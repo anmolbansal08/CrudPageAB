@@ -1,0 +1,521 @@
+﻿/* DEFAULTS  background: #b6b7bc;
+----------------------------------------------------------*/
+
+body {
+    font-size: .80em;
+    font-family: "Helvetica Neue", "Lucida Grande", "Segoe UI", Arial, Helvetica, Verdana, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    color: #696969;
+}
+
+
+p {
+    margin-bottom: 10px;
+    line-height: 1.6em;
+}
+
+.btnHide {
+    display:none;
+
+}
+.btnShow {
+    display:block;
+
+}
+/* HEADINGS   
+----------------------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 1.5em;
+    color: #666666;
+    font-variant: small-caps;
+    text-transform: none;
+    font-weight: 200;
+    margin-bottom: 0px;
+}
+
+h1 {
+    font-size: 1.6em;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
+h4 {
+    font-size: 1.1em;
+}
+
+h5, h6 {
+    font-size: 1em;
+}
+
+/* this rule styles <h1> and <h2> tags that are the 
+first child of the left and right table columns */
+.rightColumn > h1, .rightColumn > h2, .leftColumn > h1, .leftColumn > h2 {
+    margin-top: 0px;
+}
+
+
+/* PRIMARY LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+.page {
+    background-color: #fff;
+    margin: 0px auto 0px auto;
+    border: 0px solid #496077;
+}
+
+.page2 {
+    background-color: #fff;
+    /*margin: auto;*/
+    border: 1px solid #496077;
+    height: 595px;
+}
+
+.header {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    background: #CD5C5C;
+    width: 100%;
+}
+
+    .header h1 {
+        font-weight: 700;
+        margin: 0px;
+        padding: 0px 0px 0px 20px;
+        color: #f9f9f9;
+        border: none;
+        line-height: 2em;
+        font-size: 2em;
+    }
+
+.main {
+    padding: 0px 12px;
+    margin: 12px 8px 8px 8px;
+    min-height: 420px;
+}
+
+.main2 {
+    padding: 0px 12px;
+    margin: 12px 8px 8px 8px;
+    min-height: 491px;
+}
+
+.leftCol {
+    padding: 6px 0px;
+    margin: 12px 8px 8px 8px;
+    width: 200px;
+    min-height: 200px;
+}
+
+.footer {
+    color: #4e5766;
+    padding: 8px 0px 0px 0px;
+    margin: 0px auto;
+    text-align: center;
+    line-height: normal;
+}
+
+
+/* TAB MENU   
+----------------------------------------------------------*/
+
+div.hideSkiplink {
+    background-color: #3a4f63;
+    width: 100%;
+}
+
+div.menu {
+    padding: 4px 0px 4px 8px;
+}
+
+    div.menu ul {
+        list-style: none;
+        margin: 0px;
+        padding: 0px;
+        width: auto;
+    }
+
+        div.menu ul li a, div.menu ul li a:visited {
+            background-color: #465c71;
+            border: 1px #4e667d solid;
+            color: #dde4ec;
+            display: block;
+            line-height: 1.35em;
+            padding: 4px 20px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+            div.menu ul li a:hover {
+                background-color: #bfcbd6;
+                color: #465c71;
+                text-decoration: none;
+            }
+
+            div.menu ul li a:active {
+                background-color: #465c71;
+                color: #cfdbe6;
+                text-decoration: none;
+            }
+
+/* FORM ELEMENTS   
+----------------------------------------------------------*/
+
+fieldset {
+    margin: 1em 0px;
+    padding-top: 0.30em;
+    padding-bottom: 0.625em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    border: 1px solid #4297d7;
+}
+
+    fieldset p {
+        margin: 2px 12px 10px 10px;
+    }
+
+    fieldset.login label, fieldset.register label, fieldset.changePassword label {
+        display: block;
+    }
+
+    fieldset label.inline {
+        display: inline;
+    }
+
+legend {
+    font-size: 1.0em;
+    font-weight: 600;
+    padding: 2px 4px 8px 4px;
+}
+
+input.textEntry {
+    width: 320px;
+    border: 1px solid #ccc;
+}
+
+input.passwordEntry {
+    width: 320px;
+    border: 1px solid #ccc;
+}
+
+div.accountInfo {
+    width: 42%;
+}
+
+/* MISC  
+----------------------------------------------------------*/
+
+.clear {
+    clear: both;
+}
+
+.title {
+    display: block;
+    float: left;
+    text-align: left;
+    width: auto;
+}
+
+.loginDisplay {
+    font-size: 1.1em;
+    display: block;
+    text-align: right;
+    padding: 10px;
+    color: White;
+}
+
+    .loginDisplay a:link {
+        color: white;
+    }
+
+    .loginDisplay a:visited {
+        color: white;
+    }
+
+    .loginDisplay a:hover {
+        color: white;
+    }
+
+.failureNotification {
+    font-size: 1.2em;
+    color: Red;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.submitButton {
+    text-align: right;
+    padding-right: 10px;
+}
+
+@media (min-width: 768px) {
+    .col-lg {
+        position: relative;
+        min-height: 1px;
+        float: left;
+    }
+
+    .row {
+        margin-right: 0px;
+        margin-left: 0px;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #bebdbe;
+        vertical-align: middle;
+    }
+
+    .row-Last {
+        margin-right: 0px;
+        margin-left: 0px;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #fff;
+        vertical-align: middle;
+    }
+
+
+    .row:before,
+    .row:after {
+        display: table;
+        content: " ";
+    }
+
+    .row:after {
+        clear: both;
+    }
+
+    .row-Last:before,
+    .row-Last:after {
+        display: table;
+        content: " ";
+    }
+
+    .row-Last:after {
+        clear: both;
+    }
+
+    div.container {
+        /*border-top: #cccccc 1px solid;
+    border-right: #cccccc 1px solid;
+    border-left: #cccccc 1px solid;*/
+        border: #cccccc 1px solid;
+        border-radius: 5px;
+        padding: 2px;
+    }
+
+    .section {
+        margin-top: 5px;
+    }
+
+    .subSection {
+        margin-top: 5px;
+    }
+
+    .subSection-col {
+        padding-left: 2px;
+        float: left;
+    }
+
+    div.form-Label {
+        height: 30px;
+    }
+
+    div.form-Control {
+        height: 30px;
+    }
+
+    div.form-Content {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    div.container-Header {
+        font-weight: bold;
+        font-size: 9pt;
+        color: #5A7570;
+        font-family: Verdana;
+        height: 25px;
+        text-align: left;
+        vertical-align: middle;
+        background-color: #F7F7F7;
+        border-bottom: #cccccc 1px solid;
+        padding-left: 2px;
+    }
+
+    span.form-Label {
+        vertical-align: middle;
+        font-weight: 500;
+        color: black;
+        font-size: 11px;
+    }
+
+    span.form-Text {
+        vertical-align: middle;
+        color: black;
+        font-size: 11px;
+    }
+
+    span.form-Control {
+        vertical-align: middle;
+    }
+}
+
+input[type=text]:focus, textarea:focus {
+    background-color: #ffebe8;
+    border-color: #94c0d2;
+}
+
+input[disabled=disabled], select[disabled=disabled] {
+    background-color: #F0F5F9;
+    color: #747373;
+    cursor: not-allowed;
+}
+
+
+
+
+
+
+/*------------------------------Start Add By Akash for rate card priority----------------*/
+
+#sortable {
+    list-style-type: none;
+    margin: 10px;
+    padding: 20px;
+    width: 50%;
+    border: 1px solid lightgrey;
+}
+
+    #sortable li {
+        margin: 0 3px 3px 3px;
+        padding: 0.4em;
+        padding-left: 1.5em;
+        font-size: 1.4em;
+        height: 22px;
+        cursor: all-scroll;
+    }
+
+        #sortable li span {
+            position: absolute;
+            margin-left: -1.3em;
+        }
+
+/*------------------------------End Add By Akash for rate card priority----------------*/
+/*used for kendo grid row empty*/
+.gridemptyrow {
+    color: Red;
+}
+
+.k-grid-content > .k-no-data, .mandatory {
+    content: "No records found." !important;
+    color: #f00 !important;
+}
+
+
+
+
+.k-checkbox:checked + .k-checkbox-label:before {
+        content: "\2713";
+    }
+
+    .k-checkbox-label:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-width: 1px;
+        border-style: solid;
+        width: 14px;
+        height: 14px;
+        font-size: 14px;
+        line-height: 14px;
+        text-align: center;
+    }
+
+    .k-checkbox-label:hover:before, .k-checkbox:checked + .k-checkbox-label:hover:before {
+        border-color: #7f7f7f;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .k-checkbox:checked + .k-checkbox-label:before {
+        background-color: #3f51b5;
+        border-color: #3f51b5;
+        color: #fff;
+    }
+
+    .k-checkbox + .k-checkbox-label:after {
+        border-style: none !important;
+        display: none !important;
+    }
+
+    .k-radio, input.k-checkbox {
+        display: inline;
+        opacity: 0;
+        width: 0;
+        margin: 0;
+        -webkit-appearance: none;
+        overflow: hidden;
+    }
+
+
+    .k-checkbox-label, .k-radio-label {
+        line-height: 18px;
+        padding-left: 1.8em;
+    }
+
+#popupWindow {padding:0px;}
+
+.confirm_yes, .confirm_no {
+    width: 50%;
+    border-radius: 0;
+    font-size: 20px;
+    border-bottom: 0;
+    border-left: 0;
+    background-color: transparent;
+}
+    .confirm_yes:hover {
+        background-color: #5bb75b;
+    }
+    .confirm_no:hover {
+        background-color: #f44336;
+    } 
+    
+ .popupTitle {
+        margin-top: -39px !important;
+        font-size: 18px;
+        height: 39px;
+        border-radius: 0px;
+    }
+.popupMessage {
+    padding: 20px 20px;
+    font-size: 14px;
+}
+
+.txtRem {
+    float: right;
+    border: 1px solid #c1c1c1;
+    padding: 0px 4px;
+}
+
+textarea.ng-invalid {
+    background-color: pink;
+}
+
+textarea.ng-valid {
+    background-color: lightgreen;
+}
+.cap {
+    text-transform: capitalize;
+}

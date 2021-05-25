@@ -1,0 +1,115 @@
+﻿<table class='WebFormTable' id='tbl' validateonsubmit=true>
+    <tr><td class='formSection' colspan='10'>Agent Analysis Report </td></tr>
+    <tr><td class='formlabel' colspan='10'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+    <tr class='formSection'>
+
+        <td class="formlabel"><font color='red'>*</font>Airline Name</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("Airline")
+            @Html.TextBox("Text_Airline", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank", style = "width:200px;" })
+
+        </td>
+        <td class="formlabel">Issue Place(Origin)</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("Origin")
+            @Html.TextBox("Text_Origin", null, new { controltype = "autocomplete", data_role = "autocomplete", autocomplete = "off", style = "width:200px;" })
+
+
+        </td>
+
+
+    </tr>
+
+
+    <tr class='formSection'>
+        <td class="formlabel">Forwarder (Agent)</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("AgentName")
+            @Html.TextBox("Text_AgentName", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:200px;" })
+
+
+        </td>
+        <td class="formlabel"><font color='red'></font>Flight No.</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("BookingFlightNo")
+            @Html.TextBox("Text_BookingFlightNo", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:200px;" })
+
+        </td>
+
+
+    </tr>
+    <tr class='formSection'>
+        <td class="formlabel"><font color='red'>*</font>From Date</td>
+        <td class="formInputcolumn">@Html.TextBox("Fromdate", null, new { data_valid = "required", data_valid_msg = "From Date can not be blank", style = "width:200px;" })</td>
+        <td class="formlabel"><font color='red'>*</font>To Date</td>
+        <td class="formInputcolumn">@Html.TextBox("Todate", null, new { data_valid = "required", data_valid_msg = "To Date can not be blank", style = "width:200px;" })</td>
+
+
+    </tr>
+    <tr>
+        <td align="center" colspan="6">
+            <label id="lblerror"></label>
+        </td>
+    </tr>
+
+    <tr class='formSection'>
+        <td colspan='10'>
+            <input type="button" name='SearchSave' value='Search' class='btn btn-success' id="btnSubmit" />
+            @*<input type="button" name='ExcelVersionDetails' value='Export To Excel' class='btn btn-success' id="btnSubmit" src="../Images/IconExcel.png" />*@
+            <div id="exportflight" style="margin-left: 68px;margin-top: -26px; display:none"><img id=" imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer;" title="Export To Excel" onclick="ExportToExcel_Flight()" /></div>
+        </td>
+    </tr>
+
+
+</table>
+<div class="k-grid-header-wrap" id="grid_bookingprofile" style="display: none; width: 1795px; height: 488px; overflow-x: scroll; overflow-y: scroll; ">
+
+
+    <br />
+    <table class="appendGrid ui-widget" style="margin-bottom:10px;" align="center" id="tbl_bookingprofile">
+
+
+        <thead class="ui-widget-header" style="text-align:center" id="theadid_shipment">
+            <tr>
+                <td colspan="16" rowspan="1"></td>
+                <td class="ui-widget-header" colspan="3">Released (Planning)</td>
+                <td class="ui-widget-header" colspan="3">Uplift</td>
+
+            </tr>
+            <tr>
+
+                <td class="ui-widget-header">Agent Name</td>
+                <td class="ui-widget-header">Agent Code</td>
+                <td class="ui-widget-header">AWB No.</td>
+                <td class="ui-widget-header">Flight No.</td>
+                <td class="ui-widget-header">Flight Date</td>
+                <td class="ui-widget-header">Boarding Point</td>
+                <td class="ui-widget-header">Off Point</td>
+                <td class="ui-widget-header">Origin</td>
+                <td class="ui-widget-header">Destination</td>
+                <td class="ui-widget-header">Issue Place</td>
+                <td class="ui-widget-header">Issue Date</td>
+                <td class="ui-widget-header">Product Name</td>
+
+                <td class="ui-widget-header">SHC</td>
+                <td class="ui-widget-header">Commodity</td>
+                <td class="ui-widget-header">Nature Of Goods</td>
+                <td class="ui-widget-header">Split</td>
+                <td class="ui-widget-header">Pieces</td>
+                <td class="ui-widget-header">Gross Wt.</td>
+                <td class="ui-widget-header">Volume</td>
+                <td class="ui-widget-header">Pieces</td>
+                <td class="ui-widget-header">Gross Wt.</td>
+                <td class="ui-widget-header">Volume</td>
+              
+
+            </tr>
+        </thead>
+        <tbody id="tbodygridbookingprofile" class="ui-widget-content"></tbody>
+    </table>
+</div>
+<script src="~/JScript/Schedule/AgentAnalysisReport.js"></script>

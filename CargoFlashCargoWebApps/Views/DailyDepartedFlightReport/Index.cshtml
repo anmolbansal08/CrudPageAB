@@ -1,0 +1,141 @@
+﻿<style type="text/css">
+    .completeprocess {
+        color: #fff;
+        background-color: #51a351;
+        border-color: #51a351;
+        font-size: 10px;
+    }
+
+    .incompleteprocess {
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+        font-size: 10px;
+    }
+
+    .partialprocess {
+        color: #fff;
+        background-color: #FE9D5A;
+        border-color: #FE9D5A;
+        font-size: 10px;
+    }
+
+    .failureprocess {
+        color: #fff;
+        background-color: #FE0404;
+        border-color: #FE9D5A;
+        font-size: 10px;
+    }
+
+    .dependentprocess {
+        color: #fff;
+        background-color: brown;
+        border-color: goldenrod;
+        font-size: 10px;
+    }
+
+    .k-grid-filter {
+        display: none;
+    }
+
+    .k-link {
+        cursor: text;
+    }
+</style>
+
+<div id="divbody" style="height:auto">
+
+
+
+    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+        <tr><td class='formSection' colspan='4'>Daily Departed Flight Report</td></tr>
+        <tr><td class='formActiontitle' colspan='4'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+
+
+        <tr class="DateWiseRow">
+            <td class="formlabel"><font color='red'>*</font>From Date</td>
+            <td class="formInputcolumn">@Html.TextBox("FromDate", null, new { data_valid = "required", data_valid_msg = "From Date can not be blank" })</td>
+            <td class="formlabel"><font color='red'>*</font>To Date</td>
+            <td class="formInputcolumn">@Html.TextBox("ToDate", null, new { data_valid = "required", data_valid_msg = "To Date can not be blank" })</td>
+
+        </tr>
+
+        <tr class="DateWiseRow">
+            <td class="formlabel"><font color='red'></font>Flight No</td>
+            <td class='formInputcolumn'>
+                @Html.Hidden("FlightNo")
+                @Html.TextBox("Text_FlightNo", null, new { controltype = "autocomplete", data_role = "autocomplete"
+           //    , data_valid = "required", data_valid_msg = "FlightNo can not be blank"
+           })
+            </td>
+        
+            <td class="formlabel"><font color='red'></font></td>
+            <td class="formlabel">
+                <span id="spnBookingFilter" style="float:left">
+                    <input type="radio" name="Filter" id="IsSummary" checked="checked" value="Summary">Summary
+                    <input type="radio" name="Filter" id="IsDelails" value="Delails">Delails
+
+                </span>
+            </td>
+            <td class="formlabel"></td>
+           <td class="formInputcolumn"></td>
+       
+        </tr>
+
+
+        <tr class="DateWiseRow">
+            <td class="formlabel"><font color='red'>*</font>Origin</td>
+            <td class="formInputcolumn">
+                @Html.Hidden("Origin")
+                @Html.TextBox("Text_Origin", null, new { controltype = "autocomplete", data_role = "autocomplete", data_valid = "required", data_valid_msg = "Origin can not be blank" })
+            </td>
+
+            <td class="formlabel"> <font color='red'></font>Destination</td>
+            <td class="formInputcolumn">
+                @Html.Hidden("Destination")
+                @Html.TextBox("Text_Destination", null, new { controltype = "autocomplete"
+           //    , data_role = "autocomplete", data_valid = "required", data_valid_msg = "Destination can not be blank"
+           })
+            </td>
+
+        </tr>
+
+
+        <tr class="DateWiseRow">
+            <td>
+                <input type='submit' onclick="ExportToExcel()" name='operation' value='Export to Excel' class='btn btn-success' id="btnExportToExcel_FlightDetail" />&nbsp;  
+              </td>
+            <td class='formInputcolumn' colspan="4" style="align-content:center">
+                <input type='submit' onclick="search()" name='operation' value='Search' class='btn btn-success' width="100" />
+
+            </td>
+        </tr>
+
+
+    </table>
+
+
+</div>
+
+
+
+
+
+<div id="example">
+    <div id="grid" style="font-size:11px;"></div>
+    <div id="grid1" style="font-size:11px;"></div>
+    <script src="~/JScript/Report/DailyDepartedFlightReport.js"></script>
+    <script src="~/Scripts/jquery.appendGrid-1.3.2.js"></script>
+    @*<script src="~/Scripts/Common.js" ></script>*@
+    @*<script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>*@
+    @*<script src="~/Scripts/Common.js" ></script>*@
+
+</div>
+
+<div id='divCreditLimitReport'>
+    <span id='spnCreditLimitReport'>
+        <input id='hdnPageType' name='hdnPageType' type='hidden' />
+        <input id='hdnCreditLimitReportSNo' name='hdnCreditLimitReportSNo' type='hidden' />
+        <table id='tblCreditLimitReport' Style='margin-top: 20px;'></table>
+    </span>
+</div>

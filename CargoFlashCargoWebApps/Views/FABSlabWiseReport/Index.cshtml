@@ -1,0 +1,97 @@
+﻿<table class='WebFormTable' id='tbl' validateonsubmit=true>
+    <tr><td class='formSection' colspan='10'>FAB Slab Wise Report </td></tr>
+    <tr><td class='formlabel' colspan='10'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+    <tr class='formSection'>
+
+        <td class="formlabel"><font color='red'>*</font>Airline Name</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("Airline")
+            @Html.TextBox("Text_Airline", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank", style = "width:200px;" })
+
+        </td>
+
+        <td class="formlabel">Agent Name :</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("AgentName")
+            @Html.TextBox("Text_AgentName", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:200px;" })
+
+
+        </td>
+
+    </tr>
+    <tr class='formSection'>
+        <td class="formlabel"><font color='red'></font>Product Name</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("Product")
+            @Html.TextBox("Text_Product", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:200px;" })
+
+        </td>
+        <td class="formlabel">Commodity</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("Commodity")
+            @Html.TextBox("Text_Commodity", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:200px;" })
+
+
+        </td>
+
+
+    </tr>
+    <tr class='formSection'>
+
+        <td class="formlabel"><font color='red'></font>Origin</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("Origin")
+            @Html.TextBox("Text_Origin", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:200px;" })
+
+        </td>
+        <td class="formlabel">Destination</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("Destination")
+            @Html.TextBox("Text_Destination", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:200px;" })
+
+
+        </td>
+
+    </tr>
+
+
+
+    <tr class='formSection'>
+        <td class="formlabel"><font color='red'>*</font>From Date</td>
+        <td class="formInputcolumn">
+            <input type='text' name='Fromdate' id='Fromdate' style='width: 133px;' data-valid='required'
+                   data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+        </td>
+        <td class="formlabel"><font color='red'>*</font>To Date</td>
+        <td class="formInputcolumn">
+            <input type='text' name='Todate' id='Todate' style='width: 133px;' data-valid='required'
+                   data-role="datepicker" data-valid-msg='Select To Date' controltype='datetype' value='' placeholder='To Date' />
+        </td>
+    </tr>
+
+    <tr>
+
+        <td>
+            <div id="exportflight" style="display:none"><img id=" imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer;" title="Export To Excel" onclick="ExportToExcel_Flight()" /></div>
+        </td>
+        <td class="formInputcolumn">
+            <input type="button" name='SearchSave' value='Search' class='btn btn-success' id="btnSubmit" />
+        </td>
+        <td class="formlabel"></td>
+        <td class="formInputcolumn"></td>
+    </tr>
+
+
+</table>
+<div id="grid">
+
+</div>
+
+
+<script src="~/JScript/Report/FABSlabWiseReport.js"></script>

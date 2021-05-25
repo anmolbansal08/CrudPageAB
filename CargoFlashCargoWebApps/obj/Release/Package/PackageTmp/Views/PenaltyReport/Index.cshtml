@@ -1,0 +1,135 @@
+﻿
+
+<div id="divbody" style="height:auto">
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Penalty Report</td></tr>
+                        <tr><td class='formActiontitle' colspan='4'><span id='__SpanHeader__'>Penalty Report </span><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+                       
+
+                    
+                        @*<tr class="trRadio">
+                            <td class='formlabel' title='Airline' align="left">
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    <input type="radio" name="Filter" id="AirLine Name" value="A"><label for="AirLine Name"> AirLine Name</label>
+                                    <input type="radio" name="Filter" id="DateWise" value="D"> Date Wise
+                                </span>
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+
+                        </tr>*@
+
+                        
+                        <tr>
+                            <td class='formSection' colspan='4'>
+                                <input type="radio" name="PenaltyType" id="NoShow" value="0"><label for="NoShow">No Show</label>
+                                <input type="radio" name="PenaltyType" id="Void" value="1"><label for="Void">Void</label>
+                                <input type="radio" name="PenaltyType" id="Cancelation" value="3"><label for="Cancelation">Cancellation</label>
+                            </td>
+                        </tr>
+
+
+
+                        <tr class="AWBNoRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    AirLine Name :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AirLineName")
+
+                                @Html.TextBox("Text_AirLineName", null, new { data_valid = "", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "AirLine Name can not be blank" })
+                            </td>
+                            <td class=' formlabel' title='Office'></td>
+                            <td class='formInputcolumn'></td>
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    From Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+                            </td>
+                            <td class=' formlabel' title='Office'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    To Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' />
+                            </td>
+                        </tr>
+
+                      
+
+                    
+                        <tr>
+                            <td class=' formlabel' title='Airline '>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    <input type='submit' name='operation' onclick="SearchVoidData()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+                            </td>
+                            <td class='formlabel' align="left">
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+
+                                <input type='submit' name='operation' onclick="ExportToExcel()" value='ExportToExcel' id="btnExportToExcel" class='btn btn-success btnSearch' />
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+
+
+
+                    <div id="BindBlakListTable" style="width:100%">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="example">
+            <div id="grid" style="font-size:14px;"></div>
+            <script src="~/JScript/Export/PenaltyReport.js"></script>
+
+        </div>
+
+
+    </section>
+
+    <input type="hidden" value="@ViewBag.uid" id="uid" />
+
+</div>

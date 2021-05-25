@@ -1,0 +1,21 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Hub for airline already exists</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Hub Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Hub Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Hub Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+
+

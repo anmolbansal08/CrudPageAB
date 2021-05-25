@@ -1,0 +1,24 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>BucketClassSNo</Name>
+    <Message>Bucket Class can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Record already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Bucket Days Discounting Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Bucket Days Discounting Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Bucket Days Discounting Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

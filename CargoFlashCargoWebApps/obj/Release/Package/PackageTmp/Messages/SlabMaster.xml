@@ -1,0 +1,54 @@
+﻿<Messages>
+  <!--#region SlabMaster XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  SlabMaster
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Tarun Kumar
+  Created On:		11 Mar 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>SlabTitle</Name>
+    <Message>Slab Title Can't be Blank.</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Default Slab already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Slab Master Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Slab Master Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Slab Master Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2627</Key>
+    <value>Violation of Primary keys</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1234</Key>
+    <value>Record Already exists with same Slab Attributes</value>
+  </ServerMessage>
+
+
+</Messages>
+
+
+
+
+

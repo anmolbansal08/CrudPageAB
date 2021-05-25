@@ -1,0 +1,37 @@
+﻿<Messages>
+  #region    ULDBaggageType XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  ULDBaggageType
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Devendra Singh
+  Created On:		05 July 2017
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion
+  
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>ULD BaggageType  Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>ULD BaggageType   Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>ULD BaggageType   Deleted Successfully.</value>
+  </ServerMessage>
+
+<ServerMessage>
+    <Key>1001</Key>
+    <value>ULD BaggageType already exists</value>
+  </ServerMessage>
+
+</Messages>

@@ -1,0 +1,381 @@
+﻿@{
+    ViewBag.Title = "AWB Rate Audit Log";
+}
+@model CargoFlash.Cargo.Model.SpaceControl.SpaceControlSearchModel
+<script src="~/Scripts/KendoSchedular/Content/JS/kendo.dataviz.min.js"></script>
+<br />
+<div>
+    <div>
+        @using (Html.BeginForm("AWBRateAuditLog", "GetData", FormMethod.Post, new { enctype = "multipart/form-data", @id = "SearchAWBRateAuditLogSearchForm" }))
+        {
+            <table class="WebFormTable">
+                <tbody>
+                    <tr>
+                        <td class="formlabel" style="width: 100px;">
+                            <font color="red">*</font>
+                            Search By :
+                        </td>
+                        <td class="formInputcolumn">
+                            @Html.RadioButton("SearchBy", 1, true)Reference Number
+                            @Html.RadioButton("SearchBy", 2)AWB Number
+                        </td>
+                     
+                        <td  style="width:80px;">
+                            <font color="red">*</font>
+                            <span id="spnAirlineCode" style="font-weight:bold">Airline Code</span>
+                        </td>
+                        <td style="width:100px;">
+                            @Html.Hidden("AirlineCode")
+                            @Html.TextBox("Text_AirlineCode", null, new {style = "width:200px", data_valid = "required", @data_valid_msg = "Select the Airline Code", @required = "required", placeholder = "Airline Code", controltype = "autocomplete", data_role = "autocomplete" })
+                        </td>
+
+                        <td class="formlabel" style="width: 100px;">
+                            <font color="red">*</font>
+                            <span id="refNo">Reference Number</span>
+                        </td>
+                        <td class="formInputcolumn">
+                            @Html.Hidden("ReferenceNumber")
+                            @Html.TextBox("Text_ReferenceNumber", null, new { style = "width:200px", data_valid = "required", placeholder = "Reference Number", @data_valid_msg = "Select the Reference Number", @required = "required", controltype = "autocomplete", data_role = "autocomplete" })
+                        </td>
+                      
+
+                        <td class="formbuttonrow" colspan="2">
+                            <input type="button" tabindex="4" class="btn btn-success" onclick="SearchAWBRateAuditLog(1)" name="Search" style="width:80px;" value="Search">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+<ul class="tabrow">
+    <li class="selected">
+        <a class="tablinks" onclick="OpenTab(event, 'AWBRateAuditLogSerachGridDivInfo', 1)">AWB Information</a>
+    </li>
+    <li class="">
+        <a class="tablinks" onclick="OpenTab(event, 'AWBRateAuditLogSerachGridDivRateLogHistorytab', 2)">Rate Log</a>
+    </li>
+    <li class="">
+        <a class="tablinks" onclick="OpenTab(event, 'AWBRateAuditLogSerachGridDivOtherChargesHistoryTab', 3)">Other Charges Log</a>
+    </li>
+    <li class="">
+        <a class="tablinks" onclick="OpenTab(event, 'AWBRateAuditLogSerachGridDivTaxRateHistoryTab', 4)">Tax Rate Log</a>
+    </li>      
+</ul>
+@*<div class="tab">
+    <table>
+        <tr>
+            <td><button class="tablinks" onclick="OpenTab(event, 'AWBRateAuditLogSerachGridDivInfo', 1)">Reservation Info</button></td><td>|</td>
+            <td><button class="tablinks" onclick="OpenTab(event, 'AWBRateAuditLogSerachGridDivRateLogHistory',2)">Rate Log History</button></td><td>|</td>
+            <td><button class="tablinks" onclick="OpenTab(event, 'AWBRateAuditLogSerachGridDivOtherChargesHistory',3)">Other Charges History</button></td><td>|</td>
+            <td><button class="tablinks" onclick="OpenTab(event, 'AWBRateAuditLogSerachGridDivTaxRateHistory',4)">Tax Rate History</button></td>
+        </tr>
+    </table>*@
+    @*<button class="tablinks k-content" onclick="OpenTab(event, 'AWBRateAuditLogSerachGridDiv',1)">Reservation Info</button>
+    <button class="tablinks" onclick="OpenTab(event, 'AWBRateAuditLogSerachGridDivRateLogHistory',2)">Rate Log History</button>
+    <button class="tablinks" onclick="OpenTab(event, 'AWBRateAuditLogSerachGridDivOtherChargesHistory',3)">Other Charges History</button>
+    <button class="tablinks" onclick="OpenTab(event, 'AWBRateAuditLogSerachGridDivTaxRateHistory',4)">Tax Rate History</button>*@
+@*</div>*@
+<div id="AWBRateAuditLogSerachGridDivInfo" class="tabcontent">
+    <ul id="AWBRateAuditLogSearchpanelbar">
+        <li class="k-state-active">
+           <span class="Lbl"> AWB Information</span>
+            <div id="AWBRateAuditLogSerachGridDiv" ></div>
+        </li>
+        <li class="k-state-active">
+            <span class="Lbl">AWB Rate Information</span>
+                <div id="AWBRateAuditLogSerachGridDivRate"></div>
+</li>
+        <li class="k-state-active">
+            <span class="Lbl">AWB Other Charges Information</span>
+                <div id="AWBRateAuditLogSerachGridDivOtherCharges"></div>
+</li>
+        <li class="k-state-active">
+            <span class="Lbl"> AWB Tax Rate Information</span>
+                <div id="AWBRateAuditLogSerachGridDivTaxRate"></div>
+</li>
+    </ul>
+</div>
+
+   <div id="AWBRateAuditLogSerachGridDivRateLogHistorytab" class="tabcontent">
+       <ul id="AWBRateAuditLogSearchpanelbarRateHistory">
+           <li class="k-state-active">
+               <span class="Lbl"> Rate Log</span>
+               <div id="AWBRateAuditLogSerachGridDivRateLogHistory"></div>
+           </li>
+           </ul>
+</div>
+    <div id="AWBRateAuditLogSerachGridDivOtherChargesHistoryTab" class="tabcontent">
+        <ul id="AWBRateAuditLogSearchpanelbarOtherChargesHistory">
+            <li class="k-state-active">
+                <span class="Lbl"> Other Charges Log</span>
+                <div id="AWBRateAuditLogSerachGridDivOtherChargesHistory"></div>
+            </li>
+        </ul>
+
+    </div>
+    <div id="AWBRateAuditLogSerachGridDivTaxRateHistoryTab" class="tabcontent">
+
+        <ul id="AWBRateAuditLogSearchpanelbTaxRateHistoryTab">
+            <li class="k-state-active">
+                <span class="Lbl">Tax Rate Log</span>
+                <div id="AWBRateAuditLogSerachGridDivTaxRateHistory"></div>
+            </li>
+        </ul>
+
+    </div>
+
+
+    <style>
+        .k-state-focused {
+            background-color: none;
+        }
+
+        .k-state-selected.k-state-focused {
+            background-color: #7bd2f6 !important;
+        }
+
+        .formlabel {
+            width: 13% !important;
+        }
+
+        td.formInputcolumn {
+            width: 17% !important;
+        }
+
+        .k-filter-row th {
+            overflow: hidden;
+            border-style: solid;
+            border-width: 0 0 1px 1px;
+            padding: .5em .6em .4em .6em;
+            font-weight: normal;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-align: left;
+        }
+
+        .k-grid-header th.k-header {
+            vertical-align: inherit !important;
+        }
+
+        .linkbtn {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .gridemptyrow {
+            color: Red;
+        }
+
+        .k-grid-content > .k-no-data, .mandatory {
+            content: "No records found." !important;
+            color: #f00 !important;
+        }
+
+
+
+        .k-radio, input.k-checkbox {
+            display: inline;
+            opacity: 0;
+            width: 0;
+            margin: 0;
+            -webkit-appearance: none;
+            overflow: hidden;
+        }
+
+        .k-radio-label {
+            padding-right: 5px;
+            font-size: 11px;
+        }
+
+        .k-radio:checked + .k-radio-label:after {
+            background-color: #3f51b5;
+            border-radius: 50%;
+        }
+
+        .k-radio:checked + .k-radio-label:after {
+            top: 4px;
+            left: 4px;
+        }
+
+        .k-checkbox-label, .k-radio-label {
+            display: inline-block;
+            position: relative;
+            padding-left: 20px;
+            vertical-align: text-top;
+            line-height: 16px;
+            cursor: pointer;
+            border-style: solid;
+            border-width: 0;
+        }
+
+        .k-radio:checked + .k-radio-label:before, .k-radio:checked + .k-radio-label:hover:before {
+            border-color: #3f51b5;
+        }
+
+        .k-radio-label:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 13px;
+            height: 13px;
+            border-style: solid;
+        }
+
+        .k-radio:checked + .k-radio-label:after {
+            content: "";
+            width: 9px;
+            height: 9px;
+            position: absolute;
+            top: 4px;
+            left: 4px;
+        }
+
+        .k-radio-label:before {
+            border-color: #7f7f7f;
+            border-radius: 50%;
+            background-color: #fff;
+            border-width: 2px;
+        }
+
+        /* Tab Container*/ /************************************************************
+        /* Style the buttons inside the tab */
+
+        div.tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+            div.tab button {
+                background-color: inherit;
+                float: left;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                padding: 14px 16px;
+                transition: 0.3s;
+                font-size: 17px;
+            }
+
+                /* Change background color of buttons on hover */
+                div.tab button:hover {
+                    background-color: #ddd;
+                }
+
+                /* Create an active/current tablink class */
+                div.tab button.active {
+                    background-color: #ccc;
+                }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        /*New Changes*/
+        .tabrow {
+            text-align: left;
+            list-style: none;
+            margin: 10px 0 20px;
+            padding: 0;
+            line-height: 35px;
+            height: 30px;
+            overflow: hidden;
+            font-size: 12px;
+            position: relative;
+        }
+
+            .tabrow li {
+                border: 1px solid #AAA;
+                /*background: #D1D1D1;*/
+                /*background: #00ffff;*/
+                background: rgb(231,243,248);
+                /*background: linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);*/
+                display: inline-block;
+                position: relative;
+                z-index: 0;
+                border-bottom-left-radius: 6px;
+                border-bottom-right-radius: 6px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;
+                text-shadow: 0 1px #FFF;
+                margin: 0 -5px;
+                padding: 0 30px;
+                font-weight: bold;
+                cursor: pointer;
+                font-size: 13px;
+                color: seagreen;
+                font-family: Calibri;
+                /*border-radius: 10px;*/
+            }
+
+            .tabrow a {
+                color: #555;
+                text-decoration: none;
+             
+            }
+
+            .tabrow li.selected {
+                background: #FFF;
+                color: #333;
+                z-index: 2;
+                border-top-color: #FFF;
+            }
+
+            .tabrow:before {
+                position: absolute;
+                content: "";
+                width: 100%;
+                top: 0;
+                left: 0;
+                border-top: 1px solid #AAA;
+                z-index: 1;
+            }
+
+            .tabrow li:before,
+            .tabrow li:after {
+                border: 1px solid #AAA;
+                position: absolute;
+                top: -1px;
+                width: 6px;
+                height: 6px;
+                content: "";
+            }
+
+            .tabrow li:before {
+                left: -7px;
+                border-top-right-radius: 6px;
+                border-width: 1px 1px 0px 0px;
+                box-shadow: 2px 0px 0 #ECECEC;
+            }
+
+            .tabrow li:after {
+                right: -7px;
+                border-top-left-radius: 6px;
+                border-width: 1px 0px 0px 1px;
+                box-shadow: -2px 0px 0 #ECECEC;
+            }
+
+            .tabrow li.selected:before {
+                box-shadow: 2px 0px 0 #FFF;
+            }
+
+            .tabrow li.selected:after {
+                box-shadow: -2px 0px 0 #FFF;
+            }
+
+        .Center {
+            text-align: center;
+        }
+
+        .Lbl {
+            font-weight: bold;
+            font-size: 12px;
+        }
+    </style>
+    <script src="~/JScript/Rate/AWBRateAuditLog.js"></script>

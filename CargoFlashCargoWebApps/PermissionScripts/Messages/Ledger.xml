@@ -1,0 +1,40 @@
+﻿<Messages>
+  <!--#region Ledger XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  Ledger
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Swati Rastogi.
+  Created On:		26 Dec 2016
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>LedgerName</Name>
+    <Message>Ledger Name cannot be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Ledger Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Ledger Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Ledger Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Ledger Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

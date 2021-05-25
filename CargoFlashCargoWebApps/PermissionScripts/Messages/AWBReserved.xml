@@ -1,0 +1,17 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>2222</Key>
+    <value>This AWB No. is already in use.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>AWB Reserved Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Updated Successfully.</value>
+  </ServerMessage>
+
+</Messages>

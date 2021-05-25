@@ -1,0 +1,40 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AircraftType</Name>
+    <Message>Aircraft Type can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>22</Key>
+    <value>Record DoesNot Found</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>25</Key>
+    <value>Dimesion Of Record DoesNot Exit..</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Aircraft already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1003</Key>
+    <value>Duplicate entries exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Aircraft Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Aircraft Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Aircraft Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+</Messages>

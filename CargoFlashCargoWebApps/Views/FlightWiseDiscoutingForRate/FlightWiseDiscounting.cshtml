@@ -1,0 +1,628 @@
+﻿
+
+@{
+    ViewBag.Title = "FlightWiseDiscounting";
+}
+
+<h2>Flight Wise Surcharges/Discounts</h2>
+
+<ul kendo-panel-bar>
+    <li class="k-state-active">
+        <span class="k-link k-state-selected">Flight Search</span>
+        <div style="padding: 10px;">
+            <table style="width:100%;">
+                <tbody ></tbody>
+                <tr>
+                    <td>
+                        <label><b>Flight Date:</b></label>
+
+                        <input class="width95" kendo-date-picker ng-model="SearchFlightRequest.FlightDate" data-valid='required' data-valid-msg='Select Flight Date'
+                               placeholder='Flight Date' id="rpDate" k-rebind="minDate" k-max="maxDate" k-rebind="maxDate" k-min="minDate" 
+                               k-format="'dd-MMM-yyyy'"  />
+                    </td>
+                    <td>
+                        <label><b>Airline:&nbsp;</b></label>
+                        <input kendo-combo-box k-placeholder="'Select Airline'"
+                               k-min-length="2"
+                               k-filter="'contains'" k-auto-bind="false"
+                               ng-model="SearchFlightRequest.Airline"
+                               k-filterfield="'AirlineName'"
+                               k-options='K_Options("Text_Airline", "Airline_FlightWiseDiscounting")' />
+
+
+                    </td>
+                    <td>
+                        <label><b>Origin:&nbsp;</b></label>
+                        <input kendo-combo-box k-placeholder="'Select Origin'"
+                               k-min-length="2"
+                               k-filter="'contains'" k-auto-bind="false"
+                               ng-model="SearchFlightRequest.Origin"
+                               k-filterfield="'OriginAirportCode'"
+                               k-options='K_Options("Text_Origin", "SpaceControl_Origin")' />
+
+                    </td>
+                    <td>
+                        <label><b>Destination:&nbsp;</b></label>
+                        <input kendo-combo-box k-placeholder="'Select Destination'"
+                               k-min-length="2"
+                               k-filter="'contains'" k-auto-bind="false"
+                               ng-model="SearchFlightRequest.Destination"
+                               k-filterfield="'DestinationAirportCode'"
+                               k-options='K_Options("Text_Destination", "SpaceControl_Dest")' />
+
+                    </td>
+                    <td>
+                        <label><b>Flight Type:&nbsp;</b></label>
+                        <input kendo-combo-box k-placeholder="'Select Flight Type'"
+                               k-min-length="2"
+                               k-filter="'contains'" k-auto-bind="false"
+                               ng-model="SearchFlightRequest.FlightType"
+                               k-filterfield="'FlightTypeName'"
+                               k-options='K_Options("Text_FlightType", "Rate_rate_FlightType")' />
+
+                    </td>
+                   
+                    <td>
+                            <label><b>Flight No:&nbsp;</b></label>
+                            <input id="ItineraryFlightNo" class="width95" kendo-combo-box k-placeholder="'Select Flight No'"
+                                   k-min-length="2" k-auto-bind="true"
+                                   ng-model="SearchFlightRequest.FlightNo"
+                                   k-filter="'contains'"
+                                   k-filterfield="'FlightNo'"
+                                   k-options='K_Options("Replan_FlightNo", "SpaceControl_FlightNo")' />
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input ng-click="GetFlightList()" type="button" class="btn btn-success" style="width:80px;margin-top:10px;margin-left:60px;" value="Search" />
+                    </td>
+                    
+                </tr>
+
+            </table>
+        </div>
+    </li>
+    <li ng-show="ShowFlightDetailsGrid" ng-init="ShowFlightDetailsGrid=false" class="k-state-active">
+        <span class="k-link k-state-selected">Flight Details</span>
+        <div style="padding: 10px;">
+            <div kendo-grid="flightDetailsGrid" k-options="flightDetailsGridOptions"></div>
+
+        </div>
+    </li>
+    <li ng-show="ShowFlightInfo" ng-init="ShowFlightInfo=false" class="k-state-active">
+        <span class="k-link k-state-selected">Flight Information</span>
+        <div style="padding: 10px;">
+            <table style="width:100%;">
+
+                <tr>
+
+                    <td>
+                        <label><b>Control City:</b></label>
+                    </td>
+                    <td>
+                        <label><span style="color:blue"><b>{{FlightDetailsRequest.ControlCity}}</b></span></label>
+
+                    </td>
+                    
+                </tr>
+                <tr>
+
+                    <td>
+                        <label><b>Gross Weight:</b></label>
+                    </td>
+                    <td>
+                        <label><span style="color:blue"><b>{{FlightDetailsRequest.GrWt}}</b></span></label>
+
+                    </td>
+                    <td>
+                        <label><b>Volume Weight:</b></label>
+                    </td>
+                    <td>
+                        <label><span style="color:blue"><b>{{FlightDetailsRequest.VolWt}}</b></span></label>
+
+                    </td>
+
+                </tr>
+                <tr>
+
+                    <td>
+                        <label><b>Aircraft Type:</b></label>
+                    </td>
+                    <td>
+                        <label><span style="color:blue"><b>{{FlightDetailsRequest.AircraftType}}</b></span></label>
+
+                    </td>
+                    <td>
+                        <label><b>Flight Type:</b></label>
+                    </td>
+                    <td>
+                        <label><span style="color:blue"><b>{{FlightDetailsRequest.FlightType}}</b></span></label>
+
+                </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <label><b>ETD:</b></label>
+                    </td>
+                    <td>
+                        <label><span style="color:blue"><b>{{FlightDetailsRequest.ETD}}</b></span></label>
+
+                </td>
+                    <td>
+                        <label><b>ETA:</b></label>
+                    </td>
+                    <td>
+                        <label><span style="color:blue"><b>{{FlightDetailsRequest.ETA}}</b></span></label>
+
+                </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <label><b>Pieces Max Weight:</b></label>
+                    </td>
+                    <td>
+                        <label><span style="color:blue"><b>{{FlightDetailsRequest.PiecesMaxWeight}}</b></span></label>
+
+                   </td>
+                    <td>
+                        <label><b>Pieces Max Volume:</b></label>
+                    </td>
+                    <td>
+                        <label><span style="color:blue"><b>{{FlightDetailsRequest.PiecesMaxVolume}}</b></span></label>
+
+                    </td>
+
+                </tr>
+                <tr>
+
+                    <td>
+                        <label><b>Flight Cancelled:</b></label>
+                    </td>
+                    <td>
+                        <input type="radio" name="cancelFlight" disabled="true" ng-model="FlightDetailsRequest.CancelFlight" ng-value="true" />Yes
+                        <input type="radio" name="cancelFlight" disabled="true" ng-model="FlightDetailsRequest.CancelFlight" ng-value="false" />No
+
+                    </td>
+                    <td>
+                        <label><b>Booking Closed:</b></label>
+                    </td>
+                    <td>
+                        <input type="radio" name="bookingClosed" disabled="true" ng-model="FlightDetailsRequest.BookingClosed" ng-value="true" />Yes
+                        <input type="radio" name="bookingClosed" disabled="true" ng-model="FlightDetailsRequest.BookingClosed" ng-value="false" />No
+                    </td>
+
+                </tr>
+                <tr>
+
+                    <td>
+                        <label><b>Start Date:</b></label>
+                    </td>
+                    <td>
+                        <input class="width95" kendo-date-picker ng-model="FlightDetailsRequest.StartDate" data-valid='required' data-valid-msg='Select Start Date'
+                               placeholder='Start Date' k-rebind="minDate" k-max="maxStartDate" k-rebind="maxStartDate" k-min="minDate" onchange="validDate(this);"
+                               k-format="'dd-MMM-yyyy'" ng-change="StartDateChange();"  />
+                    </td>
+                    <td>
+                        <label><b>End Date:</b></label>
+                    </td>
+                    <td>
+                        <input class="width95" kendo-date-picker ng-model="FlightDetailsRequest.EndDate" data-valid='required' data-valid-msg='Select End Date'
+                               placeholder='End Date' k-rebind="minEndDate" k-max="maxDate" k-rebind="maxDate" k-min="minEndDate" onchange="validDate(this);"
+                               k-format="'dd-MMM-yyyy'" ng-change="EndDateChange();" />
+                    </td>
+                </tr>
+                <tr>
+
+                    @*<td>
+                        <label><b>Allocation Release Time:</b></label>
+                    </td>
+                    <td>
+                        <input type="textbox" ng-model="FlightDetailsRequest.AlReleaseTime" onkeypress="return event.charCode >= 48 && event.charCode <= 57"  style="width:80px;" /> <b>(In Minutes)</b>
+
+                    </td>*@
+                    <td>
+                        <label><b>Status:</b></label>
+                    </td>
+                    <td>
+                        <input data-valid-msg="Select Status" k-data-source="GetStatus" data-valid="required" placeholder="Select" ng-model="FlightDetailsRequest.Status" kendo-combo-box  />
+
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+    </li>
+    <li ng-show="ShowConditionsGrid" ng-init="ShowConditionsGrid=false" class="k-state-active">
+    <span class="k-link k-state-selected">Conditions</span>
+        <div style="padding: 10px;">
+            <table style="width:100%;">
+
+                <tr>
+
+                    <td colspan="1">
+                        <label><b>Agent Name:</b></label>
+                    </td>
+                    <td colspan="2">
+                        <select kendo-multi-select 
+                                k-min-length="2"
+                                k-filterable="true"
+                                style="width:280px;height:auto;border-width:2px;"
+                                k-filter="'contains'"
+                                k-filterfield="'AgentName'"
+                                 @*k-options='SelectConditionOptions("Text_Origin", "SpaceControl_Origin")'*@
+                                k-options='SelectConditionOptions("Text_Agent", "Rate_rate_RateAgentName","AgentName")'
+                                k-ng-model="Conditions.Agent"
+                                k-value-primitive="true"></select>
+                    </td>
+                    <td colspan="1">
+                        <input type="radio" name="AgentName" ng-checked="true" ng-model="Conditions.IncludeAgent" ng-value="true" />Include
+                        <input type="radio" name="AgentName" ng-model="Conditions.IncludeAgent" ng-value="false" />Exclude
+                    </td>
+                    <td colspan="1">
+                        <label><b>Agent Group:</b></label>
+                    </td>
+                    <td colspan="2">
+                        <select kendo-multi-select
+                                k-min-length="2"
+                                k-filterable="true"
+                                style="width:280px;height:auto;border-width:2px;"
+                                k-filter="'contains'"
+                                k-filterfield="'AgentGroupName'"
+                                k-options='SelectConditionOptions("Text_AgentGroup", "Rate_rate_AgentGroupName","AgentGroupName")'
+                                k-ng-model="Conditions.AgentGroup"
+                                k-value-primitive="true"></select>
+                    </td>
+                    <td colspan="1" >
+                        <input type="radio" name="AgentGroup" ng-checked="true" ng-model="Conditions.IncludeAgentGroup" ng-value="true" />Include
+                        <input type="radio" name="AgentGroup" ng-model="Conditions.IncludeAgentGroup" ng-value="false" />Exclude
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="1">
+                        <label><b>Special Handling Code:</b></label>
+                    </td>
+                    <td colspan="2">
+                        <select kendo-multi-select
+                                k-min-length="2"
+                                k-filterable="true"
+                                style="width:280px;height:auto;border-width:2px;"
+                                k-filter="'contains'"
+                                k-filterfield="'Name'"
+                                k-options='SelectConditionOptions("Text_Agent", "Rate_rate_SPHCName","Name")'
+                                k-ng-model="Conditions.SPHC"
+                                k-value-primitive="true"></select>
+                    </td>
+                    <td colspan="1">
+                        <input type="radio" name="SPHC" ng-checked="true" ng-model="Conditions.IncludeSPHC" ng-value="true" />Include
+                        <input type="radio" name="SPHC" ng-model="Conditions.IncludeSPHC" ng-value="false" />Exclude
+                    </td>
+                    <td colspan="1">
+                        <label><b>Special Handling Group:</b></label>
+                    </td>
+                    <td colspan="2">
+                        <select kendo-multi-select
+                                k-min-length="2"
+                                k-filterable="true"
+                                style="width:280px;height:auto;border-width:2px;"
+                                k-filter="'contains'"
+                                k-filterfield="'Name'"
+                                k-options='SelectConditionOptions("Text_Agent", "Rate_SPHCCode","Name")'
+                                k-ng-model="Conditions.SPHCGroup"
+                                k-value-primitive="true"></select>
+                    </td>
+                    <td colspan="1">
+                        <input type="radio" name="SPHCGroup" ng-checked="true" ng-model="Conditions.IncludeSPHCGroup" ng-value="true" />Include
+                        <input type="radio" name="SPHCGroup" ng-model="Conditions.IncludeSPHCGroup" ng-value="false" />Exclude
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1">
+                        <label><b>Commodity:</b></label>
+                    </td>
+                    <td colspan="2">
+                        <select kendo-multi-select
+                                k-min-length="2"
+                                k-filterable="true"
+                                style="width:280px;height:auto;border-width:2px;"
+                                k-filter="'contains'"
+                                k-filterfield="'CommodityDescription'"
+                                k-options='SelectConditionOptions("Text_Agent", "Rate_rate_CommodityName","CommodityDescription")'
+                                k-ng-model="Conditions.Commodity"
+                                k-value-primitive="true"></select>
+                    </td>
+                    <td colspan="1">
+                        <input type="radio" name="Commodity" ng-checked="true" ng-model="Conditions.IncludeCommodity" ng-value="true" />Include
+                        <input type="radio" name="Commodity" ng-model="Conditions.IncludeCommodity" ng-value="false" />Exclude
+                    </td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+    </li>
+    <li ng-show="ShowGrid" ng-init="ShowGrid=false" class="k-state-active">
+        <span class="k-link k-state-selected">Discounting Details</span>
+        <div  style="padding: 10px;">
+                <div kendo-grid="grid" k-options="SlabGridOptions"></div>
+           
+        </div>
+        <div style="padding: 10px;">
+            <span><input type="button" ng-click="SaveDiscount()" class="btn btn-success" value="SUBMIT"></span>
+        </div>
+    </li>
+
+</ul>
+
+
+<style>
+    .k-callout-n {
+        display: none;
+    }
+
+    .k-window {
+        max-width: 98% !important;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .k-grid .k-hierarchy-col {
+        width: 30px;
+    }
+
+
+    .options {
+        padding: 0px;
+    }
+
+        .options > li {
+            float: left;
+            list-style: none;
+            padding-right: 1em;
+        }
+
+    label {
+        font-weight: 500;
+    }
+
+    .routetab > li {
+        float: left;
+        list-style: none;
+        padding-right: 1em;
+    }
+
+
+    .k-grid tbody .k-button {
+        min-width: 12px;
+        width: 18px;
+        color: transparent;
+        background-color: transparent;
+        border: transparent;
+        height: 22px;
+    }
+
+    .k-grid-header th.k-header {
+        vertical-align: inherit !important;
+    }
+
+    .chkCls {
+        text-align: center;
+    }
+
+
+
+    .k-radio, input.k-checkbox {
+        display: inline;
+        opacity: 0;
+        width: 0;
+        margin: 0;
+        -webkit-appearance: none;
+        overflow: hidden;
+    }
+
+    .k-radio-label {
+        padding-right: 5px;
+        font-size: 11px;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        background-color: #3f51b5;
+        border-radius: 50%;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        top: 4px;
+        left: 4px;
+    }
+
+    .k-checkbox-label, .k-radio-label {
+        display: inline-block;
+        position: relative;
+        padding-left: 19px;
+        vertical-align: text-top;
+        line-height: 16px;
+        cursor: pointer;
+        border-style: solid;
+        border-width: 0;
+    }
+
+    .k-radio:checked + .k-radio-label:before, .k-radio:checked + .k-radio-label:hover:before {
+        border-color: #3f51b5;
+    }
+
+    .k-radio-label:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 12px;
+        height: 12px;
+        border-style: solid;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+    }
+
+    .k-radio-label:before {
+        border-color: #7f7f7f;
+        border-radius: 50%;
+        background-color: #fff;
+        border-width: 2px;
+    }
+
+    .k-invalid-msg {
+        position: fixed;
+    }
+
+    td[role=gridcell] {
+        white-space: nowrap;
+    }
+
+    .btninfo {
+        width: 10.5em;
+        padding: 2px;
+    }
+
+
+    .k-checkbox:disabled + .k-checkbox-label:before {
+        background: #696969;
+        border-color: #696969;
+        border-radius: 1px;
+    }
+
+    .k-radio:disabled + .k-radio-label:before {
+        background: #ffffff;
+        border-color: #696969;
+    }
+
+    .img-route {
+        height: 25px;
+    }
+
+    .Add-route {
+        height: 25px;
+        filter: contrast(0.6);
+    }
+
+    .btnRemove {
+        height: 18px;
+        margin-top: -18px;
+        margin-left: 1.8em;
+        position: absolute;
+    }
+
+    .Add-route:hover {
+        filter: contrast(5);
+        color: blue;
+        cursor: pointer;
+    }
+
+    .lblRoute {
+        margin: -10px 20px;
+    }
+
+    .fltimg {
+        vertical-align: middle;
+        height: 18px;
+    }
+
+    div[kendo-window="winRoute"] table td {
+        border-bottom: 1px solid #7fc4e6;
+    }
+
+    div[id=ReRouteTab] .k-grid-content {
+        max-height: 421px;
+    }
+
+    div[id=ReRouteTab] .k-detail-cell .k-grid-content {
+        max-height: 200px;
+    }
+
+    div[options=FlightSearchO_DGridOptions] .k-grid-content {
+        max-height: 71vh;
+    }
+
+    div[kendo-window="historyWin"] .k-grid-content {
+        max-height: 70vh;
+    }
+
+    .redl {
+        color: red;
+    }
+
+        .redl:before {
+            content: "\f0c8";
+            color: red;
+            margin-right: 8px;
+        }
+
+    .greenl {
+        color: green;
+        margin-right: 20px;
+    }
+
+        .greenl:before {
+            content: "\f0c8";
+            color: green;
+            margin-right: 8px;
+        }
+
+    .lgd {
+        border: solid 1px #9a9898;
+        padding: 0px 10px;
+        font-size: 14px;
+        margin-left: 8px;
+    }
+
+    .k-window-content .bVErrMsgContainer {
+        display: none;
+    }
+
+    .k-window-content {
+        font-size: 0.85em;
+    }
+
+    .k-grid-content-locked {
+        height: auto !important;
+    }
+
+    .hcap {
+        color: #9d331d;
+        font-weight: 700;
+    }
+
+    .m0 {
+        margin: 0;
+    }
+
+    .k-grid-content {
+        min-height: 40px;
+    }
+
+    .fb {
+        font-weight: 500;
+    }
+
+    .flt {
+        margin-left: 30em;
+        font-size: 13px;
+        font-weight: normal;
+    }
+</style>
+
+@Scripts.Render("~/bundles/FlightWiseDiscounting")

@@ -1,0 +1,1309 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="../Styles/printmawb.css" type="text/css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+        AWB No :
+
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="MSHTML 6.00.3790.1830" name="GENERATOR" />
+    <script src="../Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="../Scripts/json2.js"></script>
+    <script src="../Scripts/jquery-barcode-2.0.2.js"></script>
+    <script type='text/javascript'>
+        function printWindow() {
+            document.getElementById('divAWBWithImage').style.display = 'none';
+            document.getElementById('divAWBPrint').style.display = 'block';
+            document.getElementById('divPrint').style.display = 'none';
+            window.print();
+        }
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        ////////////////////////////////////////
+
+        $(document).ready(function () {
+            var AwbNo = getParameterByName("sno", "");// "30243";
+            var pageName = getParameterByName("pagename", ""); //"ReservationBooking";
+            var FinalData;
+            var FinalData1;
+            var url;
+            if (pageName == "Acceptance")
+                url = "Services/Tariff/HandlingChargesService.svc/GetAWBPrintData"
+            else if (pageName == "ReservationBooking")
+                url = "../Services/Tariff/HandlingChargesService.svc/ReservationBookingGetAWBPrintData"
+            else
+                url = "Services/Tariff/HandlingChargesService.svc/GetImportAWBPrintData"
+            $.ajax({
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ AwbNo: AwbNo }),
+                async: false,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    //alert(data); // this is Json data object;
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table0;
+                    FinalData1 = ResultData.Table1;
+                    var FinalData2 = ResultData.Table2;
+                    //$("#imgAirline").tex
+                    if (FinalData.length > 0) {
+                        //$("<img src=" + FinalData[0].AirlineImage + " alt=\"logo\" width=\"100\" />").appendTo("#imgAirline");
+                        $("#imgAirline").attr({ "src": FinalData[0].AirlineImage, height: "32px", width: "220px" });
+                        $("#spnShipperDetails").html(FinalData[0].ShipperDetails);
+                        $("#spnShipperDetails1").html(FinalData[0].ShipperDetails);
+
+                        //   $("#spnConsigneeDetails").html(FinalData[0].ConsigneeDetails);
+
+                        $("#spnAgentName").text(FinalData[0].AgentName);
+                        $("#spnAgentName1").text(FinalData[0].AgentName);
+                        //$("#spnAgentCode").text(FinalData[0].AgentCode);
+                        $("#spnAgentAccountNumber").text(FinalData[0].AgentCode);
+                        $("#spnAgentAccountNumber1").text(FinalData[0].AgentCode);
+
+                        $("#spnAgentOriginCity").text(FinalData[0].OriginCityName);
+                        $("#spnAgentOriginCity1").text(FinalData[0].OriginCityName);
+
+                        $("#spnIATANo").text(FinalData[0].IATANo);
+                        $("#spnIATANo1").text(FinalData[0].IATANo);
+                        //$('#Label6').text(FinalData[0].Otherecharge)
+
+                        //$('#spnAgentAc').text(FinalData[0].ShipperAccountNo)
+
+                        if (FinalData[0].DueCarrierChargesDetail == '0') {
+                            $("#spnDueCarrierChargesDetail").text('')
+                            $("#spnDueCarrierChargesDetail1").text('')
+                        }
+                        else {
+                            $("#spnDueCarrierChargesDetail").text(FinalData[0].DueCarrierChargesDetail);
+                            $("#spnDueCarrierChargesDetail1").text(FinalData[0].DueCarrierChargesDetail);
+                        }
+
+                        ////  $("#spnShipperName").html("SAS " + FinalData[0].OriginCityName + " (" + FinalData[0].OriginCity + ")");
+                        $("#spnShipperName").html(FinalData[0].ShipperName);
+                        $("#spnShipperName1").html(FinalData[0].ShipperName);
+                        ////ShipperDetails
+
+                        //$("#spnShipperAccountNo").text(FinalData[0].ShipperAccountNo);
+                        //$("#spnShipperDetails").html(FinalData[0].ShipperDetails);
+                        //$("#spnConsigneeAccountNo").html(FinalData[0].ConsigneeAccountNo);
+                        //// $("#spnConsigneeName").html("SAS Express " + FinalData[0].DestinationCityName + " (" + FinalData[0].DestinationCity + ")");
+                        $("#spnConsigneeName").html(FinalData[0].ConsigneeName);
+                        $("#spnConsigneeName1").html(FinalData[0].ConsigneeName);
+                        //// ConsigneeDetails
+                        $("#spnConsigneeDetails").html(FinalData[0].ConsigneeDetails);
+                        $("#spnConsigneeDetails1").html(FinalData[0].ConsigneeDetails);
+                        //$("#spnAgentName").text(FinalData[0].AgentName);
+                        //$("#spnAgentCode").text(FinalData[0].AgentCode);
+                        //$("#spnIATANo").text(FinalData[0].IATANo);
+                        $("#spnOriginCity").text(FinalData[0].originairport);
+                        $("#spnOriginCity1").text(FinalData[0].originairport);
+                        $("#spnDestinationCity").text(FinalData[0].VIA1);
+                        $("#spnDestinationCity1").text(FinalData[0].VIA1);
+                        $("#spnFlightCode").text(FinalData[0].FlightNo.substr(0, 2));
+                        $("#spnFlightCode1").text(FinalData[0].FlightNo.substr(0, 2));
+                        $('#spnSpotCode').text(FinalData[0].SpotCode);
+                        $('#spnSpotCode1').text(FinalData[0].SpotCode);
+                        ///*mmmm*/
+                        $("#spnviaSector1").text(FinalData[0].viaSector1);
+                        $("#spnviaSector11").text(FinalData[0].viaSector1);
+                        $("#spnviaFlightNo1").text(FinalData[0].viaFlightNo1);
+                        $("#spnviaFlightNo11").text(FinalData[0].viaFlightNo1);
+                        $("#spnviaSector2").text(FinalData[0].viaSector2);
+                        $("#spnviaSector21").text(FinalData[0].viaSector2);
+                        $("#spnviaFlightNo2").text(FinalData[0].viaFlightNo2);
+                        $("#spnviaFlightNo21").text(FinalData[0].viaFlightNo2);
+                        $("#spnDestinationCityName").text(FinalData[0].destinationairport);
+                        $("#spnDestinationCityName1").text(FinalData[0].destinationairport);
+                        $("#spnFlightNo1").text(FinalData[0].FlightNO1);
+                        $("#spnFlightNo11").text(FinalData[0].FlightNO1);
+                        $("#spnFlightNo2").text(FinalData[0].FlightNo2);
+                        $("#spnFlightNo21").text(FinalData[0].FlightNo2);
+                       
+                            $("#spnFlightDate2").text( FinalData[0].FLIGHTDATE2.substring(0, 6).replace("-", ""));
+                            $("#spnFlightDate21").text(FinalData[0].FLIGHTDATE2.substring(0, 6).replace("-", ""));
+                       
+                        
+                        
+                        $("#spnFlightDate1").text("/" + FinalData[0].FlightDate.substring(0, 6).replace("-", ""));
+                        $("#spnFlightDate11").text("/"+FinalData[0].FlightDate.substring(0, 6).replace("-", ""));
+                       
+                        $("#spnRateReferenceNo").text(FinalData[0].RateReferenceNo);
+                        $("#spnRateReferenceNo1").text(FinalData[0].RateReferenceNo);
+                        //$("#spnProductName").text(FinalData[0].ProductName);
+                        $("#spnFlightTypeText").text(FinalData[0].FlightTypeText);
+                        $("#spnFlightTypeText1").text(FinalData[0].FlightTypeText);
+                        $('#spnAmtInsurance').text(FinalData[0].InsuranceAmount);
+                        // $("#spnPieces1").html($("#spnPieces1").text());
+                        ////$("#spnGrossWeight").text(FinalData[0].TotalGrossWeight);
+                        var data1 = '', psum = 0;
+                        var len = FinalData[0].FWBPieces.split(',').length;
+                        for (var i = 0; i < len; i++) {
+                            if (FinalData[0].FWBPieces.split(',')[i] != '' || FinalData[0].FWBPieces.split(',')[i] != '0') {
+                                data1 = data1 + FinalData[0].FWBPieces.split(',')[i] + "<br/>";
+                                if (FinalData[0].FWBPieces.split(',')[i] != 0)
+                                    psum = psum + parseFloat(FinalData[0].FWBPieces.split(',')[i]);
+                            }
+                        }
+                        var j = data1.length;
+                        $("#spnPieces").html(data1.substring(0, j - 5));
+                        $("#spnPieces1").html(data1.substring(0, j - 5));
+                        $("#spnsumPieces").text(psum);
+                        $("#spnsumPieces1").text(psum);
+                        var data2 = '', wsum = 0;
+                        var len = FinalData[0].FWBGrossWeight.split(',').length;
+                        for (var i = 0; i < len; i++) {
+                            if (FinalData[0].FWBGrossWeight.split(',')[i] != '' || FinalData[0].FWBGrossWeight.split(',')[i] != '0.00') {
+                                data2 = data2 + FinalData[0].FWBGrossWeight.split(',')[i] + "<br/>";
+                                if (FinalData[0].FWBGrossWeight.split(',')[i] != 0)
+                                    wsum = wsum + parseFloat(FinalData[0].FWBGrossWeight.split(',')[i]);
+                            }
+                        }
+                        var j = data2.length;
+                        $("#spnGrossWeight").html(data2.substring(0, j - 5));
+                        $("#spnGrossWeight1").html(data2.substring(0, j - 5));
+                        $("#spnsumGrossWeight").text(wsum);
+                        $("#spnsumGrossWeight1").text(wsum);
+
+                        $("#spnPWeightCharges").text(FinalData[0].PWeightCharges);
+                        ////$("#spnCWeightCharges").text(FinalData[0].TariffAmount);
+                        $("#spnCWeightCharges").text(FinalData[0].CWeightCharges);
+                        $("#spnPValuationCharges").text(FinalData[0].PValuationCharges);
+                        $("#spnCValuationCharges").text(FinalData[0].CValuationCharges);
+                        $("#spnPTaxCharges").text(FinalData[0].PTaxCharges);
+                        $("#spnCTaxCharges").text(FinalData[0].CTaxCharges);
+                        $("#spnPDueAgentCharges").text(FinalData[0].PDueAgentCharges);
+                        $("#spnCDueAgentCharges").text(FinalData[0].CDueAgentCharges);
+                        $("#spnPDueCarrierCharges").text(FinalData[0].PDueCarrierCharges);
+                        $("#spnCDueCarrierCharges").text(FinalData[0].CDueCarrierCharges);
+                        $("#spnPTotalCharges").text(FinalData[0].PTotalCharges);
+                        /////
+                        $("#spnPWeightCharges1").text(FinalData[0].PWeightCharges);
+                        $("#spnCWeightCharges1").text(FinalData[0].CWeightCharges);
+                        $("#spnPValuationCharges1").text(FinalData[0].PValuationCharges);
+                        $("#spnCValuationCharges1").text(FinalData[0].CValuationCharges);
+                        $("#spnPTaxCharges1").text(FinalData[0].PTaxCharges);
+                        $("#spnCTaxCharges1").text(FinalData[0].CTaxCharges);
+                        $("#spnPDueAgentCharges1").text(FinalData[0].PDueAgentCharges);
+                        $("#spnCDueAgentCharges1").text(FinalData[0].CDueAgentCharges);
+                        $("#spnPDueCarrierCharges1").text(FinalData[0].PDueCarrierCharges);
+                        $("#spnCDueCarrierCharges1").text(FinalData[0].CDueCarrierCharges);
+                        $("#spnPTotalCharges1").text(FinalData[0].PTotalCharges);
+                        //// $("#spnPTotalCharges").text('abc');
+                        $("#spnAWBCurrencyCode").text(FinalData[0].AWBCurrencyCode);
+                        $("#spnCTotalCharges").text(FinalData[0].CTotalCharges);
+                        $("#spnAWBDate").text(FinalData[0].AWBDate);
+                        $("#spnOriginCity2").text(FinalData[0].OriginCity);
+                        $("#spnAgentName2").text(FinalData[0].AgentName);
+                        $("#spnAgentCode2").text(FinalData[0].AgentCode != "" ? "[" + FinalData[0].AgentCode + "]" : "");
+
+                        $("#spnAWBDate1").text(FinalData[0].AWBDate);
+                        $("#spnOriginCity21").text(FinalData[0].OriginCity);
+                        $("#spnAgentName21").text(FinalData[0].AgentName);
+                        $("#spnAgentCode21").text(FinalData[0].AgentCode != "" ? "[" + FinalData[0].AgentCode + "]" : "");
+
+
+                        $("#spnAgentName3").text(FinalData[0].AgentName);
+                        $("#spnAgentCode3").text(FinalData[0].AgentCode);
+                        $("#spnOriginCity3").text(FinalData[0].OriginCity);
+                        $("#spnAgentName31").text(FinalData[0].AgentName);
+                        $("#spnAgentCode31").text(FinalData[0].AgentCode);
+                        $("#spnOriginCity31").text(FinalData[0].OriginCity);
+                        //$("#spnSCI").text(FinalData[0].SCI);
+                        $("#spnRateClass").text(FinalData[0].RateClass);
+                        $("#spnRateClass1").text(FinalData[0].RateClass);
+                        $("#spnRateClassUnit").text(FinalData[0].RateClassUnit);
+                        $("#spnRateClassUnit1").text(FinalData[0].RateClassUnit);
+                        //$("#spnRateClassName").text(FinalData[0].RateClassName);
+                        $("#spnAWBCode").text(FinalData[0].AWBCode);
+                        $("#spnAWBCode1").text(FinalData[0].AWBCode);
+                        $("#spnOriginCity4").text(FinalData[0].OriginCity);
+                        $("#spnOriginCity41").text(FinalData[0].OriginCity);
+                        $("#spnAWBNumber").text(FinalData[0].AWBNumber);
+                        $("#spnAWBNumber1").text(FinalData[0].AWBNumber);
+                        $("#spnAWBNo").text(FinalData[0].AWBNo);
+                        $("#spnAWBNo1").text(FinalData[0].AWBNo);
+                        $("#spnAirlineName").text(FinalData[0].AirlineName);
+                        $("#spnAirlineAddress").text(FinalData[0].AirlineAddress);
+                        $("#spnAirlineName1").text(FinalData[0].AirlineName);
+                        $("#spnAirlineAddress1").text(FinalData[0].AirlineAddress);
+
+                        //$("#spnissuedby").text(FinalData[0].AirlineName);
+
+                        $("#spnFlightType").text(FinalData[0].FlightType);
+                        $("#spnFlightType2").text(FinalData[0].FlightType);
+                        $("#spnFlightType3").text(FinalData[0].FlightType);
+                        $("#spnFlightType4").text(FinalData[0].FlightType);
+                        $("#spnFlightType5").text(FinalData[0].FlightType);
+
+                        $("#spnFlightType1").text(FinalData[0].FlightType);
+                        $("#spnFlightType21").text(FinalData[0].FlightType);
+                        $("#spnFlightType31").text(FinalData[0].FlightType);
+                        $("#spnFlightType41").text(FinalData[0].FlightType);
+                        $("#spnFlightType51").text(FinalData[0].FlightType);
+                        $("#spnDeclaredCarriageValue").text(FinalData[0].DeclaredCarriageValue);
+                        $("#spnDeclaredCustomsValue").text(FinalData[0].DeclaredCustomValue);
+
+                        $("#spnDeclaredCarriageValue1").text(FinalData[0].DeclaredCarriageValue);
+                        $("#spnDeclaredCustomsValue1").text(FinalData[0].DeclaredCustomValue);
+                        $("#spnTariffRate").text(FinalData[0].TariffRate);
+                        $("#spnTariffRate1").text(FinalData[0].TariffRate);
+                        $("#spnTariffAmount").text(FinalData[0].TariffAmount);
+                        $("#spnTariffAmount1").text(FinalData[0].TariffAmount);
+                        $("#spnCommodity").text(FinalData[0].Commodity);
+                        $("#spnCommodity1").text(FinalData[0].Commodity);
+                        var data = '';
+                        var len = FinalData[0].NatureOfGoods.split(',').length;
+                        for (var i = 0; i < len; i++) {
+                            if (FinalData[0].NatureOfGoods.split(',')[i] != '') {
+                                data = data + FinalData[0].NatureOfGoods.split(',')[i] + "<br/>";
+                            }
+                        }
+                        var j = data.length;
+                        $("#spnNatureOfGoods").html(data.substring(0, j - 6));
+                        $("#spnNatureOfGoods1").html(data.substring(0, j - 6));
+                        ////$("#spnUnitType").html(FinalData[0].UnitType);
+                        ////if (FinalData[0].DimensionsDetail == '<small><small>')
+                        ////{
+                        ////    $("#spnDimensionsDetail").html('')
+                        ////    $("#spnVolumeWeight").text('');
+
+                        ////}
+                        ////else {
+                        ////    $("#spnDimensionsDetail").html(FinalData[0].DimensionsDetail);
+                        ////    $("#spnVolumeWeight").text(FinalData[0].TotalVolumeWeight);
+                        ////}
+
+                        if (FinalData[0].DimensionsDetail == '<small><small>') {
+                            $("#spnDimensionsDetail").html('')
+                            $("#spnDimensionsDetail1").html('')
+                            //$("#spnVolumeWeight").text('');
+                            $("#spnUnitType").html('');
+                            $("#spnUnitType1").html('');
+                        }
+                        else {
+                            if (FinalData[0].DimensionsDetail.length < 405) {
+                                $("#spnDimensionsDetail").html(FinalData[0].DimensionsDetail);
+                                $("#spnDimensionsDetail1").html(FinalData[0].DimensionsDetail);
+                            }
+                            else {
+                                $("#spnDimensionsDetail1").html(FinalData[0].DimensionsDetail);
+                            }
+                            //$("#spnVolumeWeight").text(FinalData[0].TotalVolumeWeight);
+                            $("#spnUnitType").html(FinalData[0].UnitType);
+                            $("#spnUnitType1").html(FinalData[0].UnitType);
+                        }
+
+                        $("#spnVolumeWeight").text(FinalData[0].TotalVolumeWeight);
+                        $("#spnVolumeWeight1").text(FinalData[0].TotalVolumeWeight);
+
+                        $("#spnChargeableWeight").text(FinalData[0].ChargeableWeight);
+                        $("#spnChargeableWeight1").text(FinalData[0].ChargeableWeight);
+                        //$("#spnAWBNo2").text(FinalData[0].AWBNo);
+                        $("#spnCurrency").text(FinalData[0].CurrencyCode);
+                        $("#spnCurrency1").text(FinalData[0].CurrencyCode);
+                        ////$("#spnSecTo1").text(FinalData[0].viaSector1);
+                        ////$("#spnFlight1").text(FinalData[0].viaFlightNo1);
+                        ////$("#spnSec2").text(FinalData[0].viaSector2);
+                        ////$("#spnFlight2").text(FinalData[0].viaFlightNo2);
+
+
+                        //var data = '';
+                        //var len = FinalData[0].HandlingInformation.split(',').length;
+                        //for (var i = 0; i < len; i++) {
+                        //    if (FinalData[0].HandlingInformation.split(',')[i] != '' && FinalData[0].HandlingInformation.split(',')[i] != 0.00) {
+                        //        data = data + FinalData[0].HandlingInformation.split(',')[i] + ',';
+                        //    }
+                        //}
+                        //var j = data.length;
+
+                        //$("#spnCVB").html(FinalData[0].AWBType);
+                        //$("#spnBAStatement").html(FinalData[0].BAHStatement);
+                        //$("#spnAWBHInfo").html(FinalData[0].AWBHInformation);
+                        //if (FinalData[0].NotifyAddress != '')
+                        //    $("#spnNotify").html(FinalData[0].NotifyAddress);
+                        //$("#spnPieces").after('<br/><span id="spnOSI" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;"></span>');
+                        $("#spnHandlingInformation").html(FinalData[0].HandlingInformation);
+                        if (j != '') {
+                           
+                            if (FinalData[0].MandatoryStatement.length > 65 && j > 194) {
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].MandatoryStatement + '</span>');
+                                if (FinalData[0].SHCStatement.length > 0 && FinalData[0].SHCStatement.length < 51 && j < 194 && FinalData[0].BAHStatement == '')
+                                    $("#spnHandlingInformation").append(((j > 0) ? ';' : '') + FinalData[0].SHCStatement);
+                                else
+                                    $("#spnStatement").append('<br/>' + FinalData[0].SHCStatement);
+                            }
+                            else if (FinalData[0].MandatoryStatement.length == 0 && FinalData[0].SHCStatement.length > 0 && FinalData[0].SHCStatement.length < 51 && j < 194 && FinalData[0].BAHStatement == '') {
+                                $("#spnHandlingInformation").append(((j > 0) ? ';' : '') + FinalData[0].SHCStatement);
+
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+                            }
+                            else if (FinalData[0].MandatoryStatement.length > 0 && FinalData[0].MandatoryStatement.length < 65 && j < 201 && FinalData[0].BAHStatement == '') {
+                                $("#spnHandlingInformation").append(((j > 0) ? ';' : '') + FinalData[0].MandatoryStatement);
+
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].SHCStatement + '</span>');
+                            }
+                            else if (FinalData[0].MandatoryStatement.length > 0 && FinalData[0].MandatoryStatement.length < 100 && j < 150 && FinalData[0].BAHStatement == '') {
+                                $("#spnHandlingInformation").append(((j > 0) ? ';' : '') + FinalData[0].MandatoryStatement);
+
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].SHCStatement + '</span>');
+                            }
+                            else if (FinalData[0].MandatoryStatement.length > 0 && FinalData[0].MandatoryStatement.length < 100 && j < 100 && FinalData[0].BAHStatement == '') {
+                                $("#spnHandlingInformation").append(((j > 0) ? ';' : '') + FinalData[0].MandatoryStatement);
+
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].SHCStatement + '</span>');
+                            }
+                            else if (FinalData[0].MandatoryStatement.length > 0 && FinalData[0].MandatoryStatement.length < 150 && j < 50 && FinalData[0].BAHStatement == '') {
+                                $("#spnHandlingInformation").append(((j > 0) ? ';' : '') + FinalData[0].MandatoryStatement);
+
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].SHCStatement + '</span>');
+                            }
+                            else {
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].MandatoryStatement + '</span>');
+
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                                $("#spnStatement").append('<br/>' + FinalData[0].SHCStatement);
+                            }
+                        }
+                        else if (FinalData[0].SSR != '') {
+                            $("#spnHandlingInformation").html(FinalData[0].SSR);
+                            if (FinalData[0].MandatoryStatement.length > 65 && FinalData[0].SSR.length > 194) {
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].MandatoryStatement + '</span>');
+                                if (FinalData[0].SHCStatement.length > 0 && FinalData[0].SHCStatement.length < 51 && FinalData[0].SSR.length < 194 && FinalData[0].BAHStatement == '')
+                                    $("#spnHandlingInformation").append(((FinalData[0].SSR.length > 0) ? ';' : '') + FinalData[0].SHCStatement);
+                                else
+                                    $("#spnStatement").append('<br/>' + FinalData[0].SHCStatement);
+                            }
+                            else if (FinalData[0].MandatoryStatement.length == 0 && FinalData[0].SHCStatement.length > 0 && FinalData[0].SHCStatement.length < 51 && FinalData[0].SSR.length < 194 && FinalData[0].BAHStatement == '') {
+                                $("#spnHandlingInformation").append(((FinalData[0].SSR.length > 0) ? ';' : '') + FinalData[0].SHCStatement);
+
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+                            }
+                            else if (FinalData[0].MandatoryStatement.length > 0 && FinalData[0].MandatoryStatement.length < 65 && FinalData[0].SSR.length < 201 && FinalData[0].BAHStatement == '') {
+                                $("#spnHandlingInformation").append(((FinalData[0].SSR.length > 0) ? ';' : '') + FinalData[0].MandatoryStatement);
+
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].SHCStatement + '</span>');
+                            }
+                            else if (FinalData[0].MandatoryStatement.length > 0 && FinalData[0].MandatoryStatement.length < 100 && FinalData[0].SSR.length < 150 && FinalData[0].BAHStatement == '') {
+                                $("#spnHandlingInformation").append(((FinalData[0].SSR.length > 0) ? ';' : '') + FinalData[0].MandatoryStatement);
+
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].SHCStatement + '</span>');
+                            }
+                            else if (FinalData[0].MandatoryStatement.length > 0 && FinalData[0].MandatoryStatement.length < 100 && FinalData[0].SSR.length < 100 && FinalData[0].BAHStatement == '') {
+                                $("#spnHandlingInformation").append(((FinalData[0].SSR.length > 0) ? ';' : '') + FinalData[0].MandatoryStatement);
+
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].SHCStatement + '</span>');
+                            }
+                            else if (FinalData[0].MandatoryStatement.length > 0 && FinalData[0].MandatoryStatement.length < 150 && FinalData[0].SSR.length < 50 && FinalData[0].BAHStatement == '') {
+                                $("#spnHandlingInformation").append(((FinalData[0].SSR.length > 0) ? ';' : '') + FinalData[0].MandatoryStatement);
+
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].SHCStatement + '</span>');
+                            }
+                            else {
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].MandatoryStatement + '</span>');
+
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                                $("#spnStatement").append('<br/>' + FinalData[0].SHCStatement);
+                            }
+                        }
+                        else if (FinalData[0].MandatoryStatement != '') {
+
+                            if (FinalData[0].MandatoryStatement.length > 200 && FinalData[0].SHCStatement.length < 200) {
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].MandatoryStatement + '</span>');
+                                $("#spnHandlingInformation").append(FinalData[0].SHCStatement);
+                            }
+                            else if (FinalData[0].MandatoryStatement.length > 200 && FinalData[0].SHCStatement.length > 200) {
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].MandatoryStatement + '</span>');
+                                $("#spnStatement").append('<br/>' + FinalData[0].SHCStatement);
+                            }
+                            else if (FinalData[0].MandatoryStatement.length < 201) {
+                                if (FinalData[0].MandatoryStatement.length < 130 && FinalData[0].SHCStatement.length < 101) {
+                                    $("#spnHandlingInformation").append(FinalData[0].MandatoryStatement);
+                                    $("#spnHandlingInformation").append('<br/>' + FinalData[0].SHCStatement);
+                                }
+                                else {
+                                    $("#spnHandlingInformation").append(FinalData[0].MandatoryStatement);
+                                    $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].SHCStatement + '</span>');
+                                }
+                            }
+                            else {
+                                $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                                $("#spnHandlingInformation").html(FinalData[0].MandatoryStatement);
+                                $("#spnOSI").after('<br/><span id="spnStatement" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].SHCStatement + '</span>');
+                            }
+                        }
+                        else if (FinalData[0].SHCStatement.length < 201) {
+                            $("#spnHandlingInformation").html(FinalData[0].SHCStatement);
+
+                            $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+                        }
+                        else {
+                            $("#spnPieces").append((FinalData[0].HANO == "" ? "" : '<br/>') + FinalData[0].HANO);
+
+                            $("#spnPieces").after('<br/>' + FinalData[0].SHCStatement);
+
+
+                        }
+                        if ($("#spnHandlingInformation").text().length < 180) {
+                            $("#spnHandlingInformation").append('<br/>' + FinalData[0].Temperature.substring(0, FinalData[0].Temperature.length - 1));
+                        }
+                        else
+                            $("#spnHandlingInformationtemp").html(FinalData[0].Temperature.substring(0, FinalData[0].Temperature.length - 1));
+
+                    }
+
+                    if (FinalData[0].SSR != '' && j != '') {
+                        $("#spnSSR").html(FinalData[0].SSR);
+                    }
+
+                    if ($("#spnOSI").length === 0)
+                        $("#spnPieces").after('<br/><span id="spnOSI" style="font-size: 8px; width:435px; word-wrap: break-word; max-width: 435px;">' + FinalData[0].ELMMandatoryStatement + '</span>');
+                    else
+                        $("#spnPieces").append('<br/>' + FinalData[0].ELMMandatoryStatement);
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            var barCodeText = $("#spnAWBNo").text(), barCodeRelativeFilePath = '../fonts/IDAutomationHC39M.ttf', fontSize = 12, width = 100, height = 50;
+            var QueryString = "text=" + barCodeText + "&imageWidth=" + width + "&imageHeight=" + height + "&fontSize=" + fontSize + "&barCodeFileRelativePath=" + barCodeRelativeFilePath + "";
+
+            //$("#spnBarCode").html("<img id='uGenerateBarCode2_imgBarCode' src='Handler/BarcodeGenerator.ashx?text=" + barCodeText + "&imageWidth=" + width + "&imageHeight=" + height + "&fontSize=" + fontSize + "&barCodeFileRelativePath=" + barCodeRelativeFilePath + "' align='middle' style='border-width:0px;vertical-align: middle; text-align: center;width:auto;'>");
+            //$("#spnBarCode").barcode(barCodeText, "code39", { barWidth: 1, barHeight: 15, fontSize: 15, moduleSize: 250 });
+            $("#spnawbbarcode").barcode(barCodeText, "code39", { barWidth: 1, barHeight: 15, fontSize: 15, moduleSize: 250 });
+
+            //$.ajax({
+            //    url: "Handler/BarcodeGenerator.ashx?text=" + barCodeText + "&imageWidth=" + width + "&imageHeight=" + height + "&fontSize=" + fontSize + "&barCodeFileRelativePath=" + barCodeRelativeFilePath + "",
+            //    //data: QueryString,
+            //    async: false,
+            //    type: 'post',
+            //    cache: false,
+            //    success: function (result) {
+            //        $("#spnBarCode").html("<img id='uGenerateBarCode2_imgBarCode' src='fonts/IDAutomationHC39M.ttf' align='middle' style='border-width:0px;vertical-align: middle; text-align: center;width:auto;'>");
+            //    },
+            //    error: function () {
+            //        alert("Error");
+            //    }
+            //});
+        });
+
+    </script>
+</head>
+
+<body style="font-size: 10px; font-family: SPPKDF+ArialMT,Arial, Helvetica, sans-serif;">
+    <form id="aspnetForm" runat="server">
+        <div id="divAWBWithImage" style="display: block">
+            <div id="divBackground" style="position: absolute; left: -45px; top: 10px;">
+                <img src="../Images/air-waybill1.jpg" height="1000" width="850" border="0" alt="img"
+                     usemap="#Map" />
+            </div>
+            <div style="position: absolute; position: absolute; top: 25px; left: 45px">
+                <font size="2.5">
+                    <b>
+                        <span id="spnAWBCode"></span>&nbsp;&nbsp;<span id="spnOriginCity4"></span>&nbsp;&nbsp;&nbsp;<span id="spnAWBNumber"></span>
+                    </b>
+                </font>
+            </div>
+            <div style="position: absolute; top: 0px; left: 300px">
+                <!--<span id="spnawbbarcode" style="font-size: 10px; width:360px; word-wrap: break-word; max-width: 360px;"><center></center></span>-->
+            </div>
+            <div style="position: absolute; left: 620px; text-align: right; top: 30px; width: 130px;
+            height: 20px">
+                <font size="2">
+                    <!--<b>-->
+
+                    <span id="spnAWBNo">&nbsp;</span>
+                    <!--</b>-->
+                </font>
+            </div>
+            <div style="position: absolute; top: 60px; left: 45px; width: 340px; height: 50px">
+                <!--<b>-->
+                <span id="spnShipperName" style="font-size:10px;">&nbsp;</span></br>
+                <span id="spnShipperDetails">&nbsp;</span>
+                <!--</b>-->
+            </div>
+            <div style="position: absolute; top: 80px; left: 400px; width: 275px">
+                <span id="spnAirlineName" style="font-size:10px;">&nbsp;</span></br>
+                <span id="spnAirlineAddress" style="font-size:10px;">&nbsp;</span>
+            </div>
+            <div style="position: absolute; top: 60px; left: 610px; width: 150px">
+
+                <img width="150" style="WIDTH:150px !important;height:40PX;" id="imgAirline" />
+
+            </div>
+            <div>
+            </div>
+            <div style="position: absolute; top: 150px; left: 45px; width: 340px; height: 45px">
+                <!--<b>-->
+                <span id="spnConsigneeName" style="font-size:10px;">&nbsp;</span></br>
+                <span id="spnConsigneeDetails">&nbsp;</span>
+                <!--</b>-->
+            </div>
+            <div style="position: absolute; top: 245px; left: 45px; width: 340px; height: 40px">
+                <!--<b>-->
+                <span id="spnAgentName"></span><br /><span id="spnAgentOriginCity"></span>
+                <!--</b>-->
+            </div>
+            <div style="position: absolute; top: 300px; left: 45px; width: 170px; height: 15px">
+                <!--<b>-->
+                <span id="spnIATANo"></span>
+                <!--</b>-->
+            </div>
+            <div style="position: absolute; top: 300px; left: 225px; width: 170px; height: 15px">
+                <!--<b>-->
+                <span id="spnAgentAccountNumber"></span>
+                <!--</b>-->
+            </div>
+            <div style="position: absolute; top: 245px; left: 400px; width: 150px; height: 15px">
+                <!--<b>-->
+                <span style="font-size: 11px">
+                    FREIGHT
+                    <span id="spnFlightTypeText"></span></br>
+                    <span id="spnSpotCode"></span>
+
+                </span>
+                <!--</b>-->
+            </div>
+            <div style="position: absolute; top: 245px; left: 600px; width: 100px; height: 15px">
+
+            </div>
+            <div style="position: absolute; top: 250px; left: 450px; width: 250px; height: 40px">
+                <!--<bc:BarCode ID="barCode" runat="server"></bc:BarCode>-->
+                <!--<span id="spnawbbarcode" style="font-size: 10px; width:360px; word-wrap: break-word; max-width: 360px;"><center></center></span>-->
+            </div>
+            <div style="position: absolute; top: 335px; left: 45px; width: 340px; height: 12px">
+                <!--<b>-->
+                <span id="spnOriginCity">&nbsp;</span>
+                <!--</b>-->
+            </div>
+            <div style="position: absolute; top: 335px; left: 405px; width: 125px; height: 12px">
+                <span id="spnRateReferenceNo"></span>
+            </div>
+            <div style="position: absolute; top: 335px; left: 530px; width: 130px; height: 12px;text-align:center">
+
+            </div>
+            <div style="position: absolute; top: 335px; left: 665px; width: 110px; height: 12px">
+
+            </div>
+            <div style="position: absolute; top: 365px; left: 45px; width: 25px; height: 10px">
+                <!--<b>-->
+                <span id="spnDestinationCity"></span>
+                <!--</b>-->
+            </div>
+            <div style="position: absolute; top: 365px; left: 85px; width: 160px; height: 10px">
+                <!--<b>-->
+                <span id="spnFlightCode"></span>
+                <!--</b>-->
+            </div>
+            <div style="position: absolute; top: 365px; left: 260px; width: 30px; height: 10px">
+                <span id="spnviaSector1"></span>
+            </div>
+            <div style="position: absolute; top: 365px; left: 300px; width: 25px; height: 10px">
+                <span id="spnviaFlightNo1"></span>
+            </div>
+            <div style="position: absolute; top: 365px; left: 332px; width: 25px; height: 10px">
+                <span id="spnviaSector2"></span>
+            </div>
+            <div style="position: absolute; top: 365px; left: 367px; width: 25px; height: 10px">
+                <span id="spnviaFlightNo2"></span>
+            </div>
+            <div style="position: absolute; top: 365px; left: 400px; width: 32px; height: 15px">
+
+                <span id="spnCurrency" class="boldtext"></span>
+
+            </div>
+            <div style="position: absolute; top: 365px; left: 440px; width: 10px; height: 15px">
+
+                <span id="spnFlightType"></span>
+
+            </div>
+            <div style="position: absolute; top: 365px; left: 460px; width: 10px; height: 15px">
+
+                <span id="spnFlightType2"></span>
+
+            </div>
+            <div style="position: absolute; top: 365px; left: 480px; width: 10px; height: 15px">
+
+                <span id="spnFlightType3"></span>
+
+            </div>
+            <div style="position: absolute; top: 365px; left: 500px; width: 10px; height: 15px">
+
+                <span id="spnFlightType4"></span>
+
+            </div>
+            <div style="position: absolute; top: 365px; left: 520px; width: 10px; height: 15px">
+
+                <span id="spnFlightType5"></span>
+
+            </div>
+            <div style="position: absolute; top: 365px; left: 540px; width: 110px; height: 10px">
+
+                <span id="spnDeclaredCarriageValue"></span>
+
+            </div>
+            <div style="position: absolute; top: 365px; left: 660px; width: 110px; height: 10px">
+
+                <span id="spnDeclaredCustomsValue"></span>
+
+            </div>
+            <div style="position: absolute; top: 394px; left: 38px; width: 193px; height: 15px;font-size:8px">
+
+                <span id="spnDestinationCityName"></span>
+
+            </div>
+            <div style="position: absolute; top: 395px; left: 230px; width: 80px; height: 15px">
+
+                <span id="spnFlightNo1" style="font-size:7px;"></span><span id="spnFlightDate1" style="font-size:7px;"></span>
+
+            </div>
+            <div style="position: absolute; top: 395px; left: 310px; width: 80px; height: 15px">
+
+                <span id="spnFlightNo2" style="font-size:7px;"></span><span id="spnFlightDate2" style="font-size:7px;"></span>
+
+            </div>
+            <div style="position: absolute; top: 395px; left: 405px; width: 90px; height: 15px; text-align: center;">
+
+                <span id="spnAmtInsurance" style="font-size:7px;"></span>
+
+            </div>
+            <div style="position: absolute; top: 425px; left: 45px; width: 600px; height: 45px">
+                <span id="spnHandlingInformation" style="font-size: 9px; width:360px; word-wrap: break-word; max-width: 360px;"></span>
+
+
+            </div>
+            <div style="position: absolute; top: 510px; left: 45px; width: 20px; height: 50px">
+
+                <span id="spnPieces"></span>
+
+
+            </div>
+            <div style="position: absolute; top: 510px; left: 80px; width: 60px; height: 50px">
+
+                <span id="spnGrossWeight"></span>
+
+
+            </div>
+            <div style="position: absolute; top: 510px; left: 150px; width: 10px; height: 50px">
+                <span id="spnRateClassUnit"></span>
+            </div>
+            <div>
+            </div>
+            <div style="position: absolute; top: 510px; left: 167px; width: 60px; height: 50px">
+
+                <span id="spnRateClass"></span>
+
+            </div>
+            <div style="position: absolute; top: 510px; left: 260px; width: 60px; height: 50px">
+
+                <span id="spnChargeableWeight"></span>
+
+
+            </div>
+            <div style="position: absolute; top: 510px; left: 340px; width: 70px; height: 50px">
+
+
+                <span id="spnTariffRate"></span>
+
+            </div>
+            <div style="position: absolute; top: 510px; left: 430px; width: 110px; height: 50px">
+
+                <span id="spnTariffAmount"></span>
+
+            </div>
+            <div style="position: absolute; top: 510px; left: 560px; width: 210px; height: 50px">
+
+
+
+                <span id="spnCommodity"></span><br />
+                <span id="spnNatureOfGoods"></span><br />
+                <span id="spnUnitType"></span>  <span id="spnDimensionsDetail"></span>
+
+                <br />
+                VOL
+                <span id="spnVolumeWeight"></span>
+
+
+
+
+            </div>
+            <div style="position: absolute; left: 45px; top: 690px; width: 600px">
+
+                <span id="spnsumPieces"></span> &nbsp; &nbsp; &nbsp; &nbsp; <span id="spnsumGrossWeight"></span>
+
+            </div>
+            <div style="position: absolute; top: 728px; left: 45px; width: 125px; height: 15px">
+
+                <span id="spnPWeightCharges"></span>
+
+            </div>
+            <div style="position: absolute; top: 728px; left: 180px; width: 125px; height: 15px">
+
+                <span id="spnCWeightCharges"></span>
+
+            </div>
+            <div style="position: absolute; top: 755px; left: 45px; width: 125px; height: 15px">
+
+                <span id="spnPValuationCharges"></span>
+
+            </div>
+            <div style="position: absolute; top: 755px; left: 180px; width: 125px; height: 15px">
+
+                <span id="spnCValuationCharges"></span>
+
+            </div>
+            <div style="position: absolute; top: 785px; left: 45px; width: 125px; height: 15px">
+
+                <span id="spnPTaxCharges"></span>
+
+            </div>
+            <div style="position: absolute; top: 785px; left: 180px; width: 125px; height: 15px">
+
+                <span id="spnCTaxCharges"></span>
+
+            </div>
+            <div style="position: absolute; top: 728px; left: 330px; width: 425px; height: 70px">
+
+                <span id="spnDueCarrierChargesDetail">&nbsp;</span>
+
+            </div>
+            <div style="position: absolute; top: 815px; left: 45px; width: 125px; height: 15px">
+
+                <span id="spnPDueAgentCharges"></span>
+
+            </div>
+            <div style="position: absolute; top: 815px; left: 180px; width: 125px; height: 15px">
+
+                <span id="spnCDueAgentCharges"></span>
+
+            </div>
+            <div style="position: absolute; top: 845px; left: 45px; width: 125px; height: 15px">
+
+                <span id="spnPDueCarrierCharges"></span>
+
+            </div>
+            <div style="position: absolute; top: 845px; left: 180px; width: 125px; height: 15px">
+
+                <span id="spnCDueCarrierCharges"></span>
+
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div style="position: absolute; top: 857px; left: 330px; width: 425px; height: 15px">
+
+                <span id="spnAgentName3"></span>&nbsp;&nbsp;<span id="spnAgentCode3"></span><br />
+                <span id="spnOriginCity3"></span>
+
+            </div>
+            <div style="position: absolute; top: 910px; left: 45px; width: 125px; height: 15px">
+
+                <span id="spnPTotalCharges"></span><span id="spnAWBCurrencyCode"></span>
+
+            </div>
+            <div style="position: absolute; top: 910px; left: 180px; width: 125px; height: 15px">
+
+                <span id="spnCTotalCharges"></span>
+
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div style="position: absolute; top: 920px; left: 325px; width: 125px; height: 15px">
+
+                <span id="spnAWBDate"></span>
+
+            </div>
+            <div style="position: absolute; top: 920px; left:508px; width: 125px; height: 15px">
+
+                <span id="spnOriginCity2"></span>
+
+            </div>
+            <div style="position: absolute; top: 920px; left: 585px; width: 186px; height: 15px">
+
+                <span id="spnAgentName2"></span><span id="spnAgentCode2"></span>
+
+            </div>
+            <div>
+            </div>
+            <div style="position: absolute; top: 990px; left: 45px; width: 150px; height: 15px">
+            </div>
+            <p style="page-break-after: always">
+            </p>
+            <div id="divCondition" style="position: absolute; padding: 60px 15px 25px 25px; top: 1010px;
+        width: 750px; height: 600px;">
+                <table width="100%">
+                    <tr style="font-size: 10px">
+                        <td colspan="2" align="center">
+                            <b>PEMBERITAHUAN TENTANG  BATAS TANGGUNG JAWAB PENGANGKUT</b>
+                        </td>
+                    </tr>
+                    <tr style="font-size: 10px">
+                        <td colspan="2">
+                            <br />
+                            JIKA PENGANGKUTAN UDARA DIMULAI DAN BERAKHIR DI INDONESIA, MAKA TUNDUK KEPADA UNDANG-UNDANG REPUBLIK INDONESIA NOMOR 1  TAHUN 2009 JO.
+                            PERATURAN MENTERI PERHUBUNGAN RI NOMOR: PM 77 TAHUN 2011 JO. PM 92 TAHUN 2011  YANG  MENGATUR  DAN  MEMBATASI TANGGUNG JAWAB PENGANGKUT ATAS
+                            GANTI RUGI KARENA KEHILANGAN, KERUSAKAN DAN KETERLAMBATAN YANG DISEBABKAN  KESALAHAN PENGANGKUT DENGAN BESARAN NILAI GANTI KERUGIAN
+                            TERTENTU, KECUALI JIKA ADA PERNYATAAN KHUSUS TENTANG HARGA BARANG PADA WAKTU PENYERAHAN DARI PENGIRIM KEPADA PENGANGKUT DAN DENGAN
+                            PEMBAYARAN TARIF YANG LEBIH  TINGGI SESUAI YANG DISYARATKAN OLEH PENGANGKUT. DALAM HAL INI PENGANGKUTÂN  WAJIB UNTUK MEMBAYAR SAMPAI JUMLAH
+                            HARGA YANG DINYATAKAN ITU, KECUALI BILA PENGANGKUT DAPAT MEMBUKTIKAN.
+                            <br />
+                            <br />
+                        </td>
+                    </tr>
+                    <tr style="font-size: 10px">
+                        <td colspan="2" align="center">
+                            <b>SYARAT DAN KETENTUAN PENGANGKUTAN KARGO UDARA</b>
+                            <br />
+                        </td>
+                    </tr>
+                    <tr style="font-size: 8px">
+                        <td valign="top" style="text-align:justify;width:334px;">
+                            <b>1.</b> Angkutan udara adalah setiap kegiatan dengan menggunakan pesawat udara
+                            untuk mengangkut penumpang, kargo, dan/atau pos untuk satu perjalanan atau lebih
+                            dari satu bandar udara ke bandar udara yang lain atau beberapa bandar udara..
+                            <br />
+                            <b>2.</b> Pengangkut dalam syarat dan ketentuan ini adalah PT Garuda Indonesia
+                            (Persero) Tbk.<br />
+                            <b>3.</b> Pengangkut dalam syarat dan ketentuan ini tunduk dan berdasarkan kepada
+                            Undang-undang Negara Republik Indonesia tentang Penerbangan beserta
+                            Peraturan Menteri Perhubungan Tentang Tanggung Jawab Pengangkut Angkutan
+                            Udara.<br />
+                            <b>4.</b> Tarif, peraturan-peraturan, syarat-syarat pengangkutan, rute dan jadwal penerbangan yang berlaku dari
+                            Pengangkut merupakan satu kesatuan dan bagian yang tidak terpisahkan dari syarat dan ketentuan ini.<br />
+
+                            <b>5.</b> Kecuali jika ada pernyataan khusus tentang harga barang kargo (“kargo”) pada waktu penyerahan dari pengirim kepada Pengangkut dan dengan pembayaran tarif yang lebih tinggi, sesuai yang diisyaratkan oleh pengangkut Terhadap kargo yang dikirim. Pengangkut bertanggung jawab terhadap kargo yang hilang atau musnah, rusak sebagian atau seluruh isi kargo atau kargo,dan kargo yang datang terlambat<br />
+
+
+                            <b>6.</b> Bila harga kargo dalam kolom “Nilai yang diberitahu untuk Pengangkut” pada Airwaybill ( “AWB” ) melebihi batas tanggung jawab Pengangkut,dan jika pengirim telah membayar biaya-biaya tambahan yang disyaratkan oleh tarif Pengangkut, maka Pengangkut akan bertanggung jawab untuk membayar ganti rugi sampai jumlah harga kargo yang dinyatakan itu, kecuali bila Pengangkut dapat membuktikan bahwa harga kargo tersebut melebihi harga sebenarnya.<br /><br />
+                            <b>6.1</b> Pengangkut tidak bertanggung jawab atas kehilangan kesempatan memperoleh keuntungan akibat  dari  kehilangan, kerusakan dan atau keterlambatan penyerahan kargo.<br />
+                            <br />
+                            <b>6.2</b> Pengangkut dibebaskan dari tanggung jawab atas ganti kerugian sebagai akibat keterlambatan dan pembatalan penerbangan yang disebabkan oleh beberapa faktor di bawah ini:<br />
+                            <br />
+                            <b>6.2.1</b> Cuaca antara lain: hujan lebat, petir, badai, asap, jarak pandang dibawah standar minimal atau kecepatan angin yang melampaui standar maksimal yang mengganggu keselamatan penerbangan.<br />
+                            <br />
+                            <b>6.2.2</b> Teknis Operasional antara lain: bandar udara untuk keberangkatan dan tujuan tidak dapat digunakan operasional pesawat udara; lingkungan menuju bandar udara atau landasan terganggu fungsinya misalnya  retak, banjir atau kebakaran; terjadinya antrian pesawat udara lepas landas (take off), mendarat (landing), atau alokasi waktu keberangkatan (departure slot time) di bandar udara; keterlambatan pengisian bahan bakar (refueling).<br /><br />
+                            <b>7</b>	Dalam hal kehilangan, kerusakan atau keterlambatan atas sebagian kargo yang diangkut dimana bagian tersebut merupakan satu kesatuan yang tidak dapat dipisahkan dengan bagian lainnya, maka tanggung jawab Pengangkut adalah harga dari seluruh kargo tersebut kecuali bagian kargo tersebut bukan merupakan satu kesatuan yang tidak dapat dipisahkan, tanggung jawab Pengangkut hanya terbatas pada harga bagian barang yang hilang atau rusak.<br />
+                            <b>8</b> Tanggung jawab Pengangkut yang tertera dalam syarat dan ketentuan ini juga berlaku untuk agen-agen, orang-orang yang dipekerjakan oleh Pengangkut dan perwakilannya dimana pesawat udara digunakan oleh Pengangkut untuk mengangkut kargo.<br /><br />
+                            <b>8.1</b>	Pengangkut bertanggung jawab untuk menyelesaikan kewajiban pengangkutan. Pengangkut dapat menggunakan pesawat lain atau rute alternatif dan atau alat transportasi lain tanpa pemberitahuan, yang bertujuan semata-mata untuk memenuhi tanggung jawab Pengangkut.<br />
+                            <b>8.2</b>	Batas tanggung jawab berlaku juga untuk agen-agen dan orang- orang yang dipekerjakan dan perwakilan Pengangkut dimana mereka bertindak atas nama Pengangkut.<br />
+                        </td>
+                        <td valign="top" style="text-align: justify; width: 334px;">
+                            <b>9.</b>&nbsp;Pengangkutan bertanggung jawab atas barang-barang selama berada dalam penguasaannya.<br />
+                            <br />
+                            <b>10.</b> Pemberitahuan kedatangan kargo, akan segera dikirim kepada penerima atau kepada orang yang harus diberitahu seperti tertera pada AWB. Pada saat kedatangan kargo, penyampaian pesan-pesan dari pengirim kargo, akan dilakukan kepada atau sesuai dengan intruksi pengirim. Jika penerima menolak barang kiriman tersebut atau tidak dapat dihubungi maka tindakan akan diambil berdasarkan kepada intruksi dari pengirim dan biaya-biaya yang ditimbulkannya menjadi tanggung jawab pengirim.<br />
+                            <br />
+                            <b>11.</b>	Pihak yang berhak atas kargo dapat mengajukan keluhan atau tuntutan kepada Pengangkut dalam hal :<br />
+                            <br />
+                            <b>11.1</b>	Kerusakan sebagian/seluruh kargo atau isi kargo dan/atau musnah kargo yang nyata/terlihat, harus diajukan segera pada saat kargo diambil oleh penerima kargo.<br />
+                            <br />
+                            <b>11.2</b>	Kargo yang dinyatakan telah hilang harus diajukan setelah 14 (empat belas) hari kalender terhitung sejak seharusnya kargo tiba di tempat tujuan.<br />
+                            <br />
+                            <b>11.3</b>	Keterlambatan atau tidak diterimanya kargo, harus diajukan pada saat kargo seharusnya diambil oleh penerima kargo;<br />
+                            <br />
+                            <b>12.</b> 	Tuntutan sebagaimana dimaksud dalam angka 10 syarat dan ketentuan ini, harus diajukan secara tertulis oleh pihak yang berhak atas kargo kepada Pengangkut.<br />
+                            <br />
+                            <b>13.</b> 	Pengirim wajib mengikuti semua peraturan-peraturan yang berlaku dan peraturan Pemerintah Negara Republik Indonesia, mengenai barang yang boleh diangkut sebagai kargo termasuk hal-hal yang berhubungan dengan kemasan, pengangkutan atau pengiriman barang-barang serta wajib memberikan informasi dan melampirkan dokumen pendukung yang dibutuhkan pada AWB sesuai dengan ketentuan.<br />
+                            <br />
+                            <b>14.</b> 	Pengangkut tidak bertanggung jawab atas kerugian atau biaya-biaya yang timbul akibat kelalaian pengirim yang tidak mengikuti peraturan-peraturan sebagaimana dimaksud pada angka 12 syarat dan ketentuan ini.<br />
+                            <br />
+                            <b>15.</b> 	Tidak ada agen atau pihak-pihak yang dipekerjakan atau perwakilan dari Pengangkut yang mempunyai hak untuk mengubah atau menghapuskan setiap ketentuan dalam  syarat dan ketentuan ini.<br />
+                            <br />
+                            <b>16.</b> 	Jika Pengangkut menawarkan asuransi dan asuransi tersebut disetujui oleh pengirim serta premi yang ditentukan telah dibayar secara nyata dan telah dicatat dalam AWB ini, maka kargo kiriman tersebut dilindungi oleh AWB yang diasuransikan dalam polis terbuka untuk sejumlah yang diminta seperti tertera dalam AWB ini. Perlindungan ini dibatasi atas harga yang seharusnya dari barang-barang yang hilang atau rusak namun jumlahnya tidak melebihi harga yang diasuransikan sesuai dengan syarat-syarat serta perlindungan dan pengecualian yang tercantum dalam polis terbuka. Jika akan dilakukan inspeksi dikantor pengangkut untuk kepentingan pihak yang menuntut/klaim dalam polis, wajib diberitahukan secepatnya ke kantor Pengangkut.<br />
+                            <br />
+
+                        </td>
+                    </tr>
+                    <tr style="font-size: 8px">
+                        <td colspan="2" align="left" style="text-align: justify;">
+                            <br />
+                            <br />
+                            <br /><br />
+                            <br /><br />
+                            <br /><br />
+
+                            <br /><br />
+                            Catatan : Jika digunakan Dokumen Pengangkutan lain yang dikeluarkan oleh Agen Pengangkutan Barang dalam kapasitasnya sebagai yang melakukan perjanjian kontrak pengangkutan udara harus disetujui bahwa pengangkutan ke bandar udara keberangkatan sebagaimana yang tertera dalam dokumen pengangkut tersebut bukan merupakan bagian dari perjanjian pengangkutan udara, sejauh penerbit dokumen pengangkutan mengambil alih pengaturan atau pelaksanaan dari pada pelayanan. Hal tersebut dilakukan dibawah perjanjian terpisah.
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="divAWBPrint" style="display: none">
+            <div id="topmawb">
+                <font size="4">
+
+                    <span id="spnAWBCode1"></span>&nbsp;&nbsp;<span id="spnOriginCity41"></span>&nbsp;&nbsp;&nbsp;<span id="spnAWBNumber1"></span>
+
+                </font>
+            </div>
+            <div id="tophawb">
+            </div>
+            <div id="toplogo">
+                <font size="2">
+
+                    <span id="spnAWBNo1">&nbsp;</span>
+
+                </font>
+            </div>
+            <div id="shipper">
+
+                <span id="spnShipperName1" style="font-size:10px;">&nbsp;</span>
+                </br>
+
+                <span id="spnShipperDetails1">&nbsp;</span>
+
+            </div>
+            <div id="hawbno">
+                <!--<img src="../Images/GaurdaCMS Logo.jpg" alt="Gaurda" height="50px" width="190px"><br />-->
+                <!--<%=StrComp %>
+                <%=Straddress %>-->
+            </div>
+            <div id="issuedby">
+                <span id="spnAirlineName1" style="font-size:10px;">&nbsp;</span></br>
+                <span id="spnAirlineAddress1" style="font-size:10px;">&nbsp;</span>
+            </div>
+            <div id="consignee">
+
+                <span id="spnConsigneeName1" style="font-size:10px;">&nbsp;</span></br>
+                <span id="spnConsigneeDetails1">&nbsp;</span>
+
+            </div>
+            <div id="agent">
+
+                <span id="spnAgentName1"></span><br /><span id="spnAgentOriginCity1"></span>
+
+            </div>
+            <div id="ag_iata">
+
+                <span id="spnIATANo1"></span>
+
+            </div>
+            <div id="ag_acc">
+
+                <span id="spnAgentAccountNumber1"></span>
+
+            </div>
+            <div id="mawb_no">
+
+
+
+            </div>
+            <div id="mawb_dt">
+            </div>
+            <div id="acc_info">
+                <bc:BarCode ID="barCode1" runat="server"></bc:BarCode>
+            </div>
+            <div id="airport_departure">
+
+                <span id="spnOriginCity1">&nbsp;</span>
+
+            </div>
+            <div id="ref_no">
+
+                <!--strShipmentType-->
+
+            </div>
+            <div id="opt_ship_info1">
+
+                <!--ShipmentType-->
+
+            </div>
+            <div id="opt_ship_info2">
+
+                <span style="font-size: 11px">
+                    FREIGHT
+                    <span id="spnFlightTypeText1"></span></br>
+                    <span id="spnSpotCode1"></span>"
+                </span>
+
+            </div>
+            <div id="route1">
+
+                <span id="spnDestinationCity1"></span>
+
+            </div>
+            <div id="route2">
+
+                <span id="spnFlightCode1"></span>
+
+            </div>
+            <div id="route3">
+                <span id="spnviaSector11"></span>
+            </div>
+            <div id="route4">
+                <span id="spnviaFlightNo11"></span>
+            </div>
+            <div id="route5">
+                <span id="spnviaSector21"></span>
+            </div>
+            <div id="route6">
+                <span id="spnviaFlightNo21"></span>
+            </div>
+            <div id="currency">
+
+                <span id="spnCurrency1" class="boldtext"></span>
+
+            </div>
+            <div id="cghs_cd">
+
+                <span id="spnFlightType1"></span>
+
+            </div>
+            <div id="wt_ppd">
+
+                <span id="spnFlightType21"></span>
+
+            </div>
+            <div id="wt_coll">
+
+                <span id="spnFlightType31"></span>
+
+            </div>
+            <div id="oth_ppd">
+
+                <span id="spnFlightType41"></span>
+
+            </div>
+            <div id="oth_coll">
+
+                <span id="spnFlightType51"></span>
+
+            </div>
+            <div id="declare_carriage">
+
+                <span id="spnDeclaredCarriageValue1"></span>
+
+            </div>
+            <div id="declare_custom">
+
+                <span id="spnDeclaredCustomsValue1"></span>
+
+            </div>
+            <div id="airport_dest">
+
+                <span id="spnDestinationCityName1"></span>
+
+            </div>
+            <div id="req_flno">
+
+                
+                <span id="spnFlightNo11"></span><span id="spnFlightDate11"></span>
+
+            </div>
+            <div id="req_fldt">
+                <span id="spnFlightNo21"></span><span id="spnFlightDate21"></span>
+
+            </div>
+            <div id="amt_insurance">
+
+
+
+            </div>
+            <div id="handling_info">
+
+
+
+            </div>
+            <div id="no_piece">
+                <span id="spnPieces1">1</span>
+
+            </div>
+            <div id="gross_wt">
+
+                <span id="spnGrossWeight1">40</span>
+
+            </div>
+            <div id="kg">
+                <span id="spnRateClassUnit1"></span>
+            </div>
+            <div id="rate_class">
+                <span id="spnRateClass1"></span>
+            </div>
+            <div id="commodity_no">
+            </div>
+            <div id="charge_wt">
+
+                <span id="spnChargeableWeight1"></span>
+
+            </div>
+            <div id="rate_charge">
+
+                <span id="spnTariffRate1"></span>
+
+            </div>
+            <div id="total_charge">
+
+                <span id="spnTariffAmount1"></span>
+
+            </div>
+            <div id="quality_nature">
+
+
+
+                <span id="spnCommodity1"></span><br />
+                <span id="spnNatureOfGoods1"></span><br />
+                <span id="spnUnitType1"></span>  <span id="spnDimensionsDetail1"></span>
+
+                <br />
+                VOL
+                <span id="spnVolumeWeight1"></span>
+
+
+
+
+            </div>
+            <div style="position: absolute; left: 15px; top: 720px; width: 300px">
+
+                <span id="spnsumPieces1"></span> &nbsp; &nbsp; &nbsp; &nbsp; <span id="spnsumGrossWeight1"></span>
+
+            </div>
+            <div id="pre_wt_charges">
+
+                <span id="spnPWeightCharges1"></span>
+
+            </div>
+            <div id="col_wt_charges">
+
+                <span id="spnPWeightCharges1"></span>
+
+            </div>
+            <div id="pre_val_charges">
+
+                <span id="spnPValuationCharges1"></span>
+
+            </div>
+            <div id="col_val_charges">
+
+                <span id="spnCValuationCharges1"></span>
+
+            </div>
+            <div id="pre_tax_charges">
+
+                <span id="spnPTaxCharges1"></span>
+
+            </div>
+            <div id="col_tax_charges">
+
+                <span id="spnCTaxCharges1"></span>
+
+            </div>
+            <div id="oth_charge">
+
+                <span id="spnDueCarrierChargesDetail1">&nbsp;</span>
+
+            </div>
+            <div id="pre_agent_due_charges">
+
+                <span id="spnPDueAgentCharges1"></span>
+
+            </div>
+            <div id="col_agent_due_charges">
+
+                <span id="spnCDueAgentCharges1"></span>
+            </div>
+            <div id="pre_car_due_charges">
+
+                <span id="spnPDueCarrierCharges1"></span>
+
+            </div>
+            <div id="col_car_due_charges">
+
+                <span id="spnCDueCarrierCharges1"></span>
+
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div id="ag_sign">
+
+                <span id="spnAgentName31"></span>&nbsp;&nbsp;<span id="spnAgentCode31"></span><br />
+                <span id="spnOriginCity31"></span>
+
+            </div>
+            <div id="pre_tot_charges">
+
+                <span id="spnPTotalCharges1"></span><span id="spnAWBCurrencyCode"></span>
+
+            </div>
+            <div id="col_tot_charges">
+
+                <span id="spnCTotalCharges1"></span><span id="spnAWBCurrencyCode"></span>
+
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div id="exe_dt">
+
+                <span id="spnAWBDate1"></span>
+
+            </div>
+            <div id="place">
+
+                <span id="spnOriginCity21"></span>
+
+            </div>
+            <div id="car_ag_sign">
+
+                <span id="spnAgentName21"></span><span id="spnAgentCode21"></span>
+
+            </div>
+            <div>
+            </div>
+        </div>
+        <div id="divPrint" style="display: block;  position: fixed; top: 1em; LEFT: 1em;"><a href="javascript:void(0);" onclick="printWindow();">Print</a></div>
+    </form>
+</body>
+</html>
+

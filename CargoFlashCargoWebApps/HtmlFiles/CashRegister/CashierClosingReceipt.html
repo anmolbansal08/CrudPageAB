@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../../Scripts/jquery-1.7.2.js"> </script>
+    <script src="../../Scripts/json2.js"> </script>
+    <style type="test/css">
+        td {
+            font-size: 12px;
+            font-family: sans-serif;
+        }
+    </style>
+    <script type="text/javascript">
+
+        var CashierID = '';
+        var GroupSNo = '';
+        var CurrentSNo = '';
+        var OpeningAmount = '';
+        var ClosingAmount = '';
+        var AmountDeposit = '';
+        var TotalReceiveAmount = '';
+        var StartS = '';
+        var StartT = '';
+        var EndDate = '';
+        var EndTime = '';
+        var i = 0;
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        
+        $(document).ready(function () {
+           
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            SPHCSNo = '';
+            CashierID = getParameterByName("CashierID", "");
+            GroupSNo = getParameterByName("GroupSNo", "");
+            CurrentSNo = getParameterByName("CurrentSno", "");
+            StartDate = getParameterByName("StartDate", "");
+            //EndDate = getParameterByName("EndDate", "");
+            OpeningAmount = getParameterByName("OpeningAmount", "");
+            ClosingAmount = getParameterByName("ClosingAmount", "");
+            AmountDeposit = getParameterByName("AmountDeposit", "");
+            TotalReceiveAmount = getParameterByName("TotalReceiveAmount", "");
+            GetCashierTransactionDetail();
+        });
+
+        function GetCashierTransactionDetail() {
+            $.ajax({
+                url: "../../Services/Accounts/CashRegisterService.svc/GetCashierTransactionDetail",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ CashierID: CashierID, GroupSNo: GroupSNo, CurrentSNo: CurrentSNo, StartDate: StartDate, EndDate: EndDate }),
+                async: false,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    var dataTableobj = JSON.parse(result);
+                    var FinalData = dataTableobj.Table0;
+                    var FinalData1 = dataTableobj.Table1;
+                    var FinalData2 = dataTableobj.Table2;
+                    var FinalData3 = dataTableobj.Table3;
+                    var FinalData4 = dataTableobj.Table4;
+                    var FinalData5 = dataTableobj.Table5;
+                    var FinalData6 = dataTableobj.Table6;
+                    var FinalData7 = dataTableobj.Table7;
+                    var FinalData8 = dataTableobj.Table8;
+                    var FinalData9 = dataTableobj.Table9;
+                    var FinalData10 = dataTableobj.Table10;
+                    var FinalData11 = dataTableobj.Table11;
+                    var FinalData12 = dataTableobj.Table12;
+                    if (FinalData12.length > 0)
+                    {
+                        StartS = FinalData12[0].StartShift;
+                        StartT = FinalData12[0].StartTime;
+                        EndDate = FinalData12[0].EndShift;
+                        EndTime = FinalData12[0].EndTime;
+                     
+                    }
+                    if (FinalData3.length > 0) {
+                        var tbl = '';
+                        tbl = '<table><tr><td width=1000px; colspan=5><h1><small><center>CASH ACCOUNT CLOSING RECEIPT<center><small><h1></td></tr><tr><td style="float:left; width:150px"><b>Name<b></td><td>:</td><td style="width:300px;">'
+                            + FinalData3[0].Name + '</td></tr><tr><td style="float:left;"><b>User ID<b></td><td style="width:3px;">:</td><td style="width:100px;">' + FinalData3[0].UserName +
+                            '</td></tr><tr><tr><td style="float:left;width:200px;"><b>Opening Date & Time<b></td><td style="width:3px;">:</td><td style="width:100px;">' + StartS +' '+ StartT+
+                            '</td></tr><tr><td style="float:left;"><b>Closing Date & Time<b></td><td>:</td><td>' + EndDate+' '+EndTime+ '</td></tr><tr><td style="float:left;"><b>Currency<b></td><td>:</td><td>' + FinalData3[0].Currency +
+                            '</td><td style="width:750px;"></td></tr><tr><td>&nbsp</td></tr></table><table><tr><td width=200px><b>Opening Amount<b></td><td  width=200px><b>Total Invoice (Cash)<b></td><td width=200px><b>Total Received Amount<b></td><td width=200px><b>Total Deposited Amount<b></td><td width=200px><b>Total Cheque/Card Payment<b></td><td width=200px><b>Total Deposit (Bank)<b></td><td width=200px><b>Refunded Amount<b></td><td><b>Closing Amount<b></td></tr><tr><td>'
+                            +FinalData12[0].OpeningAmount + '</td><td>' + FinalData6[0].InvoiceTotal + '</td><td>' + FinalData4[0].ReceiveAmount + '</td><td>' + FinalData5[0].DepositedAmount + '</td><td>' + FinalData6[0].ChequeAmount + '</td><td>' + FinalData9[0].BankDeposit + '</td><td>' + FinalData12[0].DebitAmount + '</td><td>' + FinalData12[0].ClosingAmount + '</td></tr></table>';
+                        // FinalData3[0].BalanceBroughtForward
+                        //FinalData4[0].ReceiveAmount
+                        //FinalData7[0].Total 
+                        //  FinalData5[0].DepositedAmount
+                        //
+                        $("#Page").find('#divHeader').append(tbl);
+                       // 
+                    }
+                    if (FinalData.length > 0) {
+                       // if (FinalData[0].CashAmount != 0.00) {
+                            GetInvoiceAmountDetail(FinalData);
+                            var tbl = '';
+                            tbl = '<tr></tr><tr><td><b>Total<b></td><td></td><td></td><td>' + FinalData6[0].Cash + '</td><td>' + FinalData6[0].Credit + '</td><td>' + FinalData6[0].Cheque + '</td><td></td></tr><tr></tr>'
+                                $("#Page").find('#leftTbl').append(tbl);
+                          
+                        //}
+                    }
+                    if (FinalData1.length > 0) {
+                        GetReceiveAmountDetail(FinalData1);
+                    }
+                    if (FinalData2.length > 0) {
+                        GetDepositedAmountDetail(FinalData2);
+                    }
+                    if (FinalData8.length > 0) {
+                        GetBankDepositedAmountDetail(FinalData8);
+                        //var tbl = '';
+                        //tbl = '<tr></tr><tr><td><b>Total<b></td><td></td><td>' + FinalData9[0].BankDeposit + '</td><td></td><td></td><td></td><td></td></tr><tr></tr>'
+                        //$("#Page").find('#leftTbl').append(tbl);
+                    }
+                    if (FinalData10.length > 0) {
+                        GetPettyCashAmountDetail(FinalData10);
+                        //var tbl = '';
+                        //tbl = '<tr></tr><tr><td><b>Total<b></td><td></td><td>' + FinalData11[0].PettyCash + '</td><td></td><td></td><td></td></tr><tr></tr>'
+                        //$("#Page").find('#leftTbl').append(tbl);
+                    }
+                }
+            });
+        }
+
+        function GetInvoiceAmountDetail(FinalData) {
+            var tbl = '';
+            var today = new Date();
+            tbl = '<tr><td colspan=5 width=1000px;><h3>INVOICE DETAIL<h3></td></tr><tr><td width="200px"><b>Invoice No.</b></td><td><b>Date</b></td><td><b>Time<b></td><td><b>Cash Amount</b></td><td><b>Credit Note Amount</b></td><td><b>Cheque/Card Amount</b></td></tr>';
+            $("#Page").find('#leftTbl').append(tbl);
+            for (var i = 0; i < FinalData.length; i++) {
+                //if (FinalData[i].CardNumber != "") {
+                //    tbl = '<tr><td>' + FinalData[i].InvoiceNo + '</td><td>' + FinalData[i].CashRegisterDate + '</td><td>' + FinalData[i].Time + '</td><td>0.00</td><td>' + FinalData[i].CreditNoteAmount + '</td><td>' + FinalData[i].CashAmount + '</td></tr></br>'
+                //}
+                //else {
+                    tbl = '<tr><td>' + FinalData[i].InvoiceNo + '</td><td>' + FinalData[i].CashRegisterDate + '</td><td>' + FinalData[i].Time + '</td><td>' + FinalData[i].CashAmount + '</td><td>' + FinalData[i].CreditNoteAmount + '</td><td>' + FinalData[i].ChequeAmount + '</td></tr></br>'
+                //}
+                $("#Page").find('#leftTbl').append(tbl);
+            }
+        }
+
+        function GetDepositedAmountDetail(FinalData2) {
+            var tbl = '';
+            var today = new Date();
+            tbl = '<tr><td colspan=5 width=1000px;><h3>DEPOSITED TO<h3></td></tr><tr><td><b>To</b></td><td><b>Date</b></td><td><b>Time</b></td><td><b>Amount</b></td><td><b>Reference No </b></td></tr>';
+            $("#Page").find('#leftTbl').append(tbl);
+            tbl = '';
+            for (var i = 0; i < FinalData2.length; i++) {
+                tbl = '<tr><td>' + FinalData2[i].DepositedToName + '</td><td>' + FinalData2[i].DepositedDate + '</td><td>' + FinalData2[i].Time + '</td><td>' + FinalData2[i].DepositedAmount + '</td><td>' + FinalData2[i].ReferenceNo + '</td></tr></br>'
+                $("#Page").find('#leftTbl').append(tbl);
+            }
+        }
+
+        function GetReceiveAmountDetail(FinalData1) {
+            var tbl = '';
+            var today = new Date();
+            tbl = '<tr><td colspan=4><h3>RECEIVED FROM<h3></td></tr><tr><td width=200px><b>From</b></td><td width=200px><b>Date</b></td><td width=200px><b>Time</b></td><td width=200px><b>Amount</b></td></tr>';
+            $("#Page").find('#leftTbl').append(tbl);
+            tbl = '';
+            for (var i = 0; i < FinalData1.length; i++) {
+                tbl = '<tr><td>' + FinalData1[i].ReceiveFromName + '</td><td>' + FinalData1[i].DepositedDate + '</td><td>' + FinalData1[i].ApprovedTime + '</td><td>' + FinalData1[i].DepositedAmount + '</td></tr></br>'
+                $("#Page").find('#leftTbl').append(tbl);
+            }
+        }
+
+        function GetBankDepositedAmountDetail(FinalData8) {
+            var tbl = '';
+            var today = new Date();
+            tbl = '<tr><td colspan=4><h3>BANK<h3></td></tr><tr><td width=200px><b>Date</b></td><td width=200px><b>Time</b></td><td width=200px><b>Amount</b></td><td width=200px><b>Account No</b></td><td width=200px><b>Reference No</b></td><td width=200px><b>Remarks</b></td><td><b>Signature<b></td></tr>';
+            $("#Page").find('#leftTbl').append(tbl);
+            tbl = '';
+            for (var i = 0; i < FinalData8.length; i++) {
+                tbl = '<tr><td>' + FinalData8[i].DepositedDate + '</td><td>' + FinalData8[i].BankDepositedTime + '</td><td>' + FinalData8[i].DepositedAmount + '</td><td>' + FinalData8[i].AccountNo + '</td><td>' + FinalData8[i].ReferenceNo + '</td><td>' + FinalData8[i].DepositerRemarks + '</td></tr></br>'
+                $("#Page").find('#leftTbl').append(tbl);
+            }
+        }
+
+        function GetPettyCashAmountDetail(FinalData8) {
+            var tbl = '';
+            var today = new Date();
+            tbl = '<tr><td colspan=4><h3>PETTY CASH<h3></td></tr><tr><td width=200px><b>Date</b></td><td width=200px><b>Time</b></td><td width=200px><b>Amount</b></td><td width=200px><b>Reference No</b></td><td width=200px><b>Remarks</b></td><td><b>Signature<b></td></tr>';
+            $("#Page").find('#leftTbl').append(tbl);
+            tbl = '';
+            for (var i = 0; i < FinalData8.length; i++) {
+                tbl = '<tr><td>' + FinalData8[i].DepositedDate + '</td><td>' + FinalData8[i].PettyDepositedTime + '</td><td>' + FinalData8[i].DepositedAmount + '</td><td>' + FinalData8[i].ReferenceNo + '</td><td>' + FinalData8[i].DepositerRemarks + '</td></tr></br>'
+                $("#Page").find('#leftTbl').append(tbl);
+            }
+        }
+
+        function ClosedAccount() {
+            $.ajax({
+                url: "../../Services/Accounts/CashRegisterService.svc/ClosingAccount", async: false, type: "POST", dataType: "json", cache: false,
+
+                data: JSON.stringify({ CashierID: CashierID, GroupSNo: GroupSNo, CurrentSNo: CurrentSNo }),
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result == 0) {
+                        $("#Confirm").hide();
+                        window.print();
+                        ShowMessage('success', '', "Your Account Closed Now");
+                        window.setTimeout(function () {
+                            window.location = 'Default.cshtml?Module=Accounts&Apps=CashRegister&FormAction=""';
+                        }, 500);
+                    }
+                    else if (result == 1001) {
+                        ShowMessage('warning', '', "You Have Some Pending Request(Either Accept or Reject)");
+                    }
+                    else {
+                        return;
+                    }
+                }
+            });
+        }
+
+    </script>
+</head>
+<body style="width:1000px;">
+    <div id="AllPage">
+        <div id="container">
+            <div id="Page" style="border:double;">
+                <div id="divHeader">
+
+                </div>
+                <table id="outerTblLine">
+                    <tr>
+                        <td style="width: 1000px; vertical-align: top;">
+                            <table id="leftTbl"></table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="buttton"><center><br /><input type='button' id='Confirm' value='Print' class='btn btn-success' onclick='ClosedAccount()'></center></div>
+    </div>
+    <div id="footer"><span id="spnversion"></span></div>
+</body>
+</html>

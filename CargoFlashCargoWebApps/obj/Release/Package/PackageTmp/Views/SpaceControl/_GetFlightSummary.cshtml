@@ -1,0 +1,55 @@
+﻿@*// <copyright file="_GetFlightSummary.cshtml" company="Cargoflash">
+           //
+           // Created On: 13-Feb-2017
+           // Created By: Braj
+           // Description:
+           //----------------------------------------------------------------------------
+           // Revison History:
+           // Please add a new line below for any update to this file
+           // Updated On  Updated By                     Significant Changes
+           // ----------------------------------------------------------------------------
+           //
+           //
+    </copyright>*@
+
+@model System.Data.DataSet
+@{
+    string gridId = Guid.NewGuid().ToString();}
+<table class='WebFormTable'>
+
+    @*<tr>
+        <td class='formSection' colspan='4'>Flight Summary</td>
+    </tr>*@
+    <tr>
+        <td colspan='4'>
+            <div id="gridDiv_@gridId"></div>
+            <script>
+                $(document).ready(function () {
+                    $("#gridDiv_@gridId").kendoGrid({
+                        dataSource: {
+                            data: JSON.parse(@Html.Raw(Json.Encode(CargoFlashCargoWebApps.Common.Global.DStoJSON(Model)))),
+                            schema: {
+                                model: { fields: { FlightNo: { type: "string" }, GrossWeight: { type: "number" }, VolumeWeight: { type: "number" }, FlightDate: { type: "date" } } }
+                            },
+
+                        },
+                        height: 250,
+                        scrollable: true,
+                        columns: [
+                            { field: "AWBNo", title: "AWB No", width: "70px" },
+                            { field: "FlightDate", title: "Flight Date", format: "{0: yyyy-MM-dd}", width: 70 },
+                            { template: "<span>#= ETD # /#= ETA#</span>", title: "ETD/ETA", width: 100 },
+                            { template: "<span>#= Board # /#= Off#</span>", title: "Board/Off", width: 90 },
+                            { field: "GrossWeight", title: "Gross", width: "60px" },
+                            { field: "VolumeWeight", title: "Volume", width: "60px" },
+                            { field: "Revenue", title: "Revenue", width: "60px" },
+                            { field: "TotalFreight", title: "Freight", width: "60px" },
+                            { field: "Yield", title: "Yield", width: "60px" }
+                        ]
+                    });
+                });
+            </script>
+        </td>
+    </tr>
+
+</table>

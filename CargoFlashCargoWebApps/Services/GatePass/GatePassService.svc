@@ -1,0 +1,3 @@
+﻿
+<%@ ServiceHost Language="C#" Debug="true" Service="CargoFlash.Cargo.DataService.GatePass.GatePassService" CodeBehind="GatePassService.cs" %>
+<%@ Assembly Name="CargoFlash.Cargo.DataService" %>

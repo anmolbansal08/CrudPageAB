@@ -1,0 +1,125 @@
+﻿<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+    });
+</script>
+<style>
+    #divMainGrid 
+    {
+        color: #333;
+        font-size: 11px;
+        font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+</style>
+<div id="divMainDiv">
+    <table width="100%" validateonsubmit='true'>
+        <tr><td><div id="divMainGrid"></div></td></tr>
+    </table>
+</div>
+<table class="WebFormTable" id="tblAdd" validateonsubmit='true'>
+    <tr>
+        <td class="formSection" id="HeaderName" colspan="10"><span id="HeaderName">New ULD Charge</span></td>
+    </tr>
+    <tr>
+        <td class="formthreelabel">
+            <!--<font color="red">*</font>-->
+            <span>ULD Type</span>
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="Uldtype" id="Uldtype">
+            <input type="text" name="Text_Uldtype" id="Text_Uldtype" data-valid="required" data-valid-msg="Select Uldtype" controltype="autocomplete" style="width:150px;">
+        </td>
+        <td class="formthreelabel">
+            <span>Transfer From</span>
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="TransferFrom" id="TransferFrom">
+            <input type="text" name="Text_TransferFrom" data-valid="required" data-valid-msg="Select Transfer To" id="Text_TransferFrom">
+        </td>
+        <td class="formthreelabel">
+            <span>Transfer By</span>
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="TransferBy" id="TransferBy">
+            <input type="text" name="Text_TransferBy" data-valid="required" data-valid-msg="Select Transfer By" data-text-field="AirlineName" controltype="autocomplete" id="Text_TransferBy">
+        </td>
+        <td class="formthreelabel">
+            <span>Transfer To</span>
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="TransferTo" id="TransferTo">
+            <input type="text" name="Text_TransferTo" id="Text_TransferTo" data-valid="required" data-valid-msg="Select Transfer To" controltype="autocomplete" style="width:150px;">
+        </td>
+    </tr>
+    <tr><td><br /><br /></td></tr>
+    <tr>
+        <td class="formthreelabel">
+            <span>Agent Name</span>
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="AgentName" id="AgentName">
+            <input type="text" name="Text_AgentName" id="Text_AgentName" controltype="autocomplete">
+        </td>
+        <td class="formthreelabel">
+            Airline Name
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="AirlineID" id="AirlineID">
+            <input type="text" name="Text_AirlineID" id="Text_AirlineID" controltype="autocomplete">
+        </td>
+        <td class="formthreelabel">
+            Free Type
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="FreeType" id="FreeType">
+            <input type="text" name="Text_FreeType" id="Text_FreeType" data-valid="required" data-valid-msg="Select Free Type" controltype="autocomplete">
+        </td>
+        <td class="formthreelabel">Free Period</td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="FreePeriod" id="FreePeriod">
+            <input type="text" name="Text_FreePeriod" id="Text_FreePeriod" data-valid="required" onkeypress="OnlyNumeric(event)" data-valid-msg="Select Free Period" controltype="autocomplete">
+            <span id="spnfreeperiod"></span>
+        </td>
+    </tr>
+    <tr><td><br /><br /></td></tr>
+    <tr>
+        <td class="formthreelabel">
+            Non Return Days
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="NonReturnDays" id="NonReturnDays">
+            <input type="text" name="Text_NonReturnDays" onkeypress="OnlyNumeric(event)" data-valid="required" id="Text_NonReturnDays">
+        </td>
+        <td class="formthreelabel">
+            Currency
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="Currency" id="Currency">
+            <input type="text" name="Text_Currency" id="Text_Currency" data-valid="required" data-valid-msg="Select Currency" controltype="autocomplete">
+        </td>
+        <td class="formthreelabel">
+            Demurrage Charge
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="DemurrageCharge" id="DemurrageCharge">
+            <input type="text" name="Text_DemurrageCharge" onkeypress="OnlyNumeric(event)" id="Text_DemurrageCharge">
+        </td>
+        <td class="formthreelabel">
+            Non Return Value
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="NonReturnValue" id="NonReturnValue">
+            <input type="text" name="Text_NonReturnValue" onkeypress="OnlyNumeric(event)" id="Text_NonReturnValue">
+        </td>
+    </tr>
+    <tr style="height:100px">
+        <td colspan="10">
+            <input type="hidden" id="ExtraUldType" />
+        </td>
+    </tr>
+</table>

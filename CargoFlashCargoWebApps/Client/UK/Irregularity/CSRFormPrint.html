@@ -1,0 +1,373 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        .fsttd {
+            width: 100% !important;
+        }
+
+        .thrdtd {
+            width: 30% !important;
+        }
+
+        .WebFormMTable {
+            width: 100%;
+            height: 100%;
+            padding: 0px;
+            border: 0px solid #000;
+            margin-bottom: 0px;
+        }
+
+        .WebFormTable {
+            width: 100%;
+            padding: 0px;
+            border: 0px solid #000;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-weight: normal;
+        }
+
+        .WebFormTablefooter {
+            width: 90%;
+            padding: 0px;
+            border: 0px solid #000;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-weight: normal;
+        }
+
+        .auto-style1 {
+            height: 13.5pt;
+            width: 103pt;
+            color: windowtext;
+            font-size: 6.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: "Courier New", monospace;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 0px;
+        }
+
+        .auto-style2 {
+            height: 14pt;
+            width: 103pt;
+            color: black;
+            font-size: 10.0pt;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+            font-family: "Courier New", monospace;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 1px;
+        }
+
+        .auto-style3 {
+            width: 25%;
+            height: 14pt;
+        }
+
+        .auto-style4 {
+            height: 14pt;
+            width: 2%;
+            color: black;
+            font-size: 10.0pt;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+            font-family: "Courier New", monospace;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 1px;
+        }
+
+        .auto-style5 {
+            width: 100%;
+            height: 14pt;
+        }
+
+        .auto-style6 {
+            height: 13pt;
+            width: 103pt;
+            color: windowtext;
+            font-size: 10.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: "Courier New", monospace;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 0px;
+        }
+
+        .auto-style7 {
+            width: 100%;
+            height: 13pt;
+        }
+
+        .myclass {
+            font-weight: normal !important;
+            font-size: 19px !important;
+        }
+
+        .myclass1 {
+            font-weight: bold !important;
+            font-size: 15px !important;
+        }
+
+        .myclass2 {
+            font-weight: normal !important;
+            font-size: 15px !important;
+            font-style: italic;
+        }
+
+        .myclass3 {
+            font-weight: normal !important;
+            font-size: 15px !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="divConnNotePrinttab">
+        <table style="width: 100%;" border="1">
+            <tr>
+                <td style="width: 100%;">
+                    <table style="text-align: center; width: 100%;">
+                        <tr>
+                            <td>
+
+                               
+                                <!--<img id="ImgLogo" width='120' height='50'/>-->
+                                <!--<img src="../Images/VistaraLogo.jpg" width='120' height='50' />-->
+                                <img src="client/UK/Images/VistaraLogo.jpg" width='120' height='50' />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span style="font-size: 20px; font-weight:bold">CARRIER'S SURVEY REPORT FORM</span>  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 0px;">
+                                <span style="font-size: 12px; font-weight:bold">NO : <span style="font-size:12px;font-weight:bold" id="spnclaimnumber"></span></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table class="WebFormTable">
+                        <tr>
+                            <td class="fsttd WebFormTable searchHeader">
+                                <table class="WebFormTable">
+                                    <tr>
+                                        <td class="auto-style1" colspan="2"><span class="myclass1" style="margin-left:8px">Flight NO/Date:</span><span class="myclass1" style="font-size:12px; margin-left:8px;" id="spnflight"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="auto-style1" colspan="2">
+                                            <span class="myclass1" style="margin-left:8px">Routing:</span><span class="myclass1" id="spnRouting" style="font-size:12px; margin-left:8px"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="auto-style1" colspan="2"><span class="myclass1" style="margin-left:8px">Master Air Waybill No.:</span><span class="myclass1" id="spnMAWB" style="font-size:12px; margin-left:8px"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="auto-style1" colspan="2"> <span class="myclass1" style="margin-left:8px">House Waybill No.:</span><span class="myclass1" id="spnHWB" style="font-size:12px; margin-left:8px"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="auto-style1" colspan="2"> <span class="myclass1" style="margin-left:8px">Content Of Cargo as Per AWB:</span><span class="myclass1" id="spnContentCargoAWB" style="font-size:12px; margin-left:8px"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="auto-style1" colspan="2"> <span class="myclass1" style="margin-left:8px">Total Of Pieces:</span><span class="myclass1" id="spnTotalPieces" style="font-size:12px; margin-left:8px"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="auto-style1" colspan="2"> <span class="myclass1" style="margin-left:8px">Total Of Weight:</span><span class="myclass1" id="spnTotalWeight" style="font-size:12px; margin-left:8px"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="auto-style1" colspan="2"> <span class="myclass1" style="margin-left:8px">Total Of Pieces Delivered:</span><span class="myclass1" id="spnTotalPiecesDelivered" style="font-size:12px; margin-left:8px"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="auto-style1" colspan="2"> <span class="myclass1" style="margin-left:8px"> Total Of Weight Delivered:</span><span class="myclass1" id="spnTotalWeightDelivered" style="font-size:12px; margin-left:8px"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="auto-style1"></td>
+                                        <td style="width:100%;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="auto-style1" colspan="2">
+                                            <span class="myclass1">
+                                                Please Explain and Calculate in Detail Of The Cargo Found Damage and Good Condition.
+                                            </span>
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="auto-style1" colspan="2">
+                                            <span class="myclass1" style="font-weight:bold" id="spnIrregularity">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td valign="middle" width="100%">
+                    <table class="WebFormTable" style="border: width:100%;">
+                        <tr>
+                            <td width="100%">
+                                <table class="WebFormTablefooter" style="border: 1px solid #000;width:100%;">
+                                    <tr>
+                                        <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid; ">CARGO </td>
+                                        <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid; text-align: center;">Signature</td>
+                                        <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid; ">AGENT/SHIPPER/CONSIGNEE</td>
+                                        <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid; text-align: center;">Signature</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid;">
+                                            <table class="WebFormTable">
+                                                <tr>
+                                                    <td class="fsttd WebFormTable searchHeader">
+                                                        <table class="WebFormTable">
+                                                            <tr>
+                                                                <td class="auto-style4" style="padding-left: 0px; "> Date Of Issued </td>
+                                                                <td class="auto-style5">: &nbsp&nbsp <span id="spncargogarudadateofissued"></span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="auto-style2">Name</td>
+                                                                <td class="auto-style3">
+                                                                    : &nbsp&nbsp
+                                                                    <span id="spncargogarudaname"></span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="auto-style2">Job Title </td>
+                                                                <td style="width: 40%;">
+                                                                    : &nbsp&nbsp
+                                                                    <span style="font-size:12px;" id="spncargogarudajobtitle"></span>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid;">
+                                            <span id=""></span>
+                                            <table class="WebFormTable">
+                                                <tr>
+                                                    <td class="auto-style4" style="padding-left: 0px; "> </td>
+                                                    <td class="auto-style5"> &nbsp&nbsp <span id="spnBranchOffice"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="auto-style2"> </td>
+                                                    <td class="auto-style3">
+                                                        &nbsp&nbsp
+                                                        <span id="spnAWBNO"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="auto-style1"> <span style="font-size:12px;"></span> </td>
+                                                    <td style="width: 40%;">
+                                                        &nbsp&nbsp
+                                                        <span style="font-size:12px;" id="spnflightnodates"></span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid;">
+                                            <table class="WebFormTable">
+                                                <tr>
+                                                    <td class="auto-style4" style="padding-left: 0px; "> Date </td>
+                                                    <td class="auto-style5">: &nbsp&nbsp <span id="spnagentdate"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="auto-style2">Name </td>
+                                                    <td class="auto-style3">
+                                                        : &nbsp&nbsp
+                                                        <span id="spnagentname"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="auto-style2">Job Title </td>
+                                                    <td style="width: 40%;">
+                                                        : &nbsp&nbsp
+                                                        <span style="font-size:12px;" id="spnagentjobtitle"></span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid;">
+                                            <table class="WebFormTable">
+                                                <tr>
+                                                    <td class="auto-style4" style="padding-left: 0px; "></td>
+                                                    <td class="auto-style5"> &nbsp&nbsp <span id="spnBranchOffice"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="auto-style2"> </td>
+                                                    <td class="auto-style3">
+                                                        &nbsp&nbsp
+                                                        <span id="spnAWBNO"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="auto-style1"> <span style="font-size:12px;"></span> </td>
+                                                    <td style="width: 40%;">
+                                                        &nbsp&nbsp
+                                                        <span style="font-size:12px;" id="spnflightnodte"></span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td valign="middle">
+                    <table class="WebFormTable">
+                        <tr>
+                            <td class="fsttd WebFormTable searchHeader">
+                                <table class="WebFormTable">
+                                    <tr>
+                                        <td class="auto-style4" style="text-align: left;" colspan="2">
+                                            *To be filled Only when damage inspected together with Shipper/Consignee or Agent 
+                                        </td>
+                                    </tr>
+                                    
+                                </table>
+                            </td>
+                            <td class="thrdtd WebFormTable searchHeader"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

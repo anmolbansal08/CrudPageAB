@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    @*<title>@Page.Title - CMS</title>*@
+    <title>nGen Cargo System</title>
+    @*<link rel="shortcut icon" href="~/Images/GaurdaCMS%20Logo%20title.jpg" />*@
+
+    <link href="~/LoginCSS/Site.css" rel="stylesheet" type="text/css" />
+
+    @*added by pankaj khanna*@
+
+    <script src="~/Scripts/jquery-1.7.2.js"></script>
+    <link href="~/Styles/jquery-ui/jquery-ui-1.10.2.custom.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <header>
+       
+        @RenderSection("headerScripts", required: false)
+    </header>
+    @RenderSection("featured", required: false)
+    @RenderBody()
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

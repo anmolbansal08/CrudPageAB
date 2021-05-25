@@ -1,0 +1,4 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="CargoFlash.Cargo.DataService.Roster.RosterResourceAllocationService" CodeBehind="RosterResourceAllocationService.svc.cs" %>
+<%@ Assembly Name="CargoFlash.Cargo.DataService" %>
+
+

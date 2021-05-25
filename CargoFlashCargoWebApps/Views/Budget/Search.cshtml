@@ -1,0 +1,433 @@
+﻿
+@Html.AntiForgeryToken()
+
+<ul kendo-panel-bar>
+    <li class="k-state-active">
+        <span class="k-link k-state-selected">Search Budgets</span>
+        <div style="padding: 10px;">
+            <kendo-grid options="BudgetSearchGridOptions"></kendo-grid>
+        </div>
+    </li>
+    <li class="k-state-active" ng-show="action=='A' || action=='R'">
+        <span class="k-link k-state-selected">
+            {{Title}}
+
+        </span>
+        <div style="padding: 10px;">
+            <table ng-if="action=='A' || action=='R'" id="tblSearch" width="100%" style="margin-bottom:0.8em;">
+               
+                <tr id="updateStatustr" ng-if="action=='R' && IsUpdate">
+                    <td >
+                    </td>
+                    <td colspan="2">
+                        <label><font color="red">*</font>Remarks:</label>
+
+                        <textarea id="Rmks" ng-model="UpdateRemarks" style="width:97%;" rows="2" data-valid='required'
+                                  data-valid-msg='Remarks field is required' required maxlength="150"></textarea>
+                        <span class="txtRem">{{150-UpdateRemarks.length}}</span>
+                    </td>
+                    <td>
+                        <label><font color="red">*</font>Status:</label>
+
+                        <input style="width:200px;" kendo-combo-box k-placeholder="'Select Status'" name="sts" data-valid='required' data-valid-msg='Select Status'
+                               k-min-length="2" k-auto-bind="true"
+                               k-filter="'contains'"
+                               ng-model="SearchRequest.Status"
+                               k-filterfield="'LOOKUPNAME'"
+                               k-options='K_Options("BudgetMasterStatus", "SpaceControl_LookUp")' />
+                    </td>
+
+                    <td>
+                        <input type="button" class="btn btn-success" ng-click="UpdateStatus();" style="width:80px;" value="Update">
+                        <input type="button" class="btn btn-info" ng-click="close();" value="Close">
+                    </td>
+                </tr>
+                <tr ng-if="action=='A'" id="fetchtargetdata">
+
+
+
+                    <td>
+                        <label><font color="red">*</font> Target Type:</label>
+
+                        <input style="width:100px;" kendo-combo-box k-placeholder="'Select Target'" name="targettype" data-valid='required' data-valid-msg='Select Target Type'
+                               ng-change="onChangeTarget()"
+                               k-min-length="2" k-auto-bind="true"
+                               k-filter="'contains'"
+                               ng-model="SearchRequest.TargetType"
+                               k-filterfield="'LOOKUPNAME'"
+                               k-options='K_Options("targettype", "SpaceControl_LookUp")' />
+                    </td>
+                    <td>
+                        <label><font color="red">*</font> From Month:</label>
+                        <input kendo-date-picker data-valid='required' data-valid-msg='Select From Month' id="frmMonth" placeholder="Select From Month"
+                               k-options="monthSelectorOptions"
+                               k-format="'MMM-yyyy'"
+                               ng-model="SearchRequest.From" />
+
+                    </td>
+
+                    <td>
+
+                        <label><font color="red">*</font> Origin:</label>
+
+                        <input style="width:100px;" kendo-combo-box="replancomboOrigin" name="origin" k-placeholder="'Select Origin'" data-valid='required' data-valid-msg='Select Origin Airport'
+                               k-min-length="2"
+                               k-filter="'contains'" k-auto-bind="false"
+                               ng-model="SearchRequest.Origin"
+                               k-filterfield="'OriginAirportCode'"
+                               k-options='K_Options("S_O", "SpaceControl_Origin")' />
+
+                    </td>
+
+                    <td>
+                        <label>Destination:</label>
+                        <input style="width:100px;" kendo-combo-box="replancomboDest" k-placeholder="'Select Destination'"
+                               k-min-length="2"
+                               k-filter="'contains'" k-auto-bind="false"
+                               ng-model="SearchRequest.Destination"
+                               k-filterfield="'DestinationAirportCode'"
+                               k-options='K_Options("S_D", "SpaceControl_Dest")' />
+
+                    </td>
+
+                    <td>
+
+                        <input type="button" class="btn btn-success" ng-click="FetchData();" style="width:80px;" value="Fetch Data">
+                        <input type="button" class="btn btn-info" ng-click="close();" value="Close">
+
+                    </td>
+                </tr>
+
+                <tr ng-if="isRecordFetch">
+                    <td colspan="8">
+
+
+                        <kendo-grid options="TargetGridOptions"></kendo-grid>
+
+                    </td>
+                </tr>
+
+                <tr ng-if="isRecordFetch && action=='A'">
+                    <td colspan="3">
+                    </td>
+                    
+                    <td>
+                        <label><font color="red">*</font>Currency:</label>
+
+                        <input style="width:100px;" kendo-combo-box k-placeholder="'Select Currency'" name="cry" data-valid='required' data-valid-msg='Select Currency'
+                               k-min-length="2" k-auto-bind="true"
+                               k-filter="'contains'"
+                               ng-model="SearchRequest.Currency"
+                               k-filterfield="'CurrencyCode'"
+                               k-options='K_Options("currency", "Office_Currency")' />
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-success" ng-click="submitBudget();" style="width:80px;" value="Submit">
+                    </td>
+                </tr>
+
+            </table>
+
+
+
+
+            
+
+        </div>
+    </li>
+
+</ul>
+
+<script type="text/x-kendo-template" id="template">
+    
+    <kendo-grid k-options="ProductGridOption(dataItem);"></kendo-grid>
+
+</script>
+
+<script type="text/x-kendo-template" id="toolbartemplate">
+    <div class="refreshBtnContainer">
+        <a href="\\#" class="k-pager-refresh k-link k-button k-button-icon" ng-click="AddNewBudget();" title="Create New Budget"><span class="k-icon k-add"></span></a>
+    </div>
+    <div class="toolbar">
+        @*<label class="category-label" for="category">Show products by category:</label>
+        <input type="search" id="category" style="width: 150px" />*@
+    </div>
+</script>
+
+<style>
+
+     .refreshBtnContainer {
+                    display: inline-block;
+                }
+                .toolbar {
+                    float: right;
+                }
+    .k-callout-n {
+        display: none;
+    }
+
+    .k-window {
+        max-width: 98% !important;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .k-grid .k-hierarchy-col {
+        width: 30px;
+    }
+
+
+    .options {
+        padding: 0px;
+    }
+
+        .options > li {
+            float: left;
+            list-style: none;
+            padding-right: 1em;
+        }
+
+    label {
+        font-weight: 500;
+    }
+
+    .routetab > li {
+        float: left;
+        list-style: none;
+        padding-right: 1em;
+    }
+
+
+    .k-grid tbody .k-button {
+        min-width: 12px;
+        width: 18px;
+        color: transparent;
+        background-color: transparent;
+        border: transparent;
+        height: 22px;
+    }
+
+    .k-grid-header th.k-header {
+        vertical-align: inherit !important;
+    }
+
+    .chkCls {
+        text-align: center;
+    }
+
+
+
+    .k-radio, input.k-checkbox {
+        display: inline;
+        opacity: 0;
+        width: 0;
+        margin: 0;
+        -webkit-appearance: none;
+        overflow: hidden;
+    }
+
+    .k-radio-label {
+        padding-right: 5px;
+        font-size: 11px;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        background-color: #3f51b5;
+        border-radius: 50%;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        top: 4px;
+        left: 4px;
+    }
+
+    .k-checkbox-label, .k-radio-label {
+        display: inline-block;
+        position: relative;
+        padding-left: 19px;
+        vertical-align: text-top;
+        line-height: 16px;
+        cursor: pointer;
+        border-style: solid;
+        border-width: 0;
+    }
+
+    .k-radio:checked + .k-radio-label:before, .k-radio:checked + .k-radio-label:hover:before {
+        border-color: #3f51b5;
+    }
+
+    .k-radio-label:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 12px;
+        height: 12px;
+        border-style: solid;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+    }
+
+    .k-radio-label:before {
+        border-color: #7f7f7f;
+        border-radius: 50%;
+        background-color: #fff;
+        border-width: 2px;
+    }
+
+    .k-invalid-msg {
+        position: fixed;
+    }
+
+    td[role=gridcell] {
+        white-space: nowrap;
+    }
+
+    .btninfo {
+        width: 10.5em;
+        padding: 2px;
+    }
+
+
+    .k-checkbox:disabled + .k-checkbox-label:before {
+        background: #696969;
+        border-color: #696969;
+        border-radius: 1px;
+    }
+
+    .k-radio:disabled + .k-radio-label:before {
+        background: #ffffff;
+        border-color: #696969;
+    }
+
+    .img-route {
+        height: 25px;
+    }
+
+    .Add-route {
+        height: 25px;
+        filter: contrast(0.6);
+    }
+
+    .btnRemove {
+        height: 18px;
+        margin-top: -18px;
+        margin-left: 1.8em;
+        position: absolute;
+    }
+
+    .Add-route:hover {
+        filter: contrast(5);
+        color: blue;
+        cursor: pointer;
+    }
+
+    .lblRoute {
+        margin: -10px 20px;
+    }
+
+    .fltimg {
+        vertical-align: middle;
+        height: 18px;
+    }
+
+    div[kendo-window="winRoute"] table td {
+        border-bottom: 1px solid #7fc4e6;
+    }
+
+    div[id=ReRouteTab] .k-grid-content {
+        max-height: 421px;
+    }
+
+    div[id=ReRouteTab] .k-detail-cell .k-grid-content {
+        max-height: 200px;
+    }
+
+    div[options=FlightSearchO_DGridOptions] .k-grid-content {
+        max-height: 71vh;
+    }
+
+    div[kendo-window="historyWin"] .k-grid-content {
+        max-height: 70vh;
+    }
+
+    .redl {
+        color: red;
+    }
+
+        .redl:before {
+            content: "\f0c8";
+            color: red;
+            margin-right: 8px;
+        }
+
+    .greenl {
+        color: green;
+        margin-right: 20px;
+    }
+
+        .greenl:before {
+            content: "\f0c8";
+            color: green;
+            margin-right: 8px;
+        }
+
+    .lgd {
+        border: solid 1px #9a9898;
+        padding: 0px 10px;
+        font-size: 14px;
+        margin-left: 8px;
+    }
+
+    .k-window-content .bVErrMsgContainer {
+        display: none;
+    }
+
+    .k-window-content {
+        font-size: 0.85em;
+    }
+
+    .k-grid-content-locked {
+        height: auto !important;
+    }
+
+    .hcap {
+        color: #9d331d;
+        font-weight: 700;
+    }
+
+    .m0 {
+        margin: 0;
+    }
+
+    .k-grid-content {
+        min-height: 40px;
+    }
+
+    .fb {
+        font-weight: 500;
+    }
+
+    .flt {
+        margin-left: 30em;
+        font-size: 13px;
+        font-weight: normal;
+    }
+</style>
+
+
+
+@Scripts.Render("~/bundles/budget")

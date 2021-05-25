@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Timeline view</title>
+    <meta charset="utf-8">
+    <link href="CSS/examples-offline.css" rel="stylesheet">
+    <link href="CSS/kendo.common.min.css" rel="stylesheet">
+    <link href="CSS/kendo.default.min.css" rel="stylesheet">
+    <link href="../../../Styles/CfiMessage.css" rel="stylesheet" />
+    <script src="JS/jquery.min.js"></script>
+    <script src="JS/kendo.all.min.js"></script>
+    <script src="JS/NewSch.js"></script>
+    <script src="../../CfiMessage.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+        });
+    </script>
+    <style>
+        .k-invalid-msg {
+            position: fixed;
+        }
+
+        .v-center {
+            height: 100vh;
+            width: 100%;
+            display: table;
+            position: relative;
+            text-align: center;
+        }
+
+            .v-center > div {
+                display: table-cell;
+                vertical-align: middle;
+                position: relative;
+                top: -10%;
+            }
+
+        .btn {
+            font-size: 2.15vmin;
+            padding: 0.65em 1.5em;
+            background-color: #f1f1f1;
+            border: 1px solid #bbb;
+            color: #000;
+            text-decoration: none;
+            display: inline;
+            border-radius: 3px;
+            -webkit-transition: background-color 1s ease;
+            -moz-transition: background-color 1s ease;
+            transition: background-color 1s ease;
+        }
+
+            .btn:hover {
+                background-color: #f56e21;
+                color: #fff;
+                -webkit-transition: background-color 1s ease;
+                -moz-transition: background-color 1s ease;
+                transition: background-color 1s ease;
+            }
+
+        .btn-small {
+            padding: .75em 1em;
+            font-size: 0.8em;
+        }
+
+        .modal-box {
+            display: none;
+            position: absolute;
+            z-index: 1000;
+            width: 98%;
+            background: white;
+            border-bottom: 1px solid #aaa;
+            border-radius: 4px;
+            box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background-clip: padding-box;
+        }
+
+        @media (min-width: 32em) {
+            .modal-box {
+                width: 70%;
+            }
+        }
+
+        .modal-box header, .modal-box .modal-header {
+            padding: 1.25em 1.5em;
+            border-bottom: 1px solid #ddd;
+        }
+
+            .modal-box header h3, .modal-box header h4, .modal-box .modal-header h3, .modal-box .modal-header h4 {
+                margin: 0;
+            }
+
+        .modal-box .modal-body {
+            padding: 2em 1.5em;
+        }
+
+        .modal-box footer, .modal-box .modal-footer {
+            padding: 1em;
+            border-top: 1px solid #ddd;
+            background: rgba(0, 0, 0, 0.02);
+            text-align: right;
+        }
+
+        .modal-overlay {
+            opacity: 0;
+            filter: alpha(opacity=0);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 900;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3) !important;
+        }
+
+        a.close {
+            line-height: 1;
+            font-size: 1.5em;
+            position: absolute;
+            top: 5%;
+            right: 2%;
+            text-decoration: none;
+            color: #bbb;
+        }
+
+            a.close:hover {
+                color: #222;
+                -webkit-transition: color 1s ease;
+                -moz-transition: color 1s ease;
+                transition: color 1s ease;
+            }
+    </style>
+</head>
+<body>
+    <div style="text-align: left; padding: 5px; margin-top: -5px; background: #e3e3e3; color: #2e2e2e; "><br /><h2>Resource Allocation</h2></div>
+    <div id="example" class="k-content" style="margin:0px;">
+        <div id="divMainContent">
+            <a class="k-button k-button-icontext" style="margin-left:10px;" href="#" data-modal-id="popup1">View Duty Area List</a>
+            <div id="popup1" class="modal-box">
+                <header>
+                    <a href="#" class="js-modal-close close">X</a>
+                    <h3>Duty Area Name</h3>
+                </header>
+                <div class="modal-body">
+                    <p>
+                        <div id="divDutyAreaName" style="height: 200px; overflow-y: scroll;"></div>
+                    </p>
+                </div>
+                <footer> <a href="#" class="btn btn-small js-modal-close">Close</a> </footer>
+            </div>
+            <input type="hidden" name="StaffStatus" id="StaffStatus" value="">
+            <input id="Text_StaffStatus" name="Text_StaffStatus" controltype="autocomplete" type="text" class="k-input" style="width: 180px; text-transform: uppercase;" placeholder="Staff Status" data-role="autocomplete" autocomplete="off">
+            <input type="hidden" name="Designation" id="Designation" value="">
+            <input id="Text_Designation" name="Text_Designation" controltype="autocomplete" type="text" class="k-input" style="width: 180px; text-transform: uppercase;" placeholder="Designation" data-role="autocomplete" autocomplete="off">
+            <input type="hidden" name="DutyArea" id="DutyArea" value="">
+            <input id="Text_DutyArea" name="Text_DutyArea" controltype="autocomplete" type="text" class="k-input" style="width: 180px; text-transform: uppercase;" placeholder="Duty Area" data-role="autocomplete" autocomplete="off">
+            <input type="hidden" name="Employee" id="Employee">
+            <input id="Text_Employee" name="Text_Employee" controltype="autocomplete" type="text" class="k-input" style="width: 180px; text-transform: uppercase;" placeholder="Employee" data-role="autocomplete" autocomplete="off">
+            <input type="text" id="StartTime" controltype="autocomplete" class="k-input" style="width: 120px; text-transform: uppercase;" placeholder="Start Time" data-role="autocomplete" autocomplete="off" />
+            <input type="text" id="EndTime" controltype="autocomplete" class="k-input" style="width: 120px; text-transform: uppercase;" placeholder="End Time" data-role="autocomplete" autocomplete="off" />
+            &nbsp;&nbsp;&nbsp;
+            <a id="aClearFilter" href="#" class="k-icon k-i-funnel-clear" title="Clear Filters"></a>
+            &nbsp;&nbsp;&nbsp;
+            <span id="spnCount" style="font-weight:bold;" />
+        </div>
+        <div id="scheduler"></div>
+        <script type="text/x-kendo-template" id="schedulerTemplate" style="width: 660px">
+            <table border="0" width="100%" class="k-edit-form-container" style="padding-left:20px" cellpadding="7" cellspacing="7">
+                <tr style="height:35px">
+                    <td style="text-align:right;">In Time</td>
+                    <td colspan="2">
+                        <input type="radio" name="rd" id="reportingTime" data-bind="checked: reportingShiftTime,disabled: isdisabled" value="false">Reporting For Duty Time
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="rd" id="shiftTime" data-bind="checked: reportingShiftTime,disabled: isdisabled" value="true">Shift Time
+                    </td>
+                </tr>
+                <tr><td style="text-align:right;">Attendance Punch Time</td><td>In:&nbsp;<b> #: (punchInTime ==null) ? "" : kendo.toString(punchInTime, "dd-MM-yyyy hh:mm tt") # </b>&nbsp;&nbsp;Out:&nbsp;<b> #:(punchOutTime == null) ? "" : kendo.toString(punchOutTime, "dd-MM-yyyy hh:mm tt") # </b></td></tr>
+
+                <tr style="height:35px">
+                    <td align="right">Duty Area</td>
+                    <td colspan="2">
+                        <input id="ddlDutyArea" required validationmessage="Duty Area is required" data-text-field="AreaName" style="width:300px" data-value-field="SNo" data-bind="value:DutyArea" data-source="DutyArea" data-role="dropdownlist" data-autobind="false" />
+                    </td>
+                </tr>
+                <tr style="height:35px">
+                    <td align="right">Start</td>
+                    <td colspan="2">
+                        <input name="start" id="start" type="text" data-datecompare-msg="End date time should be greater than start date time" required data-type="date" data-role="datetimepicker" data-bind="value: start,invisible: isAllDay" />
+                        <input name="start" type="text" data-datecompare-msg="End date time should be greater than start date time" required data-type="date" data-role="datepicker" data-bind="value: start,visible: isAllDay" />
+                        &nbsp;&nbsp;End:&nbsp;
+                        <input name="end" id="end" type="text" data-datecompare-msg="End date time should be greater than start date time" required data-type="date" data-role="datetimepicker" data-bind="value: end ,invisible:isAllDay" />
+                        <input name="end" type="text" data-datecompare-msg="End date time should be greater than start date time" required data-type="date" data-role="datepicker" data-bind="value: end ,visible:isAllDay" />
+                    </td>
+                </tr>
+            </table>
+
+
+        </script>
+    </div>
+</body>
+</html>

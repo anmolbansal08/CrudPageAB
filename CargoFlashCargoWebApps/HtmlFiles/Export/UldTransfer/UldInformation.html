@@ -1,0 +1,248 @@
+﻿<script type="text/javascript">
+    
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+
+    });
+</script>
+
+<table class="WebFormTable" id="tblAdd" validateonsubmit='true'>
+    <tr>
+        <td class="formSection" id="HeaderName"><span id="HeaderName">New ULD Information</span>  </td>
+        <td class="formSection" >
+            <input type="radio" id="InBound" name="Process" value="1" onchange="ProcessChenges(this)" class="Process" /> Receive From <input class="Process" name="Process" type="radio" id="OutBound" value="0" onchange="ProcessChenges(this)" checked="checked" /> Transfer To
+        </td>
+        <td class="formSection" colspan="6">
+            <div id="OtherAirlineULD">
+                <input type="checkbox" id="AirlineWiseUld" value="0" />ULD Received From Other Airline
+            </div>
+        </td>
+    </tr>
+    <tr id="trInBound" style="display:none">
+        <td colspan="4" class="formthreeInputcolumn">
+            <div>
+                <table class="WebFormTable" validateonsubmit='true'>
+                    <tr>
+                        <td class="formthreelabel"> <font color="red">*</font>ULD Type:</td>
+                        <td class="formthreeInputcolumn">
+                            <input type="hidden" name="UldType" id="UldType">
+                            <input type="text" name="Text_UldType" id="Text_UldType"  data-valid-msg="" controltype="autocomplete" style="width:80px;">
+                        </td>
+                        <td class="formthreelabel"> <font color="red">*</font> ULD Number:</td>
+                        <td class="formthreeInputcolumn"><input type="text" style="width:80px" id="txt_UldNumber" maxlength="5" onkeypress='validate(event)' onchange="ChangeUldNumberCheck(this)" /> </td>
+                        <td class="formthreelabel"> <font color="red">*</font>Owner Code:</td>
+                        <td class="formthreeInputcolumn"> <input type="text" style="width: 50px; text-transform: uppercase" id="txt_OwnerCode" onkeypress='validateOwnerCode(event)' onchange="ChangeOwnerCodeCheck(this)" maxlength="2" /> </td>
+                        <td class="formthreeInputcolumn"> <input type="button" id="btnsub" onclick="btnSubmit(this)" value="Add" /> </td>
+                        <td class="formthreeInputcolumn"><a onclick="UldAddMore(this,1)" href="#">Add Damaged</a> </td>
+                    </tr>
+                </table>
+            </div>
+            <div><ul id="addlist1" style="padding:3px 2px 2px 0px;margin-top:0px;"></ul></div>
+        </td>
+        <td class="formthreelabel">
+            &nbsp;&nbsp;&nbsp;Location
+        </td>
+        <td class="formthreeInputcolumn">
+            <span rel="span" name="PText_Location" id="PText_Location"></span>
+
+        </td>
+        <td class="formthreelabel">
+            &nbsp;&nbsp;&nbsp;Status
+        </td>
+        <td class="formthreeInputcolumn">
+            <span rel="span" name="PText_Status" id="PText_Status"></span>
+
+        </td>
+    </tr>
+    <tr id="trOutBound">
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            ULD Number
+        </td>
+        <td colspan="2" class="formthreeInputcolumn">
+            <input type="hidden" name="ULDNumber" id="ULDNumber">
+            <input type="hidden" name="UserSNo" id="UserSNo">
+            <input type="hidden" name="ULDCode" id="ULDCode">
+            <input type="hidden" name="AirportSNo" id="AirportSNo">
+            <input type="text" name="Text_ULDNumber" id="Text_ULDNumber" data-valid="required" data-valid-msg="Select ULD Number" controltype="autocomplete" style="width:150px;">
+        </td>
+        <td class="formthreelabel"><a onclick="UldAddMore(this,0)" href="#">Add Damaged</a> </td>
+        <td class="formthreelabel">
+            &nbsp;&nbsp;&nbsp;Location
+        </td>
+        <td class="formthreeInputcolumn">
+            <span rel="span" name="Text_Location" id="Text_Location"></span>
+
+        </td>
+        <td class="formthreelabel">
+            &nbsp;&nbsp;&nbsp;Status
+        </td>
+        <td class="formthreeInputcolumn">
+            <span rel="span" name="Text_Status" id="Text_Status"></span>
+
+        </td>
+    </tr>
+    <tr>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            <span id="capissueto">Issue to</span>
+            
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="IssuedTo" id="IssuedTo">
+            <input type="text" name="Text_IssuedTo" id="Text_IssuedTo" data-valid="required" data-valid-msg="Select IssuedTo" controltype="autocomplete" style="width:150px;">
+        </td>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            <span id="capreceivedby">Received By</span>
+           
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="ReceivedByCode" id="ReceivedByCode">
+            <input type="hidden" name="ReceivedBy" id="ReceivedBy">
+            <input type="text" name="Text_ReceivedBy" id="Text_ReceivedBy" data-valid="required" data-valid-msg="Select Received By" controltype="autocomplete" style="width:150px;">
+        </td>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            <span id="capissuedate">Issue Date</span>
+            
+        </td>
+        <td class="formthreeInputcolumn">
+
+            <input type="text" name="Text_IssuedDate" data-valid="required" data-valid-msg="Select Issued Date" controltype="datetype" id="Text_IssuedDate">
+        </td>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+           
+            <span id="capissuetime">Issue Time</span>
+        </td>
+        <td class="formthreeInputcolumn">
+
+            <input type="text" name="Text_IssuedTime" placeholder="24 Hr Format" size="5" maxlength="5" data-valid="required" style="width:100px;" data-valid-msg="Enter Issued Time" id="Text_IssuedTime" onblur="CheckTimeFormat();" onkeyup="PutHyphenINTime();">
+        </td>
+
+    </tr>
+    <tr>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            User
+        </td>
+        <td class="formthreeInputcolumn">
+            <!--<input type="hidden" name="IssuedBy" id="IssuedBy">
+            <input type="text" name="Text_IssuedBy" id="Text_IssuedBy" data-valid="required" data-valid-msg="Enter IssuedBy" controltype="autocomplete" style="width:150px;">-->
+            <span id="Text_IssuedBy"></span>
+        </td>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            Transfer By
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="TransferBy" id="TransferBy">
+            <input type="text" name="Text_TransferBy" id="Text_TransferBy" data-valid="required" data-valid-msg="Select Transfer By" controltype="autocomplete" style="width:150px;">
+        </td>
+
+        <td class="formthreelabel">&nbsp;&nbsp;&nbsp;Transfer Point</td>
+        <td class="formthreeInputcolumn"><span rel="span" name="Text_TransferPoint" id="Text_TransferPoint"></span></td>
+
+        <td class="formthreelabel">
+            Remarks
+        </td>
+        <td class="formthreeInputcolumn">
+            <textarea name="Text_Remarks" id="Text_Remarks" />
+        </td>
+
+        <!--<td class="formthreelabel">
+            &nbsp;&nbsp;&nbsp;Damaged
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="checkbox" name="Damaged" id="Damaged">
+        </td>-->
+    </tr>
+    <tr>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            Final Destination
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="FinalDestination" id="FinalDestination">
+            <input type="text" name="Text_FinalDestination" id="Text_FinalDestination" data-valid="required" data-valid-msg="Select Final Destination" controltype="autocomplete" style="width:150px;">
+        </td>
+        <td class="formthreelabel">
+            <!--<font color="red">*</font>-->
+            Demurrage Code
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="DemurrageCode" id="DemurrageCode">
+            <input type="text" name="Text_DemurrageCode" id="Text_DemurrageCode" data-valid="" data-valid-msg="" controltype="autocomplete" style="width:150px;">
+        </td>
+
+        <td class="formthreelabel">
+            <!--<font color="red">*</font>-->
+            ODLN Code
+        </td>
+        <td class="formthreeInputcolumn">
+
+            <input type="hidden" name="ODLNCode" id="ODLNCode">
+            <input type="text" name="Text_ODLNCode" id="Text_ODLNCode" data-valid="" data-valid-msg="" controltype="autocomplete" style="width:150px;">
+        </td>
+        <td class="formthreelabel"> Rental days </td>
+        <td class="formthreeInputcolumn"><input type="text" id="Rentaldays" name="Rentaldays" maxlength="3" style="width:50px" onkeypress="RentaldaysNumaric(event)"  /> </td>
+    </tr>
+    <tr>
+        <td class="formthreelabel">
+            <div id="divucrlbl" style="display:none"><font color="red">*</font>
+           UCR Number</div>
+            	
+        </td>
+        <td class="formthreeInputcolumn" id="tdDivUCR">
+            <div id="DivUCR"></div>
+        </td>
+        <td class="formthreelabel">
+        
+        </td>
+        <td class="formthreeInputcolumn">
+          
+        </td>
+
+        <td class="formthreelabel">
+        
+        </td>
+        <td class="formthreeInputcolumn">
+
+         
+        </td>
+      
+    </tr>
+    <!--<tr>
+
+
+
+
+            <td class="formthreelabel">
+    <font color="red">*</font>
+                Damage Description
+            </td>
+            <td class="formthreeInputcolumn">
+                <textarea id="Text_DamageCondition" data-valid="" data-valid-msg="" name="Text_DamageCondition" />
+            </td>
+
+            <td class="formthreelabel">  </td>
+            <td class="formthreeInputcolumn"></td>
+
+        </tr>-->
+    <tr>
+        <td colspan="8">
+            <div rel="appendGrid" id="divConsumables" style="display:none;">
+                <table id="tblConsumables"></table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height:100px">
+        <td colspan="8">
+            <input type="hidden" id="ExtraUldType" />
+        </td>
+    </tr>
+
+</table>

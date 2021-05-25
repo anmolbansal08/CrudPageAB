@@ -1,0 +1,3 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="CargoFlash.Cargo.DataService.Common.ROMSExceptionService" CodeBehind="ROMSExceptionService.cs"  %>
+<%@ Assembly Name="CargoFlash.Cargo.DataService" %>
+

@@ -1,0 +1,872 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="../../../Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="../../../Scripts/json2.js"></script>
+    <script src="../../../Scripts/JqueryPrint.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            GetInvoicePrint();
+            var LogoURL = getParameterByName("LogoURL", "");
+            $('#ImgLogo').attr('src', LogoURL);
+        });
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        function GetInvoicePrint() {
+            var InvoiceSNo = getParameterByName("InvoiceSNo", "");
+            var InvoiceType = getParameterByName("InvoiceType", "");
+            var UserSNo = getParameterByName("UserSNo", "");
+            UserSNo = UserSNo == "" ? "0" : UserSNo;
+            $.ajax({
+                url: "../../../Services/Shipment/PaymentService.svc/GetImportExportInvoicePrint",
+                async: false,
+                type: "GET",
+                dataType: "json",
+                data: { InvoiceSNo: InvoiceSNo, InvoiceType: InvoiceType, UserSNo: UserSNo },
+                contentType: "application/json; charset=utf-8", cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    var FinalData = ResultData.Table0;
+                    var TableData = ResultData.Table1;
+                    $(".trInternational").hide();
+                    $(".trDomestic").hide();
+                    if (FinalData.length > 0 && FinalData != null) {
+                        if (InvoiceType == "1") {
+                            $("#divViewInvoice").hide();
+                            $("#divViewInvoiceImport").show();
+                            $("#AirlineLogo").attr({ "src": "/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=" + FinalData[0].AirlineImage, height: "32px", width: "220px" });
+                            $('#AirlineLogo').attr('onError', 'this.style.display="none";');
+                            $("#spnDOAirline").text(FinalData[0].AirlineName);
+                            $("#spnDOAddress1").text(FinalData[0].Address1);
+                            $("#spnDOAddress2").text(FinalData[0].Address2);
+                            $("#spnDOCity").text(FinalData[0].CityCode);
+                            $("#spnDOState").text(FinalData[0].State);
+                            $("#spnDOPin").text(FinalData[0].Pin);
+                            $("#spnDOTelNo").text(FinalData[0].TelNo);
+                            $("#spnDOFaxNo").text(FinalData[0].FaxNo);
+                            $("#spnDOInvoiceDate").text(FinalData[0].InvoiceDate);
+                            $("#spnCollector").text(FinalData[0].Collector);
+                            $("#spnCargoTerminal").text(FinalData[0].CargoTerminal);
+                            $("#spnDOInvoiceNo").text(FinalData[0].InvoiceNo);
+                            $("#spnAirportName").text(FinalData[0].AirportName);
+                            $("#spnAirportState").text(FinalData[0].SateName);
+                            $("#spnDOConsigneeName").text(FinalData[0].ConsigneeName);
+                            $("#spnDOConsigneeAddress").text(FinalData[0].ConsigneeAddress);
+                            $("#spnDOConsigneeGSTNo").text(FinalData[0].ConsigneeGSTNo);
+                            $("#spnDOPlaceofDelivery").text(FinalData[0].PlaceofDelivery);
+                            $("#spnFlightNo").text(FinalData[0].FlightNo);
+                            $("#spnFlightDate").text(FinalData[0].FlightDate);
+                            $("#spnIGMNo").text(FinalData[0].IGMNo);
+                            $("#spnAWBNo").text(FinalData[0].AWBNo);
+                            $("#spnPieces").text(FinalData[0].Pieces);
+                            $("#spnGrossWeight").text(FinalData[0].GrossWeight);
+                            $("#spnCommodity").text(FinalData[0].CommodityCode);
+                            $("#spnDOAirline1").text(FinalData[0].AirlineName);
+                            $("#spnTIAirline").text(FinalData[0].AirlineName);
+                            $("#spnTIAddress1").text(FinalData[0].Address1);
+                            $("#spnTIAddress2").text(FinalData[0].Address2);
+                            $("#spnTICity").text(FinalData[0].CityCode);
+                            $("#spnTIState").text(FinalData[0].State);
+                            $("#spnTIPin").text(FinalData[0].Pin);
+                            $("#spnTITelNo").text(FinalData[0].TelNo);
+                            $("#spnTIFaxNo").text(FinalData[0].FaxNo);
+                            $("#spnTIInvoiceDate").text(FinalData[0].InvoiceDate);
+                            $("#spnTIInvoiceNo").text(FinalData[0].InvoiceNo);
+                            $("#spnTIConsigneeName").text(FinalData[0].ConsigneeName);
+                            $("#spnTIConsigneeAddress").text(FinalData[0].ConsigneeAddress);
+                            $("#spnTIConsigneeGSTNo").text(FinalData[0].ConsigneeGSTNo);
+                            $("#spnTIPlaceofDelivery").text(FinalData[0].PlaceofDelivery);
+                            $("#spnAmount").text(FinalData[0].Amount);
+                            $("#spnAmountCollectedBy").text(FinalData[0].AmountCollectedBy);
+                            $("#spnMAWBCharges").text(FinalData[0].MAWBCharges);
+                            $("#spnHAWBCharges").text(FinalData[0].HAWBCharges);
+                            $("#spnTotalDOAmount").text(FinalData[0].TotalDOAmount);
+                            $("#spnDOCharges").text(FinalData[0].DOCharges);
+                            $("#spnLessAgentTDS").text(FinalData[0].LessAgentTDS);
+                            $("#spnFreightType").text(FinalData[0].FreightType);
+                            $("#spnFinalMAWB").text(FinalData[0].AWBNo);
+                            $("#spnFinalFlightNo").text(FinalData[0].FlightNo);
+                            $("#spnFinalFlightDate").text(FinalData[0].FlightDate);
+                            $("#spnGSA").text(FinalData[0].GSA);
+                            $("#spnFinalAirline").text(FinalData[0].AirlineName);
+                            $("#spnFinalAddress").text(FinalData[0].Address1 + ' ' + FinalData[0].Address2);
+                            $("#spnFinalCity").text(FinalData[0].CityCode);
+                            $("#spnFinalPin").text(FinalData[0].Pin);
+                            $("#spnFinalGSTNo").text(FinalData[0].AirlineGSTNo);
+                            $("#spnFinalHSNCode").text(FinalData[0].HSNCode);
+                            $("#spnCGSTPer").text(FinalData[0].CGSTPer);
+                            $("#spnCGSTPer").text(FinalData[0].SGSTPer);
+                            $("#spnCGSTPer").text(FinalData[0].IGSTPer);
+
+                            var IGST = FinalData[0].IGSTPer == undefined || Number(FinalData[0].IGSTPer) == 0 ? 0 : (Number(FinalData[0].DOCharges) * (Number(FinalData[0].IGSTPer) / 100)).toFixed(2);
+                            var CGST = FinalData[0].CGSTPer == undefined || Number(FinalData[0].CGSTPer) == 0 ? 0 : (Number(FinalData[0].DOCharges) * (Number(FinalData[0].CGSTPer) / 100)).toFixed(2);
+                            var SGST = FinalData[0].SGSTPer == undefined || Number(FinalData[0].SGSTPer) == 0 ? 0 : (Number(FinalData[0].DOCharges) * (Number(FinalData[0].SGSTPer) / 100)).toFixed(2);
+                            var TotalAmount = Number(FinalData[0].DOCharges) + Number(CGST) + Number(SGST) + Number(IGST);
+
+                            $("#spnCGSTAmount").text(Number(FinalData[0].AirlineStateSNo) = Number(FinalData[0].AgentStateSNo) ? FinalData[0].CGST : 0);
+                            $("#spnSGSTAmount").text(Number(FinalData[0].AirlineStateSNo) = Number(FinalData[0].AgentStateSNo) ? FinalData[0].SGST : 0);
+                            $("#spnIGSTAmount").text(Number(FinalData[0].AirlineStateSNo) != Number(FinalData[0].AgentStateSNo) ? FinalData[0].IGST : 0);
+                            $("#spnTotalAmount").text(FinalData[0].TotalAmount);
+                            $("#spnRecievableAmount").text(FinalData[0].TotalAmount);
+                            //$("#spnAmountInWord").val(FinalData[0].IsInternational);
+                            ConvertNumberIntoWords(FinalData[0].TotalAmount, 0);
+                        }
+                        else {
+                            $("#divViewInvoice").show();
+                            $("#divViewInvoiceImport").hide();
+                            if (Number(FinalData[0].IsInternational) == 0) {
+                                $(".trInternational").hide();
+                                $(".trDomestic").show();
+                            }
+                            else {
+                                $(".trInternational").show();
+                                $(".trDomestic").hide();
+                            }
+
+                            $("#AirlineLogo").attr({ "src": "/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=" + FinalData[0].AirlineImage, height: "32px", width: "220px" });
+                            $('#AirlineLogo').attr('onError', 'this.style.display="none";');
+                            $('#spnShipperName').text(FinalData[0].ShipperName);
+                            $('#spnShipperAddress').text(FinalData[0].ShipperAddress);
+                            $('#spnInvoiceDate').text(FinalData[0].InvoiceDate);
+                            $('#spnAirline').text(FinalData[0].AirlineName);
+                            $("#spnAddress1").text(FinalData[0].Address1);
+                            $("#spnAddress2").html(FinalData[0].Address2);
+                            $("#spnCity").text(FinalData[0].CityName);
+                            $("#spnState").text(FinalData[0].State);
+                            $('#spnPin').text(FinalData[0].Pin);
+                            $("#spnContact").text(FinalData[0].Contact);
+                            $("#spnCIN").html(FinalData[0].CIN);
+                            $("#spnAgentGSTNo").text(FinalData[0].AgentGSTNo);
+                            $("#spnFromDate").text(FinalData[0].FromDate);
+                            $("#spnToDate").text(FinalData[0].ToDate);
+                            $("#spnStateCode").text(FinalData[0].StateCode);
+                            $("#spnAirlineGSTNo").text(FinalData[0].AirlineGSTNo);
+                            $("#spnPlaceOfSupply").html(FinalData[0].PlaceOfSuply);
+                            $("#spnHSNCode").text(FinalData[0].HSNCode);
+                            $('#spnCGSTPer').text(FinalData[0].CGSTPer);
+                            $("#spnSGSTPer").html(FinalData[0].SGSTPer);
+                            $("#spnIGSTPer").html(FinalData[0].IGSTPer);
+                            $("#spnLessAgentExpenses").html(FinalData[0].LessAgentExpenses);
+                            $("#spnReceivableAgent").html(FinalData[0].ReceivableAgent);
+                            $("#spnAirlineName").html(FinalData[0].AirlineName);
+                            $("#spnPanNo").html(FinalData[0].PanNo);
+                            $("#spnBankName").html(FinalData[0].BankName);
+                            $("#spnIFSCCode").html(FinalData[0].IFSCCode);
+                            $("#spnAccountNo").html(FinalData[0].AccountNo);
+                            $("#spnAirlineAddress1").text(FinalData[0].AirlineAddress1);
+                            $("#spnAirlineAddress2").html(FinalData[0].AirlineAddress2);
+                            $("#spnAirlineAddress3").html(FinalData[0].AirlineAddress3);
+                            $("#spnFavourOf").html(FinalData[0].FavourOf);
+                            $("#spnAddTax").html(FinalData[0].AddTax);
+                            var trData;
+                            var SumChWt = 0;
+                            var SumPP = 0;
+                            var SumCC = 0;
+                            var SumDueCarrier = 0;
+                            var SumDueAgent = 0;
+                            var SumCommission = 0;
+                            var SumDiscount = 0;
+                            var TotalAmount = 0;
+                            TableData.forEach(function (item) {
+                                trData += "<tr><td style='border-bottom:1px solid black;'>" + item.InvoiceDate + "</td><td style='border-bottom:1px solid black;'>" + item.AWBNo + "</td><td style='border-bottom:1px solid black;'>" + item.Destination + "</td><td style='border-bottom:1px solid black;'>" + Number(item.TotalChargeableWeight).toFixed(2) + "</td><td style='border-bottom:1px solid black;'>" + Number(item.PP).toFixed(2) + "</td><td style='border-bottom:1px solid black;'>" + Number(item.CC).toFixed(2) + "</td><td style='border-bottom:1px solid black;'>" + Number(item.DueCarrier).toFixed(2) + "</td><td style='border-bottom:1px solid black;'>" + Number(item.DueAgent).toFixed(2) + "</td><td style='border-bottom:1px solid black;'>" + Number(item.Commission).toFixed(2) + "</td><td style='border-bottom:1px solid black;'>" + Number(item.Discount).toFixed(2) + "</td><td style='border-bottom:1px solid black;'>" + item.Commodity + "</td></tr>";
+                                SumChWt = Number(SumChWt) + Number(item.TotalChargeableWeight);
+                                SumPP = Number(SumPP) + Number(item.PP);
+                                SumCC = Number(SumCC) + Number(item.CC);
+                                SumDueCarrier = Number(SumDueCarrier) + Number(item.DueCarrier);
+                                SumDueAgent = Number(SumDueAgent) + Number(item.DueAgent);
+                                SumCommission = Number(SumCommission) + Number(item.Commission);
+                                SumDiscount = Number(SumDiscount) + Number(item.Discount);
+                            });
+                            $("#divViewInvoice").find("table").find("tbody").find("tr#trRow").after(trData);
+
+                            TotalAmount = Number(SumPP) + Number(SumCC) + Number(SumDueCarrier) + Number(SumDueAgent) - Number(SumDiscount);
+                            $("#spnSumChWt").html(Number(SumChWt).toFixed(2));
+                            $("#spnSumPP").html(Number(SumPP).toFixed(2));
+                            $("#spnSumCC").html(Number(SumCC).toFixed(2));
+                            $("#spnSumDueCarrier").html(Number(SumDueCarrier).toFixed(2));
+                            $("#spnSumDueAgent").html(Number(SumDueAgent).toFixed(2));
+                            $("#spnSumCommission").html(Number(SumCommission).toFixed(2));
+                            $("#spnSumDiscount").html(Number(SumDiscount).toFixed(2));
+                            $("#spnTotalFreight").html(Number(Number(SumPP) + Number(SumCC)).toFixed(2));
+                            $("#spnAddedDueCarrier").text(Number(SumDueCarrier).toFixed(2));
+                            $("#spnAddedDueAgent").text(Number(SumDueAgent).toFixed(2));
+                            $("#spnTotalAmount").text(Number(FinalData[0].TotalAmount).toFixed(2));
+                            $("#spnLessDiscount").text(Number(SumDiscount).toFixed(2));
+                            $("#spnTotalAmount").text(Number(TotalAmount).toFixed(2));
+                            $("#spnBranchName").text(FinalData[0].BranchName);
+                            $("#spnBranchCode").text(FinalData[0].BranchCode);
+
+                            var IGST = FinalData[0].IGSTPer == undefined || Number(FinalData[0].IGSTPer) == 0 ? 0 : (Number(TotalAmount) * (Number(FinalData[0].IGSTPer) / 100)).toFixed(2);
+                            var CGST = FinalData[0].CGSTPer == undefined || Number(FinalData[0].CGSTPer) == 0 ? 0 : (Number(TotalAmount) * (Number(FinalData[0].CGSTPer) / 100)).toFixed(2);
+                            var SGST = FinalData[0].SGSTPer == undefined || Number(FinalData[0].SGSTPer) == 0 ? 0 : (Number(TotalAmount) * (Number(FinalData[0].SGSTPer) / 100)).toFixed(2);
+
+                            if (FinalData[0].IsInternational = 0) {
+                                IGST = 0;
+                                CGST = 0;
+                                SGST = 0;
+                            }
+
+                            $("#spnCGST").html(Number(CGST).toFixed(2));
+                            $("#spnSGST").html(Number(SGST).toFixed(2));
+                            $("#spnIGST").html(Number(IGST).toFixed(2));
+                            $("#spnTotalGST").html(Number(Number(IGST) + Number(CGST) + Number(SGST)).toFixed(2));
+                            $("#spnTotalGSTPer").html(Number(Number(IGST) > 0 ? FinalData[0].IGSTPer : Number(FinalData[0].CGSTPer) + Number(FinalData[0].SGSTPer)).toFixed(2));
+                            var TotalReceivableAmount = 0;
+                            TotalReceivableAmount = Number(TotalAmount) + Number(IGST) + Number(CGST) + Number(SGST);
+                            $("#spnTotalReceivable").html(Number(TotalReceivableAmount).toFixed(2));
+                        }
+
+                        $("#spnInvoiceNo").text(FinalData[0].InvoiceNo);
+
+                        if (Number(FinalData[0].IsInvoiceGenerated) == 0) {
+                            var StateCode = FinalData[0].StateCode;
+                            var AWBNo = TableData[0].AWBNo;
+                            $.ajax({
+                                url: "../../../Services/Shipment/PaymentService.svc/GetInvoiceNoFromCRA",
+                                async: false,
+                                type: "GET",
+                                dataType: "json",
+                                data: { StateCode: StateCode, MemoType: "AWB", AWBNo: AWBNo },
+                                contentType: "application/json; charset=utf-8", cache: false,
+                                success: function (result) {
+                                    var CRAResult = jQuery.parseJSON(result);
+                                    var CRAData = CRAResult.Table0;
+                                    $("#spnInvoiceNo").text(CRAData[0].Column1);
+
+                                    $.ajax({
+                                        url: "../../../Services/Shipment/PaymentService.svc/UpdateInvoice",
+                                        async: false,
+                                        type: "GET",
+                                        dataType: "json",
+                                        data: { InvoiceSNo: InvoiceSNo, InvoiceNo: $("#spnInvoiceNo").text() },
+                                        contentType: "application/json; charset=utf-8", cache: false,
+                                        success: function (result) {
+                                        },
+                                        error: function (err) {
+                                            alert("Generated error");
+                                        }
+                                    });
+                                },
+                                error: function (err) {
+                                    alert("Generated error");
+                                }
+                            });
+                        }
+                    }
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        }
+
+        function ConvertNumberIntoWords(TotalAmount, InvoiceSNo) {
+            $.ajax({
+                url: "../../../Services/Shipment/PaymentService.svc/ConvertNumberIntoWords",
+                async: false,
+                type: "GET",
+                dataType: "json",
+                data: { TotalAmount: TotalAmount, InvoiceSNo: InvoiceSNo },
+                contentType: "application/json; charset=utf-8", cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    var FinalData = ResultData.Table0;
+                    if (FinalData.length > 0) {
+                        $("#spnAmountInWord").val(FinalData[0].TotalAmountInWord);
+                    }
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <!-- Invoice -->
+    <div id="divViewInvoice" style="display:none;">
+        <table class="PageInsideTable" style="border: 1px solid black;border-spacing: 1px;margin:10px" width="99%">
+            <tbody>
+                <tr>
+                    <td colspan="3"><b><span id="spnShipperName"></span></b></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b><span id="spnShipperAddress"></span></b></td>
+                </tr>
+                <tr>
+                    <td rowspan="7" colspan="3" align="center">&nbsp;</td>
+                </tr>
+                <!--<tr>
+                    <td rowspan="7" colspan="3"><b><span id="spnAgenName"></span></b></td>
+                </tr>-->
+                <tr>
+                    <td rowspan="6" colspan="5" align="center"><img id="AirlineLogo"></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>Invoice Date: </b><span id="spnInvoiceDate"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b><span id="spnAirline"></span></b></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b><span id="spnAddress1"></span>&nbsp;<span id="spnAddress2"></span></b></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b><span id="spnCity"></span><span id="spnState"></span>-<span id="spnPin"></span> Ph :<span id="spnContact"></span></b></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>CIN: </b><span id="spnCIN"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>Invoice No:</b><span id="spnInvoiceNo"></span></td>
+                    <td colspan="5" style="text-align:center;"><b>Cargo Sales Report</b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>GST NO:</b><span id="spnAgentGSTNo"></span></td>
+                    <td colspan="5" style="text-align:center;"><b>From :</b><span id="spnFromDate"></span><b> To :</b><span id="spnToDate"></span></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>State Code:</b><span id="spnStateCode"></span></td>
+                    <td colspan="5" style="text-align:center;"><b>GST NO: </b><span id="spnAirlineGSTNo"></span></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>Place Of Supply: </b><span id="spnPlaceOfSupply"></span></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>HSN Code: </b><span id="spnHSNCode"></span></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="11" align="center" style="font-size:20px; border-bottom:1px solid black;"><b>TAX INVOICE</b></td>
+                </tr>
+                <tr>
+                    <td rowspan="2" style="border-bottom:1px solid black;"><b>Date</b></td>
+                    <td rowspan="2" style="border-bottom:1px solid black;"><b>AWB No.</b></td>
+                    <td rowspan="2" style="border-bottom:1px solid black;"><b>Dest</b></td>
+                    <td rowspan="2" style="border-bottom:1px solid black;"><b>Chrg. Wt</b></td>
+                    <td colspan="2" style="text-align:center;"><b>Freight</b></td>
+                    <td rowspan="2" style="border-bottom:1px solid black;"><b>Due Carrier</b></td>
+                    <td rowspan="2" style="border-bottom:1px solid black;"><b>Due Agent</b></td>
+                    <td rowspan="2" style="border-bottom:1px solid black;"><b>Commission</b></td>
+                    <td rowspan="2" style="border-bottom:1px solid black;"><b>Discount</b></td>
+                    <td rowspan="2" style="border-bottom:1px solid black;"><b>Remark</b></td>
+                </tr>
+                <tr id="trRow">
+                    <td style="border-bottom:1px solid black;"><b>PP</b></td>
+                    <td style="border-bottom:1px solid black;"><b>CC</b></td>
+                </tr>
+                <tr>
+                    <td style="border-bottom:1px solid black;">&nbsp;</td>
+                    <td style="border-bottom:1px solid black;">&nbsp;</td>
+                    <td style="border-bottom:1px solid black;">&nbsp;</td>
+                    <td style="border-bottom:1px solid black;" id="spnSumChWt"></td>
+                    <td style="border-bottom:1px solid black;" id="spnSumPP"></td>
+                    <td style="border-bottom:1px solid black;" id="spnSumCC"></td>
+                    <td style="border-bottom:1px solid black;" id="spnSumDueCarrier"></td>
+                    <td style="border-bottom:1px solid black;" id="spnSumDueAgent"></td>
+                    <td style="border-bottom:1px solid black;" id="spnSumCommission"></td>
+                    <td style="border-bottom:1px solid black;" id="spnSumDiscount"></td>
+                    <td style="border-bottom:1px solid black;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="3"><b>Total Freight</b></td>
+                    <td>INR</td>
+                    <td><span id="spnTotalFreight"></span></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="3"><b>Add Due Carrier</b></td>
+                    <td>INR</td>
+                    <td><span id="spnAddedDueCarrier"></span></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="3"><b>Add Due Agent</b></td>
+                    <td>INR</td>
+                    <td><span id="spnAddedDueAgent"></span></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="3"><b>Less Discount</b></td>
+                    <td>INR</td>
+                    <td style="border-bottom:1px solid black;"><span id="spnLessDiscount"></span></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="3"><b>Total Amount</b></td>
+                    <td>INR</td>
+                    <td style="border-bottom:1px solid black;"><span id="spnTotalAmount"></span></td>
+                </tr>
+                <tr class="trInternational">
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="3"><b>CGST @<span id="spnCGSTPer"></span>%</b></td>
+                    <td>INR</td>
+                    <td><span id="spnCGST"></span></td>
+                </tr>
+                <tr class="trInternational">
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="3"><b>SGST @<span id="spnSGSTPer"></span>%</b></td>
+                    <td>INR</td>
+                    <td><span id="spnSGST"></span></td>
+                </tr>
+                <tr class="trInternational">
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="3"><b>IGST @<span id="spnIGSTPer"></span>%</b></td>
+                    <td>INR</td>
+                    <td style="border-bottom:1px solid black;"><span id="spnIGST"></span></td>
+                </tr>
+                <tr class="trInternational">
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="3"><b>Total GST@<span id="spnTotalGSTPer"></span>%</b></td>
+                    <td>INR</td>
+                    <td style="border-bottom:1px solid black;"><span id="spnTotalGST"></span></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="3"><b>Less Agent Expenses</b></td>
+                    <td>&nbsp;</td>
+                    <td style="border-bottom:1px solid black;"><span id="spnLessAgentExpenses"></span></td>
+                </tr>
+                <tr class="trInternational">
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="3"><b>Total (INC GST)</b></td>
+                    <td>INR</td>
+                    <td style="border-bottom:1px solid black;"><span id="spnTotalGST"></span></td>
+                </tr>
+                <tr class="trDomestic">
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="3"><b>Add TAX</b></td>
+                    <td>INR</td>
+                    <td style="border-bottom:1px solid black;"><span id="spnAddTax"></span></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="3"><b>Total Receivable From <span id="spnReceivableAgent"></span></b></td>
+                    <td>INR</td>
+                    <td style="border-bottom:1px solid black;"><span id="spnTotalReceivable"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="11"><b>Please make Payment in favour of <span id="spnFavourOf"></span> </td><!--PAN :. </b>
+                    <span id="spnPanNo"></span></td>-->
+                </tr>
+                <tr>
+                    <td colspan="8"><b>Our NEFT/ RTGS Details are as follows :-</b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Name</b></td>
+                    <td colspan="6"><span id="spnAirlineName"></span></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Bank</b></td>
+                    <td colspan="6"><span id="spnBankName"></span></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>IFSC Code</b></td>
+                    <td colspan="6"><span id="spnIFSCCode"></span></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Branch Name</b></td>
+                    <td colspan="6"><span id="spnBranchName"></span></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Branch Code</b></td>
+                    <td colspan="6"><span id="spnBranchCode"></span></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Account No</b></td>
+                    <td colspan="6"><span id="spnAccountNo"></span></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Address</b></td>
+                    <td colspan="6"><span id="spnAirlineAddress1"></span></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                    <td colspan="6"><span id="spnAirlineAddress2"></span></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                    <td colspan="6"><span id="spnAirlineAddress3"></span></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- DO Print -->
+    <div id="divViewInvoiceImport" style="display:none;">
+        <table class="PageInsideTable" style="border: 1px solid black;border-spacing: 1px;margin:10px" width="99%">
+            <tbody>
+                <tr>
+                    <td colspan="11" style="text-align:center;"><b>DELIVERY ORDER</b></td>
+                </tr>
+                <tr>
+                    <td colspan="11" style="text-align:center;"><b><span id="spnDOAirline"></span></b></td>
+                </tr>
+                <tr>
+                    <td colspan="11" style="text-align:right;"><img id="AirlineLogo"></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b><span id="spnDOAddress1"></span></b></td>
+                    <td colspan="5" style="text-align:center;">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b><span id="spnDOAddress2"></span></b></td>
+                    <td colspan="5" style="text-align:center;">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b><span id="spnDOCity"></span><span id="spnDOState"></span>-<span id="spnDOPin"></span> </b></td>
+                    <td colspan="5" style="text-align:center;">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b>TEL. NO. <span id="spnDOTelNo"></span></b>,</td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b>Fax. NO. <span id="spnDOFaxNo"></span></b>,</td>
+                    <td colspan="5" style="text-align:center;">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="5"></td>
+                    <td colspan="3" style="text-align:left;">Date: <b><span id="spnDOInvoiceDate"></span></b></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b><span id="spnCollector"></span></b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b><span id="spnCargoTerminal"></span></b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">INVOICE No: <b><span id="spnDOInvoiceNo"></span></b></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b><span id="spnAirportName"></span></b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b><span id="spnAirportState"></span></b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;">Please deliver to M/S <b><span id="spnDOConsigneeName"></span></b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b>GST Address: <span id="spnDOConsigneeAddress"></span></b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b>GST No: <span id="spnDOConsigneeGSTNo"></span></b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b>Place of Delivery: <span id="spnDOPlaceofDelivery"></span></b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;">order the following packages which arrived<b><span id="spnFlightNo"></span>/<span id="spnFlightDate"></span></b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3" style="text-align:left;">IGM NO: <b><span id="spnIGMNo"></span></b></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;">MAWB: <b><span id="spnAWBNo"></span></b></td>
+                    <td colspan="5">Pcs: <b><span id="spnPieces"></span></b>&nbsp;GR.Wt (In Kg): <b><span id="spnGrossWeight"></span></b></td>
+                    <td colspan="3" style="text-align:left;">Commdy: <b><span id="spnCommodity"></span></b></td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3" style="text-align:left;"><b>For</b></td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3" style="text-align:left;"><b><span id="spnDOAirline1"></span></b></td>
+                </tr>
+                <tr>
+                    <td colspan="11" align="center" <b>---------------------------------------------------------------------------------------------------------------------</b></td>
+                </tr>
+                <tr>
+                    <td colspan="11" style="text-align:center;"><b>TAX INVOICE</b></td>
+                </tr>
+                <tr>
+                    <td colspan="11" style="text-align:center;"><b><span id="spnTIAirline"></span></b></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b><span id="spnTIAddress1"></span>&nbsp;<span id="spnTIAddress2"></span></b></td>
+                    <td colspan="5" style="text-align:center;">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b><span id="spnTICity"></span><span id="spnTIState"></span>-<span id="spnTIPin"></span> </b></td>
+                    <td colspan="5" style="text-align:center;">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b>TEL. NO. <span id="spnTITelNo"></span>,</b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b>Fax. NO. <span id="spnTIFaxNo"></span>,</b></td>
+                    <td colspan="5" style="text-align:center;">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="5"></td>
+                    <td colspan="3" style="text-align:left;">Date: <b><span id="spnTIInvoiceDate"></span></b></td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="5"></td>
+                    <td colspan="3" style="text-align:left;">INVOICE No: <b><span id="spnTIInvoiceNo"></span></b></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;">Received with thanks from M/S <b><span id="spnTIConsigneeName"></span></b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b>GST Address: <span id="spnTIConsigneeAddress"></span></b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b>GST No: <span id="spnTIConsigneeGSTNo"></span></b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;"><b>Place of Delivery: <span id="spnTIPlaceofDelivery"></span></b></td>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;">an amount of Rs,<b><span id="spnAmount"></span></b></td>
+                    <td colspan="8">(Rs. Amount Collect by VIA RECP:<b><span id="spnAmountCollectedBy"></span></b>)</td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="3" style="text-align:left;">MAWB Chrgs:</td>
+                    <td colspan="2" style="text-align:left;"><b><span id="spnMAWBCharges"></span></b></td>
+                    <td colspan="3">&nbsp;</b></td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="3" style="text-align:left;">HAWB Chrgs:</td>
+                    <td colspan="2" style="text-align:left;"><b><span id="spnHAWBCharges"></span></b></td>
+                    <td colspan="3">&nbsp;</b></td>
+                </tr>
+                <tr>
+                    <td colspan="11" align="center"><b>---------------------------------------------------------------------------------------------------------------------</b></td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="3" style="text-align:left;">Total DO Amt (Inc.Gst):</td>
+                    <td colspan="2" style="text-align:left;"><b><span id="spnTotalDOAmount"></span></b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="11" align="center"><b>---------------------------------------------------------------------------------------------------------------------</b></td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="3" style="text-align:left;">DoCharge:</td>
+                    <td colspan="2" style="text-align:left;"><b><span id="spnDOCharges"></span></b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="3" style="text-align:left;">CGST Amount@<span id="spnCGSTPer"></span>% :</td>
+                    <td colspan="2" style="text-align:left;"><b><span id="spnCGSTAmount"></span></b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="3" style="text-align:left;">SGST Amount@<span id="spnSGSTPer"></span>% :</td>
+                    <td colspan="2" style="text-align:left;"><b><span id="spnSGSTAmount"></span></b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="3" style="text-align:left;">IGST Amount@<span id="spnIGSTPer"></span>% :</td>
+                    <td colspan="2" style="text-align:left;"><b><span id="spnIGSTAmount"></span></b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="11" align="center"><b>---------------------------------------------------------------------------------------------------------------------</b></td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="3" style="text-align:left;"><b>Total Amt:</b></td>
+                    <td colspan="2" style="text-align:left;"><b><span id="spnTotalAmount"></span></b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="3" style="text-align:left;"><b>Less Agent Tds:</b></td>
+                    <td colspan="2" style="text-align:left;"><b><span id="spnLessAgentTDS"></span></b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="3" style="text-align:left;"><b>Total Amt Recievable:</b></td>
+                    <td colspan="2" style="text-align:left;"><b><span id="spnRecievableAmount"></span></b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="8" style="text-align:left;">Amount<b><span id="spnAmountInWord"></span> in Cash (INCLUSIVE OF SERVICE TAX)only</b></td>
+                    <td colspan="3" style="text-align:left;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;">being freight charges <b><span id="spnFreightType"></span></b></td>
+                    <td colspan="5">Plus Delivery Order Charges</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;">on MAWB: <b><span id="spnFinalMAWB"></span></b></td>
+                    <td colspan="5"><b><span id="spnFinalFlightNo"></span></b></td>
+                    <td colspan="3">Of <b><span id="spnFinalFlightDate"></span>.</b></td>
+                </tr>
+                <tr>
+                    <td colspan="11" style="text-align:left;">In accordance with notification stamps No. 3 dated 21st December issued by</td>
+                </tr>
+                <tr>
+                    <td colspan="11" style="text-align:left;">the Finance Department Government of India, the Company is exempted from</td>
+                </tr>
+                <tr>
+                    <td colspan="11" style="text-align:left;">affixing stamps on receipts for passage fares, excess baggage and freight charges.</td>
+                </tr>
+                <tr>
+                    <td colspan="8" style="text-align:left;"><b><span id="spnGSA"></span></b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="8" style="text-align:left;"><b>GSSA <span id="spnFinalAirline"></span></b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="8" style="text-align:left;"><b><span id="spnFinalAddress"></span>&nbsp;<span id="spnFinalCity"></span>&nbsp;<span id="spnFinalPin"></span>&nbsp;GST NO.&nbsp;<span id="spnFinalGSTNo"></span>,&nbsp;HSN CODE:&nbsp;<span id="spnFinalHSNCode"></span></b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="5" style="text-align:center;"><b>This is System Generated invoice, Signature and Stamp is not mandatory.</b></td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

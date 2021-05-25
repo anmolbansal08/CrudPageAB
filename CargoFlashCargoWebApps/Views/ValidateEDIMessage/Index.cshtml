@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Validate EDI Message</title>
+</head>
+<body>
+    <div>
+        <table class='WebFormTable' id='tbl'>
+            <tr><td class='formSection' colspan='10'>Validate EDI Message </td></tr>
+            @*<tr><td class='formlabel' colspan='10'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>*@
+            <tr class='formSection'>
+
+                @*<td class="formlabel"><font color='red'>*</font>Airline</td>*@
+                <td>
+
+                    @Html.TextArea("txtmessage", null, new { style = "width: 500px; height:300px;" })
+
+
+                </td>
+            </tr>
+
+            @*<tr class='formSection'>
+                    <td class="formlabel"><font color='red'>*</font>Origin</td>
+                    <td class="formInputcolumn">
+
+                        @Html.Hidden("Origin")
+                        @Html.TextBox("Text_Origin", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Origin Name can not be blank" })
+
+                    </td>
+                    <td class="formlabel"><font color='red'>*</font>Destination</td>
+                    <td class="formInputcolumn">
+
+                        @Html.Hidden("Destination")
+                        @Html.TextBox("Text_Destination", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Destination Name can not be blank" })
+
+
+                    </td>
+
+
+
+
+
+                </tr>*@
+
+
+            <tr class='formSection'>
+                <td colspan='10'>
+                    <input type="button" name='SearchSave' value='Validate Message' class='btn btn-success' id="btnSubmit" />
+                    @*<input type="button" name='ExcelVersionDetails' value='Export To Excel' class='btn btn-success' id="btnSubmit" src="../Images/IconExcel.png" />*@
+
+                </td>
+            </tr>
+            <tr class='formSection'>
+                @*<td class="formlabel"></td>*@
+                <td>
+
+                    @Html.TextBox("TxtResult", null, new { style = "width: 300px;height:50px; " })
+                    @*@Html.Label("")*@
+
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</body>
+</html>
+
+
+<script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>
+
+<script src="~/JScript/EDI/ValidateEDIMessage.js"></script>

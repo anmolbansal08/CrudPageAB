@@ -1,0 +1,38 @@
+﻿<Messages>
+  <!--#region Country XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  Country
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Purushottam Kumar
+  Created On:		15 DEC 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Flightopen already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Flightopen Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Flightopen Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Flightopen Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

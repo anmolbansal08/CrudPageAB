@@ -1,0 +1,29 @@
+﻿<Messages>
+  <!--<DataFieldName>
+    <Name>BasisOfChargeSNo</Name>
+    <Message>Basis Of Chargee cannot be blank</Message>
+  </DataFieldName>-->
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Inventory Type already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Inventory Type Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Inventory Type Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Inventory Type Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Stock for Inventory Type already exists. Can not delete Inventory Type</value>
+  </ServerMessage>
+</Messages>
+

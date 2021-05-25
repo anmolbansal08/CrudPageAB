@@ -1,0 +1,22 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>Rate</Name>
+    <Message>Due Carrier Exchange Rate can not be blank</Message>
+  </DataFieldName>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Due Carrier Exchange Rate already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Due Carrier Exchange Rate Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Due Carrier Exchange Rate Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Due Carrier Exchange Rate Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

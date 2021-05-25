@@ -1,0 +1,3 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="CargoFlash.Cargo.DataService.EDI.TelexTypeService" CodeBehind="TelexTypeService.cs" %>
+<%@ Assembly Name="CargoFlash.Cargo.DataService" %>
+

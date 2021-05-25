@@ -1,0 +1,25 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>ULDNo</Name>
+    <Message>ULD Stack Type can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>ULD Stack Details already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>ULD Stack Details Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>ULD Stack Details Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>ULD Stack Details Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

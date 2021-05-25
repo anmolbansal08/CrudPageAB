@@ -1,0 +1,124 @@
+﻿
+
+
+<div id="divbody" style="height:auto">
+    <div id='MainDiv'>
+        <table class='WebFormTable' id='tbl' validateonsubmit=true>
+            <tr><td class='formSection' colspan='4'>Warehouse Accounting Report</td></tr>
+            <tr><td class='formSection' colspan='4'>
+    <span id='__SpanHeader__'> </span>
+    <div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div>
+</td></tr>
+            
+            <tr class="DateWiseRow">
+                <td class=' formlabel' title='Airline'>
+                    <font color='red'>*</font><span>
+                        Airline
+                    </span>
+                </td>
+                <td class='formInputcolumn'>
+                    @Html.Hidden("AirlineSNo")
+                    @Html.TextBox("Text_AirlineSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                </td>
+                <td class=' formlabel'>
+                    <font color='red'></font><span>
+                        Station :
+                    </span>
+                </td>
+                <td class='formInputcolumn'>
+                    @Html.Hidden("OriginSNo")
+                    @Html.TextBox("Text_OriginSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                </td>
+            </tr>
+            <tr class="DateWiseRow">
+                <td class=' formlabel' title='From Date'>
+                    <font color='red'>*</font><span id='spnAirlineCode'>
+                        From Date :
+                    </span>
+                </td>
+                <td class='formInputcolumn'>
+                    <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                           data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+                </td>
+                <td class=' formlabel' title='To Date'>
+                    <font color='red'>*</font><span id='spnAirlineCode'>
+                        To Date :
+                    </span>
+                </td>
+                <td class='formInputcolumn'>
+                    <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                           data-role="datepicker" data-valid-msg='Select To Date' controltype='datetype' value='' placeholder='To Date' />
+                </td>
+            </tr>
+            <tr class="DateWiseRow">
+                <td class=' formlabel' title='Airline'>
+                    <font color='red'></font><span id='spnAirlineCode'>
+                        AWB No :
+                    </span>
+                </td>
+                <td class='formInputcolumn'>
+                  
+                    @Html.Hidden("AWBSNo")
+                    @Html.TextBox("Text_AWBSNo", null, new { controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "AWB No can not be blank" })
+                </td>
+
+                <td class=' formlabel'>
+                    <font color='red'></font><span>
+
+                    </span>
+                </td>
+                <td class='formInputcolumn'></td>
+            </tr>
+            <tr class="DateWiseRow">
+
+                <td class=' formlabel'>
+                    <font color='red'></font><span>
+                        Report Type :
+                    </span>
+                </td>
+                <td class='formInputcolumn' colspan="3">
+                    @*Import Internaiton/Export Internaton/Import Domestic/Rush Handling internation*@
+
+                    <input type="radio" name="Filter" value="0" id="IsImportInternaiton" checked="checked">Import International
+                    <input type="radio" name="Filter" value="1" id="IsExportInternaton">Export International
+                    <input type="radio" name="Filter" value="2" id="IsImportDomestic"> Import Domestic
+                    <input type="radio" name="Filter" value="3" id="IsRushHandlinginternation"> Rush Handling International
+                </td>
+            </tr>
+            <tr>
+
+                <td class='formlabel'>
+                    <div id="exportflight" style="float:left;"><img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel_PostFlight()" /></div>
+                </td>
+                <td class='formInputcolumn'>
+                    <input type='submit' name='operation' onclick="SearchWarehouseAccountReport()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+                </td>
+
+                <td class=' formlabel'></td>
+                <td class='formInputcolumn'></td>
+
+            </tr>
+        </table>
+        <br />
+        <br />
+    </div>
+    <div id="example" style="overflow-x: scroll">
+        <div class=" k-grid-header-wrap" id="grid">
+        <br />
+        <table id="tblsearchrateList" class="appendGrid ui-widget" style="margin-bottom:10px;" align="center">
+            <thead class='ui-widget-header' style='text-align:center' id="theadid"></thead>
+            <tbody id="tbodyid" class="ui-widget-content"></tbody>
+        </table>
+    </div>
+        @*<div id="divEDITracking">
+
+        </div>
+        <table id='tbltracking' style='text-align: center'></table>*@
+        <script src="~/PermissionScripts/jquery.appendGrid-1.3.1.js"></script>
+        <script src="~/PermissionScripts/jquery.appendGrid-1.3.2.js"></script>
+        <script src="~/JScript/Report/WarehouseAccountReport.js"></script>
+    </div>
+</div>
+
+
+

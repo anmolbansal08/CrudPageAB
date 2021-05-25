@@ -1,0 +1,130 @@
+﻿<Messages>
+  <!--<ServerMessage>
+    <Key>1</Key>
+    <value>Customer Name Already Exists.Please Key in  Another Name.</value>
+  </ServerMessage>-->
+
+  <!--<ServerMessage>
+    <Key>444</Key>
+    <value>Customer Name Already Exists.Please Key in  Another Name.</value>
+  </ServerMessage>-->
+
+  <ServerMessage>
+    <Key>2</Key>
+    <value>->UnSpecified Error. We are exporing the problem,caused this error. Please have patience.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>547</Key>
+    <value>->Foreign Key constraint violations while attempting a delete</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>548</Key>
+    <value>->Data can not be deleted as already in use. Please mark it Inactive, if not to be used further.</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>1776</Key>
+    <value>->There are no primary or candidate keys in the referenced table </value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8111</Key>
+    <value>-> can not define PRIMARY KEY constraint on nullable column in table</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1750</Key>
+    <value>->Could not create constraint</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>01001</Key>
+    <value>->An attempt to update or delete an already deleted row was made</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>01003</Key>
+    <value>->Null values were eliminated from the argument of a column function.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>07009</Key>
+    <value>->No input parameters.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>08000</Key>
+    <value>->Connection closed by unknown interrupt.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>08001</Key>
+    <value>A connection could not be established because the security token is larger than the maximum allowed by the network protocol.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>08001</Key>
+    <value>A connection could not be established because the user id has a length of zero or is larger than the maximum allowed by the network protocol.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>08001</Key>
+    <value>A connection could not be established because the password has a length of zero or is larger than the maximum allowed by the network protocol.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>08001</Key>
+    <value>Required Derby DataSource property not set.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>08003</Key>
+    <value>No current connection.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>08003</Key>
+    <value>getConnection() is not valid on a closed PooledConnection.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>08004</Key>
+    <value>Connection refused </value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>217</Key>
+    <value>Type Casting error</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2627</Key>
+    <value>Violation of Primary keys</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>3701</Key>
+    <value>can not drop the view because it does not exist</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8152</Key>
+    <value>string or binary data would be truncated</value>
+  </ServerMessage>
+
+  <!--<ServerMessage>
+    <Key>24500</Key>
+    <value>Conversion failed when converting the nvarchar value to data type int.</value>
+  </ServerMessage>-->
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>245</Key>
+    <value>Conversion failed when converting the datatype varchar to int.</value>
+  </ServerMessage>
+</Messages>

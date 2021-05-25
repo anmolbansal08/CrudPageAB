@@ -1,0 +1,20 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Basis  Of Charge Already Exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>ESS Charge Applied Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Basis  Of Charge Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+
+    <Key>2002</Key>
+    <value>Basis  Of Charge Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

@@ -1,0 +1,41 @@
+﻿<Messages>
+  <!--#region Offload Reason XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		HSCode
+  Purpose:		This XML used for Message information.
+  Company:		CargoFlash Infotech Pvt Ltd.
+  Author:			Priti Yadav
+  Created On:		20 Apr 2020
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>HSCode</Name>
+    <Message>HSCode can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>DescriptionOFGoods</Name>
+    <Message>Description Of Goods can not be blank</Message>
+  </DataFieldName>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>HSCode already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>HSCode Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>HSCode Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>HSCode Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

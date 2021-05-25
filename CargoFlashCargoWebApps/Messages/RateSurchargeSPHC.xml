@@ -1,0 +1,50 @@
+﻿<Messages>
+  <!--#region RateSurchargeSPHC XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  RateSurchargeSPHC
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Parvez Khan
+  Created On:		4 APR 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+
+
+  <DataFieldName>
+    <Name>SurChargeName</Name>
+    <Message>Surcharge Name can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Surcharge Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Rate Surcharge SHC Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Rate Surcharge SHC Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Rate Surcharge SHC Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>
+
+
+
+
+
+

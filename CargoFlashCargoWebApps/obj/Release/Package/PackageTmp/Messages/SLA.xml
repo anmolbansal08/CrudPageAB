@@ -1,0 +1,47 @@
+﻿<Messages>
+  <!--#region SLA XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  SLA
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Tarun Kumar
+  Created On:		24 feb 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>SLA Code already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>SLA Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>SLA Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>SLA Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>SLA Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2005</Key>
+    <value>SLA Trans Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

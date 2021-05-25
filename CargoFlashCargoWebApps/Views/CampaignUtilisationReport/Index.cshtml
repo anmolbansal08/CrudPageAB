@@ -1,0 +1,184 @@
+﻿
+
+<style type="text/css">
+    .completeprocess {
+        color: #fff;
+        background-color: #51a351;
+        border-color: #51a351;
+        font-size: 10px;
+    }
+
+    .incompleteprocess {
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+        font-size: 10px;
+    }
+
+    .partialprocess {
+        color: #fff;
+        background-color: #FE9D5A;
+        border-color: #FE9D5A;
+        font-size: 10px;
+    }
+
+    .failureprocess {
+        color: #fff;
+        background-color: #FE0404;
+        border-color: #FE9D5A;
+        font-size: 10px;
+    }
+
+    .dependentprocess {
+        color: #fff;
+        background-color: brown;
+        border-color: goldenrod;
+        font-size: 10px;
+    }
+
+    .k-grid-filter {
+        display: none;
+    }
+
+    .k-link {
+        cursor: text;
+    }
+</style>
+
+<div id="divbody" style="height:auto">
+    <section id="loginForm">
+        <div id='MainDiv' style="font-size: 10px;">
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        @*<tr><td class='formSection' colspan='4'>Campaign Utilisation Report</td></tr>
+                        <tr><td class='formActiontitle' colspan='4'><span id='__SpanHeader__'>Campaign Utilisation Report</span><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>*@
+                        @*<tr><td class='formbuttonrow' colspan='4'><input type='submit' onclick="GetReportData()" name='operation' value='Search' class='btn btn-success' /></td></tr>*@
+                        <tr><td class='formSection' colspan='4'>Campaign Utilization Report Information</td></tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    Airline
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AirlineCode")
+                                @Html.TextBox("Text_AirlineCode", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                            </td>
+
+                            <td class=' formlabel' title='Airline'>
+
+                                Code :
+
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='CampaignCode' class="k-input" id='CampaignCode' style='width: 133px;' />
+                            </td>
+                            <td class=' formlabel' title='Office'></td>
+                            <td class='formInputcolumn'></td>
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    From Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+                            </td>
+                            <td class=' formlabel' title='Office'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    To Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' />
+                            </td>
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class='formlabel' title='Office'>
+                                <font color='red'></font><span id='spnOffice'>
+                                    Office :
+                                </span>
+                            </td>
+
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("OfficeSNo")
+                                @Html.TextBox("Text_OfficeSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                            <td class='formlabel' title='Office'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    Agent :
+                                </span>
+                            </td>
+
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AgentSNo")
+                                @Html.TextBox("Text_AgentSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                            
+
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Office'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    Code Type :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @*<input type="radio" name="Filter" value="" id="IsAll" checked="checked">All*@
+                                <input type="radio" name="Filter" value="0" id="IsSpot">Spot
+                                <input type="radio" name="Filter" value="1" id="IsSingle" checked="checked">Single
+                                <input type="radio" name="Filter" value="2" id="IsMultiple"> Multiple
+                            </td>
+                            <td class='formlabel' title='Office'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    Status
+                                </span>
+                            </td>
+
+                            <td class='formInputcolumn'>
+                                <input type="radio" name="Status" value="0" id="IsRequested" checked="checked">Requested
+                                <input type="radio" name="Status" value="1" id="IsApproved">Approved
+                                <input type="radio" name="Status" value="2" id="IsRejected">Rejected
+                            </td>
+
+
+                            
+                        </tr>
+                        <tr>
+                            <td class='formlabel' title='Airline' colspan="4">
+                                <div id="exportflight" style="float:left;"><button type="submit"><img id="imgexcel" src="../Images/IconExcel.png" onclick="ExportToExcel_Flight();" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" /></button> </div>
+                                    <center> <input type='submit' name='operation' onclick="GetReportData()" value='Search' id="btnSearch" class='btn btn-success btnSearch' /></center>
+                            </td>
+
+                        </tr>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="example">
+            <div id="grid" style="font-size:12px;"></div>
+
+            <script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>
+            <script src="~/JScript/Rate/CampaignUtilisationReport.js"></script>
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+

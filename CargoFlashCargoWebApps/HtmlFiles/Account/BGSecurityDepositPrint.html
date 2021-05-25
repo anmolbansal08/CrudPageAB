@@ -1,0 +1,456 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript">
+        var userContext = "";
+
+
+    </script>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="MSHTML 6.00.3790.1830" name="GENERATOR" />
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/UWS/jquery-barcode-2.0.2.js"></script>
+
+    <style type="text/css" media="print">
+        @page {
+            size: auto; 
+            margin: 0;
+        }
+    </style>
+
+    <style type="text/css">
+        .lb {
+            text-align: left;
+        }
+
+        .page-break {
+            display: block;
+            page-break-after: always;
+        }
+    </style>
+
+
+
+    <script type="text/javascript">
+        var userContext = '';
+
+        function printDiv() {
+
+            document.getElementById('btnPrint').style.display = 'none';
+
+            document.getElementById('btnClose').style.display = 'none';
+            window.print();
+
+            //document.getElementById('btnPrint').style.display = 'block';
+
+            //document.getElementById('btnClose').style.display = 'block';
+        }
+
+        //$('.cancel').click(function (e) {
+        //    window.close();
+        //});
+
+        
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        $(document).ready(function () {
+      
+            var LogoURL = getParameterByName("LogoUrl", "");
+            $('#imgLogo').attr('src', LogoURL);
+            $('#LogoUrls').attr('src', LogoURL);
+            $('[id*="spnReprint"]').closest('td').find('img').attr('src', LogoURL);
+            window.print();
+
+           // var Environment = userContext.SysSetting.ICMSEnvironment;
+
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            var SNo = getParameterByName("SNo", "");
+
+            if (SNo != "") {
+                $.ajax({
+                    url: "/../../Services/Accounts/ReversePaymentService.svc/GetSecurityDepositPrint", async: false, type: "POST", cache: false, contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ SNo: SNo }),
+                    success: function (result) {
+
+                        var GetSucessResult = JSON.parse(result);
+                        if (GetSucessResult != undefined) {
+
+                            if (GetSucessResult.Table0.length > 0) {
+
+                                $("span#spnRcptNo").text(GetSucessResult.Table0[0].RcptNo);
+                                $("span#spnAgent").text(GetSucessResult.Table0[0].Name);
+                                $("span#spnDescription").text(GetSucessResult.Table0[0].Description);
+                                $("span#spnAmount").text(GetSucessResult.Table0[0].Amount);
+                                $("span#spnTotolAmountInWord").text(GetSucessResult.Table0[0].TotolAmountInWord);
+                                $("span#spnCity").text(GetSucessResult.Table0[0].CityName);
+                                $("span#spnRcptDate").text(GetSucessResult.Table0[0].RcptDate);
+                                $("span#spnPrinted").text(GetSucessResult.Table0[0].PrintDate);
+                                //$("span#spnPaidDate").text(GetSucessResult.Table0[0].PaidDate);
+                                //$("span#spnRemarks").text(GetSucessResult.Table0[0].Remarks);
+                                //if (Environment == "GA") {
+                                   //$('#imgLogo').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + GetSucessResult.Table0[0].Airlinelogo);
+                                    // $('#ImgLogo')[0].src = '#';
+                                    // $('#ImgLogo').attr('src', null);
+                               // }
+
+
+
+
+                            }
+
+                        }
+
+
+                    }
+                });
+            }
+        });
+
+    </script>
+
+</head>
+<body>
+
+
+    <div id="printPayment" align="center" style="padding: 5px; font-family:Verdana;font-size:11px;">
+        <div class="page-break">
+
+            <br />
+
+            <table  style="width:750px;">                         
+                <tr>
+                 <td colspan="4">
+                 <!--<hr size="1">-->
+                 </td>
+                </tr>
+           </table>
+
+                <table style="width: 750px; border: 1px solid black">
+                    <tbody>
+                        <tr>
+                            <td colspan="8" align="center">
+                                <img id="LogoUrls" height="80" width="200" alt="" />
+                                <br>
+                                <span id="spnReprint"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="8" rowspan="2" style="display:none;">
+                                <center>
+                                    <img id="imgLogo" height="80" width="200" alt="" src="">
+                                </center>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="8" align="center" style="font-size:14px;font-weight:bold;"> Deposit Receipt </th>
+                        </tr>
+                        <tr>
+                            <td colspan="0" height="25">
+                                <!--<table cellpadding="0" cellspacing="0" border="0" style="width:100%">-->
+                                    <!--<tbody>
+                                        <tr>
+                                            <td style="width:100%;" align="center">
+                                                <table cellpadding="0" cellspacing="5" border="0" style="width: 100%; float: left;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="3" id="spnReciptNumber0">&nbsp;</td>
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">Date</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;" id="">
+                                                                <label for="spnDate" id="spnDate0">27-Mar-2018</label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">Payment</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td id="spnPayment0" style="width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top; font-weight: bold; font-size: 12px;">CREDIT</td>
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">Page</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;" id="spnPage0">1</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">Airline</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top;" id="spnAirline0">LION AIR</td>
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">Time</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;" id="spnTime0"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:150px;text-align:right; vertical-align:top;">Party</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top; ">
+                                                                <span id="spnPartyAgentName0">JT  AGENT JKT (FORJKT000149)</span>
+                                                            </td>
+                                                            <span id='spnPartyAgentCode0'></span>&nbsp;&nbsp;&nbsp;
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">Doc No</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;" id="spnDocNo0">AD 0000045</td>
+                                                        </tr>
+                                                        <tr id="IPTA0" style="display: none;">
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">IPTA No</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top;" id="spnIPTANo0"></td>
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">Doc Date</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;" align="left" id="spnDocDate0">27-Mar-2018</td>
+                                                        </tr>
+                                                        <tr id="Origin0" style="display: none;">
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">Origin</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top;" id="spnOrigin0"></td>
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">Destination</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;" id="spnDestination0"></td>
+                                                        </tr>
+                                                        <tr id="Weight0" style="display: none;">
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">Weight</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top;" id="spnWeight0"></td>
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">Mvmt No</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;" id="spnMvmtNo0"></td>
+                                                        </tr>
+                                                        <tr id="Seal0" style="display: none;">
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">Seal No</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top;" id="spnSealNo0"></td>
+                                                            <td style="width: 150px; text-align: right; vertical-align: top;">Truck Registration No</td>
+                                                            <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                                            <td style="width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;" id="spnTruckRegistrationNo0"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>-->
+                                <!--</table>-->
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <!--<td colspan="6" style="padding: 5px; font-size:11px">No :</td>
+                            <td style="padding: 5px; font-size:11px" align="left"><span id="spnRcptNo"></span></td>-->
+                            <td style="width:350px;padding:9px;">No: <span id="spnRcptNo"></span></td>
+                            <td></td>
+                        </tr>
+
+
+                        <tr>
+                            <td colspan="8">
+                                <table style="width:100%" id="trdetail0">
+                                    <tr>
+                                        <td colspan="6">
+                                            <hr size="1">
+                                        </td>
+                                    </tr>
+                                                                     
+                                    <!--<tr>
+                                        <td colspan="6">
+                                            <hr size="1">
+                                        </td>
+                                    </tr>-->
+                                    <tr>
+                                        <td colspan="6" height="20"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 6px; font-size:11px">PAYOR :</td>
+                                        <td style="padding: 5px; font-size:11px" align="left"><span id="spnAgent"></span></td>
+                                        <!--<td align="left">PAYOR. :&nbsp;&nbsp;&nbsp;&nbsp;JT-8237/990-88003403</td>
+                                        <td align="left">Pcs/Wt :&nbsp;&nbsp;&nbsp;&nbsp;2/10.00</td>
+                                        <td align="right"></td>
+                                        <td align="left"></td>-->
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 5px; font-size:11px">DESCRIPTION :</td>
+                                        <td style="padding: 5px; font-size:11px" align="left"><span id="spnDescription"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 5px; font-size:11px">AMOUNT :</td>
+                                        <td style="padding: 5px; font-size:11px" align="left"><span id="spnAmount"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 5px; font-size:11px">AMOUNT IN WORDS :</td>
+                                        <td style="padding: 5px; font-size:11px" align="left"><span id="spnTotolAmountInWord"></span></td>
+                                    </tr>
+                                  
+                                    <tr>
+                                        <td colspan="6" height="40">
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6">
+                                            <!--<hr size="1">-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                          
+                                        </td>
+                                        <td></td>
+                                        <td><span id="spnCity"></span>,</td>
+                                        <td><span id="spnRcptDate"></span></td>
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7">
+                                            <hr size="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7" height="20">
+                                          
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">
+                                <!--<span>Total Amount In Words&nbsp;-&nbsp;</span>
+                                <span id="spnTotalAmountInword0">IDR FIVE HUNDRED FIFTY TWO THOUSAND TWO HUNDRED  ONLY</span>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="8"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">
+                                <!--* Total Amount rounded up/off next-->
+                                <span id="spnCurrencyCode"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" style="width: 550px; max-width: 550px; word-wrap: break-word; text-align: left;">
+                                <span id="spnRemarks0"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">
+                                <span id="spnESSRemarks0"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <!--<td style="padding-left: 13px;">
+                                <span id="spnAccount1"></span>
+                                <br />&nbsp;&nbsp; <b>(Accounting)</b> :
+                            </td> 
+                            <td style="margin-left: -69px;">
+                               
+                                <br /><b>Printed</b> : <span id="spnPrinted"></span>
+                            </td> 
+                            <td>
+                                <span id="spnAccount1"></span>
+                                <br /> <b>(Cashier)</b> :
+                            </td>--> 
+
+                            <!--<td colspan="0"><b>(Accounting)</b> :</td>
+                            <td><br /><b>Printed</b> : <span id="spnPrinted"></span></td>
+                           
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td><br /> <b>(Cashier)</b> :</td>-->
+                            <td colspan="8">
+                                <table style="width:700px;">
+                                    <tr>
+                                        <td colspan="0" style="width: 266px;">&nbsp;&nbsp;<b>(Accounting)</b> :</td>
+                                        <td style="width: 0px;"><b>Printed</b> : <span id="spnPrinted"></span></td>
+                                        <td><b>(Cashier)</b> :</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            
+                          
+                        </tr>
+                        <tr>
+                            <td colspan="8">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">
+                                <!--<table style='width:80%' align='center'><tr id='trDynamic0'><th style='width:20%'>Receipt No</th><th style='width:20%'>Receipt Done By</th><th style='width:20%'>Receipt Date</th><th style='width:20%'>Amount</th></tr></table>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">
+                                <div style="height:120px;"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">
+                                <hr size="1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">
+                                <center>
+                                    JT Airline Services
+                                    <br>
+                                    <br>
+                                </center>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">
+                                <hr size="1">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+                <br />
+                <br />
+
+
+</div>
+    </div>
+
+
+
+
+</body>
+
+</html>

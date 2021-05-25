@@ -1,0 +1,341 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+        });
+    </script>
+    <title></title>
+    <!--<style type="text/css">
+        .style1 {
+            width: 20%;
+            font-size: 11px;
+            font-weight: normal;
+        }
+
+        .style2 {
+            width: 30%;
+            font-weight: bold;
+            font-size: 15pt;
+        }
+
+        .auto-style1 {
+            width: 10%;
+        }
+
+        .auto-style2 {
+            width: 12%;
+        }
+
+        th, td {
+            padding: 5px;
+            margin: 0px;
+        }
+
+        tr {
+            margin: 0px;
+        }
+
+        .auto-style3 {
+            width: 25%;
+        }
+
+        .auto-style4 {
+            width: 40%;
+        }
+
+        .auto-style5 {
+            height: 24px;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+
+        #divhead {
+            border: 1px;
+        }
+
+        .tblhead {
+            table-layout: fixed;
+        }
+
+        .imgdiv {
+            float: left;
+        }
+
+        .div2 {
+            float: right;
+        }
+
+        .verticalLine {
+            border-left: thick solid #ff0000;
+        }
+    </style>-->
+</head>
+<body>
+    <div id="Printdiv" style="width: 100%;">
+        <table style="width: 100%; border-top: 1px solid black; border-left: 1px solid black; border-right: 1px solid black; border-bottom: 0px solid black;">
+            <tr>
+                <td>
+                    <div  id="Printimg" style="text-align:center;">
+                        <img src="Images/GaurdaCMS Logo.jpg" style="width:28%; height:94px" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table id="Printtable" style="width: 100%; border-top: 0px solid black; border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;">
+            <tr>
+                <td>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="font-weight: bold; font-size: 30px; text-align: center; width: 100%;">
+                                CARGO IRREGULARITY REPORT FORM
+                                <br>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:85%;">
+                                <br>
+                                <span style="float: right; font-weight: bold;">Reference Code  :</span>
+                            </td>
+                            <td style="width:15%;">
+                                <br>
+                                <span id="spnSerialNo"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 100%; white-space: nowrap; border-left: 1px solid black; border-right: 1px solid black;">
+            <tr>
+                <td style="width:50%;">
+                    <strong>
+                        Flight No./Date:
+                    </strong>
+                    <span id="spnFlight">
+                    </span>
+                </td>
+                <td style="width:50%;text-align:center;">
+                    <strong>
+                        Routing:
+                    </strong>
+                    <span id="spnRouting">
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <table id="Desctbl" style="width:100%;border:1px solid black;border-collapse:collapse;">
+            <tr id="trDesctbl">
+                <td style="border:1px solid black;text-align:center"><strong>NO.</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>AWB No.</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>Commodity</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>AWB Total Pcs.</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>AWB Total Wt.</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>Irr. Pcs.</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>Irr. Wt.</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>Desc.</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>Action</strong></td>
+            </tr>
+        </table>
+        <table style="width: 100%;background-color:white;  border-top:0px solid black;border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black; border-collapse: collapse;  padding: 10px;">
+            <tr>
+                <td style="width: 25%; border-top: 0px solid black; border-left: 0px solid black; border-right: 1px solid black; border-bottom: 0px solid black; border-collapse: collapse; height: 100px;">
+                    <table>
+                        <tr>
+                            <td>
+                                <span style="font-weight: bold;">
+                                    Weather Condition:
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 25%; border-right: 1px solid black; height: 100px;">
+                    <table>
+                        <tr>
+                            <td>
+                                <span style="margin-left: 10px;" id="spnWeather"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 25%; border-right: 1px solid black; border-collapse: collapse; height: 100px;">
+                    <table>
+                        <tr>
+                            <td>
+                                <span style="font-weight: bold;">
+                                    Damage Type:
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 25%; height: 100px;">
+                    <table>
+                        <tr>
+                            <td>
+                                <span style="margin-left: 10px;" id="spnDamageType"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 100%;background-color:white;  border-top:0px solid black;border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black; border-collapse: collapse;  padding: 10px;">
+            <tr>
+                <td style="width: 25%; border-top: 0px solid black; border-left: 0px solid black; border-right: 1px solid black; border-bottom: 0px solid black; border-collapse: collapse;">
+                    <table>
+                        <tr>
+                            <td>
+                                <span style="font-weight: bold;">
+                                    Prepared By
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%; text-align: left;">
+                                <span>
+                                    Date of Issued:
+                                </span><span id="DateofIssue"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Name:</span>
+                                <span id="spnSigned"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Job Title:</span>
+                                <span id="spnFunction"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 25%; border-right: 1px solid black;border-collapse: collapse;">
+                    <table>
+                        <tr>
+                            <td>
+                                <span id="spnheadertext" style="font-weight: bold;">
+                                    <!--Acknowledge by Garuda Indonesia Security (If available)-->
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%; text-align: left;">
+                                <span>
+                                    Date :
+                                </span><span id="DateofApproved"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Name:</span>
+                                <span id="spnSignedApproved"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Job Title:</span>
+                                <span id="spnFunctionApproved"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 25%; border-right: 1px solid black; border-collapse: collapse;">
+                    <table>
+                        <tr>
+                            <td>
+                                <span style="font-weight: bold;">
+                                    Approved By
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%; text-align: left;">
+                                <span>
+                                    Date :
+                                </span><span id="DateofApproved"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Name:</span>
+                                <span id="spnSignedApproved"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Job Title:</span>
+                                <span id="spnFunctionApproved"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 25%; border-top: 1px solid black; border-left: 0px solid black; border-right: 1px solid black; border-bottom: 0px solid black; border-collapse: collapse; height:120px; ">
+                    <table>
+                        <tr>
+                            <td>
+                                <span style="font-weight: bold;">
+                                    Signature:
+                                </span>
+                                <span style="margin-left: 10px;" id="spnSignature"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 25%; border-right: 1px solid black; border-top: 1px solid black; border-collapse: collapse; height: 120px; ">
+                    <table>
+                        <tr>
+                            <td>
+                                <span style="font-weight: bold;">
+                                    Signature
+                                </span>
+                                <span style="margin-left: 10px;" id="spnSignatureApp"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 25%; border-right: 1px solid black; border-top: 1px solid black; border-collapse: collapse; height: 120px; ">
+                    <table>
+                        <tr>
+                            <td>
+                                <span style="font-weight: bold;">
+                                    Signature
+                                </span>
+                                <span style="margin-left: 10px;" id="spnSignatureApp2"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 100%; height:80px; background-color:white;padding: 10px;">
+            <tr>
+                <td>
+                    <ul type="star" style="margin-left: 40px;">
+                        <li style="font-weight: bold;">This document does not require a signature and has been declared valid as a document supporting the claim payment.</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

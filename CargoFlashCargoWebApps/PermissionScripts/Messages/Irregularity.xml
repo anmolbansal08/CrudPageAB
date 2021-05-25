@@ -1,0 +1,49 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>ReportingStation</Name>
+    <Message>Reporting Station can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>IncidentCategory</Name>
+    <Message>Incident Category can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1005</Key>
+    <value>Selected record deleted successfully</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1006</Key>
+    <value>Selected Incident Category and AWB No. already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>5555</Key>
+    <value>This AWB is planned from Lying List so can not update this Irregularity</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>6666</Key>
+    <value>Pcs or Weight of this AWB No. is exceeding as compare to Pcs and Weight of Lying List ,so can not update this Irregularity</value>
+  </ServerMessage>
+
+  <!--<ServerMessage>
+    <Key>1001</Key>
+    <value>City already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>City Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>City Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>City Deleted Successfully.</value>
+  </ServerMessage>-->
+
+
+</Messages>
+

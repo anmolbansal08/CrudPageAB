@@ -1,0 +1,103 @@
+﻿<script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>
+
+<style>
+    .formlabelMy {
+        font-weight: bold;
+        font-size: 10px;
+        color: rgb(0, 0, 0);
+        font-family: Verdana;
+        text-align: right;
+        background-color: rgb(245, 245, 245);
+        padding-left: 3px;
+        padding-right: 5px;
+        width: 9%;
+        height: 25px;
+        border-right: 1px solid rgb(190, 189, 190);
+        border-left: 0px solid rgb(190, 189, 190);
+        border-bottom: 1px solid rgb(190, 189, 190);
+    }
+
+    .formInputcolumnMy {
+        font-family: Verdana, Geneva, sans-serif;
+        font-size: 8pt;
+        width: 11%;
+        border-bottom: 1px solid rgb(190, 189, 190);
+    }
+
+    .k-grid-header th.k-header {
+        vertical-align: inherit !important;
+    }
+
+    .width {
+        width: 65px;
+    }
+
+    .inProgress {
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+        font-size: 10px;
+        width: 50px;
+        text-align: left;
+        cursor: pointer;
+    }
+    .wa {
+        width: auto !important;
+    }
+</style>
+<table class='WebFormTable' id='tbl' validateonsubmit=true>
+    @*<tr><td class='formSection' colspan='10'>Master Book List</td></tr>*@
+    <tr><td class='formActiontitle' colspan='10'><span id='__SpanHeader__'>Master Book List</span><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+    <tr><td class='formbuttonrow' colspan='10'><input type='submit' onclick='GetFlightData()' name='operation' value='Search' class='btn btn-success' /></td></tr> 
+    <tr><td class='formSection' colspan='10'>Master Book List Search Criteria</td></tr>
+    <tr>
+        <td class=' formlabelMy' title='FlightDate'>
+            <font color='red'>*</font>
+            <span id='spnFlightDate'>Flight Date</span>
+        </td>
+        <td class='formInputcolumnMy'>
+            @*@Html.Hidden("FlightDate")*@
+            @Html.TextBox("FlightDate", null, new { controltype = "autocomplete", data_role = "autocomplete", data_valid = "required", data_valid_msg = "Flight Date can not be blank" })
+        </td>
+        <td class=' formlabelMy' title='Origin'>
+            @*<font color='red'>*</font>*@
+            <span id='spnOrigin'>
+                Origin
+            </span>
+        </td>
+        <td class='formInputcolumnMy'>
+            @Html.Hidden("OriginSNo")
+            @Html.TextBox("Text_OriginSNo", null, new {controltype = "autocomplete", data_role = "autocomplete"})
+        </td>
+        <td class=' formlabelMy' title='Destination'>
+            @*<font color='red'>*</font>*@
+            <span id='spnDestination'>Destination</span>
+        </td>
+        <td class='formInputcolumnMy'>
+            @Html.Hidden("DestinationSNo")
+            @Html.TextBox("Text_DestinationSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            @*data_valid = "required", data_valid_msg = "Destination can not be blank"*@
+        </td>
+        <td class=' formlabelMy' title='FlightNo'>
+            @*<font color='red'>*</font>*@
+            <span id='spnFlightNo'>Flight No</span>
+        </td>
+        <td class='formInputcolumnMy'>
+            @Html.Hidden("FlightNo")
+            @Html.TextBox("Text_FlightNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            @* data_valid = "required", data_valid_msg = "Flight No can not be blank"*@
+        </td>       
+        
+       
+    </tr>
+    <tr> <td class='formInputcolumnMy' height="20px;" colspan='10'>
+</tr>
+<tr><td class='formSection' colspan='10'>Master Book List Information</td></tr>
+</table>
+<div id="FightsGrid" style="width: 100%; height:350px; overflow: scroll; display: none;">
+
+</div>
+<div id="FlightDetails" > @*style="width: 100%; overflow: scroll; display: none;"*@
+
+</div>
+<script src="~/JScript/Master/MasterBookList.js"></script>

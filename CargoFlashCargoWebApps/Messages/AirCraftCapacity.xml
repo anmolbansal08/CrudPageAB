@@ -1,0 +1,35 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AircraftSNo</Name>
+    <Message>Aircraft Type can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Aircraft Info (Regn Nbr) already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Aircraft Info (Regn Nbr) Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Aircraft Info (Regn Nbr) Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Aircraft Info (Regn Nbr) Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Aircraft Info (Regn Nbr) Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+</Messages>

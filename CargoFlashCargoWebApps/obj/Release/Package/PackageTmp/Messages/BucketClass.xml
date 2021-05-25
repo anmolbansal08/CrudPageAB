@@ -1,0 +1,44 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>Name</Name>
+    <Message>Bucket Class Name can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Allocation</Name>
+    <Message>Allocation can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Priority</Name>
+    <Message>Priority can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>BucketClosureTime</Name>
+    <Message>Bucket Closure Time can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>NoOfRebooking</Name>
+    <Message>Rebooking can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Bucket Class Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Bucket Class Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Bucket Class Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Bucket Class Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

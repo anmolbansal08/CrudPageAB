@@ -1,0 +1,105 @@
+﻿@using Newtonsoft.Json;
+@using System.Web;
+@using System.Web.UI;
+@using System.Web.UI.WebControls;
+@using System.Text.RegularExpressions;
+@using System.IO;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@{
+    var exportType = Request.QueryString["exportType"];
+    var columnNames=Request.QueryString["columnNames"];
+    // convert JSON string into datatable
+    var dt = JsonConvert.DeserializeObject<DataTable>(Request.Form["hdnExportData"].ToString());
+   
+    for (int columnIndex = 0; columnIndex < columnNames.Split(',').Length-1; columnIndex++)
+        {
+            if (dt.Columns.Contains(columnNames.Split(',')[columnIndex])) { 
+            dt.Columns[columnNames.Split(',')[columnIndex]].SetOrdinal(columnIndex);}
+        }
+    if (columnNames.Split(',').Length < dt.Columns.Count)
+    {
+        for (int a = columnNames.Split(',').Length; a < dt.Columns.Count; a++)
+        {
+            dt.Columns.RemoveAt(a);
+            a--;
+        }
+    }
+    //// removing columns from table which contains SNo/Is
+    //for (int a = 0; a < dt.Columns.Count; a++)
+    //{
+    //    if (dt.Columns[a].ColumnName.EndsWith("SNo") || dt.Columns[a].ColumnName.StartsWith("Is"))
+    //    {
+    //        dt.Columns.RemoveAt(a);
+    //        a--;
+    //    }
+    //}
+    //return;
+    // gridview binding for excel/pdf export
+    var gridView = new GridView { AutoGenerateColumns = true, DataSource = dt };
+    // set font name and size.
+    gridView.Font.Name = "Arial";
+    gridView.Font.Size = 7;
+    gridView.DataBind();
+    // set header row font-bold, background-color gray
+    gridView.HeaderRow.Font.Bold = true;
+    gridView.HeaderRow.BackColor = System.Drawing.Color.LightGray;
+    // set header row font-bold
+    //gridView.FooterRow.Font.Bold = (ds.Tables.Count > 2 && ds.Tables[2].Columns.Count > 2 && isTotal);
+    //gridView.Rows[gridView.Rows.Count - 1].Font.Bold = true;
+    var sw = new StringWriter();
+    var hw = new HtmlTextWriter(sw);
+    gridView.RenderControl(hw);
+    // removing <a></a> and <img/> tags from string
+    string str = (sw.ToString().Replace("&lt;", "<").Replace("&gt;", ">").Contains("</a>") ? Regex.Replace(sw.ToString().Replace("&lt;", "<").Replace("&gt;", ">"), "<a [^>]*>", string.Empty).Replace("</a>", string.Empty) : (sw.ToString().Replace("&lt;", "<").Replace("&gt;", ">").Contains("<img") ? Regex.Replace(sw.ToString().Replace("&lt;", "<").Replace("&gt;", ">"), "<img [^>]*>", string.Empty) : sw.ToString()));
+    str = Regex.Replace(str.ToUpper(), "<DIV [^>]*>[^>]+</DIV>", string.Empty).Replace("&NBSP;", string.Empty);
+    //str = str.Replace("\r", string.Empty).Replace("\n", string.Empty).Replace("\t", string.Empty).Replace("<DIV>", string.Empty).Replace("</DIV>", string.Empty);
+    // removing html tags for CSV format export as <td></td> to , and <tr></tr> to \r\n.
+    if (exportType.ToUpper().Contains("CSV"))
+    {
+        //str = str.ToUpper().Replace("<TH>", "<TD>").Replace("</TH>", "</TD>");
+        str = Regex.Replace(str.ToUpper(), "<TH [^>]*>", "<TD>").Replace("</TH>", "</TD>");
+        str = Regex.Replace(str.ToUpper(), "<TR [^>]*>", "<TR>").Replace("<DIV>", string.Empty).Replace("</DIV>", string.Empty);
+        str = Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(str, "<TD [^>]*>", string.Empty).Replace("</TD>", ",").Replace("<TD>", string.Empty).Replace("\r\n", string.Empty).Replace("</TR><TR>", "\r\n").Replace("<TR>", string.Empty).Replace("</TR>", string.Empty).Replace("<TBODY>", string.Empty).Replace("</TBODY>", string.Empty), "<P [^>]*>", string.Empty).Replace("</P>", string.Empty), "<LABEL [^>]*>", string.Empty).Replace("</LABEL>", string.Empty), "<TABLE [^>]*>", string.Empty).Replace("</TABLE>", string.Empty).Replace("\t", string.Empty);
+    }
+    str = HttpUtility.UrlDecode(str);
+    HttpContext.Current.Response.Clear();
+    HttpContext.Current.Response.AddHeader("content-disposition", "attachment;filename=report." + (exportType.ToUpper().Contains("EXCEL") ? "xls" : (exportType.ToUpper().Contains("CSV") ? "csv" : "pdf")));
+    HttpContext.Current.Response.Charset = "";
+    HttpContext.Current.Response.ContentType = "application/" + (exportType.Contains("EXCEL") || exportType.ToUpper().Contains("CSV") ? "excel" : "pdf");
+
+    if (exportType.ToUpper().Contains("EXCEL") || exportType.ToUpper().Contains("CSV")){
+        HttpContext.Current.Response.Write(str);
+    }
+    else if (exportType.ToUpper().Contains("PDF"))
+    {
+        //// Create New PDF Document
+        //var sr = new StringReader(str);
+        //// PDF 
+        //var pdfDoc = new Document(PageSize.A4.Rotate(), 15f, 15f, 15f, 15f);
+        //var htmlparser = new HTMLWorker(pdfDoc);
+        ////PdfWriter writer = PdfWriter.GetInstance(pdfDoc, HttpContext.Current.Response.OutputStream);
+        //PdfWriter.GetInstance(pdfDoc, HttpContext.Current.Response.OutputStream);
+        //pdfDoc.Open();
+
+        //htmlparser.Parse(sr);
+        //pdfDoc.Close();
+        //HttpContext.Current.Response.Write(pdfDoc);
+    }
+    HttpContext.Current.Response.E();
+}
+
+@*<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+    
+    </div>
+</body>
+</html>*@

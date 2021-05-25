@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Credit Invoice Report</title>
+
+    <script src="/Scripts/jquery-1.7.2.js"></script>
+
+    <script src="/Scripts/json2.js"></script>
+    <script src="/JScript/Tariff/InvoiceReport.js"></script>
+    <script src="/Scripts/JqueryPrint.js"></script>
+    <script src="/Scripts/jspdf.min.js"></script>
+    <script src="/Scripts/ExportToPDF.js"></script>
+    <style>
+        table, th, td {
+            text-align: center;
+           }
+
+        .bod {
+            border: 1px solid black;
+            /*border-collapse: collapse;*/
+        }
+
+        .fnt {
+            font: 10px arial, sans-serif;
+        }
+       
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+        });
+    </script>
+   
+</head>
+<body>
+    <div id="Containerdiv" style="width:100%;height:400px;">
+        <table id="maintbl" border="1" cellpadding="0" cellspacing="0" width="100%">
+            <tr><td colspan="16" style="text-align:center"><span id="spnlog"><img src=../../../images/logo_garuda_indonesia%20new.jpg alt="Garuda Indonesia" style="width:200px;height:90px;"></span></td></tr>
+            <tr><td style="text-align:center" colspan="16">Warehouse Invoice Details</td></tr>
+            <!--<tr><td colspan="12"><hr /></td></tr> -->
+            <tr style="font-size:12px;">
+                <th class="bod">INVOICE NO</th>
+                <th class="bod" colspan="2"><span id="spnInvoiceNo"></span></th>
+                <th class="bod" colspan="2">INVOICE DATE</th>
+                <th class="bod" colspan="2"><span id="spnInvoiceDate"></span></th>
+                <th class="bod" colspan="2">CURR :</th>
+                <th class="bod" colspan="2"><span id="CurrencyCode"></span></th>
+                <th class="bod" colspan="2">PERIOD:</th>
+                <th class="bod"><span id="spnPayment_Terms"></span></th>
+            </tr>
+            <tr>
+                <td colspan="14" id="trinvoicedetails"></td>
+            </tr>
+            <!--<tr class="fnt">
+            <td>AWB No. </td>
+            <td>Delivery Bill No</td>
+            <td>Issue Date</td>
+            <td>Orig-Dest</td>
+            <td>Charge Weight</td>
+            <td>Storage Charge</td>
+            <td>Admin Charge</td>
+            <td>Kade Charge</td>
+             <td>RA Charge</td>
+            <td>Cargo Service Charge Tax</td>
+            <td colspan="4">Delivery Bill Total</td>
+
+
+
+        </tr>-->
+            <!--<tr class="fnt" id="trAWbDetails">
+        <td style="border-right-color:transparent;"></td>
+        <td style="text-align: left; border-left-color: transparent;" colspan="13">Export International</td>
+        </tr>-->
+            <!--<tr class="fnt">
+                    <td>126-11119496</td>
+                    <td>AD 1230121</td>
+                    <td>30 Aug 2017</td>
+                    <td>CGK-SYD</td>
+                    <td>78</td>
+                    <td>93600</td>
+                    <td>20000</td>
+                    <td>25350</td>
+                    <td> 62,400</td>
+                    <td> 14,196</td>
+                    <td colspan="4">#VALUE!</td>
+
+
+
+        </tr>
+
+                    <tr class="fnt"><td>126-11119706</td><td>AD 1230122</td>
+                    <td>30 Aug 2017</td><td>CGK-SIN</td>
+                    <td>30</td><td>36,000</td>
+                    <td>20,000</td><td>598,500</td>
+                    <td> 24,000 </td><td> 5,460</td>
+                    <td colspan="4">#VALUE!</td>
+
+             </tr>-->
+            <!--<tr class="fnt">
+           <td colspan="5">Sub Total	</td>
+           <td>129,600</td>
+           <td>40,000 </td>
+           <td>1,412,500 </td>
+           <td>35,100 </td>
+           <td>86,400</td>
+
+        <tr class="fnt">
+               <td colspan="5">Total	</td>
+               <td>129,600</td>
+               <td>40,000 </td>
+               <td>1,412,500 </td>
+               <td>35,100 </td>
+               <td>86,400</td>
+
+
+           </tr>-->
+
+        </table>
+
+    </div>
+</body>
+</html>
+
+							  	 	 	 	 
+
+
+
+
+
+
+
+
+

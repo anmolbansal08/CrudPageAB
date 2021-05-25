@@ -1,0 +1,44 @@
+﻿<Messages>
+  <!--#region Account Group Trans XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  AccountGroupTrans
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Tarun Kumar
+  Created On:		21 May 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>AccountSNo</Name>
+    <Message>Account Name can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Account Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Account Group Trans Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Account Group Trans Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Account Group Trans Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+</Messages>

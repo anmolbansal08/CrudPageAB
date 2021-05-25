@@ -1,0 +1,44 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AirportName</Name>
+    <Message>Airport Name can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>AirportCode</Name>
+    <Message>Airport Code can not be blank</Message>
+  </DataFieldName>
+ 
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Airport Code already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Airport Name already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+
+    <Key>2000</Key>
+    <value>Airport  Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Airport  Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Airport  Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2601</Key>
+    <value>Duplicate entries found. Please amend to proceed.</value>
+  </ServerMessage>
+</Messages>
+
+
+

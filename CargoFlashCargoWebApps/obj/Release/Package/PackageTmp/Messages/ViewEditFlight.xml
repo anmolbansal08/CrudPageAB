@@ -1,0 +1,10 @@
+﻿<Messages>
+<ServerMessage>
+  <Key>2001</Key>
+  <value>User Updated Successfully.</value>
+</ServerMessage>
+<ServerMessage>
+  <Key>2002</Key>
+  <value>User Deleted Successfully.</value>
+</ServerMessage>
+</Messages>

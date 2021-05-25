@@ -1,0 +1,43 @@
+﻿<Messages>
+  <!--#region Commodity Package XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  CommodityPackage
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Tarun Kumar
+  Created On:		22 May 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>Name</Name>
+    <Message>Name can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Commodity Package Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Commodity Package Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Commodity Package Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2627</Key>
+    <value>Violation of Primary keys</value>
+  </ServerMessage>
+</Messages>

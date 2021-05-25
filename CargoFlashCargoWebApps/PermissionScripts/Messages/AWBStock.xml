@@ -1,0 +1,40 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AirlineSNo</Name>
+    <Message>AirlineSNo can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>IsAutoAWB</Name>
+    <Message>IsAutoAWB can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>StartRange</Name>
+    <Message>Start Range can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>EndRange</Name>
+    <Message>End Range can not be blank</Message>
+  </DataFieldName>
+  
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>AWB Stock already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>AWB Stock Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>AWB Stock Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>AWB Stock Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

@@ -1,0 +1,43 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>TerminalName</Name>
+    <Message>Terminal Name can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CityName</Name>
+    <Message>City Name can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>AirportName</Name>
+    <Message>Airport Name can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Terminal already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>X-Ray Machine already assign another Terminal</value>
+  </ServerMessage>
+
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Terminal Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Terminal Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Terminal Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

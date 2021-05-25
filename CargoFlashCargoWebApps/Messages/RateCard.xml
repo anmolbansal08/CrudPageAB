@@ -1,0 +1,26 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>RateCardName</Name>
+    <Message>Rate Card Name Name can not be blank</Message>
+  </DataFieldName>
+
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Rate Card already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Rate Card Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Rate Card Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Rate Card Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

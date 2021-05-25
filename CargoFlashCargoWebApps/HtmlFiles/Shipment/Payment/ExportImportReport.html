@@ -1,0 +1,282 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <title></title>
+    <script src="/Scripts/jquery-1.7.2.js"></script>
+
+    <script src="/Scripts/json2.js"></script>
+    <script src="/JScript/Tariff/InvoiceReport.js"></script>
+    <script src="/Scripts/JqueryPrint.js"></script>
+    <script src="/Scripts/jspdf.min.js"></script>
+    <script src="/Scripts/ExportToPDF.js"></script>
+    <meta charset="utf-8" />
+    <style>
+        .top5 {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        .fod {
+        font: 10px arial,
+          sans-serif;
+        }
+        .borderhide {
+            border-bottom-color: transparent;
+            border-top-color: transparent;
+            border-left-color: transparent;
+            border-right-color: transparent;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+        });
+    </script>
+</head>
+<body>
+    <div id="containMain" style="width: 100%; height: 800px; border: 1px solid black; border-collapse:collapse;">
+        <div id="dimg" style="width:100%;">
+            <table id="tblimg" style="width: 100%; ">
+                <tr><td align="center"><span id="spnimg"><img id="imgAirline" src=../../../images/logo_garuda_indonesia%20new.jpg alt="Garuda Indonesia" style="width:200px;height:90px;"></span></td></tr>
+                <tr>
+                    <td align="center" style="font-weight: bolder; padding-top:10px;" colspan="3"><span id="spntitle" style="border-bottom:1px solid #000;">Faktur </span><br />Invoice
+                        <hr />
+                    </td>
+
+                </tr>
+
+            </table>
+        </div>
+        <div id="child2" style="width:100%; height:150px;">
+            <table id="tbl2left" class="fod" cellpadding="2" style="width: 50%; height: 100px; border-right: 1px solid black; padding-top: 5px;" align="left" >
+
+                <tr>
+                    <td>Company Code</td><td>:</td><td>INDONESIA</td>
+                 </tr>
+
+                <tr>
+                    <td>Business Area</td><td>:</td><td>CGK-3</td>
+               </tr>
+
+                 <tr>
+                    <td><span style="border-bottom:1px solid #000">Kode</span><br />Code</td><td>:</td><td><span id="spnCode"></span></td>
+                </tr>
+
+                <tr>
+                    <td><span style="border-bottom:1px solid #000">Nama</span><br />Name</td><td>:</td><td><span id="spnName"></span></td>
+                </tr>
+
+                <tr>
+                    <td><span style="border-bottom:1px solid #000">Alamat</span><br />Address</td><td>:</td><td><span id="spnAddress"></span></td>
+               </tr>
+
+                <tr>
+                    <td><span style="border-bottom:1px solid #000">Telepone</span><br />Phone</td><td>:</td><td><span id="spnPhone"></span></td>
+              </tr>
+
+            </table>
+            <table id="tbl2right" class="fod" cellpadding="2" align="right" style="width: 50%; height: 100px; padding-top: 5px;">
+
+                <tr>
+                    <td><span style="border-bottom:1px solid #000">No.Faktur </span><br />Invoice No</td>
+                    <td colspan="2"><span id="spnInvoice_No"></span></td>
+
+                </tr>
+                <tr>
+                    <td><span style="border-bottom:1px solid #000">Tanggal Faktur</span><br />Invoice Date</td>
+                    <td colspan="2"><span id="spnInvoice_Date"></span></td>
+
+                </tr>
+
+                <tr>
+                    <td><span style="border-bottom:1px solid #000">Syarat Bayar</span><br />Payment Terms</td>
+                    <td colspan="2"><span id="spnPayment_Terms"></span></td>
+
+                </tr>
+                <tr>
+                    <td><span style="border-bottom:1px solid #000">Jatuh Tempo</span><br />Payment Due Date</td>
+                    <td colspan="2"><span id="spnPayment_Due_Date"></span></td>
+                </tr>
+
+            </table>
+
+
+            <table id="maintable" class="top5" border="1" style="border: 1px solid #000;  border-collapse: collapse; width:100%;height:100px;">
+                <tbody>
+                    <tr class="fod" id="trcharges">
+                        <th class="top5" width="100px" style="text-align:center">Referensi<br />Reference</th>
+
+                        <th class="top5" width="100px" style="text-align:center">Nomor<br />Number</th>
+
+                        <th class="top5" width="40%" colspan="4" style="text-align:center">Keterangan<br />Remark</th>
+                        <th class="top5" width="5%" style="text-align:center">Mata Uang<br />Currency</th>
+                        <th class="top5" width="10%" style="text-align:center">Jumlah <br />Amount</th>
+                    </tr>
+
+                   <!-- <tr class="fod">
+                        <td align="center">Billing Period</td>
+                        <td align="center" colspan="7">
+                            <!--<table class="top5" style="border: 1px solid #000;  border-collapse: collapse; width:100%;height:100px;">
+                                <tr>
+                                    <td class="top5" align="center">1</td>
+                                    <td class="top5" align="center">Storage Charge</td>
+                                    <td class="top5" align="center">IDR</td>
+                                    <td class="top5" align="center">2000</td>
+                                </tr>
+                            </table>
+                        </td>
+                      
+                    </tr>-->
+
+                  
+                    
+                    <!--<tr class="fod">
+                        <td rowspan="5" align="center" valign="middle">Billing Period Aug</td>
+                        <td align="center">1</td>
+                        <td colspan="4" align="center">Storage Charge</td>
+                        <td align="center">IDR</td>
+                        <td align="center">2000</td>
+                    </tr>
+                    <tr class="fod">
+                        <td align="center">2</td>
+                        <td colspan="4" align="center">Admin Charge</td>
+                        <td align="center">IDR</td>
+                        <td align="center">2000</td>
+                    </tr>
+                    <tr class="fod">
+                        <td align="center">3</td>
+                        <td colspan="4" align="center">Kade Charge</td>
+                        <td align="center">IDR</td>
+                        <td align="center">25000</td>
+                    </tr>
+                    <tr class="fod">
+                        <td align="center">4</td>
+                        <td colspan="4" align="center">RA Charge</td>
+                        <td align="center">IDR</td>
+                        <td align="center">20000</td>
+                    </tr>
+                    <tr class="fod">
+                        <td align="center">5</td>
+                        <td colspan="4" align="center">Cargo Service Charge</td>
+                        <td align="center">IDR</td>
+                        <td align="center">25000</td>
+
+                    </tr>-->
+
+
+
+                    <!--<tr class="fod">
+                        <td width="100px" colspan="2" style="border-bottom-color: transparent; border-right-color: transparent;" class="top5"></td>
+                      
+                        <td width="100px" colspan="2" style="border-bottom-color: transparent;" class="top5"></td>
+                        <td class="top5" width="40%" colspan="2" style="text-align:left">SubTotal</td>
+                        <td class="top5" width="5%" style="text-align:center">IDR</td>
+                        <td class="top5" width="10%" style="text-align:center"><span id="spnSubTotal"></span>310,756</td>
+                    </tr>
+                    <tr class="fod">
+                        <td width="100px" colspan="2" style="border-bottom-color: transparent; border-top-color: transparent; border-right-color: transparent;" class="top5"></td>
+                        <td width="100px" colspan="2" style="border-bottom-color: transparent;" class="top5"></td>                       
+                        <td class="top5" width="40%" colspan="2" style="text-align:left">Value Added Tax (PPN/10%)</td>
+                        <td class="top5" width="5%" style="text-align:center">IDR</td>
+                        <td class="top5" width="10%" style="text-align:center"><span id="spnValue_Added_Tax"></span>310,756</td>
+                    </tr>
+                    <tr class="fod">
+
+                        <td width="100px" colspan="2" style="border-bottom-color: transparent; border-top-color: transparent; border-right-color: transparent;"class="top5"></td>
+                        <td width="100px" colspan="2" style="border-bottom-color: transparent;" class="top5"></td>                      
+                        <td class="top5" width="40%" colspan="2" style="text-align:left">Total Invoice Amount</td>
+                        <td class="top5" width="5%" style="text-align:center">IDR</td>
+                        <td class="top5" width="10%" style="text-align:center"><span id="spnTotal_Invoice_Amount"></span>341,832</td>
+                    </tr>
+                    <tr class="fod">
+                        <td width="100px" colspan="2" style="border-top-color: transparent; border-right-color: transparent;" class="top5"></td>
+                        <td width="100px" colspan="2" style="border-bottom-color: transparent;" class="top5"></td>                        
+                        <td class="top5" width="40%" colspan="2" style="text-align:left">NET TO PAY</td>
+                        <td class="top5" width="5%" style="text-align:center">IDR</td>
+                        <td class="top5" width="10%" style="text-align:center"><span id="spnNET_TO_PAY"></span>341,832</td>
+                    </tr>-->
+
+                    <tr class="fod">
+                        <td colspan="2" rowspan="2">
+                            Terms & Conditions*<br />
+                            1. Upon payment please state invoice number<br />
+                            2. Transfer Payment to:
+                            <br />
+                            PT GARUDA INDONESIA <br />
+                            BANK BNI<br />
+                            Cab. Utama Tangerang <br />
+                            Virtual Account :9880000101108159
+
+                        </td>
+                        <td rowspan="2" colspan="2"></td>
+
+                        <td>Terbilang:</td>
+                        <td colspan="3"><span id="spnTerbilang"></span></td>
+                    </tr>
+                    <tr class="fod">
+                     <td width="10%">Spelling:</td>
+                        <td colspan="3"><span id="spnSpelling"></span></td>
+                    </tr>
+                
+                </tbody>
+            </table>
+            <!--<div id="2tbl" style="width:100%;height:200px; ">
+   
+                <table style="width: 30%; border: 1px solid black; height: 80px;" align="left">
+                    <tr class="fod">
+                        <td>
+                            Terms & Conditions*<br />
+                            1. Upon payment please state invoice number<br />
+                            2. Transfer Payment to:
+                            <br />
+                            PT GARUDA INDONESIA <br />
+                            BANK BNI<br />
+                            Cab. Utama Tangerang <br />
+                            Virtual Account :9880000101108159
+
+                        </td>
+                    </tr>
+                </table>
+
+
+
+                <table align="right" style="width:55%;border:1px solid black;height:100px,">
+                    <tr class="fod">
+                    
+                        <td >Terbilang :</td>
+                        <td colspan="3">Tiga ratus empat puluh satu ribu delapan ratus tiga puluh dua rupiah</td>
+                    </tr>
+                   
+                    <tr class="fod">
+                        <td>Spelling:</td>
+                        <td colspan="3">Three hundred forty one thousand eight hundred thirty two rupiahs</td>
+                    </tr>
+                </table>
+            </div>-->
+            <table class="fod" style=" width:100%;height:100px;" id="child67">
+
+                
+
+                <tr>
+                    <td>Disiapkan Oleh / Prepared by</td>
+
+                    <td>Disetujui oleh / Approved by</td>
+                </tr>
+
+                <tr>
+                    <td style="text-decoration:underline"><span id="spnPreparedBy"></span></td>
+
+                    <td style="text-decoration:underline"><span id="spnApprovedby"></span></td>
+                </tr>
+
+                <tr>
+                    <td>NOTES <br /> <br/>1. This is Computer Generated Report No Need Of Signature</td>
+                </tr>
+
+              </table>
+        </div>
+  </div>
+</body>
+</html>
+

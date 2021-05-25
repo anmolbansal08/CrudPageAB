@@ -1,0 +1,397 @@
+﻿<!--<div id="divrViewInvoice">
+    <div id="divInvoiceDetails" style="display:block">
+        <table class="PageInsideTable" style="border: 1px solid black;border-spacing: 1px;margin:10px" width="99%">
+            <tbody>
+                <tr>
+                    <td colspan="6" align="center"><img id="AirlineLogo" src="Images/AirArabiaLogo.gif" style="width:100px"></td>
+                </tr>
+                <tr>
+                    <td colspan="6" align="center" id="tdAirlineAddress">P O BOX 132<br>Sharjah, UAE</td>
+                </tr>
+                <tr>
+                    <td colspan="6" align="center" style="font-size:20px"><b>INVOICE</b></td>
+                </tr>
+                <tr>
+                    <td width="20%">Date</td>
+                    <td width="10%">:</td>
+                    <td width="20%" id="tdDate">Jun-01-2013</td>
+                    <td width="20%">GSA/CSA/Airline</td>
+                    <td width="10%">:</tdwidth="20%">
+                    <td width="20%" id="tdGSA_CSA_Airline">AL MULLA CARGO</td>
+                </tr>
+                <tr>
+                    <td width="20%">Invoice No</td>
+                    <td width="10%">:</td>
+                    <td width="20%"><a href="#" id="tdInvoiceNo"> CAIUAE13000002</a></td>
+                    <td width="20%">Address</td>
+                    <td width="10%">:</td>
+                    <td width="20%" id="tdAddress">PO BOX 1644 , KINDOM OF BAHRAIN</td>
+                </tr>
+                <tr>
+                    <td width="20%">Period</td>
+                    <td width="10%">:</td>
+                    <td width="20%" id="tdPeriod" colspan="4">2ND F/N JUNE 2013</td>
+                </tr>
+                <tr>
+                    <td width="20%">Billing Currency</td>
+                    <td width="10%">:</td>
+                    <td width="20%" id="tdBillingCurrency">AED</td>
+                    <td width="20%">Country</td>
+                    <td width="10%">:</td>
+                    <td width="20%" id="tdCountry">BAHRAIN</td>
+                </tr>
+                <tr>
+                    <td width="20%">AR-Code</td>
+                    <td width="10%">:</td>
+                    <td width="20%" id="tdARCode">AR-4314</td>
+                    <td width="20%">Attention</td>
+                    <td width="10%">:</td>
+                    <td width="20%" id="tdAttention"></td>
+                </tr>
+                <tr>
+                    <td width="20%">Due Date</td>
+                    <td width="10%">:</td>
+                    <td width="20%" id="tdDueDate" colspan="4">Jul-16-2013</td>
+                </tr>
+                <tr>
+                    <td width="20%">Due Days</td>
+                    <td width="10%">:</td>
+                    <td width="20%" id="tdDueDays" colspan="4">0</td>
+                </tr>
+                <tr>
+                    <td colspan="4" align="center" style="padding: 2px 2px 2px 2px;
+    height: 24px;
+    background-color: #DBEAF9;
+    font-weight: bold;
+    font-size: 10px;
+    text-align: center;
+    color: black;">
+                        Remarks
+                    </td>
+                    <td colspan="2" align="center" style="padding: 2px 2px 2px 2px;
+    height: 24px;
+    background-color: #DBEAF9;
+    font-weight: bold;
+    font-size: 10px;
+    text-align: center;
+    color: black;">
+                        Amount
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="dataTableAlternateRow"><br><br><br><span id="brRemarks">Cargo sales for the period 2ND F/N JUNE 2013</span><br><br><br><br></td>
+                    <td colspan="2" class="dataTableAlternateRowRight"><br><br><br><span id="brAmount">6,613.46</span> <br><br><br><br></td>
+                </tr>
+                <tr>
+                    <td colspan="4" align="left"><b>Remittance Instructions</b></td>
+                    <td colspan="2" align="center"></td>
+                </tr>
+                <tr>
+                    <td align="left">ACCOUNT NAME</td>
+                    <td>:</td>
+                    <td id="tdAccountName" colspan="4" align="left">Air Arabia PJSC</td>
+                </tr>
+                <tr>
+                    <td align="left">ACCOUNT NO (AED)</td>
+                    <td>:</td>
+                    <td colspan="4" align="left" id="tdAccountNo">040-110900-001</td>
+                </tr>
+                <tr>
+                    <td align="left">IBAN (AED)</td>
+                    <td>:</td>
+                    <td colspan="4" align="left" id="tdIBAN">AE480200000040110900001</td>
+                </tr>
+                <tr>
+                    <td align="left">BANK</td>
+                    <td>:</td>
+                    <td colspan="4" align="left" id="tdBank">HSBC Bank Middle East Limited</td>
+                </tr>
+                <tr>
+                    <td align="left">BANK ADDRESS</td>
+                    <td>:</td>
+                    <td colspan="4" align="left" id="tdBankAddress">P O Box  25, Sharjah, United Arab Emirates</td>
+                </tr>
+                <tr>
+                    <td align="left">SWIFT</td>
+                    <td>:</td>
+                    <td colspan="4" align="left" id="tdSwift">BBMEAEAD</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="padding: 2px 2px 2px 2px;background-color: #DBEAF9;color: black;"><div style="float:left"> Value in words: <span id="divValueInWords">Six Thousand Six Hundred and Thirteen   Point Fourty Six  </span></div> <div style="float:right">Total</div></td>
+                    <td style="padding: 2px 2px 2px 2px;background-color: #DBEAF9;color: black;" colspan="2" id="tdValueInNumber">6,613.46</td>
+                </tr>
+                <tr>
+                    <td colspan="6" align="left" style="font-size:8px">* All payments shall be made without deduction for any taxes or other duties, but if you are required by law to made any such deduction, you will pay such additional </td>
+                </tr>
+                <tr>
+                    <td colspan="6" align="left" style="font-size:8px">** Any discrepancies whatsoever should be notified within seven days upon receipt of this document.** </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>-->
+
+<style type="text/css">
+    #table2 {
+        border-collapse: collapse;
+    }
+</style>
+
+<div id="divrViewInvoice">
+    <div id="divInvoiceDetails" style="display:block">
+        <table class="PageInsideTable" style="border: 1px solid black;border-spacing: 1px;margin:10px" width="99%">
+            <tbody>
+                <tr>
+                    <td colspan="6" align="CENTER"><img id="AirlineLogo"  src="logo/AirArabialogo.jpg" style="width:20%;height:90%"></td>
+                </tr>
+                <TR><TD COLSPAN="6" ALIGN="CENTER" STYLE="FONT-SIZE:20PX; FONT-FAMILY:Verdana;"><B>INVOICE</B></TD></TR>
+              
+                <TR><TD COLSPAN="6" ALIGN="CENTER" STYLE="FONT-SIZE:20PX;FONT-FAMILY:Verdana"><BR /><B>AIR ARABIA PJSC - AIR ARABIA</B> </TD> </TR>
+               
+                <TR><TD COLSPAN="6" ALIGN="CENTER" STYLE="FONT-SIZE:20PX;FONT-FAMILY:Verdana"><BR /><B>A One Building, Air Arabia PJSC Head Office, Sharjah Airport Road, Sharjah,132 United Arab Emirates </B></TD> </TR>
+                
+                <TR><TD COLSPAN="6" ALIGN="CENTER" STYLE="FONT-SIZE:20PX;FONT-FAMILY:Verdana"><BR /><B>TRN :  </B></TD> </TR>
+               
+                <TR>
+                    <TD COLSPAN="7">
+                        <br />
+
+                        <table align="center" STYLE="WIDTH:100%;height:50%;BORDER-COLLAPSE:COLLAPSE" border="1" ID='TABLE2'>
+                            <TR>
+                                <TH COLSPAN=5 ALIGN="LEFT">Customer Details</TH>
+                                <TH>Invoice Number</TH>
+                                <TH>Invoice Date</TH>
+                            </TR>
+                            <TR>
+                                <TH COLSPAN=3 ALIGN="LEFT">Company Name</TH>
+                                <TD COLSPAN=2 ALIGN="left">
+                                   <span id="tdGSA_CSA_Airline"></span>
+                                </TD>
+                                <TD ALIGN="center" id="tdInvoiceNo"></TD>
+                                <TD ALIGN="center" id="tdDate"></TD>
+                            </TR>
+                            <TR>
+                                <TH COLSPAN=3 ALIGN="LEFT">Address</TH>
+                                <TD COLSPAN=4 ALIGN="left" id="tdAddress"> 
+                                
+                                </TD>
+                            </TR>
+                            <TR>
+                                <TH COLSPAN=3 ALIGN="LEFT">TRN</TH>
+                                <TD COLSPAN=4 ALIGN="LEFT"></TD>
+                            </TR>
+                            <TR>
+                                <TH COLSPAN=3 ALIGN="LEFT">Date of Supply</TH>
+                                <TD COLSPAN=4 ALIGN="left">
+                                    <SPAN ID="tdDueDate"></SPAN>
+                                </TD>
+                            </TR>
+                           
+                                        <TR id="tdforusd">
+                                            <TH ALIGN="left">Description of goods/services</TH>
+                                            <TH ALIGN="center">Qty</TH>
+                                            <TH ALIGN="center">
+                                                Unit Price
+                                                (<span class="tdBillingCurrency"></span>)
+                                            </TH>
+                                            <TH ALIGN="center">
+                                                Total Value
+                                                (<span class="tdBillingCurrency"></span>)
+                                            </TH>
+                                            <TH ALIGN="center">
+                                                Discount
+                                                (<span class="tdBillingCurrency"></span>)
+                                            </TH>
+                                            <TH ALIGN="center">
+                                                Total Amount
+                                                (<span class="tdBillingCurrency"></span>)
+                                            </TH>
+                                            <TH ALIGN="center">
+                                                Total Amount
+                                                (<span class="tdBillingCurrency"></span>)
+                                            </TH>
+                                        </TR>
+                                        <TR id="tdforusd1">
+                                        <TD ALIGN="center" class="tdCommodity"> </TD>
+                                         <TD></TD> 
+                                        <TD align="right"> <span class="brAmount"> </span> </TD>
+                                         <TD align="right"> <span class="brAmount"> </span> </TD>
+                                         <TD align="right"> </TD>
+                                         <TD align="right"> <span class="brAmount"> </span> </TD>
+                                        <TD align="right"> <span class="brAmount"> </span> </TD>
+                                        </TR>
+                                        <TR id="tdforusd2">
+                                        <TD COLSPAN=1 ALIGN="left"><B>Exchange Rate</B> <span id="tdExchangeRate"></span></TD>
+                                        <TD COLSPAN=5 align="right"> <span class="brAmount"></span> </TD>
+                                         <TD align="right"> <span class="brAmount"></span> </TD>
+                                        </TR>
+                                        <TR id="tdforusd3">
+                                            <TD COLSPAN=7 ALIGN="LEFT"> <B>Total:</B> <span class="divValueInWords1"  style="text-align: center;"></span> </TD> 
+                                        </TR>
+
+
+                                 
+                            <!--<tr>
+                                <td colspan="8" id="tdforaed">
+                                    <TABLE align="center" STYLE="WIDTH:100%; BORDER-COLLAPSE:collapse;" border="1" ID='TABLE4'>-->
+                                        <!--<TR id="tdforaed">
+                                            <TH ALIGN="left">Description of goods/services</TH>
+                                            <TH ALIGN="center" colspan="2">Qty</TH>
+                                            <TH ALIGN="center">
+                                                Unit Price
+                                                (AED)
+                                            </TH>
+                                            <TH ALIGN="center">
+                                                Total Value
+                                                (AED)
+                                            </TH>
+                                            <TH ALIGN="center">
+                                                Discount
+                                                (AED)
+                                            </TH>
+                                            <TH ALIGN="center">
+                                                Total Amount
+                                                (AED)
+                                            </TH>
+
+                                        </TR>
+                                        <TR  id="tdforaed1">
+                                            
+
+                                        <TD ALIGN="center" class="tdCommodity" ></TD>
+                                         <TD colspan="2">-</TD> 
+                                            <TD align="right"> <span class="brAmountforaed"></span> </TD> 
+                                        <TD align="right"><span class="brAmountforaed"></span> </TD> 
+                                        <TD align="right"> </TD> 
+                                        <TD align="right"> <span class="brAmountforaed"></span> </TD>
+                                        </TR>
+
+                                        <TR  id="tdforaed2">
+                                        <TD COLSPAN=7 ALIGN="LEFT"> <B>Total:</B> <span id="divValueInWords1"></span> <span class="brAmountforaed" align="right"> </span> </TD>
+                                        </TR>-->
+
+
+                                    <!--</TABLE>
+                                </td>
+                            </tr>-->
+                                  
+
+                               
+
+                        </TABLE>
+                    </TD>
+
+                </TR>
+
+                <TR>
+                    <TD>
+                        <BR><b>
+                            Terms/Conditions of the business:
+                            </b>
+                    </TD>
+                </TR>
+                <TR>
+                    <TD STYLE="MARGIN-LEFT:10%">
+                        <br /> <B>
+                            <i>Payment Terms: </i>
+                        </B>
+                        <i>07 Days</i>
+                    </TD>
+                  
+                </TR>
+                <TR>
+                    <TD>
+                     <p>
+                            * All payments shall be made without deduction for any taxes or other duties, but if you are required by
+                            law to make any such deduction, you will pay such additional amounts.
+                        </p>
+                    </TD>
+                </TR>
+                <TR>
+                    <TD>
+                      <p>
+                            * Any discrepancies, whatsoever should be notified within seven days from the date of receipt of this
+                            document.
+                        </p>
+                    </TD>
+                </TR>
+                <TR>
+                    <TD>
+                      
+                        <p>* All business transactions subject to the company's terms & condition, and subject to U.A.E. laws.</p>
+                    </TD>
+                </TR>
+                <TR></TR>
+                <TR>
+            
+                    <TD ALIGN="LEFT">
+                        <br /><B>OUR AED BANK ACCOUNT DETAILS:</B></TD>
+
+                </TR>
+                <TR></TR>
+                <!--<TR>
+                    <TD ALIGN="LEFT"><B>ACCOUNT NO (AED) :</B><SPAN ID="tdAccountNo"></SPAN> </TD>
+
+
+                </TR>
+                <TR>
+                    <TD ALIGN="LEFT"><B>IBAN (AED) : </B><span ID="tdIBAN"></span></TD> 
+
+                </TR>
+                <TR>
+                    <TD ALIGN="LEFT"><B>ACCOUNT NAME : </B><span ID="tdAccountName"></span></TD> 
+
+                </TR>
+                <TR>
+                    <td ALIGN="LEFT"><B>CURRENCY : </B><span class=tdBillingCurrency></span> </td>
+
+
+                </TR>
+                <TR>
+                    <TD ALIGN="LEFT"><b>SWIFT CODE :</b> <span id="tdSwift"></span></TD>
+
+                </TR>
+
+                <!--<TR>
+                    <TD ALIGN="LEFT">BANK</TD>
+                    <TD>:</TD>
+                    <TD COLSPAN="4" ALIGN="LEFT" ></TD>
+                </TR>
+                <TR>
+                    <TD ALIGN="LEFT"><B>BANK NAME & ADDRESS : </B><SPAN ID="tdBank"></SPAN><BR /> <SPAN ID="tdBankAddress"></SPAN></TD>
+
+                </TR> -->
+
+                <TR>
+                    <TD ALIGN="LEFT"><b>ACCOUNT NO (AED) </b>:250981020001</TD>
+
+
+                </TR>
+                <TR>
+                    <TD ALIGN="LEFT"><B>IBAN (AED) </B>: AE910030000250981020001</TD>
+
+                </TR>
+                <TR>
+                    <TD ALIGN="LEFT"><B>ACCOUNT NAME </B>: Air Arabia PJSC</TD>
+
+                </TR>
+                <TR>
+                    <td ALIGN="LEFT"><B>CURRENCY  </B>: AED</td>
+
+
+                </TR>
+                <TR>
+                    <TD ALIGN="LEFT"><b>SWIFT CODE </b>: ADCBAEAA</TD>
+
+                </TR>
+
+                <TR>
+                    <TD ALIGN="LEFT"><B>BANK NAME & ADDRESS  </B>: Abu Dhabi Commercial Bank,Al Durrah Tower Buhaira Corniche,P.O. Box 66644, Sharjah, UAE</TD>
+
+                </TR>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+

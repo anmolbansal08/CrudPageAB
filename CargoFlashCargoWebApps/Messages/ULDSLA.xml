@@ -1,0 +1,47 @@
+﻿<Messages>
+  #region ULDSLA XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  ULDSlA
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			 Devendra Singh
+  Created On:		29 Jun 2017
+  Updated By:  
+  Updated On:   
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion
+  <DataFieldName>
+    <Name>EventSNo</Name>
+    <Message>Event can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>BasisSNo</Name>
+    <Message>Basis can not be blank</Message>
+  </DataFieldName>
+
+
+
+  <!--<ServerMessage>
+    <Key>1001</Key>
+    <value>ULD Code already exists</value>
+  </ServerMessage>-->
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>ULD SLA  Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>ULD SLA  Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>ULD SLA  Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

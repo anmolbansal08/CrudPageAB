@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html>
+<style type="text/css" media="print">
+    @page {
+        size: auto; /* auto is the initial value */
+        margin: 0; /* this affects the margin in the printer settings */
+    }
+</style>
+<script src="../../../Scripts/jquery-1.7.2.js"></script>
+<div style="text-align:right">
+    <input type="button" id="btnUCRPrint" value="Print" onclick="FunPrintDataNew('printULDHandoverForm');" />
+</div>
+<head>
+    <script type="text/javascript">
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        function isBase64(str) {
+            try {
+                return btoa(atob(str)) == str;
+            }
+            catch (err) {
+                return false;
+            }
+        }
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+
+            var EditSNo = getParameterByName("EditSNo", "");// "30243";
+            var pageName = getParameterByName("pagename", ""); //"ReservationBooking";
+            var tnc = getParameterByName("tnc", ""); // usercontext variable for hidding div #divCondition
+            if (isBase64(EditSNo))
+                EditSNo = atob(EditSNo);
+            if (isBase64(tnc))
+                tnc = atob(tnc);
+
+            if (tnc == 'Print') {
+                $("#btnUCRPrint").hide();
+
+                GetUldHandOverRecordData(EditSNo)
+                setTimeout(function () {
+                    window.print();
+                    window.close();
+                }, 1000)
+            }
+        });
+
+        function GetUldHandOverRecordData(EditSNo) {
+            /*----------Change by pankaj kumar ishwar on 22-7-2017 for uld handover form print----------*/
+            var str22 = "";
+            $.ajax({
+                url: "/Services/Tariff/HandlingChargesService.svc/GetUldHandOverRecord?Sno=" + EditSNo, async: false, type: "get", dataType: "json", cache: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    var finaltabl0 = ResultData.Table0;
+                    var finaltabl1 = ResultData.Table1;
+                    var AirlineLog = "";
+                    $("#ImgLogo").attr('src', '');
+                    if (finaltabl0.length > 0) {
+
+                        if (finaltabl0[0].AirlineLogo == "") {
+                            $("#ImgLogo").attr('src', userContext.SysSetting.LogoURL);
+                        } else {
+                            AirlineLogo = "/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=" + finaltabl0[0].AirlineLogo;
+                            $("#ImgLogo").attr('src', AirlineLogo);
+                        }
+
+                        var data = $("span#spntrf1").text(finaltabl0[0].AirportCode).text();
+                        $("span#UFH1").text(finaltabl0[0].UHFReceiptNo).text();
+                        $("span#nameid").text(finaltabl0[0].Receivedname).text();
+                        $("span#addressid").text(finaltabl0[0].ReceivedAddress).text();
+                        $("span#Transfernameid").text(finaltabl0[0].Receivedname).text();
+                        $("span#Transfernameid_agent").text(finaltabl0[0].UserName).text();
+                        $("span#Usernameid").text(finaltabl0[0].UserName).text();
+                        $("span#UserAddressid").text(finaltabl0[0].EMailID).text();
+                        $("span#LoadedBy").text(finaltabl0[0].LoadedBy).text();
+                        $("#Date").text((finaltabl0[0].IssuedDate) + '       ' + (finaltabl0[0].Time));
+                        $("#Remarks").text(finaltabl0[0].Remarks);
+                        $("#Dates").text((finaltabl0[0].ReturnDate) + '       ' + (finaltabl0[0].Times));
+                        $("#Remarkss").text(finaltabl0[0].ReturnRemarks);
+                        day = finaltabl0[0].Day
+                        month = finaltabl0[0].Month
+                        year = finaltabl0[0].Year
+                        var myTable = "<table style='width: 60%; border:1px solid black;' align='center'><tr><td colspan='4' align='right'><span><b>ULD Numbers</b></span></td>"
+                        myTable += "<td colspan='4' align='right'><span><b>Condition Code</b></span></td></tr>"
+
+                        for (var i = 0; i < finaltabl0.length; i++) {
+                            myTable += "<tr><td colspan='2' style='border:double;' align='center'>" + (finaltabl0[i].ULDCode) + "</td><td colspan='2' style='border:double;' align='center'>" + (finaltabl0[i].ULDNumber) + "</td><td colspan='2' style='border:double;' align='center'>" + (finaltabl0[i].OwnerCode) + "</td><td colspan='2' style='border:double;' align='center'>" + (finaltabl0[0].IsDamageds) + "</td></tr>";
+                            $("#spnDateoftransfer").text((finaltabl0[0].IssuedDate) + '       ' + (finaltabl0[0].Time));
+                            $("#totalunits").text(finaltabl0.length);
+                            $("#totalunit").text(finaltabl0.length);
+                        }
+
+                        myTable += "</table>";
+                        $('#ulddetail').append(myTable);
+                    }
+                    if (finaltabl1.length > 0) {
+                        $(finaltabl1).each(function (row, tr) {
+                            if (tr.ConsumableNameQty != undefined) {
+                                str22 = str22 + (tr.ConsumableNameQty) + ','
+                            }
+                        })
+                        $('tr#Consumid').after("<tr style='border:1px solid black;'><td class='tdstyle' style='width:12%;padding:7px;'>" + str22 + "</td></tr>")
+                    }
+                },
+                error:
+                    {
+                    }
+            });
+
+            $.ajax({
+                url: "/Services/Tariff/HandlingChargesService.svc/GetAndUpdateUHFPrint?Sno=" + EditSNo,
+                async: false,
+                type: "get",
+                dataType: "json",
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                }
+            })
+        }
+    </script>
+    <title></title>
+</head>
+<body>
+    <div id="printULDHandoverForm" align="center" style="padding: 5px; font-family:Verdana;font-size:11px;">
+        <table style="width: 700px; border: 2px solid black;">
+            <tr><td colspan="2" align="center"><img id="ImgLogo" src="" style="width:130px; height:50px" /></td><th colspan="4" align="left" style="font-size:14px;font-weight:bold;">ULD Handover Form</th></tr>
+            <tr>
+                <td colspan="8">
+                    <table cellpadding="0" cellspacing="0" border="0" style="width: 100%">
+                        <tr>
+                            <td style="width:70%;" align="center">
+                                <table cellpadding="0" cellspacing="5" border="0" style="width: 70%; float:right">
+                                    <tr>
+                                        <td style="text-align:right"><b>UHF Receipt No :<span id="UFH1"></span></b></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" valign="bottom">
+                    <table style="width: 100%; border:1px solid black" cellspacing="0" cellpadding="3">
+                        <tr>
+                            <td colspan='4' style="border: none; border-right: 1px solid black; "><span><b>Transfer Station</b></span></td>
+                            <td colspan="2" style="border: none; border-right:1px solid black"><b>Date of Transfer</b></td>
+                            <td colspan="2" style="border: none;"><b>Agent/Carrier Name</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan='4' style="border: none; border-top: 1px solid black; border-right: 1px solid black"><span id="spntrf1"></span></td>
+                            <td colspan="2" style="border: none; border-top: 1px solid black; border-right: 1px solid black">
+                                <span id="spnDateoftransfer"></span>
+                            </td>
+                            <td colspan="2" style="border: none; border-top: 1px solid black;">
+                                <span id="Transfernameid"></span><br />
+                                <span id="Transferaddressid"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr><td><br /><br /></td></tr>
+            <tr>
+                <td colspan="8" valign="bottom">
+                    <div id="ulddetail">
+                    </div>
+                </td>
+            </tr>
+            <tr><td><br /><br /></td></tr>
+            <tr>
+                <td colspan="8">
+                    <table cellpadding="0" cellspacing="0" border="0" style="width: 100%">
+                        <tr>
+                            <td style="width:70%;" align="left">
+                                <table cellpadding="0" cellspacing="5" border="0" style="width: 70%; float:left">
+                                    <tr>
+                                        <td style="text-align:left"><b>Transferred by</b></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" valign="bottom">
+                    <table style="width: 100%; border:1px solid black;" cellspacing="0" cellpadding="3">
+                        <tr>
+                            <td colspan="4" style="border-bottom:1px solid black; border-right: 1px solid black;"><span><b>Name and Signature</b></span></td>
+                            <td colspan="2" style="border: none; border-bottom: 1px solid black; border-right: 1px solid black"><span><b>Total Unit</b></span></td>
+                            <td colspan="2" style="border: none; border-bottom: 1px solid black; border-right: 1px solid black"><span><b>Date</b></span></td>
+                            <td colspan="2" style="border: none; border-bottom: 1px solid black; "><span><b>Remarks</b></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan='4' style="border: none; border-right: 1px solid black">
+                                <span id="Transfernameid_agent"></span>
+                                <br /><span id="Transferaddressid"></span>
+                            </td>
+                            <td colspan="2" style="border: none; border-right: 1px solid black">
+                                <span id="totalunit"></span>
+                            </td>
+                            <td colspan="2" style="border: none; border-right: 1px solid black">
+                                <span id="Date"></span>
+                            </td>
+                            <td colspan="2" style="border: none;">
+                                <span id="Remarks"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr><td><br /><br /></td></tr>
+            <tr>
+                <td colspan="8">
+                    <table cellpadding="0" cellspacing="0" border="0" style="width: 100%">
+                        <tr>
+                            <td style="width:70%;" align="left">
+                                <table cellpadding="0" cellspacing="5" border="0" style="width: 70%; float:left">
+                                    <tr>
+                                        <td style="text-align:left"><b>Received by</b></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" valign="bottom">
+                    <table style="width: 100%; border:1px solid black" cellspacing="0" cellpadding="3">
+                        <tr>
+                            <td colspan='4' style="border: none; border-right: 1px solid black;"><span><b>Name and Signature</b></span></td>
+                            <td colspan="2" style="border: none; border-right: 1px solid black"><span><b>Total Unit</b></span></td>
+                            <td colspan="2" style="border: none; border-right: 1px solid black"><span><b>Date</b></span></td>
+                            <td colspan="2" style="border: none;"><span><b>Remarks</b></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan='4' style="border: none; border-top: 1px solid black; border-right: 1px solid black">
+                                <span id="nameid"></span>
+                                <br /><span id="addressid"></span>
+                            </td>
+                            <td colspan="2" style="border: none; border-top: 1px solid black; border-right: 1px solid black">
+                                <span id="totalunits"></span>
+                            </td>
+                            <td colspan="2" style="border-top: 1px solid black; border-right: 1px solid black">
+                                <span id="Dates"></span>
+                            </td>
+                            <td colspan="2" style="border: none; border-top: 1px solid black;">
+                                <span id="Remarkss"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr><td><br /></td></tr>
+            <tr><td colspan="8"><span><b>CONDITIONS:</b></span></td></tr>
+            <tr><td colspan="8"><span>Demurrage according to GA policy will be charged until ULD is returned to GA.</span></td></tr>
+            <tr><td colspan="8"><span>ULDs not returned within 7 days will be deemed lost and the cost of the unit will be recovered from the agent to whom the unit(s) was transferred to by Garuda</span></td></tr>
+            <tr><td><br /></td></tr>
+            <tr><td colspan="8"><b>The agent shall be liable to Garuda for any damage or loss of ULD while in their possesion</b></td></tr>
+            <tr><td><br /></td></tr>
+            <tr><td colspan="4" align="left"><b>Original: Garuda</b></td></tr>
+            <tr><td colspan="4"><b>First Copy : Carrier/Agent</b></td></tr>
+        </table>
+        <br /><br />
+    </div>
+</body>
+
+
+

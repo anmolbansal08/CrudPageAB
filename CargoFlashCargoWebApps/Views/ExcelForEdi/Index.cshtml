@@ -1,0 +1,47 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+
+
+
+                <td class=' formlabel'>
+                    <form id="df" action="../ExcelForEdi/DataSetToAllExcelFile" method="post">
+                        <input id="FromDate" type="hidden" name="FromDate" value="" />
+                        <input id="ToDate" type="hidden" name="ToDate" value="" />
+                        <input id="Carrier" type="hidden" name="Carrier" value="" />
+                        <input id="EventType" type="hidden" name="EventType" value="" />
+                        <input id="MessageTypeCheck" type="hidden" name="MessageTypeCheck" value="" />
+                        <input id="MessageType" type="hidden" name="MessageType" value="" />
+                        <input id="FlightNo" type="hidden" name="FlightNo" value="" />
+                        <input id="AWBNo" type="hidden" name="AWBNo" value="" />
+                        <input id="CityCode" type="hidden" name="CityCode" value="" />
+                        <input id="Status" type="hidden" name="Status" value="" />
+                        <input id="SenderID" type="hidden" name="SenderID" value="" />                        
+                    </form>
+                    @*<div id="exportflight1" style="float:left;"><button type="submit"><img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" /></button> </div>*@
+                </td>
+                <td class='formInputcolumn'>
+                    <input type='submit' name='operation' onclick="SearchDailySalesReport()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+                </td>
+
+                <td class="formlabel"></td>
+                <td class="formInputcolumn"></td>
+
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

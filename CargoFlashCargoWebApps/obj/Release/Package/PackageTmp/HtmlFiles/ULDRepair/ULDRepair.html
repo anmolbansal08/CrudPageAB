@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <!--<style type="text/css">
+        .style1 {
+            width: 20%;
+            font-size: 11px;
+            font-weight: normal;
+        }
+
+        .style2 {
+            width: 30%;
+            font-weight: bold;
+            font-size: 15pt;
+        }
+
+        .auto-style1 {
+            width: 10%;
+        }
+
+        .auto-style2 {
+            width: 12%;
+        }
+
+        th, td {
+            padding: 5px;
+            margin: 0px;
+        }
+
+        tr {
+            margin: 0px;
+        }
+
+        .auto-style3 {
+            width: 25%;
+        }
+
+        .auto-style4 {
+            width: 40%;
+        }
+
+        .auto-style5 {
+            height: 24px;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+
+        #divhead {
+            border: 1px;
+        }
+
+        .tblhead {
+            table-layout: fixed;
+        }
+
+        .imgdiv {
+            float: left;
+        }
+
+        .div2 {
+            float: right;
+        }
+
+        .verticalLine {
+            border-left: thick solid #ff0000;
+        }
+    </style>-->
+
+</head>
+<body>
+    <div id="Printdiv" style=" width: 100%;">
+        <table id="Printtable" style="width: 100%; border: 1px solid;">
+            <tr>
+                <td>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style=" font-weight: bold; font-size: 30px; text-align: center; width: 100%;">
+                                REPAIR ORDER
+                                <br>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:85%;">
+                                <br>
+                                <span style="float: right; font-weight: bold;">No.</span>
+                            </td>
+                            <td style="width:15%;">
+                                <br>
+                                <span id="spnSerialNo"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+            </tr>
+        </table>
+        <table style="width:100%;white-space:nowrap; border:1px solid">
+            <tr>
+                <td style="width:50%;border:1px solid">
+                    <div>
+                        <img src="Images/GaurdaCMS Logo.jpg" style="width:75%; height:94px" />
+                    </div>
+                </td>
+                <td style="width:50%;">
+                    <table style="width:100%;float:right;white-space:nowrap;border: 1px solid black;border-collapse: collapse;">
+                        <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style=" font-size: 19px; font-weight: bold;">Type/Model</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><span style="font-size: 19px;" id="spnType"></span></td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style="font-size: 19px; font-weight: bold;">ULD No.</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><span style="font-size: 19px;" id="spnULDNo"></span></td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style="font-size: 19px; font-weight: bold;">MANUFACTURER</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><span style="font-size: 19px;" id="spnManufacturer"></span></td>
+                        </tr>
+
+                        <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style="font-size: 19px; font-weight: bold;">DATE OF DELIVERY</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><span style="font-size: 19px;" id="spnDateOfDelivery"></span></td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table id="Desctbl" style="width:100%;border:1px solid black;border-collapse:collapse;">
+            <tr id="trDesctbl">
+                <td style="border:1px solid black;text-align:center"><strong>NO.</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>DESCRIPTIONS</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>GOOD</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>DMGD</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>N/A</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>REMARKS</strong></td>
+            </tr>
+
+        </table>
+
+        <table style="width:100%;border:1px solid black;border-collapse:collapse;">
+            <tr>
+                <td style=""><strong>REMARKS:</strong></td>
+                <td style=""><span style="font-size:15pt" id="spnREMARKS"></span></td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="text-align:left"><strong>TYPE OF MAINTENANCE :</strong></td>
+            <tr>
+                <td>
+                    <span style="font-size:12pt" id="spnREPAIR"></span>
+                </td>
+                <!--<td><input id="Checkbox1" type="checkbox" /></td>-->
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <!--<td><input id="Checkbox1" type="checkbox" /></td>-->
+                <td>
+                    <span style="font-size:12pt" id="spnMaintenance"></span>
+                </td>
+            </tr>
+            <tr>
+                <!--<td>
+                    SCRAP <span style="font-size:15pt" id="spnSCRAP"></span>
+                </td>-->
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <!--<td><input id="Checkbox1" type="checkbox" /></td>-->
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <!--<td><input id="Checkbox1" type="checkbox" /></td>-->
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <!--<td><input id="Checkbox1" type="checkbox" /></td>-->
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            </tr>
+        </table>
+
+        <table style="width:100%;border:1px solid black;border-collapse:collapse;">
+            <tr>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style=""><strong>Delivery by,</strong></td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="text-align:left"><strong>Recieved by,</strong></td>
+            <tr>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style=""><strong>SBU Garuda Cargo</strong></td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="text-align:left;"><strong>GMF Aero Asia</strong></td>
+            </tr>
+            <tr>
+                <td> Full Name :</td>
+                <td> <span style="font-size:12pt" id="spnfullname1"></span></td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>Full Name :</td>
+                <td> <span style="font-size:12pt" id="spnfullname2"></span> </td>
+
+            </tr>
+            <tr>
+                <td>ID No. :</td>
+                <td> <span style="font-size:12pt" id="spnId1"></span></td>
+                <td style="border-left:1px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>ID No. :</td>
+                <td> <span style="font-size:12pt" id="spnId2"></span> </td>
+
+            </tr>
+        </table>
+
+        <table style="width:100%; border:1px solid ">
+            <tr>
+                <td style="width:50%;">
+                    <table id="lasttble1 " style="float:left;">
+                        <tr>
+                            <td>ORIGINAL</td>
+                            <td>:</td>
+                            <td>JOIN PAYMENT<span style="font-size:10pt" id="spnoriginal"></span></td>
+                        </tr>
+                        <tr>
+                            <td>COPY1</td>
+                            <td>:</td>
+                            <td>RECIEVER ORDER<span style="font-size:10pt" id="spncopy1"></span></td>
+                        </tr>
+                        <tr>
+                            <td>COPY2</td>
+                            <td>:</td>
+                            <td>H/O ULD MANAGEMENT<span style="font-size:10pt" id="spncopy2"></span></td>
+                        </tr>
+                        <tr>
+                            <td>COPY3</td>
+                            <td>:</td>
+                            <td>FILE<span style="font-size:10pt" id="spncopy3"></span></td>
+                        </tr>
+
+                    </table>
+                </td>
+                <td style="width:50%;">
+                    <table id="lasttable2" style="height: 85px; width: 100%">
+                        <tr>
+                            <td><span style="font-size:10pt">FRM/JKTFIJ/001</span><span style="font-size:10pt" id="spnODS"></span></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../../Styles/Application.css" />
+    <link type="text/css" rel="stylesheet" href="../../Styles/Grid/kendo.common.min.css" />
+    <link type="text/css" rel="stylesheet" href="../../Styles/Grid/kendo.blueopal.min.css" />
+    <script type="text/javascript" src="../../Scripts/jquery-1.9.1.min.js"></script>
+    <script src="../../Scripts/KendoSchedular/Content/JS/kendo.all.min.js"></script>
+    <script src="../../Scripts/KendoSchedular/Content/JS/kendo.dataviz.min.js"></script>
+    <script>
+        var ch1 = [];
+        var ch2 = [];
+        var ch3 = [];
+        var ch4 = [];
+
+        $(function () {
+            var obj = {
+                Airline: window.parent.$("#Airline").val(), FromDate: window.parent.$("#StartDate").attr("sqldatevalue"), ToDate: window.parent.$("#EndDate").attr("sqldatevalue"), Country: window.parent.$("#Country").val(), City: window.parent.$("#City").val(), Currency: window.parent.$("#Currency").val(), Mode: "0", AccountSNo: window.parent.userContext.AccountSNo, UserSNo: window.parent.userContext.UserSNo
+            };
+            $.ajax({
+                url: "../../Services/Dashboard/MainDashboardService.svc/GetTOPAgents",
+                type: "POST",
+                dataType: 'json',
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    try {
+                        if (response) {
+                            if (window.parent.userContext.AgentSNo == "0")
+                                $("tr[rel='Contribution']").show();
+                            var res = JSON.parse(response);
+                            for (var i = 0; i < res.Table0.length; i++) {
+                                ch1.push({ key: res.Table0[i].Agent, val: res.Table0[i].ChargeableWeight, valueColor: getRandomColor() });
+                            }
+                            for (var i = 0; i < res.Table1.length; i++) {
+                                ch2.push({ key: res.Table1[i].Agent, val: res.Table1[i].ChargeableWeight, valueColor: getRandomColor() });
+                            }
+                            for (var i = 0; i < res.Table2.length; i++) {
+                                ch3.push({ key: res.Table2[i].Agent, val: res.Table2[i].ChargeableWeight, valueColor: getRandomColor() });
+                            }
+                            for (var i = 0; i < res.Table3.length; i++) {
+                                ch4.push({ key: res.Table3[i].Agent, val: res.Table3[i].ChargeableWeight, valueColor: getRandomColor() });
+                            }
+
+                            $("#RevenueChart").kendoChart({
+                                dataSource: {
+                                    data: ch1
+                                },
+                                seriesDefaults: {
+                                    type: "pie",
+                                    labels: {
+                                        visible: true,
+                                        background: "transparent"
+                                    }
+                                },
+                                series: [{
+                                    colorField: "valueColor",
+                                    field: "val",
+                                    categoryField: "key",
+                                }],
+                                tooltip: {
+                                    visible: true,
+                                    format: "N0", template: "${category} - ${value}"
+                                }
+                            });
+
+                            $("#ChargeableChart").kendoChart({
+                                dataSource: {
+                                    data: ch2
+                                },
+                                seriesDefaults: {
+                                    type: "pie",
+                                    labels: {
+                                        visible: true,
+                                        background: "transparent"
+                                    }
+                                },
+                                series: [{
+                                    colorField: "valueColor",
+                                    field: "val",
+                                    categoryField: "key",
+                                }],
+                                tooltip: {
+                                    visible: true,
+                                    format: "N0", template: "${category} - ${value}"
+                                }
+                            });
+                            $("#CommodityChart").kendoChart({
+                                dataSource: {
+                                    data: ch3
+                                },
+                                seriesDefaults: {
+                                    type: "pie",
+                                    labels: {
+                                        visible: true,
+                                        background: "transparent"
+                                    }
+                                },
+                                series: [{
+                                    colorField: "valueColor",
+                                    field: "val",
+                                    categoryField: "key",
+                                }],
+                                tooltip: {
+                                    visible: true,
+                                    format: "N0", template: "${category} - ${value}"
+                                }
+                            });
+                            $("#DestinationChart").kendoChart({
+                                dataSource: {
+                                    data: ch4
+                                },
+                                seriesDefaults: {
+                                    type: "pie",
+                                    labels: {
+                                        visible: true,
+                                        background: "transparent"
+                                    }
+                                },
+                                series: [{
+                                    colorField: "valueColor",
+                                    field: "val",
+                                    categoryField: "key",
+                                }],
+                                tooltip: {
+                                    visible: true,
+                                    format: "N0", template: "${category} - ${value}"
+                                }
+                            });
+                        }
+                    } catch (e) {
+                        ShowMessage("info", "", "No Data found.");
+                    }
+                }
+            });
+
+        });
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        function BindChart(obj) {
+            $("#divChart").html('');
+            PopUp("fullChart", "", ($(window).width() - 100), null, null, 10);
+            var c = ch1;
+            if (obj == 'Weight')
+                c = ch1;
+            if (obj == 'Revenue')
+                c = ch2;
+            if (obj == 'Commodity')
+                c = ch3;
+            if (obj == 'Destination')
+                c = ch4;
+
+            $("#divChart").kendoChart({
+                dataSource: {
+                    data: c
+                },
+                seriesDefaults: {
+                    type: "bar",
+                    labels: {
+                        visible: true,
+                        background: "transparent"
+                    }
+                },
+                series: [{
+                    colorField: "valueColor",
+                    field: "val",
+                    categoryField: "key",
+                }],
+                tooltip: {
+                    visible: true,
+                    format: '{0:N0}', template: "${category} - ${value}"
+                }
+            });
+        }
+        function PopUp(cntrlId, title, width, OnOpen, OnClose, topPosition) {
+            var Kwindow = $("#" + cntrlId);
+
+            if (!Kwindow.data("kendoWindow")) {
+                Kwindow.kendoWindow({
+                    width: ((width == null || width == undefined || width == "") ? "800px" : width + "px"),
+                    actions: ["Minimize", "Maximize", "Close"],
+                    title: title,
+                    modal: true,
+                    maxHeight: 500,
+                    close: (OnClose == undefined ? null : OnClose),
+                    open: (OnOpen == undefined ? null : OnOpen)
+                });
+                Kwindow.data("kendoWindow").open();
+            }
+            else {
+                var a = Kwindow.data("kendoWindow");
+                a.setOptions({ title: title });
+                a.open();
+            }
+            $(document).bind("keydown", function (e) {
+                if (e.keyCode == kendo.keys.ESC) {
+                    var visibleWindow = $(".k-window:visible:last > .k-window-content")
+                    if (visibleWindow.length)
+                        visibleWindow.data("kendoWindow").close();
+                }
+            });
+
+            Kwindow.data("kendoWindow").center();
+            $("#" + cntrlId).closest(".k-window").centerTop(topPosition);
+
+        }
+        $.fn.centerTop = function (topPosition) {
+            this.css("position", "absolute");
+            if (topPosition)
+                this.css("top", topPosition + "px");
+            else
+                this.css("top", ($(window).height() - this.height()) / 2 + $(window).scrollTop() + "px");
+            this.css("left", ($(window).width() - this.width()) / 2 + $(window).scrollLeft() + "px");
+            return this;
+        };
+    </script>
+    <style type="text/css">
+        .tdHeading {
+            text-align: center;
+            background-color: #daecf4;
+            color: black;
+            vertical-align: central;
+        }
+
+        .charttd {
+            border: 1px solid #CCCCCC;
+            height: 50%;
+            width: 50%;
+            vertical-align: top;
+        }
+
+        span.k-i-arrow-s {
+            cursor: pointer;
+        }
+
+        .SpanHeading {
+            font-size: 13px;
+            font-weight: bold;
+            vertical-align: -webkit-baseline-middle;
+        }
+    </style>
+</head>
+<body>
+    <table class="WebFormTable">
+        <tr>
+            <td>
+                <div>
+                    <table class="WebFormTable">
+                        <tr class="k-header" rel="Contribution" style="text-align:center;display:none;">
+                            <td width="50%" style="border-right: 1px solid #CCCCCC;">
+                                <span class="SpanHeading">
+                                    Top 10 Agent Contribution ( By Weight )
+                                </span>
+                                <span style="float: right;" class="SpanHeading">
+                                    <a style="cursor:pointer;" onclick="BindChart('Weight')" title="Maximize" class="k-window-action k-link"><span class="k-icon k-i-maximize">Maximize</span></a>
+                                </span>
+                            </td>
+                            <td>
+                                <span class="SpanHeading">
+                                    Top 10 Agent Contribution ( By Revenue )
+                                </span>
+                                <span style="float: right;" class="SpanHeading">
+                                    <a style="cursor:pointer;" onclick="BindChart('Revenue')" title="Maximize" class="k-window-action k-link"><span class="k-icon k-i-maximize">Maximize</span></a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr rel="Contribution" style="text-align:center;display:none;">
+                            <td class="charttd">
+                                <div id="RevenueChart" rel="chart" style="height: 250px;"></div>
+                            </td>
+                            <td class="charttd">
+                                <div id="ChargeableChart" rel="chart" style="height: 250px;"></div>
+                            </td>
+                        </tr>
+                        <tr class="k-header" style="text-align:center;">
+                            <td width="50%" style="border-right: 1px solid #CCCCCC;">
+                                <span class="SpanHeading">
+                                    Top 10 Commodity Contribution
+                                </span>
+                                <span style="float: right;" class="SpanHeading">
+                                    <a style="cursor:pointer;" onclick="BindChart('Commodity')" title="Maximize" class="k-window-action k-link"><span class="k-icon k-i-maximize">Maximize</span></a>
+                                </span>
+                            </td>
+                            <td width="50%">
+                                <span class="SpanHeading">
+                                    Top 10 Destination Contribution
+                                </span>
+                                <span style="float: right;" class="SpanHeading">
+                                    <a style="cursor:pointer;" onclick="BindChart('Destination')" title="Maximize" class="k-window-action k-link"><span class="k-icon k-i-maximize">Maximize</span></a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="charttd">
+                                <div id="CommodityChart" rel="chart" style="height: 250px;"></div>
+                            </td>
+
+                            <td class="charttd">
+                                <div id="DestinationChart" rel="chart" style="height: 250px;"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div id="fullChart">
+        <div id="divChart" style="height:400px;">
+        </div>
+    </div>
+</body>
+</html>

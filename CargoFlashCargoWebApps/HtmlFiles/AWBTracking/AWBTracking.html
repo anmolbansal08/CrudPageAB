@@ -1,0 +1,398 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/Kendo/kendo.web.js"></script>
+    <script src="../../Scripts/CfiMessage.js"></script>
+    
+    <style>
+        img {
+            height: 50px;
+            width: 50px;
+            background-color: white;
+            position: relative;
+        }
+
+        #cfMessage-container {
+            font-size: 12px;
+        }
+    </style>
+
+
+
+
+    <link href="../../Styles/bootstrap.css" rel="stylesheet" />
+    <link href="../../Styles/Application.css" rel="stylesheet" />
+    <link href="../../Styles/Grid/kendo.common.min.css" rel="stylesheet" />
+    <link href="../../Styles/Grid/kendo.blueopal.min.css" rel="stylesheet" />
+    <link href="../../Styles/Site.css" rel="stylesheet" />
+    <link href="../../Styles/CfiMessage.css" rel="stylesheet" />
+    <link href="../../Styles/font-awesome.min.css" rel="stylesheet" />
+
+
+
+
+
+
+    <script type="text/javascript">
+        var userContext = "";
+        $(document).ready(function () {
+
+            //if (window.opener)
+            //    userContext = window.opener.parent.userContext;
+
+
+
+            var BasedOn = getParameterByName("BasedOn", "");
+            var AWBNo = getParameterByName("AWBNo", "");
+            var CarrierCode = getParameterByName("CarrierCode", "");
+            var AccountSNo = 0;
+            var flag = 0;
+            var str = "";
+            var str1 = "";
+            var str2 = "";
+            if (userContext.length) {
+                if (userContext.GroupName.toUpperCase() == "AGENT") {
+                    AccountSNo = userContext.AgentSNo;
+                    flag = 1;
+                }
+            }
+
+            if (BasedOn == 0) {
+                str2 = "<span class='attMed'><strong>AWB No: " + CarrierCode + "-"
+            }
+            else {
+
+                str2 = "<span class='attMed'><strong>Reference Number: "
+            }
+            // rendering the data from awbtracking service
+            $.ajax({
+                url: "../../Services/Shipment/AWBTrackingService.svc/GetAWBTrackingRecord",
+                async: false,
+                type: "GET",
+                dataType: "json",
+                data: { AWBNo: AWBNo, BasedOn: BasedOn, AccountSNo: AccountSNo, flag: flag, CarrierCode: CarrierCode },
+                contentType: "application/json; charset=utf-8",
+                cache: false,
+                success: function (result) {
+                    $("#AWBTrackingDetails").html('');
+                    var countmain = 0;
+                    var count = 0;
+                    var countforbkd = 0; var countforexe = 0; var countforrcs = 0; var countnexttd = 0;
+                    var action = ""; var station = "";
+                    var myData = jQuery.parseJSON(result);
+                    if (myData == null || myData == '') {
+                        ShowMessage('warning', 'AWB TRACKING', "Some Error Occured");
+                        return;
+                    }
+                    if (myData.Table0.length > 0) {
+
+                        str += '<ul id="AWBOuterSearchPanelBar">';
+                        for (var i = 0; i < $.trim($("#AWBNo").val()).split(',').length; i++) {
+                            var divmain = "divmain" + i;
+                            var divsummary = "divsummmary" + i;
+                            var divmile = "divmilestone" + i;
+                            var divinfo = "divinfo" + i;
+                            var divhistory = "divstatushistory" + i;
+                            countmain = 0;
+                            countnexttd = 0;
+                            // create table for summary and awb details
+                            for (var j = 0; j < myData.Table0.length; j++) {
+
+                                if (myData.Table0[j].AWBNo == CarrierCode + '-' + $.trim(AWBNo).split(',')[i] || myData.Table0[j].AWBNo == $.trim(AWBNo).split(',')[i]) {
+                                    if (countmain == 0) {
+                                        str += '<li class="k-state-active"><b><span id="AWBNoInput">' + str2 + myData.Table0[j].AWBNo + '</strong></span></span></b><div id="' + divmain + '" style="width: 98%; margin-left: 15px;"><ul id="AWBInnerSearchpanelbar' + count + '">';
+                                        str += '<li class="k-state-active"><span><b>AWB Summary</b></span><div id="' + divsummary + '" style="width: 98%; margin-left: 15px;">'
+
+                                        for (var m = 0; m < myData.Table1.length; m++) {
+                                            if (myData.Table1[m].AWBNo == myData.Table0[j].AWBNo || myData.Table1[m].ReferenceNumber == myData.Table0[j].AWBNo) {
+                                                //latest event
+                                                str += '<table cellpadding="12"><tr><td><span style="color:red;"><strong>LATEST EVENT: <span style="color:blue;">' + myData.Table1[m].Action + ' </span></strong></span><span><b>Your shipment '
+                                                var action = myData.Table1[m].Action;
+                                                switch (action) {
+                                                    case ('BKD'):
+                                                        str += 'has been booked at ';
+                                                        break;
+                                                    case ('EXE'):
+                                                        str += 'has been executed at ';
+                                                        break;
+                                                    case ('RCS'):
+                                                        str += 'has been accepted at ';
+                                                        break;
+                                                    case ('REPLAN'):
+                                                        str += 'has been re-planned at ';
+                                                        break;
+                                                    case ('PRE'):
+                                                        str += 'has pre-manifested at ';
+                                                        break;
+                                                    case ('MAN'):
+                                                        str += 'has been manifested at ';
+                                                        break;
+                                                    case ('DEP'):
+                                                        str += 'has been Departed from ';
+                                                        break;
+                                                    case ('ARR'):
+                                                        str += 'has been arrived at ';
+                                                        break;
+                                                    case ('RCF'):
+                                                        str += 'has been arrived at ';
+                                                        break;
+                                                    case ('NFD'):
+                                                        str += 'has been notified at ';
+                                                        break;
+                                                    case ('AWD'):
+                                                        str += 'document has arrived at ';
+                                                        break;
+                                                    case ('DLV'):
+                                                        str += 'has been delivered at ';
+                                                        break;
+                                                    default:
+                                                        str += '';
+                                                        break;
+
+                                                }
+                                                str += myData.Table1[m].Station + ' on ' + myData.Table1[m].createdon + '</b></span></td></tr></table>';
+                                            }
+                                        }
+                                        // summary
+                                        str += "<table width='100%' border='0' align='center' cellpadding='8' cellspacing='0' class='k-focusable k-selectable'><tbody >"
+                                        str += "<tr style='background-color:#bfbbbb'><td width='20%' height='25' align='center' valign='middle'><strong><b>Origin</b><strong></td><td width='20%' height='25' align='center' valign='middle'><strong><b>Destination</b><strong></td><td width='20%' height='25' align='center' valign='middle'><strong><b>Pieces</b><strong></td><td width='20%' height='25' align='center' valign='middle'><strong><b>Gross Weight</b><strong></td><td width='20%' height='25' align='center' valign='middle'><strong><b>Product</b><strong></td></tr>"
+                                        if (myData.Table0.length > 1) {
+                                            str += "<tr ><td width='20%' align='center' valign='middle'><strong>" + myData.Table0[1].Origin + "</strong></td><td width='20%' align='center' valign='middle' ><strong>" + myData.Table0[1].Destination + "</strong></td><td width='20%' align='center' valign='middle' ><strong>" + myData.Table0[1].Pieces + "</strong></td><td width='20%' align='center' valign='middle' ><strong>" + myData.Table0[1].GrossWeight + "</strong></td><td width='20%' align='center' valign='middle'><strong>" + myData.Table0[1].ProductName + "</strong></td></tr></tbody></table>"
+                                        }
+                                        else {
+                                            str += "<tr ><td width='20%' align='center' valign='middle'><strong>" + myData.Table0[j].Origin + "</strong></td><td width='20%' align='center' valign='middle' ><strong>" + myData.Table0[j].Destination + "</strong></td><td width='20%' align='center' valign='middle' ><strong>" + myData.Table0[j].Pieces + "</strong></td><td width='20%' align='center' valign='middle' ><strong>" + myData.Table0[j].GrossWeight + "</strong></td><td width='20%' align='center' valign='middle'><strong>" + myData.Table0[j].ProductName + "</strong></td></tr></tbody></table>"
+                                        }
+                                        str += '</div></li>';
+                                        // booking and acceptance
+                                        //str += '<li class="k-state-active"><span><b>Booking & Acceptance Information</b></span><div id="' + divinfo + '" style="width: 98%; margin-left: 15px; ">'
+                                        //str += "<table id='tblbkdrcs' cellspacing='0' cellpadding='8' border='0' width='100%' align='center'><tbody><tr style='background-color:#bfbbbb; '><td align='center' width='17%'><strong><b>Origin</b><strong></td><td align='center' width='17%'><strong><b>Destination</b><strong></td><td align='center' width='17%' ><strong><b>Pieces</b><strong></td><td align='center' width='17%' ><strong><b>Gross Weight</b><strong></td><td align='center' width='17%'><strong><b>Volume</b><strong></td><td align='center' width='15%' ><strong><b>Status</b><strong></td></tr>"
+                                        countmain += 1;
+                                    }
+                                    count += 1;
+                                    //if (myData.Table0[j].AWBStatus == 'BKD' || myData.Table0[j].AWBStatus == 'EXE' || myData.Table0[j].AWBStatus == 'RCS') {
+
+                                    //    str += "<tr style='background-color: #eae7e7;'><td align='center' width='17%'>" + myData.Table0[j].Origin + "</td><td align='center' width='17%'>" + myData.Table0[j].Destination + "</td><td align='center' width='17%' >" + myData.Table0[j].Pieces + "</td><td align='center' width='17%' >" + myData.Table0[j].GrossWeight + "</td><td align='center' width='17%'>" + myData.Table0[j].cbm + "</td><td align='center' width='15%' >" + myData.Table0[j].AWBStatus + "</td></tr>"
+                                    //}
+                                }
+                            } //str += "</tbody></table>"
+
+                            //str += '</div></li>';
+                            countmain = 0;
+                            countforbkd = 0; countforexe = 0; countforrcs = 0;
+                            // create table for milestone plan
+                            var bkdexercs = 4;
+                            for (var l = 0; l < myData.Table2.length; l++) {
+                                bkdexercs = 4;
+
+                                if (myData.Table2[l].AWBNo == $.trim(AWBNo).split(',')[i] || myData.Table2[l].ReferenceNumber == $.trim(AWBNo).split(',')[i]) {
+                                    if (countmain == 0) {
+                                        //milestone plan table only 1st iteration
+                                        str += '<li class="k-state-active"><span><b>Milestone Plan</b></span><div id="' + divmile + '" style="width: 98%; margin-left: 15px;">'
+                                        str += '<div id="milestoneinner" style = "text-align: -webkit-center;">'
+                                        str += '<table ><tr >'
+
+                                    }
+
+                                    if (countforbkd == 0 && myData.Table2[l].Action.toUpperCase() == 'BKD') {
+                                        action = myData.Table2[l].Action.toUpperCase();
+                                        station = myData.Table2[l].Station;
+                                        countforbkd = 1;
+                                        bkdexercs = 1;
+                                    }
+                                    if (countforexe == 0 && myData.Table2[l].Action.toUpperCase() == 'EXE') {
+                                        action = myData.Table2[l].Action.toUpperCase();
+                                        station = myData.Table2[l].Station;
+                                        countforexe = 1;
+                                        bkdexercs = 1;
+                                    }
+                                    if (countforrcs == 0 && myData.Table2[l].Action.toUpperCase() == 'RCS') {
+                                        action = myData.Table2[l].Action.toUpperCase();
+                                        station = myData.Table2[l].Station;
+                                        countforrcs = 1;
+                                        bkdexercs = 1;
+                                    }
+                                    if (myData.Table2[l].Action.toUpperCase() == action && myData.Table2[l].Station != station) {
+                                        myData.Table2[l].Action = action;
+                                        myData.Table2[l].Station = station;
+
+                                        continue;
+                                    }
+                                    if ((myData.Table2[l].Action.toUpperCase() == 'BKD' || myData.Table2[l].Action.toUpperCase() == 'EXE' || myData.Table2[l].Action.toUpperCase() == 'RCS') && bkdexercs == 4) {
+                                        continue;
+                                    }
+                                    // to not get the arrow image first time
+                                    if (countmain != 0) {
+                                        str += '<td style="text-align:center;padding:2px;"><img  src="../../images/arrowtrack.png" alt="confirm order"></td>'
+                                    }
+                                    countmain = 1;
+                                    if (countnexttd % 9 == 0 && countnexttd > 0) {
+                                        str += '</tr><tr>'
+                                    }
+                                    if (myData.Table2[l].Action.toUpperCase() == 'BKD' || myData.Table2[l].Action.toUpperCase() == 'EXE' || myData.Table2[l].Action.toUpperCase() == 'RCS') {
+                                        str += '<td style="text-align:center;padding:2px;"><p ><b>' + myData.Table2[l].Station + '</b></p><img  src="../../images/' + myData.Table2[l].Action.toUpperCase() + ".png" + '" alt="confirm order"><p ><b>' + myData.Table2[l].Action + '</b></p>'
+                                        str += '<p><b>' + myData.Table2[l].createdon + '</b></p><p><b>' + myData.Table2[l].ActualPieces + ' pcs' + '</b></p></td>'
+                                    }
+                                    else {
+                                        str += '<td style="text-align:center;padding:2px;"><p ><b>' + myData.Table2[l].Station + '</b></p><img  src="../../images/' + myData.Table2[l].Action.toUpperCase() + ".png" + '" alt="confirm order"><p ><b>' + myData.Table2[l].Action + '</b></p>'
+                                        str += '<p><b>' + myData.Table2[l].createdon + '</b></p><p><b>' + myData.Table2[l].Pieces + ' pcs' + '</b></p></td>'
+                                    }
+                                    countnexttd += 1;
+
+                                }
+                            } str += '</tr></table></div></div></li>';
+                            countmain = 0;
+                            // create table for  flight details
+                            for (var k = 0; k < myData.Table2.length; k++) {
+                                if (myData.Table2[k].AWBNo == $.trim(AWBNo).split(',')[i] || myData.Table2[k].ReferenceNumber == $.trim(AWBNo).split(',')[i]) {
+                                    //flight details table only 1st iteration
+                                    if (countmain == 0) {
+                                        str += '<li class="k-state-active"><span><b>Flight Details</b></span><div id="' + divhistory + '" style="width: 98%; margin-left: 15px; ">'
+                                        str += "<table id='tblstatus' cellspacing='0' cellpadding='8' border='0' width='100%' align='center'><tbody><tr style='background-color:#bfbbbb; '><td align='center' width='9%' ><strong><b>Event</b></strong></td><td align='center' width='16%' ><strong><b>Description</b></strong></td><td align='center' width='9%' ><strong><b>Station</b></strong></td><td align='center' width='16%'><strong><b>Flight No</b></strong></td><td align='center' width='10%'><strong><b>Flight Date</b></strong></td><td align='center' width='10%' ><strong><b>Total Pieces</b></strong></td><td align='center' width='10%' ><strong><b>Planned Pieces</b></strong></td><td align='center' width='10%' ><strong><b>Gross Weight</b></strong></td><td align='center' width='10%'><strong><b>Volume</b></strong></td></tr>"
+                                        countmain += 1;
+                                    }
+                                    switch (myData.Table2[k].Action) {
+                                        case ('BKD'):
+                                            description = 'Booking confirmed';
+                                            break;
+                                        case ('EXE'):
+                                            description = 'Booking executed';
+                                            break;
+                                        case ('RCS'):
+                                            description = 'Shipment accepted';
+                                            break;
+                                        case ('REPLAN'):
+                                            description = 'Shipment re-planned';
+                                            break;
+                                        case ('RCT'):
+                                            description = 'Shipment transferred';
+                                            break;
+                                        case ('PRE'):
+                                            description = 'Pre-manifested';
+                                            break;
+                                        case ('MAN'):
+                                            description = 'Manifested';
+                                            break;
+                                        case ('DEP'):
+                                            description = 'Departed';
+                                            break;
+                                        case ('RCF'):
+                                            description = 'Received from flight';
+                                            break;
+                                        case ('TFD'):
+                                            description = 'Shipment transferred';
+                                            break;
+                                        case ('NFD'):
+                                            description = 'Ready for pick-up';
+                                            break;
+                                        case ('AWD'):
+                                            description = 'Document arrived';
+                                            break;
+                                        case ('ARR'):
+                                            description = 'AWB Arrived';
+                                            break;
+                                        case ('DLV'):
+                                            description = 'Delivered';
+                                            break;
+                                        default:
+                                            description = '';
+                                            break;
+
+                                    }
+                                    //<td align='center' width='11%'><strong><b>Origin</b></strong></td><td align='center' width='11%'><strong><b>Destination</b></strong></td>
+                                    str += "<tr style='background-color: #eae7e7;'><td align='center' width='9%' >" + myData.Table2[k].Action + "</td><td align='center' width='16%' >" + description + "</td><td align='center' width='9%'>" + myData.Table2[k].Station + "</td><td align='center' width='16%'><b><font color='red'>" + myData.Table2[k].FlightNo + "</font><font color='blue'> ( " + myData.Table2[k].Origin + " -> " + myData.Table2[k].Destination + " )</font></b>" + "</td><td align='center' width='10%'>" + myData.Table2[k].FlightDate + "</td><td align='center' width='10%' >" + myData.Table2[k].ActualPieces + "</td><td align='center' width='10%' >" + myData.Table2[k].Pieces + "</td><td align='center' width='10%' >" + myData.Table2[k].Weight + "</td><td align='center' width='10%'>" + myData.Table2[k].cbm + "</td></tr>"
+                                }
+                            } str += "</tbody></table>"
+
+                            str += '</ul></div></li>';
+
+                        }
+                        str += "</ul>";
+                        $("#AWBTrackingDetails").append(str);
+                        $("#tblbkdrcs tr:odd,#tblstatus tr:odd").css("background-color", "#ffffff");
+                        $("#AWBOuterSearchPanelBar").kendoPanelBar();
+                        $("[id^=AWBInnerSearchpanelbar]").kendoPanelBar();
+
+                    }
+                    else {
+                        $("#AWBTrackingDetails").html('');
+                        ShowMessage('warning', 'AWB TRACKING', "No Record Found");
+                        setTimeout(function () { window.close() }, 3000);
+                    }
+
+                }
+            });
+        });
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+
+
+        function ShowMessage(msgType, title, htmlText) {
+
+            if (htmlText != "") {
+                CallMessageBox(msgType, title, htmlText);
+            }
+        }
+
+
+        ///MessageBox
+        function CallMessageBox(msgType, title, msg, position, fadeInTime, fadeOutTime, timeout) {
+
+            if (fadeInTime == undefined)
+                fadeInTime = 200;
+            if (fadeOutTime == undefined)
+                fadeOutTime = 300;
+            if (timeout == undefined)
+                timeout = 2600;
+            if (position == undefined)
+                position = "cfMessage-top-right";
+            InvokeMsg.options = {
+                "debug": false,
+                "positionClass": position,
+                "onclick": null,
+                "fadeIn": fadeInTime,
+                "fadeOut": fadeOutTime,
+                "timeOut": timeout
+
+            }
+            InvokeMsg[msgType](msg, title)
+        }
+
+    </script>
+
+</head>
+<body>
+    <table class="WebFormTable" id="tbl" validateonsubmit="true">
+        <tbody>
+            <tr>
+                <td class="formSection" colspan="4"><span id="__SpanHeader__">AWB Tracking:</span></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div id="AWBTrackingDetails" style="font-size:12px;"></div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</body>
+</html>
+

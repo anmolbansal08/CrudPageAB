@@ -1,0 +1,42 @@
+﻿<Messages>
+  <!--#region Process Dependency XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  Process Dependency
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Arun Kumar Pathak
+  Created On:		15 Mar 2017
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Sub Process Dependency already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Sub Process Dependency Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Sub Process Dependency Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Sub Process Dependency Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Add at least One Sub Process.</value>
+  </ServerMessage>
+
+</Messages>

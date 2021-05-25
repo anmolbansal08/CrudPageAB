@@ -1,0 +1,442 @@
+﻿
+
+<div kendo-tab-strip="tabstrip2" id="tabstrip" ng-init="GetAirport();">
+    <ul>
+        <li class="k-state-active"><span class="k-link">Search Replan Offloaded Shipments</span></li>
+    </ul>
+    <div>
+        @using (Html.BeginForm("SpaceControlSearch", "SpaceControl", FormMethod.Post, new { enctype = "multipart/form-data", @id = "SpaceControlSearchForm" }))
+        {
+            <table class="WebFormTable">
+                <tbody>
+
+                  
+                    <tr>
+
+                        <td class="formlabel">Origin:</td>
+                        <td class="formInputcolumn">
+
+                            <input kendo-combo-box k-placeholder="'Select Origin'"
+                                   k-min-length="2"
+                                   k-filter="'contains'" k-auto-bind="false"
+                                   @*ng-model="SearchRequest.Origin"*@
+                                   k-ng-model="OriginModel"
+                                   k-filterfield="'Board'"
+                                   ng-disabled="ReplanOffloadAutoFillOrigin"
+                                   k-options='K_Options("Text_Origin", "ReplanOffload_Origin")' />
+
+
+                        </td>
+                        <td class="formlabel">Destination:</td>
+                        <td class="formInputcolumn">
+
+
+                            <input kendo-combo-box k-placeholder="'Select Destination'"
+                                   k-min-length="2"
+                                   k-filter="'contains'" k-auto-bind="false"
+                                   ng-model="SearchRequest.Destination"
+                                    @*k-ng-model="SearchReplanRequest.DestinationModel"*@
+                                   k-filterfield="'Destination'"
+                                   k-options='K_Options("Text_Destination", "ReplanOffload_Destination" )' />
+
+
+                        </td>
+                        <td class="formlabel" style="width: 100px;">
+
+                            Flight Date:
+                        </td>
+                        <td class="formInputcolumn">
+                          Start  <input kendo-date-picker ng-model="SearchRequest.From" data-valid='required' data-valid-msg='Select Flight Date'
+                                   placeholder='Flight Date' id="flDateFrom" onchange="validDate(this);"
+                                   k-format="'dd-MMM-yyyy'" />
+
+                        </td>
+
+                        <td class="formInputcolumn">
+                           End <input kendo-date-picker ng-model="SearchRequest.To" data-valid='required' data-valid-msg='Select Flight Date'
+                                   placeholder='Flight Date' id="flDateTo" onchange="validDate(this);"
+                                   k-format="'dd-MMM-yyyy'" />
+
+                        </td>
+
+
+                        
+                    </tr>
+
+                    <tr>
+
+
+                        <td class="formlabel">Flight No:</td>
+                        <td class="formInputcolumn">
+
+                            <input kendo-combo-box k-placeholder="'Select Flight No'"
+                                   k-min-length="3" k-auto-bind="false"
+                                   k-filter="'contains'"
+                                   ng-model="SearchRequest.FlightNo"
+                                   k-filterfield="'FlightNo'"
+                                   k-options='K_Options("Text_FlightNo", "ReplanOffload_FlightNo" )' />
+
+                        </td>
+
+                        <td class="formlabel">
+                            <span>AWB No:</span>
+                        </td>
+                        <td class="formInputcolumn">
+
+                            <input kendo-combo-box k-placeholder="'Select AWBNo'"
+                                   k-min-length="3" k-auto-bind="false"
+                                   k-filter="'contains'"
+                                   ng-model="SearchRequest.AWBNo"
+                                   k-filterfield="'AWBNo'" k-data-text-field="'Text'" k-data-value-field="'Key'"
+                                   k-options='K_Options("Text_AWBNo", "ReplanOffload_AWBNo" )' />
+                        </td>
+
+
+
+                        <td class="formlabel">
+
+                            <span>Reference Number:</span>
+                        </td>
+                        <td class="formInputcolumn">
+
+                            <input kendo-combo-box k-placeholder="'Select Reference No'"
+                                   k-min-length="3" k-auto-bind="false"
+                                   k-filter="'contains'"
+                                   ng-model="SearchRequest.ReferenceNo"
+                                   k-filterfield="'BookingRefNo'" k-data-text-field="'Text'" k-data-value-field="'Key'"
+                                   k-options='K_Options("Text_AWBNo", "ReplanOffload_BookingRefNo")' />
+                        </td>
+
+
+                        <td class="formbuttonrow" >
+                            <input type="button" class="btn btn-success" ng-click="SearchOffloadShipment();" style="width: 80px; margin: 0px 32px;" value="Search">
+                        </td>
+
+                    </tr>
+
+                
+                  
+                </tbody>
+            </table>
+
+    <fieldset ng-hide="divoffloadGrid" ng-init="divoffloadGrid=true">
+
+        <legend class="legcls">Replan Offloaded Shipments Result</legend>
+        <kendo-grid options="OffloadShipmentGridOptions"></kendo-grid>
+
+    </fieldset>
+        }
+    </div>
+
+    <style>
+        .k-state-active, .k-state-active:hover, .k-active-filter {
+            background-color: #ffffff !important;
+        }
+
+        .k-state-focused {
+            background-color: none;
+        }
+
+        .k-state-selected.k-state-focused {
+            background-color: #7bd2f6 !important;
+        }
+
+        .formlabel {
+            width: 13% !important;
+        }
+
+        .formInputcolumn {
+            width: 23% !important;
+        }
+
+        .k-filter-row th {
+            overflow: hidden;
+            border-style: solid;
+            border-width: 0 0 1px 1px;
+            padding: .5em .6em .4em .6em;
+            font-weight: normal;
+            white-space: normal !important;
+            text-overflow: ellipsis;
+            text-align: left;
+        }
+
+        .k-grid-header th.k-header {
+            vertical-align: inherit !important;
+        }
+
+        .linkbtn {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .gridemptyrow {
+            color: Red;
+        }
+
+        .k-grid-content > .k-no-data, .mandatory {
+            content: "No records found." !important;
+            color: #f00 !important;
+        }
+
+
+
+
+        /*#AWBDetailsSerachGridDiv > .k-grid-content {
+            max-height: 250px;
+        }*/
+        /*.k-grid tbody .k-button {
+            min-width: 12px;
+            width: 18px;
+            color: transparent;
+            background-color: transparent;
+            border: transparent;
+            height: 22px;
+        }*/
+        .k-radio, input.k-checkbox {
+            display: inline;
+            opacity: 0;
+            width: 0;
+            margin: 0;
+            -webkit-appearance: none;
+            overflow: hidden;
+        }
+
+        .k-radio-label {
+            padding-right: 5px;
+            font-size: 11px;
+        }
+
+        .k-radio:checked + .k-radio-label:after {
+            background-color: #3f51b5;
+            border-radius: 50%;
+        }
+
+        .k-radio:checked + .k-radio-label:after {
+            top: 4px;
+            left: 4px;
+        }
+
+        .k-checkbox-label, .k-radio-label {
+            display: inline-block;
+            position: relative;
+            padding-left: 19px;
+            vertical-align: text-top;
+            line-height: 16px;
+            cursor: pointer;
+            border-style: solid;
+            border-width: 0;
+        }
+
+        .k-radio:checked + .k-radio-label:before, .k-radio:checked + .k-radio-label:hover:before {
+            border-color: #3f51b5;
+        }
+
+        .k-radio-label:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            border-style: solid;
+        }
+
+        .k-radio:checked + .k-radio-label:after {
+            content: "";
+            width: 8px;
+            height: 8px;
+            position: absolute;
+            top: 4px;
+            left: 4px;
+        }
+
+        .k-radio-label:before {
+            border-color: #7f7f7f;
+            border-radius: 50%;
+            background-color: #fff;
+            border-width: 2px;
+        }
+
+        .k-radio:disabled + .k-radio-label:active:before, .k-radio:disabled + .k-radio-label:before, .k-radio:disabled + .k-radio-label:hover:after, .k-radio:disabled + .k-radio-label:hover:before {
+            background: #fff;
+            border-color: #bfbfbf;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .k-tabstrip .k-tabstrip-items li .removeIcon[data-type='remove'] {
+            padding-left: 0.46em;
+        }
+
+        .k-checkbox:checked + .k-checkbox-label:before {
+            content: "\2713";
+        }
+
+        .k-checkbox-label:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-width: 1px;
+            border-style: solid;
+            width: 14px;
+            height: 14px;
+            font-size: 14px;
+            line-height: 14px;
+            text-align: center;
+        }
+
+        .k-checkbox-label:hover:before, .k-checkbox:checked + .k-checkbox-label:hover:before {
+            border-color: #7f7f7f;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .k-checkbox:checked + .k-checkbox-label:before {
+            background-color: #3f51b5;
+            border-color: #3f51b5;
+            color: #fff;
+        }
+
+        .k-checkbox + .k-checkbox-label:after {
+            border-style: none !important;
+            display: none !important;
+        }
+
+        .k-radio, input.k-checkbox {
+            display: inline;
+            opacity: 0;
+            width: 0;
+            margin: 0;
+            -webkit-appearance: none;
+            overflow: hidden;
+        }
+
+        .k-checkbox-label, .k-radio-label {
+            line-height: 18px;
+        }
+
+        .inProgress {
+            color: #fff;
+            background-color: #428bca;
+            border-color: #357ebd;
+            font-size: 10px;
+            width: 50px;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .k-grid td {
+            padding: 0.4em !important;
+        }
+
+        .hcap {
+            color: #9d331d;
+            font-weight: 700;
+        }
+
+        .hRev {
+            color: #00a000;
+            font-weight: 700;
+        }
+
+        .tdRev {
+            color: #e04800;
+        }
+
+        .hYield {
+            color: #0030a0;
+            font-weight: 700;
+        }
+
+        .tdYield {
+            color: #b232b2;
+        }
+
+        .hQueue {
+            color: #f91c1c;
+            font-weight: 700;
+        }
+
+        .hConf {
+            color: #179801;
+            font-weight: 700;
+        }
+
+        .tdQueue {
+            color: #fff;
+            background-color: red;
+            padding: 0.0em 0.5em 0.1em 0.5em;
+        }
+
+        .tdConf {
+            color: #fff;
+            background-color: green;
+            padding: 0.0em 0.5em 0.1em 0.5em;
+        }
+
+        .wa {
+            width: auto !important;
+        }
+
+        .hawb {
+            color: #e02802;
+            font-weight: 500;
+        }
+
+        .hawbd {
+            color: #f89406;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .k-grid .k-hierarchy-col {
+            width: 20px;
+        }
+
+        .discontinued {
+            font-weight: bold;
+            color: #f00;
+        }
+
+        .Hold {
+            color: #f00;
+        }
+
+        .LL {
+            color: #f00;
+        }
+
+        .KK {
+            color: #00a000;
+        }
+
+        /*.k-link > .k-icon {
+            float: right;
+            margin-left: 6px !important;
+            margin-top: 1px !important;
+        }*/
+
+        .k-grid-cancel-changes {
+            background-color: #d00c02;
+            color: white;
+        }
+
+            .k-grid-cancel-changes:hover {
+                background-color: red;
+            }
+
+        .k-grid-save-changes {
+            background-color: green;
+            color: white;
+        }
+
+            .k-grid-save-changes:hover {
+                background-color: #08c308;
+            }
+    </style>
+    @Scripts.Render("~/bundles/spacecontrol")
+
+    @*<script src="~/JScript/SpaceControl/SpaceControl.js"></script>*@
+

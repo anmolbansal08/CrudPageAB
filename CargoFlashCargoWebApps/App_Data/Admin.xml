@@ -1,0 +1,791 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<USER>
+  <LoginDetails>
+    <LanguageCode>EN</LanguageCode>
+    <LoginSNo>1</LoginSNo>
+    <LoginID>admin</LoginID>
+    <Password/>
+    <EMailID>admin@admin.com</EMailID>
+    <Name>Admin</Name>
+    <AirportCodeSNo>1229</AirportCodeSNo>
+    <AirportCode>JKT</AirportCode>
+    <AirportName>JAkARTA Airport</AirportName>
+    <CityCode>JKT</CityCode>
+    <CityName>JAkARTA</CityName>
+    <CountrySNo>156</CountrySNo>
+    <CountryCode>ID</CountryCode>
+    <CountryName>INDONESIA</CountryName>
+    <LoginTypeSNo>1</LoginTypeSNo>
+    <LoginType>Admin</LoginType>
+    <AirlineSNo>1</AirlineSNo>
+    <AirlineCode>126</AirlineCode>
+    <CarrierCode>AK</CarrierCode>
+    <AirlineName>AIR ASIA</AirlineName>
+    <LoginActive>true</LoginActive>
+    <LoginBlocked>false</LoginBlocked>
+    <DateFormat>dd/MM/yyyy</DateFormat>
+  </LoginDetails>
+
+  <LoginDetails>
+    <LanguageCode>RU</LanguageCode>
+    <LoginSNo>1</LoginSNo>
+    <LoginID>admin</LoginID>
+    <Password/>
+    <EMailID>admin@admin.com</EMailID>
+    <Name>Админ</Name>
+    <AirportCodeSNo>1229</AirportCodeSNo>
+    <AirportCode>KUL</AirportCode>
+    <AirportName>КУАЛА-ЛУМПУР аэропорта</AirportName>
+    <CityCode>KUL</CityCode>
+    <CityName>КУАЛА-ЛУМПУР</CityName>
+    <CountrySNo>156</CountrySNo>
+    <CountryCode>MY</CountryCode>
+    <CountryName>Малайзия</CountryName>
+    <LoginTypeSNo>1</LoginTypeSNo>
+    <LoginType>Админ</LoginType>
+    <AirlineSNo>1</AirlineSNo>
+    <AirlineCode>807</AirlineCode>
+    <CarrierCode>AK</CarrierCode>
+    <AirlineName>AIR ASIA</AirlineName>
+    <LoginActive>true</LoginActive>
+    <LoginBlocked>false</LoginBlocked>
+    <DateFormat>MM/dd/yyyy</DateFormat>
+  </LoginDetails>
+  <AppsAuthentication>
+    <Apps>
+      <AppsSNo>4</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>Client</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>4</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>Client</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>4</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>Client</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>4</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>Client</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>5</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>Airline</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>5</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>Airline</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>5</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>Airline</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>5</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>Airline</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>6</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>Currency</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>6</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>Currency</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>6</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>Currency</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>6</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>Currency</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>7</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>Country</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>7</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>Country</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>7</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>Country</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>7</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>Country</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>8</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>City</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>8</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>City</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>8</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>City</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>8</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>City</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>9</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>Slab</Controller>
+      <Action>Delete</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>9</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>Slab</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>9</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>Slab</Controller>
+      <Action>Edit</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>9</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>Slab</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>18</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>Language</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>18</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>Language</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>18</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>Language</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>18</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>Language</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>19</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>Groups</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>19</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>Groups</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>19</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>Groups</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>19</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>Groups</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>20</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Manage</Area>
+      <Controller>Permission</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>21</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>Priority</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>21</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>Priority</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>21</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>Priority</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>21</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>Priority</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>22</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>Product</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>22</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>Product</Controller>
+      <Action>Edit</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>22</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>Product</Controller>
+      <Action>Delete</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>22</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>Product</Controller>
+      <Action>Read</Action>
+    </Apps>
+
+    <Apps>
+      <AppsSNo>23</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>FlightType</Controller>
+      <Action>Delete</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>23</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>FlightType</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>23</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>FlightType</Controller>
+      <Action>Edit</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>23</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>FlightType</Controller>
+      <Action>Read</Action>
+    </Apps>
+
+
+    <Apps>
+      <AppsSNo>24</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>CommodityGroup</Controller>
+      <Action>Delete</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>24</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>CommodityGroup</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>24</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>CommodityGroup</Controller>
+      <Action>Edit</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>24</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>CommodityGroup</Controller>
+      <Action>Read</Action>
+    </Apps>
+
+    <Apps>
+      <AppsSNo>25</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>CommoditySubGroup</Controller>
+      <Action>Delete</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>25</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>CommoditySubGroup</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>25</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>CommoditySubGroup</Controller>
+      <Action>Edit</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>25</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>CommoditySubGroup</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>26</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>DensityGroup</Controller>
+      <Action>Delete</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>26</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>DensityGroup</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>26</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>DensityGroup</Controller>
+      <Action>Edit</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>26</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>DensityGroup</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>27</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>ULD</Area>
+      <Controller>ULDType</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>27</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>ULD</Area>
+      <Controller>ULDType</Controller>
+      <Action>Edit</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>27</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>ULD</Area>
+      <Controller>ULDType</Controller>
+      <Action>Delete</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>27</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>ULD</Area>
+      <Controller>ULDType</Controller>
+      <Action>Read</Action>
+    </Apps>
+
+    <Apps>
+      <AppsSNo>28</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>Commodity</Controller>
+      <Action>Delete</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>28</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>Commodity</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>28</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>Commodity</Controller>
+      <Action>Edit</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>28</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>Commodity</Controller>
+      <Action>Read</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>29</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>CommodityException</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>29</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>CommodityException</Controller>
+      <Action>Edit</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>29</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>CommodityException</Controller>
+      <Action>Delete</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>29</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>CommodityException</Controller>
+      <Action>Read</Action>
+    </Apps>
+
+    <Apps>
+      <AppsSNo>30</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>DueCarrier</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>30</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>DueCarrier</Controller>
+      <Action>Edit</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>30</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>DueCarrier</Controller>
+      <Action>Delete</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>30</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>DueCarrier</Controller>
+      <Action>Read</Action>
+    </Apps>
+
+    <Apps>
+      <AppsSNo>31</AppsSNo>
+      <Rights>Create</Rights>
+      <Area>Master</Area>
+      <Controller>DueAgent</Controller>
+      <Action>Create</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>31</AppsSNo>
+      <Rights>Edit</Rights>
+      <Area>Master</Area>
+      <Controller>DueAgent</Controller>
+      <Action>Edit</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>31</AppsSNo>
+      <Rights>Delete</Rights>
+      <Area>Master</Area>
+      <Controller>DueAgent</Controller>
+      <Action>Delete</Action>
+    </Apps>
+    <Apps>
+      <AppsSNo>31</AppsSNo>
+      <Rights>Read</Rights>
+      <Area>Master</Area>
+      <Controller>DueAgent</Controller>
+      <Action>Read</Action>
+    </Apps>
+
+  </AppsAuthentication>
+
+  <Apps>
+    <AppsDetails LanguageCode="EN">
+      <LanguageCode>EN</LanguageCode>
+      <AppsDescription>
+        <ul>
+          <li>
+            <a href="#">Master</a>
+            <ul>
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=Airline&amp;FormAction=INDEXVIEW" target="iMasterFrame">Airline</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=Country&amp;FormAction=INDEXVIEW" target="iMasterFrame">Country</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=City&amp;FormAction=INDEXVIEW" target="iMasterFrame">City</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=Zone&amp;FormAction=INDEXVIEW" target="iMasterFrame">Zone</a>
+              </li>
+
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=Currency&amp;FormAction=INDEXVIEW" target="iMasterFrame">Currency</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=CustomerType&amp;FormAction=INDEXVIEW" target="iMasterFrame">Customer Type</a>
+              </li>
+
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=Customer&amp;FormAction=INDEXVIEW" target="iMasterFrame">Customer</a>
+              </li>
+
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=Commodity&amp;FormAction=INDEXVIEW" target="iMasterFrame">Commodity</a>
+              </li>
+
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=Product&amp;FormAction=INDEXVIEW" target="iMasterFrame">Product</a>
+              </li>
+
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=Embargo&amp;FormAction=INDEXVIEW" target="iMasterFrame">Embargo</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=Priority&amp;FormAction=INDEXVIEW" target="iMasterFrame">Priority</a>
+              </li>
+
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=DueCarrier&amp;FormAction=INDEXVIEW" target="iMasterFrame">Due-Carrier</a>
+              </li>
+
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=Department&amp;FormAction=INDEXVIEW" target="iMasterFrame">Department</a>
+              </li>
+
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=HandOverCutOffTime&amp;FormAction=INDEXVIEW" target="iMasterFrame">Handover Cut-Off Time</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=SpecialHandlingCode&amp;FormAction=INDEXVIEW" target="iMasterFrame">Special Handling Code</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=TimeZone&amp;FormAction=INDEXVIEW" target="iMasterFrame">Time Zone</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=ExchangeRate&amp;FormAction=INDEXVIEW" target="iMasterFrame">Exchange Rate</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">Manage Permission</a>
+            <ul>
+              <li>
+                <a href="Default.aspx?Module=Security&amp;Apps=Groups&amp;FormAction=INDEXVIEW" target="iMasterFrame">Group</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Security&amp;Apps=Users&amp;FormAction=INDEXVIEW" target="iMasterFrame">User</a>
+              </li>
+              <li>
+                <a href="Permission.aspx?Module=Users&amp;Apps=Groups&amp;FormAction=INDEXVIEW" target="iMasterFrame">Manage Permission</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">Bucket</a>
+            <ul>
+              <li>
+                <a href="Default.aspx?Module=Bucket&amp;Apps=BucketClass&amp;FormAction=INDEXVIEW" target="iMasterFrame">Bucket Class</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Bucket&amp;Apps=FlightWiseBucketClass&amp;FormAction=INDEXVIEW" target="iMasterFrame">Flight Wise Bucket Class</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">Discounting</a>
+            <ul>
+              <li>
+                <a href="Default.aspx?Module=Discounting&amp;Apps=BucketRateDiscounting&amp;FormAction=INDEXVIEW" target="iMasterFrame">Bucket Rate Discounting</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Discounting&amp;Apps=BucketDaysDiscounting&amp;FormAction=INDEXVIEW" target="iMasterFrame">Bucket Days Discounting</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Discounting&amp;Apps=SpecialDiscounting&amp;FormAction=INDEXVIEW" target="iMasterFrame">Special Discounting</a>
+              </li>
+
+            </ul>
+          </li>
+          <li>
+            <a href="#">Penalty</a>
+            <ul>
+              <li>
+                <a href="Default.aspx?Module=PenaltyCharge&amp;Apps=Penalty&amp;FormAction=INDEXVIEW" target="iMasterFrame">Penalty Types</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=PenaltyCharge&amp;Apps=PenaltyCharges&amp;FormAction=INDEXVIEW" target="iMasterFrame">Penalty Charges</a>
+              </li>
+
+            </ul>
+          </li>
+
+          <li>
+            <a href="#">Auction</a>
+            <ul>
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=AirlineAuction&amp;FormAction=INDEXVIEW" target="iMasterFrame">Airline Auction</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Master&amp;Apps=CustomerBid&amp;FormAction=INDEXVIEW" target="iMasterFrame">Customer's Bid</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">Shipment</a>
+            <ul>
+              <li>
+                <a href="Default.aspx?Module=Shipment&amp;Apps=Booking&amp;FormAction=INDEXVIEW" target="iMasterFrame">Booking</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">Payment</a>
+            <ul>
+              <li>
+                <a href="Default.aspx?Module=Payment&amp;Apps=Payment&amp;FormAction=INDEXVIEW" target="iMasterFrame">Payment Request</a>
+              </li>
+              <li>
+                <a href="Default.aspx?Module=Payment&amp;Apps=PaymentApproved&amp;FormAction=INDEXVIEW" target="iMasterFrame">Payment Approved</a>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="#">Dashboard</a>
+            <ul>
+              <li>
+                <a href="NewRomsDashboard.aspx"  target="_blank">Forecasting (Flight Wise)</a>
+              </li>
+              <li>
+                <a href="NewDashboard.aspx"  target="_blank">Forecasting (Month Wise)</a>
+              </li>
+
+            </ul>
+          </li>
+
+          <li>
+            <a href="#">Reports</a>
+            <ul>
+              <li>
+                <a href="Default.aspx?Module=Reports&amp;Apps=SpaceAllocationReport&amp;FormAction=NEW" target="iMasterFrame">Space Allocation Report</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">Dashboard Home</a>
+            <ul>
+              <li>
+                <a href="DashboardHome.aspx?Module=Reports&amp;Apps=SpaceAllocationReport&amp;FormAction=NEW" target="iMasterFrame">DashboardHome</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </AppsDescription>
+    </AppsDetails>
+
+  </Apps>
+</USER>

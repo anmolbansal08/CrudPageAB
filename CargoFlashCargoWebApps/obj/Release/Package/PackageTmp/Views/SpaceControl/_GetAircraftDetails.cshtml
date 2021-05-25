@@ -1,0 +1,176 @@
+﻿@*// <copyright file="_GetAircraftDetails.cshtml" company="Cargoflash">
+           //
+           // Created On: 23-March-2017
+           // Created By: Braj
+           // Description:
+           //----------------------------------------------------------------------------
+           // Revison History:
+           // Please add a new line below for any update to this file
+           // Updated On  Updated By                     Significant Changes
+           // ----------------------------------------------------------------------------
+           //
+           //
+    </copyright>*@
+
+@model System.Data.DataSet
+@{
+    string gridId = Guid.NewGuid().ToString();}
+<table class='WebFormTable'>
+    @if (Model.Tables.Count > 0 && Model.Tables[0].Rows.Count > 0)
+    {
+        <tr>
+            <td class='formSection' colspan='4'>Aircraft Information</td>
+        </tr>
+        <tr>
+            <td class=' formlabel' title='Airline'><span> Airline</span></td>
+            <td class='formInputcolumn'>
+                <span style='max-width: 250px;word-wrap: break-word;    display: inline-block;max-height: 50px;overflow: auto;'>
+                    @Model.Tables[0].Rows[0]["AirlineName"].ToString()
+                </span>
+            </td>
+            <td class='formlabel' title='Structual Capacity'><span > Structual Capacity</span></td>
+            <td class='formInputcolumn'>
+                <span style='max-width: 250px;word-wrap: break-word;    display: inline-block;max-height: 50px;overflow: auto;'>
+                    @Model.Tables[0].Rows[0]["StructuralCapacity"].ToString()
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td class='formlabel' title='Type'><span> Type</span></td>
+            <td class='formInputcolumn'>
+                <span style='max-width: 250px;word-wrap: break-word;    display: inline-block;max-height: 50px;overflow: auto;'>
+                    @Model.Tables[0].Rows[0]["AircraftType"].ToString()
+                </span>
+
+            </td>
+            <td class='formlabel' title='Series'><span> Series</span></td>
+            <td class='formInputcolumn'>
+                <span style='max-width: 250px;word-wrap: break-word;    display: inline-block;max-height: 50px;overflow: auto;'>
+                    @Model.Tables[0].Rows[0]["AircraftVersion"].ToString()
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td class='formlabel' title='Cargo Classification'><span> Cargo Classification</span></td>
+            <td class='formInputcolumn'>
+                <span style='max-width: 250px;word-wrap: break-word;    display: inline-block;max-height: 50px;overflow: auto;'>
+                    @Model.Tables[0].Rows[0]["strCargoClassification"].ToString()
+                </span>
+            </td>
+            <td class='formlabel' title='Body Type'><span > Body Type</span></td>
+            <td class='formInputcolumn'>
+                <span style='max-width: 250px;word-wrap: break-word;    display: inline-block;max-height: 50px;overflow: auto;'>
+                    @Model.Tables[0].Rows[0]["strBodyType"].ToString()
+                </span>
+            </td>
+        </tr>
+        <tr>
+
+            
+        </tr>
+        <tr>
+            <td class='formSection' colspan='4'>Aircraft Weight Information</td>
+        </tr>
+        <tr>
+            <td class='formlabel' title='Gross Unit'><span > Gross Unit</span></td>
+            <td class='formInputcolumn'>
+                <span style='max-width: 250px;word-wrap: break-word;    display: inline-block;max-height: 50px;overflow: auto;'>
+                    @Model.Tables[0].Rows[0]["GrossWeightType"].ToString()
+                </span>
+            </td>
+            <td class='formlabel' title='Gross Weight'><span id='spnGrossWeight'> Gross Weight</span></td>
+            <td class='formInputcolumn'>
+                <span style='max-width: 250px;word-wrap: break-word;    display: inline-block;max-height: 50px;overflow: auto;'>
+                    @Model.Tables[0].Rows[0]["GrossWeight"].ToString()
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td class='formlabel' title='Volume Unit'><span> Volume Unit</span></td>
+            <td class='formInputcolumn'>
+                <span style='max-width: 250px;word-wrap: break-word;    display: inline-block;max-height: 50px;overflow: auto;'>
+                    @Model.Tables[0].Rows[0]["VolumeWeightType"].ToString()
+                </span>
+
+            </td>
+            <td class='formlabel' title='Volume(cbm) '><span> Volume(cbm) </span></td>
+            <td class='formInputcolumn'>
+                <span style='max-width: 250px;word-wrap: break-word;    display: inline-block;max-height: 50px;overflow: auto;'>
+                    @Model.Tables[0].Rows[0]["VolumeWeight"].ToString()
+                </span>
+
+
+            </td>
+        </tr>
+        <tr>
+            <td class='formlabel' title='Max Gross Weight Per Piece'><span > Max Gross Weight Per Piece</span></td>
+            <td class='formInputcolumn'>
+                <span style='max-width: 250px;word-wrap: break-word;    display: inline-block;max-height: 50px;overflow: auto;'>
+                    @Model.Tables[0].Rows[0]["MaxGrossWtPiece"].ToString()
+                </span>
+
+            </td>
+            <td class='formlabel' title='Max Volume Per Piece'><span> Max Volume Per Piece</span></td>
+            <td class='formInputcolumn'>
+                <span style='max-width: 250px;word-wrap: break-word;    display: inline-block;max-height: 50px;overflow: auto;'>
+                    @Model.Tables[0].Rows[0]["MaxVolumePiece"].ToString()
+                </span>
+
+
+            </td>
+        </tr>
+        <tr>
+            <td class='formlabel' title=' Active'><span id='spnIsActive'>  Active</span></td>
+            <td class='formInputcolumn'>
+                <span style='max-width: 250px;word-wrap: break-word;    display: inline-block;max-height: 50px;overflow: auto;'>
+                    @Model.Tables[0].Rows[0]["IsActive"].ToString()
+                </span>
+
+
+            </td>
+            <td class='formlabel' title=''><span id='spn'> </span></td>
+            <td class='formInputcolumn'>&nbsp;</td>
+        </tr>
+
+        <tr>
+            <td class='formSection' colspan='4'>Aircraft Inventory</td>
+        </tr>
+
+
+        <tr>
+            <td colspan='4'>
+                <div id="tblAirCraftInventoryGrid_@gridId"></div>
+
+                <script>
+
+                    $(document).ready(function () {
+                        $("#tblAirCraftInventoryGrid_@gridId").kendoGrid({
+                            dataSource: {
+                                data: JSON.parse(@Html.Raw(Json.Encode(CargoFlashCargoWebApps.Common.Global.DStoJSON(Model,1)))),                               
+                            },
+                            dataBound: function (e) { cfi.DisplayEmptyMessage(e, this); },
+                            //height:180,
+                            scrollable: true,
+                            columns: [
+                                { field: "RegistrationNo", title: "Registration No" },                        
+                                { field: "ACTIVE", title: "Active", width: "200px" },
+                            ]
+                        });
+                    });
+                </script>
+            </td>
+        </tr>
+
+
+    }
+    else
+    {
+        <tr>
+            <td class='formSection' colspan='4'>No results found</td>
+        </tr>
+
+    }
+
+</table>
+
+

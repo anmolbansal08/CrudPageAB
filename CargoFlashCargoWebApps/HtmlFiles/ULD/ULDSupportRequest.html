@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="divhead" align="left" style="padding: 100px; font-family:Calibri; font-size:15px;">
+        <b>
+            Dear ULD Controller,
+            <br />
+            Please find the ULD details below.
+        </b>
+        <br /><br />
+        <table style="width: 750px; height:100px; font-size:11px;">
+            <tr>
+                <td colspan="8">
+                    <table style="width: 80%; border:1px solid black" cellspacing="0" cellpadding="3">
+                        <tr>
+                            <td colspan="4" style="border-right: 1px solid black; border-bottom: 1px solid black; font-weight: bold;">Request Reference No</td>
+                            <td colspan="4" style="border-bottom: 1px solid black; font-weight: bold;"><span id="spnreqrefno">@spnreqrefno</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="border-right: 1px solid black; border-bottom: 1px solid black; font-weight: bold;">Request By Airport</td>
+                            <td colspan="4" style="border-bottom: 1px solid black; font-weight: bold;"><span id="spnreqairport">@spnreqairport</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="border-right: 1px solid black; font-weight: bold;">Request To Airport</td>
+                            <td colspan="4" style="font-weight: bold;"><span id="spnreqtoairport">@spnreqtoairport</span></td>
+                        </tr>
+                        <tr><th colspan="8" align="center" style="font-size: 12px; border: 1px solid black; border-right: none; border-left: none; font-weight: bold; ">ULD Type Request</th></tr>
+                        <tr>
+                            <td colspan="4" align="center" style="border-right: 1px solid black; font-size: 12px; font-weight: bold;"><span>ULD Type</span><span id="spnuldtype"></span></td>
+                            <td colspan="4" align="center" style="font-size: 12px; font-weight: bold;">Quantity<span id="spnqty"></span></td>
+                        </tr>
+                        @ULDTypeRow
+                        <tr><th colspan="8" align="center" style="font-size: 12px; border: 1px solid black; border-right: none; border-left: none; font-weight: bold; ">Consumeable Request</th></tr>
+                        <tr>
+                            <td colspan="4" align="center" style="border-right: 1px solid black; font-size: 12px; font-weight: bold; "><span>Consumeable</span><span id="spnconsumable"></span></td>
+                            <td colspan="4" align="center" style="border: none; font-size: 12px; font-weight: bold;"><span>Quantity</span><span id="spnqtys"></span></td>
+                        </tr>
+                        @ConsumeableRow
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+

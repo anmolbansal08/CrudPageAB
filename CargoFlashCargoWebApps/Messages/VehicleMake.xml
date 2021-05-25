@@ -1,0 +1,34 @@
+﻿<Messages>
+
+  <DataFieldName>
+    <Name>Capacity</Name>
+    <Message>Enter the value of Capacity</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Vehicle Brand already exists. Please Enter another Vehicle Brand.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>5001</Key>
+    <value>Vehicle  Brand already exists in In-Active State. Please Enter another Vehicle Brand.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Vehicle  Brand Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Vehicle  Brand Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Vehicle  Brand Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>
+
+
+
+
+

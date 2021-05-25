@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <style type="text/css">
+        .style1 {
+            width: 35%;
+            font-size: 11px;
+            font-weight: normal;
+        }
+
+        .style2 {
+            width: 30%;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .auto-style1 {
+            width: 10%;
+        }
+
+        .auto-style2 {
+            width: 12%;
+        }
+
+        th, td {
+            padding: 5px;
+            margin: 0px;
+        }
+
+        tr {
+            margin: 0px;
+        }
+
+        .auto-style3 {
+            width: 25%;
+        }
+
+        .auto-style4 {
+            width: 40%;
+        }
+
+        .auto-style5 {
+            height: 24px;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+    <!--<script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/Export/UWS/UWSPrint/UWSPrint.js"></script>-->
+    <script type="text/javascript">
+        
+        $(document).ready(function () {
+
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+        });
+    </script>
+</head>
+
+<body>
+    <form id="form1" runat="server">
+        <div style="width: 100%; font-family:Arial; font-size:18px;  padding:0px; margin:0px;" align="center">
+
+            <table style="width: 90%; padding:0px; margin:0px;" cellspacing="0px">
+
+
+                <tr>
+                    <td colspan="3">
+                        <table style="width:100%; font-size:10px; padding:0px; margin:0px;" cellspacing="0px">
+
+
+                            <tr>
+                                <td colspan="6" style="width:100%; margin:0; padding:0;">
+                                    <table id="recordTbl" style="width:100%; margin:0; padding:0; border-collapse:collapse;text-align:center;">
+                                        <thead class="ui-widget-header">
+                                            <tr style="font-weight: bold; border: 1px solid black;">
+                                                <td colspan="6" style="width:10%; padding:10px;">Consignment Details</td>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ui-widget-content">
+
+                                            <tr style="border: 1px solid black;">
+                                                <td style="width: 17%; padding: 10px;">Consignment Number:</td>
+                                                <td style="width:17%; text-align:left"><span id="spnConsignmentNo"></span></td>
+                                                <td style="width: 17%; padding: 10px; ">Carrier:</td>
+                                                <td style="width: 17%; text-align: left; "><span id="spnCarrier"></span></td>
+                                                <td style="width: 17%; padding: 10px; ">Planned RCS to planned NFD:</td>
+                                                <td style="width: 17%; text-align: left; "><span id="spnPlannedRCSplanned"></span></td>
+                                            </tr>
+
+                                            <tr style="border: 1px solid black;">
+                                                <td style="width: 17%; padding: 10px;">Total Pieces:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnTotalpieces"></span></td>
+                                                <td style="width: 17%; padding: 10px;">Forwarder:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnFarwarder"></span></td>
+                                                <td style="width: 17%; padding: 10px;">Planned RCS to last Event:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnPlannedRCSlast"> </span></td>
+                                            </tr>
+                                            <tr style="  border: 1px solid black;">
+                                                <td style="width: 17%; padding: 10px;">Total Weight:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnTotalWeight"></span></td>
+                                                <td style="width: 17%; padding: 10px;">Routing:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnRouting"></span></td>
+                                                <td style="width: 17%; padding: 10px;"></td>
+                                                <td style="width:17%;"></td>
+                                            </tr>
+                                            <tr style="  border: 1px solid black;">
+                                                <td style="width: 17%; padding: 10px;">Product Code:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnProductCode"> </span></td>
+                                                <td style="width: 17%; padding: 10px;">Baseline Routing:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnBaselineRouting"> </span></td>
+                                                <td style="width:17%;"></td>
+                                                <td style="width:17%;"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="width:100%; margin:0; padding:0;">
+                                    <table id="tblpic" style="width:100%; margin:0; padding:0; border-collapse:collapse;text-align:center;">
+                                        <thead class="ui-widget-header">
+                                            <tr style="font-weight: bold; border: 1px solid black;">
+                                                <td style="width:10%; padding:10px;">Pieces</td>
+                                                <td colspan="3" style="width:10%; padding:10px;">Origin Milestones</td>
+                                                <td style="width:10%; padding:10px;">Origin</td>
+                                                <td colspan="2" style="width:10%; padding:10px;">Flight</td>
+
+                                                <td style="width:10%; padding:10px;">Dest</td>
+                                                <td colspan="3" style="width:10%; padding:10px;">Destination Milestones</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ui-widget-content">
+                                            <tr style=" font-weight: bold; border: 1px solid black;">
+                                                <td style="width:10%; padding:10px;"><span id="spnPieces"></span></td>
+                                                <td id="tdFWB" style="width: 5%; padding: 5px; color: black;">
+                                                    <span id="spnFWB" style="display: block; vertical-align: bottom; background: skyblue; border-radius: 100%; height: 50px; width: 50px; margin: 0; "><div style="padding-top: 17px; font-size: medium;">FWB</div></span>
+                                                    <div style="padding-right: 10px;">
+                                                        <span id="spnFWBDate" style="color:black"></span>
+                                                    </div><div style="padding-right: 30px;">
+                                                        <span id="spnFWBTime" style="color:black"></span>
+                                                    </div>
+                                                </td>
+                                                <td id="tdRCS" style="width: 5%; padding: 5px; color: black">
+                                                    <span id="spnRCS" style="display: block; background: skyblue; vertical-align: baseline; border-radius: 100%; height: 50px; width: 50px; margin: 0; "><div style="padding-top: 17px;font-size:medium;">RCS</div></span>
+                                                    <div style="padding-right: 10px;">
+                                                        <span id="spnRCSDate" style="color:black">
+                                                        </span>
+                                                    </div>
+                                                    <div style="padding-right: 30px;">
+                                                        <span id="spnRCSTime" style="color:black"></span>
+                                                    </div>
+                                                </td>
+                                                <td id="tdDEP" style="width: 5%; padding: 5px; color: black">
+                                                    <span id="spnDEP" style="display: block; background: skyblue; vertical-align: auto; border-radius: 100%; height: 50px; width: 50px; margin: 0;"><div style="padding-top: 17px; font-size: medium;">DEP</div></span>
+                                                    <div style="padding-right: 10px;">
+                                                        <span id="spnDEPDate" style="color:black;"></span>
+                                                    </div>
+                                                    <div style="padding-right: 30px;">  <span id="spnDEPTime" style="color:black;"></span> </div>
+
+                                                </td>
+                                                <td style="width:10%; padding:10px;"><span id="spnOrigin"> </span></td>
+                                                <td colspan="2" style="width:10%; padding:10px;"><span id="spnFlight" style="color:red;"> </span></br>Dep:<span id="spnETD"></span></br>Dep:<span id="spnETDGMT"></span></br>Arr:<span id="spnETA"></span></br>Arr:<span id="spnETAGMT"></span></td>
+                                                <td style="width:10%; padding:10px;"><span id="spnDest"> </span></td>
+                                                <td id="tdRCF" style="width: 5%; padding: 5px; text-align: center; color: black">
+                                                    <span id="spnRCF" style="display: block; background: skyblue; border-radius: 100%; height: 50px; width: 50px; margin: 0; "><div style="padding-top: 17px; font-size: medium;">RCF</div></span>
+                                                    <div style="padding-right: 10px;">
+                                                        <span id="spnRCFDate" style="color:black"></span>
+                                                    </div>
+                                                    <div style="padding-right: 30px;"> <span id="spnRCFTime" style="color:black"></span></div>
+
+                                                </td>
+                                                <td id="tdNFD" style="width: 5%; padding: 5px; color: black">
+                                                    <span id="spnNFD" style="display: block; background: skyblue; border-radius: 100%; height: 50px; width: 50px; margin: 0; "><div style="padding-top: 17px; font-size: medium;">NFD</div></span>
+                                                    <div style="padding-right: 10px;">
+                                                        <span id="spnNFDDate" style="color:black"></span>
+                                                    </div>
+                                                    <div style="padding-right: 30px;"> <span id="spnNFDTime" style="color:black"></span></div>
+                                                </td>
+                                                <td id="tdDLV" style="width: 5%; padding: 5px; color: black">
+                                                    <span id="spnDLV" style="display: block; background: skyblue; border-radius: 100%; height: 50px; width: 50px; margin: 0;   "><div style="padding-top: 17px; font-size: medium;">DLV</div></span>
+                                                    <span id="spnDLVDate" style="color:black"></span>
+                                                    <span id="spnDLVTime" style="color:black"></span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td colspan="6" style="width:100%; margin:0; padding:0;">
+                                    <table id="tblEDI" style="width:100%; margin:0; padding:0; border-collapse:collapse;text-align:center;">
+                                        <thead class="ui-widget-header">
+                                            <tr id="trEDI" style="font-weight: bold; border: 1px solid black;">
+                                                <td style="width:10%; padding:10px;">Station</td>
+                                                <td style="width:10%; padding:10px;">Code</td>
+                                                <td style="width:10%; padding:10px;">Event Time<br>(UTC)</td>
+                                                <td style="width:10%; padding:10px;">Received Time<br>(UTC)</td>
+                                                <td style="width:10%; padding:10px;">Type   </td>
+                                                <td style="width:10%; padding:10px;">Pieces</td>
+                                                <td style="width:10%; padding:10px;">Weight</td>
+                                                <td style="width:10%; padding:10px;">OSI</td>
+                                                <td style="width:10%; padding:10px;">Other Details</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ui-widget-content"></tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>

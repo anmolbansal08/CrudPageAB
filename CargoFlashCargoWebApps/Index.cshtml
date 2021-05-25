@@ -1,0 +1,857 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    @{
+        if (Session["UserDetail"] == null)
+        {
+            CargoFlash.Cargo.DataService.Common.CommonService CS = new CargoFlash.Cargo.DataService.Common.CommonService();
+            string loginPage = CS.GetSystemSetting("LoginPage");
+            System.Web.HttpContext.Current.Response.Redirect("~/Account/" + loginPage);
+            return;
+        }
+        var dttemp = ((CargoFlash.Cargo.Model.UserLogin)Session["UserDetail"]).SysSetting["JSVersion"];
+    }
+    <title>ICMS</title>
+    <link type="text/css" rel="stylesheet" href="Styles/Application.css?ver=@dttemp" />
+    <link type="text/css" rel="stylesheet" href="Styles/Grid/kendo.common.min.css?ver=@dttemp" />
+    <link type="text/css" rel="stylesheet" href="Styles/Grid/kendo.blueopal.min.css?ver=@dttemp" />
+
+    <link type="text/css" rel="stylesheet" href="Styles/Site.css?ver=@dttemp" />
+    @*<script type="text/javascript" src="Scripts/jquery-1.7.2.min.js?ver=@dttemp"></script>
+        <script type="text/javascript" src="Scripts/kendo/kendo.web.min.js?ver=@dttemp"></script>
+        <script src="Scripts/shortcut.js?ver=@dttemp"></script>
+        <script type="text/javascript" src="Scripts/index.min.js"></script>*@
+    <link href="~/Styles/jquery-ui/jquery-ui-1.10.2.custom.css" rel="stylesheet" />
+    @*<script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>*@
+    @*@System.Web.Optimization.Styles.Render("~/Content/index")*@
+    @System.Web.Optimization.Scripts.Render("~/Scripts/index")
+    <meta name="viewport" content="width=device-width" />
+
+
+    <style>
+        .short {
+            font-weight: bold;
+            color: #FF0000;
+            font-size: 11px;
+        }
+
+        .weak {
+            font-weight: bold;
+            color: orange;
+            font-size: 11px;
+        }
+
+        .good {
+            font-weight: bold;
+            color: #2D98F3;
+            font-size: 11px;
+        }
+
+        .strong {
+            font-weight: bold;
+            color: limegreen;
+            font-size: 11px;
+        }
+
+
+        .divshort {
+            color: #FF0000;
+            width: 25%;
+            border: solid;
+            background-color: #FF0000;
+        }
+
+        .divweak {
+            color: orange;
+            width: 50%;
+            border: solid;
+            background-color: orange;
+        }
+
+        .divgood {
+            color: #2D98F3;
+            width: 75%;
+            border: solid;
+            background-color: #2D98F3;
+        }
+
+        .divstrong {
+            color: limegreen;
+            width: 97%;
+            border: solid;
+            background-color: limegreen;
+        }
+    </style>
+</head>
+@{
+    var MenuItem = "";
+    var UserName = "";
+    var CityCode = "";
+    var AirportCode = "";
+    var GroupName = "";
+    var NewTerminalName = "";
+    var UserSNo = 0;
+    var FirstName = "";
+    var UserTypeName = "";
+    var AgentName = "";
+    //CargoFlash.Cargo.DataService.LoginService ls = new CargoFlash.Cargo.DataService.LoginService();
+    //NewTerminalName = ((CargoFlash.Cargo.Model.UserLogin)(System.Web.HttpContext.Current.Session["UserDetail"])).NewTerminalName;
+    if (((CargoFlash.Cargo.Model.UserLogin)(System.Web.HttpContext.Current.Session["UserDetail"])).DefaultTerminalSNo != ((CargoFlash.Cargo.Model.UserLogin)(System.Web.HttpContext.Current.Session["UserDetail"])).TerminalSNo)
+    {
+        //NewTerminalName = "["+ ((CargoFlash.Cargo.Model.UserLogin)(System.Web.HttpContext.Current.Session["UserDetail"])).NewTerminalName +"]";
+    }
+
+    CargoFlash.Cargo.DataService.Common.CommonService CS1 = new CargoFlash.Cargo.DataService.Common.CommonService();
+    string loginPage1 = CS1.GetSystemSetting("LoginPage");
+
+    try
+    {
+
+        if (Session["UserDetail"] != null)
+        {
+            CargoFlash.Cargo.Model.UserLogin userLogin = (CargoFlash.Cargo.Model.UserLogin)Session["UserDetail"];
+            CargoFlash.Cargo.DataService.LoginService l = new CargoFlash.Cargo.DataService.LoginService();
+            if (HttpContext.Current.Request.QueryString["AirportSNo"] != "" && HttpContext.Current.Request.QueryString["AirportCode"] != null)
+            {
+                System.Data.DataSet ds = new System.Data.DataSet();
+
+                ds = l.GetCitySNo(Convert.ToInt32(HttpContext.Current.Request.QueryString["AirportSNo"]), Convert.ToInt32(HttpContext.Current.Request.QueryString["UserSNo"]));
+                userLogin.AirportSNo = Convert.ToInt32(HttpContext.Current.Request.QueryString["AirportSNo"]);
+                userLogin.AirportCode = HttpContext.Current.Request.QueryString["AirportCode"].Substring(0, 3);
+                userLogin.AirportName = ds.Tables[0].Rows[0]["AirportName"].ToString();
+                userLogin.CitySNo = Convert.ToInt32(ds.Tables[0].Rows[0]["CitySNo"]);
+                userLogin.CityCode = ds.Tables[0].Rows[0]["CityCode"].ToString();
+                userLogin.CityName = ds.Tables[0].Rows[0]["CityName"].ToString();
+                userLogin.TerminalSNo = ds.Tables[0].Rows[0]["TerminalSNo"].ToString() == "" ? 0 : Convert.ToInt32(ds.Tables[0].Rows[0]["TerminalSNo"].ToString());
+                userLogin.AirlineCarrierCode = Convert.ToString(ds.Tables[0].Rows[0]["AirlineCarrierCode"]);
+
+                try
+                {
+                    int result = l.UpdateUserInfoOnAirportChanges(Convert.ToInt32(HttpContext.Current.Request.QueryString["UserSNo"]), userLogin.TerminalSNo, userLogin.CitySNo, userLogin.AirportSNo);
+                }
+                catch (Exception Ex)
+                {
+
+                }
+            }
+
+            UserName = userLogin.UserName;
+            MenuItem = userLogin.MenuDetails;
+            CityCode = userLogin.CityCode;
+            AirportCode = userLogin.AirportCode;
+            GroupName = userLogin.GroupName;
+            UserSNo = userLogin.UserSNo;
+            FirstName = userLogin.FirstName;
+            UserTypeName = userLogin.UserTypeName;
+            AgentName = userLogin.AgentName.Split('-')[0].ToString() != "" ? "- " + userLogin.AgentName.Split('-')[0].ToString() : userLogin.AgentName.Split('-')[0].ToString();
+
+            try
+            {
+                int result = l.UpdateUserInfoOnAirportChanges(Convert.ToInt32(userLogin.UserSNo), userLogin.TerminalSNo, userLogin.CitySNo, userLogin.AirportSNo);
+            }
+            catch (Exception Ex)
+            {
+
+            }
+
+            @Html.Hidden("HdnGroupName", GroupName)
+        }
+        else
+        {
+            Session.Abandon();
+            System.Web.HttpContext.Current.Response.Redirect("~/Account/" + loginPage1);
+        }
+    }
+    catch
+    {
+        Session.Abandon();
+        System.Web.HttpContext.Current.Response.Redirect("~/Account/" + loginPage1);
+    }
+
+
+}
+
+@*Added By Arman*@
+@{
+    var Creditlimit = "";
+    var RemainingCreditLimit = "";
+    var AsAgreeAgent = "";
+    var IsASAGREED = "";
+    var OfficeSNO = 0;
+    var FliePath = "";
+    var MasterOffice = "";
+    var AgentSNo = 0;
+
+    if (Session["UserDetail"] != null)
+    {
+        CargoFlash.Cargo.Model.UserLogin userLogin = (CargoFlash.Cargo.Model.UserLogin)Session["UserDetail"];
+        System.Data.DataSet ds = new System.Data.DataSet();
+        CargoFlash.Cargo.DataService.LoginService l = new CargoFlash.Cargo.DataService.LoginService();
+        //  ds = l.GetCredit(userLogin.AgentSNo);
+        OfficeSNO = (((CargoFlash.Cargo.Model.UserLogin)(System.Web.HttpContext.Current.Session["UserDetail"]))).OfficeSNo;
+        AgentSNo = userLogin.AgentSNo;
+        MasterOffice = (((CargoFlash.Cargo.Model.UserLogin)(System.Web.HttpContext.Current.Session["UserDetail"]))).MasterOffice;
+        ds = GroupName.ToUpper() == "GSA" && OfficeSNO > 0 ? l.GetCreditLimit(userLogin.OfficeSNo, userLogin.UserSNo) : l.GetCredit(userLogin.AgentSNo , userLogin.UserSNo );
+        if (ds != null && ds.Tables[0].Rows.Count > 0)
+        {
+            Creditlimit = ds.Tables[0].Rows[0]["Creditlimit"].ToString();
+            RemainingCreditLimit = ds.Tables[0].Rows[0]["RemainingCreditLimit"].ToString();
+            AsAgreeAgent = ds.Tables[0].Rows[0]["AsAgreed"].ToString();
+            IsASAGREED = ds.Tables[0].Rows[0]["IsASAGREED"].ToString();
+        }
+        else
+        {
+            Creditlimit = "";
+            RemainingCreditLimit = "0.00";
+        }
+        //------------------------- File download-----------------
+        System.Data.DataSet dt = new System.Data.DataSet();
+        dt = l.GetFilePath(userLogin.UserSNo);
+        if (dt != null && dt.Tables[0].Rows.Count > 0)
+        {
+            FliePath = dt.Tables[0].Rows[0]["FilePath"].ToString();
+        }
+    }
+
+}
+@*End Here*@
+
+<body onload="ResizedIFrame(70)" onresize="ResizedIFrame(70)">
+    <style type="text/css">
+        body, html {
+            overflow: hidden;
+        }
+
+        .sgrad {
+            background: #C8CDD1; /* For browsers that do not support gradients */
+            background: -webkit-linear-gradient(left,rgba(202,207,210,1),rgba(255,0,0,0)); /*Safari 5.1-6*/
+            background: -o-linear-gradient(right,rgba(202,207,210,1),rgba(255,0,0,0)); /*Opera 11.1-12*/
+            background: -moz-linear-gradient(right,rgba(202,207,210,1),rgba(255,0,0,0)); /*Fx 3.6-15*/
+            background: linear-gradient(to right, rgba(202,207,210,1), rgba(255,0,0,0)); /*Standard*/
+        }
+
+        .MarqueBlue {
+            color: blue;
+        }
+    </style>
+
+    <header id="header">
+        <div id="divoverlay" class="ui-widget-overlay" style="display:none;z-index: 999999;"></div>
+        <div class="sgrad" style="height: 33px;">
+            @* added by   Devendra*@
+            <div style="width: auto;float: left; margin-top: 2px; margin-left: 5px;">
+                @*<a id="IconServiceRed" target="iMasterFrame" href="Default.cshtml?Module=PERMISSIONS&amp;Apps=WindowServicesReport&amp;FormAction=READ" title="Service Fail" style=" text-decoration: none; ">
+                        <img alt="" border="0" style="height:20px;margin-right:5px;vertical-align: bottom;" src="/Images/warning.png">
+                    </a>
+                    <span id="noservicefail" style="color:Red;font-size: 17px;height: auto;/* padding: 0; */"></span>*@
+                <button id="btnServiceStatus" type="button" class="btn btn-info btn-xs" onclick="ScheduleStatusPopup()" style="display:none; height:23px;" title="Service Status">
+                    <span class="glyphicon glyphicon-cog" title="Service Status"></span>
+                </button>
+                <button type="button" class="btn btn-info btn-xs" onclick="openChat();" title="Chat" style="height:23px;">
+                    <span class="glyphicon glyphicon-comment" title="Chat"></span>
+                </button>
+            </div>
+            @*<div id="divMarquee" style="float: left; text-align: center; width: 70%;padding-top: 2px;font-weight:bold;color:red;">
+                    <label id="marTicker" style="display:none;"></label>
+                </div>*@
+            <div id="divMarquee" style="float: left;text-align: center;width: 40%;padding-top: 2px;font-weight:bold;color:blue;float:left;">
+                <marquee id="marTicker" style="padding-left:20px;"></marquee>
+            </div>
+            <div id="welcomeMsg" style="float: right;padding: 0px 20px 0px 0px;font-weight: bold">
+                <input type="hidden" id="hdnUserContext" value="" />
+                <table id="tblPickup" border="0" style="padding-top: 2px;" cellpadding="0" cellspacing="0" width="100%">
+                    <tbody>
+                        <tr>
+                            @* added by   Arman*@
+                            @if (@AgentSNo > 0   && @AsAgreeAgent != "True")
+                            {
+
+                                <td align="center">
+                                    <span style="color:Red">
+                                        Available Credit Limit : &nbsp;&nbsp;
+                                    </span>
+                                    <span id="spnCreditLimit" style="color:black">
+                                        @RemainingCreditLimit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </span>
+                                </td>
+                                @*end  here*@
+                            }
+                          else  if (@AgentSNo > 0  && @AsAgreeAgent == "True" && @IsASAGREED == "1")
+                            {
+                                <td align="center">
+                                    <span style="color:Red">
+                                        Available Credit Limit : &nbsp;&nbsp;
+                                    </span>
+                                    <span id="spnCreditLimit" style="color:black">
+                                        @RemainingCreditLimit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </span>
+                                </td>
+                                @*end  here*@
+                            }
+                            else if (@AgentSNo == 0 && @OfficeSNO > 0 && @MasterOffice == "YES" && IsASAGREED!="0" )
+                            {
+                                <td align="center">
+                                    <span style="color:Red">
+                                        Available Credit Limit : &nbsp;&nbsp;
+                                    </span>
+                                    <span id="spnCreditLimit" style="color:black">
+                                        @RemainingCreditLimit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </span>
+                                </td>
+                                @*end  here*@
+                            }
+
+                            @* Hot Fix for GSA Branch Office to Show Remaining Credit Limit by UMAR on 28-May-19 *@
+                            else if (@AgentSNo == 0 && @OfficeSNO > 0 && @MasterOffice == "NO")
+                            {
+                                <td align="center">
+                                    <span style="color:Red">
+                                        Available Credit Limit : &nbsp;&nbsp;
+                                    </span>
+                                    <span id="spnCreditLimit" style="color:black">
+                                        @RemainingCreditLimit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </span>
+                                </td>
+                            }
+                            @if (@FliePath != "")
+                            {
+                                <td align="center" style="padding-top: 5px;">
+                                    @*<button type="button" style="height: 23px; margin-left: 15px;" class="btn btn-block btn-info"
+                                                id="btnPrintAWB" onclick="updateFilepath();" value="D" title="Click To Download">
+                                            <span class="glyphicon glyphicon-download"></span>
+                                        </button>*@
+                                    <a id="filepath" href="#"  onclick="updateFilepath('@FliePath');">Download Rate</a>
+                                </td>
+                            }
+                            @*@if (CS1.GetSystemSetting("GetWeightFrom") == "MACHINE")
+                            {
+                                <td align="left">
+                                    <input type="hidden" name="WeighingNameSNo" id="WeighingNameSNo" style="text-transform: lowercase;" value="">
+                                    <input type="text" class="" name="Text_WeighingNameSNo" id="Text_WeighingNameSNo" controltype="autocomplete" style="font-family: Verdana; font-size: 12px; position: relative; vertical-align: top; background-color: transparent;width:130px;" value="" placeholder="Weighing Machine">
+                                </td>
+
+                            }*@
+                            <td align="left" style="display:none"><span id="spnSession"></span> </td>
+                            @*//Added by devendra on 12 Sep 2018*@
+                            @*<td><button id="Download" onclick="Download()">Download Report</button></td>    @*Added By Uttam  **@
+                            @if (CS1.GetSystemSetting("ICMSEnvironment") == "JT")
+                            {
+                                if (@GroupName == "AGENT")
+                                {
+                                    <td align="left">
+                                        <span>
+
+                                            <span style="color:Red" id="spnterminal">
+                                                @NewTerminalName
+                                            </span>
+
+                                            <span>
+
+                                                <a style="color:black" href="#" title="@FirstName" onclick="GetCityAutocomplete()">
+                                                    @FirstName @AgentName   - @GroupName -<span id="spnCityCode"> @AirportCode </span><span id="spnCity" style="display:none">
+                                                        <input type="hidden" id="hdnUserSNo" value="@UserSNo">
+                                                        <input type="hidden" name="AirportCode" id="AirportCode" value="">
+                                                        <input type="text" class="k-input" name="Text_AirportCode" id="Text_AirportCode" tabindex="0" controltype="autocomplete" maxlength="40" style="font-family: Verdana; font-size: 12px; position: relative; vertical-align: top; text-transform: uppercase; background-color: transparent;width:90px;" value="" placeholder="Airport Code" data-role="autocomplete" autocomplete="off">
+                                                    </span>
+                                                </a>
+                                            </span>
+
+                                            @*<span style="vertical-align: super;color:black">
+                                                    [@CityCode]
+                                                </span>*@<span style="vertical-align: super;color:black">
+                                            </span>
+
+                                        </span>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td align="left">
+                                        <span>
+
+                                            <span style="color:Red" id="spnterminal">
+                                                @NewTerminalName
+                                            </span>
+
+                                            <span style="margin-left:5px;">
+
+                                                <a style="color:black" href="#" title="@FirstName" onclick="GetCityAutocomplete()">
+                                                    @FirstName- @GroupName -<span id="spnCityCode"> @AirportCode </span><span id="spnCity" style="display:none">
+                                                        <input type="hidden" id="hdnUserSNo" value="@UserSNo">
+                                                        <input type="hidden" name="AirportCode" id="AirportCode" value="">
+                                                        <input type="text" class="k-input" name="Text_AirportCode" id="Text_AirportCode" tabindex="0" controltype="autocomplete" maxlength="40" style="font-family: Verdana; font-size: 12px; position: relative; vertical-align: top; text-transform: uppercase; background-color: transparent;width:90px;" value="" placeholder="Airport Code" data-role="autocomplete" autocomplete="off">
+                                                    </span>
+                                                </a>
+                                            </span>
+
+                                            @*<span style="vertical-align: super;color:black">
+                                                    [@CityCode]
+                                                </span>*@<span style="vertical-align: super;color:black">
+                                            </span>
+
+                                        </span>
+                                    </td>
+                                }
+
+
+                            }
+                            else
+                            {
+                                <td align="left">
+                                    <span>
+
+                                        <span style="color:Red" id="spnterminal">
+                                            @NewTerminalName
+                                        </span>
+
+                                        <span style="margin-left:5px;">
+
+                                            <a style="color:black" href="#" title="@UserName" onclick="GetCityAutocomplete()">
+                                                @UserName.ToUpper() (@GroupName)-<span id="spnCityCode"> @AirportCode </span><span id="spnCity" style="display:none">
+                                                    <input type="hidden" id="hdnUserSNo" value="@UserSNo">
+                                                    <input type="hidden" name="AirportCode" id="AirportCode" value="">
+                                                    <input type="text" class="k-input" name="Text_AirportCode" id="Text_AirportCode" tabindex="0" controltype="autocomplete" maxlength="40" style="font-family: Verdana; font-size: 12px; position: relative; vertical-align: top; text-transform: uppercase; background-color: transparent;width:90px;" value="" placeholder="Airport Code" data-role="autocomplete" autocomplete="off">
+                                                </span>
+                                            </a>
+                                        </span>
+
+                                        @*<span style="vertical-align: super;color:black">
+                                                [@CityCode]
+                                            </span>*@<span style="vertical-align: super;color:black">
+                                        </span>
+
+                                    </span>
+                                </td>
+                            }
+
+                            <td id="LogoutPanal">
+                               <div style="width:100%;float:right;margin-left:20px;">
+
+                                    <button type="button" style="height: 23px; margin-left: 15px; display:none !important;" class="btn btn-block btn-warning"
+                                            id="BlobReportPopUp" onclick="BlobReportDownload(0);" value="View Reports" title="View Reports">
+                                        <span class="glyphicon glyphicon-list-alt"></span>
+                                    </button>
+
+                                    @{
+                                        if (CS1.GetSystemSetting("ICMSEnvironment") == "GA")
+                                        {
+
+                                            <button type="button" style="height: 23px; margin-left:4px;" class="btn btn-block btn-info"
+                                                    id="btnPrintAWB" onclick="clicktodownload();" value="D" title="Click To Download">
+                                                <span class="glyphicon glyphicon-download"></span>
+                                            </button>
+                                        }
+                                    }
+
+                                    <button type="button" style="height: 23px; " class="btn btn-block btn-primary" id="btnPrintAWB" onclick="PrintAWB();" value="P" title="Print AWB">
+                                        <span class="glyphicon glyphicon-print"></span>
+                                    </button>
+                                    <button type="button" style="height: 23px;" class="btn btn-success" id="btnRefreshPage" onclick="RefreshPage();"
+                                            value="R" title="Refresh">
+                                        <span class="glyphicon glyphicon-refresh"></span>
+                                    </button>
+                                    <button id="tracking" target="iMasterFrame" onclick="openTracking();" title="AWB Tracking" class="btn btn-info btn-xs" style="height:23px;">
+                                        @*<img alt="" border="0" style="height:20px ;margin-right:5px;" src="~/Images/TrackingIcon.png">*@
+                                        <span class="glyphicon glyphicon-plane"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-xs" title="Change Password" onclick="PopChangePassword()" style="height:23px;">
+                                        <span class="glyphicon glyphicon-lock"></span>
+                                    </button>
+                                    @*<img alt="" border="0" style="height: 21px; width: 21px; cursor:pointer; margin-right:5px;" title="Change Password" onclick="PopChangePassword()" src="~/Images/key.png">*@
+                                    <button type="button" id="logout" onclick="delcook()" class="btn btn-danger btn-xs" title="Logout" style="height:23px;">
+                                        <span class="glyphicon glyphicon-log-out"></span>
+                                        @*<img alt="" border="0" style="height:20px" src="~/Images/logout.png">*@
+                                    </button>
+                                </div>
+                            </td>
+                            @*margin-left: 15px; removed By Akash for cursor : pointer not displayed on 2 Nov  2017*@
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="ContentsHolder">
+                </div>
+
+            </div>
+        </div>
+        <div class="menu-title" style="display:none;">
+            @Html.Raw(@MenuItem)
+
+        </div>
+    </header>
+    <div style="position: absolute; width: 100%; height: 0px;">
+        <div id="divSlider" onclick="CollapseAll()" style="float: right; cursor: pointer; padding-right: 20px; ">
+            <img id="imgArrow" src="~/Images/expand.png" style="height:20px;width:20px;" title="Collapse (shift+C)" />
+        </div>
+
+    </div>
+    <div id="divSchedulerStatus"></div>
+    <div>
+        <iframe class="iframeCss" frameborder="0" id="iMasterFrame" name="iMasterFrame" src="default.cshtml" style="height: 100%;  width: 100%" marginheight="0" marginwidth="0"></iframe>
+    </div>
+
+    <script>
+
+
+
+
+
+            var lo = 0;
+            $(document).ready(function () {
+
+                $("#menu").kendoMenu({
+                    select: function (e) {
+                        this.close();
+                    }
+                });
+
+                $(".menu-title").show();
+                shortcut.add("f1", function (e) {
+                    CollapseAll();
+                }, {
+                    'type': 'keydown',
+                    'target': document
+                });
+
+                $("#divSchedulerStatus").hide();
+
+                //Commented by Amit Yadav (No Need)
+                //setInterval(serviceStatus, 30000);
+
+                //Added Code By Shivali Thakur to set location and airport on airport change on 20/01/2018.
+                // Comment By Sushant
+                setTimeout(setAirport('@AirportCode','@CityCode',2000));
+                //setTimeout(setLocation('@CityCode', 2000));
+
+                //Ended Code By Shivali Thakur
+                      });
+
+            function delcook() {
+                //cfi.SaveUpdateLockedProcess(0, 0, "", "", $("#hdnUserSNo").val(), 0, " ", 2, "");
+                $("iframe").contents().find("#hdnLo").val("1");
+                document.cookie = "UserDetail=0"
+                location.href = 'Account/' + userContext.SysSetting.LoginPage + '?islogout=true';
+
+                //$.ajax({
+                //    url: "Services/CommonService.svc/SaveUpdateLockedProcess", async: false, type: "POST", dataType: "json", cache: false,
+                //    data: JSON.stringify({ AWBSNo: 0, DailyFlightSNo: 0, FlightNo: "", FlightDate: "", UpdatedBy: $("#hdnUserSNo").val(), SubprocessSNo: 0, SUbprocess: "", Event: 2, ULDNo: "" }),
+                //    contentType: "application/json; charset=utf-8",
+                //    success: function (result) {
+                //    }
+                //});
+
+                //$.ajax({
+                //    type: "GET",
+                //    contentType: "application/json; charset=utf-8",
+                //    dataType: "json",
+                //    async: false,
+                //    url: "Services/CommonService.svc/Logout?UserSNo=" + $("#hdnUserSNo").val(),
+                //    success: function (response) {
+
+                //        document.cookie = "UserDetail=0"
+                //        location.href = 'Account/GarudaLogin.cshtml?islogout=true';
+
+                //    }
+                //});
+            }
+            var slide = 0;
+            function CollapseAll() {
+                if (slide == 0) {
+                    slide = 1;
+                    $("#header").fadeOut('fast');
+
+                    ResizedIFrame(10);
+                    $("#imgArrow").attr('src', 'Images/collapse.png').attr("title", "Expand (shift+C)");
+                }
+                else {
+                    slide = 0;
+                    $("#header").fadeIn('fast');
+                    $("iframe").contents().find(".k-selectable").find("tr").not("tr[class$='selected']").fadeIn('fast');
+                    $("iframe").contents().find("table[cfi-aria-search='search']").closest("div").fadeIn('fast');
+                    $("iframe").contents().find(".formSection").fadeIn('fast');
+                    $("iframe").contents().find("div[data-role='pager']").fadeIn('fast');
+                    ResizedIFrame(70);
+                    $("#imgArrow").attr('src', 'Images/expand.png').attr("title", "Collapse (shift+C)");;
+
+                }
+            }
+
+            function requiredfn(id) {
+                var value = $('#' + id).val();
+                if (value != "") {
+                    $('#' + id).css("border", "1px solid #4CAF50");
+                }
+            }
+
+            var serviceStatus = function () {
+                $.getJSON("Services/CommonService.svc/GetServiceStatus", function (data) {
+                    if (data == 3) {
+                        $("#btnServiceStatus").attr("class", "btn btn-danger btn-xs");
+                        //$("#btnServiceStatus span").attr("class", "glyphicon glyphicon-remove");
+                    }
+                    else if (data == 2) {
+                        $("#btnServiceStatus").attr("class", "btn btn-warning btn-xs");
+                        //$("#btnServiceStatus span").attr("class", "glyphicon glyphicon-warning-sign");
+                    }
+                    else {
+                        $("#btnServiceStatus").attr("class", "btn btn-info btn-xs");
+                        //$("#btnServiceStatus span").attr("class", "glyphicon glyphicon-ok");
+                    }
+                });
+            }
+
+            function ScheduleStatusPopup() {
+                $("#divSchedulerStatus").show();
+                $.getJSON("Services/CommonService.svc/GetSchedulerStatusDetails", function (data) {
+                    var result = JSON.parse(data).Table0;
+                    if (result) {
+                        var table = "<table class='innerTable'>";
+                        table += "<tr><th>Process Name</th><th>Last Execution Time</th><th>Process Status</th><th>Updated On</th>";
+                        $(result).each(function (index, item) {
+                            var btnStatusClass = "btn-info";
+                            var glyphiconStatusClass = "glyphicon-ok";
+                            if (item.ProcessStatus == "2") {
+                                btnStatusClass = "btn-warning";
+                                glyphiconStatusClass = "glyphicon-warning-sign";
+                            }
+                            else if (item.ProcessStatus == "3") {
+                                btnStatusClass = "btn-danger";
+                                glyphiconStatusClass = "glyphicon-remove";
+                            }
+
+                            table += "<tr><td>" + item.ProcessName + "</td><td>" + item.LastExecutionTime + "</td><td><button type='button' class='btn " + btnStatusClass + " btn-xs'><span class='glyphicon " + glyphiconStatusClass + "'></span></button></td><td>" + item.UpdatedOn + "</td>";
+                        });
+                        $("#divSchedulerStatus").html(table);
+                    }
+                });
+
+                $("#divSchedulerStatus").dialog({
+                    autoResize: true,
+                    maxWidth: 800,
+                    maxHeight: 400,
+                    width: 700,
+                    height: 400,
+                    title: "Windows service status",
+                    draggable: true,
+                    resizeable: true,
+                    buttons: {
+                        "Ok": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            }
+            //Added By Shivali Thakur to set exact location and airport on Airport Change
+            function setAirport(airportCode, CityCode) {
+                $('.k-menu-horizontal').find('a[href*="&location="]').each(function(item){
+                    $(this).attr('href', $(this).attr('href').slice(0, $(this).attr('href').toLocaleLowerCase().indexOf('&location=') + 10) + CityCode + $(this).attr('href').slice($(this).attr('href').toLocaleLowerCase().indexOf('&location=') + 13));
+
+
+                });
+
+                $('.k-menu-horizontal').find('a[href*="&airport="]').each(function (item) {
+                    $(this).attr('href', $(this).attr('href').slice(0, $(this).attr('href').toLocaleLowerCase().indexOf('airport') + 8) + airportCode + $(this).attr('href').slice($(this).attr('href').toLocaleLowerCase().indexOf('airport') + 11));
+
+
+                });
+            }
+            //function setLocation(CityCode)
+            //{
+            //    $('.k-menu-horizontal').find('a[href*="location"]').each(function (item) {
+
+            //        $(this).attr('href', $(this).attr('href').slice(0, $(this).attr('href').toLocaleLowerCase().indexOf('&location=') + 9) + CityCode + $(this).attr('href').slice($(this).attr('href').toLocaleLowerCase().indexOf('&location=') + 13));
+
+            //    });
+            //}
+            //Ended Code By Shivali Thakur
+    </script>
+    <script type="text/javascript">
+
+        @{var obj = ""; var userContextCitySNo = ""; var userContextOfficeSNo = ""; var userContextAccountSNo = ""; var DomainUrl = "";
+			if (Session["UserDetail"] != null)
+			{
+				System.Web.Script.Serialization.JavaScriptSerializer s = new System.Web.Script.Serialization.JavaScriptSerializer();
+				CargoFlash.Cargo.Model.UserLogin userContext = new CargoFlash.Cargo.Model.UserLogin((CargoFlash.Cargo.Model.UserLogin)Session["UserDetail"]);
+				userContext.MenuDetails = "";
+				//userContext.PageRights = null;
+				obj = s.Serialize(userContext);
+				userContextCitySNo = userContext.CitySNo.ToString();
+				userContextOfficeSNo = userContext.OfficeSNo.ToString();
+				userContextAccountSNo = userContext.AgentSNo.ToString();
+				DomainUrl = ((CargoFlash.Cargo.Model.UserLogin)(System.Web.HttpContext.Current.Session["UserDetail"])).SysSetting["Domain"].ToString();
+				//DomainUrl = "http://gauat.bookmycargo.net";
+
+
+			}
+        }
+            $(function () {
+                $("#hdnUserContext").val(JSON.stringify(@Html.Raw(@obj)));
+                //-----Addded by devendra
+                userContext = JSON.parse($("#hdnUserContext").val());
+                if (userContext != undefined && userContext.SpecialRights != undefined && userContext.SpecialRights.WINICON == true) {
+                    $("#btnServiceStatus").show();
+                }
+                else {
+                    $("#btnServiceStatus").hide();
+                }
+
+            });
+
+
+            var UserContextData = GetUserContextData('@userContextCitySNo', '@userContextOfficeSNo', '@userContextAccountSNo', '@DomainUrl');
+
+            function ResizedIFrame(obj) {
+                var newheight;
+                var frame = document.getElementById('iMasterFrame');
+                var browser = navigator.appName;
+                var windowheight = window.screen.height;
+                if (document.layers) {
+                    //netscape not tested
+                    newheight = window.innerHeight - obj;
+                    frame.style.height = (parseInt(newheight) - parseInt(20)) + "px";
+                    frame.style.overflow = "auto";
+
+                } else if (document.all) {
+                    //mac IE and (not PC IE)
+                    newheight = document.body.parentNode.offsetHeight - obj;
+                    if (newheight < windowheight) {
+                        frame.style.height = (parseInt(newheight) - parseInt(20)) + "px";
+                        frame.style.overflow = "auto";
+                    }
+                } else {
+                    //works for safari - same code as for netscape
+                    newheight = window.innerHeight - obj;
+                    frame.style.height = (parseInt(newheight) - parseInt(20)) + "px";
+                    frame.style.overflow = "auto";
+                }
+            }
+            this.AutoComplete = function (textId, basedOn, tableName, keyColumn, textColumn, templateColumn, addOnFunction, filterCriteria, separator, newAllowed, confirmOnAdd, procName, onSelect, rightAlign, template) {
+                var keyId = textId;
+                textId = "Text_" + textId;
+                if (IsValid(textId, autoCompleteType)) {
+                    if (keyColumn == null || keyColumn == undefined)
+                        keyColumn = basedOn;
+                    if (textColumn == null || textColumn == undefined)
+                        textColumn = basedOn;
+                    var dataSource = GetDataSource(textId, tableName, keyColumn, textColumn, templateColumn, procName);
+                    $("input[type='text'][name='" + textId + "']").kendoAutoComplete({
+                        filter: (filterCriteria == undefined || filterCriteria == null || filterCriteria == "" ? "startswith" : filterCriteria),
+                        dataSource: dataSource,
+                        select: (onSelect == undefined ? null : onSelect),
+                        filterField: basedOn,
+                        rightAlign: (rightAlign == undefined ? false : rightAlign),
+                        separator: (separator == undefined ? null : separator),
+                        dataTextField: autoCompleteText,
+                        dataValueField: autoCompleteKey,
+                        valueControlID: $("input[type='hidden'][name='" + keyId + "']"),
+                        template: template == null ? '<span>#: TemplateColumn #</span>' : template,
+                        addOnFunction: (addOnFunction == undefined ? null : addOnFunction),
+                        newAllowed: newAllowed,
+                        confirmOnAdd: confirmOnAdd
+                    });
+                }
+            }
+
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var bkgUrl = window.location.search.slice(1);
+
+            var $iframe = $('#iMasterFrame');
+            if ($iframe.length && bkgUrl != "" && bkgUrl.indexOf('ReservationBooking') > 0) {
+                $iframe.attr('src', window.location.search.slice(1));
+                history.pushState({ urlPath: window.location.pathname }, "", window.location.pathname);
+            }
+            GetCountServiceFail();
+        });
+        var iSiteUrl = "";
+        function navigatecraurl(currenturl) {
+            //          var res = false;
+            $.ajax({
+                type: "GET",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: iSiteUrl + "Services/CommonService.svc/CheckSession",
+                success: function (response) {
+                    if (response.CheckSessionResult == true) {
+                        location.href = iSiteUrl + 'Account/' + userContext.SysSetting.LoginPage + '?islogout=true';
+                        //                    res = false;
+                    } else {
+                        document.getElementById('iMasterFrame').src = currenturl;
+                        //window.location.href = currenturl;
+                    }
+                }, error: function () {
+                    location.href = iSiteUrl + 'Account/' + userContext.SysSetting.LoginPage + '?islogout=true';
+                }
+            });
+            //            return res;
+        }
+
+
+        function openChat() {
+            window.open("/chatapp/chat/" + userContext.UserName);
+        }
+
+        function openTracking() {
+            //location.href = "Default.cshtml ? Module = Shipment & amp; Apps = AWBTracking & amp; FormAction = New";
+            document.getElementById("iMasterFrame").src = "Default.cshtml?Module=Shipment&Apps=AWBTracking&FormAction=New";
+        }
+
+        function GetCountServiceFail() {
+
+            $.ajax({
+                url: "./Services/Permissions/WindowServicesReportService.svc/GetCountServiceFail",
+                async: false, type: "get", dataType: "json", cache: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    var data = jQuery.parseJSON(response);
+
+                    if (data.Table0.length != "0") {
+                        var count1 = data.Table0[0].Count;
+                        $("#noservicefail").text(count1);
+
+                    }
+                }
+            });
+
+        }
+
+        function bindEvent(element, eventName, eventHandler) {
+            if (element.addEventListener) {
+                element.addEventListener(eventName, eventHandler, false);
+            } else if (element.attachEvent) {
+                element.attachEvent('on' + eventName, eventHandler);
+            }
+        }
+
+        // Send a message to the child iframe
+        var sendMessage = function (msg) {
+            // Make sure you are sending a string, and to stringify JSON
+            document.getElementById('iMasterFrame').contentWindow.postMessage(msg, '*');
+        }
+        // Listen to message from child window
+        bindEvent(window, 'message', function (e) {
+            //results.innerHTML = e.data;
+            $.ajax({
+                type: "GET",
+                async: false,
+                contentType: "application/text; charset=utf-8",
+                dataType: "text",
+                url: "Services/Common/CommonService.svc/CheckSessionforcra",
+                success: function (response) {
+                    //r random =ab+' Manish '+ Math.random();
+                    sendMessage('' + response);
+                    //ert(response);
+                }, error: function () {
+                    alert('error');
+                }
+            });
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+﻿<Messages>
+	<ServerMessage>
+		<Key>1001</Key>
+		<value>Account Vat already exists</value>
+	</ServerMessage>
+
+	<ServerMessage>
+		<Key>2000</Key>
+		<value>Account Vat Added Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2001</Key>
+		<value>Account Vat Updated Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2002</Key>
+		<value>Account Vat Deleted Successfully.</value>
+	</ServerMessage>
+</Messages>

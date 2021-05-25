@@ -1,0 +1,37 @@
+﻿<Messages>
+
+
+
+  <ServerMessage>
+    <Key>5001</Key>
+    <value>Detail already exists in In-Active State. Please Enter another Detail.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Detail Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Detail Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Detail Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Detail Mobile Number already exists. Please Enter Another Detail Mobile Number.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2004</Key>
+    <value>Detail Licence number already exists.</value>
+  </ServerMessage>
+
+
+
+</Messages>
+
+
+
+
+

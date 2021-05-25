@@ -1,0 +1,548 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{35AEA97A-EE6D-4DB0-9767-E668A5BBF5AE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CargoFlash.Cargo.Model</RootNamespace>
+    <AssemblyName>CargoFlash.Cargo.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accounts\AgentPayment.cs" />
+    <Compile Include="Accounts\ApprovePayment.cs" />
+    <Compile Include="Accounts\CashRegister.cs" />
+    <Compile Include="Accounts\CreditLimitReport.cs" />
+    <Compile Include="Accounts\Ledger.cs" />
+    <Compile Include="Accounts\ChargeGroup.cs" />
+    <Compile Include="Accounts\CreditDebitNote.cs" />
+    <Compile Include="Accounts\CreditDebitNoteApproval.cs" />
+    <Compile Include="Accounts\DirectPayment.cs" />
+    <Compile Include="Accounts\InvoiceGroup.cs" />
+    <Compile Include="Accounts\NOTOC.cs" />
+    <Compile Include="Accounts\Payment.cs" />
+    <Compile Include="Accounts\PaymentStatusReport.cs" />
+    <Compile Include="Accounts\ReversePayment.cs" />
+    <Compile Include="Accounts\SummaryReport.cs" />
+    <Compile Include="Accounts\TransactionHistory.cs" />
+    <Compile Include="Accounts\VerifyPayment.cs" />
+    <Compile Include="AuditLog\ActivityLog.cs" />
+    <Compile Include="AuditLog\AuditLog.cs" />
+    <Compile Include="AWBHistory.cs" />
+    <Compile Include="BuildUp\AgentBuildUp.cs" />
+    <Compile Include="BuildUp\AgentBuildUpWeighing.cs" />
+    <Compile Include="BuildUp\Buildup.cs" />
+    <Compile Include="CFAutenticate.cs" />
+    <Compile Include="Common\DataSetToExcel.cs" />
+    <Compile Include="CRA\AWBLevelPrimeGCRFlightReport.cs" />
+    <Compile Include="CRA\CRAInvoiceList.cs" />
+    <Compile Include="Dashboard\MainDashboard.cs" />
+    <Compile Include="EDI\EventMaster.cs" />
+    <Compile Include="EDI\EventMessageTrans.cs" />
+    <Compile Include="EDI\ManualEdiMessage.cs" />
+    <Compile Include="EDI\MessageTypeMaster.cs" />
+    <Compile Include="EDI\RecipientMsgConfig.cs" />
+    <Compile Include="EDI\TelexType.cs" />
+    <Compile Include="Export\AWBPenalty.cs" />
+    <Compile Include="Export\CCAReport.cs" />
+    <Compile Include="Export\ExecutionReport.cs" />
+    <Compile Include="Export\PenaltyApprovalReport.cs" />
+    <Compile Include="Export\PenaltyReport.cs" />
+    <Compile Include="Export\RampOffload.cs" />
+    <Compile Include="Export\UldTransfer\LUC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Export\UldTransfer\ServiceContract.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Export\UldTransfer\UldOut.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Export\UWS\UWDPrint\UWSPrint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FlightControl\FlightControl.cs" />
+    <Compile Include="GatePass\GatePass.cs" />
+    <Compile Include="House\House.cs" />
+    <Compile Include="House\HouseAcceptance.cs" />
+    <Compile Include="ImpOperation\ImpOperation.cs" />
+    <Compile Include="Import\AddShipmentAdjustment.cs" />
+    <Compile Include="Import\CTM.cs" />
+    <Compile Include="Import\ImportRFS.cs" />
+    <Compile Include="Inventory\InventoryStockList.cs" />
+    <Compile Include="Irregularity\ApplicationEntity.cs" />
+    <Compile Include="Irregularity\Claim.cs" />
+    <Compile Include="Irregularity\Complaint.cs" />
+    <Compile Include="Irregularity\IrregularityAWBReport.cs" />
+    <Compile Include="Irregularity\IrregularityFlightReport.cs" />
+    <Compile Include="Irregularity\SpecialCargo.cs" />
+    <Compile Include="Mail\AirMailManifest.cs" />
+    <Compile Include="Master\AircraftDimensionMatrix.cs" />
+    <Compile Include="Master\AirlineHub.cs" />
+    <Compile Include="Master\BTBMachinePallet.cs" />
+    <Compile Include="Master\BTL.cs" />
+    <Compile Include="Master\CityConnectionTimePriority.cs" />
+    <Compile Include="Master\Commission.cs" />
+    <Compile Include="Master\CreditLimitUpdate.cs" />
+    <Compile Include="Master\CrudPageAB.cs" />
+    <Compile Include="Master\Details.cs" />
+    <Compile Include="Master\Distance.cs" />
+    <Compile Include="Master\DriverMaster.cs" />
+    <Compile Include="Master\Drivers.cs" />
+    <Compile Include="Master\EdiInboundOutboundExcelForAll.cs" />
+    <Compile Include="Master\ExcelUpload.cs" />
+    <Compile Include="Master\ExchangeRateConfiguration.cs" />
+    <Compile Include="Master\FFRManagement.cs" />
+    <Compile Include="Master\FocType .cs" />
+    <Compile Include="Master\HSCodes.cs" />
+    <Compile Include="Master\IndustryType.cs" />
+    <Compile Include="Master\LoginColorCode.cs" />
+    <Compile Include="Master\MessageTest.cs" />
+    <Compile Include="Master\OffloadReason.cs" />
+    <Compile Include="Master\PenaltyParameters.cs" />
+    <Compile Include="Master\RateCard.cs" />
+    <Compile Include="Master\RatePriorityMaster.cs" />
+    <Compile Include="Master\RateType.cs" />
+    <Compile Include="Master\RateTypePriority.cs" />
+    <Compile Include="Master\Region.cs" />
+    <Compile Include="Master\RFSLocation.cs" />
+    <Compile Include="Master\Route.cs" />
+    <Compile Include="Master\State.cs" />
+    <Compile Include="Master\TempratureSensor.cs" />
+    <Compile Include="Master\TruckMaster.cs" />
+    <Compile Include="Master\TruckType.cs" />
+    <Compile Include="Master\UnLockedPage.cs" />
+    <Compile Include="Master\Vehicle.cs" />
+    <Compile Include="Master\VehicleMake.cs" />
+    <Compile Include="Master\VehicleType.cs" />
+    <Compile Include="Master\WeighingScale.cs" />
+    <Compile Include="Master\XRayMachine.cs" />
+    <Compile Include="Operation\Operation.cs" />
+    <Compile Include="Permissions\AlertEventType.cs" />
+    <Compile Include="Permissions\Allotment.cs" />
+    <Compile Include="Permissions\Banner.cs" />
+    <Compile Include="Permissions\ChangePassword.cs" />
+    <Compile Include="Permissions\DefaultParameters.cs" />
+    <Compile Include="Permissions\LoginSecurity.cs" />
+    <Compile Include="Permissions\ProcessDependency.cs" />
+    <Compile Include="Permissions\ReleaseNote.cs" />
+    <Compile Include="Permissions\ServiceConfigs.cs" />
+    <Compile Include="Permissions\EmailAlert.cs" />
+    <Compile Include="Permissions\UserType.cs" />
+    <Compile Include="Permissions\WindowServicesReport.cs" />
+    <Compile Include="Rate\AgentGroup.cs" />
+    <Compile Include="Rate\CampaignUtilisationReport.cs" />
+    <Compile Include="Rate\FlightWiseDiscounting.cs" />
+    <Compile Include="Rate\ManageClassRate.cs" />
+    <Compile Include="Rate\ManageTactRate.cs" />
+    <Compile Include="Rate\OtherCharges.cs" />
+    <Compile Include="Rate\OtherChargesHistory.cs" />
+    <Compile Include="Rate\Rate.cs" />
+    <Compile Include="Rate\RateDetailsHistory.cs" />
+    <Compile Include="Rate\RateSurcharge.cs" />
+    <Compile Include="Rate\SpotRate.cs" />
+    <Compile Include="Rate\TaxLogs.cs" />
+    <Compile Include="Rate\TaxRate.cs" />
+    <Compile Include="Report\AccelaeroReport.cs" />
+    <Compile Include="Report\BillingReport.cs" />
+    <Compile Include="Report\CLBalanceReport.cs" />
+    <Compile Include="Report\DailyDepartedFlightReport.cs" />
+    <Compile Include="Report\DailyReportPOD.cs" />
+    <Compile Include="Report\DailyFinalDeliveryReport.cs" />
+    <Compile Include="Report\DashBoardFlightReport.cs" />
+    <Compile Include="Report\FlownAsBookedReport.cs" />
+    <Compile Include="Report\FMRDailyReport.cs" />
+    <Compile Include="Report\FreightCalculation.cs" />
+    <Compile Include="Report\GenerateAndViewInvoice.cs" />
+    <Compile Include="Report\AddShipmentReport.cs" />
+    <Compile Include="Report\AirMailReport.cs" />
+    <Compile Include="Report\BookingVarianceReport.cs" />
+    <Compile Include="Report\CancelInvoicereport.cs" />
+    <Compile Include="Report\ChargesCollect.cs" />
+    <Compile Include="Report\CommonExportImportReport.cs" />
+    <Compile Include="Report\BalanceStock.cs" />
+    <Compile Include="Report\CargoAirlineVolume.cs" />
+    <Compile Include="Report\Consume.cs" />
+    <Compile Include="Report\CreditLimit.cs" />
+    <Compile Include="Report\CreditLimitReportRequest.cs" />
+    <Compile Include="Report\CreditLimitTransactionReport.cs" />
+    <Compile Include="Report\DamageCargoReport.cs" />
+    <Compile Include="Report\DeliveryPending.cs" />
+    <Compile Include="Report\DiscrepancyReport.cs" />
+    <Compile Include="Report\DOIssuanceReport.cs" />
+    <Compile Include="Report\EmbargoReport.cs" />
+    <Compile Include="Report\FABReport.cs" />
+    <Compile Include="Report\FABSlabWiseReport.cs" />
+    <Compile Include="Report\FlightStatusReport.cs" />
+    <Compile Include="Report\FlightSummaryDetail.cs" />
+    <Compile Include="Report\FPRLionReport.cs" />
+    <Compile Include="Report\FPRReport.cs" />
+    <Compile Include="Report\GroupPermissionDetail.cs" />
+    <Compile Include="Report\HoldTypeReport.cs" />
+    <Compile Include="Report\LoadFactorFlight.cs" />
+    <Compile Include="Report\MarineInsuranceReport.cs" />
+    <Compile Include="Report\NonExecutedBooking.cs" />
+    <Compile Include="Report\PendingArrivalReport.cs" />
+    <Compile Include="Report\Petty.cs" />
+    <Compile Include="Report\MovementRegister.cs" />
+    <Compile Include="Report\Handling.cs" />
+    <Compile Include="Report\ESS.cs" />
+    <Compile Include="Report\ExportCSR.cs" />
+    <Compile Include="Report\ImportStatus.cs" />
+    <Compile Include="Report\ExportFlightMonitoring.cs" />
+    <Compile Include="Report\ExportImport.cs" />
+    <Compile Include="Report\FlightStatus.cs" />
+    <Compile Include="Report\HandedOver.cs" />
+    <Compile Include="Report\ImportCSR.cs" />
+    <Compile Include="Report\ImportFlightMonitoring.cs" />
+    <Compile Include="Report\POMailReport.cs" />
+    <Compile Include="Report\ReservationVSCRAComparision.cs" />
+    <Compile Include="Report\SeaAir.cs" />
+    <Compile Include="Report\SegregationReport.cs" />
+    <Compile Include="Report\TariffHistory.cs" />
+    <Compile Include="Report\TransitAWBReport.cs" />
+    <Compile Include="Report\TransitShipmentsReport.cs" />
+    <Compile Include="Report\ULDInventory.cs" />
+    <Compile Include="Report\ULDMonitoring.cs" />
+    <Compile Include="Report\ULDHistory.cs" />
+    <Compile Include="Report\ImportCargo.cs" />
+    <Compile Include="Report\ConsigneeSummary.cs" />
+    <Compile Include="Report\CargoRankingEI.cs" />
+    <Compile Include="Report\CargoRanking.cs" />
+    <Compile Include="Report\SLA.cs" />
+    <Compile Include="Report\ULDMovementHistory.cs" />
+    <Compile Include="Report\ULDOut.cs" />
+    <Compile Include="Report\UnclearedShipment.cs" />
+    <Compile Include="Report\ExportDeparture.cs" />
+    <Compile Include="Report\UnInvoiceAwbReport.cs" />
+    <Compile Include="Report\UserGroupsLevelDetails.cs" />
+    <Compile Include="Report\UserSpecialPermission.cs" />
+    <Compile Include="Report\UWSPending.cs" />
+    <Compile Include="Report\WarehouseAccountReport.cs" />
+    <Compile Include="Report\WarehouseInventoryReport.cs" />
+    <Compile Include="Reservation\AgeingReport.cs" />
+    <Compile Include="Reservation\DailyReportForHO.cs" />
+    <Compile Include="Reservation\DailySalesReport.cs" />
+    <Compile Include="Reservation\FlightCapacityDashboard.cs" />
+    <Compile Include="Reservation\FlightCapacityReport.cs" />
+    <Compile Include="Reservation\FlightWisePerformanceReport.cs" />
+    <Compile Include="Reservation\IndividualSalesReport.cs" />
+    <Compile Include="Reservation\PerformanceRouteReport.cs" />
+    <Compile Include="Reservation\PointOfSales.cs" />
+    <Compile Include="Reservation\PostFlightReport.cs" />
+    <Compile Include="Reservation\StationWiseSummary.cs" />
+    <Compile Include="RFS\RFS.cs" />
+    <Compile Include="Export\RushHandlingApproval.cs" />
+    <Compile Include="Schedule\AllotmentGrid.cs" />
+    <Compile Include="Schedule\AllotmentRelease.cs" />
+    <Compile Include="Schedule\LegGridModel.cs" />
+    <Compile Include="Schedule\RoutesDetails.cs" />
+    <Compile Include="Schedule\SASSSIMUpload.cs" />
+    <Compile Include="Schedule\ScheduleFlightSearchRequest.cs" />
+    <Compile Include="Schedule\ScheduleUpdateFlight.cs" />
+    <Compile Include="Schedule\BulkShipments.cs" />
+    <Compile Include="Schedule\ULDShipments.cs" />
+    <Compile Include="Shipment\AWBTracking.cs" />
+    <Compile Include="Shipment\BackLogCargoMailModel.cs" />
+    <Compile Include="Shipment\CCA.cs" />
+    <Compile Include="Shipment\FHLExport.cs" />
+    <Compile Include="Shipment\MarineInsurance.cs" />
+    <Compile Include="Shipment\ReservationBooking.cs" />
+    <Compile Include="Shipment\ReturntoShipper.cs" />
+    <Compile Include="Shipment\ShortAcceptance.cs" />
+    <Compile Include="Shipment\ShortBooking.cs" />
+    <Compile Include="Shipment\UCMDiscrepancyReport.cs" />
+    <Compile Include="Shipment\UCMInOutAlert.cs" />
+    <Compile Include="Shipment\UpdateSchedule.cs" />
+    <Compile Include="Shipment\XrayExemption.cs" />
+    <Compile Include="SpaceControl\AdviceStatusCodeRequest.cs" />
+    <Compile Include="SpaceControl\AgentDetailsModel.cs" />
+    <Compile Include="SpaceControl\AWBGrid.cs" />
+    <Compile Include="SpaceControl\AWBGridRequest.cs" />
+    <Compile Include="SpaceControl\AWBNoDetailsRequestModel.cs" />
+    <Compile Include="SpaceControl\CapacityRequest.cs" />
+    <Compile Include="SpaceControl\FlightPlan.cs" />
+    <Compile Include="SpaceControl\FlightSearchModel.cs" />
+    <Compile Include="SpaceControl\FreightBookingList.cs" />
+    <Compile Include="SpaceControl\HDQRemarks.cs" />
+    <Compile Include="SpaceControl\OffloadShipmentGridRequest.cs" />
+    <Compile Include="SpaceControl\OffloadShipmentGridResponse.cs" />
+    <Compile Include="SpaceControl\ReplanFlightRequestModel.cs" />
+    <Compile Include="SpaceControl\ReplanSubmitModel.cs" />
+    <Compile Include="SpaceControl\SpaceControlSearchFlightGrid.cs" />
+    <Compile Include="SpaceControl\SpaceControlSearchModel.cs" />
+    <Compile Include="SpaceControl\SubmitReplanRequest.cs" />
+    <Compile Include="Tariff\RoundOffCharge.cs" />
+    <Compile Include="Tariff\SaveManageTariff.cs" />
+    <Compile Include="ULDDamage\ULDDamage.cs" />
+    <Compile Include="ULD\Stock\BlackListAWBHistory.cs" />
+    <Compile Include="ULD\SCMDiscrepancy.cs" />
+    <Compile Include="ULD\ULDStockNonInventory.cs" />
+    <Compile Include="ULD\ULDUCMReport.cs" />
+    <Compile Include="ULD\ULDStatisticReports.cs" />
+    <Compile Include="ULD\ULDStockReportDetails.cs" />
+    <Compile Include="ULD\ULDAllocationReport.cs" />
+    <Compile Include="ULD\DemurrageFreePeriod.cs" />
+    <Compile Include="ULD\MaintenanceType.cs" />
+    <Compile Include="ULD\Stock\AgentStockReport.cs" />
+    <Compile Include="ULD\Stock\AWBStockHistory.cs" />
+    <Compile Include="ULD\Stock\AWBStockStatus.cs" />
+    <Compile Include="ULD\Stock\AWBReserved.cs" />
+    <Compile Include="Tariff\TariffSearch.cs" />
+    <Compile Include="Tariff\TariffInvoice.cs" />
+    <Compile Include="Import\ImportFWB.cs" />
+    <Compile Include="Import\DeliveryOrder.cs" />
+    <Compile Include="Import\FlightArrival.cs" />
+    <Compile Include="Import\FWBImport.cs" />
+    <Compile Include="Import\InboundFlight.cs" />
+    <Compile Include="Import\ReceivedConsumable.cs" />
+    <Compile Include="Import\TransitMonitoring.cs" />
+    <Compile Include="Inventory\Consumable.cs" />
+    <Compile Include="Inventory\ConsumableStock.cs" />
+    <Compile Include="Inventory\InventoryItem.cs" />
+    <Compile Include="Inventory\InventoryVehType.cs" />
+    <Compile Include="Inventory\InvVehicle.cs" />
+    <Compile Include="Inventory\InvVehicleService.cs" />
+    <Compile Include="Inventory\IssueConsumables.cs" />
+    <Compile Include="Inventory\ReturnConsumable.cs" />
+    <Compile Include="Irregularity\Irregularity.cs" />
+    <Compile Include="Irregularity\IrregularityDisposalAdvice.cs" />
+    <Compile Include="Irregularity\IrregularityEvent.cs" />
+    <Compile Include="Irregularity\IrregularityIncident.cs" />
+    <Compile Include="Irregularity\IrregularityNonDeliveryReason.cs" />
+    <Compile Include="Irregularity\IrregularityPacking.cs" />
+    <Compile Include="Irregularity\IrregularityRecuperation.cs" />
+    <Compile Include="Irregularity\IrregularityDamage.cs" />
+    <Compile Include="Irregularity\IrregularitySeverity.cs" />
+    <Compile Include="Irregularity\IrregularityStatus.cs" />
+    <Compile Include="Mail\AirMail.cs" />
+    <Compile Include="Master\AccountGroup.cs" />
+    <Compile Include="Master\AirlineCheckList.cs" />
+    <Compile Include="Master\Charges.cs" />
+    <Compile Include="Master\CheckListType.cs" />
+    <Compile Include="Master\DocumentMaster.cs" />
+    <Compile Include="Master\EdiInboundAndOutbound.cs" />
+    <Compile Include="Master\EDIMaster.cs" />
+    <Compile Include="Master\CommodityDensityGroup.cs" />
+    <Compile Include="Master\CommodityPackage.cs" />
+    <Compile Include="Master\Contacts.cs" />
+    <Compile Include="Master\CountryVat.cs" />
+    <Compile Include="Master\EDox.cs" />
+    <Compile Include="Master\Employee.cs" />
+    <Compile Include="Master\FlightType.cs" />
+    <Compile Include="Master\HoldType.cs" />
+    <Compile Include="Master\PageCreation.cs" />
+    <Compile Include="Master\RegistryControl.cs" />
+    <Compile Include="Master\SLA.cs" />
+    <Compile Include="Master\SPHCDocument.cs" />
+    <Compile Include="Master\SPHCGroup.cs" />
+    <Compile Include="Master\TaskArrea.cs" />
+    <Compile Include="Master\TaskMaster.cs" />
+    <Compile Include="Master\Tax.cs" />
+    <Compile Include="Master\Terminal.cs" />
+    <Compile Include="Master\TimeZone.cs" />
+    <Compile Include="PageAccessLogModel.cs" />
+    <Compile Include="Permissions\AlertEvents.cs" />
+    <Compile Include="Permissions\HoldShpt.cs" />
+    <Compile Include="Permissions\SystemSetting.cs" />
+    <Compile Include="Permissions\SystemSettings.cs" />
+    <Compile Include="Permissions\UserStatus.cs" />
+    <Compile Include="Rate\RateSearch.cs" />
+    <Compile Include="Report\WorkOrder.cs" />
+    <Compile Include="Schedule\FlightOpen.cs" />
+    <Compile Include="Schedule\SSIMUpload.cs" />
+    <Compile Include="Schedule\ViewEditFlight.cs" />
+    <Compile Include="Shipment\AmendFlightStatus.cs" />
+    <Compile Include="Shipment\AssignTeam.cs" />
+    <Compile Include="Shipment\BackLogCargo.cs" />
+    <Compile Include="Shipment\Payment.cs" />
+    <Compile Include="Shipment\ReadyToUnloading.cs" />
+    <Compile Include="Shipment\Tracking.cs" />
+    <Compile Include="Shipment\UCM.cs" />
+    <Compile Include="Shipment\UWSInfo.cs" />
+    <Compile Include="Shipment\UwsPrint.cs" />
+    <Compile Include="Tariff\ESSCharges.cs" />
+    <Compile Include="Tariff\HolidayList.cs" />
+    <Compile Include="Roster\RosterResourceAllocation.cs" />
+    <Compile Include="Tariff\HandlingCharges.cs" />
+    <Compile Include="Rate\DueCarrier.cs" />
+    <Compile Include="Rate\DueCarrierCommodityTrans.cs" />
+    <Compile Include="Rate\DueCarrierSpecialHandlingTrans.cs" />
+    <Compile Include="Rate\RateExchangeDueCarrier.cs" />
+    <Compile Include="Rate\RateGlobalDueCarrier.cs" />
+    <Compile Include="Rate\RateGlobalDueCarrierTrans.cs" />
+    <Compile Include="Rate\RateHeavyWeightSurcharge.cs" />
+    <Compile Include="Master\Account.cs" />
+    <Compile Include="Master\AccountType.cs" />
+    <Compile Include="Master\AirCraft.cs" />
+    <Compile Include="Master\AirlineTimeZone.cs" />
+    <Compile Include="Master\Airport.cs" />
+    <Compile Include="Master\CityConnectionTime.cs" />
+    <Compile Include="Master\CommodityGroup.cs" />
+    <Compile Include="Master\CommoditySubGroup.cs" />
+    <Compile Include="Master\ConnectionType.cs" />
+    <Compile Include="Master\CustomerAddress.cs" />
+    <Compile Include="Rate\ExchangeRate.cs" />
+    <Compile Include="Master\Office.cs" />
+    <Compile Include="Rate\RateServiceType.cs" />
+    <Compile Include="Rate\RateSurchargeCommodity.cs" />
+    <Compile Include="Rate\RateAirlineMaster.cs" />
+    <Compile Include="Rate\RateSurchargeSPHC.cs" />
+    <Compile Include="Reservation\ReservationGridData.cs" />
+    <Compile Include="Roster\DesignationMaster.cs" />
+    <Compile Include="Roster\DutyArea.cs" />
+    <Compile Include="Roster\ManageRoster.cs" />
+    <Compile Include="Roster\ManageTeam.cs" />
+    <Compile Include="Roster\RosterEmployee.cs" />
+    <Compile Include="Roster\RosterTeamID.cs" />
+    <Compile Include="Roster\ShiftMaster.cs" />
+    <Compile Include="Roster\SkillMaster.cs" />
+    <Compile Include="Schedule\Schedule.cs" />
+    <Compile Include="Master\Slab.cs" />
+    <Compile Include="Master\SlabMaster.cs" />
+    <Compile Include="Master\SPHCClass.cs" />
+    <Compile Include="Schedule\ScheduleTrans.cs" />
+    <Compile Include="Shipment\Acceptance.cs" />
+    <Compile Include="Shipment\AWBSwapping.cs" />
+    <Compile Include="Shipment\Booking.cs" />
+    <Compile Include="Shipment\FlightTransfer.cs" />
+    <Compile Include="Shipment\SLInfo.cs" />
+    <Compile Include="Shipment\ULDBreakdown.cs" />
+    <Compile Include="Shipment\UNKBooking.cs" />
+    <Compile Include="Shipment\WMSBooking.cs" />
+    <Compile Include="SpaceControl\Allocation.cs" />
+    <Compile Include="SpaceControl\AllocationAccount.cs" />
+    <Compile Include="SpaceControl\AWBQueueManagement.cs" />
+    <Compile Include="ULD\Stock\AWBLost.cs" />
+    <Compile Include="ULD\Stock\AWBStock.cs" />
+    <Compile Include="ULD\Stock\AWBVoid.cs" />
+    <Compile Include="ULD\Stock\DailyStockTransactionReport.cs" />
+    <Compile Include="ULD\Stock\StockAgeingReport.cs" />
+    <Compile Include="ULD\Stock\StockAWB.cs" />
+    <Compile Include="ULD\Stock\StockManagement.cs" />
+    <Compile Include="Tariff\BasisOfCharge.cs" />
+    <Compile Include="Tariff\ManageTariff.cs" />
+    <Compile Include="Tools\SeaAirTool.cs" />
+    <Compile Include="ULD\CityWiseULDAllocation.cs" />
+    <Compile Include="ULD\ULDBaggageType.cs" />
+    <Compile Include="ULD\ULDCharge.cs" />
+    <Compile Include="ULD\ULDInCompatibility.cs" />
+    <Compile Include="ULD\ULDInventory.cs" />
+    <Compile Include="ULD\ULDRepair.cs" />
+    <Compile Include="ULD\ULDRepairSLAReport.cs" />
+    <Compile Include="ULD\ULDReport.cs" />
+    <Compile Include="ULD\ULDSLA.cs" />
+    <Compile Include="ULD\ULDSLACalendar.cs" />
+    <Compile Include="ULD\UldStack.cs" />
+    <Compile Include="ULD\ULDStock.cs" />
+    <Compile Include="ULD\ULDSupportAssigned.cs" />
+    <Compile Include="ULD\ULDSupportProcessed.cs" />
+    <Compile Include="ULD\ULDSupportRequest.cs" />
+    <Compile Include="ULD\ULDTracking.cs" />
+    <Compile Include="ULD\ULDRepairableItems.cs" />
+    <Compile Include="ULD\ULDInvoice.cs" />
+    <Compile Include="ULD\ULDType.cs" />
+    <Compile Include="ULD\VendorPriceList.cs" />
+    <Compile Include="UserHistory.cs" />
+    <Compile Include="UserLogin.cs" />
+    <Compile Include="Master\Airline.cs" />
+    <Compile Include="Master\AirlineAuction.cs" />
+    <Compile Include="AutoComplete.cs" />
+    <Compile Include="Master\City.cs" />
+    <Compile Include="Master\Commodity.cs" />
+    <Compile Include="Master\Country.cs" />
+    <Compile Include="Master\Currency.cs" />
+    <Compile Include="Master\Customer.cs" />
+    <Compile Include="Master\CustomerBid.cs" />
+    <Compile Include="Master\CustomerType.cs" />
+    <Compile Include="Master\Department.cs" />
+    <Compile Include="Master\DueCarrier.cs" />
+    <Compile Include="Master\Embargo.cs" />
+    <Compile Include="Master\Group.cs" />
+    <Compile Include="Master\HandOverCutOffTime.cs" />
+    <Compile Include="Master\Priority.cs" />
+    <Compile Include="Master\Product.cs" />
+    <Compile Include="Permissions\GroupPageRightTrans.cs" />
+    <Compile Include="Permissions\Groups.cs" />
+    <Compile Include="Permissions\PageRights.cs" />
+    <Compile Include="Permissions\Pages.cs" />
+    <Compile Include="Permissions\PagesPermission.cs" />
+    <Compile Include="Permissions\UserGroup.cs" />
+    <Compile Include="Permissions\UserPageRightTrans.cs" />
+    <Compile Include="Permissions\Users.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Master\SpecialHandlingCode.cs" />
+    <Compile Include="Common\ROMSException.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="Users.cs" />
+    <Compile Include="ValidationControl.cs" />
+    <Compile Include="Master\Zone.cs" />
+    <Compile Include="Warehouse\Area.cs" />
+    <Compile Include="Warehouse\LocationSearch.cs" />
+    <Compile Include="Warehouse\WarehouseLocationSearch.cs" />
+    <Compile Include="Warehouse\LocationSubType.cs" />
+    <Compile Include="Warehouse\LocationType.cs" />
+    <Compile Include="Warehouse\WarehouseLocation.cs" />
+    <Compile Include="Warehouse\WarehousePlanning.cs" />
+    <Compile Include="Warehouse\WarehouseSetup.cs" />
+    <Compile Include="Warehouse\WarehouseUtilization.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CargoFlash.SoftwareFactory.Data\CargoFlash.SoftwareFactory.Data.csproj">
+      <Project>{1c17eb6b-8e0e-4aa2-8005-dcf1783dbc14}</Project>
+      <Name>CargoFlash.SoftwareFactory.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

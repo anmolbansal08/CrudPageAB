@@ -1,0 +1,97 @@
+﻿
+<div id="divbody" style="height:auto">
+
+
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Missing Connection Shipment</td></tr>
+                        <tr><td class='formActiontitle' colspan='4'><span id='__SpanHeader__'>Missing Connection Shipment</span><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    From Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+                            </td>
+                            <td class=' formlabel' title='Office'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    To Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' />
+                            </td>
+                            @*<td class=' formlabel' title='Airline '>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    <input type='submit' name='operation' onclick="SearchAmendFlightRecords()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+                            </td>*@
+                        </tr>
+                        <tr>
+                            
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            
+                            <td class=' formlabel' title='Airline '>
+                               
+                                    @*<input type='submit' name='operation' onclick="SearchAmendFlightRecords()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />*@
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type="submit" class="btn btn-success" name="Search" id="btnSearch" style="width:100px;" value="Search" onclick="SearchAmendFlightRecords()">
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+
+
+
+                    <div id="BindAmendFlighRecords" style="width:100%">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="example">
+            <div id="grid" style="font-size:14px;"></div>
+            <script src="~/JScript/Shipment/AmendFlightSearch.js"></script>
+
+        </div>
+
+
+    </section>
+    @*}*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".k-hierarchy-cell").click();
+        });
+
+        $('tr.k-master-row').click(function () {
+            $(this).nextUntil('tr.k-master-row').css('display', function (i, v) {
+                return this.style.display === 'table-row' ? 'none' : 'table-row';
+            });
+        });
+
+    </script>
+</div>

@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "ULDDamageReport";
+    Layout = "~/Views/Shared/_LayoutGaruda.cshtml";
+}
+<div id="divbody" style="height:auto">
+
+    @*@using (Html.BeginForm("GetAirlineData", "AWBStockStatus", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {*@
+
+
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>ULD Damage Report</td></tr>      
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnPageName'>
+                                    ULD Type
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("ULDTypeSNo")
+                                @Html.TextBox("Text_ULDTypeSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                           
+                            <td class='formlabel' title='Airline'>
+                                <font color='red'><span id="spnvform"></span></font><span id='spnKeyValue'>
+                                   ULD No.
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                         
+                                @Html.Hidden("ULDSNo")
+                                @Html.TextBox("Text_ULDSNo", null, new { controltype = "autocomplete", data_role = "autocomplete"  })
+                            </td>
+                        </tr>
+
+                        <tr>
+
+                            <td class='formlabel' title='Airline'>
+                                <font color='red'><span id="spnvform"></span></font><span id='spnKeyValue'>
+                                    Station
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                         
+                                @Html.Hidden("OriginSNo")
+                                @Html.TextBox("Text_OriginSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+
+
+
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnStartDate'>
+                                    Date Of Damage
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.TextBox("Text_StartDate", null, new { controltype = "date", data_role = "autocomplete" })
+                            </td>
+                            @*<td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnEndDate'>
+                                    Ownership
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+
+                                @Html.TextBox("Text_EndDate", null, new { controltype = "date", data_role = "autocomplete" })
+                            </td>*@
+                        </tr>
+
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnAName'>
+                                 Ownership
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("OwnershipSNo")
+                                @Html.TextBox("Text_OwnershipSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                                      </td>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnDownload'>
+                                Primary Maintenance
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("MaintenanceType")
+                                @Html.TextBox("Text_MaintenanceType", null, new { controltype = "autocomplete", data_role = "autocomplete" })                              
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnAName'>
+                                   Additional Maintenance
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AdditionalMaintenanceType")
+                                @Html.TextBox("Text_AdditionalMaintenanceType", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnDownload'>
+
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type="button" class="btn btn-success" value="Search" onclick="Search()" />
+                            </td>
+                        </tr>
+                        <div id="divULDDamageReport"><span id="spnULDDamageReport"><input id="hdnPageType" name="hdnPageType" type="hidden" value="NEW"><input id="hdnULDDamageReportSNo" name="hdnULDDamageReportSNo" type="hidden" value=""><table id="tblULDDamageReport" style="margin-top: 20px; display: table;" class="appendGrid ui-widget"></table></span></div>
+                 </table>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+
+        <table id='tbl'></table>
+
+        <div id="example">
+            <div id="grid" style="font-size:11px;"></div>
+            <script src="~/JScript/ULDDamageReport/ULDDamageReport.js"></script>
+
+        </div>
+
+    </section>
+    @*}*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".k-hierarchy-cell").click();
+        });
+
+        $('tr.k-master-row').click(function () {
+            $(this).nextUntil('tr.k-master-row').css('display', function (i, v) {
+                return this.style.display === 'table-row' ? 'none' : 'table-row';
+            });
+        });
+
+    </script>
+</div>
+

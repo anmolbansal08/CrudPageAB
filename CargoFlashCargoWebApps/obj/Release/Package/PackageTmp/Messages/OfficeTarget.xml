@@ -1,0 +1,83 @@
+﻿<Messages>
+  <!--#region Customer XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  Customer
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Badiuz zaman Khan
+  Created On:		22 March 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>AirportSNo</Name>
+    <Message>Airport can't be Blank.</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>OfficeSNo</Name>
+    <Message>Office can't be Blank.</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Office Target Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Office Target Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Office Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Office Target Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2627</Key>
+    <value>Violation of Primary keys</value>
+  </ServerMessage>
+
+
+  <ServerMessage>
+    <Key>10001</Key>
+    <value>Office Commision Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>10002</Key>
+    <value>Office Commision Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>10003</Key>
+    <value>Office Commision Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2007</Key>
+    <value>Office Target Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2008</Key>
+    <value>Office Target Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2009</Key>
+    <value>Office Target Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>
+
+
+
+
+
+

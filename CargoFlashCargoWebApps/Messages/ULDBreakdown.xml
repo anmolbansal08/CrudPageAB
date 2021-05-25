@@ -1,0 +1,28 @@
+﻿<Messages>
+  <!--<DataFieldName>
+    <Name>ReportingStation</Name>
+    <Message>Reporting Station can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>IncidentCategory</Name>
+    <Message>Incident Category can not be blank</Message>
+  </DataFieldName>-->
+
+  <!--<ServerMessage>
+    <Key>1001</Key>
+    <value>City already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>City Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>City Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>City Deleted Successfully.</value>
+  </ServerMessage>-->
+</Messages>
+

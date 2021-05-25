@@ -1,0 +1,55 @@
+﻿<table class='WebFormTable' id='tbl' validateonsubmit=true>
+    <tr><td class='formSection' colspan='10'>Irregularity Report </td></tr>
+    <tr><td class='formlabel' colspan='10'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+    @*<tr>
+            <td class="formbuttonrow" colspan="4">
+                <input type="radio" name="CustomerType" checked="checked" id="CustomerType" value="0">   Complaint
+                <input type="radio" name="CustomerType"  id="CustomerType" value="1">  Irregularity
+                <input type="radio" name="CustomerType"  id="CustomerType" value="2">  Claim
+            </td>
+
+        </tr>*@
+    <tr class='formSection'>
+
+        <td class="formlabel"><font color='red'>*</font>Status</td>
+        <td class="formInputcolumn">
+
+            @*@Html.Hidden("BranchOffice")
+                @Html.TextBox("Text_BranchOffice", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Select Branch Office" })*@
+            @Html.Hidden("IrregularityStatusSNo")
+            @Html.TextBox("Text_IrregularityStatusSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Select Status" })
+
+
+        </td>
+        <td class="formlabel"><font color='red'></font> </td>
+        <td class="formInputcolumn"></td>
+
+
+    </tr>
+    <tr class='formSection'>
+
+        <td class="formlabel"><font color='red'>*</font>From Date</td>
+        <td class="formInputcolumn">@Html.TextBox("Fromdate", null, new { data_valid = "required", data_valid_msg = "Select From Date" })</td>
+        <td class="formlabel"><font color='red'>*</font>To Date</td>
+        <td class="formInputcolumn">@Html.TextBox("Todate", null, new { data_valid = "required", data_valid_msg = "Select To Date" })</td>
+
+
+
+
+    </tr>
+
+
+    <tr class='formSection'>
+        <td colspan='10'>
+            <input type="button" name='SearchSave' value='Search' class='btn btn-success' id="btnSubmit" />
+            @*<input type="button" name='ExcelVersionDetails' value='Export To Excel' class='btn btn-success' id="btnSubmit" src="../Images/IconExcel.png" />*@
+            <div id="exportflight" style="margin-left: 68px;margin-top: -26px; display:none"><img id="" imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer;" title="Export To Excel" onclick="ExportToExcel_IrregularityReport()" /></div>
+        </td>
+    </tr>
+
+
+</table>
+
+<script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>
+
+<script src="~/JScript/Irregularity/IrregularityAWBReport.js"></script>

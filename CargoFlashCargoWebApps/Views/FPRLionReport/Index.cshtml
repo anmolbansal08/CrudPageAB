@@ -1,0 +1,171 @@
+﻿<style type="text/css">
+    .k-grid-header th.k-header > .k-link {
+        cursor: auto;
+    }
+</style>
+
+
+<div id="divbody" style="height:auto">
+    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+        <tr><td class='formSection' colspan='4'>FPR Report Information</td></tr>
+        <tr class="DateWiseRow">
+            <td class=' formlabel' title='Airline'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    Airline
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                @Html.Hidden("AirlineCode")
+                @Html.TextBox("Text_AirlineCode", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+            </td>
+
+            <td class=' formlabel' title='AWB No'>
+                <span id='spnAirlineCode'>
+                    AWB No :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                @Html.Hidden("AWBNo")
+                @Html.TextBox("Text_AWBNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            </td>
+
+        </tr>
+
+        @*Add Agent Label  By UMAR ON 10-Sep-2018*@
+        <tr class='formSection'>
+
+            <td class="formlabel" title='Agent'>Agent</td>
+            <td class="formInputcolumn">
+           
+                @Html.Hidden("Agent")
+                @Html.TextBox("Text_Agent", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                @*<label id="AgentName"></label>*@
+            </td>
+
+            <td class="formlabel"></td>
+            <td class="formInputcolumn">
+
+                @*@Html.Hidden("CurrencySNo")
+                @Html.TextBox("Text_CurrencySNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })*@
+
+            </td>
+
+        </tr>
+
+
+        <tr class='formSection'>
+
+            <td class="formlabel"><font color='red'></font>Origin</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("OriginSNo")
+                @Html.TextBox("Text_OriginSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+
+            </td>
+            <td class="formlabel">Destination</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("DestinationSNo")
+                @Html.TextBox("Text_DestinationSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+
+
+            </td>
+
+        </tr>
+
+
+        @*Add Cuurenct Drop Down By UMAR ON 04-Sep-2018*@
+
+        @*<tr class='formSection'>
+
+            <td class="formlabel"><font color='red'></font></td>
+            <td class="formInputcolumn">
+
+            </td>
+
+            <td class="formlabel">Currency</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("CurrencySNo")
+                @Html.TextBox("Text_CurrencySNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+
+            </td>
+
+        </tr>*@*
+
+        @*END*@
+
+        <tr class="DateWiseRow">
+            <td class=' formlabel' title='From Date'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    From Date :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+            </td>
+            <td class=' formlabel' title='To Date'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    To Date :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                       data-role="datepicker" data-valid-msg='Select To Date' controltype='datetype' value='' placeholder='To Date' />
+            </td>
+        </tr>
+
+        <tr class="DateWiseRow">
+            <td class=' formlabel' title='From Date'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    Currency :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                @Html.Hidden("CurrencySNo")       
+                @Html.TextBox("Text_CurrencySNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Currency can not be blank" })
+            </td>
+            <td class=' formlabel' >
+            </td>
+            <td class='formlabel'>
+               
+            </td>
+
+        </tr>
+        @*<tr class='formSection'>
+            <td class="formlabel">Flight No </td>
+            <td class="formInputcolumn">
+                @Html.Hidden("FlightNo")
+                @Html.TextBox("Text_FlightNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            </td>
+
+            <td class="formlabel"></td>
+            <td class="formInputcolumn"></td>
+        </tr>*@
+        <tr>
+            <td class=' formlabel'>
+                <div id="exportflight" style="float:left;">
+                    <img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" onclick="ExportExcelHoldType()" title="Export To Excel" />
+                </div>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='submit' name='operation' onclick="SearchFPRLionReport()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+            </td>
+            <td class="formlabel"></td>
+            <td class="formInputcolumn"></td>
+
+        </tr>
+    </table>
+    <br />
+    <br />
+</div>
+<table id='tbl'></table>
+
+<div id="example">
+    <div id="grid" style="font-size:11px;"></div>
+    <script src="~/JScript/Report/FPRLionReport.js"></script>
+
+</div>
+
+

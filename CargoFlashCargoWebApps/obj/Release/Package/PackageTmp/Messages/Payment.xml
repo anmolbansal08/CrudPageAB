@@ -1,0 +1,43 @@
+﻿<Messages>
+
+  <DataFieldName>
+    <Name>PaymentMode</Name>
+    <Message>Payment Mode can not be blank</Message>
+  </DataFieldName>
+  
+  
+<ServerMessage>
+  <Key>1001</Key>
+  <value>Duplicate Entry</value>
+</ServerMessage>
+
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Not a Cashier</value>
+  </ServerMessage>
+
+<ServerMessage>
+  <Key>2000</Key>
+  <value>Payment Request Added Successfully.</value>
+</ServerMessage>
+<ServerMessage>
+  <Key>2001</Key>
+  <value>Payment Request Updated Successfully.</value>
+</ServerMessage>
+<ServerMessage>
+  <Key>2002</Key>
+  <value>Payment Request Deleted Successfully.</value>
+</ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Payment Request Rejected Because Cashier is not Active.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2005</Key>
+    <value>Total Amount should not be greater than Balance Receivable, Kindly refresh the page and try again.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1006</Key>
+    <value>Payment Request Rejected.</value>
+  </ServerMessage>
+</Messages>

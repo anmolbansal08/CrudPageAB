@@ -1,0 +1,16 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Agent Build Up Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Agent Build Up Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Agent Build Up Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+
+

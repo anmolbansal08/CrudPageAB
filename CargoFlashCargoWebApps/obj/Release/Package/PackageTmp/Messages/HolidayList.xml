@@ -1,0 +1,45 @@
+﻿<Messages>
+  <!--#region HolidayList XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  InvVehicle
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Anju Rani
+  Created On:		30 nov 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <!--<DataFieldName>
+    <Name>Holiday List</Name>
+    <Message>HolidayList Type can not be blank</Message>
+  </DataFieldName>-->
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>HolidayList already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>HolidayList Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>HolidayList Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>HolidayList Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>
+
+

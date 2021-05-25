@@ -1,0 +1,866 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="../../../Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="../../../Scripts/json2.js"></script>
+    <link type="text/css" href="../../../Styles/Application.css" rel="stylesheet" />
+
+
+
+    <style type="text/css">
+        body {
+            font-family: Verdana;
+            margin: 0px;
+            padding: 5px;
+            color: black;
+            font-weight: bold;
+        }
+
+        .webtable {
+            border-collapse: collapse;
+            margin-left: 225px;
+            width: 600px;
+        }
+
+        .webtd {
+            border: 1px solid black;
+            padding: 10px 15px;
+            font-size: 10px;
+        }
+
+        .webth {
+            border: 1px solid black;
+            padding: 10px 15px;
+            font-weight: bold;
+        }
+
+        .prs {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: normal;
+            font-family: Verdana, Geneva, sans-serif;
+        }
+
+        .fsttd {
+            width: 100% !important;
+        }
+
+        .scndtd {
+            width: 35% !important;
+        }
+
+        .thrdtd {
+            width: 30% !important;
+        }
+
+        .WebFormTableNoWidth {
+            padding: 10px;
+            border: 0;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .WebFormMTable {
+            width: 600px;
+            height: 100%;
+            padding: 0px;
+            border: 0px solid #000;
+            margin-bottom: 0px;
+        }
+
+        .WebFormTable {
+            width: 600px;
+            padding: 0px;
+            border: 0px solid #000;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-weight: normal;
+        }
+
+        .tdLabel {
+            font-size: 8px;
+            text-align: left;
+            padding-left: 1px;
+            width: 15%;
+        }
+
+        .tdColon {
+            font-size: 8px;
+            font-weight: bold;
+            width: 5%;
+        }
+
+        .tdValue {
+            font-size: 7px;
+            font-weight: bold;
+            text-align: left;
+            padding-left: 1px;
+            width: 30%;
+        }
+
+        .tdBarcodeLabel {
+            font-size: 8px;
+            font-weight: bold;
+            text-align: left;
+            width: 30%;
+        }
+
+        .tdFooter {
+            font-size: 7px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .tdAddress {
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .tdILabel {
+            font-size: 8px;
+            text-align: left;
+            padding-left: 1px;
+            width: 30%;
+        }
+
+        .tdIColon {
+            font-size: 8px;
+            font-weight: bold;
+            width: 5%;
+        }
+
+        .tdIValue {
+            font-size: 7px;
+            font-weight: bold;
+            text-align: left;
+            padding-left: 1px;
+            width: 65%;
+        }
+
+        .tdHeaderCgValue {
+            font-size: 8px;
+            text-align: right;
+            padding-left: 1px;
+            font-weight: bold;
+        }
+
+        .tdHeaderValue {
+            font-size: 8px;
+            text-align: center;
+            padding-left: 1px;
+            width: 14%;
+        }
+
+        .tdHeader {
+            font-size: 8px;
+            text-align: center;
+            font-weight: bold;
+            padding-left: 1px;
+            width: 14%;
+        }
+
+        .tdHeader {
+            font-size: 8px;
+            text-align: center;
+            font-weight: bold;
+            padding-left: 1px;
+            width: 14%;
+        }
+
+        .tdSLabel {
+            font-size: 8px;
+            text-align: center;
+            padding-left: 1px;
+        }
+
+        .tdBLLabel {
+            font-size: 8px;
+            text-align: left;
+            padding-left: 1px;
+        }
+
+        .tdBRLabel {
+            font-size: 8px;
+            text-align: right;
+            padding-left: 1px;
+        }
+
+        .style1 {
+            width: 163px;
+            height: 16px;
+        }
+
+        .fontfamilyHeader {
+            font-weight: bold;
+            font-size: 8px;
+            color: #000000;
+            font-family: Verdana;
+        }
+
+        .fontfamily {
+            font-size: 7px;
+            color: #000000;
+            font-family: Verdana;
+        }
+
+        span {
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        .myclass {
+            font-weight: normal !important;
+            font-size: 15px !important;
+        }
+
+        .myclass1 {
+            font-weight: normal !important;
+            font-size: 10px !important;
+            font-style: italic !important;
+        }
+
+        .myclass2 {
+            font-weight: normal !important;
+            font-size: 10px !important;
+        }
+
+        .auto-style1 {
+            height: 13.5pt;
+            width: 103pt;
+            color: windowtext;
+            font-size: 10.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: "Courier New", monospace;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 0px;
+        }
+
+        .auto-style2 {
+            height: 14pt;
+            width: 103pt;
+            color: windowtext;
+            font-size: 10.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: "Courier New", monospace;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 0px;
+        }
+
+        .auto-style3 {
+            width: 25%;
+            height: 14pt;
+        }
+
+        .auto-style4 {
+            height: 14pt;
+            width: 25%;
+            color: black;
+            font-size: 10pt;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+            font-family: "Courier New", monospace;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 14px;
+            padding-left: 13%;
+        }
+
+        .auto-style5 {
+            width: 100%;
+            height: 14pt;
+        }
+
+        .auto-style6 {
+            height: 13pt;
+            width: 103pt;
+            color: windowtext;
+            font-size: 10.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: "Courier New", monospace;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 0px;
+        }
+
+        .auto-style7 {
+            width: 100%;
+            height: 13pt;
+        }
+    </style>
+
+    <script type="text/javascript">
+       var userContext = "";
+       function getParameterByName(name, url) {
+           if (!url) url = window.location.href;
+           name = name.replace(/[\[\]]/g, "\\$&");
+           var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+               results = regex.exec(url);
+           if (!results) return null;
+           if (!results[2]) return '';
+           return decodeURIComponent(results[2].replace(/\+/g, " "));
+       }
+
+       $(document).ready(function () {
+
+           if (window.opener)
+               userContext = window.opener.parent.userContext;
+                var CurrentClaimSNo = getParameterByName("sno", "");
+                var pageName = getParameterByName("pagename", "");
+                var FinalData;
+                var FinalData1;
+                var url;
+
+
+                url = "../../../Services/Irregularity/ClaimService.svc/GetSettelmentClaimPrint"
+                $.ajax({
+                    url: url,
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ CurrentClaimSNo: CurrentClaimSNo }),
+                    async: false,
+                    type: 'post',
+                    cache: false,
+                    success: function (result) {
+                        //alert(data); // this is Json data object
+                        var ResultData = jQuery.parseJSON(result);
+                        FinalData = ResultData.Table0;
+                        FinalData1 = ResultData.Table1;
+                        var FinalData2 = ResultData.Table2;
+                        $('#spnformccfno').text(FinalData[0].ClaimFormCCFNO);
+                        $('#spnairwaybillno').text(FinalData[0].AirWaybillNO);
+                        $('#spnflightnodated').text(FinalData[0].FlightNODate);
+                        $('#spnclaimantname').text(FinalData[0].ClaimantName);
+                        $('#spnamountofclaim').text(FinalData[0].AmountOfClaim);
+
+                        $('#spnsettelmentclaimcargo').text(FinalData[0].SettelmentOfClaimCargo);
+                        $('#spnpaidbyinsurance').text(FinalData[0].PaidByInsurance);
+                        $('#spnpaidbyga').text(FinalData[0].PaidByGa);
+                        $('#ImgLogo').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineLogo);
+                        $('#ImgLogo').attr('onError', 'this.onerror=null;this.src="../Logo/aaa.jpg";');
+
+                        $('#spnclaimnumber').text(FinalData[0].ClaimFormNumber);
+
+                        if(FinalData1.length!==0)
+                        {
+                            $('#spnname').text(FinalData1[0].ProposedByName);
+                            $('#spnProposedBranchName').text(FinalData1[0].ProposedBranchName);
+                            $('#spnfunction').text(FinalData1[0].ProposedFunction);
+                            $('#spnsigned').text(FinalData1[0].ProposedBySigned);
+
+                        }
+                        if (FinalData2.length !==0) {
+
+                            $('#spndossierno').text(FinalData2[0].DossierNo);
+                            $('#spnApprovedBranchName').text(FinalData2[0].ApprovedBranchName);
+                            $('#spndateofdossier').text(FinalData2[0].DateOfDossier);
+                            $('#spnapprovedname').text(FinalData2[0].ApprovedByName);
+                            $('#spnapprovedfunction').text(FinalData2[0].ApprovedFunction);
+                            $('#spnapprovedsigned').text(FinalData2[0].ApprovedBySigned);
+                            //$('#spnBranchOffice').text(FinalData2[0].ApprovedByName);
+                            //$('#spnBranchAddress').text(FinalData2[0].ApprovedBranchName);
+                        }
+
+
+                    }
+
+                });
+
+            });
+
+    </script>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div id="divMainSTTStatus">
+
+            <div id="divConnNotePrinttab" style="width:100%;height: 100%;margin: 0% 4%;">
+                <table class="WebFormMTable" id="tblSTTStatus" style="width: 100%; height: 100%;">
+
+                    <tr>
+                        <td valign="top" class="formbuttonrow" style="border-top: none;border-bottom: none;">
+                            <table border="0" cellspacing="0" cellpadding="0" class="WebFormTable fontfamilyHeader">
+                                <tr>
+                                    <td style="text-align: center; width: 35%; padding: 0px;" align="center" valign="top">
+                                        <table class="WebFormTable" style="margin-left: 250px;">
+
+
+
+                                            <tr>
+                                                <td style="text-align:center; width: 30%;" align="center" valign="top">
+                                                    <table class="WebFormTable">
+                                                        <tr>
+                                                            <td>
+                                                                <img id="ImgLogo" width='150' height='50' />
+                                                                <!--<img src="Images/GarudaIndonesiaGroupNew.png" width='120' height='50' />-->
+                                                            </td>
+                                                        </tr>
+
+                                                        <!--<tr>
+                                                            <td>
+                                                                <span></span><span></span>
+                                                                <br />
+                                                                <span></span> <span> </span>
+                                                            </td>
+                                                        </tr>-->
+
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+
+
+                                            <tr>
+                                                <td>
+                                                    <span style="font-size: 16px;">FORM OF SETTELMENT CARGO CLAIM (SCC)</span> 
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-left: 0px;">
+                                                    <span style="font-size: 14px;">NO:<span style="font-size:14px;" id="spnclaimnumber"></span></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td>
+
+                            <table class="webtable">
+
+
+
+
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="webtd" style="text-align: left;">
+
+
+                                            CARGO CLAIM FORM /CCF NO<br />
+
+
+                                        </td>
+                                        <td class="webtd" style="text-align: left; width: 275px;">
+                                            :&nbsp;<span class="myclass2" id="spnformccfno"></span>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="webtd" style="text-align: left;">
+                                            AIR WAYBILL NO
+                                        </td>
+                                        <td class="webtd" style="text-align: left; width: 275px;">
+                                            :&nbsp;<span class="myclass2" id="spnairwaybillno"></span>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="webtd" style="text-align: left;">
+
+                                            FLIGHT NO/DATE
+                                        </td>
+                                        <td class="webtd" style="text-align: left; width: 275px;">
+
+                                            :&nbsp;<span class="myclass2" id="spnflightnodated"></span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td colspan="3" class="webtd" style="text-align: left;">
+
+                                            CLAIMANT NAME
+                                        </td>
+                                        <td class="webtd" style="text-align: left; width: 275px;">
+
+                                            :&nbsp;<span class="myclass2" id="spnclaimantname"></span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td colspan="3" class="webtd" style="text-align: left;">
+
+                                            AMOUNT OF CLAIM
+                                        </td>
+                                        <td class="webtd" style="text-align: left; width: 275px;">
+
+                                            :&nbsp;<span class="myclass2" id="spnamountofclaim"></span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td colspan="3" class="webtd">
+                                            <table>
+                                                <tr>
+                                                    <td style="text-align: left;">SETTELMENT OF CLAIM CARGO:</td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="text-align:center;width: 400px;"><span class="myclass2" id="spnsettelmentclaimcargo">PM 77</span></td>
+
+
+                                                </tr>
+
+
+
+                                            </table>
+                                        </td>
+                                        <td style="padding: 0px 0px; border: 1px solid black; font-size: 10px;">
+                                            <table>
+
+                                                <tr>
+                                                    <td style="text-align: center; border-bottom: 1px solid black;" colspan="2">DETAIL PAYMENT OF CLAIM</td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="border-right: 1px solid black;">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="text-align:left;">
+                                                                    PAID BY INSURANCE:
+                                                                  
+                                                                </td>
+
+
+                                                            </tr>
+
+
+                                                            <tr>
+                                                                <td style="text-align:center;width: 400px;"><span class="myclass2" id="spnpaidbyinsurance"></span></td>
+
+
+                                                            </tr>
+
+
+
+                                                        </table>
+                                                    </td>
+
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="text-align:left;">
+                                                                    PAID BY VISTARA (EMPATHY):
+                                                                    
+                                                                </td>
+
+
+                                                            </tr>
+
+
+                                                            <tr>
+                                                                <td style="text-align:center;width: 400px;"><span class="myclass2" id="spnpaidbyga"></span></td>
+
+
+                                                            </tr>
+
+
+
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+
+
+                                            </table>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td colspan="3" class="webtd">
+                                            <table>
+                                                <tr>
+                                                    <td style="text-align:center;width: 275px;" colspan="2">PROPOSED BY:</td>
+
+
+                                                </tr>
+
+
+
+                                                <tr>
+                                                    <td style="text-align:left;width:135px;">BRANCH OFFICE (BO)<span class="myclass1" id="spnBranchOffice"></span><span class="myclass1" id="spnBranchAddress"></span></td>
+
+                                                    <td style="text-align: left; width:135px;">:&nbsp;<span class="myclass2" id="spnProposedBranchName"></span></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="text-align:left;">NAME</td>
+
+                                                    <td style="text-align: left; width: 120px;">:&nbsp;<span class="myclass2" id="spnname"></span></td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="text-align:left;">FUNCTION</td>
+
+                                                    <td style="text-align: left; width: 120px;">:&nbsp;<span class="myclass2" id="spnfunction"></span></td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="text-align:left;">SIGNED</td>
+
+                                                    <td style="text-align: left; width: 120px;">:&nbsp;<span class="myclass2" id="spnsigned"></span></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td colspan="3" class="webtd">
+                                            <table>
+                                                <tr>
+                                                    <td style="text-align:center;width: 400px;" colspan="2">APPROVED BY:</td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td></td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="text-align:left;">BRANCH OFFICE (BO)<br /><span class="myclass1">BRANCH OFFICE</span></td>
+
+                                                    <td style="text-align: left; width: 135px;">:&nbsp;<span class="myclass2" id="spnApprovedBranchName"></span></td>
+                                                </tr>
+
+
+
+
+
+                                                <tr>
+                                                    <td style="text-align:left;">DOSSIER NO</td>
+
+                                                    <td style="text-align: left; width: 100px;">:&nbsp;<span class="myclass2" id="spndossierno"></span></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:left;">DATE OF DOSSIER</td>
+
+                                                    <td style="text-align: left; width: 100px;">:&nbsp;<span class="myclass2" id="spndateofdossier"></span></td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="text-align:left;">NAME</td>
+
+                                                    <td style="text-align: left; width: 100px;">:&nbsp;<span class="myclass2" id="spnapprovedname"></span></td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="text-align:left;">FUNCTION</td>
+
+                                                    <td style="text-align: left; width: 100px;">:&nbsp;<span class="myclass2" id="spnapprovedfunction"></span></td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="text-align:left;">SIGNED</td>
+
+                                                    <td style="text-align: left; width: 100px;">:&nbsp;<span class="myclass2" id="spnapprovedsigned"></span></td>
+
+
+                                                </tr>
+
+
+
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+
+
+
+                            </table>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+
+                    <tr>
+
+
+
+
+                        <td class="auto-style4" style="width:550px;text-align:left;">
+                            <table>
+                                <tr>
+                                    <td style="width:700px;text-align:center;">
+                                        * This Document Does Not require a Signature and Has Been Declared Valid as a Supporting Document
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+
+
+                </table>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

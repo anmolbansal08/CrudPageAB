@@ -1,0 +1,34 @@
+﻿<Messages>
+  <!--<DataFieldName>
+    <Name>BucketClassSNo</Name>
+    <Message>Bucket Class can not be blank</Message>
+  </DataFieldName>-->
+
+  <DataFieldName>
+    <Name>CityCode</Name>
+    <Message>City Code can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>HandOverCutoffTime</Name>
+    <Message>Handover Cut Off Time can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Handover Cut-Off Time for this City Code already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Handover Cut-Off Time Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Handover Cut-Off Time Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Handover Cut-Off Time Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

@@ -1,0 +1,344 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>UWS</title>
+    <style type="text/css">
+        .style1 {
+            width: 35%;
+            font-size: 11px;
+            font-weight: normal;
+        }
+
+        .style2 {
+            width: 30%;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .auto-style1 {
+            width: 10%;
+        }
+
+        .auto-style2 {
+            width: 12%;
+        }
+
+        th, td {
+            padding: 5px;
+            margin: 0px;
+        }
+
+        tr {
+            margin: 0px;
+        }
+
+        .auto-style3 {
+            width: 25%;
+        }
+
+        .auto-style4 {
+            width: 40%;
+        }
+
+        .auto-style5 {
+            height: 24px;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+    <!--<script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/Export/UWS/UWSPrint/UWSPrint.js"></script>-->
+    <script type="text/javascript">
+        
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+
+        });
+    </script>
+
+</head>
+
+<body>
+    <form id="form1" runat="server">
+        <div style="width: 100%; font-family:Arial; font-size:18px;  padding:0px; margin:0px;" align="center">
+            <div id="div1" style="width:95%; height:25px; font-size:10px; padding:0px; margin:0px; text-align:left;">
+                <input type="button" id="Save_Print" value="Save & Print" style="background-color:#33cc33;">
+                <input type="hidden" id="hdnSNoList" value="">
+                <!--added for message-->
+                <input type="button" id="Create_Message" onclick="showUWSPreviewmessage()" value="UWS Preview" style="background-color:#33cc33;">
+                <!--end-->
+            </div>
+            <table style="width: 95%; padding:0px; margin:0px;" cellspacing="0px">
+                <tr>
+                    <td class="style1" rowspan="3">&nbsp;</td>
+                    <td class="style2" rowspan="3" align="center">UWS Print</td>
+                    <td class="style1" align="right"><span id="spnDateTime"></span></td>
+                </tr>
+                <tr>
+                    <td class="style1" align="right"><span id="spnPageNo"></span></td>
+                </tr>
+                <tr>
+                    <td class="style1" align="right"><span id="UWSMessage"><a href='#' onclick=showUWSHistoryMessage()><b>UWS Message</b></a></span></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <table style="width:100%; font-size:10px; padding:0px; margin:0px;" cellspacing="0px">
+                            <tr style="border-top:1px solid black; border-right:1px solid black; border-left:1px solid black;">
+                                <td style="width:5%">&nbsp;</td>
+                                <td align="left" class="auto-style1" style="font-weight: bold;">Airline:</td>
+                                <td style="font-weight:bold;" align="left" class="auto-style4"><span id="spnAirline"></span></td>
+                                <td align="left" class="auto-style2" style="font-weight: bold;">Flight No:</td>
+                                <td style="font-weight:bold;" align="left" class="auto-style3"><span id="spnFlight"></span><span id="spnFlightSNo" style="display:none"></span></td>
+                                <td style="width:5%">&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td style="width:5%">&nbsp;</td>
+                                <td align="left" class="auto-style1">Sector:</td>
+                                <td align="left" class="auto-style4"><span id="spnSector"></span></td>
+                                <td align="left" class="auto-style2">Export Mvt No:</td>
+                                <td align="left" class="auto-style3"><span id="spnExport"></span></td>
+                                <td style="width:5%">&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td style="width:5%">&nbsp;</td>
+                                <td align="left" class="auto-style1">LBD Slno:</td>
+                                <td align="left" class="auto-style4"><span id="spnLBD"></span></td>
+                                <td align="left" class="auto-style2">ACFT Regn:</td>
+                                <td align="left" class="auto-style3"><span id="spnACFT"></span></td>
+                                <td style="width:5%">&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td style="width:5%">&nbsp;</td>
+                                <td align="left" class="auto-style1">Agent:</td>
+                                <td align="left" class="auto-style4"><span id="spnAgent"></span></td>
+                                <td align="left" class="auto-style2">Type:</td>
+                                <td align="left" class="auto-style3"><span id="spnType"></span></td>
+                                <td style="width:5%">&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6" style="width:100%; margin:0; padding:0;">
+                                    <table id="recordTbl" style="width:100%; margin:0; padding:0; border-collapse:collapse;text-align:center;">
+                                        <tr style="background-color:#b3b3b3; font-weight:bold; border:1px solid black;">
+                                            <td style="width:8%;">Equipment</td>
+                                            <td style="width:13%;">ULD No / BULK</td>
+                                            <td style="width:3%;">Pieces</td>
+                                            <td style="width:6%;">Gross Wt</td>
+                                            <td style="width:3%;  ">Net Wt</td>
+                                            <!--<td style="width:8%;  ">Dolly No</td>-->
+                                            <td style="width:10%;" colspan="2">SHC Code</td>
+                                            <td style="width:5%;">Occupied</td>
+                                            <td style="width:5%;">Priority</td>
+                                            <td style="width:15%;" colspan="2">Remarks</td>
+                                            <td style="width:15%;">ULD Contour Code</td>
+                                            <td style="width:20%" colspan="6">Overhang Details
+                                            <table style="width:100%;">
+                                               <tr><td style=" width:5%;">AFT/FWD</td><td style="width:5%;">OHD</td><td style="width:5%;">Unit</td><td style="width:5%;">Type</td><td style="width:15%;">Other Info</td></tr></table>
+                                            </td>
+                                        </tr>
+
+                                        <tr id="spDes" style="border:1px solid black;">
+                                            <td colspan="15" style="padding: 7px; font-size: 12px; font-weight: bold; text-align: center;display:none">[ Destination :  <span id="spnDes"></span> ]</td>
+                                        </tr>
+
+                                        <tr style="background-color: #FFC0CB; border: 1px solid black;">
+                                            <td style="padding: 5%; padding: 7px; font-weight: bold;" colspan="2"></td>
+                                            <td style="width:7%; padding:7px; font-weight:bold;">Gross Wt :</td>
+                                            <td style="width:5%; padding:7px;  font-weight:bold;"><span id="spnGrandTotalGwt"></span></td>
+                                            <td style="width:5%; padding:7px; font-weight:bold;">Net Wt :</td>
+                                            <td style="width:5%; padding:7px; font-weight:bold;"><span id="spnGrandTotalNwt"></span></td>
+                                            <td style="width:5%; padding:7px;">&nbsp;</td>
+                                            <td style="width:3%; padding:7px;">&nbsp;</td>
+                                            <td style="width:5%; padding:7px;">&nbsp;</td>
+                                            <td style="width:5%; padding:7px;" colspan="8">&nbsp;</td>
+                                            <td></td>
+                                            
+                                         
+                                           
+                                        </tr>
+
+                                        <!--<tr style="background-color:#cccccc; border:1px solid black;">
+                                            <td style="padding:7px; font-weight:bold; " colspan="2">Gross Wt : </td>
+                                            <td style="padding:7px; font-weight:bold;" colspan="2"><span id="spnMainTGwt"></span></td>
+                                            <td style="width:12%; padding:7px; font-weight:bold;" colspan="2">Net Wt :</td>
+                                            <td style="width:12%; padding:7px; font-weight:bold;"> <span id="spnMainTNwt"></span> </td>
+                                            <td style="width:8%; padding:7px;" >&nbsp;</td>
+                                            <td style="width:5%; padding:7px;" colspan="2">&nbsp;</td>
+                                            <td style="width:5%; padding:7px;">&nbsp;</td>
+                                            <td style="width:22%; padding:7px;" colspan="2">&nbsp;</td>
+                                        </tr>-->
+
+
+                                    </table>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="width:100%; margin:0; padding:0;">
+                                    <table style="width:100%; margin:0; padding:0; border-collapse:collapse;text-align:center;">
+                                        <tr style="text-align:left; font-size:10px; font-weight:bold;">
+                                            <td colspan="6">
+                                                # - Manual Entry
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:20%;">Other Info</td>
+                                            <td style="width:40%;" class="auto-style5"> <input type="text" id="SI1" size="64" maxlength="100" /></td>
+                                            <td style="width:20%;">Other Info</td>
+                                            <td colspan="2" style="width:40%;"><input type="text" id="SI2" size="64" maxlength="100" /> </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="width:25%; text-align:left; font-weight:bold;">
+
+                                                Prep. By&nbsp; (CARGO STAFF)&nbsp;&nbsp;&nbsp;&nbsp;
+                                            </td>
+
+                                            <!--<td style="width:15%;text-align:left; font-weight:bold;">
+
+                                                &nbsp;
+                                            </td>-->
+
+                                            <td colspan="2" style="width:15%;text-align:left; font-weight:bold;">
+
+                                                (<span id="spnStaffType1">CCU</span> STAFF)
+                                            </td>
+
+                                            <!--<td style="width:15%; text-align:left; font-weight:bold;">
+
+                                                &nbsp;
+                                            </td>-->
+
+                                            <td colspan="2" style=" width:15%;text-align:left; font-weight:bold;">
+
+                                                (<span id="spnStaffType2">RAMP</span> STAFF)
+                                            </td>
+
+                                            <!--<td style="width:15%;text-align:left; font-weight:bold;">
+
+                                                &nbsp;
+                                            </td>-->
+
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="width:25%; text-align:left; font-weight:bold;">
+
+                                                <span id="spnEmpData"></span>
+                                            </td>
+
+                                            <!--<td style="width:15%;text-align:left; font-weight:bold;">
+
+                                                &nbsp;
+                                            </td>-->
+
+                                            <td colspan="2" style="width:15%;text-align:left; font-weight:bold;">
+
+                                                <span id="spnCCUStaff"></span>
+                                            </td>
+
+                                            <!--<td style="width:15%; text-align:center; font-weight:bold;">
+
+                                                &nbsp;
+                                            </td>-->
+
+                                            <td colspan="2" style=" width:15%;text-align:left; font-weight:bold;">
+
+                                                <span id="spnRampStaff"></span>
+                                            </td>
+
+                                            <!--<td style="width:15%;text-align:left; font-weight:bold;">
+
+                                                &nbsp;
+                                            </td>-->
+
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="width:25%;  text-align:left; font-weight:bold;">
+
+                                                Dispatched at : ___________________
+                                            </td>
+
+                                            <!--<td style="width:15%;text-align:left; font-weight:bold;">
+
+                                                &nbsp;
+                                            </td>-->
+
+                                            <td colspan="2" style="width:15%;text-align:left; font-weight:bold;">
+
+                                                Dispatched at : ___________________
+                                            </td>
+
+                                            <!--<td style="width:15%; text-align:left; font-weight:bold;">
+
+                                                &nbsp-->
+                                </td>
+
+                                <td colspan="2" style=" width:15%;text-align:left; font-weight:bold;">
+
+                                    Received at : ____________________
+                                </td>
+
+                                <!--<td style="width:15%;text-align:left; font-weight:bold;">
+
+                                    &nbsp;
+                                </td>-->
+
+                            </tr>
+
+
+                            <!--<tr>
+                                <td style="width:25%;text-align:left; font-weight:bold;">
+
+                                    <span id="spnEmpData">E701</span> Dispatched at :
+                                </td>
+
+                                <td style=" width:15%;text-align:left; font-weight:bold;">
+
+                                    <hr align="left" style="width:100%; margin:0px; padding:0px; height: 1px;" />
+
+                                </td>
+
+                                <td style="width:15%;text-align:left; font-weight:bold;">
+
+                                    Dispatched at :
+                                </td>
+
+                                <td style=" width:15%;text-align:right; font-weight:bold;">
+
+                                    <hr align="left" style="width:100%; margin:0px; padding:0px; height: 1px;" />
+
+                                </td>
+
+                                <td style="width:15%;text-align:left; font-weight:bold;">
+
+                                    Received at :
+                                </td>
+
+                                <td style="width:15%;text-align:left; font-weight:bold;">
+
+                                    <hr align="left" style="width:100%; margin:0px; padding:0px; height: 1px;" />
+                                </td>
+
+                            </tr>-->
+
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            </td>
+            </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>

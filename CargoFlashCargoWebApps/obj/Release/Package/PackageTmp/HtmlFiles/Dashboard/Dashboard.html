@@ -1,0 +1,107 @@
+﻿<div class="container-fluid">
+    <!--open container-->
+    <div class="row row-offcanvas row-offcanvas-left">
+        <!--open row-->
+        <div id="nav-section" class="col-xs-12 column">
+            <!--open nav column-->
+            <div class="navbar-default">
+                <button id="toggle-button" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <h1 id="dash-logo" class="center-block ">CMS·Dashboard</h1>
+            <div class="collapse navbar-collapse" id="sidebar-nav" role="navigation">
+                <ul class="nav">
+                    <li><a href="#">ULD</a></li>
+                    <li ><a href="#">Airline</a></li>
+                    <li  class="active"><a href="#">Exports</a></li>
+                    <li><a href="#">Performance</a></li>
+
+                </ul>
+                <!--<div id="rights">
+                    <p>Copyright © 2016, Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.</p>
+                </div>-->
+            </div>
+        </div><!--close left column-->
+        <div id="main-section" class="col-xs-12 column">
+
+            <div id="main-section-header" class="row">
+               
+                <div id="dateFilter" class="col-xs-12" data-role="validator">
+                    <div class="period-wrapper">
+                        <label for="StartDate" class="select-period">From</label>
+                       
+                        <input name="StartDate" id="StartDate" type="text" />
+                    </div>
+                    <div class="period-wrapper">
+                        <label for="EndDate" class="select-period">To</label>
+                        <input name="EndDate" id="EndDate" type="text" />
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+            <div class="main-section-content row" style="">
+
+                <div id="employee-list" class="col col-xs-2">
+                    <h3>NAMES</h3>
+                    <div id="EmployeesList" data-role="listview" class="k-widget k-listview k-selectable" role="listbox">
+                        <div class="employee" data-uid="5c915098-a968-4a82-a8e3-fb1d22d2fa8a" role="option" aria-selected="false">
+                            <div class="employee-wrapper">
+                              
+                                <dl class="employee-list-details">
+                                    <dt class="name">Nancy Davolio</dt>
+                                    <dd class="title">Sales Representative</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="employee" data-uid="d6de97a6-7d18-44ed-b581-02cb27dc6fa9" role="option" aria-selected="false">
+                            <div class="employee-wrapper">
+                            
+                                <dl class="employee-list-details">
+                                    <dt class="name">Andrew Fuller</dt>
+                                    <dd class="title">Vice President, Sales</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="employee" data-uid="b9b08678-6edd-49e4-a16b-98c390c52552" role="option" aria-selected="false">
+                            <div class="employee-wrapper">
+                              
+                                <dl class="employee-list-details">
+                                    <dt class="name">Janet Leverling</dt>
+                                    <dd class="title">Sales Representative</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="employee" data-uid="eb7891a0-4398-4fc2-a886-2e8f35bbbdb3" role="option" aria-selected="false">
+                            <div class="employee-wrapper">                             
+                                <dl class="employee-list-details">
+                                    <dt class="name">Margaret Peacock</dt>
+                                    <dd class="title">Sales Representative</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div id="employee-details-wrapper" class="col col-xs-10">
+                    <div id="employee-details" class="row">
+                        <div id="employeeStats" class="col-xs-6">
+                            <div class="k-chart" id="TeamSales"></div>
+                        </div>
+                        <div id="employeeStats" class="col-xs-6">
+                            <div class="k-chart" id="Team"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div><!--close row-->
+    </div>

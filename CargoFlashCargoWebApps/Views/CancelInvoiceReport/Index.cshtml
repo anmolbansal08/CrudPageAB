@@ -1,0 +1,145 @@
+﻿
+
+<div id="divbody" style="height:auto">
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Cancel Invoice and Refund Report</td></tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirline'>
+                                    Airline
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AirlineSNo")
+                                @Html.TextBox("Text_AirlineSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                            </td>
+
+
+                            <td class=' formlabel' title='Cance Invoice'>
+                                <font color='red'></font><span id='spnCanceInvoice'>
+                                    Cance Invoice
+                                </span>
+                            </td>
+
+
+
+                            <td class='formInputcolumn' title='Report Type' align="left">
+
+                                <input type="radio" name="BasedOnCancel" id="RbtnCancelinvoice" value="0" checked="checked"><label for="CancelInvoice">Cancel Invoice</label>
+                                <input type="radio" name="BasedOnCancel" id="RbtnCreditNote" value="1"><label for="Creditnote">Credit Note(Cash and Credit)</label>
+
+                            </td>
+
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <span id='spnOrigin'>
+                                    Origin :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("Origin")
+                                @Html.TextBox("Text_Origin", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                            <td class=' formlabel' title='Office'>
+                                <span id='spnDestination'>
+                                    Destination :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("Destination")
+                                @Html.TextBox("Text_Destination", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <span id='spnAWB'>
+                                    AWB No.:
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AWBSNo")
+                                @Html.TextBox("Text_AWBSNo", null, new { controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "AWB No can not be blank" })
+                            </td>
+                            <td class=' formlabel' title='Airline'>
+                                <span id='spnAgent'>
+                                    Agent Name:
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AgentSNo")
+                                @Html.TextBox("Text_AgentSNo", null, new { controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                            </td>
+
+
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    From Date:
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+                            </td>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    To Date:
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select To Date' controltype='datetype' value='' placeholder='To Date' />
+                            </td>
+
+                        </tr>
+                        <tr class="DateWiseRow">
+
+                            <td class=' formlabel' title='Airline'>
+                                <span id='spnType'>
+                                    Type:
+                                </span>
+                            </td>
+                            <td class='formInputcolumn' title='Report Type' align="left">
+
+                                <input type="radio" name="BasedOn" id="RbtnApproved" value="0" checked="checked"><label for="Approved">Approved</label>
+                                <input type="radio" name="BasedOn" id="RbtnRequested" value="1"><label for="Requested">Requested</label>
+                                <input type="radio" name="BasedOn" id="RbtnRejected" value="2"><label for="Rejected">Rejected</label>
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td class=' formlabel' title='Airlin' colspan="4">
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    <div id="exportflight" style="float:left;"><img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel()" /></div>
+                                                             <input type='submit' name='operation' onclick="SearchCancelInvoiceRefund()" value='Search' id="btnSearch" class='btn btn-success btnSearch' style="float: left;margin-left: 200px;" />
+                            </td>
+
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+
+                </div>
+
+            </div>
+
+            <div id="example">
+                <div id="grid" style="font-size:11px;"></div>
+
+                <script src="~/JScript/Report/CancelInvoiceReport.js"></script>
+            </div>
+
+
+    </section>
+
+</div>
+

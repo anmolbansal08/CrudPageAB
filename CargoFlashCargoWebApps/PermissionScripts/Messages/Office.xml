@@ -1,0 +1,114 @@
+﻿<Messages>
+  <!--#region Customer XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  Customer
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Badiuz zaman Khan
+  Created On:		5 March 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+   <DataFieldName>
+    <Name>Name</Name>
+    <Message>Office Name  Can't be Blank.</Message> 
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CitySNo</Name>
+    <Message>City  Can't be Blank.</Message>
+  </DataFieldName>
+  
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Office Name already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>545</Key>
+    <value>Office Name already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>4</Key>
+    <value>Office Added Succesfully</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1995</Key>
+    <value>Office Contact Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1996</Key>
+    <value>Office Contact already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1997</Key>
+    <value>Office Contact Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Office Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Office Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Contact Information Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2222</Key>
+    <value>Office can not be deleted.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2627</Key>
+    <value>Violation of Primary keys</value>
+  </ServerMessage>
+
+
+  <ServerMessage>
+    <Key>10001</Key>
+    <value>Office Commision Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>10002</Key>
+    <value>Office Commision Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>10003</Key>
+    <value>Office Commision Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Office Airline already exists.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2004</Key>
+    <value> Contact Infomation Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2005</Key>
+    <value>Contact Infomation Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2006</Key>
+    <value>Associated Airline Deleted Successfully.</value>
+  </ServerMessage>
+
+
+  <ServerMessage>
+    <Key>2007</Key>
+    <value>Associated Airline Updated Successfully.</value>
+  </ServerMessage>
+  
+  
+</Messages>
+
+
+
+
+

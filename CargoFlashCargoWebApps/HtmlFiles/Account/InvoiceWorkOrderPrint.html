@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head id='head1'>
+    <title>WORK ORDER</title>
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../Scripts/JqueryPrint.js"></script>
+    <style type="text/css">
+        @media print 
+        {
+            .page-break 
+            {
+                display: block;
+                page-break-after: always;
+            }
+        }
+    </style>
+    <script type="text/javascript">
+        var userContext = "";
+        var AirlineInvoiceSNo = getParameterByName("AirlineInvoiceSNo", "");
+        var UserSNo = getParameterByName("UserSNo", "");
+        var RFS = getParameterByName("RFS", '')
+        UserSNo = (UserSNo == "" || UserSNo == null ? "1" : UserSNo);
+        $(document).ready(function ()
+        {
+            userContext = window.opener.parent.userContext;
+            getInvoice();
+            //var LogoURL = getParameterByName("LogoUrl", "");
+            //$('#imgLogo').attr('src', LogoURL);
+            //$('#LogoUrls').attr('src', LogoURL);
+            ///$('[id*="spnReprint"]').closest('td').find('img').attr('src', LogoURL);
+            window.print();
+        });
+        function getInvoice()
+        {
+            $.ajax({
+                url: "../../Services/Tariff/TariffInvoiceService.svc/GetPrintInvoice?AirlineInvoiceSNo=" + AirlineInvoiceSNo,
+                async: false, type: "GET", dataType: "json", cache: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    var ResultData = jQuery.parseJSON(response);
+                    var data = ResultData.Table0;
+                    var count_str = ResultData.Table0.length;
+                    var SNo = 0;
+                    $('#printPayment').html('');
+                    for (var i = 0; i < count_str; i++)
+                    {
+                        SNo = data[i].SNO;
+
+                        var divcontent = "<div class='page-break'><table style='width: 750px; border: 1px solid black'><tr><td colspan='8' align='center'><img id='ImgLogo' height='80' width='200' alt='' /><br /><span id='spnReprint" + i + "'>(RE PRINT)</span></td>"
+       + "</tr><tr><th colspan='8' rowspan='2' style='display:none;'><center><img id='imgLogo' height='80' width='200' alt='' /></center></th></tr>"
+       + "<tr><th colspan='8' align='center' style='font-size:14px;font-weight:bold;'>CHARGE NOTE - CARGO</th></tr><tr><td colspan='8'><table cellpadding='0' cellspacing='0' border='0' style='width:100%'>"
+       + "<tr><td style='width:100%;' align='center'><table cellpadding='0' cellspacing='5' border='0' style='width: 100%; float: left;'><!--<tr><td style='width:150px;text-align:right'>Flight No</td><td width='10px'>:</td>"
+       + "<td id='spnFlightNo" + i + "'></td></tr>--><tr><td colspan='3' id='spnReciptNumber" + i + "'>&nbsp;</td><td style='width: 150px; text-align: right; vertical-align: top;'>Date</td>"
+       + "<td style='width: 10px; text-align: right; vertical-align: top;'>:</td><td style='width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;' id=''><label for='spnDate' id='spnDate" + i + "'></label></td>"
+       + "</tr><tr><td style='width: 150px; text-align: right; vertical-align: top;'>Payment</td><td style='width: 10px; text-align: right; vertical-align: top;'>:</td>"
+       + "<td id='spnPayment" + i + "' style='width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top; font-weight: bold; font-size: 12px;'></td>"
+       + "<td style='width: 150px; text-align: right; vertical-align: top;'>Page</td><td style='width: 10px; text-align: right; vertical-align: top;'>:</td><td style='width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;' id='spnPage" + i + "'></td>"
+       + "</tr><tr><td style='width: 150px; text-align: right; vertical-align: top;'>Airline</td><td style='width: 10px; text-align: right; vertical-align: top;'>:</td>"
+       + "<td style='width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top;' id='spnAirline" + i + "'></td><td style='width: 150px; text-align: right; vertical-align: top;'>Time</td>"
+       + "<td style='width: 10px; text-align: right; vertical-align: top;'>:</td><td style='width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;' id='spnTime" + i + "'></td>"
+       + "</tr><tr><td style='width:150px;text-align:right; vertical-align:top;'>Party</td><td style='width: 10px; text-align: right; vertical-align: top;'>:</td><td style='width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top; '>"
+       + "<span id='spnPartyAgentName" + i + "'></span></td> <!--<span id='spnPartyAgentCode" + i + "'></span>&nbsp;&nbsp;&nbsp;--><td style='width: 150px; text-align: right; vertical-align: top;'>Doc No</td>"
+       + "<td style='width: 10px; text-align: right; vertical-align: top;'>:</td><td style='width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;' id='spnDocNo" + i + "'></td></tr>"
+       + "<tr id='IPTA" + i + "'><td style='width: 150px; text-align: right; vertical-align: top;'>IPTA No</td><td style='width: 10px; text-align: right; vertical-align: top;'>:</td><td style='width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top;' id='spnIPTANo" + i + "'></td>"
+       + "<td style='width: 150px; text-align: right; vertical-align: top;'>Doc Date</td><td style='width: 10px; text-align: right; vertical-align: top;'>:</td><td style='width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;' align='left' id='spnDocDate" + i + "'></td>"
+       + "</tr><tr id='Origin" + i + "'><td style='width: 150px; text-align: right; vertical-align: top;'>Origin</td><td style='width: 10px; text-align: right; vertical-align: top;'>:</td><td style='width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top;' id='spnOrigin" + i + "'></td><td style='width: 150px; text-align: right; vertical-align: top;'>Destination</td>"
+       + "<td style='width: 10px; text-align: right; vertical-align: top;'>:</td><td style='width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;' id='spnDestination" + i + "'></td></tr>"
+       + "<tr id='Weight" + i + "'><td style='width: 150px; text-align: right; vertical-align: top;'>Weight</td><td style='width: 10px; text-align: right; vertical-align: top;'>:</td><td style='width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top;' id='spnWeight" + i + "'></td>"
+       + "<td style='width: 150px; text-align: right; vertical-align: top;'>Mvmt No</td><td style='width: 10px; text-align: right; vertical-align: top;'>:</td><td style='width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;' id='spnMvmtNo" + i + "'></td>"
+       + "</tr><tr id='Seal" + i + "'><td style='width: 150px; text-align: right; vertical-align: top;'>Seal No</td><td style='width: 10px; text-align: right; vertical-align: top;'>:</td><td style='width: 250px; max-width: 250px; word-wrap: break-word; text-align: left; vertical-align: top;' id='spnSealNo" + i + "'></td>"
+       + "<td style='width: 150px; text-align: right; vertical-align: top;'>Truck Registration No</td><td style='width: 10px; text-align: right; vertical-align: top;'>:</td><td style='width: 150px; max-width: 150px; word-wrap: break-word; text-align: left; vertical-align: top;' id='spnTruckRegistrationNo" + i + "'></td>"
+       + "</tr></table></td></tr></table></td></tr><tr><td colspan='8'><table style='width:100%' id='trdetail" + i + "'></table></td></tr><tr><td colspan='8'><span>Total Amount In Words&nbsp;-&nbsp;</span><span id='spnTotalAmountInword" + i + "'></span></td></tr><tr><td colspan='8'>Note :</td></tr>"
+       + "<tr><td colspan='8'>* Total Amount rounded up/off next <span id='spnCurrencyCode" + i + "'></span>.</td></tr><tr><td colspan='8'>&nbsp;</td></tr><tr><td colspan='8' style='width: 550px; max-width: 550px; word-wrap: break-word; text-align: left;'><span id='spnRemarks" + i + "'></span></td></tr><tr><td colspan='8'>&nbsp;</td></tr>"
+       + "<tr><td colspan='8'><span id='spnESSRemarks" + i + "'></span></td></tr><tr><td colspan='8'>&nbsp;</td></tr><tr><td colspan='8'>&nbsp;</td></tr><tr><td colspan='4' style='width:50%; text-align:left;'><br />Service &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='spnReceivedBy" + i + "'></span><br />Received By:  --------------------- </td>"
+       + "<td colspan='4' style='width:50%; text-align:right;'><span id='spnPreparedBy" + i + "'></span><br />Prepared By:  --------------------- </td></tr><tr><td colspan='8'>&nbsp;</td></tr><tr><td colspan='8'><!--<table style='width:80%' align='center'><tr id='trDynamic" + i + "'><th style='width:20%'>Receipt No</th><th style='width:20%'>Receipt Done By</th><th style='width:20%'>Receipt Date</th><th style='width:20%'>Amount</th></tr>"
+       + "</table>--></td></tr><tr><td colspan='8'><div style='height:120px;'></div></td></tr><tr><td colspan='8'>&nbsp;</td></tr><tr><td colspan='8'>&nbsp;</td></tr><tr><td colspan='8'>&nbsp;</td></tr><tr><td colspan='8'>&nbsp;</td></tr>"
+       + "<tr><td colspan='8'>&nbsp;</td></tr><tr><td colspan='8'><hr size='1' /></td></tr><tr><td colspan='8'><center>Garuda Airline Services<br /><br /></center></td></tr><tr><td colspan='8'><hr size='1' /></td></tr>"
+       + "</table></div>";
+
+                        $('#printPayment').append(divcontent);
+
+                        GetInvoiceworkorderPrint(SNo, UserSNo, i);
+                    }
+                    if (SNo == 0) {
+                        $('#printPayment').html('');
+                        alert("No Workorder found");
+                    }
+                }
+            });
+        }
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        function GetInvoiceworkorderPrint(InvoiceSNo, UserSNo, i) {
+
+            $.ajax({
+                url: "../../Services/Report/WorkOrderService.svc/GetWorkOrderPrintRecord?InvoiceSNo=" + InvoiceSNo + "&UserSNo=" + UserSNo,
+                async: false,
+                type: "GET",
+                dataType: "json",
+                //data: JSON.stringify({ InvoiceSNo: InvoiceSNo }),
+                contentType: "application/json; charset=utf-8", cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table0;
+                    FinalData1 = ResultData.Table1;
+                    if (FinalData.length > 0) {
+                        $("#spnDate" + i + "").text(FinalData[0].Date);
+                        $("#spnTime" + i + "").text(FinalData[0].Time);
+                        $("#spnPage" + i + "").html(FinalData[0].Page)
+                        $("#spnPayment" + i + "").text(FinalData[0].PaymentMode);
+                        $("#spnDocNo" + i + "").text(FinalData[0].InvoiceNo);
+                        $('#spnAirline' + i + '').text(FinalData[0].AirlineName);
+                        $("#spnFlightNo" + i + "").text(FinalData[0].FlightNo);
+                        $("#spnDocDate" + i + "").html(FinalData[0].InvoiceDate);
+                        $("#spnPartyAgentName" + i + "").html((FinalData[0].AgentCode == "" || FinalData[0].AgentCode == undefined) ? FinalData[0].Name : FinalData[0].AgentCode + '  ' + FinalData[0].Name);
+                        $("#spnMvmtNo" + i + "").html(FinalData[0].MvmtNo);
+                        $("#spnPaymentMode" + i + "").html(FinalData[0].PaymentMode);
+                        $("#spnReciptDoneBy" + i + "").html(FinalData[0].ReceiptDoneBy);
+                        $("#spnReciptDoneOn" + i + "").html(FinalData[0].ReceiptDoneOn);
+                        $("#spnHAWBNo" + i + "").html(FinalData[0].HAWBNo);
+                        $("#spnPreparedBy" + i + "").html(FinalData[0].UserName);
+                        $("#ImgLogo").attr({ "src": "/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=" + FinalData[0].AirlineLogo });
+                        if (FinalData[0].PrintCount > 0) {
+                            $('#spnReprint' + i + '').show();
+                        }
+                        else {
+                            $('#spnReprint' + i + '').hide();
+                        }
+                        RFS = (RFS == "" || RFS == null) ? FinalData[0].ISRFS : RFS;
+                        if (RFS == 1) {
+                            $("#IPTA" + i + "").show();
+                            $("#Seal" + i + "").show();
+                            $("#Origin" + i + "").show();
+                            $("#Destination" + i + "").show();
+                            $("#Registration" + i + "").show();
+                            $("#Weight" + i + "").show();
+                            $("#spnWeight" + i + "").prev('td').prev('td').text(' Manifested Weight' + i + '');
+                            $("#Remarks" + i + "").show();
+
+                            $("#spnIPTANo" + i + "").html(FinalData[0].IPTANo);
+                            $("#spnSealNo" + i + "").html(FinalData[0].SealNo);
+                            $("#spnOrigin" + i + "").html(FinalData[0].Origin);
+                            $("#spnDestination" + i + "").html(FinalData[0].Destination);
+                            $("#spnTruckRegistrationNo" + i + "").html(FinalData[0].TruckRegistrationNo);
+                            $("#spnWeight" + i + "").html(FinalData[0].Weight);
+                            $('#spnRemarks' + i + '').html(FinalData[0].DRemarks);
+                        }
+                        else {
+                            $("#IPTA" + i + "").hide();
+                            $("#Seal" + i + "").hide();
+                            $("#Origin" + i + "").hide();
+                            $("#Destination" + i + "").hide();
+                            $("#Registration" + i + "").hide();
+                            $("#Weight" + i + "").hide();
+                            $("#Remarks" + i + "").hide();
+                        }
+                        var strdata = '';
+                        strdata = strdata + " <tr><td colspan='6' ><hr size='1' /></td></tr><tr><th align='left'>Chg</th><th align='left'>Description</th><th align='left'>QTY</th><th align='right'>Amount </th><th align='left'></th></tr><tr><td colspan='6'><hr size='1' /></td></tr>";
+                        strdata = strdata + " <tr><td colspan='6'></td></tr><tr><td align='left'>" + FinalData[0].Basis + " :&nbsp;&nbsp;&nbsp;&nbsp;" + FinalData[0].AWBNo + "</td><td align='left'>Pcs/Wt :&nbsp;&nbsp;&nbsp;&nbsp;" + FinalData[0].TotalPieces + "/" + FinalData[0].TotalGrossWeight + "</td><td align='right'></td><td align='left'></td></tr><tr><td colspan='6'></td></tr>";//SLI No :   " + FinalData[0].SLINo + "
+                        for (var num = 0; num < FinalData.length; num++) {
+                            strdata = strdata + "<tr><td style='padding: 5px; font-size:11px'>" + FinalData[num].TariffCode + "</td><td style='padding: 5px; font-size:11px'>" + FinalData[num].TariffName + "</td><td>" + FinalData[num].QTY + "</td><td id='spnAWBAmountRemarks" + i + "' style='font-family:Verdana;font-size:11px' align='right'>" + FinalData[num].Amount + "</td><td  style='padding: 5px; font-family:Verdana;font-size:11px'></td></tr>";//id='spnSLINo'
+                        }
+                        strdata = strdata + " <tr><td colspan='6'><hr size='1' /></td></tr><tr><td>Currency:&nbsp; <span id='spnCurrency" + i + "'></span></td><td></td><td>Total Amount:</td><td align='right' id='spnTotalAmount" + i + "'></td><td align='right' style='width:50px; font-weight: bold;' id='spnPaymentMode" + i + "'></td><td></td></tr><tr><td colspan='7'><hr size='1' /></td></tr>";
+                        $('#trdetail' + i + '').html(strdata);
+                        $("#spnCurrency" + i + "").html(FinalData[0].Currency);
+                        $("#spnCurrencyCode" + i + "").html(FinalData[0].Currency);
+                        $('#spnTotalAmountInword' + i + '').html(FinalData[0].TotolAmountInWord);
+                        $("#spnTotalAmount" + i + "").html(FinalData[0].TotalAmount);
+                        $("#spnPaymentMode" + i + "").html("(" + FinalData[0].PaymentMode + ")");
+                        $("#spnESSRemarks" + i + "").html(FinalData[0].ESSRemarks);
+                    }
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        }
+
+        function funPrint(divID) {
+            var divContents = $("#" + divID).html();
+            var printWindow = window.open('', '', '');
+            printWindow.document.write(divContents);
+            printWindow.document.close();
+            printWindow.print();
+        }
+    </script>
+</head>
+<body>
+    <div id="printPayment" align="center" style="padding: 5px; font-family:Verdana;font-size:11px;"></div>
+</body>
+</html>

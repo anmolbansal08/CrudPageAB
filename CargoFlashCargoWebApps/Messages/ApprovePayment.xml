@@ -1,0 +1,30 @@
+﻿<Messages>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Payment Approved Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Payment Not Approved.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Data Submitted Successfully. Payment Is Not Approved.</value>
+  </ServerMessage>
+
+ <ServerMessage>
+    <Key>2008</Key>
+    <value>You Are Not Authorised To Approve Payment</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2009</Key>
+    <value>Selected BG validity is already expired.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2010</Key>
+    <value>Payment already approved.</value>
+  </ServerMessage>
+</Messages>

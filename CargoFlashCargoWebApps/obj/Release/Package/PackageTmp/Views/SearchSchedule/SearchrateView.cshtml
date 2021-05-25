@@ -1,0 +1,145 @@
+﻿@*<style type="text/css">
+    .formlabelMy {
+        font-weight: bold;
+        font-size: 10px;
+        color: rgb(0, 0, 0);
+        font-family: Verdana;
+        text-align: right;
+        background-color: rgb(245, 245, 245);
+        padding-left: 3px;
+        padding-right: 5px;
+        width: 9%;
+        height: 25px;
+        border-right: 1px solid rgb(190, 189, 190);
+        border-left: 0px solid rgb(190, 189, 190);
+        border-bottom: 1px solid rgb(190, 189, 190);
+    }
+
+    .formInputcolumnMy {
+        font-family: Verdana, Geneva, sans-serif;
+        font-size: 8pt;
+        width: 11%;
+        border-bottom: 1px solid rgb(190, 189, 190);
+    }
+
+    .k-grid-header th.k-header {
+        vertical-align: inherit !important;
+    }
+
+    .width {
+        width: 65px;
+    }
+</style>*@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SearchrateView</title>
+    <script src="~/JScript/Schedule/SearchRate.js"></script>
+</head>
+<body>
+    <div>
+        <table class='WebFormTable' id='tbl' validateonsubmit=true>
+            <tr><td class='formSection' colspan='8'>Search Rate </td></tr>
+            <tr><td class='formlabel' colspan='8'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+            <tr class='formSection'>
+                <td class="formlabel"><font color='red'>*</font> AirlineCode</td>
+                <td class="formInputcolumn">
+                   
+                    @Html.Hidden("Airline")
+                    @Html.TextBox("Text_Airline", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+
+                </td>
+
+
+                @*</tr>
+                    <tr class='formSection'>*@
+                <td class="formlabel"><font color='red'>*</font> Origin</td>
+                <td class="formInputcolumn">
+                  
+                    @Html.Hidden("Origin")
+                    @Html.TextBox("Text_Origin", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Origin  can not be blank" })
+
+                </td>
+
+                <td  class="formlabel"><font color='red'>*</font> Destination</td>
+                <td class="formInputcolumn">
+                 
+                    @Html.Hidden("Destination")
+                    @Html.TextBox("Text_Destination", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Destination  can not be blank" })
+
+                </td>
+
+            </tr>
+
+            <tr class='formSection'>
+
+                <td class="formlabel"><font color='red'>*</font> Date</td>
+
+                <td class="formInputcolumn">
+                    @Html.TextBox("FlightDate", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Date can not be blank" })
+                </td>
+
+
+                <td  class="formlabel">Product Name</td>
+                <td class="formInputcolumn">
+                  
+                    @Html.Hidden("Product")
+                    @Html.TextBox("Text_Product", null, new {  controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "ProductName  can not be blank" })
+
+                </td>
+                <td  class="formlabel">Commodity</td>
+                <td class="formInputcolumn" validateonsubmit=false>
+                  
+                    @Html.Hidden("Commodity")
+                    @Html.TextBox("Text_Commodity", null, new {controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Commodity  can not be blank" })
+
+                </td>
+               
+            </tr>
+            <tr class='formSection'>
+                <td class="formlabel">Flight number</td>
+                <td class="formInputcolumn" validateonsubmit=false>
+
+                    @Html.Hidden("flightname")
+                    @Html.TextBox("Text_flightname", null, new { controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Flight name  can not be blank" })
+
+                </td>
+                <td class="formlabel">Agent</td>
+                <td class="formInputcolumn" validateonsubmit=false>
+
+                    @Html.Hidden("Account")
+                    @Html.TextBox("Text_Account", null, new { controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Agent name  can not be blank" })
+
+                </td>
+
+                <td  class="formlabel"><font color='red'>*</font>
+                    Rate Type
+                </td>
+
+                <td class="formInputcolumn">
+                    
+                    @Html.Hidden("RateType")
+                    @Html.TextBox("Text_RateType", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Rate Type  can not be blank" })
+
+                </td>
+
+            </tr>
+            <tr class='formSection'><td colspan='10'><input type="button" name='SearchSave' value='Search' class='btn btn-success' id="btnSubmit" /></td></tr>
+        </table>
+
+    </div>
+    <input type="hidden" value="@ViewBag.Username" id="myUsername" /> 
+    <input type="hidden" value="@ViewBag.AgentSNo" id="myAgentSNo" /> 
+    <br />
+    <div class="k-grid-header-wrap" id="grid">
+        <br />
+        <table id="tblsearchrateList" class="appendGrid ui-widget" style="margin-bottom:10px;" align="center">
+            <thead class='ui-widget-header' style='text-align:center' id="theadid"></thead>
+            <tbody id="tbodyid" class="ui-widget-content"></tbody>
+        </table>
+    </div>
+</body>
+</html>

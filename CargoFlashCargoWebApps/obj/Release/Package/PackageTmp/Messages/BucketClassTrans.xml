@@ -1,0 +1,57 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AirlineCode</Name>
+    <Message>Airline Code can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>FlightNo</Name>
+    <Message>Flight No can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Origin</Name>
+    <Message>Origin can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Destination</Name>
+    <Message>Destination can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>ValidFrom</Name>
+    <Message>Valid From can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>ValidTo</Name>
+    <Message>Valid From can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Allocation</Name>
+    <Message>Allocation can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>BucketClosureTime</Name>
+    <Message>Bucket Closure Time can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Bucket Class Trans Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Bucket Class Trans Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Bucket Class Trans Deleted Successfully.</value>
+  </ServerMessage>
+
+
+
+</Messages>

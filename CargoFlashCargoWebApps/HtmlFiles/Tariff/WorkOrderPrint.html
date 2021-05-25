@@ -1,0 +1,463 @@
+﻿<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head id='head1'>
+    <title>DELIVERY BILL</title>
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../Scripts/JqueryPrint.js"></script>
+    <script type="text/javascript">
+        var userContext = "";
+        $(document).ready(function ()
+        {
+            userContext = window.opener.parent.userContext;
+            var LogoURL = userContext.SysSetting.LogoURL;
+            GetChargeNotePrint();
+            
+            // $('#ImgLogo').attr('src', LogoURL);
+
+          
+           
+        });
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        function prependZeros(num) {
+            var str = ("" + num);
+            return (Array(Math.max(8 - str.length, 0)).join("0") + str);
+        }
+
+        function GetChargeNotePrint() {
+            var InvoiceSNo = getParameterByName("InvoiceSNo", "");
+            var UserSNo = userContext.UserSNo;
+            var RFS = getParameterByName("RFS", '')
+            UserSNo = (UserSNo == "" || UserSNo == null ? "0" : UserSNo);
+            $.ajax({
+                url: "../../Services/Report/WorkOrderService.svc/GetWorkOrderPrintRecord?InvoiceSNo=" + InvoiceSNo + "&UserSNo=" + UserSNo,
+                async: false,
+                type: "GET",
+                dataType: "json",
+                //data: JSON.stringify({ InvoiceSNo: InvoiceSNo }),
+                contentType: "application/json; charset=utf-8", cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table0;
+                    FinalData1 = ResultData.Table1;
+                    //*****starts here******Added by Devendra*****
+
+                    var UD = FinalData[0].ULD
+                    var InvoiceType = FinalData[0].InvoiceType
+                    var ES = FinalData[0].ESS
+                       var isInt = FinalData[0].ISinternational == '0' || FinalData[0].ISinternational == 'False' ? '0' : '1'
+                      var RCH = FinalData[0].RUSH == null || FinalData[0].RUSH == undefined || FinalData[0].RUSH == 'False' || FinalData[0].RUSH == "" ? "" : FinalData[0].RUSH
+                    if (FinalData.length > 0) {
+                        if (InvoiceType == '2' && isInt != undefined && UD == '0' && (isInt == '1') && (ES == 'False')) {
+                            $("#spnhdr").html("EXPORT-INTERNATIONAL-Credit");
+                        }
+                        else if (InvoiceType == '2' && isInt != undefined && UD == '0' && (isInt == '0') && (ES == 'False')) {
+                            $("#spnhdr").html("EXPORT-DOMESTIC-Credit");
+
+                        } else if (InvoiceType == '1' && UD == '0' && (RCH != "" && RCH == 'True') && (isInt == '0') && (ES == 'False')) {  ///// true rus for dom
+                            $("#spnhdr").html("IMPORT-DOMESTIC(Rush Handling)-Credit");
+
+                        } else if (InvoiceType == '1' && UD == '0' && (RCH != "" && RCH == 'True') && (isInt == '1') && (ES == 'False')) {   //// true rus for int
+                            $("#spnhdr").html("IMPORT-INTERNATIONAL(Rush Handling)-Credit");
+                        }
+                        else if (InvoiceType == '1' && UD == '0' && (RCH == "") && (isInt == '1') && (ES == 'False')) {   //// false rus for int
+                            $("#spnhdr").html("IMPORT-INTERNATIONAL-Credit");
+
+                        }
+                        else if (InvoiceType == '1' && UD == '0' && (RCH == "") && (isInt == '0') && (ES == 'False')) {   ///// false rus for dom
+                            $("#spnhdr").html("IMPORT-DOMESTIC-Credit");
+
+                        } else if (InvoiceType == '1' && UD == '0' && (ES == 'True')) {
+                            $("#spnhdr").html("IMPORT-Credit");
+                        } else if (InvoiceType == '2' && UD == '0' && (ES == 'True')) {
+
+                            $("#spnhdr").html("EXPORT-Credit");
+                        }
+                        else if (UD != '0') {
+                            $("#spnhdr").html("CREDIT");
+                        }
+                        else {
+                            $("#spnhdr").html('');
+                        }
+                        //*****Ends here******Added by Devendra*****
+                        if (userContext.SysSetting.ICMSEnvironment == 'JT') {
+                            $('#spnnama1').html('LION AIRLINES');
+                            $('#spnname').html('LION AIRLINES');
+
+                        }
+                        $("#spnDate").text(FinalData[0].Date);
+                        $("#spnTime").text(FinalData[0].Time);
+                        $("#spnPage").html(FinalData[0].Page)
+                        $("#spnPayment").text(FinalData[0].PaymentMode);
+                        $("#spnDocNo").text(FinalData[0].InvoiceNo);
+                        $('#spnAirline').text(FinalData[0].AirlineName);
+                        $("#spnFlightNo").text(FinalData[0].FlightNo);
+                        $("#spnDocDate").html(FinalData[0].InvoiceDate);
+                        $("#spnnamas").html(FinalData[0].Name);
+                        $("#spnMvmtNo").html(FinalData[0].MvmtNo);
+                        $("#spnPaymentMode").html(FinalData[0].PaymentMode);
+                        $("#spnReciptDoneBy").html(FinalData[0].ReceiptDoneBy);
+                        $("#spnReciptDoneOn").html(FinalData[0].ReceiptDoneOn);
+                        $("#spnalamat").html(FinalData[0].Address);
+                        $("#spncontent").html(FinalData[0].NatureOfGoods);
+                        $("#spnpsc").html(FinalData[0].TotalPieces);
+                        $("#spntotalweight").html(FinalData[0].TotalGrossWeight);
+                        $("#spndo").html(FinalData[0].DONumber);
+                        //$("#spnnamepersonalno").val(userContext.FirstName.toUpperCase());
+                        $("#spndateofarrival").html(FinalData[0].InvoiceDate);
+                        $("#spnnamepersonalno").html(FinalData[0].CurrentUser);
+                        $("#spninvoicenovalue").html(FinalData[0].InvoiceNo);
+                        $('#spnawbno').text(FinalData[0].AWBNo);
+                        $('#spnflightno').text(FinalData[0].FlightNo);
+                        
+                      
+                        $('#spnorigin').text(FinalData[0].AirportName);
+                        $("#spnsignatureofconsignee").html(FinalData[0].Name);
+                        $("#spnamountreceivedinwriting").html(FinalData[0].TotolAmountInWord);
+                        $("#spnHAWBNo").html(FinalData[0].HAWBNo);
+                        //$("#spnPreparedBy").html(FinalData[0].CustomerName);
+                        if (FinalData[0].PrintCount > 0) {
+                            $('#spnReprint').show();
+                        }
+                        else {
+                            $('#spnReprint').hide();
+                        }
+                        RFS = (RFS == "" || RFS == null) ? FinalData[0].ISRFS : RFS;
+                        if (RFS == 1) {
+                            $("#IPTA").show();
+                            $("#Seal").show();
+                            $("#Origin").show();
+                            $("#Destination").show();
+                            $("#Registration").show();
+                            $("#Weight").show();
+                            $("#Remarks").show();
+
+                            $("#spnIPTANo").html(FinalData[0].IPTANo);
+                            $("#spnSealNo").html(FinalData[0].SealNo);
+                            $("#spnOrigin").html(FinalData[0].Origin);
+                            $("#spnDestination").html(FinalData[0].Destination);
+                            $("#spnTruckRegistrationNo").html(FinalData[0].TruckRegistrationNo);
+                            $("#spnWeight").html(FinalData[0].Weight);
+                            $("#spnWeight").prev('td').prev('td').text(' Manifested Weight');
+                            $('#spnRemarks').html(FinalData[0].DRemarks);
+                        }
+                        else {
+                            $("#IPTA").hide();
+                            $("#Seal").hide();
+                            $("#Origin").hide();
+                            $("#Destination").hide();
+                            $("#Registration").hide();
+                            $("#Weight").hide();
+                            $("#Remarks").hide();
+                        }
+                        var myTable1 = "<table style='width: 100%;' cellspacing='0' cellpadding='2'>"
+                        myTable1 += "<tr><td colspan='6' align='center' style='border: none; border-left: none; border-top: 1px solid black; border-right: 1px solid black;'><span><b>Descriptions</b></span></td><td colspan='2' style='border:1px solid black;border-left: none;border-bottom:none;border-right:none'><span><b>Amount</b></span></td></tr>";
+                        var Total = 0;
+
+                        for (var i = 0; i < ResultData.Table0.length; i++) {
+                          
+                           // myTable1 += "<tr><td colspan='2' style='border-right:none; border:1px solid black;border-left: none;border-bottom:1px solid black;'>" + ResultData.Table0[i].TariffName + ":</td><td colspan='4' style='border: none; border-top: 1px solid black;border-bottom: 1px solid black; border-right:1px solid black'>" + ResultData.Table0[i].Slabvalue + "</td><td colspan='2' style='border: none; border-top: 1px solid black;border-bottom: 1px solid black'>" + ResultData.Table0[i].ChargeValue + "</td></tr>";
+                            myTable1 += "<tr><td colspan='2' style='border-right:none; border:1px solid black;border-left: none;border-bottom:1px solid black;'>" + ResultData.Table0[i].TariffName + ":</td><td colspan='4' style='border: none; border-top: 1px solid black;border-bottom: 1px solid black; border-right:1px solid black'>" + ResultData.Table0[i].Slabvalue + "</td><td colspan='2' style='border: none; border-top: 1px solid black;border-bottom: 1px solid black'>" + ResultData.Table0[i].ChargeValue + "</td><td colspan='2' style='border: none; border-top: 1px solid black;border-bottom: 1px solid black;display:none;'>" + ResultData.Table0[i].ChargeValue_waveoff + "</td></tr>";
+
+                            if (ResultData.Table0[i].Chargewaveoff_Remarks == "NOWAVEOFF") {
+                                Total = (parseFloat(Total) + parseFloat(ResultData.Table0[i].ChargeValue_waveoff));
+                               // Total += parseFloat(ResultData.Table0[i].ChargeValue = "" ? "0" : ResultData.Table0[i].ChargeValue)
+                            }
+
+                           
+                            //-- ResultData.Table0[i].NatureOfGoods                                                                                                                                                                                                                                                                                                          
+                            //total = (parseFloat(total) + parseFloat(ResultData.Table0[i].ChargeValue));
+
+                        }
+                        //total = total + parseFloat(FinalDataTaxCharge[0].TotalChargeTaxAmount);
+                     
+                      var  TotalAmount_ = 0;
+                      TotalAmount_ = parseFloat(Total) + parseFloat(ResultData.Table0[0].TaxAmount);
+                      ConvertNumberIntoWords(TotalAmount_, InvoiceSNo);
+                      myTable1 += "<tr><td colspan='2' style='border-right:none; border:2px solid black;border-left: none;border-bottom:2px solid black;'><b>Amount Before VAT: </b></td><td colspan='4' style='border: none; border-top: 1px solid black;border-bottom: 1px solid black; text-align:right; border-right:1px solid black'></td><td  style='border: none; border-top: 1px solid black;border-bottom: 1px solid black; border-right:1px solid black'>" + Total + "</td></tr>"
+                        myTable1 += "<tr><td colspan='2' style='border-right:none; border:1px solid black;border-left: none;border-bottom:1px solid black;'>VAT:</td><td colspan='4' style='border: none; border-top: 1px solid black;border-bottom: 1px solid black; border-right:1px solid black'>" + FinalData1[0].Tax + "</td><td colspan='4' style='border: none; border-top: 1px solid black;border-bottom: 1px solid black; border-right:1px solid black'>" + ResultData.Table0[0].TaxAmount + "</td></tr>";
+                        //   FinalDataTax[0].Tax    FinalDataTaxCharge[0].TotalChargeTaxAmount                                                                                                                                                                                                                                                                                                                               
+                        myTable1 += "<tr><<td colspan='2' style='border-right:none; border:2px solid black;border-left: none;border-bottom:2px solid black;'><b>Amount After VAT: </b></td><td colspan='4' style='border: none; border-top: 1px solid black;border-bottom: 1px solid black; text-align:right; border-right:1px solid black'></td><td  style='border: none; border-top: 1px solid black;border-bottom: 1px solid black; border-right:1px solid black'>" + TotalAmount_ + "</td></tr>"
+                                                                                                                                                                                                                                                                                                                                                                                                             // total.toFixed(2)
+                        myTable1 += "</table>";
+                        $('#LastTable').append(myTable1);
+                       
+
+                        $("#spnCurrency").html(FinalData[0].Currency);
+                        $("#spnCurrencyCode").html(FinalData[0].Currency);
+                       // $('#spnTotalAmountInword').html(FinalData[0].TotolAmountInWord);
+                        $("#spnTotalAmount").html(TotalAmount_);
+                        $("#spnPaymentMode").html("(" + FinalData[0].PaymentMode + ")");
+                        //$("#spnPartyAgentCode").html(FinalData[0].AgentCode);
+                        $('#ImgLogo').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineLogo);
+                        $('#ImgLogo').attr('onError', 'this.onerror=null;this.src="' + LogoURL + '";');
+                        //$('#ImgLogo').attr('onError', 'this.style.display=\"none\"');
+
+
+
+                        //var strdata1 = '';
+                        //for (var num = 0; num < FinalData1.length; num++) {
+                        //    strdata1 = strdata1 + "<tr style='text-align:center'><td>" + FinalData1[num].ReceiptNo + "</td><td>" + FinalData1[num].ReceivedBy + "</td><td>" + FinalData1[num].ReceivedOn + "</td><td style='text-align:right'>" + FinalData1[num].Amount + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";
+                        //  }
+                        //$("#trDynamic").after(strdata1);
+                    }
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        }
+       
+        function ConvertNumberIntoWords(TotalAmount_, InvoiceSNo) {
+
+            $.ajax({
+                url: "../../../Services/Shipment/PaymentService.svc/ConvertNumberIntoWords",
+                async: false,
+                type: "GET",
+                dataType: "json",
+                data: { TotalAmount: TotalAmount_, InvoiceSNo: InvoiceSNo },
+                contentType: "application/json; charset=utf-8", cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                   var FinalData_ = ResultData.Table0;
+                   if (FinalData_.length > 0) {
+                       $("#spnTotalAmountInword").text(FinalData_[0].TotalAmountInWord);
+                       if (FinalData_[0].PrintCount > 0) {
+                            $('#spnReprint').show();
+                        }
+                        else {
+                            $('#spnReprint').hide();
+                        }
+                    }
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        }
+        function funPrint(divID) {
+            var divContents = $("#" + divID).html();
+            var printWindow = window.open('', '', '');
+            printWindow.document.write(divContents);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+    </script>
+    <style type="text/css">
+        .BorderCss {
+            border: 1px solid black;
+            border-left: none;
+            border-bottom: none;
+            border-right: 1px solid black;
+        }
+
+        .BorderTop {
+            border: 1px solid black;
+            border-left: none;
+            border-right: none;
+            border-bottom: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="printDeliveryBill" align="center" style="padding: 5px; font-family:Verdana;font-size:11px;">
+        <table style="width: 750px; border: 1px solid black">
+            <tr>
+                <td colspan="8" align="center"><img id="ImgLogo" style="width:130px;height:50px" /><br /></td>
+            </tr>
+            <tr><th colspan="8" align="center" style="font-size:14px;font-weight:bold;">DELIVERY BILL</th></tr>
+            <tr><th colspan="8" align="center" style="font-size:14px; font-weight:bold;">(BUKTI PEMBAYARAN JASA PENITIPAN)</th></tr>
+            <!--<tr><th colspan="8" align="center" style="font-size:14px; font-weight:bold;">FAKTUR PAJAK STANDAR</th></tr>-->
+            <tr><th colspan="8" align="center" style="font-size:14px; font-weight:bold;"><span>FAKTUR PAJAK STANDAR</span><br /><span id="spnhdr" style="font-size:8px;"></span></th></tr>
+            <tr>
+                <td colspan="8">
+                    <table cellpadding="0" cellspacing="0" border="0" style="width: 100%">
+                        <tr>
+                            <td style="width:70%;" align="center">
+                                <table cellpadding="0" cellspacing="5" border="0" style="width: 70%; float: left;">
+                                    <tr>
+                                        <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 200px; text-align: right; vertical-align: top;">PENGUSAHA KENA PAJAK*</td>
+                                        <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                        <td align="right"></td>
+                                        <td align="right"></td>
+                                        <td style="text-align:right"><b style="margin-left: -96px;">No:<span id="spninvoicenovalue"></span></b></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 150px; text-align: right; vertical-align: top;">Nama</td>
+                                        <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                        <td id='spnnama1'>PT.GARUDA INDONESIA</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 150px; text-align: right; vertical-align: top;">Alamat</td>
+                                        <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                        <td id='tdAlamat'>Jl. Kebon Sirih No 44 Gambir, Jakarta Pusat 10110</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:150px;text-align:right; vertical-align:top;">NPWP</td>
+                                        <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                        <td style="height: auto; word-wrap: break-word; max-width: 300px;">
+                                            01.001.634.3-093.000 <span id="spnnpwp"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:150px;text-align:right; vertical-align:top;">No. Pengukuhan PKP</td>
+                                        <td style="width: 10px; text-align: right; vertical-align: top;">:</td>
+                                        <td style="height: auto; word-wrap: break-word; max-width: 300px;">
+                                            <span id="spnnpwpNo">No. 051.00095.01.89</span>
+                                        </td>
+                                        <td>
+                                            Tanggal:
+                                        </td>
+                                        <td style="white-space:nowrap;">
+                                            <span id="spntanggal">13 Januari 1989</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table cellpadding="0" cellspacing="5" border="0" style="width: 30%; float: right;">
+                                    <tr>
+                                        <td align="right" style="font-size:14px;font-weight:bold;padding-top:17px">
+                                            <span id="spnpajak"></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr><td colspan="8"><hr /></td></tr>
+            <tr><td colspan='8'><span>* UU PPN No. 42 Tahun 2009</span></td></tr>
+            <tr><td colspan='8'><span>* Peraturan Direktur Jenderal Pajak No. 10/PJ/2010</span></td></tr>
+            <tr><td colspan='8'><span>* Peraturan Direktur Jenderal Pajak No. 13/PJ/2010</span><span id="spn"></span></td></tr>
+            <tr>
+                <td colspan="8" valign="bottom">
+                    <table style="width: 100%;" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td valign="bottom">
+                                <table style="width: 100%;" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td width="70%" valign="bottom">
+                                            <table style="border: none; border-top: 1px solid black; border-left:1px solid black;width:100%; border-right: 1px solid black; ">
+                                                <tr>
+                                                    <td style="width: 50%; border-right: 1px solid black; border-left: none;">Date :<span id="spnDate"></span></td>
+                                                    <td style=" width: 30%;" valign="bottom"> DO (Weighing Slip No):<span id="spndo"></span></td>
+                                                </tr>
+                                            </table>
+:                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;</td>
+                                        <td width="30%" valign="bottom">
+                                            <table border="0" cellspacing="0" cellpadding="2" style="width:100%">
+                                                <tr>
+                                                    <td style="border: 1px solid black;">
+                                                        Sales Report No.:
+                                                        <span id="spnsalesrptno"></span>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td style="border: 1px solid black; border-top: none;">
+                                                        SAP Doc.:
+                                                        <span id="spnsapdoc"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="border:1px solid black; border-top:none;">
+                                                        Date:
+                                                        <span id="spndates"></span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width: 100%;" border="0" cellspacing="0" cellpadding="3">
+                        <tr>
+                            <td colspan='6' style="border: none; border-top: 1px solid black; border-right: 1px solid black; "><span>Consignment Note/AWB No.:</span><span id="spnawbno"></span></td>
+                            <td colspan="2" style="border: none; border-top: 1px solid black;">PEMBELI BKP/PENERIMA JKP</td>
+                        </tr>
+                        <tr>
+                            <td colspan='6' style="border: none; border-right: 1px solid black">
+                                <span>Airport of Origin:</span>
+                                <span id="spnorigin"></span>
+                            </td>
+                            <td colspan="2" style="border:none;">
+                                Nama :<span id="spnnamas"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan='6' style="border: none; border-right: 1px solid black"><span>Date of Arrival:</span><span id="spndateofarrival"></span></td>
+                            <td colspan="2" style="border:none">Alamat :<span id="spnalamat"></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan='6' style="border: none; border-right: 1px solid black">
+                                <span>Flight No.:</span>
+                                <span id="spnflightno"></span>
+                            </td>
+                            <td colspan="2" style="border: none;">
+                                <span>
+                                    <b>Nomor Pokok Wajib Pajak:</b><br />
+                                    <span id="spannomor"></span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan='6' style="border: none; border-right: 1px solid black">
+                                <span></span><span>Pieces:</span>
+                                <span id="spnpsc"></span> Pcs.
+                            </td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td colspan='6' style="border: none; border-right: 1px solid black">
+                                <span></span><span>Total Weight:</span>
+                                <span id="spntotalweight"></span> KG
+                            </td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td colspan='6' style="border: none; border-right: 1px solid black">
+                                <span>
+                                    Contents:
+                                </span>
+                                <span id="spncontent"></span>
+                            </td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    <div id="LastTable">
+                    </div>
+                </td>
+            </tr>
+            <tr><td colspan="4"><span>Amount Received in writing</span>:&nbsp;&nbsp;<span id="spnamountreceivedinwriting"></span></td></tr>
+            <tr><td colspan="8"><hr /></td></tr>
+            <tr><td colspan="8"><br /><br /></td></tr>
+            <tr><td colspan="4"><span id="spnname">PT.GARUDA INDONESIA</span></td><td colspan="4" align="right"><span>Received in good order and condition</span></td></tr>
+            <tr><td colspan="8" style="padding-top:100px"></td></tr>
+            <tr><td colspan="4" align="left"><span id="spnnamepersonalno"></span></td><td></td><td align="right" colspan="4"><span id="spnsignatureofconsignee" style="margin-right: 60px"></span></td></tr>
+            <tr><td colspan="2" align="left"><hr /></td><td colspan="2"></td><td colspan="2"></td><td align="right" colspan="2" id="userids"><hr /></td></tr>
+            <tr><td colspan="4" align="left">Name and Personal Number</td><td></td><td align="right" colspan="4">Name and Signature or Consignee</td></tr>
+        </table>
+    </div>
+</body>
+</html>

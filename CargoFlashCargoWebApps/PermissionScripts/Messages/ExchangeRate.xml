@@ -1,0 +1,23 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>Rate</Name>
+    <Message>Rate can not be blank</Message>
+  </DataFieldName>
+ <ServerMessage>
+    <Key>1001</Key>
+    <value>Exchange Rate Already Exists For Given Date</value>
+  </ServerMessage>
+ <ServerMessage>
+    <Key>2000</Key>
+    <value>Exchange Rate Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Exchange Rate Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Exchange Rate Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

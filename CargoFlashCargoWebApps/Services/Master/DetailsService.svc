@@ -1,0 +1,2 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="CargoFlashCargoWebApps.Services.Master.Details" CodeBehind="Details.svc.cs" %>
+<%@ Assembly Name="CargoFlash.LionExpress.DataService" %>

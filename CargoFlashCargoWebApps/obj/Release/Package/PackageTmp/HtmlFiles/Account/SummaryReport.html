@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <title></title>
+    <style type="test/css">
+        td {
+            font-size: 12px;
+            font-family: sans-serif;
+        }
+    </style>
+    <script type="text/javascript">
+        var UserId = '';
+        var i = 0;
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        $(document).ready(function () {
+
+            CashierID = getParameterByName("CashierID", "");
+
+            //var tbl = '';
+            //tbl = '<table border="0" cellpadding="0" cellspacing="0" style="width:100%;"><tr><td style="padding-left:0; width:5px; height:50px;vertical-align:bottom">Sharjah Aviation Services</td><td align="center" style="padding-left:0; width:40px; height:50px;vertical-align:top"><font size="2"><h1><b>Summary Report</b></h1></font></td><td align="center" style="padding-left:0; width:40px; height:50px;vertical-align:bottom">Date</td></tr><tr><td style="padding-left:0; width:5px; height:30px;vertical-align:top"><span id="spnUserName">ABC</span></td><td style="padding-left:0; width:5px; height:30px;vertical-align:top"></td><td align="center" style="padding-left:0; width:5px; height:30px;vertical-align:top"><span id="spnCurrentDate">245454</span></td></tr></table>'
+            //$("#Page").find('#divHeader').append(tbl);
+
+            GetSummaryReport();
+            //GetCollected(1);
+            //GetShiftPending(1);
+            //GetPending(1);
+
+            //var tbl = '';
+            //tbl = '<tr style="Border:0px;"><td colspan="7" width=1000px;><table border="0" cellpadding="0" cellspacing="0" style="width:100%;"><tr><td width=50% style="Border:0px;"><table border="1" border-top="0" cellpadding="0" cellspacing="0" width=100%><tr style="Border:0px;"><td colspan="2" style="Border:0px; height:40px;">Denomination / No.</td><td style="Border:0px;">Currency & Amount</td></tr><tr><td width=20% height=40px>1000 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>500 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>200 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>100 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>50 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>20 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>10 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>5 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>Coins</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>Float Cash</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>Total</td><td width=40%></td><td width=40%></td></tr></table></td><td width=50%><table height=600px><tr><td height="40px"></td></tr></tr><tr><td height="20px"></td><tr><td height=40px>Variance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td></tr><tr><td height="20px"></td></tr><tr><td style="vertical-align:top">Remarks if any variance:</td></tr><tr><td height="20px"></td></tr><tr><td height="20px"></td></tr><tr><td style="vertical-align:top">Note: If any excess it must be deposited, any short must pay.</td></tr></table></td></tr></table></td></tr><tr style="Border:0px;"><td width=50% style="Border:0px;">Handover cashier signature</td><td width=50% style="Border:0px;">Takeover cashier signature</td></tr><tr style="Border:0px;"><td height="50px" style="Border:0px;"></td></tr><tr style="Border:0px;"><td width=50% style="Border:0px;">Name:</td><td width=50% style="Border:0px;">Name:</td></tr>'
+            //$("#Page").find('#bottomTbl').append(tbl);
+        });
+
+        function GetSummaryReport() {
+            var CashierID = getParameterByName("SNo", "");
+            var Date = getParameterByName("Date", "");
+            var StartSession = getParameterByName("StartSession", "");
+            var EndSession = getParameterByName("EndSession", "");
+            //var date = new Date();
+            //var Date = date.getDate() + '-' + (date.getMonth()+1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+            $.ajax({
+                url: "../../Services/Accounts/CashRegisterService.svc/GetSummaryReport",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ CashierID: CashierID, Date: Date, StartSession: StartSession, EndSession: EndSession }),
+                async: false,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    var dataTableobj = JSON.parse(result);
+                    var FinalData = dataTableobj.Table0;
+                    var FinalData1 = dataTableobj.Table1;
+                    var FinalData2 = dataTableobj.Table2;
+                    var FinalData3 = dataTableobj.Table3;
+
+                    var tbl = '';
+                    tbl = '<table border="0" cellpadding="0" cellspacing="0" style="width:100%;"><tr><td style="padding-left:0; width:25%; height:50px;vertical-align:bottom;">Sharjah Aviation Services</td><td align="center" style="padding-left:0; width:50%; height:50px;vertical-align:top"><font size="2"><h1><b>Summary Report</b></h1></font></td><td align="center" style="padding-left:0; width:25%; height:50px;vertical-align:bottom">Date</td></tr><tr><td style="padding-left:0; width:25%; height:30px;vertical-align:bottom"><span id="spnUserName">' + FinalData[0].UserName + '</span></td><td align="center" style="padding-left:0; width:50%; height:30px;vertical-align:bottom"><span id="spnPeriod">' + ((FinalData[0].Period == '' || FinalData[0].Period == undefined) ? '' : 'Period: ' + FinalData[0].Period) + '</span></td><td align="center" style="padding-left:0; width:25%; height:30px;vertical-align:bottom"><span id="spnCurrentDate">' + FinalData[0].CurrentDateTime + '</span></td></tr></table>'
+                    $("#Page").find('#divHeader').append(tbl);
+
+                    if (FinalData1.length > 0) {
+                        GetCollected(FinalData1);
+                    }
+
+                    if (FinalData2.length > 0) {
+                        GetCancelCharges(FinalData2);
+                    }
+
+                    if (FinalData2.length > 0) {
+                        GetGrandToTal(FinalData3);
+                    }
+
+                    var tbl = '';
+                    tbl = '<tr style="Border:0px;"><td colspan="7" width=1000px;><table border="0" cellpadding="0" cellspacing="0" style="width:100%;"><tr><td width=50% style="Border:0px;"><table border="1" border-top="0" cellpadding="0" cellspacing="0" width=100%><tr style="Border:0px;"><td colspan="2" style="Border:0px; height:40px;">Denomination / No.</td><td style="Border:0px;">Currency & Amount</td></tr><tr><td width=20% height=40px>1000 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>500 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>200 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>100 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>50 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>20 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>10 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>5 x</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>Coins</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>Float Cash</td><td width=40%></td><td width=40%></td></tr><tr><td width=20% height=40px>Total</td><td width=40%></td><td width=40%></td></tr></table></td><td width=50%><table height=600px><tr><td height="40px"></td></tr></tr><tr><td height="20px"></td><tr><td height=40px>Variance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td></tr><tr><td height="20px"></td></tr><tr><td style="vertical-align:top">Remarks if any variance:</td></tr><tr><td height="20px"></td></tr><tr><td height="20px"></td></tr><tr><td style="vertical-align:top">Note: If any excess it must be deposited, any short must pay.</td></tr></table></td></tr></table></td></tr><tr style="Border:0px;"><td width=50% style="Border:0px;">Handover cashier signature</td><td width=50% style="Border:0px;">Takeover cashier signature</td></tr><tr style="Border:0px;"><td height="50px" style="Border:0px;"></td></tr><tr style="Border:0px;"><td width=50% style="Border:0px;">Name:</td><td width=50% style="Border:0px;">Name:</td></tr>'
+                    $("#Page").find('#bottomTbl').append(tbl);
+
+                }
+            });
+        }
+
+        function GetCollected(FinalData) {
+            var tbl = '';
+            var today = new Date();
+            tbl = '<tr><td colspan=7 width=1000px;><h3>Collected<h3></td></tr><tr><td width=200px style="Border-bottom:0px;"><b>Pay Mode</b></td><td colspan="2"><center><b>Credit</b></center></td><td colspan="2"><center><b>Cash</b><center></td><td colspan="2"><center><b>Grand Totals</b><center></td></tr><tr><td width=200px style="Border-top:0px;"><b>Doc Type</b></td><td><center><b>Count<b></center></td><td><center><b>Amount</b></center></td><td><center><b>Count<b></center></td><td><center><b>Amount</b></center></td><td><center><b>Count<b></center></td><td><center><b>Amount</b></center></td></tr>';
+            $("#Page").find('#leftTbl').append(tbl);
+            for (var i = 0; i < FinalData.length; i++) {
+                tbl = '<tr><td>' + FinalData[i].DocType + '</td><td>' + FinalData[i].CreditCount + '</td><td>' + FinalData[i].CreditAmount + '</td><td>' + FinalData[i].CashCount + '</td><td>' + FinalData[i].CashAmount + '</td><td>' + FinalData[i].TotalCount + '</td><td>' + FinalData[i].TotalAmount + '</td></tr></br>'
+                $("#Page").find('#leftTbl').append(tbl);
+            }
+        }
+
+        function GetCancelCharges(FinalData) {
+            var tbl = '';
+            var today = new Date();
+            tbl = '<tr><td colspan=7 width=1000px;><h3>***Cancelled DO and ESS**<h3></td></tr><tr><td colspan=4 width=200px style="Border-bottom:0px;"><b>Document Number</b></td><td colspan="3"><center><b>Amount</b></center></td>/tr>';
+            $("#Page").find('#leftTbl').append(tbl);
+            for (var i = 0; i < FinalData.length; i++) {
+                tbl = '<tr><td colspan=4>' + FinalData[i].DocType + '</td><td colspan=3>' + FinalData[i].CancelAmount + '</td></tr></br>'
+                $("#Page").find('#leftTbl').append(tbl);
+            }
+        }
+
+        function GetGrandToTal(FinalData) {
+            var tbl = '';
+            var today = new Date();
+            tbl = '<tr><td colspan=7 width=1000px;></td></tr>';
+            $("#Page").find('#leftTbl').append(tbl);
+            for (var i = 0; i < FinalData.length; i++) {
+                tbl = '<tr><td colspan=4>' + FinalData[i].DocType + '</td><td colspan=3>' + FinalData[i].CancelAmount + '</td></tr></br>'
+                $("#Page").find('#leftTbl').append(tbl);
+            }
+        }
+
+        function GetShiftPending(FinalData) {
+            var tbl = '';
+            var today = new Date();
+            tbl = '<tr style="Border:0px;"><td colspan="7" width=1000px;><h3>Shift Pending<h3></td></tr><tr><td width=200px style="Border-bottom:0px;"><b>Pay Mode</b></td><td colspan="2"><center><b>Credit</b></center></td><td colspan="2"><center><b>Grand Totals</b></center></td><td colspan="2" style="Border:0px;"></td></tr><tr><td width=200px style="Border-top:0px;"><b>Doc Type</b></td><td><center><b>Count<b></center></td><td><center><b>Amount</b></center></td><td><center><b>Count<b></center></td><td><center><b>Amount</b></center></td><td colspan="2" style="Border:0px;"></td></tr>';
+            $("#Page").find('#leftTbl').append(tbl);
+            for (var i = 0; i < FinalData.length; i++) {
+                tbl = '<tr><td>' + FinalData[i].DocType + '</td><td>' + FinalData[i].CreditCount + '</td><td>' + FinalData[i].CreditAmount + '</td><td>' + FinalData[i].TotalCount + '</td><td>' + FinalData[i].TotalAmount + '</td></tr></br>'
+                $("#Page").find('#leftTbl').append(tbl);
+            }
+        }
+
+        function GetPending(FinalData) {
+            var tbl = '';
+            var today = new Date();
+            tbl = '<tr><td colspan=7 width=1000px;><h3>Pending<h3></td></tr><tr><td width=200px style="Border-bottom:0px;"><b>Pay Mode</b></td><td colspan="2"><center><b>Credit</b></center></td><td colspan="2"><center><b>Credit</b></center></td><td colspan="2><center><b>Cash</b><center></td><td colspan="2><center><b>Grand Totals</b><center></td></tr><tr><td width=200px style="Border-top:0px;"><b>Doc Type</b></td><td><center><b>Count<b></center></td><td><center><b>Amount</b></center></td><td><center><b>Count<b></center></td><td><center><b>Amount</b></center></td><td><center><b>Count<b></center></td><td><center><b>Amount</b></center></td></tr>';
+            $("#Page").find('#leftTbl').append(tbl);
+            for (var i = 0; i < FinalData.length; i++) {
+                tbl = '<tr><td>' + FinalData[i].DocType + '</td><td>' + FinalData[i].CreditCount + '</td><td>' + FinalData[i].CreditAmount + '</td><td>' + FinalData[i].CashCount + '</td><td>' + FinalData[i].CashAmount + '</td><td>' + FinalData[i].TotalCount + '</td><td>' + FinalData[i].TotalAmount + '</td></tr></br>'
+                $("#Page").find('#leftTbl').append(tbl);
+            }
+        }
+
+
+    </script>
+
+</head>
+<body style="width:1000px;">
+    <div id="AllPage">
+        <div id="container">
+            <div id="Page" style="border:double;">
+                <div id="divHeader">
+
+                </div>
+                <table id="outerTblLine">
+                    <tr>
+                        <td style="width: 1000px; vertical-align: top;">
+                            <table id="leftTbl" border="1" cellpadding="0" cellspacing="0"></table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 1000px; vertical-align: top;">
+                            <table id="bottomTbl" border="1" cellpadding="0" cellspacing="0"></table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="buttton"><center><br /><input type='button' id='btnPrint' value='Print' class='btn btn-success' onclick="window.print();"></center></div>
+    </div>
+    <!--<table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+        <tr>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+
+                <tr>
+                    <td style="padding-left:0; width:5px; height:50px;vertical-align:top">Sharjah Aviation Services</td>
+                    <td align="center" style="padding-left:0; width:40px; height:50px;vertical-align:top">
+                        <font size="2">
+                            <h1><b>Summary Report</b></h1>
+                        </font>
+                    </td>
+                    <td align="center" style="padding-left:0; width:40px; height:50px;vertical-align:top">Date</td>
+                </tr>
+                <tr>
+                    <td style="padding-left:0; width:5px; height:30px;vertical-align:top">
+                        <span id="spnUserName">11</span>
+                    </td>
+                    <td style="padding-left:0; width:5px; height:30px;vertical-align:top"></td>
+                    <td align="center" style="padding-left:0; width:5px; height:30px;vertical-align:top">
+                        <span id="spnCurrentDate">ww</span>
+                    </td>
+                </tr>
+            </table>
+        </tr>
+        <tr>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+                <tr>
+                    <td style="border:1;" colspan="7"><h1><b>Collected</b></h1></td>
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <table id="Collected" border="1" cellpadding="0" cellspacing="0" style="width:100%;">
+                            <tr>
+                                <td style="border:0;">
+                                    Pay Mode
+                                </td>
+                                <td colspan="2">
+                                    <center><b>Credit</b></center>
+                                </td>
+                                <td colspan="2">
+                                    <center><b>Cash</b></center>
+                                </td>
+                                <td colspan="2">
+                                    <center><b>Grand Total</b></center>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:0;">
+                                    Doc Type
+                                </td>
+                                <td>
+                                    Count
+                                </td>
+                                <td>
+                                    Amount
+                                </td>
+                                <td>
+                                    Count
+                                </td>
+                                <td>
+                                    Amount
+                                </td>
+                                <td>
+                                    Count
+                                </td>
+                                <td>
+                                    Amount
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td style="border:1;" colspan="7"><h1><b>Shift Pending</b></h1></td>
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <table id="Collected" border="1" cellpadding="0" cellspacing="0" style="width:100%;">
+                            <tr>
+                                <td style="border:0;">
+                                    Pay Mode
+                                </td>
+                                <td colspan="2">
+                                    <center><b>Credit</b></center>
+                                </td>
+                                <td colspan="2">
+                                    <center><b>Grand Total</b></center>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:0;">
+                                    Doc Type
+                                </td>
+                                <td>
+                                    Count
+                                </td>
+                                <td>
+                                    Amount
+                                </td>
+                                <td>
+                                    Count
+                                </td>
+                                <td>
+                                    Amount
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td style="border:1;" colspan="7"><h1><b>Shift Pending</b></h1></td>
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <table id="Collected" border="1" cellpadding="0" cellspacing="0" style="width:100%;">
+                            <tr>
+                                <td style="border:0;">
+                                    Pay Mode
+                                </td>
+                                <td colspan="2">
+                                    <center><b>Credit</b></center>
+                                </td>
+                                <td colspan="2">
+                                    <center><b>Cash</b></center>
+                                </td>
+                                <td colspan="2">
+                                    <center><b>Grand Total</b></center>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:0;">
+                                    Doc Type
+                                </td>
+                                <td>
+                                    Count
+                                </td>
+                                <td>
+                                    Amount
+                                </td>
+                                <td>
+                                    Count
+                                </td>
+                                <td>
+                                    Amount
+                                </td>
+                                <td>
+                                    Count
+                                </td>
+                                <td>
+                                    Amount
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </tr>
+    </table>-->
+</body>
+</html>

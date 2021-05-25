@@ -1,0 +1,32 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>CommoditySNo</Name>
+    <Message>Commodity can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Commodity Code already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>DueCarrier CommodityTrans Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>DueCarrier CommodityTrans Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>DueCarrier CommodityTrans Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+
+</Messages>
+
+
+

@@ -1,0 +1,210 @@
+﻿<style type="text/css">
+    /*.noselect {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: pointer;
+    }*/
+
+    /*.tbl {
+        background-color: transparent;
+        border-collapse: collapse;
+    }*/
+
+    /*.tbl td {
+            border: 1px solid black;
+            padding: 5px;
+        }*/
+    /*.formlabel {
+        font-weight: bold;
+        font-size: 10px;
+        color: #000000;
+        font-family: Verdana;
+        text-align: center;
+        background-color: #F5F5F5;
+        padding-left: 3px;
+        padding-right: 5px;
+        width: 10%;
+        border-right: #bebdbe 1px solid;
+        border-left: #bebdbe 0px solid;
+        border-bottom: #bebdbe 1px solid;
+        height: 10px;
+    }*/
+    /*.formdata {
+        font-size:8px;
+        color: #000000;
+        font-family: Verdana;
+        text-align: center;
+        background-color: #F5F5F5;
+        padding-left: 3px;
+        padding-right: 5px;
+        width: 10%;
+        border-right: #bebdbe 1px solid;
+        border-left: #bebdbe 0px solid;
+        border-bottom: #bebdbe 1px solid;
+        height: 10px;
+    }*/
+
+    /*body {
+        font-size: 11px;
+    }*/
+
+    /*.valid_errmsg_area {
+        background-color: Blue;
+        color: white;
+    }*/
+    th {
+        padding-top: 4px;
+        padding-right: 2px;
+        padding-bottom: 4px;
+        white-space: nowrap;
+        font-size: 10px;
+        font-family: Verdana;
+    }
+
+    legend {
+        font-size: 1.2em;
+        font-weight: bold;
+        padding: 2px 4px 8px;
+        color: #222222;
+    }
+</style>
+
+
+
+
+
+<div id="divWindow" style="width:100%">
+    <fieldset>
+        <legend>AWB Information:</legend>
+        <!--<table width="100%">
+            <tr>
+                <td width="100%" style="vertical-align:top;">-->
+        <table id="tblDetails" class="appendGrid ui-widget">
+            <tr class="ui-widget-header">
+                <th style="text-align: center; width: 15%">AWB</th>
+                <th style="text-align: center; width: 15%">AWB Date</th>
+                <th style="text-align: center; width: 15%;">SLI</th>
+                <th style="text-align: center; width: 15%">Origin</th>
+                <th style="text-align: center; width: 15%;">Destination</th>
+                <th style="text-align: center; width: 15%">Total Pieces</th>
+                <th style="text-align: center; width: 10%">Gross Wt.</th>
+            </tr>
+
+            <tr>
+                <td class="ui-widget-content" style="text-align: center; width: 15%"><a id="lblAWB" href="#"></a></td>
+                <td class="ui-widget-content" style="text-align: center; width: 15%"><label id="lblAWBDate"></label></td>
+                <td class="ui-widget-content" style="text-align: center; width: 15%"><label id="lblSLI"></label></td>
+                <td class="ui-widget-content" style="text-align: center; width: 15%"><label id="lblOrigin"></label></td>
+                <td class="ui-widget-content" style="text-align: center; width: 15%"><label id="lblDestination"></label></td>
+                <td class="ui-widget-content" style="text-align: center; width: 15%"><label id="lblTotalPieces"></label></td>
+                <td class="ui-widget-content" style="text-align: center; width: 10%"> <label id="lblGrossWt"></label></td>
+            </tr>
+            <tr class="ui-widget-header">
+                <th style="text-align: center; width: 15%">Nature Of Goods</th>
+                <th style="text-align: center; width: 15%">Agent BuildUp</th>
+                <th style="text-align: center; width: 15%">On Hold</th>
+                <th style="text-align: center; width: 15%">SHC</th>
+                <th style="text-align: center; width: 15%">AWB Type</th>
+                <th style="text-align: center; width: 15%">Count of HAWB</th>
+                <th style="text-align: center; width: 10%">BOE Received</th>
+            </tr>
+            <tr>
+                <td class="ui-widget-content" style="text-align: center; width: 15%"><label id="lblNatureOfGoods"></label></td>
+                <td class="ui-widget-content" style="text-align: center; width: 15%"><label id="lblAgentBuildUp"></label></td>
+                <td class="ui-widget-content" style="text-align: center; width: 15%"><label id="lblOnHold"></label></td>
+                <td class="ui-widget-content" style="text-align: center; width: 15%"><label id="lblSHC"></label></td>
+                <td class="ui-widget-content" style="text-align: center; width: 15%"><label id="lblAWBType"></label></td>
+                <td class="ui-widget-content" style="text-align: center; width: 15%"><label id="lblHAWB"></label></td>
+                <td class="ui-widget-content" style="text-align: center; width: 10%"><label id="lblBOE"></label></td>
+            </tr>
+            <tr class="ui-widget-header">
+                <!--<td></td>-->
+                <th colspan="3" style="text-align: center;width:49%;">Shipper</th>
+                <th colspan="3" style="text-align: center; width: 49%;">Consignee</th>
+                <th style="width:2px;"></th>
+                <!--<td></td>-->
+            </tr>
+            <tr>
+                <!--<td class="ui-widget-content" width="5px;"> </td>-->
+                <td colspan="3" class="ui-widget-content" style="text-align: center; width: 49%;"><label id="lblShipperName"></label></td>
+
+                <td colspan="3" class="ui-widget-content" style="text-align: center; width: 49%;"><label id="lblConsigneeName"></label></td>
+                <td class="ui-widget-content" style="width:2px;"></td>
+
+
+                <td></td>
+            </tr>
+
+            <tr>
+                <!--<td class="ui-widget-content"></td>-->
+                <td colspan="3" class="ui-widget-content" style="text-align: center"><label id="lblShipperAddress"></label></td>
+                <!--<td class="ui-widget-content"></td>-->
+
+                <td colspan="3" class="ui-widget-content" style="text-align: center"><label id="lblConsigneeAddress"></label></td>
+
+
+                <td class="ui-widget-content"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <!--<td class="ui-widget-content"></td>-->
+                <td colspan="3" class="ui-widget-content" style="text-align: center"><label id="lblShipperEmail"></label></td>
+                <!--<td class="ui-widget-content"></td>-->
+
+                <td colspan="3" class="ui-widget-content" style="text-align: center"><label id="lblConsigneeEmail"></label></td>
+
+                <td class="ui-widget-content"></td>
+                <td></td>
+            </tr>
+
+            <tr id="trap" class="ui-widget-header">
+                <th colspan="1" style="text-align: center; width: 25%">Accepted Pieces</th>
+                <th colspan="2" style="text-align: center; width: 25%">Planned Pieces</th>
+                <th colspan="2" style="text-align: center; width: 25%">Departed Pieces</th>
+                <th colspan="2" style="text-align: center; width: 25%"><label id="lblLayingHeader"> </label></th>
+            </tr>
+            <tr id="trapdata">
+                <td colspan="1" class="ui-widget-content" style="text-align: center; width: 25%"><label id="lblAccepted"></label></td>
+                <td colspan="2" class="ui-widget-content" style="text-align: center; width: 25%"><label id="lblPlanned"></label></td>
+                <td colspan="2" class="ui-widget-content" style="text-align: center; width: 25%"><label id="lblDeparted"></label></td>
+                <td colspan="2" class="ui-widget-content" style="text-align: center; width: 25%"><label id="lblLying"></label></td>
+            </tr>
+
+
+            <tr id="trpcs" class="ui-widget-header">
+                <th colspan="1" style="text-align: center; width: 25%">Received Pieces</th>
+                <th colspan="2" style="text-align: center; width: 25%">Balance Pieces</th>
+                <th colspan="2" style="text-align: center; width: 25%">DO Issued Pieces</th>
+                <th colspan="2" style="text-align: center; width: 25%">PD Out of Warehouse Pieces</th>
+            </tr>
+            <tr id="trpcsdata">
+                <td colspan="1" class="ui-widget-content" style="text-align: center; width: 25%"><label id="lblrecdpc"></label></td>
+                <td colspan="2" class="ui-widget-content" style="text-align: center; width: 25%"><label id="lblbalpc"></label></td>
+                <td colspan="2" class="ui-widget-content" style="text-align: center; width: 25%"><label id="lbldorecdpc"></label></td>
+                <td colspan="2" class="ui-widget-content" style="text-align: center; width: 25%"><label id="lbldobalpc"></label></td>
+            </tr>
+
+            <tr id="transit" class="ui-widget-header">
+                <th colspan="1" style="text-align: center; width: 25%">Received Pieces</th>
+                <th colspan="2" style="text-align: center; width: 25%">Planned Pieces</th>
+                <th colspan="2" style="text-align: center; width: 25%">Departed Pieces</th>
+                <th colspan="2" style="text-align: center; width: 25%"><label id="lblLayingHeader"> </label></th>
+            </tr>
+            <tr id="transitdata">
+                <td colspan="1" class="ui-widget-content" style="text-align: center; width: 25%"><label id="lblrecdpc"></label></td>
+                <td colspan="2" class="ui-widget-content" style="text-align: center; width: 25%"><label id="lblPlanned"></label></td>
+                <td colspan="2" class="ui-widget-content" style="text-align: center; width: 25%"><label id="lblDeparted"></label></td>
+                <td colspan="2" class="ui-widget-content" style="text-align: center; width: 25%"><label id="lblLying"></label></td>
+            </tr>
+
+
+        </table>
+        <!--</td>
+            </tr>
+        </table>-->
+    </fieldset>
+</div>

@@ -1,0 +1,70 @@
+﻿<script type="text/javascript">
+    
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+
+    });
+</script>
+    <table id="tblReport" align="center" style="border: 1px solid black;" width="99%" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr align="center"><td colspan="11" style="font: bold;"><h2>CBV MANIFEST</h2> </td></tr>
+            <tr align="center"><td colspan="11">ICAO ANNEX 9 APPENDIX 3</td></tr>
+            <tr align="center"><td colspan="11" style="font: bold;">&nbsp;</td></tr>
+            <tr align="center">
+                <td colspan="2" align="left">Owner or Operator</td>
+                <td colspan="2" align="left"><span id="spnOwner"></span></td>
+                <td colspan="2" align="left">Marks of Nationality/Regn No:</td>
+                <td align="left" colspan="2"><span id="spnRes"></span></td>
+                <td colspan="6">&nbsp;</td>
+            </tr>
+            <tr align="left">
+                <td colspan="2" align="left">Flight Number</td>
+                <td align="left" colspan="2"><span id="spnFlifgtNo"></span></td>
+                <td align="left" colspan="2">Flight Date</td>
+                <td align="left" colspan="2"><span id="spnFlightDate"></span></td>
+                <td colspan="6"></td>
+            </tr>
+            <tr align="center">
+                <td colspan="2" align="left">Point Of Loading</td>
+                <td colspan="2" align="left"><span id="spnPointOfLoading"></span></td>
+                <td colspan="2" align="left">Point Of Unloading</td>
+                <td colspan="2" align="left"><span id="spnPointOfUnloading"></span></td>
+                <td colspan="6">&nbsp;</td>
+            </tr>
+            <tr align="center" style="height:50px;border: 1px solid black;">
+                <td colspan="4" style="border: 1px solid black;">Pallet/ULD No<br>Local Transit</td>
+                <td colspan="7" style="border: 1px solid black;">For use by owner/operator</td>
+            </tr>
+            <tr align="center" id="trData">
+                <!--<td colspan="1" class="grdTableHeader">No</td>-->
+                <td colspan="2" class="grdTableHeader"> Air Waybill and part No</td>
+                <td colspan="1" class="grdTableHeader">No of Pieces</td>
+                <td colspan="1" class="grdTableHeader">Nature of Goods</td>
+                <td colspan="1" class="grdTableHeader">Gross Weight</td>
+                <td colspan="1" class="grdTableHeader">ULD No</td>
+                <td colspan="1" class="grdTableHeader">ORI/DES</td>
+                <td colspan="1" class="grdTableHeader">SHC</td>
+                <td colspan="1" class="grdTableHeader">Remarks</td>
+                <td colspan="1" class="grdTableHeader">Office Use</td>
+            </tr>
+
+            <!--<tr><td colspan="9">&nbsp;</td></tr>
+            <tr><td colspan="9">&nbsp;</td></tr>
+            <tr><td colspan="9">&nbsp;</td></tr>
+            <tr><td colspan="9">&nbsp;</td></tr>
+            <tr><td colspan="9">&nbsp;</td></tr>
+            <tr><td align="center" colspan="9" style="font-size:30px;color:red">NIL MANIFEST&nbsp;</td></tr>
+            <tr><td colspan="9">&nbsp;</td></tr>
+            <tr><td colspan="9">&nbsp;</td></tr>
+            <tr><td colspan="9">&nbsp;</td></tr>
+            <tr><td colspan="9">&nbsp;</td></tr>
+            <tr><td colspan="9">&nbsp;</td></tr>
+            <tr><td colspan="9">&nbsp;</td></tr>
+            <tr><td colspan="9">&nbsp;</td></tr>-->
+            <tr><td colspan="9">&nbsp;</td></tr>
+            <tr align="right"><td colspan="9"><input id="btnPrint" type="button" value="Print" class="no-print"></td></tr>
+            <tr align="right"><td colspan="9">&nbsp;</td></tr>
+        </tbody>
+    </table>
+

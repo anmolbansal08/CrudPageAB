@@ -1,0 +1,395 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>AWB Label</title>
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/UWS/jquery-barcode-2.0.2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+    <script type="text/javascript">
+        var userContext = '';
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        function isBase64(str) {
+            try {
+                return btoa(atob(str)) == str;
+            } catch (err) {
+                return false;
+            }
+        }
+        function hideImageOnError(obj) {
+            $(obj).css("display", "none");
+        }
+        function addLeadingZeros(n, length) {
+            var str = (n > 0 ? n : -n) + "";
+            var zeros = "";
+            for (var i = length - str.length; i > 0; i--)
+                zeros += "0";
+            zeros += str;
+            return n >= 0 ? zeros : "-" + zeros;
+        }
+
+        $(document).ready(function () {
+            //if (window.opener)
+            //    userContext = window.opener.parent.userContext; //Commented By Akash for Webservice on 6 Dec 2017
+            var AwbNo = getParameterByName("Sno", "");
+            //var AwbNo = "37055";
+            if (isBase64(AwbNo))
+                AwbNo = atob(AwbNo);
+            var FinalData;
+            var FinalData1;
+            var VIA2;
+            var result2;
+            var result1;
+            var pageName = getParameterByName("pagename", ""); //"ReservationBooking";
+            var url;
+            var ProcName = "";
+            var i = "";
+            //var Environment = window.opener.parent.userContext.SysSetting.ICMSEnvironment.toUpperCase();
+            var ICMSEnvironment = "";
+            //if (Environment == "GA")
+            //    ProcName = "ReservationBooking_GetAWBPrintData"
+            //else if (Environment == "I5")
+            //    ProcName = "ReservationBooking_GetAWBPrintDataI5"
+            //else if (Environment == "JT")
+            //    ProcName = "ReservationBooking_GetAWBPrintDataJT"
+            url = "/Services/Tariff/HandlingChargesService.svc/ReservationBookingGetAWBPrintData"
+            $.ajax({
+                //url: "../../Services/Tariff/HandlingChargesService.svc/ReservationBookingGetAWBPrintData",
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                //data: JSON.stringify({ AwbNo: AwbNo }),
+                data: JSON.stringify({ AwbNo: AwbNo }),
+                async: false,
+                type: 'POST',
+                cache: false,
+                success: function (result) {
+                    //alert(data); // this is Json data object
+
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table0;
+                    FinalData1 = ResultData.Table1;
+                    var FinalData2 = ResultData.Table2;
+                    ICMSEnvironment = FinalData2[0].Environment;
+                    var str_finalData1 = FinalData1;
+                    if (FinalData1[0].VIA1 != 'VIA1') {
+                        var datastr = str_finalData1[0].COMPLEX_ORIGIN;
+                        var aaryfilter = datastr.toString().split(',');
+                        if (aaryfilter.length > 2) {
+                            var unique_FinalData1 = aaryfilter.filter(function (itm, i, aaryfilter) {
+                                return i == aaryfilter.indexOf(itm);
+                            });
+                            var deepcopy_finaldata1 = $.extend(true, [], unique_FinalData1);
+                            result1 = deepcopy_finaldata1.shift();
+                            result2 = deepcopy_finaldata1.pop();
+                        }
+                        else {
+                            var unique_FinalData1 = aaryfilter.filter(function (itm, i, aaryfilter) {
+                                return i == aaryfilter.indexOf(itm);
+                            });
+                            var deepcopy_finaldata1 = $.extend(true, [], unique_FinalData1);
+                            deepcopy_finaldata1.length = 0;
+
+                        }
+                    }
+                    if (FinalData1[0].VIA1 == 'VIA1') {
+                        FinalData[0].VIA1 = '';
+                        VIA2 = '';
+                        result2 = FinalData[0].DestinationCity;
+                    }
+                    else {
+                        if (deepcopy_finaldata1.length == 0) {
+                            FinalData[0].VIA1 = '';
+                            VIA2 = '';
+                        }
+                        else if (deepcopy_finaldata1.length == 1) {
+                            FinalData[0].VIA1 = deepcopy_finaldata1[0];
+                            VIA2 = '';
+                        }
+                        else {
+                            FinalData[0].VIA1 = deepcopy_finaldata1[0];
+                            VIA2 = deepcopy_finaldata1[1];
+                        }
+                    }
+                    if (FinalData.length > 0) {
+                        if (FinalData[0].TotalPieces.length > 0) {
+                            var Length = 0;
+                            var str = "";
+                            var BookType = "";
+                            if (ICMSEnvironment.toUpperCase() == "GA") {
+                                for (i = 1; i <= FinalData[0].TotalPieces; i++) {
+                                    var lastvalue = addLeadingZeros(i, 5); + lastvalue
+                                    // var p = i % 2 == 0 ? "" : "page-break-before: always;";
+
+                                    if (FinalData[0].BookingType == 2) {
+                                        BookType = "Courier Baggage Voucher"
+                                    } else {
+                                        BookType = "AWB :"
+                                    }
+
+                                    var p = "page-break-before: always;";
+                                    var siz = "40px;"
+                                    $("#print").append('<table border="1" cellpadding="0" cellspacing="0" style="width:350px;height:480px;margin-top:2%;' + p + '"> <tr> <td colspan="2"><div>Airline</div></td></tr><tr><td style="font-weight:bold;font-size:40px;width:50%;text-align: center;"> ' + FinalData[0].FlightCode + ' </td><td style="text-align: center;width:50%;"> <img src="/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineImage + '" style="height:50px;width:50%;" onerror="hideImageOnError(this);";> </td></tr><tr> <td rel="txtBarcode" colspan="2" style="padding:15px;font-weight:bold;font-size:' + siz + 'text-align: center;box-sizing:border-box;"> <span id=' + "spnbarcode" + i + ' style="height:55%;width:100%;display: inline-block;"></span> </td></tr><tr><td colspan="2"><div style="width:100%;"><span style="text-align:left;font-weight:normal;">' + BookType + '</span><span style="text-align:center;font-weight:bold;font-size:40px;padding-left:120px;box-sizing:border-box;">' + FinalData[0].AWBNo + '</span></div ></td ></tr > <tr> <td> <div style="width:50%;float:left;"> Dest. </div><div rel="txtDestination" style="text-align:center;font-weight:bold;font-size:' + siz + '"> ' + result2 + ' </div></td><td> <div style="float:left;width:50%;"> Pieces </div><div rel="txtPieces" style="text-align:center;font-weight:bold;float:left;width:50%;font-size:' + siz + '"> ' + i + ' / ' + FinalData[0].TotalPieces + ' </div></td></tr> <tr> <td> <div style="float:left;width:50%;"> Weight </div><div rel="txtWeight" style="text-align:center;font-weight:bold;font-size:' + siz + '"> ' + FinalData[0].TotalGrossWeight + ' </div></td><td> <div style="float:left;width:50%;"> Origin </div><div rel="txtOrigin" style="text-align:center;font-weight:bold;font-size:' + siz + '"> ' + FinalData[0].OriginCity + ' </div></td></tr> <tr><td colspan="2"> <div> Remarks</div><div rel="txtremarks" style="font-size:20px;text-align: center;"> ' + FinalData[0].Remarks + ' </div></td></tr> <tr> <td colspan="2" style="height:20px;"></td></tr></table > ');
+                                    $("#print").find("#spnbarcode" + i.toString()).barcode(FinalData[0].AWBNo + lastvalue, "code39", { barWidth: 2, barHeight: 80, fontSize: 25 });
+                                    $("#print").find("#spnbarcode" + i.toString()).css('overflow', 'inherit');
+                                }
+                            }
+                            else {
+                                for (i = 1; i <= FinalData[0].TotalPieces; i++) {
+                                    Length = parseInt(Length) + 1;
+                                    var lastvalue = addLeadingZeros(i, 5); + lastvalue
+                                    var p = "page-break-before: always;";
+                                    var siz = "20px;"
+
+                                    if (Length == 1)
+                                        $("#print").append('<table width="100%" style="margin-top:2%;' + p + '"> <tr> ');
+                                    else if (Length == 3)
+                                        $("#print").append(' <tr> ');
+
+                                    //$("#print").append('<td><table border="1" cellpadding="0" cellspacing="0" style="width:350px;height: 480px;"> <tr> <td colspan="2"><div>Airline</div></td></tr><tr><td style="font-weight:bold;font-size:20px;width:50%;text-align: center;"> ' + FinalData[0].FlightCode + ' </td><td style="text-align: center;"> <img src="/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineImage + '" style="height:55px;width:250px;" onerror="hideImageOnError(this);";> </td></tr><tr> <td rel="txtBarcode" colspan="2" style="padding-top:30px;font-weight:bold;font-size:' + siz + 'text-align: center;"> <span id=' + "spnbarcode" + i + ' style="height:75%;width:100%;display: inline-block;"></span> </td></tr><tr> <td colspan="2"> <div>Air Waybill No.</div><div style="text-align:center;font-weight:bold;font-size:' + siz + '" rel="txtAwb">' + FinalData[0].AWBNo + '</div></td></tr><tr> <td> <div> Destination </div><div rel="txtDestination" style="text-align:center;font-weight:bold;font-size:' + siz + '"> ' + result2 + ' </div></td><td> <div> No Of Pieces </div><div rel="txtPieces" style="text-align:center;font-weight:bold;;font-size:' + siz + '"> ' + i + ' / ' + FinalData[0].TotalPieces + ' </div></td></tr><tr> <td> <div> Weight </div><div rel="txtWeight" style="text-align:center;font-weight:bold;font-size:' + siz + '"> ' + FinalData[0].TotalGrossWeight + ' </div></td><td> <div> Origin </div><div rel="txtOrigin" style="text-align:center;font-weight:bold;;font-size:' + siz + '"> ' + FinalData[0].OriginCity + ' </div></td></tr><tr><td colspan="2"> <div> Remarks</div><div rel="txtremarks" style="font-size:20px;text-align: center;"> ' + FinalData[0].Remarks + ' </div></td></tr><tr> <td colspan="2" style="height:20px;"></td></tr></table></td>');
+                                    $("#print").append('<td>' +
+                                        '<table class="tableFormat" style="margin-top:4%"  >' +
+                                        '<tr>' +
+                                        '<td colspan="2" style="text-align:center;padding:2px;"><img src="/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineImage + '" style="height:50px;width:150px;" onerror="hideImageOnError(this);";></td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        ' <td style="text-align:center;height: 120 px;" width="50%" class="headingText" colspan=2 >' +
+                                        '   <span id=' + "spnbarcode" + i + ' style="height:75%;width:100%;display: inline-block;"></span><br />' +
+                                        '</td > ' +
+                                        '</tr>' +
+                                        ' <tr>' +
+                                        ' <td colspan="2" class="normalText"  style="border-bottom-color: white;"  >Air Waybill No</td>' +
+                                        '</tr>' +
+                                        ' <tr>' +
+                                        '<td colspan="2" class="AWBText" style="border-top-color: white;">' + FinalData[0].AWBNo + '</td>' +
+
+                                        '</tr>' +
+                                        '<tr>' +
+                                        ' <td class="normalText"  style="border-bottom-color: white;">Destination</td>' +
+                                        '  <td class="normalText"  style="border-bottom-color: white;">No Of Pieces</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        ' <td class="largText">' + FinalData[0].DestinationCity + '</td>' +
+                                        ' <td class="headingText">' + i + '/' + FinalData[0].TotalPieces + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        ' <td class="normalText"  style="border-bottom-color: white;">Total Weight</td>' +
+                                        ' <td class="normalText"  style="border-bottom-color: white;">Origin</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        ' <td class="headingText">' + FinalData[0].TotalGrossWeight + '</td>' +
+                                        ' <td class="headingText">' + FinalData[0].TH_OriginAirportCode + '</td>' +
+                                        ' </tr>' +
+                                        '<tr>' +
+                                        ' <td colspan="2" class="headingText" style="font-size:' + ((27 - ((FinalData[0].TH_AgentName.length - 12) / 2)) <= 9 ? 9 : (27 - ((FinalData[0].TH_AgentName.length - 12) / 2))) + 'pt">' + FinalData[0].TH_AgentName +
+
+                                        '</td>' +
+                                        ' </tr>' +
+                                        '</table ></td>' + (i != FinalData[0].TotalPieces ? '<div style="page-break-before: always">' : '') + '</div>');
+                                    $("#print").find("#spnbarcode" + i.toString()).barcode(FinalData[0].AWBNo + lastvalue, "code128", { barWidth: 2, barHeight: 50, fontSize: 25 });
+                                    $("#print").find("#spnbarcode" + i.toString()).css('overflow', 'inherit');
+                                    if (Length == 1 && i == FinalData[0].TotalPieces)
+                                        $("#print").append(' </table> </tr> ');
+                                    else if (Length == 3 && i == FinalData[0].TotalPieces)
+                                        $("#print").append(' </table> </tr> ');
+                                    else {
+                                        if (Length == 2) {
+                                            $("#print").append(' </tr> ');
+                                        }
+                                        else if (Length == 4) {
+                                            Length = 0;
+                                            $("#print").append(' </tr> </table> ');
+                                        }
+                                    }
+
+
+                                    //if (Length == 1)
+                                    //	str += '<table width="100% " style="margin- top:5 %;' + p + '"><tr>';
+                                    //else if (Length == 3)
+                                    //	str += '<tr>';
+
+                                    //str += '<td><table width="100%"> <tr> <td colspan="2"><div>Airline</div></td></tr><tr><td style="font-weight:bold;font-size:20px;width:50%;text-align: center;"> ' + FinalData[0].FlightCode + ' </td><td style="text-align: center;"> <img src="/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineImage + '" style="height:55px;width:250px;" onerror="hideImageOnError(this);";> </td></tr><tr> <td rel="txtBarcode" colspan="2" style="padding-top:30px;font-weight:bold;font-size:' + siz + 'text-align: center;"> <span id=' + "spnbarcode" + i + ' style="height:75%;width:100%;display: inline-block;"></span> </td></tr><tr> <td colspan="2"> <div>Air Waybill No.</div><div style="text-align:center;font-weight:bold;font-size:' + siz + '" rel="txtAwb">' + FinalData[0].AWBNo + '</div></td></tr><tr> <td> <div> Destination </div><div rel="txtDestination" style="text-align:center;font-weight:bold;font-size:' + siz + '"> ' + result2 + ' </div></td><td> <div> No Of Pieces </div><div rel="txtPieces" style="text-align:center;font-weight:bold;;font-size:' + siz + '"> ' + i + ' / ' + FinalData[0].TotalPieces + ' </div></td></tr><tr> <td> <div> Weight </div><div rel="txtWeight" style="text-align:center;font-weight:bold;font-size:' + siz + '"> ' + FinalData[0].TotalGrossWeight + ' </div></td><td> <div> Origin </div><div rel="txtOrigin" style="text-align:center;font-weight:bold;;font-size:' + siz + '"> ' + FinalData[0].OriginCity + ' </div></td></tr><tr><td colspan="2"> <div> Remarks</div><div rel="txtremarks" style="font-size:20px;text-align: center;"> ' + FinalData[0].Remarks + ' </div></td></tr><tr> <td colspan="2" style="height:20px;"></td></tr></table></td>';
+
+
+                                    //if (Length == 1 && i == FinalData[0].TotalPieces)
+                                    //	str +='</table></tr>';
+                                    //else if (Length == 3 && i == FinalData[0].TotalPieces)
+                                    //	str +='</table></tr>';
+                                    //else {
+                                    //	if (Length == 2) {
+                                    //		str +='</tr>';
+                                    //	}
+                                    //	else if (Length == 4) {
+                                    //		Length = 0;
+                                    //		str +='</tr></table>';
+                                    //	}
+                                    //}
+                                }
+                            }
+                            SavePDF(FinalData[0].AWBNo);
+                        }
+                    }
+                }
+            });
+        });
+        //Added by Avinash Poonia to download pdf as page loads
+        function SavePDF(awbNo) {
+            var pdf = new jsPDF('p', 'pt', 'a4');
+            var pdfName = awbNo + '.pdf';
+            var divs = $('table');                //jQuery object of all the myDivClass divs
+            var numRecursionsNeeded = divs.length;     //the number of times we need to call addHtml (once per div)
+            var currentRecursion = 0;
+            pdf.internal.scaleFactor = 1.1;
+            margins = {
+                top: 40,
+                bottom: 60,
+                //left: 40,
+                width: 522
+            };
+            //Found a trick for using addHtml more than once per pdf. Call addHtml in the callback function of addHtml recursively.
+            function recursiveAddHtmlAndSave(currentRecursion, totalRecursions) {
+                //Once we have done all the divs save the pdf
+                if (currentRecursion == totalRecursions) {
+                    //pdf.save(pdfName);
+                    window.print();
+                    window.close();
+                }
+                else {
+                    pdf.addPage();
+                    pdf.addHTML($('table')[currentRecursion], 10, 10, { width: 1000 }, function () {
+                        recursiveAddHtmlAndSave(currentRecursion, totalRecursions)
+                    });
+                    currentRecursion++;
+                }
+            }
+            pdf.addHTML($('table')[currentRecursion], 10, 10, { width: 1000 }, function () {
+                recursiveAddHtmlAndSave(currentRecursion, numRecursionsNeeded);
+            });
+        }
+    </script>
+    <style>
+        .a4 {
+            width: 17cm;
+            /*min-height: 29.7cm;
+            margin: 2cm auto;*/
+            background: white;
+        }
+
+        .tblprint {
+            border: 1px solid black;
+            margin-right: 110px;
+        }
+
+        .tblprint, td {
+            font-size: 20px;
+            padding: 8px;
+            border: 1px solid black;
+        }
+
+        .tblnoborder {
+            border: none;
+        }
+
+        .normalText {
+            text-align: center;
+            height: 13.75pt;
+            color: black;
+            font-size: 12.0pt;
+            font-weight: 700;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Cambria, serif;
+            text-align: center;
+            vertical-align: top;
+            border: .5pt solid windowtext;
+        }
+
+        .headingText {
+            color: black;
+            font-size: 28.0pt;
+            font-weight: 700;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Cambria, serif;
+            text-align: center;
+            vertical-align: middle;
+            border: .5pt solid windowtext;
+        }
+
+        .largText {
+            color: black;
+            font-size: 48.0pt;
+            font-weight: 700;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Cambria, serif;
+            text-align: center;
+            vertical-align: middle;
+            border: .5pt solid windowtext;
+            width: 145pt;
+        }
+
+        .AWBText {
+            color: black;
+            font-size: 36.0pt;
+            font-weight: 700;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Cambria, serif;
+            text-align: center;
+            vertical-align: middle;
+            border: .5pt solid windowtext;
+        }
+
+        .tableFormat {
+            border: .5pt solid windowtext;
+            border-collapse: collapse;
+            width: 425px;
+            height: 580px;
+        }
+
+            .tableFormat td {
+                width: 50%;
+                padding: 0px;
+            }
+    </style>
+    <!--<style>
+        .a4 {
+            width: 17cm;
+            /*min-height: 29.7cm;
+            margin: 2cm auto;*/
+            background: white;
+        }
+
+        .tblprint {
+            border: 1px solid black;
+            margin-right: 110px;
+        }
+
+        .tblprint, td {
+            font-size: 20px;
+            padding: 8px;
+            border: 1px solid black;
+        }
+
+        .tblnoborder {
+            border: none;
+        }
+    </style>-->
+</head>
+<body>
+    <div>
+        <div id="print" class="a4" style="background:#fff;">
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,40 @@
+﻿<Messages>
+  <!--#region IrregularityNonDeliveryReason XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  IrregularityNonDeliveryReason
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Swati Rastogi.
+  Created On:		12 Oct 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>NonDeliveryReason</Name>
+    <Message>Non-Delivery Reason can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Non-Delivery Reason already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Non-Delivery Reason Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Non-Delivery Reason Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Non-Delivery Reason Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

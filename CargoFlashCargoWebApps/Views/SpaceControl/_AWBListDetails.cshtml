@@ -1,0 +1,149 @@
+﻿
+<div ng-init="AWBListLoad()" class="k-grid k-widget">
+    <div class="k-grid-header" style="padding-right: 20px;">
+        <div class="k-grid-header-wrap">
+            <table role="grid">
+                <colgroup><col style="width:60px"><col style="width:75px"><col style="width:75px"><col style="width:75px"><col style="width:75px"><col style="width:75px"><col style="width:75px"></colgroup>
+                <thead role="rowgroup">
+                    <tr role="row">
+                        <th role="columnheader" rowspan="2" data-index="0" class="k-header ng-scope"><span class="hawbd ng-binding">GA-0426 </span> AWB Details</th>
+                        <th role="columnheader" colspan="2" data-colspan="2" class="k-header ng-scope"><span class="hcap">Total Capacity</span></th>
+                        <th role="columnheader" colspan="2" data-colspan="2" class="k-header ng-scope"><span class="hcap">Used Capacity</span></th>
+                        <th role="columnheader" colspan="2" data-colspan="2" class="k-header ng-scope"><span class="hcap">Remaining Capacity</span></th>
+                    </tr>
+                    <tr role="row">
+                        <th role="columnheader" data-title="Gross" data-index="1" class="k-header ng-scope">Gross</th>
+                        <th role="columnheader" data-title="Volume" data-index="2" class="k-header ng-scope">Volume</th>
+                        <th role="columnheader" data-title="Gross" data-index="3" class="k-header ng-scope">Gross</th>
+                        <th role="columnheader" data-title="Volume" data-index="4" class="k-header ng-scope">Volume</th>
+                        <th role="columnheader" data-title="Gross" data-index="5" class="k-header ng-scope">Gross</th>
+                        <th role="columnheader" data-title="Volume" data-index="6" class="k-header ng-scope">Volume</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="k-grid-content">
+        <table role="treegrid">
+            <colgroup><col style="width:60px"><col style="width:75px"><col style="width:75px"><col style="width:75px"><col style="width:75px"><col style="width:75px"><col style="width:75px"></colgroup>
+            <tbody role="rowgroup">
+                <tr class="k-master-row ng-scope" data-uid="d45b7fa9-1c0a-47cc-ac13-f511c9dd9cb1" role="row">
+                    <td role="gridcell"><span class="hawb">CGK-DPS</span></td>
+                    <td role="gridcell"><input type="button" value="14400.00" class="inProgress" onclick="ViewCapacity('125484','Available');"></td>
+                    <td role="gridcell"><input type="button" value="86.400" class="inProgress" onclick="ViewCapacity('125484','Available');"></td>
+                    <td role="gridcell"><input type="button" value="11.000" class="inProgress" onclick="ViewCapacity('125484','Used');"></td>
+                    <td role="gridcell"><input type="button" value="0.006" class="inProgress" onclick="ViewCapacity('125484','Used');"></td>
+                    <td role="gridcell"><input type="button" value="14389.00" class="inProgress" onclick="ViewCapacity('125484','Remaining');"></td>
+                    <td role="gridcell"><input type="button" value="86.394" class="inProgress" onclick="ViewCapacity('125484','Remaining');"></td>
+                </tr>
+                <tr class="k-detail-row ng-scope">
+                    <td class="k-detail-cell" colspan="7">
+                        <div>
+                            <div data-role="grid" class="k-grid k-widget" style="height: 400px;">
+                                <div class="k-header k-grid-toolbar ng-scope">
+                                    <a class="k-button k-button-icontext k-grid-save-changes" href="#"><span class="k-icon k-update"></span>Save changes</a>
+                                    <a class="k-button k-button-icontext k-grid-cancel-changes" href="#"><span class="k-icon k-cancel"></span>Cancel changes</a>
+                                </div>
+                                <div class="k-grid-header" style="padding-right: 21px;">
+                                    <div class="k-grid-header-wrap">
+                                        <table role="grid">
+                                            <colgroup><col style="width:23px"><col style="width:60px"><col style="width:80px"><col style="width:40px"><col style="width:40px"><col style="width:60px"><col style="width:60px"><col style="width:40px"><col style="width:50px"><col style="width:50px"><col style="width:60px"><col style="width:60px"><col style="width:50px"><col style="width:50px"><col style="width:80px"><col style="width:50px"><col style="width:50px"><col style="width:50px"><col style="width:50px"><col style="width:50px"><col style="width:50px"><col style="width:50px"><col style="width:50px"><col style="width:50px"></colgroup>
+                                            <thead role="rowgroup">
+                                                <tr  role="row">
+                                                    <th role="columnheader" rowspan="1" data-index="0" class="k-header ng-scope"></th>
+                                                    <th role="columnheader" rowspan="1" data-index="1" class="k-header ng-scope">Booking<br>Type</th>
+                                                    <th role="columnheader" rowspan="1" data-index="2" class="k-header ng-scope">
+                                                        <span>AWB No/ <br> Ref No/CN38</span>
+                                                    </th>
+                                                    <th role="columnheader" rowspan="1" data-title="Origin" data-index="3" class="k-header ng-scope">Origin</th>
+                                                    <th role="columnheader" rowspan="1" data-title="Dest" data-index="4" class="k-header ng-scope">Dest</th>
+                                                    <th role="columnheader" rowspan="1" data-title="Agent" data-index="5" class="k-header ng-scope">Agent</th>
+                                                    <th role="columnheader" rowspan="1" data-title="Commodity" data-index="6" class="k-header ng-scope">Commodity</th>
+                                                    <th role="columnheader" rowspan="1" data-title="Pieces" data-index="7" class="k-header ng-scope">Pieces</th>
+                                                    <th role="columnheader" rowspan="1" data-title="Gross" data-index="8" class="k-header ng-scope">Gross</th>
+                                                    <th role="columnheader" rowspan="1" data-title="Volume" data-index="9" class="k-header ng-scope">Volume</th>
+                                                    <th role="columnheader" rowspan="1" data-title="CBM" data-index="10" class="k-header ng-scope">CBM</th>
+                                                    <th role="columnheader" rowspan="1" data-index="11" class="k-header ng-scope">
+                                                        <span class="hawb">Chble<br> Wt.</span>
+                                                    </th>
+                                                    <th role="columnheader" rowspan="1" data-title="SHC" data-index="12" class="k-header ng-scope">SHC</th>
+                                                    <th role="columnheader" rowspan="1" data-index="13" class="k-header ng-scope">
+                                                        <span>Origin<br>Priority</span>
+                                                    </th>
+                                                    <th role="columnheader" rowspan="1" data-title="OSI/Remarks" data-index="14" class="k-header ng-scope">OSI/Remarks</th>
+                                                    <th role="columnheader" rowspan="1" data-index="15" class="k-header ng-scope">
+                                                        <span class="hawb">Split <br> Loaded</span>
+                                                    </th>
+                                                    <th role="columnheader" rowspan="1" data-index="16" class="k-header ng-scope">
+                                                        <span class="hawb">Agent<br>Allocation</span>
+                                                    </th>
+                                                    <th role="columnheader" rowspan="1" data-index="17" class="k-header ng-scope"><span class="hawb">Yield</span></th>
+                                                    <th role="columnheader" rowspan="1" data-index="18" class="k-header ng-scope"><span class="hawb">Revenue</span></th>
+                                                    <th role="columnheader" rowspan="1" data-index="19" class="k-header ng-scope">
+                                                        <span class="hawb">Space<br>Info</span>
+                                                    </th>
+                                                    <th role="columnheader" rowspan="1" data-index="20" class="k-header ng-scope">
+                                                        <span class="hawb">HDQ<br>Priority<br>/RMKS</span>
+                                                    </th>
+                                                    <th role="columnheader" rowspan="1" data-title="Status" data-index="21" class="k-header ng-scope">Status</th>
+                                                    <th role="columnheader" rowspan="1" data-index="22" class="k-header ng-scope"><span class="hawb">C/S/O</span></th>
+                                                    <th role="columnheader" rowspan="1" data-title="Replan" data-index="23" class="k-header ng-scope">Replan</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="k-grid-content" data-role="virtualscrollable" style="width: auto; overflow: hidden; padding-right: 21px; ">
+                                    <div class="k-virtual-scrollable-wrap">
+                                        <table role="grid" style="height: auto;">
+                                            <colgroup><col style="width:23px"><col style="width:60px"><col style="width:80px"><col style="width:40px"><col style="width:40px"><col style="width:60px"><col style="width:60px"><col style="width:40px"><col style="width:50px"><col style="width:50px"><col style="width:60px"><col style="width:60px"><col style="width:50px"><col style="width:50px"><col style="width:80px"><col style="width:50px"><col style="width:50px"><col style="width:50px"><col style="width:50px"><col style="width:50px"><col style="width:50px"><col style="width:50px"><col style="width:50px"><col style="width:50px"></colgroup>
+                                            <tbody role="rowgroup" id="testtrContainer">
+                                                <tr  data-uid="f5a75efc-4c3d-4d12-baf2-c90a6d9bf906" role="row" class="ng-scope">
+                                                    <td role="gridcell">
+                                                        <input type="checkbox" id="eq1f5a75efc-4c3d-4d12-baf2-c90a6d9bf906" ng-model="dataItem.Is_Select" class="k-checkbox checkbox chkbx ng-pristine ng-untouched ng-valid ng-empty">
+                                                        <label class="k-checkbox-label" for="eq1f5a75efc-4c3d-4d12-baf2-c90a6d9bf906"></label>
+                                                    </td>
+                                                    <td role="gridcell">Reservation</td>
+                                                    <td role="gridcell"><span class="linkbtn" onclick="GetAWBNoDetails('20170731104607900','18469','Reservation');">20170731104607900</span></td>
+                                                    <td role="gridcell">CGK</td>
+                                                    <td role="gridcell">DPS</td>
+                                                    <td role="gridcell"><span class="linkbtn" onclick="GetAgentDetails('18469','2847','Reservation');">JAKARTA UAT AGENT</span></td>
+                                                    <td role="gridcell">ITEM IS </td>
+                                                    <td role="gridcell">11</td>
+                                                    <td role="gridcell">11.00</td>
+                                                    <td role="gridcell">1.000</td>
+                                                    <td role="gridcell">0.006</td>
+                                                    <td role="gridcell">11.000</td>
+                                                    <td role="gridcell"></td>
+                                                    <td role="gridcell"></td>
+                                                    <td role="gridcell"><span class="linkbtn" onclick="GetOSIRemarks('');"></span></td>
+                                                    <td role="gridcell"><span class="LL">No</span></td>
+                                                    <td role="gridcell">No</td>
+                                                    <td role="gridcell">65927.70</td>
+                                                    <td role="gridcell">725204.700</td>
+                                                    <td role="gridcell"><span class="KK">KK</span></td>
+                                                    <td role="gridcell"></td>
+                                                    <td role="gridcell">BKD</td>
+                                                    <td role="gridcell">
+                                                        <span title="" style="width: 48px;" class="k-widget k-dropdown k-header adviceCode" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="" aria-disabled="false" aria-readonly="false">
+                                                            <span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">Select</span><span unselectable="on" class="k-select"><span unselectable="on" class="k-icon k-i-arrow-s">select</span></span></span>
+                                                            <div style="width: 48px; display: none;" class="adviceCode" data-role="dropdownlist"></div>
+                                                        </span>
+                                                    </td>
+                                                    <td role="gridcell"><input type="button" value="Replan" class="inProgress wa" ng-click="ReplanAWBFlight(dataItem,false);"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="k-scrollbar k-scrollbar-vertical" style="width: 21px;">
+                                        <div style="width:1px;height:19640px"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

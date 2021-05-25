@@ -1,0 +1,15 @@
+﻿<Messages>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Payment Reverse Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Payment Not Reversed.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Amount for reversal is greater than the  balance Credit Limit available with the Customer. Cannot proceed.</value>
+  </ServerMessage>
+</Messages>

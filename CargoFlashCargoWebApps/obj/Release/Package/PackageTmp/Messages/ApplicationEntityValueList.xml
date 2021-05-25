@@ -1,0 +1,23 @@
+﻿<Messages>
+<ServerMessage>
+  <Key>1004</Key>
+  <value>Record not found.</value>
+</ServerMessage>
+
+<ServerMessage>
+  <Key>2000</Key>
+  <value>Application Entity Value Added Successfully.</value>
+</ServerMessage>
+<ServerMessage>
+  <Key>2001</Key>
+  <value>Application Entity Value Updated Successfully.</value>
+</ServerMessage>
+<ServerMessage>
+  <Key>2002</Key>
+  <value>Application Entity Value Deleted Successfully.</value>
+</ServerMessage>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Code And Name already exists</value>
+  </ServerMessage>
+</Messages>

@@ -1,0 +1,24 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Inventory Item already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Inventory Item Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Inventory Item  Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Inventory Item  Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+</Messages>
+

@@ -1,0 +1,122 @@
+﻿<style type="text/css">
+    .k-grid-header th.k-header > .k-link {
+        cursor: default;
+    }
+
+    .k-grid-header th.k-header > .k-link {
+        text-align: center;
+    }
+
+    .k-grid-header {
+        padding-right: 17px !important;
+    }
+
+    .k-grid-content {
+        text-align: center;
+    }
+</style>
+
+
+<div id="divbody" style="height:auto">
+
+
+    <section>
+        <div id='MainDiv'>
+            <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                <tr><td class='formSection' colspan='4'>Reservation VS CRA Comparision</td></tr>
+                @*<tr>
+                        <td class='formSection' colspan='4'>
+                            Reservation VS CRA Comparision Report
+                        </td>
+                    </tr>*@
+                <tr class="DateWiseRow">
+                    <td class=' formlabel' title='From Date'>
+                        <font color='red'>*</font><span id='spnAirlineCode'>
+                            From Date :
+                        </span>
+                    </td>
+                    <td class='formInputcolumn'>
+                        <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                               data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+                    </td>
+                    <td class=' formlabel' title='To Date'>
+                        <font color='red'>*</font><span id='spnAirlineCode'>
+                            To Date :
+                        </span>
+                    </td>
+                    <td class='formInputcolumn'>
+                        <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                               data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' />
+                    </td>
+                </tr>
+                <tr class="DateWiseRow">
+                    <td class=' formlabel' title='Airline'>
+                        <font color='red'>*</font><span id='spnAirlineCode'>
+                            Airline
+                        </span>
+                    </td>
+                    <td class='formInputcolumn'>
+                        @Html.Hidden("AirlineSNo")
+                        @Html.TextBox("Text_AirlineSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                    </td>
+
+                    <td class=' formlabel'>
+                        <font color='red'></font><span id='spnAirlineCode'>
+                            Report Type :
+                        </span>
+                    </td>
+                    <td class='formInputcolumn'>
+                        <font color='red'></font><span>
+                            <input type="radio" name="Filter" value="AWB" id="IsAWB" checked="checked">AWB
+                            <input type="radio" name="Filter" value="PoMail" id="IsPoMail">Po Mail
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class=' formlabel' title='Airline'>
+                        @*<div id="exportflight" style="float:left;"><img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel_PostFlight()" /></div>*@
+                    </td>
+                    <td class='formInputcolumn'>
+                        <input type='submit' name='operation' onclick="SearchReservationVSCRAComparision()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+                    </td>
+                    <td class=' formlabel' title='AWB No'>
+                        <span id='spnAirlineCode'>
+                            AWB No :
+                        </span>
+                    </td>
+                    <td class='formInputcolumn'>
+                        @Html.Hidden("AWBNo")
+                        @Html.TextBox("Text_AWBNo", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:200px;" })
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br />
+        <br />
+       
+        <div style="width: 100%; font-size: 16px;" id="SumResAndCRA">
+            <table style="width: 100%; font-size: 12px;">
+                <tr>
+                    <td><p><b><span>Reservation Transfer :-</span><span id="RESTransfer"></span></b></p></td>
+                    <td><p><b><span>Reservation Not Transfer :-</span><span id="RESNotTransfer"></span></b></p></td>
+                    <td><p><b><span>Reservation Failed :-</span><span id="RESFailed"></span></b></p></td>
+                    <td><p><b><span>CRA Transfer :-</span><span id="CCATransfer"></span></b></p></td>
+                </tr>
+            </table>
+        </div>
+        <div id="example">
+            <div id="grid" style="font-size:11px;"></div>
+
+            <script src="~/JScript/Report/ReservationVSCRAComparision.js"></script>
+        </div>
+        <form id="aspnetForm">
+            <div id="DivAWBDeatils">
+                <div id="exportflight1"><img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel_GetAWBDetails()" /></div>
+                <div id="AWBDetailgrid" style="font-size:11px;"></div>
+            </div>
+        </form>
+    </section>
+</div>
+
+
+

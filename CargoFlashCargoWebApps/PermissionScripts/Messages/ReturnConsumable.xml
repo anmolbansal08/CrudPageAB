@@ -1,0 +1,21 @@
+﻿<Messages>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Item already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Inventory Returned Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Item Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Item Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

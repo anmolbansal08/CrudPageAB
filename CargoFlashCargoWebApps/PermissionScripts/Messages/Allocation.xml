@@ -1,0 +1,32 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AllocationCode</Name>
+    <Message>AllocationCode can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>AllocationCode already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+
+    <Key>2000</Key>
+    <value>Allocation  Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Allocation  Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Allocation  Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+
+</Messages>

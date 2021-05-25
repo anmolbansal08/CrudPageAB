@@ -1,0 +1,135 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+    });
+</script>
+<style type="text/css">
+    body {
+        font-size: 11px;
+    }
+</style>
+<div>
+    <table width="100%" validateonsubmit='true' class="WebFormTable">
+        <tr>
+            <td class="formSection" colspan="6">Warehouse Location Search</td>
+        </tr>
+        <tr id="trWarehouseSNo">
+            <td class="formlabel"><font color="red">*</font>Warehouse</td>
+            <td>
+                <input type="hidden" name="WarehouseDetails_Search" id="WarehouseDetails_Search" value="">
+                <input type="text" class="" name="Text_WarehouseDetails_Search" id="Text_WarehouseDetails_Search" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel"></td>
+            <td></td>
+            <td class="formlabel"></td>
+            <td></td>
+        </tr>
+        <tr>
+
+            <td class="formlabel">
+
+                Terminal
+            </td>
+            <td>
+                <input type="hidden" name="Terminal_Search" id="Terminal_Search" value="">
+                <input type="text" class="" name="Text_Terminal_Search" id="Text_Terminal_Search" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel">
+                Airline
+            </td>
+            <td>
+                <input type="hidden" name="Airline_Search" id="Airline_Search" value="">
+                <input type="text" class="" name="Text_Airline_Search" id="Text_Airline_Search" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel">
+                SHC
+            </td>
+            <td>
+                <input type="hidden" name="SHC_Search" id="SHC_Search" value="">
+                <input type="text" class="" name="Text_SHC_Search" id="Text_SHC_Search" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+        </tr>
+        <tr>
+
+            <td class="formlabel">
+                Dest Country
+            </td>
+            <td>
+                <input type="hidden" name="DestCountry_Search" id="DestCountry_Search" value="">
+                <input type="text" class="" name="Text_DestCountry_Search" id="Text_DestCountry_Search" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel">
+                Dest City
+            </td>
+            <td>
+                <input type="hidden" name="DestCity_Search" id="DestCity_Search" value="">
+                <input type="text" class="" name="Text_DestCity_Search" id="Text_DestCity_Search" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel">
+                Forwarder (Agent)
+
+            </td>
+            <td>
+                <input type="hidden" name="AgentForwarder_Search" id="AgentForwarder_Search" value="">
+                <input type="text" class="" name="Text_AgentForwarder_Search" id="Text_AgentForwarder_Search" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+        </tr>
+        <tr>
+            <td class="formlabel">
+                Type of Location
+            </td>
+            <td>
+                <input type="hidden" name="Location_Search" id="Location_Search" value="">
+                <input type="text" class="" name="Text_Location_Search" id="Text_Location_Search" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel">
+                Search by
+            </td>
+            <td>
+                <input type="hidden" name="Search" id="Search" value="">
+                <input type="text" class="" name="Text_Search" id="Text_Search" data-valid="" data-valid-msg="Enter Search By" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel">
+                Search Text
+            </td>
+            <td>
+                <input type="text" id="Text_SearchBy" name="Text_SearchBy" data-valid="" data-valid-msg="Enter Search Text" value=""/>
+
+            </td>
+        </tr>
+        <tr>
+            <!--<td class="formlabel"></td>
+            <td>
+                <input type="button" style="font-size: 10px;" id="btnSearch" value="Excel Download" class="ui-button ui-widget ui-state-default ui-corner-all ui-state-hover" onclick="SearchData('Excel')" />
+            </td>
+            <td class="formlabel"></td>
+            <td>
+
+            </td>-->
+            <td colspan="6" align="center">
+                <!--<input type="button" style="font-size: 10px;" id="btnSearch" value="Find Location" class="ui-button ui-widget ui-state-default ui-corner-all ui-state-hover" onclick="FindLocation()" />-->
+                <input type="hidden" name="SearchAction" id="SearchAction" value="">
+                <input type="text" class="" name="Text_SearchAction" id="Text_SearchAction" placeholder="" style="width:150px;" controltype="autocomplete" value="" >
+                <input type="button" style="font-size: 10px;" id="btnSearch" value="Apply" class="ui-button ui-widget ui-state-default ui-corner-all ui-state-hover" onclick="SearchData('Search')" />
+                <input type="button" id="btn" style="font-size: 10px;" value="Clear Data" class="ui-button ui-widget ui-state-default ui-corner-all ui-state-hover" onclick="ClearAutoComplete()" />
+            </td>
+
+
+            <!--<input type="button" style="font-size: 10px;" id="btnPending" value="Pending for Location" class="ui-button ui-widget ui-state-default ui-corner-all ui-state-hover" onclick="SearchData('PendingLocation')" />
+            <input type="button" id="btn" style="font-size: 10px;" value="Clear Data" class="ui-button ui-widget ui-state-default ui-corner-all ui-state-hover" onclick="ClearAutoComplete()" />-->
+
+
+
+
+        </tr>
+        <tr>
+            <td colspan="6">
+                <div id="divData">
+                    <table id="tblLocationSearch"></table>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div id='divSearchLocationUpdate'></div>
+</div>

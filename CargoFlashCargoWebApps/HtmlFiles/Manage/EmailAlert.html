@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <table style="width:100%" class="WebFormTable">
+        <tr>
+            <td class="formSection" colspan="4">Email Alerts</td>
+        </tr>
+        <tr>
+            <td class="formtwolabel">Airline:</td>
+            <td class="formtwoInputcolumn">
+                <input type="hidden" name="Airline" id="Airline">
+                <input type="text" name="Text_Airline" id="Text_Airline" data-valid-msg="" controltype="autocomplete" style="width:150px;">
+            </td>
+            <td class="formtwolabel">Process:</td>
+            <td class="formtwoInputcolumn">
+                <input type="hidden" name="Process" id="Process">
+                <input type="text" name="Text_Process" id="Text_Process" data-valid-msg="" controltype="autocomplete" style="width:150px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="formtwolabel">City/Country:</td>
+            <td class="formtwoInputcolumn"><input type="checkbox" id="chcitycountry" class="chcitycountry" value="0" /> </td>
+            <td class="formtwolabel"><label id="lblCityCountry">Country</label></td>
+            <td class="formtwoInputcolumn">
+                <input type="hidden" name="CityCountry" id="CityCountry">
+                <input type="text" name="Text_CityCountry" id="Text_CityCountry" data-valid-msg="" controltype="autocomplete" style="width:150px;">
+            </td>
+
+        </tr>
+        <tr>
+            <td class="formtwolabel">Occurs:</td>
+            <td class="formtwoInputcolumn">
+                <input type="hidden" name="Occurs" id="Occurs">
+                <input type="text" name="Text_Occurs" id="Text_Occurs" data-valid-msg="" controltype="autocomplete" style="width:150px;">
+            </td>
+            <td class="formtwolabel"><label id="lblOccurs"></label></td>
+            <td class="formtwoInputcolumn">
+                <div id="DivHours" style="display:none">
+                    <input type="hidden" name="Hours" id="Hours">
+                    <input type="text" name="Text_Hours" id="Text_Hours" data-valid-msg="" controltype="autocomplete" style="width:100px;">
+                </div>
+                <div id="DivDaily" style="display:none">
+                    Time: <input type="text" name="Text_Daily" id="Text_Daily" class="timevlaidate" onblur="CheckTimeFormatDail();" onkeyup="PutHyphenINTimeDail();" data-valid-msg="" controltype="autocomplete" style="width:100px;">
+                </div>
+                <div id="DivWeeks" style="display:none">
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="multichech" id="cheSun" value="1" />Sun
+                                <input type="checkbox" class="multichech" id="cheMon" value="2" />Mon
+                                <input type="checkbox" class="multichech" id="cheTue" value="3" />Tue
+                                <input type="checkbox" class="multichech" id="cheWed" value="4" />Wed
+                                <input type="checkbox" class="multichech" id="cheThu" value="5" />Thu
+                                <input type="checkbox" class="multichech" id="cheFri" value="6" />Fri
+                                <input type="checkbox" class="multichech" id="cheSat" value="7" />Sat
+                            </td>
+                            <td>|</td>
+                            <td>
+                                Time: <input onblur="CheckTimeFormatWeeks();" class="timevlaidate" onkeyup="PutHyphenINTimeWeeks();" type="text" name="Text_Weeks" id="Text_Weeks" data-valid-msg="" controltype="autocomplete" style="width:60px;">
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div id="DivMonth" style="display:none">
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="hidden" name="Month" id="Month">
+                                <input type="text" name="Text_Month" id="Text_Month" data-valid-msg="" controltype="autocomplete" style="width: 100px;">
+                            </td>
+                            <td>
+                                Time:<input onblur="CheckTimeFormatMonthTime();" class="timevlaidate" onkeyup="PutHyphenINTimeMonthTime();" type="text" name="Text_MonthTime" id="Text_MonthTime" data-valid-msg="" controltype="autocomplete" style="width:100px;">
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </td>
+
+        </tr>
+        <tr>
+            <td class="formtwolabel">Emails:</td>
+            <td class="formtwoInputcolumn">
+                <input type="hidden" id="hdnmail" name="hdnmail">
+                <input id="txtEmail" class="k-input" maxlength="50" style="width:95%;text-transform:uppercase;" type="text">
+                <br><span class="k-label">(Press space key to capture receiver E-mail Address and Add New E-mail ( If Required))</span><br>
+                <div id="divmailAdd" style="overflow:auto;"><ul id="addlist1" style="padding:3px 2px 2px 0px;margin-top:0px;"></ul></div>
+            </td>
+            <td class="formtwolabel"></td>
+            <td class="formtwoInputcolumn">
+                <input id="btnback" type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=Permissions&Apps=EmailAlert&FormAction=INDEXVIEW');" class="btn btn-inverse">&nbsp;&nbsp;
+                <input id="Save" type="button" value="Save" onclick="SaveEmailAlerts()" class="btn btn-success">&nbsp;&nbsp;
+                <input id="Update" type="button" value="Update" onclick="UpdatedEmailAlerts()" class="btn btn-success">
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,2 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="CargoFlash.Cargo.DataService.Master.HandOverCutOffTimeService" CodeBehind="HandOverCutOffTimeService.cs" %>
+<%@ Assembly Name="CargoFlash.Cargo.DataService" %>

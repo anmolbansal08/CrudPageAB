@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <tr>
+        <td class='ui-widget-header' align=center style='padding-left:11px;border-base:2' colspan=6>
+            <h2>Conditions</h2>
+        </td>
+    </tr>
+    <tr>
+        <td align=left style='padding-left:11px;' style='padding-left:11px;' class='ui-widget-content'><strong>Origin City</strong> </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+            <input type='hidden' id='OriginCitySNo' name='OriginCitySNo' tabindex='0' />
+            <input type=text id='Text_OriginCitySNo' name='Text_OriginCitySNo' tabindex='0' controltype='autocomplete' />
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+           
+            <label><b>Exclude</b>
+                <input type='radio' class='radio' value='1' name='IE1' checked="checked" />Yes
+                <input type='radio' class='radio' value='0' name='IE1' />No
+            </label>
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'><strong>Origin Country</strong> </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+            <input type='hidden' id='OriginCountrySNo' name='OriginCountrySNo' tabindex='0' />
+            <input type=text id='Text_OriginCountrySNo' name='Text_OriginCountrySNo' tabindex='0' controltype='autocomplete' />
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+           
+            <label>
+                <b>Exclude</b>
+                <input type='radio' class='radio' value='1' name='IE2' checked="checked" />Yes
+                <input type='radio' class='radio' value='0' name='IE2' />No
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'><strong>Destination City</strong> </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+            <input type='hidden' id='DestinationCitySNo' name='DestinationCitySNo' tabindex='0' />
+            <input type=text id='Text_DestinationCitySNo' name='Text_DestinationCitySNo' tabindex='0' controltype='autocomplete' />
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+           
+            <label>
+                <b>Exclude</b>
+                <input type='radio' class='radio' value='1' name='IE3' checked="checked" />Yes
+                <input type='radio' class='radio' value='0' name='IE3' />No
+            </label>
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'><strong>Destination Country</strong> </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+            <input type='hidden' id='DestinationCountrySNo' name='DestinationCountrySNo' tabindex='0' />
+            <input type=text id='Text_DestinationCountrySNo' name='Text_DestinationCountrySNo' tabindex='0' controltype='autocomplete' />
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+
+            <label>
+                <b>Exclude</b>
+                <input type='radio' class='radio' value='1' name='IE4' checked="checked" />Yes
+                <input type='radio' class='radio' value='0' name='IE4' />No
+            </label>
+        </td>
+    </tr>
+    <!--<tr>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'><strong>Flight Carrier</strong> </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+            <input type='hidden' id='FlightSNo' name='FlightSNo' tabindex='0' />
+            <input type=text id='Text_FlightSNo' name='Text_FlightSNo' tabindex='0' controltype='autocomplete' />
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+            
+            <label>
+                <input type='radio' class='radio' value='1' name='IE4' />Exclude
+            </label>
+        </td>
+       
+    </tr>-->
+    <tr>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'><strong>Agent Name</strong> </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+          
+
+            <input type='hidden' id='AccountSNo' name='AccountSNo' tabindex='0' />
+            <input type=text id='Text_AccountSNo' name='Text_AccountSNo' tabindex='0' controltype='autocomplete' />
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+           
+            <label>
+                <b>Exclude</b>
+                <input type='radio' class='radio' value='1' name='IE5' checked="checked" />Yes
+                <input type='radio' class='radio' value='0' name='IE5' />No
+            </label>
+        </td>
+
+        <td align=left style='padding-left:11px;' class='ui-widget-content'><strong>Shipper Name</strong> </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+          
+
+            <input type='hidden' id='ShipperSNo' name='ShipperSNo' tabindex='0' />
+            <input type=text id='Text_ShipperSNo' name='Text_ShipperSNo' tabindex='0' controltype='autocomplete' />
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+            
+            <label>
+                <b>Exclude</b>
+                <input type='radio' class='radio' value='1' name='IE6' checked="checked" />Yes
+                <input type='radio' class='radio' value='0' name='IE6' />No
+            </label>
+        </td>
+
+    </tr>
+    <tr>
+        
+        <td align=left style='padding-left:11px;' class='ui-widget-content'><strong>Product Type</strong> </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+           
+
+            <input type='hidden' id='ProductSNo' name='ProductSNo' tabindex='0' />
+            <input type=text id='Text_ProductSNo' name='Text_ProductSNo' tabindex='0' controltype='autocomplete' />
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+           
+            <label>
+                <b>Exclude</b>
+                <input type='radio' class='radio' value='1' name='IE7' checked="checked" />Yes
+                <input type='radio' class='radio' value='0' name='IE7' />No
+            </label>
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'><strong>Commodity Code</strong> </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+
+
+            <input type='hidden' id='CommoditySNo' name='CommoditySNo' tabindex='0' />
+            <input type=text id='Text_CommoditySNo' name='Text_CommoditySNo' tabindex='0' controltype='autocomplete' />
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+
+            <label>
+                <b>Exclude</b>
+                <input type='radio' class='radio' value='1' name='IE8' checked="checked" />Yes
+                <input type='radio' class='radio' value='0' name='IE8' />No
+            </label>
+        </td>
+    </tr>
+    <tr>
+      
+
+        
+
+        <td align=left style='padding-left:11px;' class='ui-widget-content'><strong>Other Charge Code</strong> </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+            <input type='hidden' id='OtherChargeSNo' name='OtherChargeSNo' tabindex='0' />
+            <input type=text id='Text_OtherChargeSNo' name='Text_OtherChargeSNo' tabindex='0' controltype='autocomplete' />
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+
+            <label>
+                <b>Exclude</b>
+                <input type='radio' class='radio' value='1' name='IE9' checked="checked" />Yes
+                <input type='radio' class='radio' value='0' name='IE9' />No
+            </label>
+        </td>
+        
+        <td align=left style='padding-left:11px;' class='ui-widget-content'><strong>Issue Carrier</strong> </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+            <input type='hidden' id='ICAirlineSNo' name='ICAirlineSNo' tabindex='0' />
+            <input type=text id='Text_ICAirlineSNo' name='Text_ICAirlineSNo' tabindex='0' controltype='autocomplete' />
+        </td>
+        <td align=left style='padding-left:11px;' class='ui-widget-content'>
+
+            <label>
+                <b>Exclude</b>
+                <input type='radio' class='radio' value='1' name='IE10' checked="checked" />Yes
+                <input type='radio' class='radio' value='0' name='IE10' />No
+            </label>
+        </td>
+    </tr>
+
+</body>
+</html>

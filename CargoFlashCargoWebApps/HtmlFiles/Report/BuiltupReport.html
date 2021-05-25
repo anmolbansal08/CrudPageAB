@@ -1,0 +1,39 @@
+﻿<style type="text/css">
+    .ui-button-text {
+        font-size: 11px;
+    }
+
+    #divMainGrid {
+        color: #333;
+        font-size: 11px;
+        font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+
+    .k-list-container {
+        max-height: 200px;
+    }
+
+    ul.k-list {
+        max-height: 200px;
+    }
+</style>
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+
+    });
+</script>
+
+
+
+<div id="divMainDiv">
+    <table id="tblBindMainReport" class='paginated-table' style='margin-bottom: 14px;border-collapse: collapse;width:650px' ></table>
+    <span style='background-color: #008CBA;color: black;padding: 8px 16px;display:none' class='prev'>Previous</span><span style='padding: 8px 16px; background-color: #4CAF50; color: white; display: none' class='next'>Next</span>
+
+
+</div>

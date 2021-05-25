@@ -1,0 +1,12 @@
+﻿<Messages>
+  
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>You Can Delete Slab Record because ULD Support Request has been Closed </value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1000</Key>
+    <value>Closed Remarks Slab Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

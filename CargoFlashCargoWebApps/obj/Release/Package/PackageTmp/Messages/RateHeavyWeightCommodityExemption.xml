@@ -1,0 +1,33 @@
+﻿<Messages>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Heavy Weight Commodity Excemption already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Heavy Weight Commodity Excemption Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Heavy Weight Commodity Excemption Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Heavy Weight Commodity Excemption Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+
+</Messages>
+
+
+
+
+
+
+
+

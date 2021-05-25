@@ -1,0 +1,16 @@
+﻿<Messages>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Payment Verified Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Payment Not Verified.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Data Submitted Successfully. Payment Is Not Verified.</value>
+  </ServerMessage>
+</Messages>

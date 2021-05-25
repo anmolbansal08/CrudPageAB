@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            cfi.ValidateForm();
+            cfi.DateType("CustomDate_0");
+            var todaydate = new Date();
+            var validfromdate = $("#CustomDate_0").data("kendoDatePicker"); //.min(todaydate)
+            cfi.DateType("CustomDate_1");
+            var todaydate = new Date();
+            var validfromdate = $("#CustomDate_1").data("kendoDatePicker"); //.min(todaydate)
+        });
+    </script>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div id="divDetail4">
+        <div id="areatransCustomInfo">
+            <table class="WebFormTable" id="__tblcustomreferencenumber__">
+                <tbody>
+                    <tr>
+                        <td class="formSection" colspan="6">Custom Permission</td>
+                    </tr>
+                    <tr id="areatransCustomInfo_0">
+                        <td class="formthreelabel" title="Select Custom Reference Number"><span id="spnCustomRef"> Custom Reference Number(NO SPPB)</span></td>
+                        <td class="formthreeInputcolumn">
+                            <span>
+                                <input type="text" class="k-input" name="CustomRef_0" id="CustomRef_0" style="width: 150px; text-transform: uppercase;" controltype="alphanumericupper" colname="custom reference number" tabindex="12" maxlength="25" value="" placeholder="" data-role="alphabettextbox" autocomplete="off" oldvalue="" newvalue="">
+                            </span>&nbsp;
+                            &nbsp;
+                            <span class="k-picker-wrap k-state-default k-widget k-datepicker k-header" style="width: 100px;">
+                                <input type="text" class="k-input k-state-default" name="CustomDate_0" id="CustomDate_0" style="color: rgb(0, 0, 0);" tabindex="105" controltype="datetype" value="" data-role="datepicker">
+                                <span unselectable="on" class="k-select">
+                                    <span unselectable="on" class="k-icon k-i-calendar">select</span>
+                                </span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr id="areatransCustomInfo_1">
+                        <td class="formthreelabel" title="Select Custom Reference Number"><span id="spnCustomRefd"> Custom Reference Number(NO DAFT)</span></td>
+                        <td class="formthreeInputcolumn">
+                            <span>
+                                <input type="text" class="k-input" name="CustomRef_0" id="CustomRef_1" style="width: 150px; text-transform: uppercase;" controltype="alphanumericupper" colname="custom reference number" tabindex="12" maxlength="25" value="" placeholder="" data-role="alphabettextbox" autocomplete="off" oldvalue="" newvalue="">
+                            </span>&nbsp;
+                            &nbsp;
+                            <span class="k-picker-wrap k-state-default k-widget k-datepicker k-header" style="width: 100px;">
+                                <input type="text" class="k-input k-state-default" name="CustomDate_1" id="CustomDate_1" style="color: rgb(0, 0, 0);" tabindex="105" controltype="datetype" value="" data-role="datepicker">
+                                <span unselectable="on" class="k-select">
+                                    <span unselectable="on" class="k-icon k-i-calendar">select</span>
+                                </span>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

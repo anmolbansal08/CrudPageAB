@@ -1,0 +1,337 @@
+﻿<style>
+    .short {
+        font-weight: bold;
+        color: #FF0000;
+        font-size: 11px;
+    }
+
+    .weak {
+        font-weight: bold;
+        color: orange;
+        font-size: 11px;
+    }
+
+    .good {
+        font-weight: bold;
+        color: #2D98F3;
+        font-size: 11px;
+    }
+
+    .strong {
+        font-weight: bold;
+        color: limegreen;
+        font-size: 11px;
+    }
+
+
+    .divshort {
+        color: #FF0000;
+        width: 25%;
+        border: solid;
+        background-color: #FF0000;
+    }
+
+    .divweak {
+        color: orange;
+        width: 50%;
+        border: solid;
+        background-color: orange;
+    }
+
+    .divgood {
+        color: #2D98F3;
+        width: 75%;
+        border: solid;
+        background-color: #2D98F3;
+    }
+
+    .divstrong {
+        color: limegreen;
+        width: 97%;
+        border: solid;
+        background-color: limegreen;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+    });
+</script>
+<table class="WebFormTable" id="tbl" validateonsubmit='true'>
+
+    <tr><td class="formActiontitle" colspan="4"><span id="__SpanHeader__">NEW Return to Shipper:</span><div class="MandatoryTextCss"><font color="red">*</font> Mandatory Fields</div></td></tr>
+    <tr>
+        <td class="formbuttonrow" colspan="4">
+            <input type="submit" name="operation" value="Save" class="btn btn-success"><!--onclick="SaveReturntoShipper();"-->
+            
+
+
+            <input id="btnBack" type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=Shipment&Apps=ReturntoShipper&FormAction=INDEXVIEW');" class="btn btn-inverse">
+
+
+
+
+
+        </td>
+    </tr>
+    <tr><td class="formSection" colspan="4">Return to Shipper Information</td></tr>
+    <tr id="trsearch">
+        <td class="formlabel"> AWB No :</td>
+        <td class="formInputcolumn">
+
+
+
+
+            <input type="hidden" name="AWBSNo" id="AWBSNo" value="">
+            <input type="text" class="" name="Text_AWBSNo" id="Text_AWBSNo" data-valid="required" data-valid-msg="Select AWBNo" controltype="autocomplete" maxlength="12" value="" placeholder="">
+            / HAWB :
+            <input type="hidden" name="HAWBSNo" id="HAWBSNo" value="">
+            <input type="text" class="" name="Text_HAWBSNo" id="Text_HAWBSNo"  data-valid-msg="Select HAWBNo" controltype="autocomplete" maxlength="12" value="" placeholder="">
+
+
+
+        </td>
+        <td class="formlabel"></td>
+        <td class="formInputcolumn"> 
+            <input type="button" value="Search" title="Search" class="btn btn-success" id="btnSearch" onclick="GetReturntoShipperData()">
+                                     <input type="button" value="Clear" title="Clear" class="btn btn-inverse"  id="btnClear" onclick="navigateUrl('Default.cshtml?Module=Shipment&Apps=ReturntoShipper&FormAction=NEW');" >
+        </td>
+       
+    </tr>
+
+    <tr>
+        <td colspan="4">
+            <div id="InfoDiv" style="display:none;">
+
+                <table style="border-collapse:collapse;width:100%" border="1" class="WebFormTable">
+                    <tr id="trawbinread" style="display:none;">
+
+                        <td class="formlabel"> AWB No :</td>
+                        <td class="formInputcolumn"><span id="spnAwbread"></span></td>
+                        <td class="formlabel"></td>
+                        <td class="formInputcolumn"></td>
+                    </tr>
+                    <tr>
+
+                        <td class="formlabel"> Origin :</td>
+                        <td class="formInputcolumn"><span id="Origin"></span></td>
+                        <td class="formlabel"> Destination :</td>
+                        <td class="formInputcolumn"><span id="Destination"></span> </td>
+                    </tr>
+
+                    <tr>
+
+
+
+                        <td class="formlabel"> Product :</td>
+                        <td class="formInputcolumn"><span id="Product"></span></td>
+                        <td class="formlabel"> Forwarder(Agent) :</td>
+                        <td class="formInputcolumn"><span id="Agent"></span> </td>
+                    </tr>
+
+
+                    <tr>
+
+
+
+                        <td class="formlabel"> Pieces :</td>
+                        <td class="formInputcolumn">
+
+
+
+                            <input type="text" class="" name="Text_Pieces" id="Text_Pieces" style="width:150px;" onkeypress='validate(event)'  onchange="ChangePieces(event)" />
+
+
+                            <span id="Char">/</span> <a id="avipieces" onclick="    return abc()" style="text-decoration:underline; color:blue;"></a>
+
+
+
+                        </td>
+                        <td class="formlabel"> Gr. Wt :</td>
+                        <td class="formInputcolumn">
+                            <!--onblur="CalculateShipmentChWt(this)"-->
+                            <input type="text" class=""  name="Text_GrWt" id="Text_GrWt" style="width:150px;" maxlength="7" onkeypress='validate(event)'   onchange="ChangeGrWt(event)"/>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+
+
+
+                    
+                        <td class="formlabel"> Vol. Wt. :</td>
+                        <td class="formInputcolumn">
+
+                            <!--onblur="CalculateShipmentCBM(this)"-->
+
+                            <input type="text" class="" name="Text_VolWt" maxlength="7"  id="Text_VolWt" style="width:150px;" onkeypress='validate(event)'  onchange="ChangeVolWt(event)" />
+
+
+                            <input id="hdnVolWt" type="hidden" />
+                        </td>
+                        <td class="formlabel"></td>
+                        <td class="formInputcolumn">
+
+                            <!--onblur="CalculateShipmentChWt(this)"-->
+
+                            <input type="text" class="" name="Text_CBM" id="Text_CBM" style="width:150px;display:none;" onkeypress='validate(event)' data-valid="required,min[0]" data-valid="required" data-valid-msg="Enter CBM" readonly="readonly" />
+
+                            <input id="hdnCBM" type="hidden" />
+                        </td>
+                    </tr>
+
+
+
+                    <tr>
+
+
+
+                        <td class="formlabel"> SHC :</td>
+                        <td class="formInputcolumn">
+
+                            <span id="SHC"></span>
+
+                        </td>
+                        <td class="formlabel"> Nature of Goods :</td>
+                        <td class="formInputcolumn">
+                            <span id="NatureofGoods"></span>
+                        </td>
+                    </tr>
+
+
+
+
+
+                    <tr>
+                        <td colspan="4">
+                            <div id="ItineryInfo">
+
+
+                            </div>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    <tr><td class='formSection' colspan='4'>Clearance Information</td></tr>
+
+
+
+                    <tr>
+
+
+
+                        <td class="formlabel"> Custom Ref No :</td>
+                        <td class="formInputcolumn">
+                            <input type="text" class="" name="Text_CustomRefNo" id="Text_CustomRefNo" style="width: 150px; text-transform: uppercase;"  />
+                        </td>
+                        <td class="formlabel"> NOC Ref No</td>
+                        <td class="formInputcolumn"><input type="text" class="" name="Text_NOCRefNo" id="Text_NOCRefNo" style="width: 150px; text-transform: uppercase;" /> </td>
+                    </tr>
+
+
+                    <tr>
+
+
+
+                        <td class="formlabel"> Reason :</td>
+                        <td class="formInputcolumn">
+                            <input type="text" class="" name="Text_Reason" id="Text_Reason" style="width: 150px; text-transform: uppercase;"  maxlength="50" />
+                        </td>
+                        <td class="formlabel" > </td>
+                        <td class="formInputcolumn" id="trprint">
+
+                            <input id="btnPrint" type="button" value="Print" onclick='printDiv();'>
+
+                        </td>
+                    </tr>
+                    <tr style="display:none;">
+
+                        <td>
+
+                            <input type='hidden' name='TotalCharges' id='TotalCharges' recname='TotalCharges' value='' />
+                            <input type="text" class="" name="Text_TotalCharges" id="Text_TotalCharges" style="width:150px;" onkeypress='validate(event)' readonly="readonly" />
+                        </td>
+                    </tr>
+                    <tr><td class='formSection'  colspan='4' style="display:none;">Handling Charge Information</td></tr>
+
+                    <tr>
+
+
+
+                        <td class="formlabel" colspan="4">
+                            <div id="DivChargeDetails">
+                                <!--<table class='WebFormHeaderTable persist-area'></table>
+                                <table width='100%' style='border-spacing: 0;' id='tblpayment'>
+                                <tr>
+                                    <td><div id='__divpayment__'>
+                                        <div id='divareaTrans_shipment_shipmenthandlingchargeinfo' validateonsubmit=true cfi-aria-trans='trans'>
+                                            <input type='hidden' id='valueareaTrans_shipment_shipmenthandlingchargeinfo' name='valueareaTrans_shipment_shipmenthandlingchargeinfo' />
+                                            <table class='WebFormTable'><tr>
+                                         
+                                            <tr>
+                                            <td class='formHeaderLabel snowidth' id='transSNo' name='transSNo'>SNo</td>
+                                            <td class='formHeaderLabel' title=''>Waive off</td>
+                                            <td class='formHeaderLabel' title='Select Charge Name'><font color='red'>*</font><span id='spnChargeName'> Charge Names</span></td>
+                                            <td class='formHeaderLabel' title='Primary Basis'><span id='spnPrimaryBasis'> P Basis</span></td>
+                                            <td class='formHeaderLabel' title='Secondary Basis'><span id='spnSecondaryBasis'> S Basis</span></td>
+                                            <td class='formHeaderLabel' title=''><span id='spnAmount'> Amount</span></td>
+                                            <td class='formHeaderLabel' title=''><span id='spnTax'> Tax</span></td>
+                                            <td class='formHeaderLabel' title='Total Amount'><span id='spnTotalAmount'> Total Amount</span></td>
+                                            <td class='formHeaderLabel' title=''>Cash</td><td class='formHeaderLabel' title=''>Credit</td>
+                                            <td class='formHeaderLabel' title='Enter Remarks'>Remarks</td><td class='formHeaderLabel' title=''></td>
+                                            <td class='formHeaderLabel' title=''></td>
+                                            <td class='formHeaderLabel' title='Select'><span id='spnBillTo'> Bill To</span></td>
+                                            <td class='formHeaderLabel'>Action</td></tr>
+                                <tr data-popup='false' id='areaTrans_shipment_shipmenthandlingchargeinfo'>
+                                    <td id='tdSNoCol' class='formSNo'>1</td>
+                                    <td class='formfourInputcolumn'>
+                                    <input type='checkbox' tabindex=19 class='' name='chkWaveoff' id='chkWaveoff' validatename='chkWaveoff[]' recname='chkWaveoff' /></td>
+                                    <td class='formfourInputcolumn'>
+                                    <input type='hidden' name='ChargeName' id='ChargeName' recname='ChargeName' value='' />
+                                    <input type='text' class='' name='Text_ChargeName' id='Text_ChargeName' recname='Text_ChargeName' data-valid='required' data-valid-msg='Select Charge Name' tabindex=21 controltype='autocomplete' maxlength='10' value='' placeholder='' /></td>
+                                    <td class='formfourInputcolumn'>
+                                    <input type='text' class='' name='PrimaryBasis' id='PrimaryBasis' recname='PrimaryBasis' style='width:40px;px;' controltype='number' allowchar='.' tabindex=0 maxlength='5' value='' placeholder='' /></td>
+                                    <td class='formfourInputcolumn'><input type='text' class='' name='SecondaryBasis' id='SecondaryBasis' recname='SecondaryBasis' style='width:40px;px;' controltype='number' allowchar='.' tabindex=0 maxlength='5' value='' placeholder='' /></td>
+                                    <td class='formfourInputcolumn'><input type='text' class='' name='Amount' id='Amount' recname='Amount' style='width:100px;px;' controltype='decimal2' allowchar='.' tabindex=23 maxlength='' value='' placeholder='' /></td><td class='formfourInputcolumn'>
+                                    <input type='text' class='' name='Tax' id='Tax' recname='Tax' style='width:50px;px;' controltype='decimal2' allowchar='.' tabindex=23 maxlength='' value='' placeholder='' /></td>
+                                    <td class='formfourInputcolumn'><input type='hidden' name='TotalAmount' id='TotalAmount' recname='TotalAmount' value='' />
+                                    <span class='' id='TotalAmount' recname='TotalAmount'></span></td><td class='formfourInputcolumn'>
+                                    <input type='radio' class='' name='chkCash' id='chkCash' recname='chkCash' value=''  /></td>
+                                    <td class='formfourInputcolumn'><input type='radio' class='' name='chkCredit' id='chkCredit' recname='chkCredit' value=''  /></td><td class='formfourInputcolumn'>
+                                    <input type='text' class='' name='Remarks' id='Remarks' recname='Remarks' style='width:100px;px;' controltype='alphanumericupper' tabindex=27 maxlength='' value='' placeholder='' /></td><td class='formfourInputcolumn'>
+                                    <input type='text' class='' name='rate' id='rate' recname='Rate' style='width:80px;px;' controltype='default' maxlength='' value='' placeholder='' /></td><td class='formfourInputcolumn'><input type='text' class='' name='min' id='min' recname='min' style='width:80px;px;' controltype='default' maxlength='' value='' placeholder='' /></td>
+                                    <td class='formfourInputcolumn'><input type='hidden' name='BillTo' id='BillTo' recname='BillTo' value='' />
+                                    <input type='text' class='' name='Text_BillTo' id='Text_BillTo' recname='Text_BillTo' tabindex=28 controltype='autocomplete' maxlength='10' value='' placeholder='' /></td><td class='formtransactionrow' id='transAction' name='transAction' rowspan='0'>
+                                    <div id='transActionDiv' align='left'></div>
+                                    </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+            </div>
+        </td>
+
+    </tr>
+</table>-->
+
+
+
+                </div>
+<div id="DivpiecesDetails" style="display:none;">
+
+</div>
+            </td>
+
+        </tr>
+
+
+
+
+    </table>
+

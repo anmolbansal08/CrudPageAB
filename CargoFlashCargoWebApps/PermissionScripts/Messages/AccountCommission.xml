@@ -1,0 +1,47 @@
+﻿<Messages>
+	<DataFieldName>
+		<Name>CommisionAmount</Name>
+		<Message>Commission Amount can not be blank</Message>
+	</DataFieldName>
+	<DataFieldName>
+		<Name>IncentiveAmount</Name>
+		<Message>Incentive Amount can not be blank</Message>
+	</DataFieldName>
+
+	<!--<DataFieldName>
+		<Name>EndRange</Name>
+		<Message>End range can not be blank</Message>
+	</DataFieldName>
+
+	<DataFieldName>
+		<Name>SubGroupName</Name>
+		<Message>Account Commision can not be blank</Message>
+	</DataFieldName>-->
+
+	<ServerMessage>
+		<Key>1001</Key>
+		<value>Account Commission already exists</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2000</Key>
+		<value>Account Commission Added Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2001</Key>
+		<value>Account Commission Updated Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2002</Key>
+		<value>Account Commission Deleted Successfully.</value>
+	</ServerMessage>
+
+	<ServerMessage>
+		<Key>8114</Key>
+		<value>Conversion failed when converting the datatype varchar to numeric.</value>
+	</ServerMessage>
+
+</Messages>
+
+
+
+

@@ -1,0 +1,316 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="../../../Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="../../../Scripts/json2.js"></script>
+    <script src="../../../Scripts/JqueryPrint.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            GetInvoicePrint();
+            var LogoURL = getParameterByName("LogoURL", "");
+        });
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        function GetInvoicePrint() {
+            var InvoiceSNo = getParameterByName("InvoiceSNo", "");
+            var InvoiceType = getParameterByName("InvoiceType", "");
+            var UserSNo = getParameterByName("UserSNo", "");
+            UserSNo = UserSNo == "" ? "0" : UserSNo;
+            $.ajax({
+                url: "../../../Services/Shipment/PaymentService.svc/GetImportExportInvoicePrint",
+                async: false,
+                type: "GET",
+                dataType: "json",
+                data: { InvoiceSNo: InvoiceSNo, InvoiceType: InvoiceType, UserSNo: UserSNo },
+                contentType: "application/json; charset=utf-8", cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    var FinalData = ResultData.Table0;
+                    var chargesData = ResultData.Table1;
+                    if (FinalData.length > 0 && FinalData != null) {
+                        $("#AirlineLogo").attr({ "src": "/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=" + FinalData[0].AirlineImage, height: "32px", width: "220px" });
+                        $('#AirlineLogo').attr('onError', 'this.style.display="none";');
+                        $('#spnShipperName').text(FinalData[0].ShipperName);
+                        $('#spnShipperAddress').text(FinalData[0].ShipperAddress1);
+                        $('#spnShipperAddress2').text(FinalData[0].ShipperAddress2);
+                        $('#spnShipperAddress3').text(FinalData[0].ShipperAddress3);
+                        $('#spnInvoiceNo').text(FinalData[0].InvoiceNo);
+                        $('#spnInvoiceDate').text(FinalData[0].InvoiceDate);
+                        $('#spnAWBNo').text(FinalData[0].AWBNo);
+                        $('#spnOrigin').text(FinalData[0].Origin);
+                        $('#spnDestination').text(FinalData[0].Destination);
+                        $('#spnGrossWeight').text(FinalData[0].GrossWeight);
+                        $('#spnChWt').text(FinalData[0].ChWt);
+                        $('#spnPieces').text(FinalData[0].Pieces);
+                        $('#spnPaymentMode').text(FinalData[0].PaymentMode);
+                        $('#spnChequeNo').text(FinalData[0].ChequeNo);
+
+                        var strCharges = "";
+                        var TotalAmount = 0;
+                        if (chargesData.length > 0) {
+                            strCharges += "<table cellspacing='0' cellpadding='5' style='border:1px solid black;width: 100%;font-weight: 600;font-size: 13px'>";
+                            strCharges += "<tr>";
+                            strCharges += "<td colspan='4' style='border-bottom:1px solid black; width:25%;'>Description</td>";
+                            strCharges += "<td colspan='2' style='border-bottom:1px solid black; width:10%;'>QTY</td>";
+                            strCharges += "<td colspan='2' style='border-bottom:1px solid black; width:10%;'>UOM</td>";
+                            strCharges += "<td colspan='2' style='border-bottom:1px solid black; width:15%;'>Unit Price<br>(MYR)</td>";
+                            strCharges += "<td colspan='2' style='border-bottom:1px solid black; width:15%;'>Amount<br>(MYR)</td>";
+                            strCharges += "</tr>";
+
+                            chargesData.forEach(function (item) {
+                                strCharges += "<tr>";
+                                strCharges += "<td colspan='4' style='width:25%;'>" + item.ChargeName + "</td>";
+                                strCharges += "<td colspan='2' style='width:10%;'>" + item.Qty + "</td>";
+                                strCharges += "<td colspan='2' style='width:10%;'>" + item.UOM + "</td>";
+                                strCharges += "<td colspan='2' style='width:15%;'>" + item.Price + "</td>";
+                                strCharges += "<td colspan='2' style='width:15%;'>" + item.Amount + "</td>";
+                                strCharges += "</tr>";
+                                TotalAmount = Number(TotalAmount) + Number(item.Amount);
+                            });
+
+                            strCharges += "</table>";
+                        }
+                        $("#divCharges").html(strCharges);
+                        if (userContext.SysSetting.ClientEnvironment == 'TH' && parseFloat(RoundUp(TotalAmount) - TotalAmount).toFixed(2) != 0) {
+                            $('#spnRoundingAmount').text(parseFloat(RoundUp(TotalAmount) - TotalAmount).toFixed(2));
+                            $('#spnRoundingAmount').parent().parent().show();
+                        }
+                        $('#spnTotalAmount').text(RoundUp(TotalAmount));
+                        ConvertNumberIntoWords(RoundUp(TotalAmount), InvoiceSNo);
+                    }
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        }
+
+
+
+        function RoundUp(num) {
+          //  return (Math.round(num / 0.05) * 0.05).toFixed(2);
+            return (Math.ceil(num)).toFixed(2);
+        }
+
+        function ConvertNumberIntoWords(TotalAmount, InvoiceSNo) {
+            $.ajax({
+                url: "../../../Services/Shipment/PaymentService.svc/ConvertNumberIntoWords",
+                async: false,
+                type: "GET",
+                dataType: "json",
+                data: { TotalAmount: TotalAmount, InvoiceSNo: InvoiceSNo },
+                contentType: "application/json; charset=utf-8", cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    var FinalData = ResultData.Table0;
+                    if (FinalData.length > 0) {
+                        var totalamount = (FinalData[0].TotalAmountInWord);
+                        var amount = totalamount.split(' ');
+                        var currency = amount[0];
+                        var AmountInWord = amount.slice(1).join(' ')
+                        $("#spnAmountInWords").text(AmountInWord + ' ( ' + currency + ' )');
+                        //var AmountInWord = totalamount.substring(amount[0].length.trim());
+                    }
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <!-- Invoice -->
+    <div id="divViewInvoice" style="width:95%; margin:auto;">
+        <table class="PageInsideTable" style="border: 1px solid black;border-spacing: 1px;width:90%;margin:auto;">
+            <tr>
+                <td>
+                    <div id="content" style="width:90%; margin-left: 30px;">
+                        <table width:"100%"="" ;style="font-weight: 600;" style="float: right; width :100%; ">
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <img id="AirlineLogo" alt="" style="float :right ;width:120px; height:90px  ">
+                                </td>
+                            </tr>
+                            <tr style="float: none;margin-left: 16px; text-align:center;">
+                                <td style="FONT-SIZE: 25PX;FONT-FAMILY: sans-serif;" colspan="2">
+                                    <strong>INVOICE</strong>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width: 100%;font-size: 13px ;font-weight: 600;">
+                            <tr>
+                                <td colspan="4">
+                                    To : <span id="spnShipperName" style="margin-left:5px;"></span><br>
+                                    <span id="spnShipperAddress1" style="margin-left:30px;"></span> <br>
+                                    <span id="spnShipperAddress2" style="margin-left:29px;"></span><br>
+                                    <span id="spnShipperAddress3" style="margin-left:29px;"></span>
+                                </td>
+                                <td colspan="4"></td>
+                                <td colspan="4" style="padding-right: 20px;float: right;">
+                                    Invoice No : <span id="spnInvoiceNo"></span><br>
+                                    Date : <span id="spnInvoiceDate"></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                        <br>
+                        <br>
+                        <table style="border:1px solid black; width: 100%;font-size: 13px ;font-weight: 600;" cellpadding="5">
+                            <tbody>
+                                <tr>
+                                    <td colspan="2">
+                                        AWB No
+                                    </td>
+                                    <td colspan="2">:</td>
+                                    <td colspan="2">
+                                        <span id="spnAWBNo"></span>
+                                    </td>
+
+                                    <td colspan="2">Origin</td>
+                                    <td colspan="2">:</td>
+                                    <td colspan="2">
+                                        <span id="spnOrigin">
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        Gross Weight (kg)
+                                    </td>
+                                    <td colspan="2">:</td>
+                                    <td colspan="2">
+                                        <span id="spnGrossWeight"></span>
+                                    </td>
+                                    <td colspan="2">
+                                        Destination
+                                    </td>
+                                    <td colspan="2">:</td>
+                                    <td colspan="2">
+                                        <span id="spnDestination"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        Chargeable Weight
+                                    </td>
+                                    <td colspan="2">:</td>
+                                    <td colspan="2">
+                                        <span id="spnChWt"></span>
+                                    </td>
+                                    <td colspan="2">
+                                        No of pieces
+                                    </td>
+                                    <td colspan="2">:</td>
+                                    <td colspan="2">
+                                        <span id="spnPieces"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <h3>
+                            DETAILS OF CHARGES
+                        </h3>
+                        <br>
+
+                        <div id="divCharges"></div>
+                        <table style='float:right; border:1px solid black;width: 40%; font-weight: 600; font-size: 13px'>
+                            <tr style='display:none'>
+                                <td style="width:51%">Rounding Amount</td>
+                                <td style="text-align:left;width:47%">
+                                    <span id='spnRoundingAmount' colspan='6' style='margin-right: 30px;'></span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="width:50%">Total Amount</td>
+                                <td style="text-align:left;width:47%">
+                                    <span id='spnTotalAmount' colspan='6' style='margin-right: 30px;'></span>
+                                </td>
+                            </tr>
+
+
+                        </table>
+                        <table style="width: 100%;font-weight: 600;font-size: 13px">
+                            <tr>
+                                <td colspan="4">
+                                    <h3>
+                                        RECEIPT DETAILS
+                                    </h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="width:25%;">
+                                    Payment Mode
+                                </td>
+                                <td colspan="1" style="width:5%;"><span style="text-align:left;">: </span></td>
+                                <td colspan="2" style="text-align:left;">
+                                    <span id="spnPaymentMode" style="text-align:left;padding-left:30px;"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">
+                                    Cheque No
+                                </td>
+                                <td colspan="1"><span style="text-align:left;">: </span></td>
+                                <td colspan="2">
+                                    <span id="spnChequeNo" style="text-align:left; padding-left:30px;"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">
+                                    Amount (in words)
+                                </td>
+                                <td colspan="1">
+                                    <span style="text-align:left;">: </span>
+                                </td>
+                                <td colspan="2">
+                                    <span id="spnAmountInWords" style="text-align:left; padding-left:30px;"></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width: 100%;font-weight: 600;font-size: 13px">
+                            <tr>
+                                <td>
+                                    <br>
+                                    <br>
+                                    <strong>
+                                        This invoice is computer generated. No signature is required.
+                                    </strong>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                </td>
+                            </tr>
+                        </table>
+                        <div id="address" style="text-align: center;">
+                            <strong>RAYA AIRWAYS SDN BHD (186425-D)</strong><br>
+                            Raya Complex, Sultan Abdul Aziz Shah Airport, 47200 Subang, Selangor, Malaysia<br>
+                            Tel: +603 7884 9898 Fax : +603 7884 9899 Website : www.rayaairways.com
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+﻿<div>
+    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+        <tr><td class='formSection' colspan='10'>Booking Profile Report </td></tr>
+        <tr><td class='formlabel' colspan='10'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+        <tr class='formSection'>
+            <td class="formlabel"><font color='red'>*</font>Airline Name</td>
+            <td class="formInputcolumn">
+                @Html.Hidden("AirlineSNo")
+                @Html.TextBox("Text_AirlineSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+
+            </td>
+            <td class="formlabel">Flight No </td>
+            <td class="formInputcolumn">
+                @Html.Hidden("FlightNo")
+                @Html.TextBox("Text_FlightNo", null, new { controltype = "autocomplete", data_role = "autocomplete", })
+            </td>
+        </tr>
+        <tr class='formSection'>
+            <td class="formlabel"><font color='red'>*</font>From Date</td>
+            <td class="formInputcolumn">@Html.TextBox("FromDate", null, new { data_valid = "required", data_valid_msg = "From Date can not be blank" })</td>
+            <td class="formlabel"><font color='red'>*</font>To Date</td>
+            <td class="formInputcolumn">@Html.TextBox("ToDate", null, new { data_valid = "required", data_valid_msg = "To Date can not be blank" })</td>
+        </tr>
+        <tr>
+            <td class="formlabel"><font color='red'></font>Origin</td>
+            <td class="formInputcolumn">
+                @Html.Hidden("OriginSNo")
+                @Html.TextBox("Text_OriginSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            </td>
+            <td class="formlabel">Destination</td>
+            <td class="formInputcolumn">
+                @Html.Hidden("DestinationSNo")
+                @Html.TextBox("Text_DestinationSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            </td>
+        </tr>
+        <tr class='formSection'>
+            <td class="formlabel">Office Name:</td>
+            <td class="formInputcolumn">
+                @Html.Hidden("OfficeSNo")
+                @Html.TextBox("Text_OfficeSNo", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:250px;" })
+            </td>
+            <td class="formlabel">Agent Name:</td>
+            <td class="formInputcolumn">
+                @Html.Hidden("AgentName")
+                @Html.TextBox("Text_AgentName", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:250px;" })
+            </td>
+          
+        </tr>
+        <tr class='formSection'>
+            <td class="formlabel">
+                <div id="exportflight" style="float:left"><img id=" imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer;" title="Export To Excel" onclick="ExportToExcel_Flight()" /></div>
+            </td>
+            <td class="formInputcolumn">
+                <input type="button" name='SearchSave' value='Search' class='btn btn-success' id="btnSubmit" />
+            </td>
+            <td class="formlabel">DateType</td>
+            <td class="formInputcolumn">
+                <input type="radio" name="Filter" id="IsBookingDate" checked="checked" value="B">Booking Date
+                <input type="radio" name="Filter" id="IsFlightDate" value="E">Flight Date
+            </td>
+        </tr>
+    </table>
+
+    <div id="grid" style="font-size:11px;"></div>
+</div>
+
+@*<script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>*@
+<script src="~/JScript/Schedule/BookingProfileReport.js"></script>
+

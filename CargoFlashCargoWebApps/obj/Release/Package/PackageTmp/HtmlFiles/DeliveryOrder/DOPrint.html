@@ -1,0 +1,414 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>DOPrint</title>
+
+    <script src="../../Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <style>
+
+       #PrintDO{
+           width:70px;height:30px;
+       }
+        .auto-style1 {
+            height: 23px;
+        }
+        .auto-style3 {
+        }
+
+        .auto-style12 {
+            width: 490px;
+        }
+
+        .auto-style36 {
+            width: 133px;
+            height: 40px;
+        }
+
+        .auto-style39 {
+            width: 93px;
+        }
+        .auto-style40 {
+            height: 42px;
+        }
+        table#table1, #table2, #table3 {
+            /*width: 100%;
+            margin-left: 15%;
+            margin-right: 15%;*/
+            width: 100%;
+            font-size: smaller;
+        }
+        #content {
+            position: initial;
+            z-index: 1;
+        }
+        </style>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            GetDeliveryOrderPrint();
+            $('#divPrint1').append($('#content').html()
+                );
+            //$('#divPrint1').find('.watermark').map(function () { return $(this).text('Original'); })
+       
+            $('#content').html("");
+           var LogoURL = getParameterByName("LogoURL", "");
+         
+          
+           var str = LogoURL;
+           str = str.split('/');
+           $('#ImgLogo').attr('src', str[1] + '/' + str[2] + "/" + str[3] + "/" + str[4]);
+
+
+            if (IsCancel == "1") {
+                $('#divPrint1').find('.watermark').map(function () { return $(this).text('Cancelled'); })
+            }
+        
+            var IsCancel = 0;
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+
+               // CODE for Showing Current Time//
+            function startTime() {
+                var today = new Date();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                // add a zero in front of numbers<10
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('#spntime').innerHTML = h + ":" + m + ":" + s;
+                t = setTimeout(function () {
+                    startTime()
+                }, 500);
+            }
+            startTime();
+                       //END//
+            function GetDeliveryOrderPrint() {
+                debugger;
+                var DOSNo = getParameterByName("DOSNo", "");
+                var Type = getParameterByName("Type", "");
+                $.ajax({
+                    url: "../../Services/Import/DeliveryOrderService.svc/GetDeliveryOrderPrint",
+                    async: false,
+                    type: "GET",
+                    dataType: "json",
+                    data: { DOSNo: DOSNo, Type: Type },
+                    contentType: "application/json; charset=utf-8",
+                    cache: false,
+                    success: function (result) {
+                        var ResultData = jQuery.parseJSON(result);
+                        FinalData = ResultData.Table0;
+                        FinalData1 = ResultData.Table1;
+                        FinalData2 = ResultData.Table2;
+                        LocationData = ResultData.Table3;
+                        StorageData = ResultData.Table4;
+                        var chargeType = "";
+                        var Pieces = 0;
+                        var chargeType1 = "";
+                        var Pieces1 = 0;
+                        var chargeType2 = "";
+                        var Pieces2 = 0;
+                        if (FinalData.length > 0) {
+                            Pieces = FinalData[0].Pieces;
+                            $("#spnDONo").text(FinalData[0].DeliveryOrderNo);
+                            $("#spnDate").text(FinalData[0].DeliveryOrderDate + ' ' + FinalData[0].DOTime);
+                            $("#spnConsignee").html(FinalData[0].Consignee );
+                            $("#spnAirWaybillNo").text(FinalData[0].AWBNo);
+                            $("#spnName").html(FinalData[0].Name);
+                            $("#spnName1").html(FinalData[0].Name);
+                            $("#spnAirline").html(FinalData[0].AIRLINENAME);
+                            $("#spnConsigneeAddress").html(FinalData[0].STREET);
+                            $("#spnFlightNo").html(FinalData1[0].FlightDetails);
+                            $("#spntime").html(FinalData1[0].Time);
+                            chargeType = FinalData[0].ChargesType;
+                            if (FinalData[0].IsCancel == "False") {
+                                $("#spnReprintCount").html(FinalData[0].PrintCount > 1 ? "(RE-PRINT: " + (FinalData[0].PrintCount - 1).toString() + ")" : "");
+                                IsCancel = 0;
+                            }
+                            else {
+                                IsCancel = 1;
+                            }
+                        }
+                        
+                        var strdata = '';
+                        var TotalPieces = 0;
+                        if (FinalData1.length > 0) {
+                            strdata = strdata + "<tr style='border:1px solid black;font-family:'Verdana''><td  style='text-align:center; border-right:1px solid black;'>Jenis Barang</br>(Particulars)</td><td style='text-align:center; border-right:1px solid black;'>Jumlah koli</br>(Pcs)</td><td style='text-align:center; border-right:1px solid black;'>Jumlah Berat(Kg)</br>(Gross Weight)</td><td style='text-align:center; border-right:1px solid black;'> Keterangan</br>(Amount)</td></tr>";
+
+                            for (var num = 0; num < FinalData1.length; num++) {                                
+                                strdata += "<tr style='border:1px solid black;padding:4px;'>";
+                                strdata += "<td style='text-align:left; border-right:1px solid black;font-size:15px;'><span id='spnParticulars'>" + FinalData2[num].DescriptionOfGoods + "</span></td>"
+                                strdata += "<td style='text-align:left; border-right:1px solid black;font-size:15px;'><span id='spnGrossWt'>" + FinalData1[num].Pieces + "</span></td>";
+                                strdata += "<td style='text-align:left; border-right:1px solid black;font-size:15px;'><span id='spnGrossWt'>" + FinalData1[num].GrossWeight + "</span></td>";
+                                strdata += "<td style='text-align:right; border-right:1px solid black;font-size:15px;'><span id='spnAmount'>" + FinalData1[num].FlightDetails + "</span></td>";
+                                strdata += "<tr>"
+                               
+                               TotalPieces = Number(TotalPieces) + Number(Pieces);
+                            }
+                            $('#tabletrans').html(strdata);
+                        }
+
+                        var Particulars;
+                        var Charges;
+                        var TotalCharges = 0;
+
+
+                        if (FinalData2.length > 0) {
+                            //var length = FinalData2.length > 5 ? 5 : FinalData2.length;
+                            for (var S = 0; S < FinalData2.length ; S++) {                             
+                                Particulars = Particulars + "</br>" + (FinalData2[S].IsWaveOff == "True" ? FinalData2[S].TariffName + '(Waived Off)' : FinalData2[S].TariffName);
+                                Charges = Charges + "</br>" + FinalData2[S].ChargeValue;
+                                if (FinalData2[S].IsWaveOff != "True")
+                                    TotalCharges = parseFloat(FinalData2[S].TotalAmount);
+                            }
+                            $("#spnParticulars").html(Particulars.replace(undefined, ""));
+                            $("#spnAmount").html(Charges.replace(undefined, ""));
+                            $("#spnTotal").html(" (" + chargeType + ")&nbsp;" + TotalCharges.toFixed(2));
+                            $("#spntotalamountinwords").html(FinalData2[0].TotalAmountInWord);
+                            $("#spntp").html(LocationData[0].TotalPieces);
+                            $("#spnwt").html(LocationData[0].TotalGrossWeight);
+
+                            if (FinalData2.length > 5)
+                                $("#Total").hide();
+                        }
+                    },
+                    error: function (err) {
+                        if (err.responseText.toLowerCase().indexOf("object reference not set") != -1) {
+                            document.cookie = "UserDetail=0";
+                            location.href = '../../Account/GarudaLogin.cshtml?islogout=true';
+                        }
+                    }
+                });
+            }
+        });
+   
+        </script>
+</head>
+<body>
+    <form id="form1">
+     
+        <div id="divPrint1">
+            <div class="watermark">
+            </div>
+        </div>
+        <div class="example"></div>
+        <div id="content">
+            <table id="table1">
+                <tr>
+                    <td>
+                        <div id="DivHead" width="90%" align="center">
+                            <table width="90%" style="border-bottom:1px solid black;">
+                                <tr>
+                                    <td></td>
+                                    <td><center><img id="ImgLogo" alt=""/></center></td>
+                                    <td align="right"></td>
+                                </tr>
+                            </table>
+                            <table width="90%">
+                                <tr>
+                                    <td style="width:50%;padding-bottom:2%;">
+                                        <table width="90%" align="left" style="border-collapse:collapse;font-family:Verdana;font-size:15px;">
+                                            <tr>
+                                                <td style="font-weight:bold;text-align:left;">
+                                                    <u>PENYERAHAN AIR WAYBILL</u></br>AWB DELIVERY ORDER
+                                                </td>
+                                                <td style="padding-bottom:5%;"></td>
+                                            </tr>
+                                            <tr><td ></td></tr>
+                                        </table>
+                                    </td>
+                               <td style="width:40%">
+                                    <table width="90%" align="right" style="border-collapse:collapse;font-family:'Verdana';font-size:15px;">
+                                         <tr>
+                                              <td style="font-weight:bold;text-align:right;">CARGO DEPARTMENT</BR>SOEKARNO- HATTA AIRPORT</BR> TELP.5507318,5507319</td>
+                                               <td style="padding-bottom:10%;"></td>                                      
+                                         </tr>
+                                         <tr>
+                                              <td style="font-weight:bold;text-align:right;font-size:25px;">
+                                                    No.
+                                                    <span id=" spnserialno">120147</span>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                            </table>
+                            <table width="90%" style="border-bottom:1px solid black;">
+                                <tr>
+                                    <td style="width:40%;padding-bottom:5%;">
+                                        <table width="100%" align="left"  style="border-collapse:collapse;font-family:'Verdana'; font-size:13px;">
+                                          <tr>
+                                              <td style="width:60%">Penerima barang    </td>
+                                              <td>:</td>
+                                              <td style="width:50%"><span id="spnConsignee"></span></td>
+                                          </tr>
+                                            <tr>
+                                                <td style="text-align:left;font-size:10px;">(Consignee)</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                           
+                                          <tr>
+                                              <td style="width:60%">A l a m a t   </td>
+                                              <td>:</td>
+                                              <td style="width:50%"><span id="spnConsigneeAddress"></span></td>
+                                          </tr>
+                                            <tr>
+                                                <td style="text-align:left;font-size:10px;">(Consignee Address)</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:60%">Diurus/dikuasakan oleh</td>
+                                                <td>:</td>
+                                                <td style="width:50%"><span id="spnName"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;font-size:10px;">(Authorised Person Name)</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                   <!-- <td style="width:2%;"></td>-->
+                                    <td style="width:60%;">
+                                        <table width="90%" align="right" style="font-family:'Verdana'; font-size:13px;">
+                                            <tr>
+                                                <td style="text-align:right">Penerbangan No</td>
+                                                <td style="text-align:right;">:</td>
+                                                <td style="text-align:right;"><span id="spnFlightNo"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;font-size:10px;">(Flight No.)</td>
+                                                <td></td>
+                                                <td ></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;">A W B No.</td>
+                                                <td style="text-align:right;">:</td>
+                                                <td style="text-align:right;"><span id="spnAirWaybillNo"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;font-size:10px;">(Air WayBill No.)</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;">P U / Pos No.</td>
+                                                <td style="text-align:right;">:</td>
+                                                <td style="text-align:right;"><span id="spnDONo"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;font-size:10px;">(Delivery Order No.)</td>
+                                                <td ></td>
+                                                <td ></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;">Tanggal tiba</td>
+                                                <td style="text-align:right;">:</td>
+                                                <td style="text-align:right;"><span id="spnDate"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;font-size:10px;">(Delivery Order Date)</td>
+                                                <td ></td>
+                                                <td ></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;">Barang di gudang</td>
+                                                <td style="text-align:right;">:</td>
+                                                <td style="text-align:right;"><span id="spnAirline"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;font-size:10px;">(Airline Name)</td>
+                                                <td ></td>
+                                                <td></td>
+                                            </tr>
+                                            </br>
+                                        </table>
+
+                                    </td>
+                                    </br>
+                                </tr>
+
+                            </table></br>
+
+
+                            <table id="tabletrans" width="90%" cellpadding="12" cellspacing="0" style="font-size:18px;border-collapse:collapse; ">
+                           
+                            </table>
+                            <table width="90%" cellpadding="12" cellspacing="0" style="font-size:15px;border-collapse:collapse; ">
+                                <tr style="font-family:verdana">
+                                    <td style="width:60%;border-bottom:1px solid black;border-left:1px solid black;"></td>
+                                    <td style=" border-bottom:1px solid black; width:20%;text-align:right;">TOTAL:</td>
+                                    <td style="width:16.8%;text-align:right; border-bottom:1px solid black;border-right:1px solid black;"><span id="spnTotal"></span></td>
+                                </tr>
+                            </table>
+                            </br></br>
+                            <table width="90%" style="font-size:15px;">
+                                <tr>
+                                    <td style="width:50%">
+                                        <table width="90%" style="float:left;font-size:20px; ">
+                                            <tr></tr>
+                                            <tr>
+                                                <td>Tanda tangan penerima,</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size:12px;">(Recipient Signature),</td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                    <td style="width:50%">
+                                        <table width="90%" style="float:right;font-size:20px; ">
+                                            <tr>
+                                                <td style="padding:8px;text-align:right;width:20%;"></td>
+                                                <td style="padding:8px;text-align:right;width:20%;"></td>
+                                                <td style="padding:8px;text-align:right;">Cengkareng,</td>
+                                                <td style="padding:8px;text-align:right;">.......................................<span id="spndate"></span></td>
+                                               
+
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:8px;text-align:right;width:20%;"></td>
+                                                <td style="padding:8px;text-align:right;width:20%;"></td>
+                                                <td colspan="2" style="padding:8px;text-align:left;">Yang menyerahkan,</td>
+                                               
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width:90%;font-size:18px; ">
+                                <tr>
+                                    <td style="padding:8px;text-align:center;">(..................................)</br><span id="spnName1"></span></td>
+                                    <td style="padding:8px;text-align:right;width:15%;"></td>
+                                    <td style="padding:8px;text-align:right;width:10%;"><span id="spntime"></span></td>
+                                    <td style="padding:8px;text-align:left;width:10%;"></td>
+                                    <td style="padding:8px;text-align:left;width:10%;"></td>
+                                    <td style="padding:8px;text-align:right;width:10%;">(......................................)<span id="spnno"></span></td>
+                                    <td style="padding:8px;text-align:right;width:15%;">No.Peg.:</td>
+                                    <td style="padding:8px;text-align:left;width:10%">.....................<span id="spnpegno"></span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+           
+                          </div>
+        </form>
+</body>
+</html>
+
+
+
+

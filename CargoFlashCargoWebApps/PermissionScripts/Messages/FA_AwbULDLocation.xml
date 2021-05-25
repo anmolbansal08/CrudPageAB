@@ -1,0 +1,33 @@
+﻿<Messages>
+  <!--#region Flight Arrival ULD location XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  Flight Arrival AWB Location
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Deepak Sharma
+  Created On:		03 March 2016
+  *****************************************************************************
+  */
+  #endregion-->
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>AWB Location Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>AWB Location Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>AWB Location Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>9000</Key>
+    <value>HAWB is mandatory.</value>
+  </ServerMessage>
+
+</Messages>

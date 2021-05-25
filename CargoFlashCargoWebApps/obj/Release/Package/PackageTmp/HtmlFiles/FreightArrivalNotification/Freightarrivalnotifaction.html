@@ -1,0 +1,465 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1">
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/Import/Freightarrivalnotifaction.js"></script>
+    <title></title>
+    <style>
+        table#table1 {
+            width: 70%;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+    </style>
+    <style type="text/css">
+        @media print {
+            body, html {
+                margin-top: -115px;
+                margin-left: 0px;
+                padding-top: -115px;
+                margin-bottom: 2px;
+                transform: scale(1.2,.84);
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <table id="table1">
+        <tr>
+            <td>
+                <table style="width: 100%; background-color: rgba(0, 0, 255, 0.07); padding: 0px;">
+                    <tr>
+                        <td>
+                            <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+                                <tr>
+                                    <td align="center" style="padding-left:15px">
+                                        <table border="0" cellpadding="0" cellspacing="0" style="height:20px;width:100%;">
+                                            <tr>
+                                                <td align="left" style="width: 100%; padding-left: 10px; vertical-align:bottom;">
+                                                    From: Sharjah Int'I Airport&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span id="spnCDate"></span> (Page 1 of 1)
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table border="1" cellpadding="0" cellspacing="0" style="width:100%;height:300px;">
+                                <tr>
+                                    <td align="center" style="border:0px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" style="height:60px;width:100%;">
+                                            <tr>
+                                            <tr>
+                                                <td align="left" style="width:40px;height:70px; vertical-align:bottom;padding-left:15px; border:0px;">
+                                                    <img src="http://sharjahaviation.com/sites/default/files/SAS-Logo.png" style="align-content:" alt="" height="70" width="150">
+                                                </td>
+                                                <td align="center" style="width:60px;padding-right:190px; vertical-align:bottom; border:0px;">
+                                                    <font size="6">
+                                                        <b>
+                                                            Sharjah Aviation Services
+                                                        </b>
+                                                    </font>
+                                                    <font size="5">
+                                                        <b> P.O.Box:70888,Sharjah-U.A.E.</b>
+                                                    </font>
+                                                </td>
+                                            </tr>
+                                            <tr></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="border:0px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" style="height:10px;width:99%;">
+                                            <tr>
+                                                <td align="center" style="width: 10px; height: 50px; vertical-align: middle; border-bottom: 1px solid black; padding-left: 60px;">
+                                                    <b>
+                                                        <font size="4">
+                                                            FREIGHT ARRIVAL NOTIFICATION
+                                                        </font>
+                                                    </b>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="border:0px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" style="height:80px;width:100%;">
+                                            <tr>
+                                                <td align="left" style="width:20%;vertical-align:top;padding-left:20px; margin-left: 40px;">
+                                                    <font size="2">
+                                                        <b>
+                                                            Consignee:
+                                                        </b>
+                                                        <br />
+                                                        <span id="spnConsqnee" style="text-transform: uppercase;"></span>
+                                                        <br />
+                                                        <b>
+                                                            Fax:
+                                                        </b>
+                                                        <span id="spnFax"></span>
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width:50%;vertical-align:top;padding-left:20px; margin-left: 40px;">
+                                                    <font size="2">
+                                                        <b>
+
+                                                        </b>
+                                                        <br />
+
+                                                        <br />
+                                                        <b>
+
+                                                        </b>
+
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width: 10%;vertical-align: top; padding-right: 10px;">
+                                                    <font size="2">
+                                                        <b>No</b>
+                                                        <br />
+                                                        <b>Date</b>
+                                                        <br />
+                                                        <b>Flight</b>
+                                                        <br />
+                                                        <b>
+                                                            Arrival Date
+                                                        </b>
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="vertical-align: top;">
+                                                    : <span id="spnNo"></span>
+                                                    <br />
+                                                    : <span id="spnDate"></span>
+                                                    <br />
+                                                    : <span id="spnFlight"></span>
+                                                    <br />
+                                                    : <span id="spnArrival"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="border:0px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" style="height:20px;width:100%;">
+                                            <tr>
+                                                <td align="left" style="width:20%;vertical-align:top;padding-left:20px;">
+
+                                                    <font size="2">
+                                                        <b>AWB No</b>
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width: 10%; vertical-align: top; padding-left: 2px;">
+                                                    <font size="2">
+                                                        <b>
+                                                            Origin
+                                                        </b>
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width: 10%; vertical-align: top; padding-left: 5px;">
+                                                    <font size="2">
+                                                        <b>
+                                                            Pcs
+                                                        </b>
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width: 10%; vertical-align: top; padding-left: 6px;">
+                                                    <font size="2">
+                                                        <b>
+                                                            Weight
+                                                        </b>
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width: 10%; vertical-align: top; padding-left: 5px; ">
+                                                    <font size="2">
+                                                        <b>
+                                                            CC/PP
+                                                        </b>
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width: 15%; vertical-align: top; padding-left: 5px;">
+                                                    <font size="2">
+                                                        <b>
+                                                            Cargo Type
+                                                        </b>
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width: 25%; vertical-align: top; padding-left: 5px;">
+                                                    <font size="2">
+                                                        <b>
+                                                            Contents
+                                                        </b>
+                                                    </font>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="border:0px;">
+                                        <table border="1" cellpadding="0" cellspacing="0" style="height:20px;width:99%;">
+                                            <tr>
+                                                <td align="left" style="width:20%;vertical-align:top;padding-left:10px;border-right:0px;">
+                                                    <font size="2">
+                                                        <span id="spnAWBNo"></span>
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width: 10%; vertical-align: top; padding-left: 2px;border-left:0px;border-right:0px;">
+                                                    <font size="2">
+                                                        <span id="spnOrigin"></span>
+                                                        <b>&nbsp;</b>
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width: 10%; vertical-align: top; padding-left: 5px; border-left:0px;border-right:0px;">
+                                                    <font size="2">
+                                                        <span id="spnPcs"></span>&nbsp;
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width: 10%; vertical-align: top; padding-left: 10px; border-left:0px;border-right:0px;">
+                                                    <font size="2">
+                                                        <span id="spnWeight"></span>
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width: 10%; vertical-align: top; padding-left: 15px; border-left:0px;border-right:0px; ">
+                                                    <font size="2">
+                                                        <span id="spnCCPP"></span>
+                                                        <b>&nbsp;</b>
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width: 15%; vertical-align: top; padding-left: 20px;border-left:0px;border-right:0px;">
+                                                    <font size="2">
+                                                        <span id="spnCargoType"></span>
+                                                    </font>
+                                                </td>
+                                                <td align="left" style="width: 25%; vertical-align: top; padding-left: 5px; border-left:0px;">
+                                                    <font size="2">
+                                                        <span id="spnContent"></span>
+                                                    </font>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="border:0px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" style="height:20px;width:100%;">
+                                            <tr>
+                                                <td align="left" style="width:100%;vertical-align:top;padding-left:10px;">
+                                                    <font size="1.5">
+                                                        The following documents are required at the Import Counter along with Photo copies to facilities immediate clearance:
+                                                        <br />
+                                                        &ensp;&emsp;&emsp;(1)&nbsp;<u> Personal shipments</u> &nbsp;&nbsp;:Passport of Consignee,Authority letter and ID in case of representative.
+                                                        <br />
+                                                        &ensp;&emsp;&emsp;(2)&nbsp;<u> Commercial shipment</u>&nbsp;&nbsp;:Authority/ID of representative.
+                                                        <br>
+                                                        &ensp;&emsp;&emsp;(3)&nbsp;<u> Shipments through Bank</u>&nbsp;&nbsp;:Bank Release Letter/Indemnity and Authority Letter/ID.
+                                                        <br />
+                                                    </font>
+                                                    <font size="2">
+                                                        Shipment can be collected subject to Customer clearance upon payment of the following charges:
+                                                    </font>
+                                                </td>
+                                            </tr>
+                                            <!--<tr>
+                                                <td align="left" style="border-bottom:1px solid black; border-top:1px solid black;">
+                                                    <table border="0" cellpadding="0" cellspacing="0" style="height:10px;width:100%;">
+                                                        <tr>
+                                                            <td align="left" style="width:50%;vertical-align:top;padding-left:20px;">
+                                                                <font size="2">
+                                                                    <b>
+                                                                        Charge Description
+                                                                    </b>
+                                                                </font>
+                                                            </td>
+                                                            <td align="right" style="width: 50%;vertical-align: top; padding-right: 60px;">
+                                                                <font size="2">
+                                                                    <b> Amount in AED</b>
+                                                                </font>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>-->
+                                            <tr>
+                                                <td style="width:100%">
+                                                    <div id="DivCharge"></div>
+                                                </td>
+                                            </tr>
+                                            <!--<tr>
+                                                <td align="left">
+                                                    <table border="0" cellpadding="0" cellspacing="0" style="height:10px;width:100%;">
+                                                        <tr>
+                                                            <td align="left" style="width:50%;vertical-align:top;padding-left:20px;">
+                                                                <font size="2">
+                                                                    Delivery Order Fee
+                                                                </font>
+                                                            </td>
+                                                            <td align="right" style="width: 50%;vertical-align: top; padding-right: 60px;">
+                                                                <font size="2">
+                                                                    <span id="spnDeliveryOrderFee"></span>
+                                                                </font>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left">
+                                                    <table border="0" cellpadding="0" cellspacing="0" style="height:10px;width:100%;">
+                                                        <tr>
+                                                            <td align="left" style="width:50%;vertical-align:top;padding-left:20px;">
+                                                                <font size="2">
+                                                                    Handling Charges
+                                                                </font>
+                                                            </td>
+                                                            <td align="right" style="width: 50%;vertical-align: top; padding-right: 60px;">
+                                                                <font size="2">
+                                                                    <span id="spnHandlingCharge"></span>
+                                                                </font>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>-->
+                                            <tr>
+                                                <td align="left">
+                                                    <table border="0" cellpadding="0" cellspacing="0" style="height:20px;width:100%;">
+                                                        <tr>
+                                                            <td align="right" style="width:80%;vertical-align:top;">
+                                                                <font size="2">
+                                                                    <!--<b>(One Hundred Fifteen Only)</b>-->
+                                                                    <span id="spnTotalText"></span>
+                                                                    &nbsp;&nbsp;&nbsp;  <b>Total:</b>
+                                                                </font>
+                                                            </td>
+                                                            <td align="right" style="width: 20%;vertical-align: top; padding-right: 60px; border-bottom:1px solid black;border-top:1px solid black;">
+                                                                <font size="3">
+                                                                    <span id="spnTotal"></span>
+                                                                    <br />
+                                                                </font>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">
+                                                    <table border="0" cellpadding="0" cellspacing="0" style="height:20px;width:100%;">
+                                                        <tr>
+                                                            <td align="left" style="width:100%;vertical-align:top;padding-right:1px;">
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="1">(&quot;Exclusive of Customer Duty.</font>&nbsp;
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left">
+                                                    <table border="0" cellpadding="0" cellspacing="0" style="height:20px;width:100%;">
+                                                        <tr>
+                                                            <td align="left" style="width:30%;vertical-align:top;padding-top:10px;">
+                                                                <b>
+                                                                    &nbsp;&nbsp;Remark:
+                                                                </b>
+                                                            <td align="right" style="width: 40%;vertical-align: top; padding-right: 1px;">
+                                                                &nbsp; &nbsp;<font size="1">Storage Charges subject to time of Delivery.)</font>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">
+                                                    <table border="0" cellpadding="0" cellspacing="0" style="height:20px;width:100%;">
+                                                        <tr>
+                                                            <td align="left" style="width:100%;vertical-align:top;padding-left:10px;">
+                                                                Free storage according to part shipment arrival if any. Charges are rounded up @ AED 5.00
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" style="padding-left:10px;">
+                                                    <table border="1" cellpadding="0" cellspacing="0" style="height:45px;width:99%;">
+                                                        <tr>
+                                                            <td align="left" style="width:100%;vertical-align:bottom;padding-left:10px;">
+                                                                <font size="1">
+                                                                    <b>
+                                                                        For Delivery order please contact,Freight<u> center import counter with appropriate</u> documents.Ph:06 5141189,&nbsp;06 5141188&nbsp;&nbsp;<u> Fax:-06 5581128</u>
+                                                                    </b>
+                                                                </font>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" style="padding-left:10px;">
+                                                    <table border="0" cellpadding="0" cellspacing="0" style="height:60px;width:99%;">
+                                                        <tr>
+                                                            <td align="left" style="width:100%;vertical-align:top;padding-left:10px; border-bottom:2px solid black; border-top:2px solid black;">
+                                                                <font size="1">
+                                                                    <b>Note:</b> 1. Undelivered goods will be auctioned by customer after 6 months from date of arrival.<br />
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.&nbsp;<b><u>Commodity</u></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><u> Handling Charges Per AWB or part</u></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><u> Storage Charges Per AWB or part</u></b><br />
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (a)&nbsp;General Cargo:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;AED 0.07 per kg,MIN AED 16/=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (7days free) AED 0.12 per kg per day,MIN AED 12/=per day<br />
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (b)&nbsp;Perishables:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;AED 0.11 per kg,MIN AED 21/=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (11 hours free) AED 0.12 per kg per day,MIN AED 25/=per day<br />
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (c)&nbsp;Valuable Cargo:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AED 0.26per kg,MIN AED 52/=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (48 hours free) AED 1.00 per kg per day,MIN AED 50/=per day<br />
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Special Handling AED 50/=per AWB)/Security Handling 220/=<br />
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(d)&nbsp;Obnoxious Cargo &amp;<br />
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Live Animals:&nbsp;&nbsp;&nbsp;&nbsp; AED 0.11per kg,MIN AED 21/=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (24 hours free) AED 0.12 per kg per day,MIN AED 25/=per day<br />
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(e)&nbsp;Dangerous Goods:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AED 0.11per kg,MIN AED 21/=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (48 hours free) AED 0.12 per kg per day,MIN AED 25/=per day<br />
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.&nbsp;Charges collect amount conversion is subject to currency fluctuation on the delivery day.<br />
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4.&nbsp;AED 10/- per DO if consignee/agent does not hold SAS ID.<br />
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.&nbsp;AED 15/- per DO will be collected as EDI(Electronic Data Interchange) charge for FWB-Electronic Data Entry of AWB.<br />
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                </font>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" style="border:0px;">
+                                                    <table border="0" cellpadding="0" cellspacing="0" style="height:30px;width:99%;">
+                                                        <tr>
+                                                            <td align="left" style="width:100%;vertical-align:top;padding-left:15px;">
+                                                                <strong style="text-transform: uppercase;">
+                                                                    <b>
+                                                                        consignee's instruction:
+                                                                    </b>
+                                                                </strong>
+                                                                &nbsp;<font size="2"><b> (can be used as Authority letter,except for Bank and Valuable shipments)</b></font>
+                                                                <br />  <br />
+                                                                I / We authorise Mr./Mrs. ...................................................whose specimen signature appended below<br />
+                                                                <br />
+                                                                to collect shipment with AWB No <span id="spnAWBNo1"></span>
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(specimen signature)
+                                                                <br />
+                                                                &nbsp;&nbsp; ...................................................................&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ........................................................<br />
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="1"> (Consignee&#39;s name,signature and company stamp)</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="1"> (Date)</font><br />
+                                                                <hr />
+                                                                <font size="1">
+                                                                    IMPORTANT-PLEASE NOTE The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and /or<br />
+                                                                    privileged material.Any review ,retransmission, or other use of or taking of any action in reliance upon,this information by persons or entities other than<br />
+                                                                    the intended recipient is prohibited.If you received this in error please contact the sender and destroy this facsimile.
+                                                                </font>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

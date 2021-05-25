@@ -1,0 +1,38 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>CurrencyCode</Name>
+    <Message>Currency Code cannot be blank. Minimum 3 Characters required</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CurrencyName</Name>
+    <Message>Currency Name can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Currency Code already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1005</Key>
+    <value>Currency Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1008</Key>
+    <value>Currency Code  And Currency Name already exists</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Currency Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Currency Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Currency Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

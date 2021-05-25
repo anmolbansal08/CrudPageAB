@@ -1,0 +1,1666 @@
+﻿<!--<!DOCTYPE html>-->
+<style type="text/css" media="print">
+    @page {
+        size: auto; /* auto is the initial value */
+        margin: 0; /* this affects the margin in the printer settings */
+    }
+</style>
+<script src="../../../Scripts/jquery-1.7.2.js"></script>
+<script type="text/javascript">
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+    function isBase64(str) {
+        try {
+            return btoa(atob(str)) == str;
+        }
+        catch (err) {
+            return false;
+        }
+    }
+
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+        var EditSNo = getParameterByName("EditSNo", "");// "30243";
+        var pageName = getParameterByName("pagename", ""); //"ReservationBooking";
+        var tnc = getParameterByName("tnc", ""); // usercontext variable for hidding div #divCondition
+        if (isBase64(EditSNo))
+            EditSNo = atob(EditSNo);
+        if (isBase64(tnc))
+            tnc = atob(tnc);
+
+        if (tnc == 'Print') {
+
+            $("#btnUCRPrint").hide();
+            GetData(EditSNo)
+            setTimeout(function () {
+                window.print();
+                window.close();
+            }, 1000)
+        }
+
+
+
+    });
+    function GetData(EditSNo) {
+        if (EditSNo != null) {
+
+            $.ajax({
+                url: "/Services/Export/UldTransfer/LucService.svc/GetUCRPrintCount?Sno=" + EditSNo, async: false, type: "get", dataType: "json", cache: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                }
+            })
+            $.ajax({
+                url: "/Services/Export/UldTransfer/LucService.svc/GetUldTransferData?Sno=" + EditSNo, async: false, type: "get", dataType: "json", cache: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    var FinalData = ResultData.Table0;
+                    var FinalData1 = ResultData.Table1;
+                    var FinalData2 = ResultData.Table2;
+                    var AirlineLogo = "";
+                    $("#AirlineLogo").attr('src', '');
+                    if (FinalData.length > 0) {
+
+                        if (FinalData[0].AirlineLogo == "") {
+                            $("#AirlineLogo").attr('src', userContext.SysSetting.LogoURL);
+
+                        } else {
+                            AirlineLogo = "/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=" + FinalData[0].AirlineLogo;
+                            $("#AirlineLogo").attr('src', AirlineLogo);
+
+                        }
+                        $('#spnOriginator').text(FinalData[0].LoginName)
+                        $('#spnControlReceiptNo').text(FinalData[0].UCRReceiptNo)
+                        if (FinalData[0].UCRReceiptNo != "") {
+                            var CRNSplit = FinalData[0].UCRReceiptNo.split('-');
+                            $("#spnCRNCarrierCode1").text(CRNSplit[0].charAt(0));
+                            $("#spnCRNCarrierCode2").text(CRNSplit[0].charAt(1));
+                            $("#spnCRNCarrierCode3").text(CRNSplit[0].charAt(2));
+
+                            for (var i = CRNSplit[1].length; i >= 0; i--) {
+                                $("#spnCRNumber" + i).text(CRNSplit[1].charAt(i - 1));
+                            }
+
+
+                        }
+                        if (FinalData[0].IssuedDateTime != "") {
+                            var CRNSplit1 = FinalData[0].IssuedDateTime.split('/');
+                            $('#spnTranferDateDay1').text(CRNSplit1[0].charAt(0))
+                            $('#spnTranferDateDay2').text(CRNSplit1[0].charAt(1))
+                            $('#spnTranferDateMonth1').text(CRNSplit1[1].charAt(0))
+                            $('#spnTranferDateMonth2').text(CRNSplit1[1].charAt(1))
+                            $('#spnTranferDateYear1').text(CRNSplit1[2].charAt(0))
+                            $('#spnTranferDateYear2').text(CRNSplit1[2].charAt(1))
+                            $('#spnTranferDateYear3').text(CRNSplit1[2].charAt(2))
+                            $('#spnTranferDateYear4').text(CRNSplit1[2].charAt(3))
+
+                        }
+
+                        if (FinalData[0].TransferPoint != "") {
+                            var CRNSplit1 = FinalData[0].TransferPoint;
+                            $('#spnTransferPoint1').text(CRNSplit1[0].charAt(0))
+                            $('#spnTransferPoint2').text(CRNSplit1[1].charAt(0))
+                            $('#spnTransferPoint3').text(CRNSplit1[2].charAt(0))
+                        }
+
+                        if (FinalData[0].time != "") {
+                            var CRNSplit1 = FinalData[0].time;
+                            $('#spnTransferTime1').text(CRNSplit1[0].charAt(0))
+                            $('#spnTransferTime2').text(CRNSplit1[1].charAt(0))
+                            $('#spnTransferTime3').text(CRNSplit1[3].charAt(0))
+                            $('#spnTransferTime4').text(CRNSplit1[4].charAt(0))
+                        }
+
+                        $('#spnLoginName').text(FinalData[0].LoginName)
+                        $('#spnTransferredAgentName').text(FinalData[0].TransfredBy)
+                        $('#spnTransferPartyName').text(FinalData[0].TransfredBy)
+                        $('#spnULDReleaseTransferringpartyName').text(FinalData[0].TransfredBy)
+                        $('#spnULDReturnTransferringpartyName').text(FinalData[0].TransfredBy)
+                        $('#spnTransferPartyContact').text(FinalData[0].TransferPartyContact)
+                        $('#spnTransferPartyEmailAddress').text(FinalData[0].TransferPartyEmailAddress)
+
+                        $('#spnLoginBranchAddress').text(FinalData[0].logineAddress)
+                        $('#spnTransferredAgentAddress').text(FinalData[0].TrasferAgentAddress)
+                        $('#spnTransferedBy').text(FinalData[0].TransfredBy)
+                        $('#spnRecivedBy').text(FinalData[0].RecivedBy)
+                        $('#spnReceivePartyName').text(FinalData[0].RecivedBy)
+                        $('#spnULDReleaseReceivingPartyName').text(FinalData[0].RecivedBy)
+                        $('#spnULDReturnReceivingPartyName').text(FinalData[0].RecivedBy)
+                        $('#spnReceivePartyContact').text(FinalData[0].ReceivePartyContact)
+                        $('#spnReceivePartyEmailAddress').text(FinalData[0].ReceivePartyEmailAddress)
+
+
+                        $('#spnTranferDate').text(FinalData[0].IssuedDateTime)
+                        $('#spnTransferTime').text(FinalData[0].time)
+                        $('#spnTransferPoint').text(FinalData[0].TransferPoint)
+                        $('#spnRemarks').text(FinalData[0].Remarks)
+                    }
+                    if (FinalData1.length > 0) {
+                        var str = "";
+                        $(FinalData2).each(function (row, tr) {
+                            str = str + (tr.ConsumableName + '(' + tr.Quantity + ')') + ','
+
+                        })
+                        str = str.substring(0, str.length - 1);
+                        var i = 0
+                        var j = 0;
+                        var rec = FinalData1.length;
+                        var divcount = parseInt(rec / 10);
+                        var remain = parseInt(rec % 10);
+
+                        for (var a = 1; a < divcount; a++) {
+                            var div = $('#UldTransferPrintContent').html();
+                            $('#UldTransferPrintContent').after('<div style="display: block; page-break-before: always;"></div><br/>' + div)
+                        }
+                        if (rec > 10 && remain > 0) {
+                            var div = $('#UldTransferPrintContent').html();
+                            $('#UldTransferPrintContent').after('<div style="display: block; page-break-before: always;"></div><br/>' + div)
+                        }
+                        var noOfDiv = $('#ddivUCRPrint div').length - 1;
+                        var n = 2;
+                        $(FinalData1).each(function (row, tr) {
+                            i = parseInt(i) + 1
+                            j = parseInt(j) + 1
+                            if (j <= 10) {
+                                //$('#trFirst').before
+                                $('#dddivUCRPrint div:eq(' + n + ')').find('tr[id="trFirst"]').before('<tr>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;background-color:aliceblue; font-size:10pt;">' +
+                                    i + '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse; font-size:10pt;">' + tr.ULDCode.charAt(0) + '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse; font-size:10pt;">' + tr.ULDCode.charAt(1) + '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse; font-size:10pt;">' + tr.ULDCode.charAt(2) + '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse; font-size:10pt;">' + tr.ULDNumber.charAt(0) + '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse; font-size:10pt;">' + tr.ULDNumber.charAt(1) + '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;font-size:10pt;">' + tr.ULDNumber.charAt(2) + '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;font-size:10pt;">' + tr.ULDNumber.charAt(3) +
+                                    '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;font-size:10pt;">' + tr.ULDNumber.charAt(4) +
+                                    '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;font-size:10pt;">' + tr.OwnerCode.charAt(0) +
+                                    '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;font-size:10pt;">' + tr.OwnerCode.charAt(1) +
+                                    '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;font-size:10pt;">' + tr.OwnerCode.charAt(2) +
+                                    '</td>' +
+                                    '<td>&nbsp;</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;font-size:10pt;">' + '' +
+                                    '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;font-size:10pt;">' + '' +
+                                    '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;font-size:10pt;">' + '' +
+                                    '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;font-size:10pt;">' + '' +
+                                    '</td>' +
+                                    '<td>&nbsp;</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;font-size:10pt;">' + tr.FinalDestination.charAt(0) +
+                                    '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;font-size:10pt;">' + tr.FinalDestination.charAt(1) +
+                                    '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;font-size:10pt;">' + tr.FinalDestination.charAt(2) +
+                                    '</td>' +
+                                    '<td>&nbsp;</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;font-size:10pt;">' + tr.DamurrageCode.charAt(0) +
+
+                                    '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;font-size:10pt;">' + tr.DamurrageCode.charAt(1) +
+                                    '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;font-size:10pt;">' + tr.DamurrageCode.charAt(2) +
+
+                                    '</td>' +
+                                    '<td>&nbsp;</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;font-size:10pt;">' + '' +
+                                    '</td>' +
+                                    '<td>&nbsp;</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;font-size:10pt;">' + tr.OdnlCode.charAt(0) +
+                                    '</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;font-size:10pt;">' + tr.OdnlCode.charAt(1) +
+                                    '</td>' +
+                                    '<td>&nbsp;</td>' +
+                                    '<td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;font-size:10pt;">' + tr.DamurrageDesc +
+                                    '</td>' +
+                                    '</tr>')
+
+                            }
+                            if (j <= 8) {
+                                $('#ddivUCRPrint div:eq(' + n + ')').find('tr[id="trLast"]').prev('tr').remove()
+                                // $('#trLast').prev('tr').remove();
+                            }
+                            if (j == 10) {
+                                $('#ddivUCRPrint div:eq(' + n + ')').find('tr[id="trLast"]').remove()
+                                $('#ddivUCRPrint div:eq(' + n + ')').find('tr[id="trFirst"]').remove()
+                                n = parseInt(n) + 2;
+                                j = 0;
+
+
+                            }
+
+
+
+                        })
+
+                        //}
+                    }
+                },
+                error: {
+
+                }
+            });
+        }
+    }
+</script>
+<div id="dddivUCRPrint">
+    <div style="text-align:right">
+        <input type="button" id="btnUCRPrint" class="no-print" value="Print" onclick="funPrintUCRData('ddivUCRPrint');" />
+    </div>
+
+
+
+    <div id="UldTransferPrintContent">
+        <style>
+            span {
+                font-size: 10pt;
+            }
+        </style>
+        <div style="border: 1px solid #4297d7;">
+            <table style="width: 100%; -webkit-print-color-adjust: exact;">
+                <tr>
+                    <td style="width:33%">
+                        <table style="width:100%;border-collapse:collapse">
+                            <tr>
+                                <td style="width: 75%; border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; ">ORIGINATOR</td>
+                                <td class="auto-style5" style="width:25%"></td>
+                            </tr>
+                            <tr>
+                                <td class="auto-style5" style="border:1px solid gray;width:75%"><span id="spnOriginator" style="color:blue">ADMIN</span></td>
+                                <td class="auto-style5" style="width:25%"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="auto-style5" style="border:1px solid gray"><span id="spnTransferPartyName" style="color:blue"> Transfer Party Name</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="auto-style5" style="border:1px solid gray"><span id="spnTransferPartyContact" style="color:blue">Transfer Party Contact</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="auto-style5" style="border:1px solid gray"><span id="spnTransferPartyEmailAddress" style="color:blue">Transfer Party SITA</span></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width:33%">
+                        <table style="width:100%">
+                            <tr>
+                                <td align="center" style="color:#0D4573">
+                                    <b> ULD CONTROL RECEIPT</b>
+                                </td>
+                            </tr>
+                            <!--<tr>
+                                <td>&nbsp;</td>
+                            </tr>-->
+                            <tr>
+                                <td align="center"><img id="AirlineLogo" src="" style="height: 60px" /></td>
+                            </tr>
+                            <!--<tr>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>-->
+                        </table>
+                    </td>
+                    <td style="width:33%">
+                        <table style="width:100%;border-collapse:collapse">
+                            <tr>
+                                <td class="auto-style5" style="width:25%"></td>
+                                <td style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; text-align: center; width: 75%;" colspan="12">CONTROL RECEIPT NUMBER</td>
+                            </tr>
+                            <tr>
+                                <td class="auto-style5" style="width:25%"></td>
+                                <td style="border:1px solid gray;border-collapse:collapse;text-align:center"><span id="spnCRNCarrierCode1" style="color:blue"></span></td>
+
+                                <td style="border:1px solid gray;border-collapse:collapse;text-align:center"><span id="spnCRNCarrierCode2" style="color:blue"></span></td>
+
+                                <td style="border:1px solid gray;border-collapse:collapse;text-align:center"><span id="spnCRNCarrierCode3" style="color:blue"></span></td>
+
+                                <td style="border:1px solid gray;border-collapse:collapse;text-align:center;color:blue">-</td>
+
+                                <td style="border:1px solid gray;border-collapse:collapse;text-align:center"><span id="spnCRNumber1" style="color:blue"></span></td>
+
+                                <td style="border:1px solid gray;border-collapse:collapse;text-align:center"><span id="spnCRNumber2" style="color:blue"></span></td>
+
+                                <td style="border:1px solid gray;border-collapse:collapse;text-align:center"><span id="spnCRNumber3" style="color:blue"></span></td>
+
+                                <td style="border:1px solid gray;border-collapse:collapse;text-align:center"><span id="spnCRNumber4" style="color:blue"></span></td>
+
+                                <td style="border:1px solid gray;border-collapse:collapse;text-align:center"><span id="spnCRNumber5" style="color:blue"></span></td>
+
+                                <td style="border:1px solid gray;border-collapse:collapse;text-align:center"><span id="spnCRNumber6" style="color:blue"></span></td>
+
+                                <td style="border:1px solid gray;border-collapse:collapse;text-align:center"><span id="spnCRNumber7" style="color:blue"></span></td>
+
+                                <td style="border:1px solid gray;border-collapse:collapse;text-align:center"><span id="spnCRNumber8" style="color:blue"></span></td>
+
+
+                            </tr>
+
+
+
+
+                            <tr>
+                                <td colspan="13" class="auto-style5" style="border:1px solid gray;text-align:right;"><span id="spnReceivePartyName" style="color:blue">Receive Party Name</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="13" class="auto-style5" style="border: 1px solid gray; text-align: right;"><span id="spnReceivePartyContact" style="color:blue">Receive Party Contact</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="13" class="auto-style5" style="border: 1px solid gray; text-align: right;"><span id="spnReceivePartyEmailAddress" style="color:blue">Receive Party SIta/Email details</span></td>
+                            </tr>
+
+                        </table>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="auto-style1" colspan="12">
+                        <table width="100%" style="border-collapse:collapse">
+                            <tr>
+                                <td align="center" class="auto-style24" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; font-size: 10pt" rowspan=" 2">
+                                    TRANSFERRED BY
+                                </td>
+                                <td rowspan="2"></td>
+                                <td rowspan="2"></td>
+                                <td class="ui-widget-header" align="center" class="auto-style25" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; font-size: 10pt;" rowspan=" 2">
+                                    RECEIVED BY
+                                </td>
+                                <td rowspan="2"></td>
+                                <td align="center" class="auto-style26" rowspan="2">
+
+                                    &nbsp;
+                                </td>
+                                <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; " colspan=" 10">
+                                    <span style="font-size:10pt">
+                                        TRANSFER DATE
+                                        (LT)
+                                    </span>
+                                </td>
+                                <td rowspan="2"></td>
+                                <td rowspan="2"></td>
+                                <td class="ui-widget-header" align="center" class="auto-style2" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; font-size: 10pt; " colspan=" 4" rowspan="2">
+                                    &nbsp;TIME (LT)
+                                </td>
+                                <td rowspan="2"></td>
+                                <td class="ui-widget-header" align="center" class="auto-style28" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; font-size: 10pt; " colspan=" 3" rowspan="2">
+                                    TRANSFER
+                                    <br />
+                                    POINT
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ui-widget-header" align="center" class="auto-style27" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; " colspan="3">
+                                    <span style="font-size:9pt">&nbsp;DAY&nbsp;&nbsp; </span>
+                                </td>
+                                <td class="ui-widget-header" align="center" class="auto-style27" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; " colspan="4">
+                                    <span style="font-size:9pt"> MONTH</span>
+                                </td>
+                                <td class="ui-widget-header" align="center" class="auto-style27" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; " colspan="3">
+                                    <span style="font-size:9pt"> YEAR</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" class="auto-style24" style="border:1px solid gray">
+
+                                    <span id="spnTransferedBy"></span>
+                                </td>
+                                <td>
+
+                                    &nbsp;
+                                </td>
+                                <td>
+
+                                    &nbsp;
+                                </td>
+                                <td align="center" class="auto-style25" style="border:1px solid gray">
+
+                                    <span id="spnRecivedBy"></span>
+                                </td>
+                                <td>
+
+                                    &nbsp;
+                                </td>
+                                <td class="auto-style26">
+
+                                    &nbsp;
+                                </td>
+                                <td align="center" class="auto-style27" style="border:1px solid gray">
+
+                                    <span id="spnTranferDateDay1"></span>
+                                </td>
+                                <td align="center" class="auto-style27" style="border:1px solid gray">
+
+                                    <span id="spnTranferDateDay2"></span>
+                                </td>
+                                <td align="center" class="auto-style27" style="border:1px solid gray" colspan="2">
+
+                                    <span id="spnTranferDateMonth1"></span>
+                                </td>
+                    </td>
+                    <td align="center" class="auto-style27" style="border:1px solid gray">
+
+                        <span id="spnTranferDateMonth2"></span>
+                    </td>
+                    <td align="center" class="auto-style27" style="border:1px solid gray">
+
+                        <span id="spnTranferDateYear1"></span>
+                    </td>
+                    <td align="center" class="auto-style27" style="border:1px solid gray" colspan="2">
+
+                        <span id="spnTranferDateYear2"></span>
+                    </td>
+                    <td align="center" class="auto-style27" style="border:1px solid gray">
+
+                        <span id="spnTranferDateYear3"></span>
+                    </td>
+                    <td align="center" class="auto-style27" style="border:1px solid gray">
+
+                        <span id="spnTranferDateYear4"></span>
+                    </td>
+                    <td>
+
+                        &nbsp;
+                    </td>
+                    <td>
+
+                        &nbsp;
+                    </td>
+                    <td align="center" class="auto-style2" style="border:1px solid gray">
+
+                        <span id="spnTransferTime1"></span>
+                    </td>
+                    <td align="center" class="auto-style2" style="border:1px solid gray">
+
+                        <span id="spnTransferTime2"></span>
+                    </td>
+                    <td align="center" class="auto-style2" style="border:1px solid gray">
+
+                        <span id="spnTransferTime3"></span>
+                    </td></td>
+                    <td align="center" class="auto-style2" style="border:1px solid gray">
+
+                        <span id="spnTransferTime4"></span>
+                    </td></td>
+                    <td>
+
+                        &nbsp;
+                    </td>
+                    <td align="center" class="auto-style28" style="border:1px solid gray">
+
+                        <span id="spnTransferPoint1"></span>
+                    </td>
+                    <td align="center" class="auto-style28" style="border:1px solid gray">
+
+                        <span id="spnTransferPoint2"></span>
+                    </td>
+                    <td align="center" class="auto-style28" style="border:1px solid gray">
+
+                        <span id="spnTransferPoint3"></span>
+                    </td>
+                </tr>
+            </table>
+            <table style="width: 100%; border-collapse: collapse; -webkit-print-color-adjust: exact;">
+                <tr>
+
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse;" rowspan=" 2">
+                        #
+                    </td>
+
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt;" colspan=" 11">
+                        <strong>IATA ID CODE</strong>
+                    </td>
+                    <td></td>
+
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt;" colspan="4">
+                        <strong>ULD SUPPORT EQUIPMENT</strong>
+                    </td>
+                    <td></td>
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt;" colspan="3" rowspan="2">
+                        <strong>
+                            FINAL
+                            <br />
+                            DESTINATION
+                        </strong>
+                    </td>
+                    <td></td>
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt;" colspan=" 3" rowspan="2">
+                        DEMURRAGE<br />
+                        CODE
+                    </td>
+                    <td></td>
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt;" rowspan=" 2">
+                        DAM
+                    </td>
+                    <td></td>
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt;" colspan=" 2" rowspan="2">
+                        ODLN<br />
+                        CODE
+                    </td>
+                    <td></td>
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt;" rowspan=" 2">
+                        DAMAGE<br />
+                        DESCRIPTION
+                    </td>
+                </tr>
+                <tr id="trHeader">
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt; " colspan=" 3">
+                        TYPE CODE
+                    </td>
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt;" colspan=" 5">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        SERIAL NO.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt;" colspan=" 3">
+                        &nbsp;&nbsp;
+                        OWNER&nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt;">
+                        Net
+                    </td>
+
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt; ">
+                        Doors
+                    </td>
+
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt; ">
+                        Straps
+                    </td>
+
+                    <td class="ui-widget-header" align="center" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; border-collapse: collapse; font-size: 10pt; ">
+                        Fitting
+                    </td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+
+
+                <tr id="trFirst">
+                    <td align="center" style="border: 1px solid gray;border-collapse: collapse;background-color:aliceblue"></td>
+                    <td align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+
+                    <td align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;background-color:aliceblue"></td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;background-color:aliceblue"></td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;background-color:aliceblue"></td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;background-color:aliceblue"></td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;background-color:aliceblue"></td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;background-color:aliceblue"></td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;background-color:aliceblue"></td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;background-color:aliceblue"></td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                </tr>
+
+
+                <tr id="trLast">
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;background-color:aliceblue"></td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td class=" " align="center" style="border: 1px solid gray; border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class=" " align="center" style="border: 1px solid gray;border-collapse: collapse;">
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+            <table style="width: 100%; -webkit-print-color-adjust: exact;">
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Remark/Supplement Information</td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%" style="border:1px solid gray;border-collapse:collapse">
+                            <tr>
+                                <td style="border:1px solid gray;border-collapse:collapse;height:50px" class="auto-style32">
+
+                                    &nbsp;<span id="spnRemarks"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!--<tr>
+                    <td>&nbsp;</td>
+                </tr>-->
+                <tr>
+                    <td class="ui-widget-header" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; font-size: 10pt; ">ULD RELEASE</td>
+                </tr>
+                <tr>
+                    <td>
+                        <table style="border:1px solid gray;border-collapse:collapse;width:100%">
+                            <tr>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse;" class="auto-style34">
+
+                                    &nbsp;
+                                </td>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse" rowspan="2" class="auto-style37">
+
+                                    <br />
+                                    DATE
+                                </td>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse" rowspan="2" class="auto-style37">
+
+                                    <br />
+                                    TIME
+                                </td>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse;color:gray" class="auto-style35">
+
+                                    &nbsp;
+                                </td>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse" rowspan="2" class="auto-style37">
+
+                                    <br />
+                                    DATE
+                                </td>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse" rowspan="2" class="auto-style37">
+
+                                    <br />
+                                    TIME
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse" class="auto-style34">
+                                    <span id="spnULDReleaseTransferringpartyName"></span>
+                                    <!--(Transferring party Name)-->
+                                </td>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse" class="auto-style35">
+                                    <span id="spnULDReleaseReceivingPartyName"></span>
+                                    <!--(Receiving Party Name)-->
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!--<tr>
+                    <td>&nbsp;</td>
+                </tr>-->
+                <tr>
+                    <td class="ui-widget-header" style="border: 1px solid #4297d7; background: #daecf4; color: #353535; font-weight: bold; font-size:10pt">ULD RETURN</td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%" style="border:1px solid gray;border-collapse:collapse">
+                            <tr>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse;color:gray" class="auto-style34">
+
+                                    &nbsp;
+                                </td>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse" rowspan="2" class="auto-style37">
+
+                                    <br />
+                                    DATE
+                                </td>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse" rowspan="2" class="auto-style37">
+
+                                    <br />
+                                    TIME
+                                </td>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse;color:gray" class="auto-style35">
+
+                                    &nbsp;
+                                </td>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse" rowspan="2" class="auto-style37">
+
+                                    <br />
+                                    DATE
+                                </td>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse" rowspan="2" class="auto-style37">
+
+                                    <br />
+                                    TIME
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse" class="auto-style34">
+                                    <span id="spnULDReturnTransferringpartyName"></span>
+                                    <!--(Transferring party Name)-->
+                                </td>
+                                <td align="center" style="border:1px solid gray;border-collapse:collapse" class="auto-style35">
+                                    <span id="spnULDReturnReceivingPartyName"></span>
+                                    <!--(Receiving Party Name)-->
+                                </td>
+                            </tr>
+
+
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <!--<tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td align="center" class="auto-style34">
+
+                                    <br />
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td align="center" class="auto-style34">
+
+                                    <br />
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td align="center" class="auto-style34">
+
+                                    <br />
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>-->
+            </table>
+        </div>
+    </div>
+</div>
+<!--<div class="page-break"></div>-->

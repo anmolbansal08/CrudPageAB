@@ -1,0 +1,87 @@
+﻿<Messages>
+  #region ULDType XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  ULDType
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Swati Rastogi.
+  Created On:		19 Nov 2015
+  Updated By:   Pankaj Khanna
+  Updated On:   25 Feb 2016
+  Approved By: 
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion
+  <DataFieldName>
+    <Name>ULDCode</Name>
+    <Message>ULD Code can not be blank</Message>
+  </DataFieldName>
+  
+  <DataFieldName>
+    <Name>ULDTypeSno</Name>
+    <Message>ULD Type can not be blank</Message>
+  </DataFieldName>
+  
+  <DataFieldName>
+    <Name>RateClassSno</Name>
+    <Message>ULD Class can not be blank</Message>
+  </DataFieldName>
+  
+  <DataFieldName>
+    <Name>EmptyWeight</Name>
+    <Message>Tare Weight can not be blank</Message>
+  </DataFieldName>
+  
+  <DataFieldName>
+    <Name>GrossWeight</Name>
+    <Message>Gross Weight can not be blank</Message>
+  </DataFieldName>
+  
+    <DataFieldName>
+      <Name>VolumeWeight</Name>
+      <Message>Volume Weight can not be blank</Message>
+    </DataFieldName>
+
+  <DataFieldName>
+    <Name>AirlineSno</Name>
+    <Message>Airline can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>Unit</Name>
+    <Message>Measurement Unit is requierd.</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>Length</Name>
+    <Message>Length can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>Width</Name>
+    <Message>Width can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>IsActive</Name>
+    <Message>Active is requierd.</Message>
+  </DataFieldName>
+  
+  
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>ULD Code already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>ULD Code Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>ULD Code Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>ULD Code Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

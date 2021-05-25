@@ -1,0 +1,138 @@
+﻿<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+    });
+</script>
+<style type="text/css">
+    .ui-button-text {
+        font-size: 11px;
+    }
+
+    #divMainGrid {
+        color: #333;
+        font-size: 11px;
+        font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+
+    .k-list-container {
+        max-height: 200px;
+    }
+
+    ul.k-list {
+        max-height: 200px;
+    }
+    #codexpl th, #codexpl td {
+        padding: 0.1em;
+    }
+
+    .round-button {
+        display: block;
+        width: 30px;
+        height: 25px;
+        line-height: 25px;
+        border: 2px solid #f5f5f5;
+        border-radius: 30%;
+        color: #f5f5f5;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 0 2px gray;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .round-button1 {
+        display: block;
+        width: 30px;
+        height: 25px;
+        line-height: 25px;
+        border: 2px solid #f5f5f5;
+        border-radius: 30%;
+        color: #f5f5f5;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 0 3px gray;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .round-button2 {
+        display: block;
+        width: 60px;
+        height: 25px;
+        line-height: 25px;
+        border: 2px solid #f5f5f5;
+        border-radius: 10%;
+        color: #f5f5f5;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 0 3px gray;
+        font-size: 9px;
+        font-weight: bold;
+    }
+
+   
+
+</style>
+<body>
+    <div style=" width: 100%;"> <input type="button" id="btnPrint" value="Print" style="float:right" onclick="printSLAReport()" /> </div>
+
+    <div id="divMainDiv">
+        <!--<table width="100%" validateonsubmit='true'>
+            <tr><td>   </td></tr>
+        </table>-->
+        <!--<!--<table style="width:100%;white-space:nowrap; border:1px solid">
+            <tr>-->
+        <!--<td style="width:50%;border:1px solid">
+            <div>
+                <img src="Images/GaurdaCMS Logo.jpg" style="width:75%; height:94px" />
+            </div>
+        </td-->
+        <!--<td style="width:100%;">
+                    <table style="width:100%;float:right;white-space:nowrap;border: 1px solid black;border-collapse: collapse;">
+                        <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style=" font-size: 19px; font-weight: bold;">Cost Approval SLA</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><span style="font-size: 19px;" id="spnCASLA"></span></td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style="font-size: 19px; font-weight: bold;">Return SLA</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><span style="font-size: 19px;" id="spnReturnSLA"></span></td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style="font-size: 19px; font-weight: bold;">Invoice SLA</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><span style="font-size: 19px;" id="spnInvoice"></span></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>-->
+
+
+        <table id="Desctbl" style="width:100%;border:1px solid black;border-collapse:collapse;">
+            <thead>
+                <tr id="trDesctbl" style="background-color: #daecf4">
+                    <td style="border:1px solid black;text-align:center"><strong>NO.</strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong>Repair Order No</strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong>ULD Number</strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong>Repair Request</strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong>Cost Approval</strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong>ULD Returned Date </strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong>Invoice Submission Date</strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong>Maintanance Type</strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong>Cost Approval SLA</strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong>Return Date SLA</strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong>Invoice Date SLA</strong></td>
+
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+</body>

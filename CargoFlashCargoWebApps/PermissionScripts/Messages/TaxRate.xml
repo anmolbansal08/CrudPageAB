@@ -1,0 +1,22 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Tax Rate already exists with same input parameters</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Tax Rate already exists for given dates.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Tax Rate Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Tax Rate Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Tax Rate Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

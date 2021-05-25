@@ -1,0 +1,152 @@
+﻿
+<style>
+    body {
+        height: 100%;
+        /*font-size:11px;*/
+        /*font-family: inherit;*/
+        color: black;
+    }
+
+    .k-splitter {
+        position: relative;
+        height: 490px;
+    }
+
+    .k-box {
+        margin: 10px;
+        border: 1px solid #0b53d4;
+        width: auto;
+        float: left;
+        /*background-color: #daecf4;*/
+        border-radius: 10px;
+        border-color: #94c0d2;
+        /*box-shadow: 5px 10px #2f96b4;*/
+        min-width: 350px;
+        min-height: 140px;
+    }
+
+    #divRightContent ul {
+        list-style-type: none;
+        padding: 5px 15px;
+    }
+
+    #divRightContent li {
+        cursor: pointer;
+        padding-bottom: 4px;
+        box-shadow: 0px 1px #2f96b4;
+        padding: 4px;
+    }
+
+        #divRightContent li:hover {
+            background: #2f96b4;
+            color: white;
+            /*font-weight:bold;*/
+        }
+</style>
+
+<div id="divGrid" style="width: 100%;height:100%">
+    <div >
+        <table class="WebFormTable">
+            <tr>
+                <td class="formSection" colspan="5">
+                    Dashboard
+
+                </td>
+                <td class="formSection" colspan="5">
+                    <input type="radio" checked="checked" value="0" name="radGrid" />Grid
+                    <input type="radio" name="radGrid" value="1" />Chart
+
+                </td>
+            </tr>
+            <tr>
+                <td style="width:50px;">&nbsp;</td>
+                <td>
+                    <input type="hidden" name="Airline" id="Airline" value="" />
+                    <input type="text" class="" name="Text_Airline" id="Text_Airline" placeholder="Airline" data-valid="required" data-valid-msg="Airline is Required." controltype="autocomplete" value="" />
+                </td>
+                <td><span><b>From</b> </span>&nbsp;</td>
+                <td><input name="StartDate" id="StartDate" type="text" style="width:120px" data-valid="required" data-valid-msg="From Date is Required." /></td>
+                <td><span><b>To</b></span>&nbsp;&nbsp;</td>
+                <td><input name="EndDate" id="EndDate" type="text" style="width:120px" data-valid="required" data-valid-msg="To Date is Required." /></td>
+                <td>
+                    <input type="hidden" name="Country" id="Country" value="" />
+                    <input type="text" class="" name="Text_Country" id="Text_Country" placeholder="Country" data-valid="required" data-valid-msg="Country is Required." controltype="autocomplete" value="" />
+                </td>
+                <td>
+                    <input type="hidden" name="City" id="City" value="" />
+                    <input type="text" class="" name="Text_City" id="Text_City" placeholder="City" controltype="autocomplete" value="" />
+                </td>
+                <td>
+                    <input type="hidden" name="Currency" id="Currency" value="" />
+                    <input type="text" class="" name="Text_Currency" id="Text_Currency" placeholder="Currency" controltype="autocomplete" value="" />
+                </td>
+                <td><input type="button" id="Search" name="Search" value="Search" class="btn btn-success" /></td>
+            </tr>
+        </table>
+    </div>
+    <div id="divRightContent">
+
+
+    </div>
+    <!--<div id="splitter">
+        <div>
+            <ul id="panelbar">
+                <li>
+                    Gross Weight
+                    <ul>
+                        <li>Booked Gross Weight</li>
+                        <li>Executed Gross Weight</li>
+                        <li>Uplifted Gross Weight</li>
+
+                    </ul>
+                </li>
+                <li>
+                    Volume Weight
+                    <ul>
+                        <li>Booked Volume Weight</li>
+                        <li>Executed Volume Weight</li>
+                        <li>Uplifted Volume Weight</li>
+                    </ul>
+                </li>
+                <li>
+                    Chargeable weight
+                    <ul>
+                        <li>Booked Chargeable weight</li>
+                        <li>Executed Chargeable Weight</li>
+                        <li>Uplifted Chargeable Weight</li>
+                    </ul>
+                </li>
+                <li>
+                    Agent's contribution
+                    <ul>
+                        <li>Top 10 agent's contribution (by Weight)</li>
+                        <li>Top 10 agent's contribution (By Revenue)</li>
+                        <li>Top 10 commoditie's contribution</li>
+                        <li>Top 10 destination's contribution</li>
+                    </ul>
+                </li>
+                <li>
+                    Irregularities,Complaints,Claims Open
+                    <ul>
+                        <li>Irregularities Open</li>
+                        <li> Complaints Open</li>
+                        <li>Claims Open</li>
+                    </ul>
+                </li>
+                <li>
+                    Lying list cargo
+                    <ul>
+                        <li>Irregularities Open</li>
+                        <li> Complaints Open</li>
+                        <li>Claims Open</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div id="divRightContent">
+
+
+        </div>
+    </div>-->
+    <div id="divPopup"></div>
+</div>

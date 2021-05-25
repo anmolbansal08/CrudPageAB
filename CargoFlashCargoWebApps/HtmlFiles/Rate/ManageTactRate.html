@@ -1,0 +1,307 @@
+﻿<script type="text/javascript">
+    
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+
+    });
+</script>
+  <table style="width:100%">
+    <tr>
+        <td class='ui-widget-header' align=center style='padding-left:11px;border-base:2' colspan=8>
+            <h2 style='text-align:left;'>Tact Rate Slab Information </h2>
+        </td>
+    </tr>
+    <tr style="height:35px;">
+        <td style='padding-left: 0px; width: 17%; text-align: center !important;' class='ui-widget-content'><strong>Minimum</strong> </td>
+        <td style='padding-left: 0px; width: 17%; text-align: center !important; ' class='ui-widget-content'><strong>Normal</strong> </td>
+        <td style='padding-left: 0px; width: 11%; text-align: center !important; ' class='ui-widget-content'><strong>+45</strong> </td>
+        <td style='padding-left: 0px; width: 11%; text-align: center !important; ' class='ui-widget-content'><strong>+100</strong> </td>
+        <td style='padding-left: 0px; width: 11%; text-align: center !important; ' class='ui-widget-content'><strong>+250</strong> </td>
+        <td style='padding-left: 0px; width: 11%; text-align: center !important; ' class='ui-widget-content'><strong>+300</strong> </td>
+        <td style='padding-left: 0px; width: 11%; text-align: center !important; ' class='ui-widget-content'><strong>+500</strong> </td>
+        <td style='padding-left: 0px; width: 11%; text-align: center !important; ' class='ui-widget-content'><strong>+1000</strong> </td>
+
+
+    </tr>
+    <tr style="height:35px;" >
+        <td style='padding-left: 0px; width: 17%; text-align: center !important; ' class='ui-widget-content'>
+            <span id="Text_Minimum"></span>
+
+            <input type=text id='Minimum' name='Minimum' maxlength="12" tabindex='33' onkeypress='return validate(this,event)'  onblur='checkslab(this)' data-valid="required,min[1]" data-valid-msg="value should be greater than or equal to 1." />
+        </td>
+        <td style='padding-left: 0px; width: 17%; text-align: center !important; ' class='ui-widget-content'>
+            <span id="Text_Normal"></span>
+            <input type=text id='Normal' name='Normal' maxlength="12" tabindex='34' class="k-input" onkeypress='return validate(this,event)' onblur='checkslab(this)' data-valid="required,min[1]" data-valid-msg="value should be greater than 0 or equal to 1." />
+        </td>
+        <td style='padding-left: 0px; width: 11%; text-align: center !important; ' class='ui-widget-content'>
+            <span id="Text_SlabValue1"></span>
+            <input type=text id='SlabValue1' name='SlabValue1' maxlength="12" tabindex='35' class="k-input" onkeypress='return validate(this,event)' onblur='checkslab(this)' data-valid="required,min[1]" data-valid-msg="value should be greater than 0 or equal to 1." />
+        </td>
+        <td style='padding-left: 0px; width: 11%; text-align: center !important; ' class='ui-widget-content'>
+            <span id="Text_SlabValue2"></span>
+            <input type=text id='SlabValue2' name='SlabValue2' maxlength="12" tabindex='36' class="k-input" onkeypress='return validate(this,event)' onblur='checkslab(this)' data-valid="required,min[1]" data-valid-msg="value should be greater than 0 or equal to 1." />
+        </td>
+        <td style='padding-left: 0px; width: 11%; text-align: center !important; ' class='ui-widget-content'>
+            <span id="Text_SlabValue3"></span>
+            <input type=text id='SlabValue3' name='SlabValue3' maxlength="12" tabindex='37' class="k-input" onkeypress='return validate(this,event)' onblur='checkslab(this)' data-valid="required,min[1]" data-valid-msg="value should be greater than 0 or equal to 1." />
+        </td>
+        <td style='padding-left: 0px; width: 11%; text-align: center !important; ' class='ui-widget-content'>
+            <span id="Text_SlabValue4"></span>
+            <input type=text id='SlabValue4' name='SlabValue4' maxlength="12" tabindex='38' class="k-input" onkeypress='return validate(this,event)' onblur='checkslab(this)' data-valid="required,min[1]" data-valid-msg="value should be greater than 0 or equal to 1." />
+        </td>
+        <td style='padding-left: 0px; width: 11%; text-align: center !important; ' class='ui-widget-content'>
+            <span id="Text_SlabValue5"></span>
+            <input type=text id='SlabValue5' name='SlabValue5' maxlength="12" tabindex='39' class="k-input" onkeypress='return validate(this,event)' onblur='checkslab(this)' data-valid="required,min[1]" data-valid-msg="value should be greater than 0 or equal to 1." />
+        </td>
+        <td style='padding-left: 0px; width: 11%; text-align: center !important; ' class='ui-widget-content'>
+            <span id="Text_SlabValue6"></span>
+            <input type=text id='SlabValue6' name='SlabValue6' maxlength="12" tabindex='40' class="k-input" onkeypress='return validate(this,event)' onblur='checkslab(this)' data-valid="required,min[1]" data-valid-msg="value should be greater than 0 or equal to 1." />
+        </td>
+
+    </tr>
+</table>
+    
+<div  id="divULDDetail">
+    <tr>
+        <td class='ui-widget-header' align=center style='padding-left: 11px;' colspan=13 id="tdulddetail">
+            <table style="Width:100%;">
+                <tr>
+                    <td class='ui-widget-header' align=center style='padding-left:11px;' colspan=8>
+
+                        <h2 style='text-align:left;'>ULD Charge Details </h2>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style='padding-left: 0px; width: 17%; text-align: center !important;' class='ui-widget-content' colspan><strong>ULD Class</strong> </td>
+                    <td style='padding-left: 0px; width: 17%;  ' class='ui-widget-content' colspan="3">
+                        <input type='hidden' id='ULDClass' name='ULDClass' tabindex='0' />
+                        <input type=text id='Text_ULDClass' name='Text_ULDClass' tabindex='41' controltype='autocomplete' data-valid="" data-valid-msg="" />
+                    </td>
+                    <td style='padding-left: 0px; width: 17%; text-align: center !important;' class='ui-widget-content'><strong>Minimum Weight</strong> </td>
+                    <td style='padding-left: 25px; width: 17%;  ' class='ui-widget-content' colspan="3">
+                        <strong> <span id="Text_ULDWeight" value=""></span></strong>
+                        <input type="hidden" id='ULDWeight' name='ULDWeight' />
+
+                    </td>
+                </tr>
+
+                <tr style='height: 35px; text-align: center; '>
+                    <td style=' padding-left: 0px; width: 17%; ' class='ui-widget-content' colspan="2">
+                        <strong>ULD Charge Code</strong>
+                    </td>
+                    <td style='padding-left: 0px; width: 17%;  ' class='ui-widget-content' colspan="3"><strong>ULD Charge Description</strong> </td>
+                    <td style='padding-left: 0px; width: 11%; ' class='ui-widget-content' colspan="1"><strong>Weight</strong> </td>
+                    <td style='padding-left: 0px; width: 11%;' class='ui-widget-content' colspan="1"><strong>Rate</strong> </td>
+                    <td style='padding-left: 0px; width: 11%;' class='ui-widget-content' colspan="1"> </td>
+                </tr>
+                <tr style='height: 35px; text-align: center; '>
+                    <td class='ui-widget-content' colspan="2">
+                        <!--<input type="hidden" id='lblULDCode1' value="A" />-->
+                        <input name="lblULDCode1" type="text" value="A" id="lblULDCode1" style="display:none" />
+                        <span>A</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="3">
+                        <span id="lblULDDescription_1">PIVOT RATE PER KG</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="ChargeableWeight1" type="text" id="ChargeableWeight1" onkeypress='validate(event)' tabindex="42" maxlength="6" class="imtb" min="1" style="width:60px;">
+
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="txtUldRate1" type="text" id="txtUldRate1" maxlength="6" tabindex="43" class="imtb" min="1" onkeypress='validate(event)'>
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input type="checkbox" name="chk1" id="chk1" onchange="return CheckValidation(this.id);" value="0">
+                    </td>
+
+                </tr>
+               
+
+                <tr style='height: 35px; text-align: center; '>
+                    <td class='ui-widget-content' colspan="2">
+                        <input name="lblULDCode2" type="text" value="B" id="lblULDCode2" style="display:none" />
+                        <span>B</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="3">
+                        <span id="lblULDDescription2">FIRST MINIMUM CHARGE- MINIMUM WEIGHT</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="ChargeableWeight2" type="text" id="ChargeableWeight2" tabindex="44" onkeypress='validate(event)' maxlength="6" class="imtb" min="1" style="width:60px;">
+
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="txtUldRate2" type="text" id="txtUldRate2" tabindex="45" class="imtb" onkeypress='validate(event)' maxlength="6" min="1">
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input type="checkbox" name="chk2" id="chk2" value="0" onchange="return CheckValidation(this.id);">
+                    </td>
+                </tr>
+                <tr style='height: 35px; text-align: center; '>
+                    <td class='ui-widget-content' colspan="2">
+                        <input name="lblULDCode3" type="text" value="C" id="lblULDCode3" style="display:none" />
+                        <span>C</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="3">
+                        <span id="lblULDDescription3">FIRST OVER PIVOT RATE PER KG</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="ChargeableWeight3" type="text" id="ChargeableWeight3" tabindex="46" onkeypress='validate(event)' maxlength="6" class="imtb" min="1" style="width:60px;">
+
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="txtUldRate3" type="text" id="txtUldRate3" tabindex="47" class="imtb" onkeypress='validate(event)' maxlength="6" min="1">
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input type="checkbox" name="chk3" id="chk3" value="0" onchange="return CheckValidation(this.id);">
+                    </td>
+                </tr>
+                <tr style='height: 35px; text-align: center; '>
+                    <td class='ui-widget-content' colspan="2">
+                        <input name="lblULDCode4" type="text" value="D" id="lblULDCode4" style="display:none" />
+                        <span>D</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="3">
+                        <span id="lblULDDescription4">SECOND MINIMUM CHARGE - MINIMUM WEIGHT	</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="ChargeableWeight4" type="text" id="ChargeableWeight4" tabindex="48" maxlength="6" onkeypress='validate(event)' class="imtb" min="1" style="width:60px;">
+
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="txtUldRate4" type="text" id="txtUldRate4" tabindex="49" class="imtb" maxlength="6" onkeypress='validate(event)' min="1">
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input type="checkbox" name="chk4" id="chk4" value="0" onchange="return CheckValidation(this.id);">
+                    </td>
+                </tr>
+
+                <tr style='height: 35px; text-align: center;'>
+                    <td class='ui-widget-content' colspan="2">
+                        <input name="lblULDCode5" type="text" value="E" id="lblULDCode5" style="display:none" />
+                        <span>E</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="3">
+                        <span id="lblULDDescription5">RATE PER KG</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="ChargeableWeight5" type="text" id="ChargeableWeight5" tabindex="50" onkeypress='validate(event)' maxlength="6" class="imtb" min="1" style="width:60px;">
+
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="txtUldRate5" type="text" id="txtUldRate5" tabindex="51" class="imtb" maxlength="6" onkeypress='validate(event)' min="1">
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input type="checkbox" name="chk5" id="chk5" value="0" onchange="return CheckValidation(this.id);">
+                    </td>
+                </tr>
+
+
+                <tr style='height: 35px; text-align: center; '>
+                    <td class='ui-widget-content' colspan="2">
+                        <input name="lblULDCode6" type="text" value="F" id="lblULDCode6" style="display:none" />
+                        <span>F</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="3">
+                        <span id="lblULDDescription6">THIRD MINIMUM CHARGE - MINIMUM WEIGHT	</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="ChargeableWeight6" type="text" id="ChargeableWeight6" tabindex="52" maxlength="6" onkeypress='validate(event)' class="imtb" min="1" style="width:60px;">
+
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="txtUldRate6" type="text" id="txtUldRate6" tabindex="53" class="imtb" maxlength="6" onkeypress='validate(event)' min="1">
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input type="checkbox" name="chk6" id="chk6" value="0" onchange="return CheckValidation(this.id);">
+                    </td>
+                </tr>
+
+                <tr style='height: 35px; text-align: center;'>
+                    <td class='ui-widget-content' colspan="2">
+                        <input name="lblULDCode7" type="text" value="G" id="lblULDCode7" style="display:none" />
+                        <span>G</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="3">
+                        <span id="lblULDDescription7">THIRD OVER PIVOT RATE PER KG</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="ChargeableWeight7" type="text" id="ChargeableWeight7" tabindex="54" maxlength="6" onkeypress='validate(event)' class="imtb" min="1" style="width:60px;">
+
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="txtUldRate7" type="text" id="txtUldRate7" tabindex="55" class="imtb" min="1" onkeypress='validate(event)' maxlength="6">
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input type="checkbox" name="chk7" id="chk7" value="0" onchange="return CheckValidation(this.id);">
+                    </td>
+                </tr>
+
+                <tr style='height: 35px; text-align: center;'>
+                    <td class='ui-widget-content' colspan="2">
+                        <input name="lblULDCode8" type="text" value="H" id="lblULDCode8" style="display:none" />
+                        <span>H</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="3">
+                        <span id="lblULDDescription8">FLAT CHRGE -MINIMUM WEIGHT OR NO WEIGHT</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="ChargeableWeight8" type="text" id="ChargeableWeight8" maxlength="6" onkeypress='validate(event)'  class="imtb" min="1" style="width:60px;">
+
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="txtUldRate8" type="text" id="txtUldRate8" tabindex="56" onkeypress='validate(event)' class="imtb" min="1" maxlength="6">
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input type="checkbox" name="chk8" id="chk8" value="0" onchange="return CheckValidation(this.id);">
+                    </td>
+                </tr>
+
+                <tr style='height: 35px; text-align: center;'>
+                    <td class='ui-widget-content' colspan="2">
+                        <input name="lblULDCode9" type="text" value="I" id="lblULDCode9" style="display:none" />
+                        <span id="lblULDCode9">I</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="3">
+                        <span id="lblULDDescription9">FLAT CHARGE - MAXIMUM WEIGHT</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="ChargeableWeight9" type="text" id="ChargeableWeight9" tabindex="57" onkeypress='validate(event)' class="imtb" min="1" style="width:60px;">
+
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="txtUldRate9" type="text" id="txtUldRate9" tabindex="58" class="imtb" onkeypress='validate(event)' maxlength="6" min="1">
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input type="checkbox" name="chk9" id="chk9" value="0" onchange="return CheckValidation(this.id);">
+                    </td>
+                </tr>
+
+                <tr style='height: 35px; text-align: center;'>
+                    <td class='ui-widget-content' colspan="2">
+                        <input name="lblULDCode10" type="text" value="Z" id="lblULDCode10" style="display:none" />
+                        <span>Z</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="3">
+                        <span id="lblULDDescription10">UNITIZATION INCENTIVE DISCOUNT</span>
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="ChargeableWeight10" type="text" id="ChargeableWeight10" maxlength="6" onkeypress='validate(event)' tabindex="59" class="imtb" min="1" style="width:60px;">
+
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input name="txtUldRate10" type="text" id="txtUldRate10" tabindex="60" class="imtb" onkeypress='validate(event)' maxlength="6" min="1">
+                    </td>
+                    <td class='ui-widget-content' colspan="1">
+                        <input type="checkbox" name="ch10" id="chk10" value="0" onchange="return CheckValidation(this.id);">
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</div>
+
+   
+
+

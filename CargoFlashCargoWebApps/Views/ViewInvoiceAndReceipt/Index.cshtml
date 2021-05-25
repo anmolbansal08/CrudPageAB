@@ -1,0 +1,72 @@
+﻿
+<div id="divbody" style="height:auto">
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>View Invoice And Receipt</td></tr>
+
+                        @*<tr class="formInputcolumn">
+                            <td class='formlabel'></td>
+                            <td class='formInputcolumn' >
+                                <input type="radio" name="rbtInvoice" id="rbtnInvoice" value="Invoice"  /> Invoice
+                                <input type="radio" name="rbtInvoice" id="rbtnReceipt"  value="Receipt" /> Receipt
+                            </td>
+                            <td class='formlabel'></td>
+                            <td class='formInputcolumn'></td>
+                        </tr>*@
+                        <tr class="formInputcolumn">
+                            <td class='formlabel' title='InvoiceNo'>
+                                <font color='red' id="fstric">*</font><span id='spnInvoiceNo'>
+                                    InvoiceNo :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                
+                                    @Html.Hidden("InvoiceNo")
+                                    @Html.TextBox("Text_InvoiceNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Select InvoiceNo" })
+                                
+                                    </td>
+                            <td class='formlabel'></td>
+                            <td class='formInputcolumn'></td>
+
+                        </tr>
+
+                        <tr>
+                            <td class='formlabel'>
+                                @*<form id="ASToExcel" action="../GenrateAndViewInvoice/ExportToExcel" method="post">
+                                    <input id="DestinationAirPortSNo" type="hidden" name="DestinationAirPortSNo" value="" />*@
+                                <div style="float:left; display: block;">
+                                    <img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel()" />
+                                </div>
+                                <div style="float:left; display: block;">
+                                    <img id="imgpdf" src="../Images/iconPDF.png" style="width:30px;height:30px;cursor: pointer" title="Export To PDF" onclick="ExportToPDF()" />
+                                </div>
+                                @*</form>*@
+                            </td>
+
+                            <td class='formInputcolumn'></td>
+                            <td class='formlabel'></td>
+                            <td class='formInputcolumn' title='Search'>
+                                <input type='submit' name='operation' onclick="GetInvoiceByInvoiceNo()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+                                <input type='button' name='operation' onclick="PrintInvoice()" value='Print' id="btnPrint" class='btn btn-info btnPrint' />
+                                
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <div id="grid" style="font-size:11px;"></div>
+                <div id="gridHide" style="font-size:11px;display:none;"></div>
+                <form method="post" name="aspnetForm" id="aspnetForm"></form>
+                <script src="~/Scripts/pdfmake.js"></script>
+                <script src="~/Scripts/html2canvas.js"></script>
+                <script src="~/JScript/Report/ViewInvoiceAndReceipt.js"></script>
+
+            </div>
+            
+        </div>
+    </section>
+</div>

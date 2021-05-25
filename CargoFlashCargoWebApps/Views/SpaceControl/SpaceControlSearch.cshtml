@@ -1,0 +1,670 @@
+﻿@*// <copyright file="SpaceControlSearch.cshtml" company="Cargoflash">
+        //
+        // Created On: 4-Feb-2017
+        // Created By: Braj
+        // Description:
+        //----------------------------------------------------------------------------
+        // Revison History:
+        // Please add a new line below for any update to this file
+        // Updated On  Updated By                     Significant Changes
+        // ----------------------------------------------------------------------------
+        //
+        //
+    </copyright>*@
+@{
+    ViewBag.Title = "Space Control Search";
+}
+@model CargoFlash.Cargo.Model.SpaceControl.SpaceControlSearchModel
+
+
+
+<div ng-init="LoadReplan(@(ViewBag.AWBSNo==null?0:ViewBag.AWBSNo),@(ViewBag.Status==null?0:ViewBag.Status));" kendo-tab-strip="tabstrip2" id="tabstrip">
+
+    @if (ViewBag.AWBSNo == null)
+    {
+        <ul>
+            <li class="k-state-active"><span class="k-link">Space Control Search</span></li>
+        </ul>
+        <div>
+            @using (Html.BeginForm("SpaceControlSearch", "SpaceControl", FormMethod.Post, new { enctype = "multipart/form-data", @id = "SpaceControlSearchForm" }))
+            {
+                <table class="WebFormTable">
+                    <tbody>
+
+                        <tr>
+                            <td class="formlabel" title="Select search type">
+                                <font color="red">*</font>
+                                <span id="spnPageSNo">Search By:</span>
+                            </td>
+                            <td class="formInputcolumn" ng-init="SearchRequest.SearchBy='Both'">
+                                <input type="radio" ng-model="SearchRequest.SearchBy" class="k-radio" value="KK" id="lblKK" />
+                                <label class="k-radio-label" for="lblKK">KK</label>
+
+                                @Html.RadioButtonFor(m => m.SearchBy, "LL", new { @id = "lblLL", @class = "k-radio", @ng_model = "SearchRequest.SearchBy" })
+                                <label class="k-radio-label" for="lblLL">LL</label>
+
+                                <input type="radio" value="Both" ng-model="SearchRequest.SearchBy" class="k-radio" id="lblboth" />
+                                <label class="k-radio-label" for="lblboth">Both</label>
+                            </td>
+                            <td class="formlabel" style="width:25%!important;" ng-init="SearchRequest.ZoneType='0'">
+                                <span>
+                                    @Html.RadioButtonFor(m => m.ZoneType, "0", new { @checked = "checked", @id = "lblOrigin", @class = "k-radio", @ng_model = "SearchRequest.ZoneType" })
+                                    <label class="k-radio-label" for="lblOrigin">Origin</label>
+                                    @Html.RadioButtonFor(m => m.ZoneType, "1", new { @id = "lblDestination", @class = "k-radio", @ng_model = "SearchRequest.ZoneType" })
+                                    <label class="k-radio-label" for="lblDestination">Destination</label>
+                                </span>
+
+                                <span>Zone:</span>
+                            </td>
+                            <td class="formInputcolumn">
+
+
+                                <input kendo-combo-box k-placeholder="'Select Zone'"
+                                       k-min-length="2" k-auto-bind="false"
+                                       k-filter="'contains'"
+                                       ng-model="SearchRequest.Zone"
+                                       k-filterfield="'ZoneName'"
+                                       k-options='K_Options("Text_Zone", "SpaceControl_Zone")' />
+
+                            </td>
+                            <td class="formlabel">Flight No:</td>
+                            <td class="formInputcolumn">
+
+                                <input kendo-combo-box k-placeholder="'Select Flight No'"
+                                       k-min-length="3" k-auto-bind="true"
+                                       k-filter="'contains'"
+                                       ng-model="SearchRequest.FlightNo"
+                                       k-filterfield="'FlightNo'"
+                                       k-options='K_Options("Text_FlightNo", "SpaceControl_FlightNo")' />
+
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="formlabel" title="Select search type">
+                                <font color="red">*</font>
+                                <span id="spnPageSNo">Flight Type:</span>
+                            </td>
+                            <td class="formInputcolumn" ng-init="SearchRequest.FlightType='0,1'">
+
+                                @Html.RadioButtonFor(m => m.FlightType, "1", new { @id = "lblDom", @class = "k-radio", @ng_model = "SearchRequest.FlightType" })
+                                <label class="k-radio-label" for="lblDom">Domestic</label>
+                                @Html.RadioButtonFor(m => m.FlightType, "0", new { @id = "lblTypeInternational", @class = "k-radio", @ng_model = "SearchRequest.FlightType" })
+                                <label class="k-radio-label" for="lblTypeInternational">International</label>
+                                @Html.RadioButtonFor(m => m.FlightType, "0,1", new { @id = "lblTypeboth", @class = "k-radio", @ng_model = "SearchRequest.FlightType" })
+                                <label class="k-radio-label" for="lblTypeboth">Both</label>
+                            </td>
+                            <td class="formlabel">Origin:</td>
+                            <td class="formInputcolumn">
+
+                                <input kendo-combo-box k-placeholder="'Select Origin'"
+                                       k-min-length="2"
+                                       k-filter="'contains'" k-auto-bind="false"
+                                       ng-model="SearchRequest.Origin"
+                                       k-filterfield="'OriginAirportCode'"
+                                       k-options='K_Options("Text_Origin", "SpaceControl_Origin")' />
+
+
+                            </td>
+                            <td class="formlabel">Destination:</td>
+                            <td class="formInputcolumn">
+
+
+                                <input kendo-combo-box k-placeholder="'Select Destination'"
+                                       k-min-length="2"
+                                       k-filter="'contains'" k-auto-bind="false"
+                                       ng-model="SearchRequest.Destination"
+                                       k-filterfield="'DestinationAirportCode'"
+                                       k-options='K_Options("Text_Destination", "SpaceControl_Dest")' />
+
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td class="formlabel" style="width: 100px;">
+                                <font color="red">*</font>
+                                Flight Date:
+                            </td>
+                            <td class="formInputcolumn">
+                                <input kendo-date-picker ng-model="SearchRequest.FlightDate" data-valid='required' data-valid-msg='Select Flight Date'
+                                       placeholder='Flight Date' id="flDate" k-min="minDate" onchange="validDate(this);"
+                                       k-format="'dd-MMM-yyyy'" ng-change="DateChanged()" />
+
+                            </td>
+                            <td class="formlabel">Time to Departure:</td>
+                            <td class="formInputcolumn">
+
+                                <input kendo-combo-box k-placeholder="'Select Finalised'"
+                                       k-min-length="2"
+                                       k-filter="'contains'" k-auto-bind="false"
+                                       ng-model="SearchRequest.TimeToDep"
+                                       k-filterfield="'LOOKUPNAME'"
+                                       k-options='K_Options("Text_TimeToDep", "SpaceControl_LookUp")' />
+                            </td>
+
+                            <td class="formlabel">Flight Finalised:</td>
+                            <td class="formInputcolumn">
+
+                                <input kendo-combo-box k-placeholder="'Select Finalised'"
+                                       k-min-length="2" k-auto-bind="false"
+                                       k-filter="'contains'"
+                                       ng-model="SearchRequest.FlightFinalised"
+                                       k-filterfield="'LOOKUPNAME'"
+                                       k-options='K_Options("Text_FlightFinalised", "SpaceControl_LookUp")' />
+
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="formlabel" style="width: 100px;">
+
+                                CAO:
+                            </td>
+                            <td class="formInputcolumn">
+                                <input kendo-combo-box k-placeholder="'Select CAO'"
+                                       k-min-length="2" k-auto-bind="false"
+                                       k-filter="'contains'"
+                                       ng-model="SearchRequest.CAO"
+                                       k-filterfield="'LOOKUPNAME'"
+                                       k-options='K_Options("Text_CAO", "SpaceControl_LookUp")' />
+
+                            </td>
+                            <td class="formlabel">Capacity Utilised:</td>
+                            <td class="formInputcolumn">
+
+                                <input kendo-combo-box k-placeholder="'Select Capacity'"
+                                       k-min-length="2" k-auto-bind="false"
+                                       k-filter="'contains'"
+                                       ng-model="SearchRequest.CapacityUtilized"
+                                       k-filterfield="'LOOKUPNAME'"
+                                       k-options='K_Options("Text_CapacityUtilized", "SpaceControl_LookUp")' />
+                            </td>
+
+                            <td class="formlabel">Order By:</td>
+                            <td class="formInputcolumn">
+
+                                <input kendo-combo-box k-placeholder="'Select Order By'"
+                                       k-min-length="2" k-auto-bind="false"
+                                       k-filter="'contains'"
+                                       ng-model="SearchRequest.OrderBy"
+                                       k-filterfield="'LOOKUPNAME'"
+                                       k-options='K_Options("Text_OrderBy", "SpaceControl_LookUp")' />
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="formlabel">
+
+                                <span>AWB No/Ref No/CN38No:</span>
+                            </td>
+                            <td class="formInputcolumn">
+
+                                <input kendo-combo-box k-placeholder="'Select AWBNo'"
+                                       k-min-length="3" k-auto-bind="false"
+                                       k-filter="'contains'"
+                                       ng-model="SearchRequest.AWBNo"
+                                       k-filterfield="'AWBNumber'" k-data-text-field="'Text'" k-data-value-field="'Key'"
+                                       k-options='K_Options("Text_AWBNo", "SpaceControl_AWBNo")' />
+                            </td>
+                            <td class="formlabel">
+                                <span>Product Type:</span>
+                            </td>
+                            <td class="formInputcolumn">
+
+                                <input kendo-combo-box k-placeholder="'Select Product'"
+                                       k-min-length="3" k-auto-bind="false"
+                                       k-filter="'contains'"
+                                       ng-model="SearchRequest.ProductSNo"
+                                       k-filterfield="'ProductName'" k-data-text-field="'Text'" k-data-value-field="'Key'"
+                                       k-options='K_Options("Text_Product", "Reservation_Product")' />
+                            </td>
+
+                            @*<td class="formInputcolumn">
+                                    <input type="checkbox" id="eq1" class="k-checkbox" ng-model="SearchRequest.IsGraphical">
+                                    <label class="k-checkbox-label" for="eq1">View graphical representation of data</label>
+                                </td>
+
+                                <td colspan="2" class="formInputcolumn">
+                                    <ul class="options" ng-if="SearchRequest.IsGraphical">
+                                        <li>
+                                            <input id="typeColumn" ng-model="ChooseChartType" class="k-radio" name="seriesType"
+                                                   type="radio" value="column" checked="checked" />
+                                            <label class="k-radio-label" for="typeColumn">Columns</label>
+                                        </li>
+                                        <li>
+                                            <input id="typeBar" ng-model="ChooseChartType" class="k-radio" name="seriesType"
+                                                   type="radio" value="bar" />
+                                            <label class="k-radio-label" for="typeBar">Bars</label>
+                                        </li>
+                                        <li>
+                                            <input id="typeLine" ng-model="ChooseChartType" class="k-radio" name="seriesType"
+                                                   type="radio" value="line" />
+                                            <label class="k-radio-label" for="typeLine">Lines</label>
+                                        </li>
+                                        <li>
+                                            <input id="stack" type="checkbox" class="k-checkbox" checked="checked" />
+                                            <label class="k-checkbox-label" for="stack">Stacked</label>
+                                        </li>
+                                    </ul>
+
+                                </td>*@
+                            <td><input type="button" ng-disabled="SearchRequest.FlightNo==''||SearchRequest.FlightDate==''" class="btn btn-success" ng-click="FlightwiseAWBNo();" style="width:80px;" value="AWB Details"></td>
+                            <td>
+
+                                <input type="button" class="btn btn-success" ng-click="SearchFlights();" style="width:80px;" value="Search">
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="content_box" id="divSpaceControlChart" ng-show="SearchRequest.IsGraphical" style="height:340px; width:100%"></div>
+            }
+        </div>
+    }
+    else
+    {
+        <ul>
+            <li class="k-state-active"><span class="k-link">Replan AWB Flight</span></li>
+        </ul>
+        <div>
+            <div id="ReplanFlightDetailsTabDive"></div>
+        </div>
+    }
+
+</div>
+
+<div kendo-window="kwinRemarks" k-title="'HDQ Priority Remarks'" k-width="400" k-height="130" k-visible="false">
+
+    <textarea ng-model="HDQRemarks.HDQRemarks" style="width:97%;overflow:hidden;" rows="5" data-valid='required' data-valid-msg='Remarks field is required' required maxlength="195"></textarea>
+    <span class="txtRem">{{195-HDQRemarks.HDQRemarks.length}}</span>
+
+    <input type="button" class="btn btn-success" ng-click="UpdateHDQRemarks();" value="Save" />
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        //initialize();
+    });
+
+    function initialize() {
+        var myLatLng = new google.maps.LatLng(1.35019, 103.994003);
+        var myOptions = {
+            zoom: 3,
+            center: myLatLng,
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
+            myOptions);
+        var flightPlanCoordinates = [
+            new google.maps.LatLng(-6.1255698204, 106.65599823),
+            new google.maps.LatLng(1.35019, 103.994003),
+            new google.maps.LatLng(28.566499710083008, 77.10310363769531),
+
+
+            //new google.maps.LatLng(-27.46758, 153.027892)
+        ];
+        var flightPath = new google.maps.Polyline({
+            path: flightPlanCoordinates,
+            strokeColor: "#FF0000",
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+        });
+
+        flightPath.setMap(map);
+    }
+</script>
+
+@*<script async defer src="https://maps.google.com/maps/api/js?callback=initialize" type="text/javascript"></script>*@
+@*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLI5Kn4_Cd-gciXvDTct_5QgoWYtGbpps&callback=initialize"></script>*@
+<style>
+    .k-state-active, .k-state-active:hover, .k-active-filter {
+        background-color: #ffffff !important;
+    }
+
+    .k-state-focused {
+        background-color: none;
+    }
+
+    .k-state-selected.k-state-focused {
+        background-color: #7bd2f6 !important;
+    }
+
+    .formlabel {
+        width: 13% !important;
+    }
+
+    .formInputcolumn {
+        width: 23% !important;
+    }
+
+    .k-filter-row th {
+        overflow: hidden;
+        border-style: solid;
+        border-width: 0 0 1px 1px;
+        padding: .5em .6em .4em .6em;
+        font-weight: normal;
+        white-space: normal !important;
+        text-overflow: ellipsis;
+        text-align: left;
+    }
+
+    .k-grid-header th.k-header {
+        vertical-align: inherit !important;
+    }
+
+    .linkbtn {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .gridemptyrow {
+        color: Red;
+    }
+
+    .k-grid-content > .k-no-data, .mandatory {
+        content: "No records found." !important;
+        color: #f00 !important;
+    }
+
+
+
+
+    /*#AWBDetailsSerachGridDiv > .k-grid-content {
+        max-height: 250px;
+    }*/
+    /*.k-grid tbody .k-button {
+        min-width: 12px;
+        width: 18px;
+        color: transparent;
+        background-color: transparent;
+        border: transparent;
+        height: 22px;
+    }*/
+    .k-radio, input.k-checkbox {
+        display: inline;
+        opacity: 0;
+        width: 0;
+        margin: 0;
+        -webkit-appearance: none;
+        overflow: hidden;
+    }
+
+    .k-radio-label {
+        padding-right: 5px;
+        font-size: 11px;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        background-color: #3f51b5;
+        border-radius: 50%;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        top: 4px;
+        left: 4px;
+    }
+
+    .k-checkbox-label, .k-radio-label {
+        display: inline-block;
+        position: relative;
+        padding-left: 19px;
+        vertical-align: text-top;
+        line-height: 16px;
+        cursor: pointer;
+        border-style: solid;
+        border-width: 0;
+    }
+
+    .k-radio:checked + .k-radio-label:before, .k-radio:checked + .k-radio-label:hover:before {
+        border-color: #3f51b5;
+    }
+
+    .k-radio-label:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 12px;
+        height: 12px;
+        border-style: solid;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+    }
+
+    .k-radio-label:before {
+        border-color: #7f7f7f;
+        border-radius: 50%;
+        background-color: #fff;
+        border-width: 2px;
+    }
+
+    .k-tabstrip .k-tabstrip-items li .removeIcon[data-type='remove'] {
+        padding-left: 0.46em;
+    }
+
+    .k-checkbox:checked + .k-checkbox-label:before {
+        content: "\2713";
+    }
+
+    .k-checkbox-label:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-width: 1px;
+        border-style: solid;
+        width: 14px;
+        height: 14px;
+        font-size: 14px;
+        line-height: 14px;
+        text-align: center;
+    }
+
+    .k-checkbox-label:hover:before, .k-checkbox:checked + .k-checkbox-label:hover:before {
+        border-color: #7f7f7f;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .k-checkbox:checked + .k-checkbox-label:before {
+        background-color: #3f51b5;
+        border-color: #3f51b5;
+        color: #fff;
+    }
+
+    .k-checkbox + .k-checkbox-label:after {
+        border-style: none !important;
+        display: none !important;
+    }
+
+    .k-radio, input.k-checkbox {
+        display: inline;
+        opacity: 0;
+        width: 0;
+        margin: 0;
+        -webkit-appearance: none;
+        overflow: hidden;
+    }
+
+    .k-checkbox-label, .k-radio-label {
+        line-height: 18px;
+    }
+
+    .inProgress {
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+        font-size: 10px;
+        width: 50px;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .k-grid td {
+        padding: 0.4em !important;
+    }
+
+    .hcap {
+        color: #9d331d;
+        font-weight: 700;
+    }
+
+    .hRev {
+        color: #00a000;
+        font-weight: 700;
+    }
+
+    .tdRev {
+        color: #e04800;
+    }
+
+    .hYield {
+        color: #0030a0;
+        font-weight: 700;
+    }
+
+    .tdYield {
+        color: #b232b2;
+    }
+
+    .hQueue {
+        color: #f91c1c;
+        font-weight: 700;
+    }
+
+    .hConf {
+        color: #179801;
+        font-weight: 700;
+    }
+
+    .tdQueue {
+        color: #fff;
+        background-color: red;
+        padding: 0.0em 0.5em 0.1em 0.5em;
+    }
+
+    .tdConf {
+        color: #fff;
+        background-color: green;
+        padding: 0.0em 0.5em 0.1em 0.5em;
+    }
+
+    .wa {
+        width: auto !important;
+    }
+
+    .hawb {
+        color: #e02802;
+        font-weight: 500;
+    }
+
+    .hawbd {
+        color: #f89406;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .k-grid .k-hierarchy-col {
+        width: 20px;
+    }
+
+    .discontinued {
+        font-weight: bold;
+        color: #f00;
+    }
+
+    .Hold {
+        color: #f00;
+    }
+
+    .LL {
+        color: #f00;
+    }
+
+    .KK {
+        color: #00a000;
+    }
+
+
+    .k-grid-cancel-changes {
+        background-color: #d00c02;
+        color: white;
+    }
+
+        .k-grid-cancel-changes:hover {
+            background-color: red;
+        }
+
+    .k-grid-save-changes {
+        background-color: green;
+        color: white;
+    }
+
+        .k-grid-save-changes:hover {
+            background-color: #08c308;
+        }
+
+    .k-checkbox:disabled + .k-checkbox-label {
+        color: #999;
+    }
+
+        .k-checkbox:disabled + .k-checkbox-label:before {
+            background: #696969;
+            border-color: #696969;
+            border-radius: 1px;
+        }
+
+
+    .options > li {
+        float: left;
+        list-style: none;
+    }
+
+    .options {
+        padding: 0;
+        margin: 0;
+    }
+
+    .k-i-close {
+        background-position: -32px -17px !important;
+    }
+
+    .warning {
+        color: #fff;
+        background: #f89406;
+    }
+
+    .k-grid-content-locked {
+        height: auto !important;
+    }
+
+    .pbtn {
+        width: 100%;
+        height: 20px;
+        background-color: transparent;
+        border: none;
+        font-size: 9px;
+        padding: 0px;
+    }
+
+    .k-window-content .bVErrMsgContainer {
+        display: none;
+    }
+</style>
+
+@Scripts.Render("~/bundles/spacecontrol")
+@*<script src="~/Scripts/KendoSchedular/Content/JS/kendo.dataviz.min.js"></script>*@

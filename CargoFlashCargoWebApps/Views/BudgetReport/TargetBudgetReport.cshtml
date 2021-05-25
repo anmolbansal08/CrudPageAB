@@ -1,0 +1,69 @@
+﻿<div id="tabstripSearch">
+    <ul>
+        <li class="k-state-active" style="font-weight: bold;">
+            Budget Report Search
+        </li>
+        
+    </ul>
+    <div>
+        <table id="tbl" style="width:100%">            
+            <tr>
+                <td style="font-weight: bold;"><font color="red">*</font><span>From Date:</span></tdstyle="font-weight:>
+                <td>
+                    <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                           data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' placeholder='From Date' />
+                </td>
+                <td style="font-weight: bold;"><font color="red">*</font><span style="font-weight: bold;">To Date:</span></td>
+                <td>
+                    <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                           data-role="datepicker" data-valid-msg='Select To Date' controltype='datetype' placeholder='To Date' />
+                </td>
+                <td style="font-weight: bold;"><font color="red">*</font><span>Origin:</span></td>
+                <td>
+                    @Html.Hidden("OriginSNo")
+                    @Html.TextBox("Text_OriginSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Origin can not be blank" })
+                </td>
+                <td style="font-weight: bold;"><font color="red"></font><span>Destination:</span></td>
+                <td>
+                    @Html.Hidden("DestinationSNo")
+                    @Html.TextBox("Text_DestinationSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                </td>
+                <td style="font-weight: bold;">
+                    <span>Grid:</span><input checked="checked" id="ReportGrid" name="ReportType" type="radio" value="Grid" />
+                    <span>Graph:</span><input id="ReportGraph" name="ReportType" type="radio" value="Graph" />
+                </td>
+                <td><input type='submit' name='operation' onclick="GetTargetBudgetData()" value='Generate Report' id="btnSearch" class='btn btn-success btnSearch' /></td>
+            </tr>
+        </table>
+    </div>
+   
+</div>
+<br/>
+<div id="tabstripReport">
+    <ul>
+        <li class="k-state-active" style="font-weight: bold;">
+            Target Budget Report
+        </li>
+        <li style="font-weight: bold;">
+            Revenue Comparison Graph
+        </li>
+        <li style="font-weight: bold;">
+            Tonnage Comparison Graph
+        </li>
+    </ul>
+    <div>
+
+    </div>
+    <div>
+        
+    </div>
+    <div>
+    </div>
+</div>
+<div id="BudgetPopUp" style="align-items:center;"> 
+    <div id="PopChart" style="height:350px;"></div>
+</div>
+<script src="~/Scripts/KendoSchedular/Content/JS/jszip.js"></script>
+@*<script src="~/Scripts/KendoSchedular/Content/JS/kendo.dataviz.min.js"></script>*@
+<script src="~/JScript/BudgetReport/BudgetReport.js"></script>
+

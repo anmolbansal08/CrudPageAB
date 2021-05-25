@@ -1,0 +1,40 @@
+﻿<Messages>
+  <!--#region WarehouseLocation XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  WarehouseLocation
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Swati Rastogi.
+  Created On:		06 Nov 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>LocationNo</Name>
+    <Message>Location No can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Location No already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Location No Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Location No Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Location No Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

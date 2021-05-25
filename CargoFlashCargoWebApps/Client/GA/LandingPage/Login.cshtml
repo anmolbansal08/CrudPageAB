@@ -1,0 +1,1053 @@
+﻿
+<!DOCTYPE HTML>
+@{
+    //Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Log in";
+
+    if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null)
+    {
+        @Html.Hidden("HdnUName", Request.Cookies["UserName"].Value)
+        @Html.Hidden("HdnPass", Request.Cookies["Password"].Value)
+    }
+
+    // Initialize general page variables
+    var email = ""; var CaptchaCode = "";
+    var password = "";
+    var rememberMe = false;
+    var browser = "";
+    //var ip = "";
+    var SessionID = "";
+
+    CargoFlash.Cargo.DataService.Common.CommonService CS = new CargoFlash.Cargo.DataService.Common.CommonService();
+    int ISCaptcha = Convert.ToInt32(CS.GetSystemSetting("ISCaptcha"));
+    string loginPage = CS.GetSystemSetting("LoginPage");
+
+    var hostname = "";
+    var returnUrl = Request.QueryString["ReturnUrl"];
+    if (returnUrl.IsEmpty())
+    {
+        // Some external login providers always require a return URL value
+
+        returnUrl = Href("~/");
+    }
+    var islogout = Request.QueryString["islogout"];
+    if (!string.IsNullOrEmpty(islogout))
+    {
+        CargoFlash.Cargo.DataService.LoginService loginservice = new CargoFlash.Cargo.DataService.LoginService();
+        bool isLogout = loginservice.LogoutSession(((CargoFlash.Cargo.Model.UserLogin)Session["UserDetail"]));
+        if (isLogout)
+        {
+            Session.Clear();
+            Session.Abandon();
+            Session["UserDetail"] = null;
+            if (Request.Cookies["UserDetail"] != null)
+            {
+                HttpCookie myCookie = new HttpCookie("UserDetail");
+                myCookie.Expires = DateTime.Now.AddDays(-1);
+                myCookie.Value = "0";
+                Response.Cookies.Add(myCookie);
+                Response.Cookies.Remove("UserDetail");
+            }
+            Response.Redirect("~/Account/" + loginPage);
+        }
+    }
+
+
+    // If this is a POST request, validate and process data
+    if (IsPost)
+    {
+        // Setup validation
+        if (string.IsNullOrEmpty(Request["email"]))
+        {
+            Validation.AddFormError("User ID is required.");
+        }
+        if (string.IsNullOrEmpty(Request["Password"]))
+        {
+            Validation.AddFormError("Password is required.");
+        }
+
+        if (ISCaptcha == 2)
+        {
+            if (string.IsNullOrEmpty(Request["CaptchaCode"]))
+            {
+                Validation.AddFormError("Captcha is required.");
+            }
+        }
+        Validation.Add("password",
+            Validator.StringLength(
+                maxLength: Int32.MaxValue));
+        //,
+        //minLength: 5,
+        //errorMessage: "Invalid UserID and Password."));
+
+        if (Session["UserDetail"] != null)
+        {
+            Response.Redirect("~/Index.cshtml");
+        }
+
+        if (Validation.IsValid())
+        {
+            try
+            {
+                email = Request.Form["email"];
+                password = Request.Form["password"];
+                rememberMe = Request.Form["rememberMe"].AsBool();
+                browser = Request.Browser.Type;
+                hostname = Dns.GetHostName();
+                SessionID = HttpContext.Current.Session.SessionID;
+
+                if (ISCaptcha == 2)
+                {
+                    CaptchaCode = Request.Form["CaptchaCode"];
+                }
+                else if (ISCaptcha == 3)
+                {
+                    CaptchaCode = Request["g-recaptcha-response"];
+                }
+
+
+
+                CargoFlash.Cargo.Model.UserLogin userLogin = new CargoFlash.Cargo.Model.UserLogin();
+                CargoFlash.Cargo.DataService.LoginService loginservice = new CargoFlash.Cargo.DataService.LoginService();
+
+                string ip = loginservice.GetIPAddress();
+
+                AntiForgery.Validate();
+
+                try
+                {
+                    userLogin = loginservice.GetLoginRecord(email, password, ip, hostname, browser, SessionID, CaptchaCode);
+                    loginservice.RememberMe(rememberMe, email, password);
+
+                    if (Request.Cookies["UserDetail"] == null)
+                    {
+                        HttpCookie myCookie = new HttpCookie("UserDetail");
+                        myCookie.Value = userLogin.SysSetting["SessionTimeout"];
+                        myCookie.Expires = DateTime.Now.AddDays(1);
+                        Response.Cookies.Add(myCookie);
+                    }
+                    Session["UserDetail"] = userLogin;
+                    Response.Redirect("~/Index.cshtml");
+                }
+                catch (System.ServiceModel.FaultException ex)
+                {
+                    Validation.AddFormError(ex.Message);
+                    if (ex.Message.ToLower() == "password expired.")
+                    {
+                        @Html.Hidden("HdnPasswordExpire", "true");
+                        @Html.Hidden("HdnUserEmail", email);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string strerror = ex.Message;
+                Validation.AddFormError(strerror);
+            }
+        }
+    }
+}
+
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Home » Garuda Indonesia Cargo</title>
+    <link rel="shortcut icon" href="https://cargo1.garuda-indonesia.com/themes/cargoga/images/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="~/Images/Login/combinedCSS.css" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cargo.garuda-indonesia.com/web/css/animate.css">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="https://cargo.garuda-indonesia.com/web/css/icomoon.css">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="https://cargo.garuda-indonesia.com/web/css/bootstrap.css">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="https://cargo.garuda-indonesia.com/web/css/magnific-popup.css">
+    <!-- Flexslider  -->
+    <link rel="stylesheet" href="https://cargo.garuda-indonesia.com/web/css/flexslider.css">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="https://cargo.garuda-indonesia.com/web/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cargo.garuda-indonesia.com/web/css/owl.theme.default.min.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="https://cargo.garuda-indonesia.com/web/css/bootstrap-datepicker.css">
+    <!-- Flaticons  -->
+    <link rel="stylesheet" href="https://cargo.garuda-indonesia.com/web/fonts/flaticon/font/flaticon.css">
+    <!-- Theme style  -->
+    <link rel="stylesheet" href="https://cargo.garuda-indonesia.com/web/css/style.css">
+    <link rel="stylesheet" href="https://cargo.garuda-indonesia.com/web/css/form/css/style.css">
+    <link rel="stylesheet" href="https://cargo.garuda-indonesia.com/web/css/navbar/css.css">
+    <link type="text/css" rel="stylesheet" href="~/Styles/CfiMessage.css" />
+    <!--ICONS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Modernizr JS -->
+    <script src="https://cargo.garuda-indonesia.com/web/js/modernizr-2.6.2.min.js"></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div id="divForgotPassword" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button data-dismiss="modal" class="close">&times;</button>
+                    <table style="margin: 0px auto;">
+                        <div class="col-xxs-12 col-xs-12 mt">
+                            <div class="input-field">
+                                <label for="from">User ID:</label>
+                                <input type="text" class="form-control" id="UserName" onblur="requiredfn(this.id)" />
+                            </div>
+                        </div>
+                        <div class="col-xxs-12 col-xs-12 mt">
+                            <div class="input-field">
+                                <label for="from">Email Address:</label>
+                                <input type="text" class="form-control" id="EmailID" maxlength="75" onblur="requiredfn(this.id)" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-xxs-12 col-xs-12 mt">
+                            <div class="input-field">
+                                <label id="mValidateMessage"></label>
+                                <button type="button" class="btn btn-primary btn-block" id="Reset" onclick="resetPassword($('#UserName').val(), $('#EmailID').val())">Reset</button>
+                            </div>
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="colorlib-loader"></div>
+    <div id="page">
+
+        <nav class="colorlib-nav" role="navigation">
+            <div class="top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-1 text-left">
+                            <p class="site">NEWS</p>
+                        </div>
+                        <div class="col-xs-8">
+                            <p class="site">
+                                <marquee behavior="scroll" direction="up" height="20px" scrolldelay="500">
+                                    Garuda Indonesia Cargo Pastikan Pelayanan Pengiriman Barang Tetap Berjalan
+                                </marquee>
+                            </p>
+                        </div>
+                        <div class="col-xs-3 text-right">
+                            <ul class="colorlib-social">
+                                <li><a href="https://twitter.com/garuda_cargo"><img src="https://cargo.garuda-indonesia.com/web/images/icons8-twitter-24.png" /></a></li>
+                                <li><a href="https://www.facebook.com/garudaindonesia.cargo/"><img src="https://cargo.garuda-indonesia.com/web/images/icons8-facebook-24.png" /></a></li>
+                                <li><a href="https://www.instagram.com/garuda.cargo/"><img src="https://cargo.garuda-indonesia.com/web/images/icons8-instagram-filled-24.png" /></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <nav class="navbar navbar-default" style="background-color: #fff;">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse"></button>
+                <a class="navbar-brand headerlogo"><img src="https://cargo.garuda-indonesia.com/web/images/Garuda-Indonesia-Cargo.png" height="70" alt="Garuda Indonesia" /></a>
+                <a class="navbar-brand headerbrand"><div class="vl"></div></a>
+                <a class="navbar-brand headerbrand">GARUDA INDONESIA AIR CARGO SERVICES</a>
+                <a class="navbar-brand headerbrand"><div class="vl"></div></a>
+
+            </div>
+
+            <div class="collapse navbar-collapse js-navbar-collapse">
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="dropdown mega-dropdown">
+                        <a href="https://cargo.garuda-indonesia.com">HOME <span class="glyphicon glyphicon-chevron-down pull-right"></span></a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown mega-dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">PRODUCTS AND SERVICES <span class="glyphicon glyphicon-chevron-down pull-right"></span></a>
+                        <ul class="dropdown-menu mega-dropdown-menu row">
+                            <li class="col-sm-3">
+                                <ul>
+                                    <form action="https://cargo.garuda-indonesia.com/Search" method="POST">
+                                        <input type="hidden" name="_token" value="rOOFAkhE445QNaEQn2UELQPDkxASpHEgHPjrS4io">
+                                        <li class="dropdown-header"><input class="form-control" name="content" type="text" placeholder="Search" aria-label="Search" required></li>
+                                        <li class="dropdown-header"><button type="submit" class="btn btn-primary">Search</button></li>
+                                    </form>
+                                </ul>
+                            </li>
+                            <li class="col-sm-3">
+                                <ul>
+                                    <li class="dropdown-header">Services</li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/Dangerous-Goods">Dangerous Goods</a></li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/Perishable-Goods">Perishable Goods</a></li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/Live-Animals">Live Animals</a></li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/Pharmaceutical-Goods">Pharmaceutical Goods</a></li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/Valueable-Goods">Valueable Goods</a></li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/Human-Remains">Human Remains</a></li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/General-Cargo">General Cargo</a></li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/Freighter">Freighter</a></li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/Marine-Cargo-Insurance">Marine Cargo Insurance</a></li>
+                                </ul>
+                            </li>
+                            <li class="col-sm-3">
+                                <ul>
+                                    <li class="dropdown-header">Door to Door</li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/GO-Express-Platinum">Go Express - Platinum</a></li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/GO-Express-Gold">Go Express - Gold</a></li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/GO-Express-Silver">Go Express - Silver</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/Airport-to-Airport" class="dropdown-header">Airport to Airport</a></li>
+                                </ul>
+                            </li>
+                            <li class="col-sm-3">
+                                <ul>
+                                    <li class="dropdown-header">Tracking</li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/#tracking">Air waybill</a></li>
+                                    <li><a href="https://cargo.garuda-indonesia.com/#schedule">Schedule</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown mega-dropdown">
+                        <a href="https://cargo.garuda-indonesia.com/FAQ">FAQ <span class="glyphicon glyphicon-chevron-down pull-right"></span></a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown mega-dropdown">
+                        <a href="https://cargo.garuda-indonesia.com/Contact-Us">CONTACT US <span class="glyphicon glyphicon-chevron-down pull-right"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <aside id="colorlib-hero">
+            <div class="flexslider">
+                <ul class="slides">
+                    <li style="background-image: url('https://cargo.garuda-indonesia.com/web/images/upload/77ab80d8c6022668d8f7a564223ad407/Website%20Cargo-01.jpg');">
+                        <div class="overlay"></div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+                                    <div class="slider-text-inner text-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li style="background-image: url('https://cargo.garuda-indonesia.com/web/images/upload/654ad1bdec66b7e075714cbe78e43494/Website%20Carter-01.jpg');">
+                        <div class="overlay"></div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+                                    <div class="slider-text-inner text-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li style="background-image: url('https://cargo.garuda-indonesia.com/web/images/upload/a1b84d95fe50805f2434bf76d53051c3/LANDING%20PAGE-ENG%20ver%201.jpg');">
+                        <div class="overlay"></div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+                                    <div class="slider-text-inner text-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    @*<li style="background-image: url('https://cargo.garuda-indonesia.com/web/images/upload/068f3a492af5b08f1d20564003e5dc9e/MAIN BANNER WEB GO EX_edit-03.jpg');">
+                            <div class="overlay"></div>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+                                        <div class="slider-text-inner text-center">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>*@
+                </ul>
+            </div>
+        </aside>
+
+        <div id="colorlib-reservation">
+            <div class="container">
+                <div class="tabulation animate-box">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#divLogin" aria-controls="divLogin" role="tab" data-toggle="tab">Login</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#tracking" aria-controls="tracking" onclick="AddAirline()" role="tab" data-toggle="tab">Tracking</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#schedule" aria-controls="schedule" onclick="GetCityDestination()" role="tab" data-toggle="tab">Schedule</a>
+                        </li>
+
+
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="divLogin">
+                            <div class="row">
+                                <form method="post" autocomplete="off">
+
+                                    @AntiForgery.GetHtml()
+                                    @* If one or more validation errors exist, show an error *@
+                                    <div id="validationMessage" style="display:none;">
+                                        @Html.ValidationSummary("", excludeFieldErrors: true, htmlAttributes: null)
+                                    </div>
+                                    <div class="col-xxs-12 col-xs-12 mt">
+                                        <div class="input-field">
+                                            <label for="from">User ID:</label>
+                                            <input type="text" id="email" class="form-control" name="email" autocomplete="off" value="@email" @Validation.For("email") />
+                                        </div>
+                                    </div>
+                                    <div class="col-xxs-12 col-xs-12 mt">
+                                        <div class="input-field">
+                                            <label for="from">Password:</label>
+                                            <input type="password" class="form-control" id="password" autocomplete="off" name="password" @Validation.For("password") />
+                                        </div>
+                                    </div>
+                                    @if (ISCaptcha == 2)
+                                    {
+                                        <div class="col-xxs-12 col-xs-12 mt">
+                                            <div class="input-field">
+                                                <label for="from">Captcha:</label>
+                                                <input type="text" class="form-control" id="CaptchaCode" name="CaptchaCode" style="margin-bottom: 4px;" autocomplete="off" value="@CaptchaCode" @Validation.For("CaptchaCode") />
+                                            </div>
+                                            <br />
+                                            <img src="~/Handler/CaptchaHandler.ashx" id="imgCaptcha" />
+                                            <a href="#" onclick="RefreshCaptcha();">Refresh</a>
+                                        </div>
+
+                                    }
+                                    else if (ISCaptcha == 3)
+                                    {
+                                        <div class="col-xxs-12 col-xs-12 mt">
+                                            <div class="input-field">
+                                                <div class="g-recaptcha" data-sitekey="6LdYXhUUAAAAALCN4_9-F0tmH64kjpI88z79b8N1"></div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="col-xs-12">
+                                        <input type="submit" class="btn btn-primary btn-block" onclick="return CompareSession();" /><br />
+                                    </div>
+
+
+                                    <a class="login-trigger" href="divForgotPassword" data-target="#divForgotPassword" data-toggle="modal" id="fgp" style="color: #0b86c3;text-decoration:underline; cursor: pointer;font-style: oblique;margin-left:  20px;">Forgot password</a>
+
+                                    <div class="col-xxs-12 col-xs-12 mt">
+                                        <label for="from">ICMS <span id="version"></span> - Powered by:</label>
+                                        <a href="http://www.cargoflash.com" target="_blank"><img src="/Images/cargo-flash-logo-new.png" style="width:150px;height:45px;"></a>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tracking">
+                            <div class="row">
+                                <div class="col-xxs-12 col-xs-12 mt">
+                                    <div class="input-field">
+                                        <label for="from"> Based On :</label>
+                                        <input type="radio" tabindex="1" data-radioval="Yes" class="" name="BasedOn" checked="True" id="BasedOn" value="0">AWB No
+                                        <input type="radio" tabindex="1" data-radioval="No" class="" name="BasedOn" id="BasedOn" value="1">Reference Number
+                                    </div>
+                                </div>
+
+                                <div class="col-xxs-12 col-xs-12 mt">
+                                    <div class="input-field">
+                                        <label for="from">AWB No :</label>
+                                        <select name="Text_AirlineCode" id="Text_AirlineCode" class="cs-select cs-skin-border" style="width:100%"></select>
+                                    </div>
+                                </div>
+                                <div class="col-xxs-12 col-xs-12 mt">
+                                    <div class="input-field">
+                                        <textarea class="form-control" name="AWBNo" id="AWBNo" style="color:#F78536;"></textarea>
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <input type="button" class="btn btn-primary btn-block" name="SearchAWB" id="SearchAWB" onclick="GetAWBTracking();" value="Track">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane" id="schedule">
+                            <div class="row">
+                                <input type="hidden" name="_token" value="rOOFAkhE445QNaEQn2UELQPDkxASpHEgHPjrS4io">
+                                <div class="col-xxs-12 col-xs-12 mt">
+                                    <div class="input-field">
+                                        <label for="from">Origin:</label>
+                                        <select name="Text_Origin" id="Text_Origin" class="cs-select cs-skin-border"
+                                                style="width:100%"></select>
+
+                                    </div>
+                                </div>
+                                <div class="col-xxs-12 col-xs-12 mt">
+                                    <div class="input-field">
+                                        <label for="from">Destination:</label>
+                                        <select name="Text_Destination" id="Text_Destination" class="cs-select cs-skin-border"
+                                                style="width:100%"></select>
+
+                                    </div>
+                                </div>
+                                <div class="col-xxs-12 col-xs-6 mt">
+                                    <div class="input-field">
+                                        <label for="date-start">Date:</label>
+                                        <input type="date" class="form-control" name="FlightDate" id="FlightDate" />
+                                    </div>
+                                </div>
+                                <div class="col-xxs-12 col-xs-6 mt alternate">
+                                    <div class="input-field">
+                                        <label for="date-start">Leg:</label>
+                                        <select name="Text_leg" id="Text_leg" class="cs-select cs-skin-border">
+                                            <option value="">Select</option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-xs-12">
+                                    <input type="button" name='SearchSave' value='Find Schedule' class="btn btn-primary btn-block" id="btnSubmit" onclick="GetFlightSchedule();" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- start: page -->
+
+        <div id="colorlib-testimony" class="colorlib-light-grey">
+            <div class="container">
+                <h2>Products and Services</h2>
+                <div class="row">
+                    <div class="col-md-2 animate-box">
+                        <a href="https://cargo.garuda-indonesia.com/Dangerous-Goods"><img src="https://cargo.garuda-indonesia.com/web/images/icon-dangerousgoods.png" alt="" width="100%"></a>
+                    </div>
+                    <div class="col-md-2 animate-box">
+                        <a href="https://cargo.garuda-indonesia.com/Perishable-Goods"><img src="https://cargo.garuda-indonesia.com/web/images/icon-perishablegoods.png" alt="" width="100%"></a>
+                    </div>
+                    <div class="col-md-2 animate-box">
+                        <a href="https://cargo.garuda-indonesia.com/Live-Animals"><img src="https://cargo.garuda-indonesia.com/web/images/icon-liveanimals.png" alt="" width="100%">
+                    </div>
+                    <div class="col-md-2 animate-box">
+                        <a href="https://cargo.garuda-indonesia.com/Pharmaceutical-Goods"><img src="https://cargo.garuda-indonesia.com/web/images/icon-pharmacygoods.png" alt="" width="100%"></a>
+                    </div>
+                    <div class="col-md-2 animate-box">
+                        <a href="https://cargo.garuda-indonesia.com/Valueable-Goods"><img src="https://cargo.garuda-indonesia.com/web/images/icon-valuablegoods.png" alt="" width="100%"></a>
+                    </div>
+                    <div class="col-md-2 animate-box">
+                        <a href="https://cargo.garuda-indonesia.com/Human-Remains"><img src="https://cargo.garuda-indonesia.com/web/images/icon-humanremains.png" alt="" width="100%"></a>
+                    </div>
+                    <div class="col-md-2 animate-box">
+                        <a href="https://cargo.garuda-indonesia.com/General-Cargo"><img src="https://cargo.garuda-indonesia.com/web/images/icon-generalcargo.png" alt="" width="100%"></a>
+                    </div>
+                    <div class="col-md-2 animate-box">
+                        <a href="https://cargo.garuda-indonesia.com/Freighter"><img src="https://cargo.garuda-indonesia.com/web/images/icon-freighter.png" alt="" width="100%"></a>
+                    </div>
+                    <div class="col-md-2 animate-box">
+                        <a href="https://cargo.garuda-indonesia.com/Marine-Cargo-Insurance"><img src="https://cargo.garuda-indonesia.com/web/images/icon-marineinsurance.png" alt="" width="100%"></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="colorlib-blog">
+            <div class="container">
+                <h2>News and Events</h2>
+                <div class="blog-flex">
+                    <div class="video colorlib-video" style="">
+                        <div class="col-md-12 animate-box">
+                            <span class="date">06 May, 2020 - News</span>
+                            <h3>Garuda Indonesia Cargo Pastikan Pelayanan Pengiriman Barang Tetap Berjalan</h3>
+                            <img src="https://cargo.garuda-indonesia.com/web/images/upload/945f206fa9d52b91a6a3017dc2121c3f/Logo%20Pesawat%20Website.jpg" alt="" width="100%">
+                            <br>
+                            <br>
+                            <p>
+                                [Updated 21 Mei 2020]
+                                Garuda Indonesia Cargo memastikan pelayanan pengiriman barang dengan penerbangan khusus kargo akan tetap berjalan | <a href="https://cargo.garuda-indonesia.com/Content-Detail/13">Details<i class="fa fa-long-arrow-right"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="blog-entry">
+                        <div class="row">
+                            <div class="col-md-12 animate-box">
+                                <a href="https://cargo.garuda-indonesia.com/Content-Detail/13" class="blog-post">
+                                    <span class="img" style="background-image: url('https://cargo.garuda-indonesia.com/web/images/upload/945f206fa9d52b91a6a3017dc2121c3f/Logo Pesawat Website.jpg');"></span>
+                                    <div class="desc">
+                                        <span class="date">06 May, 2020 - News</span>
+                                        <h3>Garuda Indonesia Cargo Pastikan Pelayanan Pengiriman Barang Tetap Berjalan</h3>
+                                        <span class="cat">
+                                            [Updated 21 Mei 2020]
+                                            Garuda Indonesia Cargo memastikan pelayanan pengiriman barang dengan penerban...
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-12 animate-box">
+                                <a href="https://cargo.garuda-indonesia.com/Content-Detail/12" class="blog-post">
+                                    <span class="img" style="background-image: url('https://cargo.garuda-indonesia.com/web/images/upload/945f206fa9d52b91a6a3017dc2121c3f/Logo Pesawat Website.jpg');"></span>
+                                    <div class="desc">
+                                        <span class="date">16 March, 2020 - News</span>
+                                        <h3>29 Maret 2020, Garuda Indonesia Group Layani Seluruh Penerbangan Dari dan Menuju Yogyakarata di YIA</h3>
+                                        <span class="cat">Mulai 29 Maret 2020, aruda Indonesia Group Layani Seluruh Penerbangan dari dan Menuju Yogyakarata di...</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-12 animate-box">
+                                <a href="https://cargo.garuda-indonesia.com/Content-Detail/11" class="blog-post">
+                                    <span class="img" style="background-image: url('https://cargo.garuda-indonesia.com/web/images/upload/945f206fa9d52b91a6a3017dc2121c3f/Logo Pesawat Website.jpg');"></span>
+                                    <div class="desc">
+                                        <span class="date">04 February, 2020 - News</span>
+                                        <h3>Garuda Indonesia Menunda Sementatara  Layanan Penerbangan Dari dan Menuju Tiongkok</h3>
+                                        <span class="cat">Maskapai nasional Garuda Indonesia menunda sementara rute penerbangan dari dan menuju Tiongkok menyu...</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-12 animate-box text-right">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="colorlib-rooms" class="colorlib-light-grey">
+            <div class="container">
+                <h2>Promo Highlight</h2>
+                <div class="row">
+                    <div class="col-md-12 animate-box">
+                        <div class="owl-carousel owl-carousel2">
+
+                            <div class="item">
+                                <a href="https://cargo.garuda-indonesia.com/web/images/upload/c017a869741362db6aa72adba912c7dd/Kartini%20Medsos.jpg" class="room image-popup-link" style="background-image: url('https://cargo.garuda-indonesia.com/web/images/upload/c017a869741362db6aa72adba912c7dd/Kartini%20Medsos.jpg');"></a>
+                                <div class="desc text-center">
+                                    <h3>Diskon 5% Kartini Tangguh</h3>
+                                    <p>Nikmati diskon 5% bagi pelanggan Perempuan menyambut Hari kartini 2019</p>
+                                    <p><a href="https://cargo.garuda-indonesia.com/Content-Detail/2" class="btn btn-primary">View Details</a></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center animate-box">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="colorlib-testimony" class="colorlib-light-grey">
+            <div class="container">
+                <h2>Garuda Indonesia Group</h2>
+                <div class="row">
+                    <div class="col-md-3 animate-box">
+                        <img src="https://cargo.garuda-indonesia.com/web/images/citilink.png" alt="" width="100%">
+                    </div>
+                    <div class="col-md-3 animate-box">
+                        <img src="https://cargo.garuda-indonesia.com/web/images/aerowisata.png" alt="" width="100%">
+                    </div>
+                    <div class="col-md-3 animate-box">
+                        <img src="https://cargo.garuda-indonesia.com/web/images/gmf.png" alt="" width="100%">
+                    </div>
+                    <div class="col-md-3 animate-box">
+                        <img src="https://cargo.garuda-indonesia.com/web/images/gapura.png" alt="" width="100%">
+                    </div>
+                    <div class="col-md-3 animate-box">
+                        <img src="https://cargo.garuda-indonesia.com/web/images/asyst.png" alt="" width="100%">
+                    </div>
+                    <div class="col-md-3 animate-box">
+                        <img src="https://cargo.garuda-indonesia.com/web/images/goh.png" alt="" width="100%">
+                    </div>
+                    <div class="col-md-3 animate-box">
+                        <img src="https://cargo.garuda-indonesia.com/web/images/sabre.png" alt="" width="100%">
+                    </div>
+                    <div class="col-md-3 animate-box">
+                        <img src="https://cargo.garuda-indonesia.com/web/images/logo-garuda-sentra-medika.png" alt="" width="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end: page -->
+        <footer id="colorlib-footer" role="contentinfo">
+            <div class="container">
+                <div class="row row-pb-md">
+                    <div class="col-md-4 colorlib-widget">
+                        <h4><img src="https://cargo.garuda-indonesia.com/web/images/GA-cargo-transp_white.png" width="70%" alt="Garuda Indonesia Cargo" /></h4>
+                    </div>
+                    <div class="col-md-3 colorlib-widget">
+                        <h4>Quick Links</h4>
+                        <p>
+                            <ul class="colorlib-footer-links">
+                                <li><a href="https://cargo.garuda-indonesia.com">Product & Service</a></li>
+                                <li><a href="https://cargo.garuda-indonesia.com/Gerai-Cargo">Door to door </a></li>
+                                <li><a href="https://cargo.garuda-indonesia.com/Airport-to-Airport">Airport to Airport</a></li>
+                                <li><a href="https://cargo.garuda-indonesia.com/FAQ">FAQ </a></li>
+                                <li><a href="https://cargo.garuda-indonesia.com/TNC">Terms and Conditions </a></li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div class="col-md-3 colorlib-widget">
+                        <h4>Contact us</h4>
+                        <ul class="colorlib-footer-links">
+                            <p>Garuda Indonesia Cargo Center Cargo Area Soekarno-Hatta International Airport Cengkareng 19100 P.O. Box 1200, TNG BUSH</p>
+                            <p>
+                                Office Phone: +62 21 5500 130 <br>
+                                Office Fax: +62 21 5500 130
+                            </p>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 colorlib-widget">
+                        <h4>Follow us</h4>
+                        <ul class="colorlib-social-icons">
+                            <li><a href="https://twitter.com/garuda_cargo"><img src="https://cargo.garuda-indonesia.com/web/images/icons8-twitter-24.png" /></a></li>
+                            <li><a href="https://www.facebook.com/garudaindonesia.cargo/"><img src="https://cargo.garuda-indonesia.com/web/images/icons8-facebook-24.png" /></i></a></li>
+                            <li><a href="https://www.instagram.com/garuda.cargo/"><img src="https://cargo.garuda-indonesia.com/web/images/icons8-instagram-filled-24.png" /></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>
+                            <small class="block">
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart3" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            </small>
+                            <small class="block">Demo Images: <a href="http://unsplash.com/" target="_blank">Unsplash</a></small>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </footer>
+    </div>
+
+    <div class="gototop js-top">
+        <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://cargo.garuda-indonesia.com/web/js/jquery.min.js"></script>
+    <!-- jQuery Easing -->
+    <script src="https://cargo.garuda-indonesia.com/web/js/jquery.easing.1.3.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cargo.garuda-indonesia.com/web/js/bootstrap.min.js"></script>
+    <!-- Waypoints -->
+    <script src="https://cargo.garuda-indonesia.com/web/js/jquery.waypoints.min.js"></script>
+    <!-- Flexslider -->
+    <script src="https://cargo.garuda-indonesia.com/web/js/jquery.flexslider-min.js"></script>
+    <!-- Owl carousel -->
+    <script src="https://cargo.garuda-indonesia.com/web/js/owl.carousel.min.js"></script>
+    <!-- Magnific Popup -->
+    <script src="https://cargo.garuda-indonesia.com/web/js/jquery.magnific-popup.min.js"></script>
+    <script src="https://cargo.garuda-indonesia.com/web/js/magnific-popup-options.js"></script>
+    <!-- Date Picker -->
+    <script src="https://cargo.garuda-indonesia.com/web/js/bootstrap-datepicker.js"></script>
+    <!-- Main -->
+    <script src="https://cargo.garuda-indonesia.com/web/js/main.js"></script>
+    <script src="https://cargo.garuda-indonesia.com/web/js/form/js/main.js"></script>
+    @System.Web.Optimization.Scripts.Render("~/bundles/Login")
+    <script type="text/javascript" src="~/Scripts/CfiMessage.js"></script>
+    <script type="text/javascript">
+
+            //Added By Amit Yadav
+            var iFramed = (window.location != window.parent.location) ? true : false;
+            if (iFramed == true) {
+                window.parent.location.href = "GarudaLogin.cshtml";
+
+            }
+            //added by Pankaj
+            function ForgetPassword() {
+                if (document.getElementById("popForgetPassword") != null) {
+                    $("#popForgetPassword").remove();
+                }
+                $("#LogInBtn").after('<div id="popForgetPassword" title="Forget Password" style="font-family: Arial; font-size:10px;"></div>');
+                $("#popForgetPassword").append('<table style="margin: 0px auto;"><tr><td><label style="margin-top: 5%;" name="mUserName">User ID</label></td></tr><tr><td><input type="text" style="margin-bottom: 2%;    padding: 6px 10px;    box-sizing: border-box;    border: 1px solid #4CAF50;  border-radius: 4px;" id="UserName" maxlength="30" onblur="requiredfn(this.id)" /></td></tr><tr><td><label name="mEmailID">Email Address</label></td></tr><tr><td><input type="text" style="margin-bottom: 2%;    padding: 6px 10px;    box-sizing: border-box;    border: 1px solid #4CAF50;  border-radius: 4px;" id="EmailID" maxlength="75" onblur="requiredfn(this.id)" /></tr></td><tr><td><label id="mValidateMessage" style="color:red;"></label></td></tr></table>');
+                $("#popForgetPassword").dialog(
+                {
+                    autoResize: true,
+                    maxWidth: 350,
+                    maxHeight: 275,
+
+                    width: 350,
+                    height: 275,
+                    modal: true,
+                    title: 'Forgot my Password',
+                    draggable: false,
+                    resizable: false,
+                    buttons: {
+                        "Reset": function () {
+                            var userName = $('#UserName').val();
+                            var EmailID = $('#EmailID').val();
+                            resetPassword(userName, EmailID);
+                            //$(this).dialog("close");
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    close: function () {
+                        $(this).dialog("close");
+                    }
+                });
+            }
+            function requiredfn(id) {
+                var value = $('#' + id).val();
+                if (value != "") {
+                    $('#' + id).css("border", "1px solid #4CAF50");
+                }
+            }
+            function resetPassword(UserName, EmailID) {
+
+                if (UserName == "" || EmailID == "") {
+                    if (UserName == "")
+                        $('#UserName').css("border", "1px solid red");
+                    if (EmailID == "")
+                        $('#EmailID').css("border", "1px solid red");
+
+                    $('#mValidateMessage').text("User ID and Email Address are mandatory !!!");
+                    return false;
+                }
+                else {
+                    if (ValidateEMail(EmailID)) {
+                        var path = window.location.href.split('/Account')[0].split('//')[1];
+                        $.ajax({
+                            url: "../Services/Permissions/ChangePasswordService.svc/ForgetPassword",
+                            async: false,
+                            type: "POST",
+                            cache: false,
+                            data: JSON.stringify({ UserName: UserName, EmailID: EmailID, Path: path }),
+                            contentType: "application/json; charset=utf-8",
+                            success: function (result) {
+                                if (result == 0) {
+                                    alert("Password reset link has been sent on the respective E-mail Address.");
+                                    location.href = "" + window.location.protocol + "//" + path + "/Account/@loginPage"
+                                }
+                                else {
+                                    if (result == 1)
+                                        $('#mValidateMessage').text("User profile does not exist !!!");
+                                    else
+                                        $('#mValidateMessage').text("Error !!!");
+                                }
+                            },
+                            error: function (result) {
+                                $('#mValidateMessage').text("Invaild Attempt !!!");
+                            }
+                        });
+                    }
+                    else {
+                        $('#mValidateMessage').text("Please enter valid email address !!!");
+                    }
+                }
+
+            }
+
+            function ValidateEMail(email) {
+                var regex = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,8}|[0-9]{1,3})(\]?)$/;
+                return regex.test(email);
+            }
+
+            $(function () {
+                if ($('.validation-summary-errors').length > 0 && $(".validation-summary-errors li:first").html() != "null" && $(".validation-summary-errors li:first").html() != "")
+                    InvokeMsg["warning"]($(".validation-summary-errors").html(), "");
+
+            });
+
+            function CompareSession() {
+                var userId = $("#email").val();
+                var captchaCode = $("#CaptchaCode").val();
+                var LoggedInMsg = "";
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    url: "../Services/CommonService.svc/CompareSession?userId=" + userId + "&CaptchaCode=" + captchaCode,
+                    success: function (response) {
+                        LoggedInMsg = response;
+                    },
+                    error: function (xhr) {
+                        InvokeMsg["warning"]("Captcha not valid!", "");
+                        return false;
+                    }
+                });
+
+                if (LoggedInMsg != "")
+                    return confirm(LoggedInMsg);
+
+                return true;
+            }
+
+            function GetAWBTracking() {
+
+                if ($("#AWBNo").val() == "") {
+                    ShowMessage('warning', 'Need Your Kind Attention', "AWB No / Reference Number Is Required");
+                }
+                else if ($("#Text_AirlineCode option:selected").val() == "" || $("#Text_AirlineCode option:selected").val() == "0") {
+                    ShowMessage('warning', 'Need Your Kind Attention', "Airline Code Is Required");
+                }
+                else {
+                    SearchAWBTracking();
+                }
+            }
+
+            function SearchAWBTracking() {
+                var BasedOn = parseInt($("input[name='BasedOn']:checked").val());
+                var AWBNo = $.trim($("#AWBNo").val());
+                var CarrierCode = $("#Text_AirlineCode option:selected").val();
+                window.open("../HtmlFiles/AWBTracking/AWBTracking.html?BasedOn=" + BasedOn + "&AWBNo=" + AWBNo + "&CarrierCode=" + CarrierCode);
+            }
+
+
+            function GetFlightSchedule() {
+                if ($("#Text_Origin option:selected").val() == "" || $("#Text_Origin option:selected").val() == "0") {
+                    ShowMessage('warning', 'Need Your Kind Attention', "Flight Origin Is Required", "bottom-right");
+                }
+                else if ($("#Text_Destination option:selected").val() == "" || $("#Text_Destination option:selected").val() == "0") {
+                    ShowMessage('warning', 'Need Your Kind Attention', "Flight Destination Is Required", "bottom-right");
+                }
+                else if ($("#FlightDate").val() == "" || $("#FlightDate").val() == undefined) {
+                    ShowMessage('warning', 'Need Your Kind Attention', "Flight Date Is Required", "bottom-right");
+                }
+                else if ($("#Text_leg option:selected").val() == "") {
+                    ShowMessage('warning', 'Need Your Kind Attention', "leg Is Required", "bottom-right");
+                }
+                else {
+                    SearchFlightSchedule();
+                }
+            }
+            function SearchFlightSchedule() {
+
+                var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+
+                var d = new Date($("#FlightDate").val());
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth();
+                var curr_year = d.getFullYear();
+
+                var FlightDateFormat = curr_date + "-" + m_names[curr_month]
+                + "-" + curr_year;
+
+                var Origin = $("#Text_Origin option:selected").val();
+                var Destination = $("#Text_Destination option:selected").val();
+                var FlightDate = FlightDateFormat;
+                var leg = $("#Text_leg option:selected").val();
+                window.open("../HtmlFiles/AWBTracking/SearchFlightSchedule.html?Origin=" + Origin + "&Destination=" + Destination + "&FlightDate=" + FlightDate + "&leg=" + leg);
+
+            }
+
+            function ShowMessage(msgType, title, htmlText) {
+
+                if (htmlText != "") {
+                    CallMessageBox(msgType, title, htmlText);
+                }
+            }
+            ///MessageBox
+            function CallMessageBox(msgType, title, msg, position, fadeInTime, fadeOutTime, timeout) {
+
+                if (fadeInTime == undefined)
+                    fadeInTime = 200;
+                if (fadeOutTime == undefined)
+                    fadeOutTime = 300;
+                if (timeout == undefined)
+                    timeout = 2600;
+                if (position == undefined)
+                    position = "cfMessage-top-right";
+                InvokeMsg.options = {
+                    "debug": false,
+                    "positionClass": position,
+                    "onclick": null,
+                    "fadeIn": fadeInTime,
+                    "fadeOut": fadeOutTime,
+                    "timeOut": timeout
+
+                }
+                InvokeMsg[msgType](msg, title)
+            }
+
+            var strAirlineCode = "";
+            var strCity = "";
+            var strDesAirports = "";
+            function AddAirline() {
+                $.ajax({
+                    url: "../DataSetToExcel/GetAirlineCode", async: false, type: "get", cache: false, contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        strAirlineCode = '<option value="0" >Select</option>';
+                        $(JSON.parse(result).Table).each(function (row, tr) {
+                            strAirlineCode += '<option value=' + tr.AirlineCode + ' >' + tr.AirlineCode + '</option>';
+                        });
+                    },
+                    error: function (jqXHR, textStatus) {
+                    }
+                });
+                $('#Text_AirlineCode').html('')
+                $('#Text_AirlineCode').append(strAirlineCode);
+            }
+
+
+            function GetCityDestination() {
+                $.ajax({
+                    url: "../DataSetToExcel/GetCityDestination", async: false, type: "get", cache: false, contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        var res = JSON.parse(result).Table;
+                        strCity = '<option value="0" >Select</option>';
+                        strDesAirports = '<option value="0" >Select</option>';
+                        $(res).each(function (row, tr) {
+                            strCity += '<option value=' + tr.CITYNAMES + ' >' + tr.CITYNAMES + '</option>';
+                        });
+                        //res.each(function (row, tr) {
+                        //    strDesAirports += '<option value=' + tr.CITYNAMES + ' >' + tr.CITYNAMES + '</option>';
+                        //});
+                    }
+                });
+
+                $('#Text_Origin').html('')
+                $('#Text_Destination').html('')
+                $('#Text_Destination').append(strCity);
+                $('#Text_Origin').append(strCity);
+            }
+
+            $('#tab-p3').click(function () {
+                GetCityDestination();
+            })
+            $('#tab-p2').click(function () {
+                AddAirline();
+
+            })
+
+    </script>
+    <style type="text/css">
+        .tabulation input[type="password"] {
+            height: 30px;
+            background: rgba(0, 0, 0, 0.05);
+            border: none;
+            box-shadow: none;
+            font-weight: bold;
+            font-size: 14px;
+            padding: 5px 10px !important;
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            -ms-border-radius: 0;
+            border-radius: 0;
+            color: #F78536 !important;
+        }
+
+        .modal-content {
+            font-weight: bold;
+            background: linear-gradient(to bottom right);
+        }
+    </style>
+</body>
+</html>
+

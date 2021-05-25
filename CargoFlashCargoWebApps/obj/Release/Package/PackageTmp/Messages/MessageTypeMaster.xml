@@ -1,0 +1,28 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>MessageTypeMaster</Name>
+    <Message>Message Type can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Message Type already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Message Type Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Message Type Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Message Type Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

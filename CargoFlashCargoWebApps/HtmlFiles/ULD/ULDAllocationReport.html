@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    
+    
+    <script src="../../Scripts/jspdf.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+        });
+    </script>
+    <style>
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .ULDAllocationthead td {
+            width: 30px;
+            background-color: #e3f0f6;
+            color: black;
+            text-align: center;
+            border: 1px solid #CCC;
+            font-weight: bold;
+            height: 25px !important;
+        }
+
+        .ULDAllocationtfoot td {
+            width: 30px;
+            background-color: #e3f0f6;
+            color: black;
+            text-align: center;
+            border: 1px solid #CCC;
+            font-weight: bold;
+            height: 40px !important;
+        }
+
+        .ULDAllocationtbody td {
+            width: 30px;
+            background-color: #f5f5f5;
+            color: black;
+            text-align: center;
+            border: 1px solid #CCC;
+            height: 20px;
+            font-weight: bold;
+        }
+
+        .ULDAllocationtbody1 td {
+            width: 30px;
+            background-color: #f5f5f5;
+            color: black;
+            text-align: center;
+            border: 1px solid #CCC;
+            height: 20px;
+            font-weight: bold;
+        }
+
+        .ULDAllocationtbody2 td {
+            width: 30px;
+            background-color: #f5f5f5;
+            color: black;
+            text-align: center;
+            border: 1px solid #CCC;
+            height: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    
+    <div style="width:100%;"><input class="btn btn-success" style="float:right;margin-right:10px" type="button" onclick="ULDAllocationPrintReportexcl(this)" value="Export to Excel" /><input style="float:right;margin-right:10px" type="button" class="btn btn-success" onclick="ULDAllocationPrintReportpdf(this)" value="Export to PDF" /><input style="float:right;margin-right:10px" class="btn btn-success" type="button" onclick="ULDAllocationPrintReport()" value="Print" /> </div>
+    <table style="width:100%" id="PrintTable">
+        <tr>
+            <td style="border-right: 1px solid #CCC; "><table id="tblCityWiseULDAllocation" style="width:100%"></table></td>
+            <td style="border-left: 1px solid #CCC;"><table id="tblCurrentStock" style=" width: 100%"></table></td>
+            <td style="border-left:1px solid #CCC;"><table id="tblDeficitSurplusStatus" style="width: 100%"></table></td>
+        </tr>
+    </table>
+
+
+
+
+</body>
+</html>

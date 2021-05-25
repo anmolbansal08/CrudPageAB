@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/UWS/jquery-barcode-2.0.2.js"></script>
+    <script type="text/javascript">
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        $(document).ready(function () {
+            var AwbNo = getParameterByName("Sno", "");
+            //var AwbNo = "37055";
+            var FinalData;
+            var FinalData1;
+            $.ajax({
+                url: "../../Services/Tariff/HandlingChargesService.svc/GetAWBPrintData",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ AwbNo: AwbNo }),
+                async: false,
+                type: 'POST',
+                cache: false,
+                success: function (result) {
+                    //alert(data); // this is Json data object
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table0;
+                    if (FinalData.length > 0) {
+                        if (FinalData[0].TotalPieces.length > 0) {
+                            for (var i = 1; i <= FinalData[0].TotalPieces; i++) {
+                                var Pieces1 = 00000 + parseInt(i)
+                                var Pieces2 = 00000 + parseInt(FinalData[0].TotalPieces)
+                                $("#print").append('<table id="tbl" border="1" cellpadding="0" cellspacing="0" style="width:350px;"><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:40px;width:100%;"><tr><td align="left" style="width:30%;padding-bottom:5px;padding-left:5px; vertical-align:top;"><font size="2">Airline</font><br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + FinalData[0].AirlineName +
+                                    '</font></strong></b></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:100px;width:100%;"><tr><td align="center" style="width:100%"><span id="spnbarcode" style="height:75%;width:100%;display: inline-block;"></span></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:50px;width:100%;"><tr><td align="left" style="width:30%;padding-bottom:5px;padding-left:5px; vertical-align:top;"><font size="2">Air Waybill No.</font><br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp; &nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;  &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + FinalData[0].AWBNo +
+                                    '</font></strong></b></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:50px;width:100%;"><tr><td align="left" style="width:50%;vertical-align:top;padding-left:5px;"><font size="2">Destination<br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;  <strong style="text-transform: uppercase;"><font size="4">' + FinalData[0].DestinationCity +
+                                    '</font></strong></b></font></td><td align="left" style="width: 50%; border-left: 2px solid black;vertical-align: top; padding-left: 5px;"><font size="2">Total No.of Pieces<br /><b><i>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;      <strong style="text-transform: uppercase;"><font size="4">' + i +
+                                    '</font></strong></i></b></font></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:50px;width:100%;"><tr><td align="left" style="width:50%;vertical-align:top;padding-left:5px;"><font size="2">Weight of Consignment<br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + FinalData[0].TotalGrossWeight + '</font></strong></b></font></td><td align="left" style="width: 50%; border-left: 2px solid black;vertical-align: top; padding-left: 5px;"><font size="2">Origin<br />&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp; <strong style="text-transform: uppercase;"><font size="4">' + FinalData[0].OriginCity +
+                                    '</font></strong></font></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:50px;width:100%;"><tr><td align="left" style="width:50%;vertical-align:top;padding-left:5px;"><font size="2">Via(1)<br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + " " +
+                                    ' </font></strong></b></font></td><td align="left" style="width: 50%; border-left: 2px solid black;vertical-align: top; padding-left: 5px;"><font size="2">Via(2)<br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + " " +
+                                    '</font></strong></b></font></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:100px;width:100%;"><tr><td align="left" style="width:50%;vertical-align:top;padding-left:5px;"><font size="2">Additional Information<br /><b><strong style="text-transform: uppercase;"><font size="4">' + FinalData[0].NatureOfGoods +
+                                    '</font></strong></b></font></td><td align="left" style="width: 50%; vertical-align: top; padding-left: 5px;"><font size="2">Piece No.   <b><strong style="text-transform: uppercase;"><font size="4">' + i + '/' + FinalData[0].TotalPieces +
+                                    '</font></strong></b></font></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:10px;width:100%;"><tr><td align="center" style="width:50%;vertical-align:top;"><font size="2"></font></tr></table></td></tr></table>');
+                                $("#print").find("#spnbarcode").barcode(FinalData[0].AWBNo, "code39", { barWidth: 1, barHeight: 45 });
+                                $("#print").find("#spnbarcode").css('overflow', 'inherit');
+                                //$("#print").find("#spnbarcode").barcode((FinalData[0].AWBNo.split('-')[0]+''+FinalData[0].AWBNo.split('-')[1]), "code39", {barWidth: 2, barHeight: 45});
+                                //<img src="../../HtmlFiles/cargolux/pic/a.png" height="75" width="300"/>
+                            }
+                        }
+                        else {
+                            $("#print").append('<table id="tbl" border="1" cellpadding="0" cellspacing="0" style="width:350px;"><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:40px;width:100%;"><tr><td align="left" style="width:30%;padding-bottom:5px;padding-left:5px; vertical-align:top;"><font size="2">Airline</font><br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + FinalData[0].AirlineName +
+                                    '</font></strong></b></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:100px;width:100%;"><tr><td align="center" style="width:100%"><span id="spnbarcode" style="height:75%;width:100%;display: inline-block;"></span></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:50px;width:100%;"><tr><td align="left" style="width:30%;padding-bottom:5px;padding-left:5px; vertical-align:top;"><font size="2">Air Waybill No.</font><br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp; &nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;  &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + FinalData[0].AWBNo +
+                                    '</font></strong></b></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:50px;width:100%;"><tr><td align="left" style="width:50%;vertical-align:top;padding-left:5px;"><font size="2">Destination<br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;  <strong style="text-transform: uppercase;"><font size="4">' + FinalData[0].DestinationCity +
+                                    '</font></strong></b></font></td><td align="left" style="width: 50%; border-left: 2px solid black;vertical-align: top; padding-left: 5px;"><font size="2">Total No.of Pieces<br /><b><i>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;      <strong style="text-transform: uppercase;"><font size="4">' + i +
+                                    '</font></strong></i></b></font></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:50px;width:100%;"><tr><td align="left" style="width:50%;vertical-align:top;padding-left:5px;"><font size="2">Weight of Consignment<br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + FinalData[0].TotalGrossWeight + '</font></strong></b></font></td><td align="left" style="width: 50%; border-left: 2px solid black;vertical-align: top; padding-left: 5px;"><font size="2">Origin<br />&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp; <strong style="text-transform: uppercase;"><font size="4">' + FinalData[0].OriginCity +
+                                    '</font></strong></font></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:50px;width:100%;"><tr><td align="left" style="width:50%;vertical-align:top;padding-left:5px;"><font size="2">Via(1)<br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + " " +
+                                    ' </font></strong></b></font></td><td align="left" style="width: 50%; border-left: 2px solid black;vertical-align: top; padding-left: 5px;"><font size="2">Via(2)<br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + " " +
+                                    '</font></strong></b></font></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:100px;width:100%;"><tr><td align="left" style="width:50%;vertical-align:top;padding-left:5px;"><font size="2">Additional Information<br /><b><strong style="text-transform: uppercase;"><font size="4">' + FinalData[0].NatureOfGoods +
+                                    '</font></strong></b></font></td><td align="left" style="width: 50%; vertical-align: top; padding-left: 5px;"><font size="2">Piece No.  <b><strong style="text-transform: uppercase;"><font size="4">' + i + '/' + FinalData[0].TotalPieces +
+                                    '</font></strong></b></font></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:10px;width:100%;"><tr><td align="center" style="width:50%;vertical-align:top;"><font size="2"></font></tr></table></td></tr></table>');
+                            $("#print").find("#spnbarcode").barcode(FinalData[0].AWBNo, "code39", { barWidth: 1, barHeight: 45 });
+                            $("#print").find("#spnbarcode").css('overflow', 'inherit');
+                        }
+                    }
+                    else {
+                        $("#print").append('<table id="tbl" border="1" cellpadding="0" cellspacing="0" style="width:350px;"><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:40px;width:100%;"><tr><td align="left" style="width:30%;padding-bottom:5px;padding-left:5px; vertical-align:top;"><font size="2">Airline</font><br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + " " +
+                                    '</font></strong></b></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:100px;width:100%;"><tr><td align="center" style="width:100%"><img src="../../HtmlFiles/cargolux/pic/a.png" height="75" width="300"/></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:50px;width:100%;"><tr><td align="left" style="width:30%;padding-bottom:5px;padding-left:5px; vertical-align:top;"><font size="2">Air Waybill No.</font><br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp; &nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;  &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + " " +
+                                    '</font></strong></b></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:50px;width:100%;"><tr><td align="left" style="width:50%;vertical-align:top;padding-left:5px;"><font size="2">Destination<br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;  <strong style="text-transform: uppercase;"><font size="4">' + " " +
+                                    '</font></strong></b></font></td><td align="left" style="width: 50%; border-left: 2px solid black;vertical-align: top; padding-left: 5px;"><font size="2">Total No.of Pieces<br /><b><i>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;      <strong style="text-transform: uppercase;"><font size="4">' + " " +
+                                    '</font></strong></i></b></font></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:50px;width:100%;"><tr><td align="left" style="width:50%;vertical-align:top;padding-left:5px;"><font size="2">Weight of Consignment<br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + " " +
+                                    '</font></strong></b></font></td><td align="left" style="width: 50%; border-left: 2px solid black;vertical-align: top; padding-left: 5px;"><font size="2">Origin<br />&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp; <strong style="text-transform: uppercase;"><font size="4">' + " " +
+                                    '</font></strong></font></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:50px;width:100%;"><tr><td align="left" style="width:50%;vertical-align:top;padding-left:5px;"><font size="2">Via(1)<br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + " " +
+                                    ' </font></strong></b></font></td><td align="left" style="width: 50%; border-left: 2px solid black;vertical-align: top; padding-left: 5px;"><font size="2">Via(2)<br /><b>&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;   &nbsp;   &nbsp;&nbsp;  &nbsp;<strong style="text-transform: uppercase;"><font size="4">' + " " +
+                                    '</font></strong></b></font></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:100px;width:100%;"><tr><td align="left" style="width:50%;vertical-align:top;padding-left:5px;"><font size="2">Additional Information<br /><b><strong style="text-transform: uppercase;"><font size="4">' + " " +
+                                    '</font></strong></b></font></td><td align="left" style="width: 50%; vertical-align: top; padding-left: 5px;"><font size="2">Piece No.1/2</font></td></tr></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" style="height:10px;width:100%;"><tr><td align="center" style="width:50%;vertical-align:top;"><font size="2"></font></tr></table></td></tr></table>');
+
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <div id="print" style="float:left;margin-right:60px">
+        </div>
+    </div>
+</body>
+</html>

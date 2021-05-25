@@ -1,0 +1,90 @@
+﻿body 
+{
+	margin-top :0;
+	margin-left :0;
+	margin-right:0; 
+	font-size:12px;	
+	font-family: verdana;
+	
+}
+#topmawb { position:absolute ; margin-left : 15px; margin-top : 10px; width: 320px; }
+#tophawb { position:absolute ; margin-left : 25px; margin-top : 10px; width: 320px }
+#toplogo { position: absolute; margin-left :575px; text-align :right ; margin-top : 0px; width: 130px; height:20px }
+#shipper { position: absolute; margin-left: 15px; margin-top: 52px; width: 320px }
+ #hawbno { position: absolute; margin-left: 450px; margin-top: 60px; width: 250px }
+ #issuedby { position: absolute; margin-left: 420px; margin-top: 87px; width: 300px }
+ #consignee { position: absolute; margin-left: 15px; margin-top: 157px; width: 320px }
+ #agent { position: absolute; margin-left: 15px; margin-top: 237px; width: 320px }
+ #ag_iata { position: absolute; margin-left: 15px; margin-top: 300px; width: 150px }
+ #ag_acc { position: absolute; margin-left: 195px; margin-top: 300px; width: 150px }
+ #mawb_no { position: absolute; margin-left: 390px; margin-top: 237px; width: 150px }
+ #mawb_dt { position: absolute; margin-left:600px; margin-top: 237px; width: 150px }
+ #acc_info { position: absolute; margin-left:360px; margin-top: 250px; width: 350px }
+ #airport_departure { position: absolute; margin-left: 15px; margin-top: 342px; width: 250px }
+ #ref_no { position: absolute; margin-left: 360px; margin-top: 342px; width: 180px }
+ #opt_ship_info1 { position: absolute; margin-left: 480px; margin-top: 342px; width: 125px }
+ #opt_ship_info2 { position: absolute; margin-left: 592px; margin-top: 342px; width: 110px }
+
+ #route1 { position: absolute; margin-left: 10px; margin-top: 377px; width: 20px }
+ #route2 { position: absolute; margin-left: 50px; margin-top: 377px; width: 120px }
+ #route3 { position: absolute; margin-left: 220px; margin-top: 377px; width: 20px }
+ #route4 { position: absolute; margin-left: 250px; margin-top: 377px; width: 20px }
+ #route5 { position: absolute; margin-left: 282px; margin-top: 377px; width: 20px }
+ #route6 { position: absolute; margin-left: 315px; margin-top: 377px; width: 20px }
+
+ #currency { position: absolute; margin-left: 350px; margin-top: 377px; width: 20px }
+ #cghs_cd { position: absolute; margin-left: 385px; margin-top: 377px; width: 12px }
+ #wt_ppd { position: absolute; margin-left: 405px; margin-top: 377px; width: 12px }
+ #wt_coll { position: absolute; margin-left: 425px; margin-top: 377px; width: 12px }
+ #oth_ppd { position: absolute; margin-left: 443px; margin-top: 377px; width: 12px }
+ #oth_coll { position: absolute; margin-left: 468px; margin-top: 377px; width: 12px }
+ #declare_carriage { position: absolute; margin-left: 500px; margin-top: 377px; width: 80px }
+ #declare_custom { position: absolute; margin-left: 605px; margin-top: 377px; width: 85px }
+
+ #airport_dest { position: absolute; margin-left: 15px; margin-top: 412px; width: 120px }
+ #req_flno { position: absolute; margin-left: 170px; margin-top: 412px; width: 100px }
+ #req_fldt { position: absolute; margin-left: 275px; margin-top: 412px; width: 60px }
+ #amt_insurance { position: absolute; margin-left: 390px; margin-top: 412px; width: 75px }
+ #handling_info { position: absolute; margin-left: 15px; margin-top: 442px; width: 620px }
+
+ #no_piece { position: absolute; margin-left: 15px; margin-top: 552px; width: 22px }
+ #gross_wt { position: absolute; margin-left: 55px; margin-top: 552px; width: 45px }
+ #kg { position: absolute; margin-left: 110px; margin-top: 552px; width: 5px }
+ #rate_class { position: absolute; margin-left: 130px; margin-top: 552px; width:5px }
+ #commodity_no { position: absolute; margin-left: 145px; margin-top: 552px; width: 50px }
+ #charge_wt { position: absolute; margin-left: 225px; margin-top: 552px; width:50px }
+ #rate_charge { position: absolute; margin-left: 300px; margin-top: 552px; width: 55px }
+ #total_charge { position: absolute; margin-left: 400px; margin-top: 552px; width: 80px }
+ #quality_nature { position: absolute; margin-left: 510px; margin-top: 552px; width: 175px }
+
+ #no_piece1 { position: absolute; margin-left: 15px; margin-top: 562px; width: 22px }
+ #gross_wt1 { position: absolute; margin-left: 55px; margin-top: 562px; width: 45px }
+ #kg1 { position: absolute; margin-left: 110px; margin-top: 562px; width: 5px }
+ #rate_class1 { position: absolute; margin-left: 130px; margin-top: 562px; width:5px }
+ #commodity_no1 { position: absolute; margin-left: 145px; margin-top: 562px; width: 50px }
+ #charge_wt1 { position: absolute; margin-left: 225px; margin-top: 562px; width:50px }
+ #rate_charge1 { position: absolute; margin-left: 300px; margin-top: 562px; width: 55px }
+ #total_charge1 { position: absolute; margin-left: 400px; margin-top: 562px; width: 80px }
+ #remark { position: absolute; margin-left: 10px; margin-top: 612px; width: 450px }
+ #dimension { position: absolute; margin-left: 15px; margin-top:652px; width: 300px }
+#pre_wt_charges { position: absolute; margin-left: 15px; margin-top: 764px; width: 85px } 
+#col_wt_charges { position: absolute; margin-left: 160px; margin-top: 764px; width: 90px } 
+#pre_val_charges { position: absolute; margin-left: 15px; margin-top: 764px; width: 85px } 
+#col_val_charges { position: absolute; margin-left: 160px; margin-top: 794px; width: 90px } 
+#pre_tax_charges { position: absolute; margin-left: 15px; margin-top: 824px; width: 85px } 
+#col_tax_charges { position: absolute; margin-left: 160px; margin-top: 824px; width: 90px }  
+#pre_agent_due_charges { position: absolute; margin-left: 15px; margin-top: 854px; width: 85px }  
+#col_agent_due_charges { position: absolute; margin-left: 160px; margin-top: 854px; width: 90px } 
+#pre_car_due_charges { position: absolute; margin-left: 15px; margin-top: 884px; width: 85px } 
+#col_car_due_charges { position: absolute; margin-left: 160px; margin-top: 884px; width: 90px }  
+
+#pre_tot_charges { position: absolute; margin-left: 15px; margin-top: 952px; width: 85px } 
+#col_tot_charges { position: absolute; margin-left: 160px; margin-top: 952px; width: 90px }  
+
+#oth_charge { position: absolute; margin-left: 300px; margin-top: 764px; width:400px }
+
+#ag_sign { position: absolute; margin-left: 300px; margin-top: 904px; width: 260px }
+#exe_dt { position: absolute; margin-left: 280px; margin-top: 944px; width: 200px }
+#place { position: absolute; margin-left: 375px; margin-top: 944px; width: 200px }
+#car_ag_sign { position: absolute; margin-left: 460px; margin-top: 944px; width: 270px }
+

@@ -1,0 +1,45 @@
+﻿<Messages>
+  <!--#region Vehicle XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  InvVehicle
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Anju Rani
+  Created On:		29 oct 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <!--<DataFieldName>
+    <Name>VehicleType</Name>
+    <Message>Vehicle Type can not be blank</Message>
+  </DataFieldName>-->
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Vehicle Service already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Vehicle Service Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Vehicle Service Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Vehicle Service Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>
+
+

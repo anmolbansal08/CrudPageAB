@@ -1,0 +1,32 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>SpecialHandlingCodeSNo</Name>
+    <Message>Special Handling Code can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Special Handling Code already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Due Carrier Special Handling Trans Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Due Carrier Special Handling Trans Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Due Carrier Special Handling Trans Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+
+</Messages>
+
+
+

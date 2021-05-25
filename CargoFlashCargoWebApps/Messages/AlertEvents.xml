@@ -1,0 +1,52 @@
+﻿<Messages>
+	<DataFieldName>
+		<Name>CitySNo</Name>
+		<Message>City can not be blank</Message>
+	</DataFieldName>
+	<DataFieldName>
+		<Name>OfficeSNo</Name>
+		<Message>Office SNo can not be blank</Message>
+	</DataFieldName>
+
+	<DataFieldName>
+		<Name>AirlineSNo</Name>
+		<Message>Airline can not be blank</Message>
+	</DataFieldName>
+
+	<DataFieldName>
+		<Name>Type</Name>
+		<Message>Type can not be blank</Message>
+	</DataFieldName>
+
+	<DataFieldName>
+		<Name>SPHCSNo</Name>
+		<Message>SPHC can not be blank</Message>
+	</DataFieldName>
+	<ServerMessage>
+		<Key>1001</Key>
+		<value>Alert Event already exists</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2000</Key>
+		<value>Alert Event Added Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2001</Key>
+		<value>Alert Event Updated Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2002</Key>
+		<value>Alert Event Deleted Successfully.</value>
+	</ServerMessage>
+
+	<ServerMessage>
+		<Key>8114</Key>
+		<value>Conversion failed when converting the datatype varchar to numeric.</value>
+	</ServerMessage>
+
+</Messages>
+
+
+
+
+

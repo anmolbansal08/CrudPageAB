@@ -1,0 +1,41 @@
+﻿<Messages>
+  #region    MaintenanceType XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  MaintenanceType
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Devendra Singh
+  Created On:		10 July 2017
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion
+
+  <ServerMessage>
+    <Key>1003</Key>
+    <value> MaintenanceType already  exists.</value>
+  </ServerMessage>
+   <ServerMessage>
+    <Key>1009</Key>
+    <value> MaintenanceType Already in Use .</value>
+  </ServerMessage>
+
+
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value> MaintenanceType  Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value> MaintenanceType   Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value> MaintenanceType   Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

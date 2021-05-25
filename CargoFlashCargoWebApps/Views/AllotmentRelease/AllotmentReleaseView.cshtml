@@ -1,0 +1,152 @@
+﻿<style>
+.formlabelMy {
+    font-weight: bold;
+    font-size: 10px;
+    color: rgb(0, 0, 0);
+    font-family: Verdana;
+    text-align: right;
+    background-color: rgb(245, 245, 245);
+    padding-left: 3px;
+    padding-right: 5px;
+    width: 9%;
+    height: 25px;
+    border-right: 1px solid rgb(190, 189, 190);
+    border-left: 0px solid rgb(190, 189, 190);
+    border-bottom: 1px solid rgb(190, 189, 190);
+}
+    .formInputcolumnMy {
+        font-family: Verdana, Geneva, sans-serif;
+        font-size: 8pt;
+        width: 11%;
+        border-bottom: 1px solid rgb(190, 189, 190);
+    }
+    .k-grid-header th.k-header {
+        vertical-align: inherit !important;
+    }
+    .width
+    {
+        width:65px;
+    }
+</style>
+
+    
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='10'>Allotment Release</td></tr>
+                        <tr><td class='formActiontitle' colspan='10'><span id='__SpanHeader__'>Allotment Release</span><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+                        <tr><td class='formbuttonrow' colspan='10'><input type='submit' onclick="GetGridData()" name='operation' value='Search' class='btn btn-success' /></td></tr>
+                        <tr><td class='formSection' colspan='10'>Allotment Release Search Criteria</td></tr>
+                        <tr>
+                            <td class=' formlabelMy' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    Airline
+                                </span>
+                            </td>
+                            <td class='formInputcolumnMy'>
+                                @Html.Hidden("AirlineSNo")
+                                @Html.TextBox("Text_AirlineSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                            </td>
+                            <td class=' formlabelMy' title='FlightDate'>
+                                <font color='red'>*</font>
+                                <span id='spnFlightDate'>Flight Date</span>
+                            </td>
+                            <td class='formInputcolumnMy'>
+                                @*@Html.Hidden("FlightDate")*@
+                                @Html.TextBox("FlightDate", null, new { controltype = "autocomplete", data_role = "autocomplete", data_valid = "required", data_valid_msg = "Flight Date can not be blank" })
+                            </td>
+                            <td class=' formlabelMy' title='Origin'>
+                                <font color='red'>*</font>
+                                <span id='spnOrigin'>
+                                    Origin
+                                </span>
+                            </td>
+                            <td class='formInputcolumnMy'>
+                                @Html.Hidden("OriginSNo")
+                                @Html.TextBox("Text_OriginSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Origin can not be blank" })
+                            </td>
+                            <td class=' formlabelMy' title='Destination'>
+                                @*<font color='red'>*</font>*@
+                                <span id='spnDestination'>Destination</span>
+                            </td>
+                            <td class='formInputcolumnMy'>
+                                @Html.Hidden("DestinationSNo")
+                                @Html.TextBox("Text_DestinationSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                                @*data_valid = "required", data_valid_msg = "Destination can not be blank"*@
+                            </td>
+                            <td class=' formlabelMy' title='FlightNo'>
+                                @*<font color='red'>*</font>*@
+                                <span id='spnFlightNo'>Flight No</span>
+                            </td>
+                            <td class='formInputcolumnMy'>
+                                @Html.Hidden("FlightSNo")
+                                @Html.TextBox("Text_FlightSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                                @* data_valid = "required", data_valid_msg = "Flight No can not be blank"*@
+                            </td>                            
+                        </tr>
+
+                        <tr>   
+                            <td class=' formlabelMy' title='Office'>
+                                <font color='red'></font>
+                                <span id='spnOffice'>Office</span>
+                            </td>
+                            <td class='formInputcolumnMy'>
+                                @Html.Hidden("OfficeSNo")
+                                @Html.TextBox("Text_OfficeSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                                @*data_valid = "required", data_valid_msg = "Flight No can not be blank"*@
+                            </td> 
+                                                     
+                            <td class=' formlabelMy' title='Forwarder (Agent)'>
+                                @*<font color='red'>*</font>*@
+                                <span id='spnAgent'>Forwarder (Agent)</span>
+                            </td>
+                            <td class='formInputcolumnMy'>
+                                @Html.Hidden("AccountSNo")
+                                @Html.TextBox("Text_AccountSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                                @*data_valid = "required", data_valid_msg = "Forwarder (Agent) Name can not be blank"*@
+                            </td>
+                            <td class=' formlabelMy' title='Shipper'>
+                                @*<font color='red'>*</font>*@
+                                <span id='spnShipper'>Shipper</span>
+                            </td>
+                            <td class='formInputcolumnMy'>
+                                @Html.Hidden("ShipperAccountSNo")
+                                @Html.TextBox("Text_ShipperAccountSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                                @*data_valid = "required", data_valid_msg = "Forwarder (Agent) Name can not be blank"*@
+                            </td>
+                            <td class=' formlabelMy' title='Allotment Type'>
+                                @* <font color='red'></font>*@
+                                <span id='spnAllotmentType'>Allotment Type</span>
+                            </td>
+                            <td class='formInputcolumnMy'>
+                                @Html.Hidden("AllotmentType")
+                                @Html.TextBox("Text_AllotmentType", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                            <td class=' formlabelMy' title='Allotment Code'>
+                                @* <font color='red'>*</font>*@
+                                <span id='spnAllotmentCode'>
+                                    Allotment Code
+                                </span>
+                            </td>
+                            <td class='formInputcolumnMy'>
+                                @Html.Hidden("AllotmentSNo")
+                                @Html.TextBox("Text_AllotmentSNo", null, new { controltype = "autocomplete", data_role = "autocomplete", })
+                                @*data_valid = "required",data_valid_msg = "Origin can not be blank"*@
+                            </td>
+                                                       
+                        </tr>
+                        <tr><td class='formSection' colspan='10'>Allotment Release Information</td></tr>
+                        <tr>
+                            <td colspan='10'>
+                             
+                                
+                                                   
+                            </td>
+                        </tr>
+                     </table>
+              
+<div id="grid">
+
+</div>
+                <script src="~/JScript/Schedule/AllotmentRelease.js"></script>
+
+
+

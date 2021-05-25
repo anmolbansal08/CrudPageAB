@@ -1,0 +1,29 @@
+﻿<Messages>
+<DataFieldName>
+  <Name>SNo</Name>
+  <Message> Name can not be blank</Message>
+</DataFieldName>
+
+<ServerMessage>
+  <Key>1001</Key>
+  <value> Name already exists</value>
+</ServerMessage>
+
+<ServerMessage>
+  <Key>2000</Key>
+  <value>UnLockedPage Added Successfully.</value>
+</ServerMessage>
+<ServerMessage>
+  <Key>2001</Key>
+  <value>UnLockedPage Updated Successfully.</value>
+</ServerMessage>
+<ServerMessage>
+  <Key>2002</Key>
+  <value>UnLockedPage Deleted Successfully.</value>
+</ServerMessage>
+
+<ServerMessage>
+  <Key>8114</Key>
+  <value>Conversion failed when converting the datatype varchar to numeric.</value>
+</ServerMessage>
+</Messages>

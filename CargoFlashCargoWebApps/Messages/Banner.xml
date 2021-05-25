@@ -1,0 +1,31 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>Title</Name>
+    <Message>Enter the value of Title</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>BannerSubject</Name>
+    <Message>Enter the value of Banner Subject</Message>
+  </DataFieldName>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Banner Header already exists. Please Enter another Banner Header.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>5001</Key>
+    <value>Banner Header is already exist in In-Active State. Please Enter another Banner Header.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Banner Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Banner Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Banner Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

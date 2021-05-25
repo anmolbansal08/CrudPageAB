@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<div style="text-align:right">
+    <input type="button" id="btnUCRPrint" value="Print" onclick="FunPrintDataNew('printULDHandoverForm');" />
+</div>
+<head>
+    <script type="text/javascript">
+        
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+
+        });
+    </script>
+    <title></title>
+</head>
+<body>
+    <div id="printULDHandoverForm" align="center" style="padding: 5px; font-family:Verdana;font-size:11px;">
+        <table style="width: 700px; border: 2px solid black;">
+            <tr><td colspan="2" align="center"><img id="ImgLogo" src="" style="width:130px; height:50px" /></td><th colspan="4" align="left" style="font-size:14px;font-weight:bold;">ULD Handover Form</th></tr>
+            <tr>
+                <td colspan="8">
+                    <table cellpadding="0" cellspacing="0" border="0" style="width: 100%">
+                        <tr>
+                            <td style="width:70%;" align="center">
+                                <table cellpadding="0" cellspacing="5" border="0" style="width: 70%; float:right">
+                                    <tr>
+                                        <td style="text-align:right"><b>UHF Receipt No :<span id="UFH1"></span></b></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" valign="bottom">
+                    <table style="width: 100%; border:1px solid black" cellspacing="0" cellpadding="3">
+                        <tr>
+                            <td colspan='4' style="border: none; border-right: 1px solid black; "><span><b>Transfer Station</b></span></td>
+                            <td colspan="2" style="border: none; border-right:1px solid black"><b>Date of Transfer</b></td>
+                            <td colspan="2" style="border: none;"><b>Agent/Carrier Name</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan='4' style="border: none; border-top: 1px solid black; border-right: 1px solid black"><span id="spntrf1"></span></td>
+                            <td colspan="2" style="border: none; border-top: 1px solid black; border-right: 1px solid black">
+                                <span id="spnDateoftransfer"></span>
+                            </td>
+                            <td colspan="2" style="border: none; border-top: 1px solid black;">
+                                <span id="Transfernameid"></span><br />
+                                <span id="Transferaddressid"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr><td><br /><br /></td></tr>
+            <tr>
+                <td colspan="8" valign="bottom">
+                    <div id="ulddetail">
+                    </div>
+                </td>
+            </tr>
+            <tr><td><br /><br /></td></tr>
+            <tr>
+                <td colspan="8">
+                    <table cellpadding="0" cellspacing="0" border="0" style="width: 100%">
+                        <tr>
+                            <td style="width:70%;" align="left">
+                                <table cellpadding="0" cellspacing="5" border="0" style="width: 70%; float:left">
+                                    <tr>
+                                        <td style="text-align:left"><b>Transferred by</b></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" valign="bottom">
+                    <table style="width: 100%; border:1px solid black;" cellspacing="0" cellpadding="3">
+                        <tr>
+                            <td colspan="4" style="border-bottom:1px solid black; border-right: 1px solid black;"><span><b>Name and Signature</b></span></td>
+                            <td colspan="2" style="border: none; border-bottom: 1px solid black; border-right: 1px solid black"><span><b>Total Unit</b></span></td>
+                            <td colspan="2" style="border: none; border-bottom: 1px solid black; border-right: 1px solid black"><span><b>Date</b></span></td>
+                            <td colspan="2" style="border: none; border-bottom: 1px solid black; "><span><b>Remarks</b></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan='4' style="border: none; border-right: 1px solid black">
+                                <span id="Transfernameid_agent"></span>
+                                <br /><span id="Transferaddressid"></span>
+                            </td>
+                            <td colspan="2" style="border: none; border-right: 1px solid black">
+                                <span id="totalunit"></span>
+                            </td>
+                            <td colspan="2" style="border: none; border-right: 1px solid black">
+                                <span id="Date"></span>
+                            </td>
+                            <td colspan="2" style="border: none;">
+                                <span id="Remarks"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr><td><br /><br /></td></tr>
+            <tr>
+                <td colspan="8">
+                    <table cellpadding="0" cellspacing="0" border="0" style="width: 100%">
+                        <tr>
+                            <td style="width:70%;" align="left">
+                                <table cellpadding="0" cellspacing="5" border="0" style="width: 70%; float:left">
+                                    <tr>
+                                        <td style="text-align:left"><b>Received by</b></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" valign="bottom">
+                    <table style="width: 100%; border:1px solid black" cellspacing="0" cellpadding="3">
+                        <tr>
+                            <td colspan='4' style="border: none; border-right: 1px solid black;"><span><b>Name and Signature</b></span></td>
+                            <td colspan="2" style="border: none; border-right: 1px solid black"><span><b>Total Unit</b></span></td>
+                            <td colspan="2" style="border: none; border-right: 1px solid black"><span><b>Date</b></span></td>
+                            <td colspan="2" style="border: none;"><span><b>Remarks</b></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan='4' style="border: none; border-top: 1px solid black; border-right: 1px solid black">
+                                <span id="nameid"></span>
+                                <br /><span id="addressid"></span>
+                            </td>
+                            <td colspan="2" style="border: none; border-top: 1px solid black; border-right: 1px solid black">
+                                <span id="totalunits"></span>
+                            </td>
+                            <td colspan="2" style="border-top: 1px solid black; border-right: 1px solid black">
+                                <span id="Dates"></span>
+                            </td>
+                            <td colspan="2" style="border: none; border-top: 1px solid black;">
+                                <span id="Remarkss"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr><td><br /></td></tr>
+            <tr><td colspan="8"><span><b>CONDITIONS:</b></span></td></tr>
+            <tr><td colspan="8"><span>Demurrage according to GA policy will be charged until ULD is returned to GA.</span></td></tr>
+            <tr><td colspan="8"><span>ULDs not returned within 7 days will be deemed lost and the cost of the unit will be recovered from the agent to whom the unit(s) was transferred to by Garuda</span></td></tr>
+            <tr><td><br /></td></tr>
+            <tr><td colspan="8"><b>The agent shall be liable to Garuda for any damage or loss of ULD while in their possesion</b></td></tr>
+            <tr><td><br /></td></tr>
+            <tr><td colspan="4" align="left"><b>Original: Garuda</b></td></tr>
+            <tr><td colspan="4"><b>First Copy : Carrier/Agent</b></td></tr>
+        </table>
+        <br /><br />
+    </div>
+</body>
+
+
+

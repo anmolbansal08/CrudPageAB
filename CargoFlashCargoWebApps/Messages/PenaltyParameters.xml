@@ -1,0 +1,28 @@
+﻿
+<Messages>
+  <DataFieldName>
+    <Name>ApplicableWeight</Name>
+    <Message>ApplicableWeight can not be blank</Message>
+  </DataFieldName>
+
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>This Penalty already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Penalty Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Penalty Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Penalty Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

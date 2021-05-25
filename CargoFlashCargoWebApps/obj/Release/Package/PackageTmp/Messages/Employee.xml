@@ -1,0 +1,58 @@
+﻿<Messages>
+  <!--#region Country XML Message Description
+  /*
+  *****************************************************************************
+  Class Name:		Employee
+  Purpose:		This XML used for Message information.
+  Company:		CargoFlash Infotech Pvt Ltd.
+  Author:			Krishan Kant Agarwal
+  Created On:		19 Nov 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************  
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>EmployeeCode</Name>
+    <Message>Employee Code can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>EmployeeName</Name>
+    <Message>Employee Name can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Email</Name>
+    <Message>Email can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Mobile</Name>
+    <Message>Mobile can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Employee Code already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Employee Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Employee Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Employee Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

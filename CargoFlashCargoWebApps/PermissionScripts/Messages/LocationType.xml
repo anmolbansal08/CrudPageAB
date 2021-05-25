@@ -1,0 +1,50 @@
+﻿<Messages>
+  <!--#region LocationSubType XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  LocationSubType
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Swati Rastogi.
+  Created On:		26 Oct 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>LocationType1</Name>
+    <Message>Location Type can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>LocationCode</Name>
+    <Message>Location Code can not be blank</Message>
+  </DataFieldName>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Location Type already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Location Code already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1003</Key>
+    <value>Location Type already use in Warehouse.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Location Type Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Location Type Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Location Type Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

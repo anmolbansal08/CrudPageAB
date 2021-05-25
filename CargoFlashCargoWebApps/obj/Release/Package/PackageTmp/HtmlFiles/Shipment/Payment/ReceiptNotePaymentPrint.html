@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head id='head1'>
+    <title>RECEIPT NOTE</title>
+    <script src="../../../Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="../../../Scripts/json2.js"></script>
+    <script src="../../../Scripts/JqueryPrint.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+          
+            GetChargeNotePrint();
+
+            var LogoURL = getParameterByName("LogoURL", "");
+          
+
+            $('#ImgLogo').attr('src', LogoURL);
+      
+        });
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        function GetChargeNotePrint() {
+            var ReceiptSNo = getParameterByName("ReceiptSNo", "");
+            var UserSNo = getParameterByName("UserSNo", "");
+            UserSNo = UserSNo == "" ? "0" : UserSNo;
+            $.ajax({
+                url: "../../../Services/Shipment/PaymentService.svc/GetPaymentReceiptPrint",
+                async: false,
+                type: "GET",
+                dataType: "json",
+                data: { ReceiptSNo: ReceiptSNo, UserSNo: UserSNo },
+                contentType: "application/json; charset=utf-8", cache: false,
+                success: function (result) {
+                    //alert(data); // this is Json data object
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table0;
+                    FinalData1 = ResultData.Table1;
+                    if (FinalData.length > 0) {
+                        $("#spnDate").text(FinalData[0].Date);
+                        //$("#spnPage").text(FinalData[0].Page);
+                        $("#spnTime").text(FinalData[0].Time);
+                        $("#spnPage").html(FinalData[0].Page)
+                        //$("#spnPayment").text(FinalData[0].PaymentMode);
+                        $("#spnReceiptNo").text(FinalData[0].ReceiptNo);
+                        $('#spnAirline').text(FinalData[0].AirlineName);
+                        $("#spnFlightNo").text(FinalData[0].FlightNo);
+                        $("#spnReceiptDate").html(FinalData[0].ReceiptDate);
+                        $("#spnPartyAgentName").html((FinalData[0].AgentCode == "" || FinalData[0].AgentCode == undefined) ? FinalData[0].AccountName : FinalData[0].AgentCode + "  " + FinalData[0].AccountName);
+                        //$("#spnPartyAgentCode").html(FinalData[0].AgentCode);
+                        //$("#spnPartyAgentName").html(FinalData[0].AccountName);
+
+                        $("#spnInvoiceNo").html(FinalData[0].InvoiceNo);
+                        $("#spnInvoiceDate").html(FinalData[0].InvoiceDate);
+                        $("#spnInvoiceAmount").html(FinalData[0].InvoiceAmount);
+
+                        //  $("#spnTotalAmount").html(FinalData[0].TotalAmount);
+                        //$("#spnPaymentMode").html(FinalData[0].PaymentMode);
+                        //$("#spnReceivedBy").html(FinalData[0].ReceivedBy);
+                        $("#spnReciptDoneBy").html(FinalData[0].ReceiptDoneBy);
+                        $("#spnReciptDoneOn").html(FinalData[0].ReceiptDoneOn);
+                        $("#spnAWBNos").html(FinalData[0].AWBNo);
+                        $("#spnHAWBNo").html(FinalData[0].HAWBNo);
+                        $("#spnPreparedBy").html(FinalData[0].ReceiptDoneBy);
+                        if (FinalData[0].PrintCount > 0) {
+                            $('#spnReprint').html('(RE PRINT)');
+                        }
+                        else {
+                            $('#spnReprint').html('');
+                        }
+                        var strdata = '';
+                        //var totalamount = 0;
+
+                        strdata = strdata + " <tr><td colspan='6' ><hr size='1' /></td></tr><tr><th align='left'>Payment Mode</th><th align='left'>Description</th><th align='right'>Amount </th><th align='left'></th></tr><tr><td colspan='6'><hr size='1' /></td></tr>";//<th align='left'>QTY</th>  //<td align='right'></td> //<td>" + FinalData[num].QTY + "</td> //<td></td>
+                        strdata = strdata + " <tr><td colspan='6'></td></tr><tr><td align='left'>AWB/ULD :&nbsp;&nbsp;&nbsp;&nbsp;" + FinalData[0].AWBNo + "</td><td align='left'>Pcs/Wt :&nbsp;&nbsp;&nbsp;&nbsp;" + FinalData[0].TotalPieces + "/" + FinalData[0].TotalGrossWeight + "</td><td align='left'></td></tr><tr><td colspan='6'></td></tr>";//Lot No :   " + FinalData[0].SLINo + "
+                        for (var num = 0; num < FinalData.length; num++) {
+                            strdata = strdata + "<tr><td style='padding: 5px; font-size:11px'>" + FinalData[num].PaymentMode + "</td><td style='padding: 5px; font-size:11px'>" + (FinalData[num].PaymentMode == "CASH" ? "" : FinalData[num].ChequeNumber) + "</td><td id='spnAWBAmountRemarks' style='padding: 5px; font-family:Verdana;font-size:11px' align='right'>" + (FinalData[num].PaymentMode == "CASH" ? FinalData[num].CashAmount : FinalData[num].ChequeAmount) + "</td><td id='spnSLINo' style='padding: 5px; font-family:Verdana;font-size:11px'></td></tr>";
+                        }
+                        for (var num = 0; num < FinalData1.length; num++) {
+                            strdata = strdata + "<tr><td style='padding: 5px; font-size:11px'>" + FinalData1[num].PaymentMode + "</td><td style='padding: 5px; font-size:11px'>" + FinalData1[num].TransactionNo + "</td><td id='spnAWBAmountRemarks' style='padding: 5px; font-family:Verdana;font-size:11px' align='right'>" + FinalData1[num].Amount + "</td><td id='spnSLINo' style='padding: 5px; font-family:Verdana;font-size:11px'></td></tr>";
+                        }
+                        strdata = strdata + " <tr><td colspan='6'><hr size='1' /></td></tr><tr><td>Currency:&nbsp; <span id='spnCurrency'></span></td><td align='right'>Total Amount:</td><td align='right' id='spnTotalAmount'></td><td align='right' style='width:50px' id='spnPaymentMode'></td><td></td></tr><tr><td colspan='7'><hr size='1' /></td></tr>";
+                        $('#trdetail').html(strdata);
+                        $("#spnCurrency").html(FinalData[0].Currency);
+                        $("#spnCurrencyCode").html(FinalData[0].Currency);
+                        $('#spnTotalAmountInword').html(FinalData[0].TotolAmountInWord)
+                        $("#spnTotalAmount").html(FinalData[0].TotalAmount);
+                        //$("#spnPaymentMode").html("(" + FinalData[0].PaymentMode + ")")
+
+
+
+
+                    }
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        }
+
+
+        function funPrint(divID) {
+            var divContents = $("#" + divID).html();
+            var printWindow = window.open('', '', '');
+            printWindow.document.write(divContents);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+    </script>
+</head>
+<body>
+    <div id="printPayment" align="center" style="padding: 5px; font-family:Verdana;font-size:11px;">
+        <table style="width: 750px; border: 1px solid black">
+            <tr>
+                <td colspan="8" align="center"><img id="ImgLogo" height="100" width="300" alt=""  /><br /><span id="spnReprint"></span></td>
+            </tr>
+            <tr><th colspan='8' rowspan='2' style='display:none;'><center><img alt='LOGO' src='../../../Logo/SASNew-Logo.png' style='width: 139px; height: 56px' /></center></th></tr>
+            <tr><th colspan="8" align="center" style="font-size:14px;font-weight:bold;">RECEIPT NOTE - CARGO</th></tr>
+            <tr>
+                <td colspan="8">
+                    <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+                        <tr>
+                            <td style="width:70%;" align="center">
+                                <table cellpadding="0" cellspacing="5" border="0" style="width: 60%; float: left;">
+                                    <tr>
+                                        <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                                    </tr>
+                                    <!--<tr>
+                                        <td colspan="3">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">&nbsp;</td>
+                                    </tr>-->
+
+                                    <tr>
+                                        <td style="width: 150px; text-align: right; vertical-align: top;"></td>
+                                        <td style="width: 10px; text-align: left; vertical-align: top; "></td>
+                                        <td align="left" id='spnPayment' style="font-weight: bold; font-size:12px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 150px; text-align: right; vertical-align: top;">Airline</td>
+                                        <td style="width: 10px; text-align: left; vertical-align: top; ">:</td>
+                                        <td id='spnAirline'></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 150px; text-align: right; vertical-align: top;">Flight No</td>
+                                        <td style="width: 10px; text-align: left; vertical-align: top; ">:</td>
+                                        <td id='spnFlightNo'></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:150px;text-align:right; vertical-align:top;">Party</td>
+                                        <td style="width: 10px; text-align: left; vertical-align: top; ">:</td>
+                                        <td style="height: auto; word-wrap: break-word; max-width: 300px;"><span id="spnPartyAgentName"></span></td>   <!--<span id="spnPartyAgentCode"></span>&nbsp;&nbsp;&nbsp;-->
+                                    </tr>
+                                    <!--<tr>
+                                        <td style="width:150px;text-align:right">Party</td>
+                                        <td width="10px">:</td>
+                                        <td><span id="spnPartyAgentCode">&nbsp;&nbsp;</span><span id="spnPartyAgentName"></span></td>
+                                    </tr>-->
+                                </table>
+                                <!--</td>
+                                <td style="float:right">-->
+                                <table cellpadding="0" cellspacing="5" border="0" style="width: 40%; float: right;">
+                                    <tr>
+                                        <td align="right">Date</td>
+                                        <td>:</td>
+                                        <td id=''><label for="spnDate" id="spnDate"></label></td>
+                                    </tr>
+                                    <tr>
+                                        <td align='right'>Page</td>
+                                        <td>:</td>
+                                        <td id='spnPage'></td>
+                                    </tr>
+                                    <tr>
+                                        <td align='right'>Time</td>
+                                        <td>:</td>
+                                        <td id='spnTime'></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width:150px;text-align:right">Receipt No</td>
+                                        <td width="10px">:</td>
+                                        <td align="left" id='spnReceiptNo'></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:150px;text-align:right">Receipt Date</td>
+                                        <td width="10px">:</td>
+                                        <td align="left" id='spnReceiptDate'></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:150px;text-align:right">Invoice No</td>
+                                        <td width="10px">:</td>
+                                        <td id='spnInvoiceNo'></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:150px;text-align:right">Invoice Amount</td>
+                                        <td width="10px">:</td>
+                                        <td id='spnInvoiceAmount'></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan='8'>
+                    <table style="width:100%" id="trdetail"></table>
+                </td>
+            </tr>
+            <tr><td colspan='8'><span>Total Amount In Words&nbsp;-&nbsp;</span><span id="spnTotalAmountInword"></span></td></tr>
+            <tr><td colspan='8'>Note :</td></tr>
+            <tr><td colspan='8'>* Total Amount rounded up/off next <span id="spnCurrencyCode"></span>.</td></tr>
+            <tr><td colspan='8'>&nbsp;</td></tr>
+            <tr><td colspan='8'>&nbsp;</td></tr>
+            <tr><td colspan='8'>&nbsp;</td></tr>
+            <tr><td colspan='8'>&nbsp;</td></tr>
+            <tr><td colspan='8'>&nbsp;</td></tr>
+            <tr><td colspan='8'>&nbsp;</td></tr>
+
+
+
+            <tr>
+                <td colspan='4' style="width:50%; text-align:left;"><br />Service &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spnReceivedBy"></span><br />Received By:  --------------------- </td>
+                <td colspan='4' style="width:50%; text-align:right;"><span id="spnPreparedBy"></span><br />Prepared By:  --------------------- </td>
+            </tr>
+            <tr><td colspan='8'>&nbsp;</td></tr>
+            <tr><td colspan='8'>&nbsp;</td></tr>
+            <tr>
+                <td colspan='5'>Receipt Done By: <span id="spnReciptDoneBy"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on: <span id="spnReciptDoneOn"></span></td>
+                <td colspan="3"></td>
+            </tr>
+            <tr><td colspan='8'><div style='height:120px;'></div></td></tr>
+            <tr><td colspan='8'>&nbsp;</td></tr>
+            <tr><td colspan='8'>&nbsp;</td></tr>
+            <tr><td colspan='8'>&nbsp;</td></tr>
+            <tr><td colspan='8'>&nbsp;</td></tr>
+            <tr><td colspan='8'>&nbsp;</td></tr>
+            <tr><td colspan='8'><!--<hr size='1' />--></td></tr>
+            <tr><td colspan='8'><!--<div id="FooterHTML" style="text-align:center;"></div>--></td>
+                <!--<tr><td colspan='8'><center>Sharjah Aviation Services PO Box 70888,Sharjah, United Arab Emirates, Tel: +971 6 5141206, Fax +971 6 5580565<br /> Cheques to be made in favour of : SHARJAH AVIATION COMPANY L.L.C</center></td></tr>-->
+<tr><td colspan='8'><!--<hr size='1' />--></td></tr>
+        </table>
+    </div>
+</body>
+</html>

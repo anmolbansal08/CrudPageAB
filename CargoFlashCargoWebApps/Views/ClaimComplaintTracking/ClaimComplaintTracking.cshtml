@@ -1,0 +1,101 @@
+﻿<table class='WebFormTable' id='tbl' validateonsubmit=true>
+    <tr><td class='formSection' colspan='10'>Claim Complaint Tracking </td></tr>
+    <tr><td class='formlabel' colspan='10'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+    <tr class='formSection'>
+
+
+
+        <td class="formlabel" title="Select Based On"><font color="red">*</font><span id="spnBasedOn"> Based On</span></td>
+        <td class="formInputcolumn">
+            <input type="radio" tabindex="18" data-radioval="Yes" class="" name="BasedOn" checked="True" id="BasedOn" value="0">Claim No.
+            <input type="radio" tabindex="18" data-radioval="No" class="" name="BasedOn" id="BasedOn" value="1">Complaint No.
+        </td>
+
+        <td class="formlabel"><font color='red'>*</font>Claim/Complaint Ref No.</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("ClaimComplaintNo")
+            @Html.TextBox("Text_ClaimComplaintNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Select Claim/Complaint No." })
+
+        </td>
+        @*<td class="formlabel"><font color='red'></font> </td>
+        <td class="formInputcolumn"></td>*@
+
+    </tr>
+    @*<tr class='formSection'>
+
+        <td class="formlabel"><font color='red'>*</font>From Date</td>
+        <td class="formInputcolumn">@Html.TextBox("Fromdate", null, new { data_valid = "required", data_valid_msg = "Select From Date" })</td>
+        <td class="formlabel"><font color='red'>*</font>To Date</td>
+        <td class="formInputcolumn">@Html.TextBox("Todate", null, new { data_valid = "required", data_valid_msg = "Select To Date" })</td>
+
+
+
+
+    </tr>*@
+
+
+    <tr class='formSection'>
+        <td colspan='10'>
+            <input type="button" name='SearchSave' value='Search' class='btn btn-success' id="btnSubmit" />
+            @*<input type="button" name='ExcelVersionDetails' value='Export To Excel' class='btn btn-success' id="btnSubmit" src="../Images/IconExcel.png" />*@
+            @*<div id="exportflight" style="margin-left: 68px;margin-top: -26px; display:none"><img id=" imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer;" title="Export To Excel" onclick="ExportToExcel_ClaimReport()" /></div>*@
+        </td>
+    </tr>
+
+
+    <tr class='formSection'>
+        <td colspan='4'>
+         
+            <div id="ClaimComplaintracking" style="width:100%;"></div>
+          
+        </td>
+    </tr>
+
+
+</table>
+
+
+<div class="k-grid-header-wrap" id="grid" style="display: none;">
+
+    <br />
+    <table class="appendGrid ui-widget" style="margin-bottom:10px;" align="center" id="tblgrid">
+
+
+        <thead class="ui-widget-header" style="text-align:center" id="theadid">
+            <tr>
+
+                <td class="ui-widget-header">Case Number</td>
+                <td class="ui-widget-header">AWB NO</td>
+                <td class="ui-widget-header">Date/Time Opened</td>
+                <td class="ui-widget-header">Date/Time Closed</td>
+                <td class="ui-widget-header">Type of Claim</td>
+                <td class="ui-widget-header">Claimant</td>
+                <td class="ui-widget-header">BO Claim</td>
+                <td class="ui-widget-header">Stasiun Iregularity</td>
+
+                <td class="ui-widget-header">Amount of Claim</td>
+                <td class="ui-widget-header">Settled Payment  </td>
+                <td class="ui-widget-header">Claim Status </td>
+
+                <td class="ui-widget-header"> Remarks</td>
+
+
+            </tr>
+
+
+
+        </thead>
+        <tbody id="gridbodys" class="ui-widget-content"></tbody>
+    </table>
+</div>
+
+
+
+
+
+
+<script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>
+
+<script src="~/JScript/Irregularity/ClaimComplaintTracking.js"></script>
+

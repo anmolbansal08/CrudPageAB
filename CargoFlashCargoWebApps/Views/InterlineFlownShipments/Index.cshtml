@@ -1,0 +1,79 @@
+﻿<div id="divbody" style="height:auto">
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Interline Flown Shipment Report</td></tr>
+
+                        <tr class="DateWiseRow">
+                            <td class='formlabel' title='From Date'>
+                                <font color='red'>*</font><span id='spnFromDate'>
+                                    From Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.TextBox("FromDate", null, new { data_valid = "required", controltype = "datetype", data_role = "datepicker", data_valid_msg = "Select From Date", placeholder = "From Date" })
+                            </td>
+                            <td class='formlabel' title='To Date'>
+                                <font color='red'>*</font><span id='spnToDate'>
+                                    To Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.TextBox("ToDate", null, new { data_valid = "required", controltype = "datetype", data_role = "datepicker", data_valid_msg = "Select To Date", placeholder = "To Date" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='formlabel' title='Interline Carrier'>
+                                <font color='red'></font><span id='spnInterlineCarrier'>
+                                Interline Carrier :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("InterlineCarrier")
+                                @Html.TextBox("Text_InterlineCarrier", null, new {  controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Select Airline" })
+                            </td>
+                            <td class='formlabel'></td>
+                            <td class='formInputcolumn'><input checked="checked"
+       id="rdbsummary"
+       name="rdbsummary"
+       type="radio"
+       value="0" />Detail <input checked="checked"
+                             id="rdbsummary"
+                             name="rdbsummary"
+                             type="radio"
+                             value="1" />Summary</td>
+                        </tr>
+                        <tr>
+                            <td class='formlabel'>
+                                @*<form id="ASToExcel" action="../GenrateAndViewInvoice/ExportToExcel" method="post">
+                <input id="DestinationAirPortSNo" type="hidden" name="DestinationAirPortSNo" value="" />*@
+                                <div style="float:left; display: block;">
+                                    <img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel()" />
+                                </div>
+                                <div style="float:left; display: block;">
+                                    <img id="imgpdf" src="../Images/iconPDF.png" style="width:30px;height:30px;cursor: pointer" title="Export To PDF" onclick="ExportToPDF()" />
+                                </div>
+                                @*</form>*@
+                            </td>
+
+                            <td class='formlabel'></td>
+                            <td class='formlabel'></td>
+                            <td class='formInputcolumn' title='Search'>
+                                <input type='submit' name='operation' onclick="SearchRecord()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+                                <input type='button' name='operation' onclick="PrintInvoice()" value='Print' id="btnPrint" class='btn btn-info btnPrint' />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <div id="grid" style="font-size:11px;"></div>
+                <script src="~/Scripts/pdfmake.js"></script>
+                <script src="~/Scripts/html2canvas.js"></script>
+                <script src="~/JScript/Report/InterlineFlownShipments.js"></script>
+            </div>
+        </div>
+    </section>
+</div>

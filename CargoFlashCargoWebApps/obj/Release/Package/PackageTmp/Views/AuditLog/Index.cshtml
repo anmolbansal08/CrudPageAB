@@ -1,0 +1,138 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutGaruda.cshtml";
+}
+
+
+<div id="divbody" style="height:auto">
+
+    @*@using (Html.BeginForm("GetAirlineData", "AWBStockStatus", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {*@
+
+
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Audit Log</td></tr>
+                        
+                        <tr><td class='formSection' colspan='4'>Audit Log Information</td></tr>
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnPageName'>
+                                    Page Name
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("PageNameSNo")
+                                @Html.TextBox("Text_PageNameSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Page Name can not be blank" })
+                            </td>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnKeyColumn'>
+                                    Key Column
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("MasterFieldNameSNo")
+                                @Html.TextBox("Text_MasterFieldNameSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnKeyValue'>
+                                    Key Value
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("KeyValueNameSNo")
+                                @Html.TextBox("Text_KeyValueNameSNo", null, new {  controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnUser'>
+                                    User
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("UserNameSNo")
+                                @Html.TextBox("Text_UserNameSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnStartDate'>
+                                    Start Date
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.TextBox("Text_StartDate", null, new { data_valid = "required", controltype = "date", data_role = "autocomplete" ,data_valid_msg = "Start Date can not be blank"})
+                            </td>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnEndDate'>
+                                    End Date
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+
+                                @Html.TextBox("Text_EndDate", null, new { data_valid = "required", controltype = "date", data_role = "autocomplete", data_valid_msg = "End Date can not be blank" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnFieldName'>
+                                    Field Name
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("FieldNameSNo")
+                                @Html.TextBox("Text_FieldNameSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Field Name can not be blank" })
+                            </td>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnDownload'>
+
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type="button" value="Download" onclick="ExportToExcel()"/>
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="example">
+            <div id="grid" style="font-size:14px;"></div>
+
+            <script src="~/JScript/AuditLog/AuditLog.js"></script>
+
+        </div>
+
+
+    </section>
+    @*}*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".k-hierarchy-cell").click();
+        });
+
+        $('tr.k-master-row').click(function () {
+            $(this).nextUntil('tr.k-master-row').css('display', function (i, v) {
+                return this.style.display === 'table-row' ? 'none' : 'table-row';
+            });
+        });
+
+    </script>
+</div>
+
+
+

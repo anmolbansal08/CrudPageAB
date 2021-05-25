@@ -1,0 +1,1284 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript">
+        var userContext = "";
+        $(document).ready(function () {
+
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+        });
+    </script>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="MSHTML 6.00.3790.1830" name="GENERATOR" />
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/UWS/jquery-barcode-2.0.2.js"></script>
+
+
+    <style type="text/css">
+        .dotted {
+            border-bottom: 1px dashed black;
+            text-decoration: none;
+        }
+
+
+        .bc {
+            text-align: center;
+            font-family: Arial;
+            height: 20px;
+        }
+
+        .c {
+            text-align: left;
+            font-family: Arial;
+            height: 20px;
+        }
+
+        body {
+            font-family: Arial;
+            font-size: 12px;
+        }
+
+        span {
+            text-align: center;
+        }
+
+
+        .ui-widget-overlay ui-front {
+            opacity: 0.1 !important;
+        }
+
+        .ui-widget-overlay {
+            background: none !important;
+            opacity: 0.1 !important;
+        }
+
+        .coverBorder {
+            border: 1px solid lightgray;
+        }
+
+        .CurveRectangle {
+            /*padding: 10px;*/
+            /*background: #dddddd;*/
+            border-top-right-radius: 6.5em;
+            border-top-left-radius: 6.5em;
+            -ms-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+            border-top: 1px solid lightgrey;
+        }
+
+        .CurveBackRectangle {
+            -ms-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            /* transform: rotate(360deg); */
+            display: block;
+        }
+
+        .formlabelcss {
+            font-size: 14px;
+            color: rgb(0, 0, 0);
+            font-family: Arial;
+            padding-left: 3px;
+            padding-right: 5px;
+            width: 17%;
+            height: 25px;
+            border-right: 1px solid rgb(190, 189, 190);
+            border-left: 2px solid rgb(190, 189, 190);
+            border-bottom: 1px solid rgb(190, 189, 190);
+            border-top: 1px solid rgb(190, 189, 190);
+        }
+
+        .btn-success {
+            background-color: #5bb75b;
+            background-repeat: repeat-x;
+            border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+            border-left-color: #51a351;
+            border-right-color: #51a351;
+            border-top-color: #51a351;
+        }
+
+            .btn-success:hover, .btn-success:active, .btn-success.active, .btn-success.disabled, .btn-success[disabled] {
+                background-color: #51a351;
+            }
+
+            .btn-primary, .btn-primary:hover, .btn-warning, .btn-warning:hover, .btn-danger, .btn-danger:hover, .btn-success, .btn-success:hover, .btn-info, .btn-info:hover, .btn-inverse, .btn-inverse:hover {
+                color: #ffffff;
+                text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+            }
+
+        .btn:hover {
+            color: #333333;
+            text-decoration: none;
+            background-color: #e6e6e6;
+            background-position: 0 -15px;
+            -webkit-transition: background-position 0.1s linear;
+            -moz-transition: background-position 0.1s linear;
+            -ms-transition: background-position 0.1s linear;
+            -o-transition: background-position 0.1s linear;
+            transition: background-position 0.1s linear;
+        }
+    </style>
+    <script type="text/javascript">
+        var userContext = '';
+
+        function printDiv() {
+
+            document.getElementById('btnPrint').style.display = 'none';
+
+            document.getElementById('btnClose').style.display = 'none';
+            window.print();
+
+            //document.getElementById('btnPrint').style.display = 'block';
+
+            //document.getElementById('btnClose').style.display = 'block';
+        }
+
+        $('.cancel').click(function (e) {
+            window.close();
+        });
+
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            var SNo = getParameterByName("CCANo", "");
+
+
+            if (SNo != "") {
+                $.ajax({
+                    url: "/../../Services/Shipment/CCAService.svc/UpdateCCAAWbRecord", async: false, type: "POST", cache: false, contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ SNo: SNo }),
+                    success: function (result) {
+
+                        //if (GetSucessResult != undefined  && GetSucessResult.Table2[0].length > 0)
+                        //{
+                        //    document.getElementById("AirlineLogo").src = GetSucessResult.Table2[0].AirlineLogo;
+                        //}
+                        var GetSucessResult = JSON.parse(result);
+                        if (GetSucessResult != undefined) {
+
+                            if (GetSucessResult.Table0.length > 0) {
+                                $('#hdnAWBSNo').val(GetSucessResult.Table0[0].AWBSNo)
+                                $("span#AWBNO").text(GetSucessResult.Table0[0].AwbNo);
+                                $("span#Origin").text(GetSucessResult.Table0[0].Origin);
+                                $("span#Destination").text(GetSucessResult.Table0[0].Destination);
+                                $("span#DateOfAwbIssue").text(GetSucessResult.Table0[0].DateofAWBissue);
+                                $("span#PlaceOfAwbIssue").text(GetSucessResult.Table0[0].PlaceofAWBIssue);
+                                $("span#NameAndCity").text(GetSucessResult.Table0[0].AgentName + ' / ' + GetSucessResult.Table0[0].AgentCity);
+                                $('#AgentCode').text(GetSucessResult.Table0[0].AgentCode);
+                                $('#AirlineName').text(GetSucessResult.Table0[0].AirlineName);
+                                $('#AirlineName1').text(GetSucessResult.Table0[0].AirlineName);
+                                $('#DateAndPlaceOfIssue').text(GetSucessResult.Table0[0].DateofAWBissue + ' / ' + GetSucessResult.Table0[0].PlaceofAWBIssue);
+
+                                $("#Text_RevisedGrossWeight").text(GetSucessResult.Table0[0].RevisedGrossWeight)
+                                $("span#hdn_OriginalGrossWeight").text(GetSucessResult.Table0[0].OriginalGrossWeight)
+
+                                $("#Text_RevisedPieces").text(GetSucessResult.Table0[0].RevisedPieces)
+                                $("span#hdn_OriginalPieces").text(GetSucessResult.Table0[0].OriginalPieces)
+
+
+                                $("#Text_RevisedVolume").text(GetSucessResult.Table0[0].RevisedVolume)
+                                $("span#hdn_OriginalVolume").text(GetSucessResult.Table0[0].OriginalVolume)
+
+                                $("span#hdn_RevisedVolumeWeight").text(GetSucessResult.Table0[0].RevisedVolumeWeight)
+                                $("span#hdn_OriginalVolumeWeight").text(GetSucessResult.Table0[0].OriginalVolumeWeight)
+
+
+
+                                $("span#Shipper").text(GetSucessResult.Table0[0].ShipperName);
+                                $("span#Consignee").text(GetSucessResult.Table0[0].ConsigneeName);
+
+                                /*
+                                //$("span#hdn_RevisedShipper").text(GetSucessResult.Table0[0].Revisedshipper);
+                                //$("span#hdn_RevisedConsignee").text(GetSucessResult.Table0[0].RevisedConsignee);
+
+                                //Revised shipper & Revised Consignee
+                                $("span#hdn_RevisedShipper").text('Name:- ' + GetSucessResult.Table2[0].RevisedCustomerName +', Address:- '+GetSucessResult.Table2[0].RevisedStreet+', Mobile:- ' + GetSucessResult.Table2[0].RevisedPhone);
+                                $("span#hdn_RevisedConsignee").text('Name:- ' + GetSucessResult.Table3[0].RevisedCustomerName + ', Address:- ' + GetSucessResult.Table3[0].RevisedStreet+', Mobile:- ' + GetSucessResult.Table3[0].RevisedPhone);
+
+                                //$("span#hdn_OriginalShipper").text(GetSucessResult.Table0[0].shipper);
+                                //$("span#hdn_OriginalConsignee").text(GetSucessResult.Table0[0].Consignee);
+                                //Original shipper & Revised Consigne
+                                  $("span#hdn_OriginalShipper").text('Name:- ' + GetSucessResult.Table2[0].OriginalCustomerName+', Address:- '+ GetSucessResult.Table2[0].OriginalStreet+', Mobile:- '+GetSucessResult.Table2[0].OriginalPhone);
+                                $("span#hdn_OriginalConsignee").text('Name:- ' + GetSucessResult.Table3[0].OriginalCustomerName+', Address:- '+ GetSucessResult.Table3[0].OriginalStreet+',  Mobile:- '+GetSucessResult.Table3[0].OriginalPhone);
+                                //$("span#Shipper").text(GetSucessResult.Table0[0].shipper);
+                                // $("span#Consignee").text(GetSucessResult.Table0[0].Consignee);
+
+                                */
+                                if (GetSucessResult.Table2.length > 0) {
+                                    $("span#hdn_RevisedShipper").text('Name:- ' + GetSucessResult.Table2[0].RevisedCustomerName + ', Address:- ' + GetSucessResult.Table2[0].RevisedStreet + ', Mobile:- ' + GetSucessResult.Table2[0].RevisedPhone);
+                                    $("span#hdn_OriginalShipper").text('Name:- ' + GetSucessResult.Table2[0].OriginalCustomerName + ', Address:- ' + GetSucessResult.Table2[0].OriginalStreet + ', Mobile:- ' + GetSucessResult.Table2[0].OriginalPhone);
+                                }
+                                if (GetSucessResult.Table3.length > 0) {
+                                    $("span#hdn_RevisedConsignee").text('Name:- ' + GetSucessResult.Table3[0].RevisedCustomerName + ', Address:- ' + GetSucessResult.Table3[0].RevisedStreet + ', Mobile:- ' + GetSucessResult.Table3[0].RevisedPhone);
+
+                                    $("span#hdn_OriginalConsignee").text('Name:- ' + GetSucessResult.Table3[0].OriginalCustomerName + ', Address:- ' + GetSucessResult.Table3[0].OriginalStreet + ',  Mobile:- ' + GetSucessResult.Table3[0].OriginalPhone);
+                                    
+                                }
+                                if (GetSucessResult.Table4.length > 0 && GetSucessResult.Table2.length < 1) {
+                                   // $("span#hdn_OriginalShipper").val(GetSucessResult.Table4[0].ShipperName);
+                                   // $("#OrgSHIPPER_Street").val(GetSucessResult.Table4[0].ShipperStreet);
+                                   // $("#OrgSHIPPER_MobileNo").val(GetSucessResult.Table4[0].ShipperMobile)
+
+                                    $("span#hdn_OriginalShipper").text('Name:- ' + GetSucessResult.Table4[0].ShipperName + ', Address:- ' + GetSucessResult.Table4[0].ShipperStreet + ', Mobile:- ' + GetSucessResult.Table4[0].ShipperMobile);
+
+                                    $("span#hdn_RevisedShipper").text('Name:- ' + GetSucessResult.Table4[0].ShipperName + ', Address:- ' + GetSucessResult.Table4[0].ShipperStreet + ', Mobile:- ' + GetSucessResult.Table4[0].ShipperMobile);
+
+                                }
+                                if (GetSucessResult.Table5.length > 0 && GetSucessResult.Table3.length < 1) {
+                                   // $("#CONSIGNEE_AccountNoName").val(GetSucessResult.Table5[0].ConsigneeName)
+                                   // $("#CONSIGNEE_Street").val(GetSucessResult.Table5[0].ConsigneeStreet)
+                                   // $("#CONSIGNEE_MobileNo").val(GetSucessResult.Table5[0].ConsigneeMobile)
+
+                                    $("span#hdn_OriginalConsignee").text('Name:- ' + GetSucessResult.Table5[0].ConsigneeName + ', Address:- ' + GetSucessResult.Table5[0].ConsigneeStreet + ',  Mobile:- ' + GetSucessResult.Table5[0].ConsigneeMobile);
+
+                                    $("span#hdn_RevisedConsignee").text('Name:- ' + GetSucessResult.Table5[0].ConsigneeName + ', Address:- ' + GetSucessResult.Table5[0].ConsigneeStreet + ', Mobile:- ' + GetSucessResult.Table5[0].ConsigneeMobile);
+
+                                }
+
+
+
+                                $('#Text_CommoditySNo').text(GetSucessResult.Table0[0].Text_CommoditySNo);
+                                var Text_SHC = GetSucessResult.Table0[0].Text_SHCSNo.substring(0, GetSucessResult.Table0[0].Text_SHCSNo.length - 1);
+                                $('#Text_SHCSNo').text(Text_SHC);
+
+                                $('#Text_ProductSNo').text(GetSucessResult.Table0[0].Text_ProductSNo);
+
+
+                                if ($('#AWBNO').text().split('-')[0] == "126") {
+
+                                    document.getElementById("AirlineLogo").src = "../../Images/GaurdaCMS%20Logo.jpg";
+                                }
+
+
+                                //Original----------------------
+                                $('#OriginalCommoditySNo').text(GetSucessResult.Table0[0].OriginalCommoditySNo);
+                                $('#Text_OriginalCommoditySNo').text(GetSucessResult.Table0[0].Text_OriginalCommoditySNo);
+
+
+                                var Text_OriginalSHC = GetSucessResult.Table0[0].Text_OriginalSHCSNo.substring(0, GetSucessResult.Table0[0].Text_OriginalSHCSNo.length - 1);
+                                $('#Text_OriginalSHCSNo').text(Text_OriginalSHC);
+
+
+
+                                $('#Text_OriginalProductSNo').text(GetSucessResult.Table0[0].Text_OriginalProductSNo);
+
+
+                                if (GetSucessResult.Table0[0].ISWEIGHTDISCREP == 'Checked') {
+                                    $('input[type="checkbox"][name=WEIGHTDISCREP]').click()
+                                }
+                                if (GetSucessResult.Table0[0].ISVOLUMEDISCREP == 'Checked') {
+                                    $('input[type="checkbox"][name=VOLUMEDISCREP]').click()
+                                }
+                                if (GetSucessResult.Table0[0].ISCNEECHANGE == 'Checked') {
+                                    $('input[type="checkbox"][name=CNEECHANGE]').click()
+                                }
+                                if (GetSucessResult.Table0[0].ISDESTCHANGE == 'Checked') {
+                                    $('input[type="checkbox"][name=DESTCHANGE]').click()
+                                }
+                                if (GetSucessResult.Table0[0].ISRATEERROR == 'Checked') {
+                                    $('input[type="checkbox"][name=RATEERROR]').click()
+                                }
+                                if (GetSucessResult.Table0[0].ISCCACHARGE == 'Checked') {
+                                    $('input[type="checkbox"][name=CCACHARGE]').click()
+                                }
+
+
+                                if (GetSucessResult.Table0[0].ISSHCCHARGE == 'Checked') {
+                                    $('input[type="checkbox"][name=SHCCHARGE]').click()
+                                }
+                                if (GetSucessResult.Table0[0].ISPRODUCTCHARGE == 'Checked') {
+                                    $('input[type="checkbox"][name=PRODUCTCHARGE]').click()
+                                }
+                                if (GetSucessResult.Table0[0].ISCOMMODITYCHARGE == 'Checked') {
+                                    $('input[type="checkbox"][name=COMMODITYCHARGE]').click()
+                                }
+                                if (GetSucessResult.Table0[0].ISPIECESCHARGE == 'Checked') {
+                                    $('input[type="checkbox"][name=PIECESCHARGE]').click()
+                                }
+                                $("[name='IsDestinationChange']").closest('tr').hide()
+                                $("[name='IsTerminateShpt']").closest('tr').hide()
+                                $("[name='IsRepriceAWB']").closest('tr').hide()
+                                $("[name='PIECESCHARGE']").attr('style', "margin-bottom:100px")
+                                if (GetSucessResult.Table0[0].IsTerminateShpt == 'Checked') {
+                                    $("[name='IsTerminateShpt']").closest('tr').show()
+                                    $('input[type="checkbox"][name=IsTerminateShpt]').click()
+                                    $("[name='IsRepriceAWB']").closest('tr').show()
+                                    $("[name='IsRepriceAWB']").prop('checked', GetSucessResult.Table0[0].IsRepriceAWB == 'Checked' ? true : false)
+                                    $("[name='PIECESCHARGE']").removeAttr('style')
+                                    $("[name='IsTerminateShpt']").attr('style', "margin-bottom:50px")
+                                }
+                                if (GetSucessResult.Table0[0].IsDestinationChange == 'Checked') {
+                                    $("[name='IsDestinationChange']").closest('tr').show()
+                                    $('input[type="checkbox"][name=IsDestinationChange]').click()
+                                    $("[name='IsRepriceAWB']").closest('tr').show()
+                                    $("[name='IsRepriceAWB']").prop('checked', GetSucessResult.Table0[0].IsRepriceAWB == 'Checked' ? true : false)
+                                    $("[name='PIECESCHARGE']").removeAttr('style')
+                                    $("[name='IsDestinationChange']").attr('style', "margin-bottom:50px")
+                                }
+                               
+
+
+
+
+                                $("span#Status").text(GetSucessResult.Table0[0].Status);
+
+                                if ($("span#Status").text() == 'Requested') {
+                                    $('#RequestedBy').text(GetSucessResult.Table0[0].RequestedBy + '-' + GetSucessResult.Table0[0].DateofAWBissue)
+                                    $('#lblApprovedBy').hide();
+                                    $('#lblCCAexecutionDate').hide();
+                                }
+
+                                if ($("span#Status").text() == 'Approved') {
+                                    $('#RequestedBy').text(GetSucessResult.Table0[0].RequestedBy + '-' + GetSucessResult.Table0[0].DateofAWBissue)
+                                    $('#ApprovedBy').text(GetSucessResult.Table0[0].ApprovedBy + '-' + GetSucessResult.Table0[0].ApprovedDate)
+                                    $("span#CCANo").text(GetSucessResult.Table0[0].CCANo)
+
+                                }
+
+
+                                if ($("span#Status").text() == 'Rejected') {
+                                    $('#RequestedBy').text(GetSucessResult.Table0[0].RequestedBy + '-' + GetSucessResult.Table0[0].DateofAWBissue)
+                                    $('#ApprovedBy').text(GetSucessResult.Table0[0].ApprovedBy + '-' + GetSucessResult.Table0[0].ApprovedDate)
+
+                                }
+                                $("#Text_Remarks").val(GetSucessResult.Table0[0].CCARemarks)
+
+                                $("#Text_RevisedChargeableWeight").text(GetSucessResult.Table0[0].RevisedChargeableWeight);
+                                $("span#hdn_OriginalChargeableWeight").text(GetSucessResult.Table0[0].OriginalChargeableWeight);
+
+
+                                $("#Text_RevisedPrepaidWeightCharges").text(GetSucessResult.Table0[0].RevisedPWeightCharges);
+                                $("#Text_RevisedPrepaidValuationCharges").text(GetSucessResult.Table0[0].RevisedPValuationCharges);
+                                $("#Text_RevisedPrepaidTax").text(GetSucessResult.Table0[0].RevisedPTax);
+                                $("span#Text_RevisedPrepaidDueAgent").text(GetSucessResult.Table0[0].RevisedPDueAgentCharges);
+                                $("span#Text_RevisedPrepaidDueCarrier").text(GetSucessResult.Table0[0].RevisedPDueCarrierCharges);
+                                $("#Text_RevisedPrepaidTotal").text(GetSucessResult.Table0[0].RevisedPTotalCharges);
+
+
+
+                                //Span Original Prepaid
+                                $("span#hdn_OriginalPrepaidWeightCharges").text(GetSucessResult.Table0[0].OriginalPWeightCharges);
+                                $("span#hdn_OriginalPrepaidValuationCharges").text(GetSucessResult.Table0[0].OriginalPValuationCharges);
+                                $("span#hdn_OriginalPrepaidTax").text(GetSucessResult.Table0[0].OriginalPTax);
+                                $("span#hdn_OriginalPrepaidDueAgent").text(GetSucessResult.Table0[0].OriginalPDueAgentCharges);
+                                $("span#hdn_OriginalPrepaidDueCarrier").text(GetSucessResult.Table0[0].OriginalPDueCarrierCharges);
+                                $("span#hdn_OriginalPrepaidTotal").text(GetSucessResult.Table0[0].OriginalPTotalCharges);
+
+
+                                //Flight Details
+                                if (GetSucessResult.Table1.length > 0) {
+
+                                    for (var i = 1; i <= GetSucessResult.Table1.length; i++) {
+                                        $("span#To" + i + "").text(GetSucessResult.Table1[i - 1].Origin);
+                                        $("span#FlightNo" + i + "").text(GetSucessResult.Table1[i - 1].FlightNo);
+                                        $("span#Date" + i + "").text(GetSucessResult.Table1[i - 1].FlightDate);
+
+
+                                        //--------------------------------------------------
+
+                                        $("span#DepartedPieces" + i + "").text(GetSucessResult.Table1[i - 1].Pieces + "/");
+                                        $("span#DepartedGrossWeight" + i + "").text(GetSucessResult.Table1[i - 1].GrossWeight + "/");
+                                        $("span#DepartedVolume" + i + "").text(GetSucessResult.Table1[i - 1].Volume + "/");
+                                        $("span#DepartedVolumeWeight" + i + "").text(GetSucessResult.Table1[i - 1].VolumeWeight);
+
+
+                                    }
+
+                                }
+
+                                if ($("span#FlightNo1").text().trim() == "") {
+                                    $("span#FlightDetails1").hide();
+                                    $("#DepartedPieces1").hide();
+                                    $("#DepartedGrossWeight1").hide();
+                                    $("#DepartedVolume1").hide();
+                                    $("#DepartedVolumeWeight1").hide();
+                                }
+
+                                if ($("span#FlightNo2").text().trim() == "") {
+                                    $("span#FlightDetails2").hide();
+                                    $("span#DepartedPieces2").hide();
+                                    $("span#DepartedGrossWeight2").hide();
+                                    $("span#DepartedVolume2").hide();
+                                    $("span#DepartedVolumeWeight2").hide();
+                                }
+                                if ($("span#FlightNo3").text().trim() == "") {
+                                    $("span#FlightDetails3").hide();
+                                    $("span#DepartedPieces3").hide();
+                                    $("span#DepartedGrossWeight3").hide();
+                                    $("span#DepartedVolume3").hide();
+                                    $("span#DepartedVolumeWeight3").hide();
+                                }
+
+
+
+
+                            }
+                                             else {
+                                ShowMessage('info', 'Need your Kind Attention!', "Data Not Found.", "bottom-left");
+                            }
+                          }
+
+                        else {
+                            ShowMessage('info', 'Need your Kind Attention!', "Data Not Found.", "bottom-left");
+                        }
+                    }
+                });
+            }
+
+            $('#btnPrint').click();
+        });
+
+    </script>
+
+</head>
+<body>
+    <div id="MainDiv">
+        <div id="ApplicationTabs" data-role="tabstrip" class="k-widget k-header k-tabstrip">
+            <div id="ApplicationTabs-1" class="k-content k-state-active" style="display: block;">
+                <table class="WebFormTable" id="tbl">
+                    <tr>
+                        <td>
+                            <div>
+                                <input id="btnPrint" type="button" value="Print" class="btn btn-success" style=" float right; /* margin-left: -15px; */ margin-right: 25px; width: 117px;" onclick='printDiv();'>
+                                <input id="btnClose" type="button" value="Close" class="btn btn-success" style=" float right; margin-right 25px; width 117px;" onclick='window.close();'>
+                                <img id="AirlineLogo" style=" float right; margin-bottom 15px; width 270px;" alt="" />
+                            </div>
+                            <div id="htmldivdetails" style="margin-left:auto;margin-right:auto;width:100%;margin-top:20px; height:100%;">
+                                <div id="PrintDiv" style="width:100%">
+                                    <div style="width:98%;margin-top:40px;margin-right:auto;margin-left:auto">
+
+                                        <table style="border-collapse:collapse;width:100%" border="1" class="WebFormTable">
+                                            <tr>
+                                                <td colspan="4" class="c formlabelcss" style="text-align: center; font-size: 20px; font-weight: 100;">
+                                                    Cargo Charges Correction Advice (CCA)
+                                                </td>
+                                                <td class="c formlabelcss" style="text-align: left; font-size: 20px; font-weight: 100;">Number  -<span id="CCANo"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bc formlabelcss">AWB No :</td>
+                                                <td class="bc formlabelcss">Origin :</td>
+                                                <td class="bc formlabelcss">Destination :</td>
+                                                <td class="bc formlabelcss">Date of AWB issue :</td>
+                                                <td class="bc formlabelcss">Place of AWB Issue :</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bc">
+                                                    <span id="AWBNO"></span>
+                                                    <input id="hdnAWBSNo" type="hidden" name="hdnAWBSNo" value="" />
+                                                </td>
+                                                <td class="bc">
+                                                    <span id="Origin"></span>
+                                                    <input type="hidden" name="OriginSNo" id="OriginSNo" value="">
+                                                </td>
+                                                <td class="bc">
+                                                    <span id="Destination"></span>
+                                                    <input type="hidden" name="DestinationSNo" id="DestinationSNo" value="">
+                                                </td>
+                                                <td class="bc">
+                                                    <span id="DateOfAwbIssue"></span>
+                                                </td>
+                                                <td class="bc">
+                                                    <span id="PlaceOfAwbIssue"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="c formlabelcss" style="font-size:14px;">Name and City(Agent For Receipt):</td>
+                                                <td class="c formlabelcss"> Code (Agent or Recipient) </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bc" colspan="4">
+                                                    <span id="NameAndCity"></span>
+                                                </td>
+                                                <td class="bc">
+                                                    <span id="AgentCode"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="c formlabelcss"><font color="red">*</font>TO :</td>
+                                                <td class="c formlabelcss">
+                                                    <font color="red">*</font>Flight No :
+                                                    <span id="FlightDetails1" style="float:right; width :182px;">Pcs/Gr.Wt/CBM./VolWt</span>
+                                                </td>
+                                                <td class="c formlabelcss"><font color="red">*</font>Date :</td>
+                                            </tr>
+                                            <tr>
+
+                                                <td class="c" colspan="3">
+                                                    <span id="To1"></span>
+                                                </td>
+                                                <td class="c">
+                                                    <span id="FlightNo1"></span>
+                                                    <div style="float:right;width: 170px;">
+                                                        <span id="DepartedPieces1"></span>
+                                                        <span id="DepartedGrossWeight1"></span>
+                                                        <span id="DepartedVolume1"></span>
+                                                        <span id="DepartedVolumeWeight1"></span>
+                                                    </div>
+                                                </td>
+                                                <td class="c">
+                                                    <span id="Date1"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+                                                <td colspan="5" class="formlabelcss" style=" font-family Arial;font-size:14px; height 20px; text-align center">Transfer stations to complete lines 2 or 3 as appropriate and forward to next carrier</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="c formlabelcss"><font color="red">*</font>To 2 :</td>
+                                                <td class="c formlabelcss">
+                                                    <font color="red">*</font>Flight No :
+                                                    <span id="FlightDetails2" style="float:right; width :182px;">Pcs/Gr.Wt/CBM./VolWt</span>
+                                                </td>
+                                                <td class="c formlabelcss"><font color="red">*</font>Date :</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="c">
+                                                    <span id="To2"></span>
+                                                </td>
+                                                <td class="c">
+                                                    <span id="FlightNo2"></span>
+                                                    <div style="float:right;width: 170px;">
+                                                        <span id="DepartedPieces2"></span>
+                                                        <span id="DepartedGrossWeight2"></span>
+                                                        <span id="DepartedVolume2"></span>
+                                                        <span id="DepartedVolumeWeight2"></span>
+                                                    </div>
+                                                </td>
+                                                <td class="c">
+                                                    <span id="Date2"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="c formlabelcss"><font color="red">*</font>To 3 :</td>
+                                                <td class="c formlabelcss">
+                                                    <font color="red">*</font>Flight No :
+                                                    <span id="FlightDetails3" style="float:right; width :182px;">Pcs/Gr.Wt/CBM./VolWt</span>
+                                                </td>
+                                                <td class="c formlabelcss"><font color="red">*</font>Date :</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="c">
+                                                    <span id="To3"></span>
+                                                </td>
+                                                <td class="c">
+                                                    <span id="FlightNo3" class="bc"></span>
+                                                    <div style="float:right;width: 170px;">
+                                                        <span id="DepartedPieces3"></span>
+                                                        <span id="DepartedGrossWeight3"></span>
+                                                        <span id="DepartedVolume3"></span>
+                                                        <span id="DepartedVolumeWeight3"></span>
+                                                    </div>
+                                                </td>
+                                                <td class="c">
+                                                    <span id="Date3" class="bc"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="formlabelcss" style=" font-family Arial; font-size 14px;text-align:left">Currency : <span id="CurrencyCode"></span> </td>
+                                                <td colspan="4" class="formlabelcss" style=" font-family Arial; font-size 14px; text-align center">Air Waybill weight and/or charges have been corrected/added as follows:</td>
+                                            </tr>
+
+
+                                        </table>
+                                        <table style="width: 100%; border-collapse: collapse; border: 1px solid lightgrey; " validateonsubmit='true'>
+
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss"> </td>
+                                                <td colspan="2" class="bc formlabelcss">Revised/Correct Chargeable Weight</td>
+                                                <td colspan="2" class="bc formlabelcss">Original/Incorrect Chargeable Weight</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Gross Weight :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="Text_RevisedGrossWeight"></span>
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_OriginalGrossWeight"></span>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Pieces :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <!--<input type="text" class="k-input" maxlength="5" name="Text_RevisedPieces" id="Text_RevisedPieces" style="width:150px;" />-->
+
+                                                    <span id="Text_RevisedPieces"></span>
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_OriginalPieces"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Volume :</td>
+                                                <td colspan="2" class="bc coverBorder">
+
+                                                    <span id="Text_RevisedVolume"></span>
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_OriginalVolume"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Volume Weight :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_RevisedVolumeWeight"></span>
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_OriginalVolumeWeight"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Chargeable Weight :</td>
+                                                <td colspan="2" class="bc coverBorder">
+
+                                                    <span id="Text_RevisedChargeableWeight"></span>
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_OriginalChargeableWeight"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Commodity :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="Text_CommoditySNo"></span>
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="Text_OriginalCommoditySNo"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">SHC  :</td>
+                                                <td colspan="2" class="bc coverBorder">
+
+                                                    <span id="Text_SHCSNo"></span>
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+
+                                                    <span id="Text_OriginalSHCSNo"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Product :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="Text_ProductSNo"></span>
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="Text_OriginalProductSNo"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table style="width: 100%; border-collapse: collapse; border: 1px solid lightgrey; " validateonsubmit='true'>
+
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss"> </td>
+                                                <td colspan="2" class="bc formlabelcss">Revised/Correct</td>
+                                                <td colspan="2" class="bc formlabelcss">Original/Incorrect</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Shipper :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <!--<input type="text" class="k-input" name="Text_RevisedShipper" id="Text_RevisedShipper" style="width:150px;" />-->
+                                                    <span id="hdn_RevisedShipper"></span>
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_OriginalShipper"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Consignee :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <!--<input type="text" class="k-input" name="Text_RevisedConsignee" id="Text_RevisedConsignee" style="width:150px;" />-->
+                                                    <span id="hdn_RevisedConsignee"></span>
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_OriginalConsignee"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table style="width:100%;">
+                                            <tr>
+                                                <td style="width: 70%;">
+                                                    <table style="width: 100%;  border:1px solid lightgrey;">
+                                                        <tr>
+                                                            <td colspan="3" class="bc formlabelcss">Revised/Corrected Charges</td>
+                                                            <td colspan="3" class="bc formlabelcss">Original/Incorrect Charges</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Prepaid</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Weight Charge</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Collect</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Prepaid</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Weight Charge</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Collect</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray;text-align:center">
+                                                                            <span id="Text_RevisedPrepaidWeightCharges"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+                                                                            <span id="Text_RevisedCollectWeightCharges"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+                                                                            <span id="hdn_OriginalPrepaidWeightCharges"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center">
+                                                                            <span id="hdn_OriginalCollectWeightCharges"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Valuation Charges</span></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Valuation Charges</span></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+
+                                                                            <span id="Text_RevisedPrepaidValuationCharges"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center">
+                                                                            <span id="Text_RevisedCollectValuationCharges"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalPrepaidValuationCharges"></span></td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalCollectValuationCharges"></span></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Tax</span></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Tax</span></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+
+                                                                            <span id="Text_RevisedPrepaidTax"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center">
+                                                                            <span id="Text_RevisedCollectTax"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalPrepaidTax"></span></td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalCollectTax"></span></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Other Charges Due Agent</span></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Other Charges Due Agent</span></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+
+                                                                            <span id="Text_RevisedPrepaidDueAgent"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center">
+                                                                            <span id="Text_RevisedCollectDueAgent"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalPrepaidDueAgent"></span></td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalCollectDueAgent"></span></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Other Charges Due Carrier</span></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Other Charges Due Carrier</span></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+
+                                                                            <span id="Text_RevisedPrepaidDueCarrier"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center">
+                                                                            <span id="Text_RevisedCollectDueCarrier"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalPrepaidDueCarrier"></span></td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalCollectDueCarrier"></span></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle"></span></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">C. C. Fee</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle"></span></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">C. C. Fee</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"></td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center"></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"></td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Prepaid</span></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Collect</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Prepaid</span></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Collect</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+                                                                            <span id="Text_RevisedPrepaidTotal"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center">
+                                                                            <span id="Text_RevisedCollectTotal"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+                                                                            <span id="hdn_OriginalPrepaidTotal"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+                                                                            <span id="hdn_OriginalCollectTotal"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top; border: 1px solid lightgrey;">
+                                                    <table style="width: 100%;">
+                                                        <tr>
+                                                            <td class="bc">
+                                                                <br />
+                                                                <span><font color="red">*</font></span>     Remarks and reason for issuing CCA
+                                                                <br />
+
+                                                                PLEASE SELECT APPROPRIATE REASON
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <br />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="bc">
+
+                                                                <textarea class="k-input" id="Text_Remarks" style="width:96%;height: 80px;" rows="5" cols="25"></textarea>
+
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="WEIGHTDISCREP" class="CCAReason" value="1"> WEIGHT DISCREP
+                                                            </td>
+                                                        <tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="VOLUMEDISCREP" class="CCAReason" value="1"> VOLUME DISCREP
+                                                            </td>
+                                                        <tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="CNEECHANGE" class="CCAReason" value="1"> CNEE CHANGE
+                                                            </td>
+                                                        <tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="DESTCHANGE" class="CCAReason" value="1"> DEST CHANGE <br>
+                                                            </td>
+                                                        <tr>
+
+
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="RATEERROR" class="CCAReason" value="1"> RATE ERROR
+                                                            </td>
+                                                        <tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="CCACHARGE" class="CCAReason" value="1"> CCA CHARGE
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="SHCCHARGE" class="CCAReason" value="1"> SHC CHANGE
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="PRODUCTCHARGE" class="CCAReason" value="1"> PRODUCT CHANGE
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="COMMODITYCHARGE" class="CCAReason" value="1"> COMMODITY CHANGE
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="PIECESCHARGE" class="CCAReason" value="1"> PIECES CHANGE
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="IsRepriceAWB" id="IsRepriceAWB" class="CCAReason"> REPRICE AWB
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="IsTerminateShpt" id="IsTerminateShpt" class="CCAReason"> Terminate Shpt
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="IsDestinationChange" id="IsDestinationChange" class="CCAReason"> Change Destination
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                
+                                                                <span><b style="font-size:12px;">
+                                                                    In case of non-delivery enter all charges due at destination for collection from shipper.
+                                                                </b>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <hr />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b style=" font-size 12px;"> Shipper Name : <span id="Shipper"></span></b>
+
+                                                </td>
+                                                <td style="float:right;width:125px;">
+                                                    <b style=" font-size 12px;"> Status : <span id="Status"></span></b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <hr />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b style=" font-size 12px;"> Consignee Name : <span id="Consignee"></span></b>
+                                                </td>
+                                                <td style="float:right;">
+                                                    <p><b style=" font-size 8px;"> Requested By : <span style=" font-size 8px;" id="RequestedBy"></span></b><br /> <b style=" font-size 8px;"> Approved By  : <span style=" font-size 8px;" id="ApprovedBy"></span></b></p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <hr />
+                                                    <br />
+                                                    <br />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <br />
+                                                    <br />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style=" height 35px;">
+                                                    <b style=" font-size 12px;"> Distribution : </b>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Original 					-		(for Carrier issuing CCA)
+                                                    </b>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			1		-		(for Accounting Department of issuing Carrier)
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <b style=" font-size 12px;"><span style="border-bottom: 1px dashed black; text-decoration: none;" id="AirlineName"></span></b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			2		-		(for First Carrier)
+                                                    </b>
+                                                </td>
+                                                <td> <b style=" font-size 12px;">    Airline</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			3		-		(for Second Carrier)
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <b style=" font-size 12px;"> <span id="DateAndPlaceOfIssue" style="border-bottom: 1px dashed black; text-decoration: none;"></span></b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			4		-		(for Third Carrier)
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <b style=" font-size 12px;">    Date and Place of Issue</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			5		-		(for Cargo Department of Carrier issuing CCA)
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <b style=" font-size 12px;"> ..............................................................</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			6		-		(for CASS/CASS Collect-Settlement Office)
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <b style=" font-size 12px;">  Signature</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			7		-		(for CASS/CASS Collect-Agent/Recipient)
+                                                    </b>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                        <table style="width: 100%;">
+                                            <tr>
+                                                <td colspan="4">
+                                                    <hr />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <hr />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <hr />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" style="height: 25px; font-size: 12px;">
+                                                    <b>This slip must be completed and returned to carrier issuing CCA.</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" style="height: 35px; font-size: 12px;">
+                                                    <b style="font-style: italic; float: right">   We herewith  confirm having corrected our documents and take the necessary action as per your instructions.</b>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <br />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 25px; width: 152px; float: left;">
+                                                    <b style=" font-size 12px; float right;">To :</b>
+                                                </td>
+                                                <td><b style=" font-size 12px;"> ..............................................................</b></td>
+                                                <td>
+                                                    <b>   From :</b>
+                                                </td>
+                                                <td><b style=" font-size 12px;"> <span id="AirlineName1" style="border-bottom: 1px dashed black; text-decoration: none;"></span>(Airline)</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 25px; width: 206px; float: left;">
+                                                    <b style=" font-size 12px; float right;">
+                                                        Ref.CCA No. :
+                                                    </b>
+                                                </td>
+                                                <td><b style=" font-size 12px;"> <span id="CCANo" style="border-bottom: 1px dashed black; text-decoration: none;"></span></b></td>
+                                                <td>
+                                                    <b>  At :</b>
+
+                                                </td>
+                                                <td>
+                                                    <b style=" font-size 12px;">
+                                                        <span id="Origin" style="border-bottom: 1px dashed black; text-decoration: none;"></span>
+                                                    </b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 25px; width: 208px; float: left;">
+                                                    <b style=" font-size 12px; float right;">
+                                                        Ref.AWB No. :
+
+                                                    </b>
+                                                </td>
+                                                <td><b style=" font-size 12px;"> <span id="AWBNO" style="border-bottom: 1px dashed black; text-decoration: none;"></span></b></td>
+                                                <td>
+                                                    <b> Date :</b>
+
+                                                </td>
+                                                <td><b style=" font-size 12px;"> <span id="DateOfAwbIssue" style="border-bottom: 1px dashed black; text-decoration: none;"></span> </b></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 25px; width: 215px; float: left;">
+                                                    <b style=" font-size 12px; float right;">
+
+                                                    </b>
+                                                </td>
+                                                <td><b style=" font-size 12px;"> </b></td>
+                                                <td>
+                                                    <b>   Signature</b>
+
+                                                </td>
+                                                <td><b style=" font-size 12px;"> ..............................................................(Airline)</b></td>
+                                            </tr>
+
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

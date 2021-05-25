@@ -1,0 +1,60 @@
+﻿<table class='WebFormTable' id='tbl' validateonsubmit=true>
+    <tr><td class='formSection' colspan='10'>Product Wise Report </td></tr>
+    <tr><td class='formlabel' colspan='10'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+    <tr class='formSection'>
+
+        <td class="formlabel"><font color='red'>*</font>Airline Name</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("AirlineCode")
+            @Html.TextBox("Text_AirlineCode", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank", style = "width:200px;" })
+
+        </td>
+
+
+        <td class="formlabel"><font color='red'></font>Product Name</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("ProductSNo")
+            @Html.TextBox("Text_ProductSNo", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:200px;" })
+
+        </td>
+    </tr>
+
+
+    <tr class='formSection'>
+        <td class="formlabel"><font color='red'>*</font>From Date</td>
+        <td class="formInputcolumn">
+            <input type='text' name='Fromdate' id='Fromdate' style='width: 133px;' data-valid='required'
+                   data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+        </td>
+        <td class="formlabel"><font color='red'>*</font>To Date</td>
+        <td class="formInputcolumn">
+            <input type='text' name='Todate' id='Todate' style='width: 133px;' data-valid='required'
+                   data-role="datepicker" data-valid-msg='Select To Date' controltype='datetype' value='' placeholder='To Date' />
+        </td>
+    </tr>
+
+    <tr>
+
+        <td>
+            <div id="exportflight" style="display:none"><img id=" imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer;" title="Export To Excel" onclick="ExportToExcel_Flight()" /></div>
+        </td>
+        <td class="formInputcolumn">
+            <input type="button" name='SearchSave' value='Search' class='btn btn-success' id="btnSubmit" />
+        </td>
+        <td class="formlabel"></td>
+        <td class="formInputcolumn"></td>
+    </tr>
+
+
+</table>
+<br />
+<br />
+<br />
+<div id="grid">
+
+</div>
+
+
+<script src="~/JScript/Report/ProductWiseReport.js"></script>

@@ -1,0 +1,48 @@
+﻿<Messages>
+
+  <DataFieldName>
+    <Name>App_Id</Name>
+    <Message>App_Id can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Name</Name>
+    <Message> Name can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Description</Name>
+    <Message>Description can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Caption</Name>
+    <Message>Caption can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>CurrentHeadingName</Name>
+    <Message>Heading can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Page already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Page Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Page Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Page Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

@@ -1,0 +1,18 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>ULD Calendar Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>ULD Calendar Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>ULD Calendar Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>ULD Calendar already exists</value>
+  </ServerMessage>
+</Messages>

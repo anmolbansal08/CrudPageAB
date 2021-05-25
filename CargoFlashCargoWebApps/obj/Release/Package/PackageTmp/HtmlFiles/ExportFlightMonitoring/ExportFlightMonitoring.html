@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../../Styles/Application.css" />
+    <link type="text/css" rel="stylesheet" href="../../Styles/Grid/kendo.common.min.css" />
+    <link type="text/css" rel="stylesheet" href="../../Styles/Grid/kendo.blueopal.min.css" />
+    <script type="text/javascript" src="../../Scripts/jquery-1.9.1.min.js"></script>
+    <script src="../../Scripts/KendoSchedular/Content/JS/kendo.all.min.js"></script>
+    <script src="../../Scripts/KendoSchedular/Content/JS/kendo.dataviz.min.js"></script>
+    <script>
+        function getQueryStringValue(name) {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regexS = "[\\?&]" + name + "=([^&#]*)";
+            var regex = new RegExp(regexS);
+            var results = regex.exec(window.location.href);
+            if (results == null)
+                return "";
+            else
+                return decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+        $(function () {
+            var FromDate = getQueryStringValue("StartDate");
+            var ToDate = getQueryStringValue("EndDate");
+            var DailyFlightSno = getQueryStringValue("DailyFlightSno");
+            $("#chart").kendoChart({
+                dataSource: new kendo.data.DataSource({
+                    transport: {
+                        read: {
+                            url: "../../Services/Report/ExportFlightMonitoringService.svc/GetChartData/" + FromDate + "/" + ToDate + "/" + DailyFlightSno,
+                            async: true, type: "GET", dataType: "json", cache: false,
+                            contentType: "application/json; charset=utf-8",
+                        }
+                    },
+                    requestStart: function () {
+                        kendo.ui.progress($("#loader"), true);
+                    },
+                    requestEnd: function (e) {
+                        kendo.ui.progress($("#loader"), false);
+                    }
+                }),
+                legend: {
+                    position: "top",
+                    visible: false
+                },
+                seriesDefaults: {
+                    type: "column"
+
+                },
+                series:
+                [{
+                    type: 'line',
+                    field: "GrossWeight",
+                    name: "UpdatedOn"
+                }, {
+                    type: 'column',
+                    field: "GrossWeight",
+                    name: "UpdatedOn"
+                }],
+                categoryAxis: {
+                    field: "UpdatedOn",
+                    labels: {
+                        rotation: -10
+                    },
+                    majorGridLines: {
+                        visible: true
+                    }
+                },
+                valueAxis: {
+                    labels: {
+                        format: "N0"
+                    },
+                    //majorUnit: 10000,
+                    line: {
+                        visible: true
+                    }
+                },
+                tooltip: {
+                    visible: true,
+                    format: "N0"
+                }
+            });
+        })
+    </script>
+</head>
+<body>
+    <div id="chart" style="height: 240px;"></div>
+</body>
+</html>

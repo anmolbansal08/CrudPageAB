@@ -1,0 +1,45 @@
+﻿<Messages>
+  <!--#region SlabMaster XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  SlabMaster
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Tarun Kumar
+  Created On:		11 Mar 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Shift  already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Shift  Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Shift  Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Shift Master Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2627</Key>
+    <value>Violation of Primary keys</value>
+  </ServerMessage>
+</Messages>
+
+
+
+
+

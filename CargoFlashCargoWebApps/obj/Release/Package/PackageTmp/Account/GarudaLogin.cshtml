@@ -1,0 +1,820 @@
+﻿@* Remove this section if you are using bundling *@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+<script type="text/javascript" async="" src="~/Images/Login/ga.js"></script>
+<script type="text/javascript" src="~/Images/Login/Page.js"></script>
+<script type="text/javascript" src="~/Images/Login/HomePage.js"></script>
+<script type="text/javascript" src="~/Scripts/Login.js"></script>
+<script type="text/javascript" src="~/Images/Login/jquery-ui-datepicker.js"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<style>
+    .short {
+        font-weight: bold;
+        color: #FF0000;
+        font-size: 11px;
+    }
+
+    .weak {
+        font-weight: bold;
+        color: orange;
+        font-size: 11px;
+    }
+
+    .good {
+        font-weight: bold;
+        color: #2D98F3;
+        font-size: 11px;
+    }
+
+    .strong {
+        font-weight: bold;
+        color: limegreen;
+        font-size: 11px;
+    }
+
+
+    .divshort {
+        color: #FF0000;
+        width: 25%;
+        border: solid;
+        background-color: #FF0000;
+    }
+
+    .divweak {
+        color: orange;
+        width: 50%;
+        border: solid;
+        background-color: orange;
+    }
+
+    .divgood {
+        color: #2D98F3;
+        width: 75%;
+        border: solid;
+        background-color: #2D98F3;
+    }
+
+    .divstrong {
+        color: limegreen;
+        width: 97%;
+        border: solid;
+        background-color: limegreen;
+    }
+</style>
+@{
+    //Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Log in";
+    string res = string.Empty;
+     int? result=null;
+
+    if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null)
+    {
+        @Html.Hidden("HdnUName", Request.Cookies["UserName"].Value)
+        @Html.Hidden("HdnPass", Request.Cookies["Password"].Value)
+    }
+
+    // Initialize general page variables
+    var email = ""; var CaptchaCode = "";
+    var password = "";
+    var rememberMe = false;
+    var browser = "";
+    //var ip = "";
+    var SessionID = "";
+    var TokenDetails = Request.QueryString["Token"];
+
+
+    CargoFlash.Cargo.DataService.Common.CommonService CS = new CargoFlash.Cargo.DataService.Common.CommonService();
+    int ISCaptcha = CS.GetSystemSettingsBySNo("ISCaptcha");
+
+    if (TokenDetails != null && TokenDetails.Length > 20)
+    {
+        CargoFlash.Cargo.Model.UserLogin userLogin = new CargoFlash.Cargo.Model.UserLogin();
+        CargoFlash.Cargo.DataService.LoginService loginservice = new CargoFlash.Cargo.DataService.LoginService();
+
+        userLogin = (CargoFlash.Cargo.Model.UserLogin)loginservice.GetTokenRecord(TokenDetails);
+        if (userLogin.UserSNo == 0)
+        {
+            Validation.AddFormError("Invalid UserID or Password.");
+        }
+        else
+        {
+
+            Session["UserDetail"] = userLogin;
+            Response.Redirect("~/Index.cshtml");
+        }
+    }
+
+    var hostname = "";
+    var returnUrl = Request.QueryString["ReturnUrl"];
+    if (returnUrl.IsEmpty())
+    {
+        // Some external login providers always require a return URL value
+
+        returnUrl = Href("~/");
+    }
+    var islogout = Request.QueryString["islogout"];
+    if (!string.IsNullOrEmpty(islogout))
+    {
+        Session.Clear();
+        Session.Abandon();
+        Session["UserDetail"] = null;
+        if (Request.Cookies["UserDetail"] != null)
+        {
+            HttpCookie myCookie = new HttpCookie("UserDetail");
+            myCookie.Expires = DateTime.Now.AddDays(-1);
+            myCookie.Value = "0";
+            Response.Cookies.Add(myCookie);
+            Response.Cookies.Remove("UserDetail");
+        }
+        Response.Redirect("~/Account/GarudaLogin.cshtml");
+    }
+    // Setup validation
+
+    Validation.RequireField("email", "You must enter User ID.");
+    Validation.RequireField("password", "You must enter Password.");
+    //Validation.RequireField("CaptchaCode", "You must enter below code.");
+    Validation.Add("password",
+        Validator.StringLength(
+            maxLength: Int32.MaxValue));
+    //,
+    //minLength: 5,
+    //errorMessage: "Invalid UserID and Password."));
+
+
+    // If this is a POST request, validate and process data
+    if (IsPost)
+    {
+        if (Session["UserDetail"] != null)
+        {
+            Response.Redirect("~/Index.cshtml");
+        }
+        // AntiForgery.Validate();
+        // is this an external login request?
+        string provider = Request.Form["provider"];
+        if (!provider.IsEmpty())
+        {
+            OAuthWebSecurity.RequestAuthentication(provider, Href("~/Account/RegisterService", new { returnUrl }));
+            return;
+        }
+        else if (Validation.IsValid())
+        {
+            email = Request.Form["email"];
+            password = Request.Form["password"];
+            rememberMe = Request.Form["rememberMe"].AsBool();
+            browser = Request.Browser.Type;
+            hostname = Dns.GetHostName();
+            SessionID = HttpContext.Current.Session.SessionID;
+            string ipAddress = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_FORWARDED_FOR"];
+            if (!string.IsNullOrEmpty(ipAddress))
+            {
+                string[] forwardedIps = ipAddress.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                ipAddress = forwardedIps[forwardedIps.Length - 1];
+            }
+            else
+            {
+                ipAddress = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+            }
+
+            CaptchaCode = Request.Form["CaptchaCode"];
+
+            IPAddress ip = Array.FindLast(
+    Dns.GetHostEntry(string.Empty).AddressList,
+    a => a.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);//Dns.GetHostEntry(hostname).AddressList[2].ToString();
+            CargoFlash.Cargo.Model.UserLogin userLogin = new CargoFlash.Cargo.Model.UserLogin();
+            CargoFlash.Cargo.DataService.LoginService loginservice = new CargoFlash.Cargo.DataService.LoginService();
+            CargoFlash.Cargo.DataService.Common.CommonService cmsvc = new CargoFlash.Cargo.DataService.Common.CommonService();
+             //***********************************TARUN*************************************
+             res = cmsvc.CompareSession(email, password, "");
+            //if (!string.IsNullOrEmpty(res))
+            //{
+                @*<script type="text/javascript">
+        if (confirm('@res')) {
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                url: "../Services/CommonService.svc/ReLogin?userId=@email&password=@password&UserSNo=",
+                success: function (response) {
+                    window.location = '../Index.cshtml';
+                }
+            });
+        }
+    </script>*@
+            //}
+            //else
+            //{
+                //***********************************END TARUN*************************************
+                
+            ////////Validate Captcha before login/////////////////////////////////////////////////////////////////////////////////////////// by Parvez Khan
+            bool Valid = false;
+            if (ISCaptcha == 1)
+            {
+                var response = Request["g-recaptcha-response"];
+
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(" https://www.google.com/recaptcha/api/siteverify?secret=6LdYXhUUAAAAAG_RXWxWmKimgSPD2v-PhfNNakLZ&response=" + response);
+                using (WebResponse wResponse = req.GetResponse())
+                {
+                    using (StreamReader readStream = new StreamReader(wResponse.GetResponseStream()))
+                    {
+                        string jsonResponse = readStream.ReadToEnd();
+                        List<string> lst = new List<string>();
+                        System.Web.Script.Serialization.JavaScriptSerializer js = new System.Web.Script.Serialization.JavaScriptSerializer();
+                        CargoFlash.Cargo.Model.CaptchaResponse data = js.Deserialize<CargoFlash.Cargo.Model.CaptchaResponse>(jsonResponse);// Deserialize Json
+                        Valid = Convert.ToBoolean(data.success);
+                    }
+                }
+            }
+            else { Valid = true; }
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            // AntiForgery.Validate();
+
+            //if (Session["CaptchaCode"].ToString() == CaptchaCode)
+            if (Valid)
+            {
+                //CargoFlash.Cargo.DataService.Common.CommonService c = new CargoFlash.Cargo.DataService.Common.CommonService();
+                //string val = c.GenerateSHA512String("admin1234");
+                //92F39F7F2A869838CD5085E6F17FC82109BCF98CD62A47CBC379E38DE80BBC0213A23CEE6E4A13DE6CAAE0ADD8A390272D6F0883C274320B1FF60DBCFC6DD750
+                 result = loginservice.GetValidLoginMessage(email, password);
+                if (result == 1 || result == 4) { Validation.AddFormError("Invalid UserID."); }
+                else if (result == 2 || result == 3) { Validation.AddFormError("Invalid Password."); }
+                else if (result == 5) { Validation.AddFormError("Account disabled,Please contact Admin."); }
+                else if (result == 6) { Validation.AddFormError("Account disabled After 3 bad attemps,Please contact Admin."); }
+                else if (result == 9) { Validation.AddFormError("Invalid UserID and Password."); }
+                else if (result == 7 || result == 8)
+                { @Html.Hidden("HdnPasswordExpire", result);@Html.Hidden("HdnUserEmail", email) }
+                //var captchavalue = Session["CaptchaCode"];
+                 res = cmsvc.CompareSession(email, password, "");
+                 if (string.IsNullOrEmpty(res))
+                 {
+                    if (result == 0)
+                    {
+                    userLogin = (CargoFlash.Cargo.Model.UserLogin)loginservice.GetLoginRecord(email, password, ip.ToString(), hostname, browser, SessionID);
+                    if (userLogin.UserSNo == 0)
+                    {
+                        Validation.AddFormError("Invalid UserID or Password.");
+                    }
+                    else
+                    {
+                        loginservice.RememberMe(rememberMe, email, password);
+
+                        if (Request.Cookies["UserDetail"] == null)
+                        {
+                            HttpCookie myCookie = new HttpCookie("UserDetail");
+                            myCookie.Value = userLogin.SysSetting["SessionTimeout"];
+                            myCookie.Expires = DateTime.Now.AddDays(1);
+                            Response.Cookies.Add(myCookie);
+                        }
+                        //  userLogin.SysSetting["SessionTimeout"] = Session.Timeout.ToString();
+                        Session["UserDetail"] = userLogin;
+                        //Session["DateFormat"] = "dd-MMM-yyyy";
+                        //Session["PageRights"] = userLogin.PageRights;
+                        Response.Redirect("~/Index.cshtml");
+                    }
+                }
+            }
+        }
+            else { Validation.AddFormError("Image code is not valid."); }
+           
+          
+        }
+    }
+}
+
+
+<!doctype html>
+<!-- saved from url=(0035)https://cargo.garuda-indonesia.com/ -->
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    @*<base href="https://cargo.garuda-indonesia.com/">*@
+    <title>Home » Garuda Indonesia Cargo</title>
+    @*<meta name="google-site-verification" content="GM8tXS1zCE86qtbUKWjr7Dvy16zG5UHB_0l5vcWPow8" />
+        <meta name="author" content="Roy Kusrahmadi" />
+        <meta http-equiv="X-UA-Compatible" content="IE=8" />
+        <meta http-equiv="Content-Style-Type" content="text/css" />
+        <meta http-equiv="Content-Script-Type" content="text/javascript" />
+        <meta http-equiv="Content-Language" content="en" />*@
+    <link rel="shortcut icon" href="https://cargo.garuda-indonesia.com/themes/cargoga/images/favicon.ico" />
+    <!--[if IE 6]>
+        <link rel="stylesheet" type="text/css" href="themes/cargoga/css/ie6.css" />
+    <![endif]-->
+    <!--[if IE 7]>
+        <link rel="stylesheet" type="text/css" href="themes/cargoga/css/ie7.css" />
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="~/Images/Login/combinedCSS.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="head-menu">
+        <div class="wrap">
+            <div class="headmenuwrap">
+                <ul class="clearfix w100 menu">
+                    <li>
+                        <a href="https://cargo.garuda-indonesia.com/" title="Go to the Home page" class="current"><span>Home</span></a>
+                    </li>
+                    <li>
+                        <a href="https://cargo.garuda-indonesia.com/about-us/" title="Go to the About Us page" class="link"><span>About Us</span></a>
+                        <ul>
+                            <li><a class="link" href="https://cargo.garuda-indonesia.com/about-us/organization-structure/" title="Organization Structure" alt="Organization Structure">Organization Structure</a></li>
+                            <li><a class="link" href="https://cargo.garuda-indonesia.com/about-us/awards/" title="Awards" alt="Awards">Awards</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="https://cargo.garuda-indonesia.com/products/" title="Go to the Products page" class="link"><span>Products</span></a>
+                        <ul>
+                            <li><a class="link" href="https://cargo.garuda-indonesia.com/products/go-express/" title="Go Express" alt="Go Express">Go Express</a></li>
+                            <li><a class="link" href="https://cargo.garuda-indonesia.com/products/regular/" title="Regular" alt="Regular">Regular</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="https://cargo.garuda-indonesia.com/news/latest-news/" title="Go to the News page" class="link"><span>News</span></a>
+                    </li>
+                    <li>
+                        <a href="https://cargo.garuda-indonesia.com/cargo-knowledge/garuda-fleet/" title="Go to the Cargo Knowledge page" class="link"><span>Cargo Knowledge</span></a>
+                        <ul>
+                            <li><a class="link" href="https://cargo.garuda-indonesia.com/cargo-knowledge/garuda-fleet/" title="Garuda Fleet" alt="Garuda Fleet">Garuda Fleet</a></li>
+                            <li><a class="link" href="https://cargo.garuda-indonesia.com/cargo-knowledge/unit-load-device/" title="Unit Load Device" alt="Unit Load Device">Unit Load Device</a></li>
+                            <li><a class="link" href="https://cargo.garuda-indonesia.com/cargo-knowledge/csc-business-flow/" title="CSC Business Flow" alt="CSC Business Flow">CSC Business Flow</a></li>
+                            <li><a class="link" href="https://cargo.garuda-indonesia.com/cargo-knowledge/dangerous-goods/" title="Dangerous Goods" alt="Dangerous Goods">Dangerous Goods</a></li>
+                            <li><a class="link" href="https://cargo.garuda-indonesia.com/cargo-knowledge/human-remain-as-cargo-shipment/" title="Human Remain as Cargo Shipment" alt="Human Remain as Cargo Shipment">Human Remain as Cargo Shipment</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="https://cargo.garuda-indonesia.com/contact-us/" title="Go to the Contact Us page" class="link"><span>Contact Us</span></a>
+                        <ul>
+                            <li><a class="link" href="https://cargo.garuda-indonesia.com/contact-us/corporate-sales/corporate-sales/" title="Corporate Sales" alt="Corporate Sales">Corporate Sales</a></li>
+                            <li><a class="link" href="https://cargo.garuda-indonesia.com/garuda-office?type=3" title="Cargo Service Center" alt="Cargo Service Center">Cargo Service Center</a></li>
+                        </ul>
+                    </li>
+                    <li class="fright">
+                        <div class="searchFormContainer">
+                            <form id="SearchForm_SearchForm" action="https://cargo.garuda-indonesia.com/home/SearchForm" method="get" enctype="application/x-www-form-urlencoded">
+                                <fieldset>
+                                    <legend></legend>
+                                    <div id="Search" class="field text  nolabel"><div class="middleColumn"><input type="text" class="text nolabel" id="SearchForm_SearchForm_Search" name="Search" value="Search" /></div></div>
+                                    <input class="hidden" type="hidden" id="SearchForm_SearchForm_locale" name="locale" value="en_US" />
+                                    <input class="action " id="SearchForm_SearchForm_action_results" type="submit" name="action_results" value="Submit" title="Submit" />
+                                </fieldset>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="lang" style="display:none;">
+                        <a href="https://cargo.garuda-indonesia.com/#"><i class="ui-icon white ui-icon-triangle-1-s"></i> Change Language <span style="clear:right"></span></a>
+                        <ul class="langs">
+                            <li class="clearfix">
+                                <a href="https://cargo.garuda-indonesia.com/?locale=en_US" title="English Version" class="enLangactiveLang" onclick="return false;">
+                                    <span class="lang_us"></span> <span>English</span>
+                                </a>
+                            </li>
+                            <li class="clearfix">
+                                <a href="https://cargo.garuda-indonesia.com/beranda?locale=id_ID" title="Indonesia Version" class="idLang" onclick="">
+                                    <span class="lang_id"></span> <span>Indonesia</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="wrap">
+        <div id="header">
+            <a href="https://cargo.garuda-indonesia.com/index.php">Cargo</a>
+            <!--
+            <div id="big-menu"> -->
+            <!-- </div>
+            -->
+        </div>
+        <div id="cargomain">
+            <div id="main-tab" style="width: 330px;">
+                <ul class="tabs clearfix" id="tab_container">
+                    <li id="li-p2" style="width: 105px;"><a href="javascript:void(0)" id="tab-p2">Tracking</a></li>
+                    <li id="li-p1" class="active" style="width: 105px;"><a href="javascript:void(0)" id="tab-p1" class="tab">Booking</a></li>
+                    <li id="li-p3" style="width: 105px;"><a href="javascript:void(0)" id="tab-p3" class="tab">Schedule</a></li>
+                </ul>
+                <div id="in_content1" class="in_content">
+                    <!--
+                        <h3>GO EXPRESS</h3>
+                        <form method="post" id="frmTrackShipmentEx" name="FormTrackEx" action="#" class="clearfix">
+                            <label>Housebill No</label>
+                            <div class="inputawbno">
+                            <input type="text" class="input3 awb" id="podnumber" size="11" minlength="8" name="podnumber">
+                            </div>
+                            <div class="inputawbbutton">
+                            <input type="button" class="btn" id="btnTrackShipmentEx" value="Track">
+                            <input type="reset" class="btn trackReset" id="btnResetTrackingFormEx" value="Reset">
+                            </div>
+                        </form>
+                        <hr>
+                    -->
+                    @*<h2>Online Booking</h2>*@
+                    @*<a class="onlineBook" href="https://cargo.garuda-indonesia.com/e-cargo">Klik Disini Untuk Login</a>*@
+                    <section id="loginForm">
+                        <form method="post" autocomplete="off">
+
+                            @AntiForgery.GetHtml()
+                            @* If one or more validation errors exist, show an error *@
+                            @Html.ValidationSummary("", excludeFieldErrors: true, htmlAttributes: null)
+                            <label for="message" id="message" class="error-label"></label>
+                            <fieldset>
+                                <legend>Log in to Your Account</legend>
+                                <ol>
+                                    <li class="email">
+                                        <label for="email" @if (!ModelState.IsValidField("email")) { <text> class="error-label" </text>   }>User ID</label>
+                                        <input type="text" id="email" name="email" autocomplete="off" value="@email" @Validation.For("email") />
+                                        @* Write any user name validation errors to the page *@
+                                        @*@Html.ValidationMessage("email")*@
+                                    </li>
+                                    <li class="password">
+                                        <label for="password" @if (!ModelState.IsValidField("password")) { <text> class="error-label" </text>  }>Password</label>
+                                        <input type="password" id="password" autocomplete="off" name="password" @Validation.For("password") />
+                                        @Html.ValidationMessage("password")
+                                    </li>
+                                    @if (ISCaptcha == 1)
+                                    {
+                                        <li>
+                                            <div class="g-recaptcha" data-sitekey="6LdYXhUUAAAAALCN4_9-F0tmH64kjpI88z79b8N1"></div>
+                                        </li>
+                                    }
+                                    @*<li>
+                                            <img src="~/Handler/CaptchaHandler.ashx" id="imgCaptcha" />
+                                            <a href="#" onclick="RefreshCaptcha();">Refresh</a>
+                                        </li>*@
+                                        @*<li>
+                                                <img src="~/Handler/CaptchaHandler.ashx" id="imgCaptcha" />
+                                                <a href="#" onclick="RefreshCaptcha();"></a>
+                                            </li>*@
+                                        <li class="remember-me" style="margin-top:5px;">
+                                            <input type="checkbox" id="rememberMe" name="rememberMe" value="true" checked="@rememberMe" /> Remember me?
+                                            @*<label class="checkbox" for="rememberMe">Remember me?</label>*@
+                                        </li>
+                                    </ol>
+                                    <input type="submit" style="margin-top:5px;" value="Log In" id="LogInBtn" />
+                                </fieldset>
+
+                            </form>
+                            @*<p>
+                                    <a style="color:#FFFFFF" href="~/Account/Register">Don't have a Account?</a><br />
+                                    <a style="color:#FFFFFF" href="~/Account/ForgotPassword">Forgotten your password?</a>
+                                </p>*@<p>
+                                <a style="color:#FFFFFF" href="~/Account/Register"></a><br />
+                                <a style="color:#FFFFFF" href="~/Account/ForgotPassword"></a>
+                            </p>
+                        </section>
+
+
+                    </div>
+
+                    <div id="in_content2" class="in_content" style="display: none; height: 270px;">
+                        <br />
+                        <h3>REGULAR</h3>
+                        <form method="post" id="frmTrackShipment" name="FormTrack" action="https://cargo.garuda-indonesia.com/#">
+
+                            <label>Document AWB No</label>
+                            <span><input type="text" class="w28p awb" id="txtPrefix" maxlength="3" size="3" value="126" /></span>
+                            <span><input type="text" class="input3 awb" minlength="8" id="txtNumber" name="txtNumber" maxlength="8" size="8" /></span>
+                            <label>Job Reference No</label>
+                            <input type="text" class="input3 awb" id="txtJrn" size="8" maxlength="8" />
+                            <input type="button" class="btn" id="btnTrackShipment" value="Track" />
+                            <input type="reset" class="btn trackReset" id="btnResetTrackingForm" value="Reset" />
+                            <input type="hidden" id="is_multi" value="0" />
+
+                        </form>
+                        <div id="in_content11" class="clearfix" style="display:none;"></div>
+                    </div>
+
+                    <div id="in_content3" class="in_content clearfix" style="display:none;">
+                        <div class="formflight fleft">
+                            <form method="post" id="frmSearchSchedule" name="Form1" action="https://cargo.garuda-indonesia.com/#" autocomplete="off">
+                                <h2>Flight Schedule</h2>
+                                <div class="clearfix">
+                                    <label>Origin</label>
+                                    <span>
+                                        <select class="select_blue" name="oriGroupID" id="oriGroupID">
+                                            <option value="" selected="selected">-- Group -- </option>
+                                            <option value="14">Asia - North</option>
+                                            <option value="13">Asia - South East</option>
+                                            <option value="9">Australia</option>
+                                            <option value="11">China</option>
+                                            <option value="7">Europe</option>
+                                            <option value="6">Indonesia</option>
+                                            <option value="12">Japan</option>
+                                            <option value="10">Middle East</option>
+                                        </select>
+                                    </span>
+                                    <span>
+                                        <select class="select_blue" name="txtOriginCode" id="txtOriginCode">
+                                            <option value="" selected="selected">-- City --</option>
+                                        </select>
+                                    </span>
+                                    <div class="select_blue_proc fright" id="txtOriginCodeProc" style="display:none"></div>
+                                </div>
+                                <div class="clearfix">
+                                    <label>Destination</label>
+                                    <span>
+                                        <select class="select_blue" name="destGroupID" id="destGroupID">
+                                            <option value="" selected="selected">-- Group -- </option>
+                                            <option value="14">Asia - North</option>
+                                            <option value="13">Asia - South East</option>
+                                            <option value="9">Australia</option>
+                                            <option value="11">China</option>
+                                            <option value="7">Europe</option>
+                                            <option value="6">Indonesia</option>
+                                            <option value="12">Japan</option>
+                                            <option value="10">Middle East</option>
+                                        </select>
+                                    </span>
+                                    <span>
+                                        <select class="select_blue" name="destinationCode" id="destinationCode">
+                                            <option value="" selected="selected">-- City --</option>
+                                        </select>
+                                    </span>
+                                    <div class="select_blue_proc fright" id="destinationCodeProc" style="display:none"></div>
+                                </div>
+                                <div class="clearfix">
+                                    <label>Date</label>
+                                    <span><input type="text" class="input2 hasDatepicker" id="departureDate" name="departureDate" /></span>
+                                </div>
+                                <span><input name="sched_now" type="button" value="SEARCH" class="sched_now btn" id="btnSearchSchedule" /></span>
+                                <span><input name="reset" type="reset" value="RESET" class="btn" id="btnResetScheduleForm" /></span>
+                            </form>
+                        </div>
+                        <div class="result fright" id="in_content33">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slider-wrapper theme-ca">
+                    <div id="slider" class="nivoSlider">
+                        <img src="~/Images/Login/a-mumbai-cargoWeb-Banner-02.jpg" alt="Deliver your goods to India" style="width: 960px; visibility: hidden; display: inline;" />
+                        <img src="~/Images/Login/mainimage9.jpg" alt="Connecting Indonesia to the world" style="width: 960px; visibility: hidden; display: inline;" />
+                        <img class="nivo-main-image" src="~/Images/Login/ga-mumbai-cargoWeb-Banner-02.jpg" style="height: auto; width: 960px;" /><div class="nivo-caption" style="display: none;"></div>
+                    </div><div class="nivo-controlNav"><a class="nivo-control active" href="" rel="0">1</a><a class="nivo-control" href="" rel="1">2</a></div>
+                </div>
+            </div>
+            <div class="pad20">
+                <div class="clearfix" id="middleHome">
+                    <div class="front-products fright">
+                        <h3>PRODUCTS</h3>
+                        <hr />
+                        <div id="slider2">
+                            <a class="buttons prev disable" href="https://cargo.garuda-indonesia.com/#">left</a><a class="buttons next" href="https://cargo.garuda-indonesia.com/#">right</a>
+                            <div class="viewport">
+                                <ul class="overview" style="width: 1176px; left: 0px;">
+                                    <li>
+                                        <a href="https://cargo.garuda-indonesia.com/products/go-express/go-express2/"><img src="/Images/Login/3Alogo2.png" alt="3A logo2" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="https://cargo.garuda-indonesia.com/products/go-express/go-express-forward/"><img src="/Images/Login/3Blogo.png" alt="3B logo" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="https://cargo.garuda-indonesia.com/products/regular/general-en-US/"><img src="/Images/Login/Logo-go-product-general.png" alt="Logo go product general" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="https://cargo.garuda-indonesia.com/products/regular/priority-heavy/"><img src="/Images/Login/Logo-go-product-heavy.jpg" alt="Logo go product heavy" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="https://cargo.garuda-indonesia.com/products/regular/synergy-en-US/"><img src="/Images/Login/Logo-go-product-synergy.jpg" alt="Logo go product synergy" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="https://cargo.garuda-indonesia.com/products/regular/priority-speed/"><img src="~/Images/Login/Logo-go-product-speed2.jpg" alt="Logo go product speed2" /></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="front-news fleft">
+                        <h3>LATEST NEWS</h3>
+                        <hr />
+                        <div class="latestnews clearfix">
+                            <a href="https://cargo.garuda-indonesia.com/news/latest-news/perubahan-lokasi-incoming-cargo-poslog-untuk-layanan-csc-city-port-to-port-di-bandara-internasional-soekarno-hatta-tangerang/" class="fright">Perubahan Lokasi Incoming Cargo Poslog untuk Layanan CSC City/ Port to Port di Bandara Internasional Soekarno-Hatta, Tangerang</a>
+                            <span class="fleft">13 Jan</span>
+                        </div>
+                        <div class="latestnews clearfix">
+                            <a href="https://cargo.garuda-indonesia.com/news/latest-news/garuda-indonesia-dan-pos-indonesia-sinergi-perluasan-jaringan-layanan-kargo/" class="fright">Garuda Indonesia dan Pos Indonesia Sinergi Perluasan Jaringan Layanan Kargo</a>
+                            <span class="fleft">21 Dec</span>
+                        </div>
+                        <div class="latestnews clearfix">
+                            <a href="https://cargo.garuda-indonesia.com/news/latest-news/garuda-indonesia-cargo-sosialisasikan-recommended-selling-price-rsp-2017-kepada-agen/" class="fright">Garuda Indonesia Cargo sosialisasikan Recommended Selling Price (RSP) 2017 kepada agen</a>
+                            <span class="fleft">14 Dec</span>
+                        </div>
+                        <div class="latestnews clearfix">
+                            <a href="https://cargo.garuda-indonesia.com/news/latest-news/trade-expo-indonesia-2016-partisipasi-buyer-dan-seller-dari-mancanegara-membuka-peluang-baru-pasar-kargo-internasional/" class="fright">Trade Expo Indonesia 2016: Partisipasi buyer dan seller dari mancanegara, membuka peluang baru pasar kargo internasional</a>
+                            <span class="fleft">02 Nov</span>
+                        </div>
+                        <div class="latestnews clearfix">
+                            <a href="https://cargo.garuda-indonesia.com/news/latest-news/trade-expo-indonesia-2016-partisipasi-buyer-dan-seller-dari-mancanegara-membuka-peluang-baru-pasar-kargo-internasional-2/" class="fright">Workshop Kepabeanan: Upaya Meningkatkan Pelayanan Kiriman Ekspor dan Impor</a>
+                            <span class="fleft">02 Nov</span>
+                        </div>
+                        <a href="https://cargo.garuda-indonesia.com/latest-news" class="more">more »</a>
+                    </div>
+                </div>
+                <div id="bottomHome" class="clearfix">
+                    <div class="shdw">&nbsp;</div>
+                    <a href="https://cargo.garuda-indonesia.com/cargo-knowledge/cargo-knowledge/human-remain-as-cargo-shipment/"><img class="first" src="~/Images/Login/hrs.jpg" width="290" height="130" alt="Cargo Promo" /></a>
+                    <a href="https://cargo.garuda-indonesia.com/cargo-knowledge/cargo-knowledge/dangerous-goods/"><img src="~/Images/Login/web_poster_DG.jpg" width="290" height="130" alt="Cargo Promo" /></a>
+                    <a href="https://cargo.garuda-indonesia.com/cargo-knowledge/cargo-knowledge/csc-business-flow"><img class="last" src="~/Images/Login/web_poster_CSC.jpg" width="290" height="130" alt="Cargo Promo" /></a>
+                </div>
+            </div>
+            <div class="typography">
+            </div>
+
+        </div>
+
+        <div id="footer">
+            <div class="wrap clearfix">
+                <a href="tel:08041909090" id="call">08041909090</a>
+
+                <div id="footer-links">
+                    <h3><small>More On Garuda Indonesia</small></h3>
+                    <ul>
+                        <li><a href="http://www.garuda-indonesia.com/" target="_blank">Garuda Indonesia</a></li>
+                        <li><a href="http://career.garuda-indonesia.com/" target="_blank">Career</a></li>
+                        <li><a href="http://eproc.garuda-indonesia.com/" target="_blank">E-Procurement</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="https://cargo.garuda-indonesia.com/site-map?locale=en_US">Site Map</a></li>
+                        <li><a href="https://cargo.garuda-indonesia.com/terms-and-conditions">Terms &amp; Conditions</a></li>
+                        <li><a href="https://cargo.garuda-indonesia.com/privacy-policy">Privacy Policy</a></li>
+                        <li><a href="https://cargo.garuda-indonesia.com/cargo-knowledge/cargo-knowledge/faq/">FAQ</a></li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                <div id="cert-goods">Certificate Dangerous Goods</div>
+                <div id="iso">ISO</div>
+                <div id="iata">IATA</div>
+                <a href="https://twitter.com/GOexpress" target="_blank"><div id="twitter" class="fleft" title="Twitter"></div></a>
+                <a href="https://www.facebook.com/GOExpressID" target="_blank"><div id="facebook" class="fleft" title="Facebook"></div></a>
+            </div>
+            <hr />
+            <div class="copyright clearfix">
+                <span class="fright">Powered by <a href="http://www.asyst.co.id/" id="asyst">asyst</a></span>
+                <span>Copyrights (c) 2016 PT. Garuda Indonesia Cargo. All Rights Reserved</span>
+            </div>
+        </div>
+
+
+        <script type="text/javascript">
+            //var _gaq = _gaq || [];
+            //_gaq.push(['_setAccount', 'UA-29659020-1']);
+            //_gaq.push(['_trackPageview']);
+
+            //(function () {
+            //    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            //    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            //    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            //})();
+
+
+
+            //]]></script>
+        <script type="text/javascript">
+            //<![CDATA[
+
+            //$(window).load(function () {
+            //    $('#frmTrackShipment').validate();
+            //    $('#frmTrackShipmentEx').validate();
+            //    $('#departureDate').datepicker({
+            //        showAnim: 'slideDown',
+            //        changeMonth: true,
+            //        changeYear: true,
+            //        dateFormat: 'dd M yy',
+            //        monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+            //        //buttonImage: 'themes/cargoga/images/calendar_icon.png',
+            //        //showOn: 'button',
+            //        //buttonImageOnly: true,
+            //        onSelect: function (selectedDate) {
+            //            $(this).removeClass('errorB');
+            //        }
+            //    });
+
+            //    //$('#main-tab').easyTabs();
+
+            //    $('#slider').nivoSlider({ directionNav: false, pauseTime: 6000 });
+            //    $('#slider2').tinycarousel({ display: 2 });
+
+            //});
+            var iFramed = (window.location != window.parent.location) ? true : false;
+            if (iFramed == true) {
+                window.parent.location.href = "GarudaLogin.cshtml";
+            }
+            //Added By Amit Yadav
+            var iFramed = (window.location != window.parent.location) ? true : false;
+            if (iFramed == true) {
+                window.parent.location.href = "GarudaLogin.cshtml";
+            }
+            //added by Pankaj
+            function ForgetPassword() {
+                $("#popForgetPassword").remove();
+                $("#LogInBtn").after('<div id="popForgetPassword" title="Forget Password" style="font-family: Arial; font-size:10px;"></div>');
+                $("#popForgetPassword").append('<table style="margin: 0px auto;"><tr><td><label style="margin-top: 5%;" name="mUserName">User ID</label></td></tr><tr><td><input type="text" style="margin-bottom: 2%;    padding: 6px 10px;    box-sizing: border-box;    border: 1px solid #4CAF50;  border-radius: 4px;" id="UserName" maxlength="30" onblur="requiredfn(this.id)" /></td></tr><tr><td><label name="mEmailID">Email Address</label></td></tr><tr><td><input type="text" style="margin-bottom: 2%;    padding: 6px 10px;    box-sizing: border-box;    border: 1px solid #4CAF50;  border-radius: 4px;" id="EmailID" maxlength="75" onblur="requiredfn(this.id)" /></tr></td><tr><td><label id="mValidateMessage" style="color:red;"></label></td></tr></table>');
+                $("#popForgetPassword").dialog(
+                {
+                    autoResize: true,
+                    maxWidth: 350,
+                    maxHeight: 275,
+
+                    width: 350,
+                    height: 275,
+                    modal: true,
+                    title: 'Forgot my Password',
+                    draggable: false,
+                    resizable: false,
+                    buttons: {
+                        "Reset": function () {
+                            var userName = $('#UserName').val();
+                            var EmailID = $('#EmailID').val();
+                            resetPassword(userName, EmailID);
+                            //$(this).dialog("close");
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    close: function () {
+                        $(this).dialog("close");
+                    }
+                });
+            }
+            function requiredfn(id) {
+                var value = $('#' + id).val();
+                if (value != "") {
+                    $('#' + id).css("border", "1px solid #4CAF50");
+                }
+            }
+            function resetPassword(UserName, EmailID) {
+
+                if (UserName == "" || EmailID == "") {
+                    if (UserName == "")
+                        $('#UserName').css("border", "1px solid red");
+                    if (EmailID == "")
+                        $('#EmailID').css("border", "1px solid red");
+
+                    $('#mValidateMessage').text("User ID and Email Address are mandatory !!!");
+                    return false;
+                }
+                else {
+                    if (ValidateEMail(EmailID)) {
+                        var path = window.location.href.split('/Account')[0].split('//')[1];
+                        $.ajax({
+                            url: "../Services/Permissions/ChangePasswordService.svc/ForgetPassword",
+                            async: false,
+                            type: "POST",
+                            cache: false,
+                            data: JSON.stringify({ UserName: UserName, EmailID: EmailID, Path: path }),
+                            contentType: "application/json; charset=utf-8",
+                            success: function (result) {
+                                if (result == 0) {
+                                    alert("Password reset link has been sent on the respective E-mail Address.");
+                                    location.href = "http://" + path + "/Account/GarudaLogin.cshtml";
+                                }
+                                else {
+                                    if (result == 1)
+                                        $('#mValidateMessage').text("User profile does not exist !!!");
+                                    else
+                                        $('#mValidateMessage').text("Error !!!");
+                                }
+                            },
+                            error: function (result) {
+                                $('#mValidateMessage').text("Invaild Attempt !!!");
+                            }
+                        });
+                    }
+                    else {
+                        $('#mValidateMessage').text("Please enter valid email address !!!");
+                    }
+                }
+
+            }
+
+            function ValidateEMail(email) {
+                var regex = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                return regex.test(email);
+            }
+        </script>
+        @*<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div>*@
+
+    @if (!string.IsNullOrEmpty(res) && result ==0)
+    {
+        <script type="text/javascript">
+        if (confirm('@res')) {
+            $(document).ready(function () {
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    url: "../Services/CommonService.svc/ReLogin?userId=@email&password=@password&UserSNo=",
+                    success: function (response) {
+                        window.location = '../Index.cshtml';
+                    }
+                });
+            });
+        }
+        </script>
+    }
+    </body>
+</html>

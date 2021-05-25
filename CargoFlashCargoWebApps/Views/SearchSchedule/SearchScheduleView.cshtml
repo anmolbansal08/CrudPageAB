@@ -1,0 +1,103 @@
+﻿@model CargoFlash.Cargo.Model.Schedule.Schedule
+
+@{Layout = null;}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/AppCssV2")
+    @Scripts.Render("~/bundles/jqueryforFlightSchedular")  @*Added by ankit*@
+
+
+
+
+</head>
+
+<style type="text/css">
+    #formsearch label {
+        display: block;
+        text-align: center;
+        line-height: 150%;
+        font-size: .85em;
+    }
+</style>
+<body ng-controller="GraudaController as Garuda">
+    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+        <tr><td class='formSection' colspan='10'>Flight Schedule </td></tr>
+        <tr><td class='formlabel' colspan='10'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+        <tr class='formSection'>
+            <td class="formlabel"><font color='red'></font> </td>
+            <td class='formInputcolumn' colspan="4">
+                @*Import Internaiton/Export Internaton/Import Domestic/Rush Handling internation*@
+
+                <input type="radio" name="Filter" value="0" id="isRoute" checked="checked">Route
+                <input type="radio" name="Filter" value="1" id="ISSchedule">Schedule
+
+            </td>
+        </tr>
+        <tr class='formSection'>
+
+            <td class="formlabel"><font color='red'>*</font> Origin</td>
+            <td class="formInputcolumn">
+
+
+
+
+
+                @Html.Hidden("Origin")
+                @Html.TextBox("Text_Origin", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Origin Name can not be blank", style = "text-transform: uppercase;" })
+
+            </td>
+
+            <td class="formlabel"><font color='red'>*</font> Destination</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("Destination")
+                @Html.TextBox("Text_Destination", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Destination Name can not be blank" })
+
+
+
+
+            </td>
+
+        </tr>
+        <tr class='formSection'>
+            <td class="formlabel"><font color='red'>*</font> Date</td>
+            <td class="formInputcolumn">@Html.TextBox("FlightDate", null, new { data_valid = "required", data_valid_msg = "Date can not be blank" })</td>
+
+            <td class="formlabel">Leg</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("leg")
+                @Html.TextBox("Text_leg", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "leg can not be blank" })
+
+
+            </td>
+        </tr>
+        <tr class='formSection'><td colspan='10'><input type="button" name='SearchSave' value='Search' class='btn btn-success' id="btnSubmit" /></td></tr>
+
+    </table>
+
+    <div id="Searchpopup">
+
+        <table id="tblScedulepop"></table>
+    </div>
+    <div class="k-grid-header-wrap" id="grid">
+        <br />
+        <table id="tblsearchrateList" class="appendGrid ui-widget" style="margin-bottom:10px;" align="center">
+            <thead class='ui-widget-header' style='text-align:center' id="theadid"></thead>
+            <tbody id="tbodyid" class="ui-widget-content"></tbody>
+        </table>
+    </div>
+</body>
+</html>
+<script src="~/JScript/Schedule/FlightSchedule.js"></script>
+
+
+
+
+@*<script src="~/Scripts/common.js"></script>*@

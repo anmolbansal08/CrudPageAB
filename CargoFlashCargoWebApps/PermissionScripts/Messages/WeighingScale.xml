@@ -1,0 +1,60 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AirportSNo</Name>
+    <Message>Airport can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>TerminalSNo</Name>
+    <Message>Terminal can not be blank</Message>
+  </DataFieldName>
+
+  <!--<DataFieldName>
+    <Name>ZoneSNo</Name>
+    <Message>Zone Name can not be blank</Message>
+  </DataFieldName>-->
+
+    <ServerMessage>
+    <Key>1001</Key>
+    <value>Record already exists</value>
+  </ServerMessage>
+
+
+  <ServerMessage>
+    <Key>1004</Key>
+    <value>Weighing Scale Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1005</Key>
+    <value>Weighing Scale ID already exists</value>
+  </ServerMessage>
+
+
+  <ServerMessage>
+    <Key>1006</Key>
+    <value>IP Address already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1007</Key>
+    <value>FTP Folder Path already exists</value>
+  </ServerMessage>
+  
+  
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Weighing Scale Added Successfully.</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Weighing Scale Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    
+    <Key>2002</Key>
+    <value>Weighing Scale Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

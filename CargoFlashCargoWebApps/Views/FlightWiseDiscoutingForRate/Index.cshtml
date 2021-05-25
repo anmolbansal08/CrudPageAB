@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "FlightWise Discounting on Rate";
+}
+<script src="~/Scripts/KendoSchedular/Content/JS/kendo.dataviz.min.js"></script>
+<script src="~/JScript/Rate/FlightWiseDiscountingForRate.js"></script>
+<h1>FlightWise Discounting on Rate</h1>
+<table class="WebFormTable">
+    <tbody>
+        <tr>
+            <td class="formlabel" style="width: 100px;">
+                <font color="red">*</font>
+               Flight Number :
+            </td>
+         
+            <td class="formInputcolumn">
+                @Html.Hidden("FlightNumber")
+                @Html.TextBox("Text_FlightNumber", null, new { style = "width:200px", data_valid = "required", @data_valid_msg = "Select the Flight Number", @required = "required", placeholder = "Flight Number", controltype = "autocomplete", data_role = "autocomplete" })
+            </td>
+            <td class="formbuttonrow" colspan="2">
+                <input type="button" tabindex="4" class="btn btn-success" name="Search" onclick="GetRecord();" style="width:80px;" value="Search">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table id="tblFlightWiseDiscounting"></table>
+            </td>
+        </tr>
+    </tbody>
+</table>

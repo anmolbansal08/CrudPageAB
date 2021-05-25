@@ -1,0 +1,4 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="CargoFlash.Cargo.DataService.Master.CrudPageABService" CodeBehind="CrudPageAB.svc.cs" %>
+<%@ Assembly Name="CargoFlash.Cargo.DataService" %>
+//iss file name me service bhi add kro file name glt hai
+// rename krna h simple?

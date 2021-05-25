@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../../Scripts/Kendo/kendo.tabstrip.js"></script>
+    <script>
+        var SearchDataSource = [{ Key: "A", Text: "Definitely not loaded." }, { Key: "B", Text: "Definitely loaded." }, { Key: "C", Text: "Loaded on the wrong flight." }, { Key: "D", Text: "Erroneously sent on other airlines." }];//, { Key: "Transit", Text: "Transit" }
+        cfi.AutoCompleteByDataSource("txtSelectPack", SearchDataSource);
+        var SearchDataSource2 = [{ Key: "A", Text: "Definitely not loaded." }, { Key: "B", Text: "Definitely loaded." }, { Key: "C", Text: "Loaded on the wrong flight." }, { Key: "D", Text: "Erroneously sent on other airlines." }];//, { Key: "Transit", Text: "Transit" }
+        cfi.AutoCompleteByDataSource("txtNT", SearchDataSource2);
+        $("#tabstrip").kendoTabStrip();
+        $('#tabstrip ul:first li:eq(0) a').unbind("click").bind("click", function () {
+            //$("#tabstrip-1").append('#divDGR');
+            //$("#divDGR").show();
+        })
+        //$("#ulTab").show();
+    </script>
+</head>
+<body>
+    <div id="maindiv">
+        <table id="tabel1">
+            <tr>
+                <td>
+                    <strong>
+                        <font size="4">
+                            NOTOC - Special Load - Notification To Captain
+                        </font>
+                    </strong>
+                </td>
+                <td id="tbbtns" style="width:70%;">
+                    <div style="float:right;">
+                        <table>
+                            <tr>
+                                <td>
+                                    <input type='button' id="btnEditUld" value='Edit ULD' class='ui-button ui-widget ui-state-default ui-corner-all ui-state-hover' style='width:80px'>
+                                </td>
+                                <td>
+                                    <input type='button' id="btnSave" value='Save' class='btn btn-success' style='width:70px'>
+                                </td>
+                                <td>
+                                    <input type='button' id="btnOpen" value='Open' class='ui-button ui-widget ui-state-default ui-corner-all ui-state-hover' style='width:70px'>
+                                </td>
+                                <td>
+                                    <input type='button' id="btnNew" value='New' class='ui-button ui-widget ui-state-default ui-corner-all ui-state-hover' style='width:70px'>
+                                </td>
+                                <td>
+                                    <input type='button' id="btnPrint" value='Print' class='ui-button ui-widget ui-state-default ui-corner-all ui-state-hover' style='width:70px'>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <hr />
+        <table id="table2">
+            <tr style="width:100%;">
+                <td style="width:12%;">
+                    <b>Station of Loading:</b>
+                </td>
+                <td style="width:12%;">
+                    <b>Flight Number:</b>
+                </td>
+                <td style="width:12%;">
+                    <b>Destination:</b>
+                </td>
+                <td style="width:12%;">
+                    <b>Date:</b>
+                </td>
+                <td style="width:12%;">
+                    <b>Aircraft Registration:</b>
+                </td>
+                <td style="width:12%;">
+                    <b>Prepared by:</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type='text' id="txtStnofLodng">
+                </td>
+                <td>
+                    <input type='text' id="txtFlgtNo">
+                </td>
+                <td>
+                    <input type='text' id="txtDestination">
+                </td>
+                <td>
+                    <input type='text' id="txtDate">
+                </td>
+                <td>
+                    <input type='text' id="txtAircraftReg">
+                </td>
+                <td>
+                    <input type='text' id="txtPrepared">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <b>Other Information:</b>
+                </td>
+                <td colspan="2">
+                    <b>Loading Supervisor Name:</b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <textarea rows="2" cols="126"></textarea>
+                </td>
+                <td>
+                    <input type='text' id="abc">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="tabdiv">
+        <div id="tabstrip">
+            <ul id="ulTab">
+                <li id='liDGR' class='k-state-active'>Dangerous Goods (DG)</li>
+                <li id='liOSL'>Other Special Load (OSL)</li>
+            </ul>
+            <div id="divDGR">
+                <table id="tabel6">
+                    <tr>
+                        <td>
+                            <input id="txtNT" name="txtNT" controltype="autocomplete" type="text" class="input-md form-control tt-input">
+                        </td>
+                        <td id="tbbtns" style="width:87%;">
+                            <div style="float:right;">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type='button' id="btnAddPkg" value='ADD Package lines' class='ui-button ui-widget ui-state-default ui-corner-all ui-state-hover' style='width:137px'>
+                                        </td>
+                                        <td>
+                                            <input type='button' id="btnSearchDG" value='Search DG' class='ui-button ui-widget ui-state-default ui-corner-all ui-state-hover' style='width:85px'>
+                                        </td>
+                                        <td>
+                                            <input type='button' id="btnSaveDG" value='Save' class='btn btn-success' style='width:70px'>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table id="table3">
+                    <tr style="width:100%;">
+                        <td>
+                            <b>Station of Unloading:</b>
+                        </td>
+                        <td>
+                            <b>Air waybill No.:</b>
+                        </td>
+                        <td>
+                            <b>House waybill No.:</b>
+                        </td>
+                        <td colspan="2">
+                            <b>Proper Shipping Name:</b>
+                        </td>
+                        <td>
+                            <b>Technical or Chemical Name:</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input style="margin-bottom: 18px;" type='text' id="txtStnofUnlodng">
+                        </td>
+                        <td>
+                            <input style="margin-bottom: 18px;" type='text' id="txtAWBNo">
+                        </td>
+                        <td>
+                            <input style="margin-bottom: 18px;" type='text' id="txtHWBNo">
+                        </td>
+                        <td colspan="2">
+                            <textarea rows="2" cols="83"></textarea>
+                        </td>
+                        <td>
+                            <input style="margin-bottom: 18px;" type='text' id="txtTechName">
+                        </td>
+                    </tr>
+                </table>
+                <table id="table4">
+                    <tr style="width:100%;">
+                        <td>
+                            <b>Class/Div:</b>
+                        </td>
+                        <td>
+                            <b>UN or ID No.:</b>
+                        </td>
+                        <td>
+                            <b>Sub risk:</b>
+                        </td>
+                        <td>
+                            <b>Number of Packages:</b>
+                        </td>
+                        <td colspan="2">
+                            <b>Net quantity or TI:</b>
+                        </td>
+                        <td>
+                            <b>Radioactive Material Category:</b>
+                        </td>
+                        <td>
+                            <b>PG:</b>
+                        </td>
+                        <td>
+                            <b>IMP Code:</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type='text' id="txtClass/Div">
+                        </td>
+                        <td>
+                            <input type='text' id="txtUNorID">
+                        </td>
+                        <td>
+                            <input type='text' id="txtSubRisk">
+                        </td>
+                        <td>
+                            <input style="width:130px" type='text' id="txtNoofPack">
+                        </td>
+                        <td>
+                            <input style="width:80px" type='text' id="txtNetQuantity">
+                        </td>
+                        <td>
+                            <input style="width:70px" type='text' id="txtL">
+                        </td>
+                        <td>
+                            <input type='text' id="txtRadioactive">
+                        </td>
+                        <td>
+                            <input style="width:120px" type='text' id="txtPG">
+                        </td>
+                        <td>
+                            <input type='text' id="txtIMPCode">
+                        </td>
+                    </tr>
+                </table>
+                <table id="table5">
+                    <tr style="width:100%;">
+                        <td>
+                            <b>ERG Code:</b>
+                        </td>
+                        <td>
+                            <b>Cargo Aircraft Only:</b>
+                        </td>
+                        <td colspan="2" style="width: 312px;">
+                            <!--<b>Sub risk:</b>-->
+                        </td>
+
+                        <td>
+                            <b>Package reference:</b>
+                        </td>
+                        <td>
+                            <b>Select packing instruction:</b>
+                        </td>
+                        <!--<td>
+                    <b>PG:</b>
+                </td>
+                <td>
+                    <b>IMP Code:</b>
+                </td>-->
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type='text' id="txtERGCode">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="txtCargoAircraft">
+                        </td>
+                        <td colspan="2"></td>
+                        <td>
+                            <input type='text' id="txtPackageRef">
+                        </td>
+                        <td>
+                            <!--<input type='text' id="txtSelectPack">-->
+                            <input id="txtSelectPack" name="txtSelectPack" controltype="autocomplete" type="text" class="input-md form-control tt-input">
+                        </td>
+                        <td>
+                            <input style="width:70px" type='text' id="txt1">
+                        </td>
+                        <!--<td>
+                    <input type='text' id="txtRadioactive">
+                </td>
+                <td>
+                    <input style="width:120px" type='text' id="txtPG">
+                </td>
+                <td>
+                    <input type='text' id="txtIMPCode">
+                </td>-->
+                    </tr>
+                </table>
+            </div>
+            <div id="divTab2"></div>
+        </div>
+    </div>
+</body>
+</html>

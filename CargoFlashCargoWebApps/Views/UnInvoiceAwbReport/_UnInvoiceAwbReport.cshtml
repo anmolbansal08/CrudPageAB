@@ -1,0 +1,40 @@
+﻿@model System.Data.DataSet
+@{
+    string gridId = Guid.NewGuid().ToString();}
+
+<div id="UnInvoicedAwbGridDiv" align="right">
+    <img id="imgpdf" src="../Images/iconPDF.png" style="width:30px;height:30px;cursor: pointer" title="Export To PDF" onclick="ExportToPDF()" />
+</div>
+<div style="height:65vh;" id="chart_@gridId">
+</div>
+@if (ViewBag.SNo != "")
+{
+    <script>
+    var gridDs = JSON.parse(@Html.Raw(Json.Encode(CargoFlashCargoWebApps.Common.Global.DStoJSON(Model))));
+        $(document).ready(function () {
+            $("#UnInvoicedAwbGridDiv").kendoGrid({
+                dataSource:{
+                    data: gridDs,
+                },
+                dataBound: function (e) { cfi.DisplayEmptyMessage(e, this); },
+                scrollable: true,
+                columns: [
+                        { field: "Status", title: "Status" },
+                        { field: "UseCreditLimit", title: "Use Credit Limit" },
+                        { field: "EnteredBy", title: "Entered By" },
+                        { field: "EnteredDt", title: "Entered Date" }
+                         ]
+                        });
+                        });
+    </script>
+}
+<script src="~/Scripts/pdfmake.js"></script>
+<script src="~/Scripts/html2canvas.js"></script>
+    <style>
+        datalist 
+        {
+            color: red;
+            text-align:right;
+        }
+    </style>
+

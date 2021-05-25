@@ -1,0 +1,32 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>DoorName</Name>
+    <Message>Door Name can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Door Name already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1003</Key>
+    <value>Duplicate entries are not allowed.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Door Information Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Door Information Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Door Information Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+</Messages>

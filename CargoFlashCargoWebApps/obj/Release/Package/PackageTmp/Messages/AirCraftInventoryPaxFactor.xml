@@ -1,0 +1,34 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AirCraftInventorySNo</Name>
+    <Message>Aircraft Inventory can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>AirCraft Inventory already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Pax Factor Information Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Pax Factor Information Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Pax Factor Information Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2601</Key>
+    <value>Duplicate entries found. Please amend to proceed.</value>
+  </ServerMessage>
+</Messages>

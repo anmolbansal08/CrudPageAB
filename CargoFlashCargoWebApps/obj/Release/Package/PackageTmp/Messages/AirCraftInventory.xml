@@ -1,0 +1,52 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>RegistrationNo</Name>
+    <Message>Registration No can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>548</Key>
+    <value>Registration No already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>549</Key>
+    <value>Aircraft Inventory not deleted because it is used in another page</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>546</Key>
+    <value>Aircraft Inventory not inactivated because it is used in another page</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Aircraft Inventory Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Aircraft Inventory Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Aircraft Inventory Deleted Successfully.</value>
+  </ServerMessage>
+  
+  
+  
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Aircraft Inventory not deleted because it is used in another page.</value>
+  </ServerMessage>
+  
+  
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2601</Key>
+    <value>Duplicate entries found. Please amend to proceed.</value>
+  </ServerMessage>
+</Messages>

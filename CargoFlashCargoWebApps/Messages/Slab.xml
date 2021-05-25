@@ -1,0 +1,62 @@
+﻿<Messages>
+  <!--#region Slab XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  Slab
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Tarun Kumar
+  Created On:		12 Mar 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>SlabName</Name>
+    <Message>Slab Name Can't be Blank.</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>StartWeight</Name>
+    <Message>Start Weight Can't be Blank.</Message>
+  </DataFieldName>
+  
+  <DataFieldName>
+    <Name>EndWeight</Name>
+    <Message>End Weight Can't be Blank.</Message>
+  </DataFieldName>
+  
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Slab Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Slab Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Slab Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Slab Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2627</Key>
+    <value>Violation of Primary keys</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Slab Cannot Be Deleted.It Is Used In Rate Master</value>
+  </ServerMessage>
+</Messages>
+
+
+
+
+

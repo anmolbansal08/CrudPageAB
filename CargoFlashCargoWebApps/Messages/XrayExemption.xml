@@ -1,0 +1,32 @@
+﻿<Messages>
+   <ServerMessage>
+    <Key>1001</Key>
+    <value>Airline  already exists for this date</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>SPHC  already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1003</Key>
+    <value>Commodity already exists</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>XrayExemption Save Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>XrayExemption Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>XrayExemption Deleted Successfully.</value>
+  </ServerMessage>
+
+  <!--<ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>-->
+</Messages>

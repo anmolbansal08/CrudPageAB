@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <system.serviceModel>
+    <services>
+      <service>
+        <endpoint behaviorConfiguration="" xdt:Transform="SetAttributes"/>
+      </service>
+    </services>
+    <extensions>
+      <behaviorExtensions>
+        <add name="Validator" type="Wcf.AttributeValidation.CustomBehaviorSection, Wcf.AttributeValidation" xdt:Transform="Remove" xdt:Locator="Match(name)"/>
+      </behaviorExtensions>
+    </extensions>
+    <behaviors>
+      <endpointBehaviors>
+        <behavior name="ValidationEndpointBehavior" xdt:Transform="Remove" xdt:Locator="Match(name)">
+          <Validator/>
+        </behavior>
+      </endpointBehaviors>
+    </behaviors>
+  </system.serviceModel>
+</configuration>

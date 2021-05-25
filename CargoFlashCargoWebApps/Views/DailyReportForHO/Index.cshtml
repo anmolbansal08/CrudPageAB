@@ -1,0 +1,100 @@
+﻿<style type="text/css">
+    .k-grid-header th.k-header > .k-link {
+        cursor: default;
+    }
+</style>
+
+
+<div id="divbody" style="height:auto">
+
+
+
+    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+        <tr><td class='formSection' colspan='4'>Daily Report For HO Information</td></tr>
+		<tr class="DateWiseRow">
+			<td class=' formlabel' title='Airline'>
+				<font color='red'>*</font><span id='spnAirlineCode'>
+					Airline
+				</span>
+			</td>
+			<td class='formInputcolumn'>
+				@Html.Hidden("AirlineCode")
+				@Html.TextBox("Text_AirlineCode", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+			</td>
+			<td class="formlabel">Airport</td>
+			<td class="formInputcolumn">
+
+				@Html.Hidden("Airport")
+				@Html.TextBox("Text_Airport", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+
+			</td>
+		</tr>
+        <tr class="DateWiseRow">
+            <td class=' formlabel' title='From Date'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    From Date :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+            </td>
+            <td class=' formlabel' title='To Date'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    To Date :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                       data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' />
+            </td>
+        </tr>
+
+
+        <tr>
+            <td class=' formlabel'>
+                <form id="df" action="../DailyReportForHO/ExportToExcel" method="post">
+                    <input id="AirlineCode" type="hidden" name="AirlineCode" value="" />
+                    <input id="Airport" type="hidden" name="Airport" value="" />
+                    <input id="FromDate" type="hidden" name="FromDate" value="" />
+                    <input id="ToDate" type="hidden" name="ToDate" value="" />
+                    <div id="exportflight" style="float:left;">
+                        <button type="submit">
+                            <img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel_DailyReportForHO()" />
+                        </button>
+                    </div>
+                </form>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='submit' name='operation' onclick="SearchDailyReportForHO()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+            </td>
+            <td class="formlabel"></td>
+            <td class="formInputcolumn"></td>
+        </tr>
+    </table>
+    <br />
+    <br />
+
+    @*<br />
+        <br />
+        <br />
+        <br />*@
+
+    <br />
+    <table class='WebFormTable' id="tblSUMOfCharges">
+        <tr class="formSection">
+            <td colspan='3'></td>
+            <td style="float:right">
+                <div style="width:500px;">
+                    <span style="margin-right:20px;"> <b>Sum of Gr.Wt : <label id="lblGrWt"></label>   </b></span>
+                    <span><b>Sum of Ch.Wt : <label id="lblChWt"></label>   </b></span>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div id="example">
+        <div id="grid" style="font-size:11px;"></div>
+        <script src="~/JScript/Reservation/DailyReportForHO.js"></script>
+    </div>
+</div>

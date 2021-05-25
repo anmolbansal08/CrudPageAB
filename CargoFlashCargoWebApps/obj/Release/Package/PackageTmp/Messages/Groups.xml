@@ -1,0 +1,22 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>GroupName</Name>
+    <Message>Group Name Can't be Blank.</Message>
+  </DataFieldName>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Group Name Already Exists. Please Key in Another Name.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Group Created Successfully. Proceed to Assign New Users.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Group Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Group Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

@@ -1,0 +1,439 @@
+﻿<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head id='head1'>
+    <title>RECEIPT NOTE</title>
+    <script src="../../../Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="../../../Scripts/json2.js"></script>
+    <script src="../../../Scripts/JqueryPrint.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+
+
+            
+
+            var LogoURL = getParameterByName("LogoURL", "");
+
+
+            $('#ImgLogo').attr('src', LogoURL);
+            GetChargeNotePrint();
+
+        });
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        function GetChargeNotePrint() {
+
+            var InvoiceSNo = getParameterByName("InvoiceSNo", "");
+            var InvoiceType = getParameterByName("InvoiceType", "");
+            var UserSNo = getParameterByName("UserSNo", "");
+            UserSNo = UserSNo == "" ? "0" : UserSNo;
+            $.ajax({
+                url: "../../../Services/Shipment/PaymentService.svc/ExportInvoicePenaltyReceipt",
+                async: false,
+                type: "GET",
+                dataType: "json",
+                data: { InvoiceSNo: InvoiceSNo, InvoiceType: InvoiceType, UserSNo: UserSNo },
+                contentType: "application/json; charset=utf-8", cache: false,
+                success: function (result) {
+                    //alert(data); // this is Json data object
+
+                    var ResultData = jQuery.parseJSON(result);
+                    var FinalData = ResultData.Table0 || [];
+
+                    $('#spnAirlineName').text(FinalData[0].AirlineName);
+
+                    $('#spnAddress').text(FinalData[0].AirlineAddress);
+                    $("#spnDate").text(FinalData[0].Date);
+                    $("#spnRefNo").html(FinalData[0].RefNo);
+                    $("#spnTime").text(FinalData[0].Time);
+                    //$("#spnTaxid").text(FinalData[0].Page)
+                    //$("#spnspnNoPKP").text(FinalData[0].PaymentMode);
+                    $("#spnTanggal").text(FinalData[0].TanggalDate);
+                    $('#spnStaff').text(FinalData[0].StaffName);
+                    $("#spnAWBno").text(FinalData[0].AWBNo);
+                    $("#spnNoOfPieces").text(FinalData[0].TotalPieces);
+
+
+                    $("#spnCustCode").html(FinalData[0].AccountCode);
+                    $("#spntotalweight").text(FinalData[0].TotalChargeableWeight);
+                    $("#spnCustName").text(FinalData[0].CustomerName);
+
+                    $("#spnNOG").text(FinalData[0].NatureOfGoods);
+                    $("#spnCustnTax").text(FinalData[0].Address);
+
+
+
+
+                    $("#spnOD").text(FinalData[0].OriginDest);
+                    $("#spnFNo").text(FinalData[0].FlightNo);
+                    $("#spnPlaceofIssue").html(FinalData[0].PlaceOfIssue);
+
+                    $("#spnTotal").text(FinalData[0].TotalAmount);
+                    $("#spnTotal2").text(FinalData[0].TotalAmount);
+
+                    $('#spnTAWBcharge').text(FinalData[0].TotalAWBCharges);
+
+                    $("#spnISUDy").html(FinalData[0].StaffName);
+
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        }
+
+
+        function funPrint(divID) {
+            var divContents = $("#" + divID).html();
+            var printWindow = window.open('', '', '');
+            printWindow.document.write(divContents);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+    </script>
+</head>
+<body>
+    <div id="printPayment" style="padding: 5px; font-family: Verdana; font-size: 11px; ">
+        <table style="width: 900px; border: 1px solid black;">
+
+
+
+            <tr>
+                <td colspan='4' id="Imglogo">
+                    <img src="../../../Logo/ExportInvoiceLogo.png" />
+                </td>
+            </tr>
+
+
+            <tr>
+                <td style="font-size:14px;font-weight:500;">Address <span class="floatRight">:</span></td>
+                <td>
+                    <span id="spnAirlineName"></span><br />
+
+                    <span id="spnAddress"></span>
+
+                </td>
+                <td style="font-size:14px;font-weight:500;">Ref No:</td>
+
+                <td id='spnRefNo'></td>
+
+
+            </tr>
+
+            <tr>
+                <td style="font-size:14px;font-weight:500;">Tax Id<span class="floatRight">:</span></td>
+                <td id="spnTaxid">
+                    01.001.634.3-093.000
+                </td>
+
+            </tr>
+
+            <tr>
+                <td style="font-size:14px;font-weight:500;">No Pengukuhan PKP<span class="floatRight">:</span></td>
+                <td id="spnNoPKP">
+                    No. 051.00095.01.89
+                </td>
+
+                <td style="font-size:14px;font-weight:500;">Tanggal:</td>
+                <td id="spnTanggal"></td>
+
+            </tr>
+
+
+
+            <tr style="height:100px;">
+                <td colspan="4" style="font-size: 14px; font-weight: 900; text-align: center; ">
+                    EXPORT INVOICE / RECEIPT <br />
+                    <span id="isFinal">
+                        DRAFT / FINAL
+                    </span>
+                </td>
+
+
+            </tr>
+            <tr>
+                <td style="font-size:14px;font-weight:500;">Date of Issued<span class="floatRight">:</span></td>
+                <td id="spnDate"></td>
+                <td colspan="2"></td>
+
+
+            </tr>
+
+            <tr>
+                <td style="font-size:14px;font-weight:500;">Time<span class="floatRight">:</span></td>
+                <td id="spnTime"></td>
+                <td colspan="2"></td>
+
+            </tr>
+
+            <tr>
+                <td style="font-size:14px;font-weight:500;">Staff Name<span class="floatRight">:</span></td>
+                <td id="spnStaff"></td>
+
+                <td colspan="2"></td>
+
+            </tr>
+
+        </table>
+
+
+        <table style="width: 900px; border: 1px solid black;">
+
+
+
+
+
+
+            <tr>
+                <td class="tdfonts">AWB No<span class="floatRight">:</span></td>
+                <td id="spnAWBno"></td>
+                <td class="tdfonts">NO. OF PIECES<span class="floatRighte">:</span></td>
+                <td id="spnNoOfPieces"> </td>
+            </tr>
+
+            <tr>
+                <td class="tdfonts">CUSTOMER CODE & ACCOUNT CODE<span class="floatRight">:</span></td>
+                <td id="spnCustCode"></td>
+
+
+                <td class="tdfonts">TOTAL CH. WEIGHT<span class="floatRighte">:</span></td>
+                <td id="spntotalweight"></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="tdfonts">CUSTOMER NAME<span class="floatRight">:</span></td>
+                <td id="spnCustName"></td>
+                <td class="tdfonts">NATURE OF GOODS<span class="floatRighte">:</span></td>
+                <td id="spnNOG"> </td>
+            </tr>
+
+            <tr>
+                <td class="tdfonts">CUSTOMER ADDRESS<span class="floatRight">:</span></td>
+                <td style="width:150px" id="spnCustnTax">
+
+                    <!--<td rowspan="3" style="border: 1px solid red;vertical-align:top; width:300px;">
+                         <div style="text-align:center">
+                         <span>Customer address and Tax Id</span>
+                     </div>
+                     <div id="spnCustnTax" style="text-align:center;padding-top:15px;"></div>
+                     </td>
+
+                    <td></td>-->
+
+                <td class="tdfonts">ORIGIN/DESTINATION<span class="floatRighte">:</span></td>
+                <td id="spnOD"> </td>
+            </tr>
+
+            <tr>
+                <td class="tdfonts">TAX ID<span class="floatRight">:</span></td>
+                <td id="spnTaxid">01.001.634.3-093.000</td>
+
+                <td class="tdfonts">FLIGHT NUMBER<span class="floatRighte">:</span></td>
+                <td id="spnFNo"> </td>
+            </tr>
+
+
+            <tr>
+                <td colspan="2"></td>
+                <td class="tdfonts">PLACE OF ISSUE<span class="floatRighte">:</span></td>
+                <td id="spnPlaceofIssue"></td>
+            </tr>
+
+
+        </table>
+
+
+
+        <table style="width: 900px; border: 1px solid black;">
+            <tr>
+                <td class="tdfonts" colspan="2">BREAKDOWN OF CHARGES</td>
+
+                <td class="tdfont">CURRENCY:&nbsp;<span id="spnCurrency"></span></td>
+
+                <td class="tdfont">AMOUNT</td>
+
+                <td align="right" class="tdfont">AMOUNT</td>
+
+            </tr>
+
+            <tr id="TrAWB">
+                <td colspan="2" class="tdfonts"> AWB PENALTY</td>
+                <td colspan="2" style="text-align:right" id="awbchrg"></td>
+            </tr>
+
+            <!--<tr >
+                <td colspan="2" class="pdLeft"> FREIGHT CHARGES</td>
+                <td id="spnFcharg" >120,000</td>
+
+            </tr>
+            <tr >
+                <td colspan="2" class="pdLeft">DISCOUNT GATF 20%</td>
+                <td id="spnDisGATF">22,000</td>
+
+            </tr>-->
+            <!--<tr>
+                <td colspan="2" class="pdLeft"> VALUATION CHARGES</td>
+                <td colspan="3" id="spnValcharge"> </td>
+
+            </tr>-->
+
+            <tr style="height:25px;">
+                <td>Total Penality Charges</td>
+                <td align="right" colspan="4" id="spnTAWBcharge"> </td>
+            </tr>
+
+
+
+            <!-- <tr id="TrOtherCharges"> -->
+            <!-- <td class="tdfonts">OTHER CHARGES</td> -->
+            <!-- <td colspan ="2"style="text-align:right" id="spnOthchrg"></td> -->
+            <!-- </tr> -->
+ <!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ NEHAL 26/02/2020 $$$$$$$$$$$$$$$$$$$$$$$$$$$ comment  start $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+            <!--<tr id="TrOtherChargesDueAgent">
+                <td class="tdfonts">DUE AGENT</td>
+
+                <td colspan="2" class="tdfonts" style="text-align:right" id="spnDueAgent"></td>
+
+
+            </tr>
+            <tr id="TrOtherChargesDueChargesCarrier">
+                <td class="tdfonts">DUE CARRIER CHARGES</td>
+                <td colspan="2" class="tdfonts" style="text-align:right" id="spnDueCharge"></td>
+
+
+            </tr>
+
+            <tr>
+                <td style="font-size:14px;">Total Other Charges</td>
+                <td colspan="4" id="spnTOC" style="text-align:right"></td>
+            </tr>
+
+            <tr style="height:25px;">
+                <td class="pdLeft">VALUE ADDED TAX</td>
+                <td colspan="4" style="text-align:right" id="spnVAT"></td>
+            </tr>
+
+            <tr>
+
+                <td style="font-size: 14px; font-size: 12px; font-weight: 700;">Total Invoice Amount</td>
+                <td colspan="3" style="text-align:right; text-decoration:overline underline;" id="spntia"></td>
+
+            </tr>-->
+ <!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ NEHAL 26/02/2020 $$$$$$$$$$$$$$$$$$$$$$$$$$$ comment END $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+            <tr>
+                <td class="tdfonts">FORM OF PAYMENT</td>
+
+                <td colspan="3" style="font-size:14px;font-weight:500;">CURRENCY:&nbsp;<span id="spnCurrency1"></span></td>
+
+
+                <td colspan="4" style="font-size:14px;font-weight:500; text-align:right;text-decoration:overline;">AMOUNT</td>
+            </tr>
+
+            <tr style="height:25px;">
+
+                <td id="spnFOP">
+                    CASH / CREDIT CARD / TOPUP
+                </td>
+                <td colspan="4" style="text-align:right;font-weight:500; text-decoration:underline;" id="spnTotal"></td>
+
+            <tr>
+
+                <td style="font-size:14px;font-weight:600;">Total</td>
+
+
+                <td colspan="4" style="text-align:right;font-weight:500; text-decoration:overline underline;" id="spnTotal2"></td>
+
+            </tr>
+
+            <tr>
+                <td class="tdfonts">SIGNATURE OF CARD HOLDER</td>
+                <td colspan="3" id="spnSIGN"><hr style="border-color:black;" /></td>
+            </tr>
+
+        </table>
+
+        <table style="width: 900px; border : 2px solid black;">
+
+            <tr>
+                <td style="width:8%;font-size:10px;font-weight:500;">Issued by:</td>
+                <td id="spnISUDy" style="width:45%"></td>
+
+                <td style="font-size: 10px; font-weight: 500; width: 10%; ">Approved by:</td>
+                <td id="spnAPProv" style="width: 0%;"></td>
+            </tr>
+
+            <tr>
+                <td style="width:8%;font-size:10px;font-weight:500;">Remarks:</td>
+                <td colspan="4" id="spnRemarks"></td>
+            </tr>
+
+        </table>
+    </div>
+    <style>
+        .pdLeft {
+            padding-left: 22px;
+        }
+
+        .pdRight {
+            padding-right: 22px;
+        }
+
+        .tdfont {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .tdfonts {
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .tp {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            text-align: center;
+            padding-left: 200px;
+        }
+
+        .floatRight {
+            float: right;
+            margin-right: 10px;
+        }
+
+        .floatRights {
+            float: left;
+            margin-left: 1px;
+        }
+
+        .floatRighte {
+            float: right;
+            margin-right: 25px;
+        }
+    </style>
+
+</body>
+</html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+
+</body>
+</html>

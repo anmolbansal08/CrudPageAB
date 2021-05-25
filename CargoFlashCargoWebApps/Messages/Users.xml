@@ -1,0 +1,45 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>UserName</Name>
+    <Message>User ID Can't be Blank.</Message>
+  </DataFieldName>
+  <!--<DataFieldName>
+    <Name>EMailID</Name>
+    <Message>EMail ID Can't be Blank.</Message>
+  </DataFieldName>-->
+ 
+  <!--<DataFieldName>
+    <Name>Password</Name>
+    <Message>Password Can't be Blank.</Message>
+  </DataFieldName>-->
+ 
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>User ID Already Exists. Please Key in Another User ID.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Email ID already exists for an another User. Kindly provide another Email ID</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>User Created Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>User Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>User Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>5001</Key>
+    <value>UserName Can not be Admin or SuperAdmin.</value>
+  </ServerMessage>
+	<ServerMessage>
+		<Key>6001</Key>
+		<value>Super Admin user can be updated by Super Admin only.</value>
+	</ServerMessage>
+</Messages>

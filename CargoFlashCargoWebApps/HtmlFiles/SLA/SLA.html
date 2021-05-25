@@ -1,0 +1,91 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+    });
+</script>
+<div>
+    <table width="100%" id="tblSLAReportTable" >
+        <tr>
+            <td class="formSection" colspan="4">SLA Report</td>
+        </tr>
+        <tr>
+            <td class="formlabel">
+                Start Date
+            </td>
+            <td class="formInputcolumn">
+                <span class="k-picker-wrap k-state-default k-widget k-datepicker k-header" style="width: 100px;">
+                    <input type="text" class="k-input k-state-default" name="StartDate" id="StartDate" style="color: rgb(0, 0, 0);" tabindex="1" controltype="datetype" value="" data-role="datepicker">
+                    <span unselectable="on" class="k-select">
+                        <span unselectable="on" class="k-icon k-i-calendar">select</span>
+                    </span>
+                </span>
+            </td>
+            <td class="formlabel">
+                End Date
+            </td>
+            <td class="formInputcolumn">
+                <span class="k-picker-wrap k-state-default k-widget k-datepicker k-header" style="width: 100px;">
+                    <input type="text" class="k-input k-state-default" name="EndDate" id="EndDate" style="color: rgb(0, 0, 0);" tabindex="1" controltype="datetype" value="" data-role="datepicker">
+                    <span unselectable="on" class="k-select">
+                        <span unselectable="on" class="k-icon k-i-calendar">select</span>
+                    </span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td class="formlabel">
+                Flight Number
+            </td>
+            <td class="formInputcolumn">
+                <input type="hidden" name="FlightNumber_Search" id="FlightNumber_Search" value="">
+                <input type="text" class="" name="Text_FlightNumber_Search" id="Text_FlightNumber_Search" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel">
+                Airline
+            </td>
+            <td class="formInputcolumn">
+                <input type="hidden" name="Airline_Search" id="Airline_Search" value="">
+                <input type="text" class="" name="Text_Airline_Search" id="Text_Airline_Search" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+        </tr>
+        <tr>
+            <td class="formlabel">
+                Airport
+            </td>
+            <td class="formInputcolumn">
+                <input type="hidden" name="Airport_Search" id="Airport_Search" value="">
+                <input type="text" class="" name="Text_Airport_Search" id="Text_Airport_Search" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel">
+                Mode
+            </td>
+            <td class="formInputcolumn">
+                <input type="hidden" name="Mode_Search" id="Mode_Search" value="">
+                <input type="text" class="" name="Text_Mode_Search" id="Text_Mode_Search" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+        </tr>
+        <tr>
+            <td class="formlabel">
+               
+            </td>
+            <td class="formInputcolumn">
+                
+            </td>
+            <td class="formlabel">
+                
+            </td>
+            <td class="formInputcolumn">
+                <input type="submit" name="Search" id="Search" value="Search" class="btn btn-info">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <div style="width:1360px; overflow:auto">
+                    <table id="tblResult"></table>
+                </div>
+                
+            </td>
+        </tr>
+    </table>
+</div>

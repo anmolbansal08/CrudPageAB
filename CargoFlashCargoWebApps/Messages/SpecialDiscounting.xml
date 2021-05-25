@@ -1,0 +1,19 @@
+﻿<Messages>
+<ServerMessage>
+  <Key>1001</Key>
+  <value>Discounting Code already exists</value>
+</ServerMessage>
+
+<ServerMessage>
+  <Key>2000</Key>
+  <value>Discounting Code Added Successfully.</value>
+</ServerMessage>
+<ServerMessage>
+  <Key>2001</Key>
+  <value>Discounting Code Updated Successfully.</value>
+</ServerMessage>
+<ServerMessage>
+  <Key>2002</Key>
+  <value>Discounting Code Deleted Successfully.</value>
+</ServerMessage>
+</Messages>

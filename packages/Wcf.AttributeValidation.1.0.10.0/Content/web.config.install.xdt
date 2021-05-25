@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <system.serviceModel>
+    <services>
+      <service>
+        <endpoint behaviorConfiguration="ValidationEndpointBehavior" xdt:Transform="SetAttributes"/>
+      </service>
+    </services>
+    <extensions xdt:Transform="InsertIfMissing">
+      <behaviorExtensions xdt:Transform="InsertIfMissing">
+        <add name="Validator" type="Wcf.AttributeValidation.CustomBehaviorSection, Wcf.AttributeValidation" xdt:Transform="InsertIfMissing"/>
+      </behaviorExtensions>
+    </extensions>
+    <behaviors xdt:Transform="InsertIfMissing">
+      <endpointBehaviors  xdt:Transform="InsertIfMissing">
+        <behavior name="ValidationEndpointBehavior" xdt:Transform="InsertIfMissing">
+          <Validator/>
+        </behavior>
+      </endpointBehaviors>
+    </behaviors>
+  </system.serviceModel>
+</configuration>

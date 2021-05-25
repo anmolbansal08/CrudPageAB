@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+
+    </title>
+
+    <script src="../../Scripts/html2canvas.js"></script>
+    <script src="../../Scripts/jspdf.debug.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+
+        });
+
+
+
+    </script>
+    <style>
+    </style>
+</head>
+<body>
+    <form id="aspnetForm" runat="server">
+        <input type="hidden" id="htmladd" value="0" />
+        <table class="WebFormTable" id="tblAdd" validateonsubmit='true'>
+
+            <tr>
+                <td class="formlabel" colspan="4" style="text-align:left" id="HeaderName">ULD Stock Report</td>
+            </tr>
+
+            <tr>
+                <td class="formlabel">
+                    <font color="red">*</font>
+                    Airline
+                </td>
+                <td class="formInputcolumn">
+                    <input type="hidden" name="Airline" id="Airline">
+                    <input type="text" name="Text_Airline" id="Text_Airline" data-valid="required" data-valid-msg="Select Airline" controltype="autocomplete" style="width:150px;">
+                </td>
+                <td class="formlabel">
+                    Airport
+                </td>
+                <td class="formInputcolumn">
+                    <input type="hidden" name="Airport" id="Airport">
+                    <input type="text" name="Text_Airport" id="Text_Airport" data-valid="required" data-valid-msg="Select Airport" controltype="autocomplete" style="width:150px;">
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="formlabel">
+
+                    ULD No
+                </td>
+                <td class="formInputcolumn">
+                    <input type="hidden" name="ULDId" id="ULDId">
+                    <input type="text" name="Text_ULDId" id="Text_ULDId" data-valid="required" data-valid-msg="Select ULD Id" controltype="autocomplete" style="width:150px;">
+                </td>
+                <td class="formlabel">
+                    Idle Days
+                </td>
+                <td class="formInputcolumn">
+                    <input type="hidden" name="IdleDays" id="IdleDays">
+                    <input type="text" name="Text_IdleDays" id="Text_IdleDays" data-valid="required" data-valid-msg="Select Idle Days" controltype="autocomplete" style="width:80px;">-
+                    <input type="text" name="numberIdleDays" maxlength="4" id="numberIdleDays" data-valid="required" data-valid-msg="Select Idle Days" controltype="autocomplete" style="width:80px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td class="formlabel">
+                    <font color="red">*</font>
+                    Ownership
+                </td>
+                <td class="formInputcolumn">
+                    <input type="hidden" name="Ownership" id="Ownership">
+                    <input type="text" name="Text_Ownership" id="Text_Ownership" data-valid="required" data-valid-msg="Select Ownership" controltype="autocomplete" style="width:150px;">
+                </td>
+                <td class="formlabel">Lost</td>
+                <td colspan="2" class="formInputcolumn">
+                    <input type="hidden" name="Lost" id="Lost">
+                    <input type="text" name="Text_Lost" id="Text_Lost" data-valid="required" data-valid-msg="Select Lost" controltype="autocomplete" style="width:100px;">
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="formlabel"></td>
+                <td class="formInputcolumn"></td>
+                <td class="formlabel"></td>
+                <td colspan="2" class="formInputcolumn">
+                    <input type="button" class="btn btn-success" id="Search" value="Search" />
+                    <input type="button" class="btn btn-success" id="StockReportPrint" value="Print" onclick="ULDStockReportPrint(this)" />
+                    <input type="button" class="btn btn-success" id="ExportExcel" value="Export Excel" />
+                    <input type="button" class="btn btn-success" id="ExportPdf" value="Export Pdf" />
+                </td>
+
+            </tr>
+
+        </table>
+        <div id="DivGetULDStockReportDetailsService">
+
+        </div>
+        <section id="page_Pfd">
+            <div id="DivPrint" style="display:none;width:100%">
+
+                <table border="1" cellspacing="0" cellpadding="0" style="width:100%">
+                    <tr>
+                        <td colspan="12" align="center">
+                            <div style="height:100px;">
+                                <img src="" id="AirlineLogo" style="height:80px;width:280px;padding-top:4px" />
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+
+                        <td colspan="12">
+                            <table border="1" cellspacing="0" cellpadding="0" id="PdfExport" style="width:100%"></table>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+            </div>
+            <div id="editor"></div>
+        </section>
+    </form>
+</body>
+
+</html>

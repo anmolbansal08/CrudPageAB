@@ -1,0 +1,166 @@
+﻿
+
+<style type="text/css">
+    .completeprocess {
+        color: #fff;
+        background-color: #51a351;
+        border-color: #51a351;
+        font-size: 10px;
+    }
+
+    .incompleteprocess {
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+        font-size: 10px;
+    }
+
+    .partialprocess {
+        color: #fff;
+        background-color: #FE9D5A;
+        border-color: #FE9D5A;
+        font-size: 10px;
+    }
+
+    .failureprocess {
+        color: #fff;
+        background-color: #FE0404;
+        border-color: #FE9D5A;
+        font-size: 10px;
+    }
+
+    .dependentprocess {
+        color: #fff;
+        background-color: brown;
+        border-color: goldenrod;
+        font-size: 10px;
+    }
+
+    .k-grid-filter {
+        display: none;
+    }
+
+    .k-link {
+        cursor: text;
+    }
+</style>
+
+<div id="divbody" style="height:auto">
+
+    @*@using (Html.BeginForm("GetAirlineData", "AWBStockStatus", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {*@
+    <script src="~/JScript/Report/ShortAdhoc.js"></script>
+
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+
+                    
+
+
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Short  Adhoc Approval</td></tr>
+                        <tr><td class='formActiontitle' colspan='4'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+
+
+                        <tr class="DateWiseRow">
+                            <td class="formlabel" title='Airline'><font color='red'>*</font>Airline</td>
+                            <td class="formInputcolumn">
+                                @Html.Hidden("AirlineSNo")
+                                @Html.TextBox("Text_AirlineSNo", null, new { controltype = "autocomplete", data_role = "autocomplete", data_valid = "required", data_valid_msg = "Airline can not be blank" })
+                         
+                            
+                               </td>
+                            <td class="formlabel" title='AWB'>AWB No</td>
+                            <td class="formInputcolumn">
+                                @Html.Hidden("AwbSNo")
+                                @Html.TextBox("Text_AwbSNo", null, new { @class = "k-input", style = "width: 133px;", maxlength = "12", placeholder = "AWB No." })
+                            </td>
+
+                           
+
+                        </tr>
+
+
+                        <tr class="DateWiseRow">
+                            <td class="formlabel" title='Origin'>Origin</td>
+                            <td class="formInputcolumn">
+                                @Html.Hidden("OriginCitySNo")
+                                @Html.TextBox("Text_OriginCitySNo", null, new { controltype = "autocomplete", data_role = "autocomplete", })
+                            </td>
+                            <td class="formlabel" title='Destination'>Destination</td>
+                            <td class="formInputcolumn">
+                                @Html.Hidden("DestinationCitySNo")
+                                @Html.TextBox("Text_DestinationCitySNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                               
+                            </td>
+
+                           
+
+                        </tr>
+
+                        <tr class="DateWiseRow">
+                            <td class="formlabel"><font color='red'></font>From Date</td>
+                            @*<td class="formInputcolumn">@Html.TextBox("FromDate", null, new { data_valid = "required", data_valid_msg = "From Date can not be blank" })</td>*@
+                            <td class="formInputcolumn">@Html.TextBox("FromDate")</td>
+                            @*<td class="formInputcolumn">@Html.TextBox("FromDate", DateTime.Now.ToString("dd-MMM-yyyy"), new { style = "width:34%", data_valid = "required", controltype = "datetype", data_role = "datepicker", data_valid_msg = "Select From Date", placeholder = "From Date" })</td>*@
+                            <td class="formlabel"><font color='red'></font>To Date</td>
+                            @*<td class="formInputcolumn">@Html.TextBox("ToDate", null, new { data_valid = "required", data_valid_msg = "To Date can not be blank" })</td>*@
+                            <td class="formInputcolumn">@Html.TextBox("ToDate", null)</td>
+                            @*<td class="formInputcolumn">@Html.TextBox("ToDate", DateTime.Now.ToString("dd-MMM-yyyy"), new { style = "width:34%", data_valid = "required", controltype = "datetype", data_role = "datepicker", data_valid_msg = "Select To Date", placeholder = "To Date" })</td>*@
+                        </tr>
+                    
+                        <tr class="DateWiseRow">
+                            <td class='formlabel'></td>
+
+
+                            <td class='formInputcolumn'>
+                                <input type='submit' onclick="search1()" name='operation' value='Search' class='btn btn-success' width="100" /> &nbsp; &nbsp;
+
+                                @*<input type="submit" onclick="ExportToExcel()" name="operation" value="Reject" style="display:none" class="btn btn-success" id="btnExportToExcel">*@
+
+                                <input type='submit' onclick="Approve()" name='operation' id="Approve" value='Approve' class='btn btn-success' width="100" /> &nbsp; &nbsp;
+                                <input type='submit' onclick="Reject()" name='operation' id="Reject" value='Reject' class='btn btn-danger' width="100" /> &nbsp; &nbsp;
+                            </td>
+                            <td class='formlabel' title='Airline'></td>
+                            <td class='formInputcolumn'></td>
+
+                        </tr>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <div id="grid" data-role="grid" class="k-grid k-widget" tabindex="0" style="display: block;">
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <div style="overflow-x: scroll; height: 55vh">
+            <table id="tblGetFlightSummaryDetail" class="appendGrid ui-widget" style="margin-bottom:10px;" align="center">
+                <thead class='ui-widget-header' style='text-align:center' id="theadid"></thead>
+                <tbody id="tbodyid" class="ui-widget-content"></tbody>
+            </table>
+        </div>
+
+    </section>
+    @*}*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".k-hierarchy-cell").click();
+        });
+
+        $('tr.k-master-row').click(function () {
+            $(this).nextUntil('tr.k-master-row').css('display', function (i, v) {
+                return this.style.display === 'table-row' ? 'none' : 'table-row';
+            });
+        });
+
+    </script>
+    
+</div>
+
+

@@ -1,0 +1,12 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Flight Transfer space not available</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Shipment Transfer Successfully.</value>
+  </ServerMessage>
+  
+</Messages>

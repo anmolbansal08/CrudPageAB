@@ -1,0 +1,174 @@
+﻿<style type="text/css">
+    .k-grid-header th.k-header > .k-link {
+        cursor: default;
+    }
+
+    .formlabels_ {
+        font-weight: bold;
+        font-size: 10px;
+        color: #000000;
+        font-family: Verdana;
+        text-align: right;
+        background-color: #F5F5F5;
+        padding-left: 3px;
+        padding-right: 5px;
+        width: 12%;
+        border-right: #bebdbe 1px solid;
+        border-left: #bebdbe 0px solid;
+        border-bottom: #bebdbe 1px solid;
+        height: 25px;
+    }
+    .formInputcolumns_ {
+        border-right: #bebdbe 1px solid;
+        border-bottom: #bebdbe 1px solid;
+        padding-left: 3px;
+        background-color: #ffffff;
+        text-align: left;
+        width: 13%;
+        font-size: 9pt;
+        font-weight: bold;
+        color: #5A7570;
+    }
+    
+</style>
+
+
+<div id="divbody" style="height:auto">
+
+
+
+    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+        <tr><td class='formSection' colspan='4'>Ageing Report Information</td></tr>
+        <tr class="DateWiseRow">
+            <td class="formInputcolumn" colspan="4" style="padding:10px">
+                <input type="radio" name="Filter" value="0" id="IsAnalysis" checked="checked">Analysis Report
+                <input type="radio" name="Filter" value="1" id="IsPartyWise">Party Wise Report
+                <input type="radio" name="Filter" value="2" id="IsAgeing">Ageing
+            </td>
+        </tr>
+        <tr class="DateWiseRow">
+            <td class=' formlabel' title='Airline'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    Airline
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                @Html.Hidden("AirlineCode")
+                @Html.TextBox("Text_AirlineCode", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+            </td>
+            <td class=' formlabel' title='GSA'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    GSA
+                </span>
+            </td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("AgentName")
+                @Html.TextBox("Text_AgentName", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "GSA Name can not be blank" })
+
+            </td>
+        </tr>
+        <tr class="DateWiseRow">
+            <td class=' formlabel' title='From Date'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    From Date :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+            </td>
+            <td class=' formlabel' title='To Date'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    To Date :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                       data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' />
+            </td>
+        </tr>
+
+
+        <tr>
+            <td class=' formlabel'>
+                <form id="df" action="../AgeingReport/ExportToExcel" method="post">
+                    <input id="AirlineCode" type="hidden" name="AirlineCode" value="" />
+                    <input id="FromDate" type="hidden" name="FromDate" value="" />
+                    <input id="ToDate" type="hidden" name="ToDate" value="" />
+                    <input id="AgentSno" type="hidden" name="AgentSno" value="" />
+                    <input id="ReportType" type="hidden" name="ReportType" value="" />
+                    <div id="exportflight" style="float:left;">
+                        <button type="submit">
+                            <img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel_AgeingReport()" />
+                        </button>
+                    </div>
+                </form>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='submit' name='operation' onclick="SearchAgeingReport()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+            </td>
+            <td class="formlabel"></td>
+            <td class="formInputcolumn"></td>
+        </tr>
+    </table>
+    <br />
+    <br />
+
+    @*<br />
+        <br />
+        <br />
+        <br />*@
+
+    <br />
+    <table class='WebFormTable' id="tblAgeingDetaiils">
+        @*<tr class="formSection">
+                <td colspan='3'></td>
+                <td style="float:right">
+                    <div style="width:500px;">
+                        <span style="margin-right:20px;"> <b>Sum of Gr.Wt : <label id="lblGrWt"></label>   </b></span>
+                        <span><b>Sum of Ch.Wt : <label id="lblChWt"></label>   </b></span>
+                    </div>
+                </td>
+            </tr>*@
+
+        <tr>
+            <td class='formlabels_' colspan='8' style="text-align:center"><label id="lblReportHeader"></label></td>
+        </tr>
+        <tr>
+            <td class='formlabels_'>GSA Name</td>
+            <td class='formInputcolumns_' colspan='7'><label id="lblGSAName"></label></td>
+        </tr>
+        <tr>
+            <td class='formlabels_'>GSA Code</td>
+            <td class='formInputcolumns_'><label id="lblGSACode"></label></td>
+            <td class='formlabels_'>AR Code</td>
+            <td class='formInputcolumns_'><label id="lblARCode"></label></td>
+            <td class='formlabels_'>Currency</td>
+            <td class='formInputcolumns_'><label id="lblCurrency"></label></td>
+            <td class='formlabels_'>Statement Date</td>
+            <td class='formInputcolumns_'><label id="lblstmtDt"></label></td>
+        </tr>
+        <tr>
+            <td class='formlabels_'>Total Invoiced Amount</td>
+            <td class='formInputcolumns_'><label id="lblTotInvAmt"></label></td>
+            <td class='formlabels_'>Total Receipt Amount</td>
+            <td class='formInputcolumns_'><label id="lblTotRecAmt"></label></td>
+            <td class='formlabels_'>Tota Outstaing Amount</td>
+            <td class='formInputcolumns_' colspan='3'><label id="lblTotOtsdAmt"></label></td>
+        </tr>
+    </table>
+
+    <div id="example">
+        <div id="grid" style="font-size:11px;"></div>
+        <script src="~/JScript/Reservation/AgeingReport.js"></script>
+    </div>
+    <br />
+
+    <div>
+        <div id="grid1" style="display:none;"></div>
+    </div>
+
+
+
+</div>

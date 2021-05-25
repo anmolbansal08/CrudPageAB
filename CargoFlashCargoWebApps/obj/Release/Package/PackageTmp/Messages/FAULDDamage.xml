@@ -1,0 +1,28 @@
+﻿<Messages>
+  <!--#region Flight Arrival ULD Damage XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  Flight Arrival AWB Damage
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Deepak Sharma
+  Created On:		03 March 2016
+  *****************************************************************************
+  */
+  #endregion-->
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>ULD Damage Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>ULD Damage Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>ULD Damage Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

@@ -1,0 +1,50 @@
+﻿<Messages>
+  <!--#region Physical ULD Inventory XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  Physical ULD Inventory
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Deepak Sharma
+  Created On:		20 October 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Physical ULD Inventory Saved Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Physical ULD Inventory Saved Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Physical ULD Inventory Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>547</Key>
+    <value>It's already in use.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>548</Key>
+    <value>ULD Stock already exists.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>10001</Key>
+    <value>Physical ULD Inventory Saved Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>10002</Key>
+    <value>Physical ULD Inventory Saved Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>10003</Key>
+    <value>Physical ULD Inventory Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

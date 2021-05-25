@@ -1,0 +1,77 @@
+﻿<Messages>
+	<DataFieldName>
+		<Name>TargetName</Name>
+		<Message>Target Name can not be blank</Message>
+	</DataFieldName>
+	<DataFieldName>
+		<Name>ProductName</Name>
+		<Message>Product Name can not be blank</Message>
+	</DataFieldName>
+
+	<DataFieldName>
+		<Name>TargetType</Name>
+		<Message>Target Type can not be blank</Message>
+	</DataFieldName>
+
+	<DataFieldName> 
+		<Name>NoOfFlight</Name>
+		<Message>No of Flight can not be blank</Message>
+	</DataFieldName>
+
+	<DataFieldName>
+		<Name>CurrencyCode</Name>
+		<Message>Currency Code can not be blank</Message>
+	</DataFieldName>
+	<ServerMessage>
+		<Key>1001</Key>
+		<value>Account Target already exists</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2000</Key>
+		<value>Account Target Added Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2001</Key>
+		<value>Account Target Updated Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2002</Key>
+		<value>Account Target Deleted Successfully.</value>
+	</ServerMessage>
+
+    <!--Message Added for Tagret commission and Penalty BY Vikram 28/12/2016-->
+	<ServerMessage>
+		<Key>10001</Key>
+		<value>Target Commision Added Successfully.</value>
+	</ServerMessage>
+  <ServerMessage>
+		<Key>10002</Key>
+		<value>Target Commision Updated Successfully.</value>
+	</ServerMessage>
+  <ServerMessage>
+    <Key>10003</Key>
+    <value>Target Commision Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2007</Key>
+    <value>Target Penalty Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2008</Key>
+    <value>Target Penalty Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2009</Key>
+    <value>Target Penalty Updated Successfully.</value>
+  </ServerMessage>
+	<ServerMessage>
+		<Key>8114</Key>
+		<value>Conversion failed when converting the datatype varchar to numeric.</value>
+	</ServerMessage>
+
+</Messages>
+
+
+
+
+

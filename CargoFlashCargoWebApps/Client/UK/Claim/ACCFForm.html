@@ -1,0 +1,2145 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="../../../Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <link href="../../../Styles/CfiMessage.css" type="text/css" rel="stylesheet" />
+    <script src="../../../Scripts/jquery.validate.min.js"></script>
+    <script src="../../../Scripts/json2.js"></script>
+    <script type="text/javascript" src="../../../Scripts/CfiMessage.js"></script>
+    <script type="text/javascript" src="../../../Scripts/commono.js"></script>
+    <script type="text/javascript" src="../../../Scripts/common.js"></script>
+    <script type="text/javascript">
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+    $(document).ready(function () {
+       
+        if (window.opener)
+           
+    userContext = window.opener.parent.userContext;
+    var CurrentClaimSNo = getParameterByName("sno", "");
+    var pageName = getParameterByName("pagename", "");
+    var FinalData;
+    var FinalData1;
+    var url;
+   
+    $("[id='Masterairwaybillyescross']").hide();
+
+
+    url = "../../../Services/Irregularity/ClaimService.svc/GetAnalysisClaimCargoFormPrint"
+    $.ajax({
+    url: url,
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify({ CurrentClaimSNo: CurrentClaimSNo }),
+    async: true,
+    type: 'post',
+    cache: false,
+    success: function (result) {
+    //alert(data); // this is Json data object
+    var ResultData = jQuery.parseJSON(result);
+    FinalData = ResultData.Table0;
+    FinalData1 = ResultData.Table1;
+    var FinalData2 = ResultData.Table2;
+    var x = FinalData2[0].EDoxdocumenttypeSNo;
+
+    var FinalData3 = ResultData.Table3;
+    var y = FinalData3[0].EDoxdocumenttypeSNo;
+
+    var FinalData4 = ResultData.Table4;
+
+
+    //claim
+
+    if (FinalData.length > 0) {
+    $('#spnAWBNO').text(FinalData[0].AWBNO);
+    $('#spnflightnodate').text(FinalData[0].FlightNODate);
+    $('#spnRouting').text(FinalData[0].Routing);
+    $('#spnPiecesweight').text(FinalData[0].PiecesWeight);
+    $('#spnCommodity').text(FinalData[0].Commodity);
+    $('#ImgLogo').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineLogo);
+    $('#ImgLogo').attr('onError', 'this.onerror=null;this.src="../Logo/aaa.jpg";');
+    }
+    if (FinalData1.length > 0) {
+    var amount = parseFloat(FinalData1[0].ApprovedAmount);
+    $('#spnBranchOffice').text(FinalData1[0].BranchOffice);
+    $('#spnClaImagesnt').text(FinalData1[0].Claimant);
+    $('#spnClaimFormNumber').text(FinalData1[0].ClaimFormNumber);
+    $('#spnClaImagesmount').text(FinalData1[0].ClaimOfAmount);
+    $('#spnReasonClaim').text(FinalData1[0].Remarks);
+
+    $('#spnclaimnumber').text(FinalData1[0].ClaimFormNumber);
+    $('#spnApprovedAmount').text(amount);
+    $('#spnBOSignature').text(FinalData1[0].Username);
+    // $('#spncityName').text(FinalData1[0].CityName);
+    }
+
+    if (y.indexOf(72) !== -1) {
+
+    $('#Masterairwaybillyescross').show();
+    $('#Masterairwaybillyesempty').hide();
+    $('#Masterairwaybillnacross').hide();
+    $('#Masterairwaybillnaempty').show();
+    }
+    else {
+    $('#Masterairwaybillyescross').hide();
+    $('#Masterairwaybillyesempty').show();
+    $('#Masterairwaybillnacross').show();
+    $('#Masterairwaybillnaempty').hide();
+    }
+
+    if (x.indexOf(60) !== -1) {
+
+    $('#LetterClaimyescross').show();
+    $('#LetterClaimyesempty').hide();
+    $('#LetterClaimnacross').hide();
+    $('#LetterClaimnaemptys').show();
+    }
+    else {
+    $('#LetterClaimyescross').hide();
+    $('#LetterClaimyesempty').show();
+    $('#LetterClaimnacross').show();
+    $('#LetterClaimnaemptys').hide();
+
+    }
+
+    if (y.indexOf(75) !== -1) {
+    $('#HouseWaybillyescross').show();
+    $('#HouseWaybillyesempty').hide();
+    $('#HouseWaybillnacross').hide();
+    $('#HouseWaybillnaempty').show();
+    }
+    else {
+    $('#HouseWaybillyescross').hide();
+    $('#HouseWaybillyesempty').show();
+    $('#HouseWaybillnacross').show();
+    $('#HouseWaybillnaempty').hide();
+    }
+
+    if (x.indexOf(88) !== -1) {
+    $('#ShipperInvoiceyescross').show();
+    $('#ShipperInvoiceyesempty').hide();
+    $('#ShipperInvoicenacross').hide();
+    $('#ShipperInvoicenaemptys').show();
+    }
+    else {
+
+    $('#ShipperInvoiceyescross').hide();
+    $('#ShipperInvoiceyesempty').show();
+    $('#ShipperInvoicenacross').show();
+    $('#ShipperInvoicenaemptys').hide();
+    }
+
+    if (y.indexOf(103) !== -1) {
+    $('#CarrierManifestyescross').show();
+    $('#CarrierManifestyesempty').hide();
+    $('#CarrierManifestnacross').hide();
+    $('#CarrierManifestnaempty').show();
+
+    }
+    else {
+    $('#CarrierManifestyescross').hide();
+    $('#CarrierManifestyesempty').show();
+    $('#CarrierManifestnacross').show();
+    $('#CarrierManifestnaempty').hide();
+    }
+    if (x.indexOf(65) !== -1) {
+
+    $('#PackingListyescross').show();
+    $('#PackingListyesempty').hide();
+    $('#PackingListnacross').hide();
+    $('#PackingListnaemptys').show();
+    }
+
+    else {
+    $('#PackingListyescross').hide();
+    $('#PackingListyesempty').show();
+    $('#PackingListnacross').show();
+    $('#PackingListnaemptys').hide();
+    }
+
+    if (y.indexOf(76) !== -1) {
+    $('#TransferManifestyescross').show();
+    $('#TransferManifestyesempty').hide();
+    $('#TransferManifestnacross').hide();
+    $('#TransferManifestnaempty').show();
+
+    }
+    else {
+    $('#TransferManifestyescross').hide();
+    $('#TransferManifestyesempty').show();
+    $('#TransferManifestnacross').show();
+    $('#TransferManifestnaempty').hide();
+
+    }
+
+    if (x.indexOf(90) !== -1) {
+    $('#AssignmentReceiptyescross').show();
+    $('#AssignmentReceiptyesempty').hide();
+    $('#AssignmentReceiptnacross').hide();
+    $('#AssignmentReceiptnaemptys').show();
+    }
+    else {
+    $('#AssignmentReceiptyescross').hide();
+    $('#AssignmentReceiptyesempty').show();
+    $('#AssignmentReceiptnacross').show();
+    $('#AssignmentReceiptnaemptys').hide();
+    }
+    if (y.indexOf(78) !== -1) {
+    $('#CargoLossyescross').show();
+    $('#CargoLossyesempty').hide();
+    $('#CargoLossnacross').hide();
+    $('#CargoLossnaempty').show();
+
+    }
+    else {
+    $('#CargoLossyescross').hide();
+    $('#CargoLossyesempty').show();
+    $('#CargoLossnacross').show();
+    $('#CargoLossnaempty').hide();
+    }
+    if (x.indexOf(69) !== -1) {
+    $('#SalvageValueyescross').show();
+    $('#SalvageValueyesempty').hide();
+    $('#SalvageValuenacross').hide();
+    $('#SalvageValuenaemptys').show();
+    }
+
+    else {
+    $('#SalvageValueyescross').hide();
+    $('#SalvageValueyesempty').show();
+    $('#SalvageValuenacross').show();
+    $('#SalvageValuenaemptys').hide();
+    }
+    if (y.indexOf(80) !== -1) {
+    $('#CarrierSurveyyescross').show();
+    $('#CarrierSurveyyesempty').hide();
+    $('#CarrierSurveynacross').hide();
+    $('#CarrierSurveynaempty').show();
+    }
+
+    else {
+    $('#CarrierSurveyyescross').hide();
+    $('#CarrierSurveyyesempty').show();
+    $('#CarrierSurveynacross').show();
+    $('#CarrierSurveynaempty').hide();
+    }
+    if (x.indexOf(71) !== -1) {
+    $('#DestroyCertificateyescross').show();
+    $('#DestroyCertificateyesempty').hide();
+    $('#DestroyCertificatenacross').hide();
+    $('#DestroyCertificatenaemptys').show();
+    }
+    else {
+    $('#DestroyCertificateyescross').hide();
+    $('#DestroyCertificateyesempty').show();
+    $('#DestroyCertificatenacross').show();
+    $('#DestroyCertificatenaemptys').hide();
+    }
+    if (y.indexOf(77) !== -1) {
+
+    $('#Irregularityyescross').show();
+    $('#Irregularityyesempty').hide();
+    $('#Irregularitynacross').hide();
+    $('#Irregularitynaempty').show();
+
+
+    }
+    else {
+    $('#Irregularityyescross').hide();
+    $('#Irregularityyesempty').show();
+    $('#Irregularitynacross').show();
+    $('#Irregularitynaempty').hide();
+    }
+
+
+    if (x.indexOf(89) !== -1) {
+
+    $('#ProfessionalSurveyyescross').show();
+    $('#ProfessionalSurveyyesempty').hide();
+    $('#ProfessionalSurveynacross').hide();
+    $('#ProfessionalSurveynaemptys').show();
+    }
+    else {
+    $('#ProfessionalSurveyyescross').hide();
+    $('#ProfessionalSurveyyesempty').show();
+    $('#ProfessionalSurveynacross').show();
+    $('#ProfessionalSurveynaemptys').hide();
+    }
+    if (y.indexOf(102) !== -1) {
+    $('#TracingMessageyescross').show();
+    $('#TracingMessageyesempty').hide();
+    $('#TracingMessagenacross').hide();
+    $('#TracingMessagenaempty').show();
+    }
+    else {
+
+    $('#TracingMessageyescross').hide();
+    $('#TracingMessageyesempty').show();
+    $('#TracingMessagenacross').show();
+    $('#TracingMessagenaempty').hide();
+
+    }
+
+    $('#Photograpsyesempty').hide();
+    if (x.indexOf(61) !== -1) {
+    $('#Photograpsyescross').show();
+    $('#Photograpsnacross').hide();
+    $('#Photograpsnaemptys').show();
+    }
+    else {
+
+    $('#Photograpsyescross').hide();
+    $('#Photograpsyesempty').show();
+    $('#Photograpsnacross').show();
+    $('#Photograpsnaemptys').hide();
+
+    }
+    if (y.indexOf(101) !== -1) {
+    $('#BuildChecklistyescross').show();
+    $('#BuildChecklistyesempty').hide();
+    $('#BuildChecklistnacross').hide();
+    $('#BuildChecklistnaempty').show();
+    }
+    else {
+    $('#BuildChecklistyescross').hide();
+    $('#BuildChecklistyesempty').show();
+    $('#BuildChecklistnacross').show();
+    $('#BuildChecklistnaempty').hide();
+    }
+    if (x.indexOf(91) !== -1) {
+    $('#HealthCertificateshipperconsigneeyescross').show();
+    $('#HealthCertificateshipperconsigneeyesempty').hide();
+    $('#HealthCertificateshipperconsigneenacross').hide();
+    $('#HealthCertificateshipperconsigneenaemptys').show();
+    }
+    else {
+    $('#HealthCertificateshipperconsigneeyescross').hide();
+    $('#HealthCertificateshipperconsigneeyesempty').show();
+    $('#HealthCertificateshipperconsigneenacross').show();
+    $('#HealthCertificateshipperconsigneenaemptys').hide();
+    }
+    if (y.indexOf(100) !== -1) {
+    $('#Breakdownyescross').show();
+    $('#Breakdownyesempty').hide();
+    $('#Breakdownnacross').hide();
+    $('#Breakdownnaempty').show();
+    }
+    else {
+    $('#Breakdownyescross').hide();
+    $('#Breakdownyesempty').show();
+    $('#Breakdownnacross').show();
+    $('#Breakdownnaempty').hide();
+    }
+    if (x.indexOf(92) !== -1) {
+    $('#VeterinarianCertificateshipperconsigneeyescross').show();
+    $('#VeterinarianCertificateshipperconsigneeyesempty').hide();
+    $('#VeterinarianCertificateshipperconsigneenacross').hide();
+    $('#VeterinarianCertificateshipperconsigneenaemptys').show();
+    }
+    else {
+    $('#VeterinarianCertificateshipperconsigneeyescross').hide();
+    $('#VeterinarianCertificateshipperconsigneeyesempty').show();
+    $('#VeterinarianCertificateshipperconsigneenacross').show();
+    $('#VeterinarianCertificateshipperconsigneenaemptys').hide();
+    }
+    if (y.indexOf(99) !== -1) {
+    $('#LoadingChecklistyescross').show();
+    $('#LoadingChecklistyesempty').hide();
+    $('#LoadingChecklistnacross').hide();
+    $('#LoadingChecklistnaempty').show();
+    }
+    else {
+
+    $('#LoadingChecklistyescross').hide();
+    $('#LoadingChecklistyesempty').show();
+    $('#LoadingChecklistnacross').show();
+    $('#LoadingChecklistnaempty').hide();
+    }
+    if (x.indexOf(87) !== -1) {
+
+    $('#ImportLicenseshipperconsigneeyescross').show();
+    $('#ImportLicenseshipperconsigneeyesempty').hide();
+    $('#ImportLicenseshipperconsigneenacross').hide();
+    $('#ImportLicenseshipperconsigneenaempty').show();
+    }
+    else {
+
+    $('#ImportLicenseshipperconsigneeyescross').hide();
+    $('#ImportLicenseshipperconsigneeyesempty').show();
+    $('#ImportLicenseshipperconsigneenacross').show();
+    $('#ImportLicenseshipperconsigneenaempty').hide();
+    }
+    if (y.indexOf(98) !== -1) {
+
+    $('#ProofofDeliveryyescross').show();
+    $('#ProofofDeliveryyesempty').hide();
+    $('#ProofofDeliverynacross').hide();
+    $('#ProofofDeliverynaempty').show();
+    }
+    else {
+    $('#ProofofDeliveryyescross').hide();
+    $('#ProofofDeliveryyesempty').show();
+    $('#ProofofDeliverynacross').show();
+    $('#ProofofDeliverynaempty').hide();
+    }
+    if (x.indexOf(93) !== -1) {
+    $('#CITIESCertificateshipperconsigneeyescross').show();
+    $('#CITIESCertificateshipperconsigneeyesempty').hide();
+    $('#CITIESCertificateshipperconsigneenacross').hide();
+    $('#CITIESCertificateshipperconsigneenaemptys').show();
+
+    }
+    else {
+    $('#CITIESCertificateshipperconsigneeyescross').hide();
+    $('#CITIESCertificateshipperconsigneeyesempty').show();
+    $('#CITIESCertificateshipperconsigneenacross').show();
+    $('#CITIESCertificateshipperconsigneenaemptys').hide();
+    }
+    if (y.indexOf(96) !== -1) {
+    $('#MarketPriceyescross').show();
+    $('#MarketPriceyesempty').hide();
+    $('#MarketPricenacross').hide();
+    $('#MarketPricenaemptys').show();
+    }
+    else {
+
+    $('#MarketPriceyescross').hide();
+    $('#MarketPriceyesempty').show();
+    $('#MarketPricenacross').show();
+    $('#MarketPricenaemptys').hide();
+    }
+    if (x.indexOf(94) !== -1) {
+    $('#DangerousGoodsshipperconsigneeyescross').show();
+    $('#DangerousGoodsshipperconsigneeyesempty').hide();
+    $('#DangerousGoodsshipperconsigneenacross').hide();
+    $('#DangerousGoodsshipperconsigneenaemptys').show();
+    }
+    else {
+
+    $('#DangerousGoodsshipperconsigneeyescross').hide();
+    $('#DangerousGoodsshipperconsigneeyesempty').show();
+    $('#DangerousGoodsshipperconsigneenacross').show();
+    $('#DangerousGoodsshipperconsigneenaemptys').hide();
+    }
+
+    if (y.indexOf(97) !== -1) {
+
+    $('#DeliveryOrderyescross').show();
+    $('#DeliveryOrderyesempty').hide();
+    $('#DeliveryOrdernacross').hide();
+    $('#DeliveryOrdernaemptys').show();
+    }
+    else {
+
+    $('#DeliveryOrderyescross').hide();
+    $('#DeliveryOrderyesempty').show();
+    $('#DeliveryOrdernacross').show();
+    $('#DeliveryOrdernaemptys').hide();
+    }
+
+    if (x.indexOf(95) !== -1) {
+
+    $('#PEBCustomshipperconsigneeyescross').show();
+    $('#PEBCustomshipperconsigneeyesempty').hide();
+    $('#PEBCustomshipperconsigneenacross').hide();
+    $('#PEBCustomshipperconsigneenaemptys').show();
+
+    }
+    else {
+
+    $('#PEBCustomshipperconsigneeyescross').hide();
+    $('#PEBCustomshipperconsigneeyesempty').show();
+    $('#PEBCustomshipperconsigneenacross').show();
+    $('#PEBCustomshipperconsigneenaemptys').hide();
+
+
+    }
+
+    $('#spnClaImagesnalysis').text(FinalData[0].ClaImagesnalysis);
+    $('#spnresume').text(FinalData[0].Resume);
+    $('#spnpreparedbydate').text(FinalData1[0].ActionDate);
+    $('#spnpreparedbyname').text(FinalData1[0].Username);
+    $('#spnpreparedbyjobtitle').text(FinalData1[0].PreparedByJobTitle);
+    //if (FinalData4.length > 0) {
+    $('#spnapprovedbydate').text(FinalData4[0].ApprovedByDate);
+    $('#spnapprovedbyname').text(FinalData4[0].ApprovedByName);
+    //$('#spnapprovedbyjobtitle').text(FinalData4[0].ApprovedByJobTitle);
+    $('#spnapprovedbyjobtitle').text(FinalData4[0].Groupname + "-" + FinalData1[0].CityName);
+    $('#spnpreparedbydate').text(FinalData4[0].PreparedByDate);
+    $('#spnpreparedbyname').text(FinalData4[0].Preparedby);
+    $('#GroupName').text(FinalData4[0].Groupname + "-" + FinalData1[0].CityName);
+
+
+
+
+    //$('#spnapprovedbyname1').text(FinalData4[0].ApprovedByName);
+    // $('#spnapprovedbydate1').text(FinalData4[0].ApprovedByDate);
+    //$('#GroupName').text(FinalData4[0].Groupname);
+    //}
+
+    }
+
+    });
+
+    });
+
+    function PrintElem(elem) {
+
+
+        var isValid = true;
+
+
+
+        $(".WebFormTabledetail tr").each(function () {
+            if ($(this).find("input[name*='check']").length > 0) {
+                if ($(this).find('td:eq(2)').find("input[name*='check']").is(":checked")
+                         == false && $(this).find('td:eq(3)').find("input[name*='check']").is(":checked")
+                            == false) {
+                    ShowMessage('warning', 'Warning', 'Please select an option for ' + $(this).find('td:eq(1)').text());
+                    isValid = false;
+                    return false;
+
+                }
+
+                if ($(this).find('td:eq(6)').find("input[name*='check']").is(":checked")
+                       == false && $(this).find('td:eq(7)').find("input[name*='check']").is(":checked")
+                             == false) {
+
+                    ShowMessage('warning', 'Warning', 'Please select an option for ' + $(this).find('td:eq(5)').text());
+                    isValid = false;
+                    return false;
+
+                }
+            }
+
+        });
+        if (isValid) {
+            $(".WebFormTabledetail tr").each(function () {
+                if ($(this).find("input[name*='check']").length > 0) {
+                    if ($(this).find('td:eq(2)').find("input[name*='check']").is(":checked") == true) {
+
+                        $(this).find('td:eq(2)').find('img').show();
+                        $(this).find('td:eq(2)').find("input[name*='check']").hide();
+
+
+                    }
+                    else {
+                        $(this).find('td:eq(2)').find("input[name*='check']").hide();
+                    }
+                    if ($(this).find('td:eq(3)').find("input[name*='check']").is(":checked") == true) {
+
+                        $(this).find('td:eq(3)').find('img').show();
+                        $(this).find('td:eq(3)').find("input[name*='check']").hide();
+
+
+                    }
+                    else {
+                        $(this).find('td:eq(3)').find("input[name*='check']").hide();
+                    }
+                    if ($(this).find('td:eq(6)').find("input[name*='check']").is(":checked") == true) {
+
+                        $(this).find('td:eq(6)').find('img').show();
+                        $(this).find('td:eq(6)').find("input[name*='check']").hide();
+
+
+                    }
+                    else {
+                        $(this).find('td:eq(6)').find("input[name*='check']").hide();
+                    }
+                    if ($(this).find('td:eq(7)').find("input[name*='check']").is(":checked") == true) {
+
+                        $(this).find('td:eq(7)').find('img').show();
+                        $(this).find('td:eq(7)').find("input[name*='check']").hide();
+
+
+                    }
+                    else {
+                        $(this).find('td:eq(7)').find("input[name*='check']").hide();
+                    }
+
+                }
+            });
+        }
+
+        if (isValid) {
+            $("#tblSTTStatus").find("input[type='button']").hide();
+            Popup($(elem).html());
+            $("#tblSTTStatus").find("input[type='button']").show();
+        }
+    }
+
+
+    function SetCheck(el) {
+        if (el) {
+            if (el.checked)
+                el.setAttribute('checked', 'checked');
+            else
+                el.removeAttribute("checked");
+        }
+    }
+
+
+            function Popup(data) {
+
+                window.print();
+
+
+                return true;
+            }
+
+        //-----------------------------------------------------------------------------//
+
+
+    </script>
+	<meta charset="utf-8" />
+
+</head>
+<body>
+<div lang=EN-US >
+
+    <table  border=1 cellpadding=0 width=1270 style='width:
+ 952.5pt;cellspacing:1.5pt;border:solid black 1.0pt;border:solid black .25pt;
+ padding:0in 0in 0in 0in'>
+        <tr >
+            <td valign=top style='border:none;padding:0in 0in 0in 0in'>
+                <table  border=0 cellspacing=0 cellpadding=0 width=1189
+                       >
+                    <tr>
+                        <td width=1189 valign=top style='width:891.65pt;border:solid black 1.0pt;
+   border:solid black .25pt;padding:0in 0in 0in 0in'>
+                            <div align=center>
+                                <table  border=0 cellspacing=0 cellpadding=0
+                                       width=1117 >
+                                    
+                                        <!--<td width=1115 valign=top style='width:836.0pt;border:solid black 1.0pt;
+      border-bottom:none;border-top:solid black .25pt;border-left:solid black .25pt;border-right:solid black .25pt;padding:0in 0in 0in 0in'>
+                                            <div align=center>
+                                                <table  border=1 cellspacing=0 cellpadding=0
+                                                       width=1048 style='width:785.85pt;border-collapse:collapse;border:none;
+       border:solid black .25pt;padding:0in 0in 0in 0in'>
+                                                    <tr>
+                                                        <td align="center"  style='border-top:none;border-left:solid black 1.0pt;border-bottom:
+      none;border-right:solid black 1.0pt;border-left:solid black .25pt;
+      border-right:solid black .25pt;padding:0in 0in 0in 0in'>
+                                                            <p class=MsoNormal>
+                                                                <span style='font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;'>
+                                                                    <img id="ImgLogo" width='150' height='80' />
+                                                                <o:p></o:p></span>
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>-->
+                                    <tr>
+                                        <td align="center" style='border-top:none;border-left:none;border-bottom:
+      none;border-right:none;border-left:none;
+      border-right:none;padding:0in 0in 0in 0in'>
+                                            <!--<p class=MsoNormal>
+                                                <span style='font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;'>-->
+                                                    <img id="ImgLogo" width='150px' height='50px' />
+                                                    <!--<o:p></o:p>
+                                                </span>
+                                            </p>-->
+                                        </td>
+                                    </tr>
+                                    <tr style='grid-row:1'>
+                                        <td align="center" style='border-top:none;border-left:none;border-bottom:
+      none;border-right:none;border-left:none;
+      border-right:none;padding:0in 0in 0in 0in'>
+                                            <!--<p class=MsoNormal>
+                                                <b>
+                                                    <span  style='font-family:Calibri;
+      font-family:"Times New Roman";font-family:Calibri;
+      font-family:Calibri;'>-->
+                                            <b>
+                                                ANALYSIS OF CLAIM
+                                                CARGO FORM
+                                            </b>
+                                                    <!--</span>
+                                                </b><span  style='font-family:Calibri;
+      font-family:"Times New Roman";font-family:Calibri;
+      font-family:Calibri;'>&nbsp;<o:p></o:p></span>
+                                            </p>-->
+                                        </td>
+                                    </tr>
+                                    <tr >
+                                        <td align="center" style='border:none;border-top:none;border-left:
+      none;border-bottom:none;border-right:
+      none;padding:0in 0in 0in 0in'>
+                                            <!--<p class=MsoNormal>
+                                                <b>
+                                                    <span  style='font-size:9.0pt;font-family:
+      Calibri;font-family:"Times New Roman";font-family:
+      Calibri;font-family:Calibri;'>-->
+                                            <b>
+                                                NO
+                                                :&nbsp;<span style="font-size:12px;" id="spnclaimnumber"></span>
+                                            </b> 
+                                                    <!--</span>
+                                                </b><span  style='font-family:
+      Calibri;font-family:"Times New Roman";font-family:
+      Calibri;font-family:Calibri;'><o:p></o:p></span>
+                                            </p>-->
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr >
+            <td style='border:none;padding:0in 0in 0in 0in'>
+                <table  border=1 cellspacing=0 cellpadding=0 width=1252
+                       style='width:939.15pt;border-collapse:collapse;border:none;border:
+   solid black .25pt;padding:0in 0in 0in 0in'>
+                    <tr >
+                        <td width=1252 style='width:939.15pt;border:solid black 1.0pt;border:
+    solid black .25pt;padding:0in 0in 0in 0in'>
+                            <table  border=1 cellspacing=0 cellpadding=0
+                                   width=1252 style='width:939.15pt;border-collapse:collapse;border:none;
+     border:solid black .25pt;padding:
+     0in 0in 0in 0in'>
+                                <tr >
+                                    <td width=360 nowrap valign=bottom style='width:270.1pt;border:none;
+      padding:.75pt .75pt .75pt 0in;'>
+
+                                                <span><b>1. Branch Office</b></span>
+
+                                                <span><o:p></o:p></span>
+
+                                    </td>
+                                    <td width=889 style='width:666.85pt;border-top:solid black 1.0pt;
+      border-left:none;border-bottom:none;border-right:solid black 1.0pt;
+      border-top:solid black .25pt;border-right:solid black .25pt;
+      padding:0in 0in 0in 0in;'>
+
+                                            <span>:&nbsp;<o:p></o:p></span>
+                                            <span id="spnBranchOffice"><o:p></o:p></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width=359 nowrap valign=bottom style='width:269.35pt;border:none;padding:.75pt .75pt .75pt .75pt;'>
+
+                                                <span><b>2. AWB NO.</b></span>
+
+                                                <span ><o:p></o:p></span>
+
+                                    </td>
+                                    <td width=889 style='width:666.85pt;border:none;border-right:solid black 1.0pt; border-right:solid black .25pt;padding:0in 0in 0in 0in;'>
+
+                                            <span>:&nbsp;<o:p></o:p></span>
+                                             <span id="spnAWBNO"><o:p></o:p></span>
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td width=137 nowrap valign=bottom style='width:103.0pt;border:none; padding:0in 0in 0in 0in;'>
+
+                                                <span><b>3. Flight NO/Date</b></span>
+                                              <span><o:p></o:p></span>
+
+                                    </td>
+                                    <td width=889 style='width:666.85pt;border:none;border-right:solid black 1.0pt;border-right:solid black .25pt;padding:0in 0in 0in 0in;'>
+
+                                            <span >:<o:p></o:p></span>
+                                            <span id="spnflightnodate"><o:p></o:p></span>
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td width=137 nowrap valign=bottom style='width:103.0pt;border:none; padding:0in 0in 0in 0in;'>
+
+                                                <span><b>4. Routing</b></span>
+                                            <span><o:p></o:p></span>
+
+                                    </td>
+                                <td width=889 style='width:666.85pt;border:none;border-right:solid black 1.0pt;border-right:solid black .25pt;padding:0in 0in 0in 0in;'>
+
+                                            <span>:<o:p></o:p></span>
+                                                 <span id="spnRouting"><o:p></o:p></span>
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;padding:0in 0in 0in 0in;'>
+                                        <span><b>5. Pieces/Weight</b></span>
+                                        <span><o:p></o:p></span>
+
+                                    </td>
+                                    <td width=889 style='width:666.85pt;border:none;border-right:solid black 1.0pt;
+      border-right:solid black .25pt;padding:0in 0in 0in 0in;'>
+
+                                            <span>:&nbsp;<o:p></o:p></span>
+                                        <span id="spnPiecesweight"><o:p></o:p></span>
+
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td width=137 nowrap valign=bottom style='width:103.0pt;border:none; padding:0in 0in 0in 0in;'>
+
+                                                <span ><b>6. Commodity</b></span>
+                                            <span><o:p></o:p></span>
+
+                                    </td>
+                                    <td width=889 style='width:666.85pt;border:none;border-right:solid black 1.0pt;border-right:solid black .25pt;padding:0in 0in 0in 0in;'>
+
+                                            <span >:&nbsp;<o:p></o:p></span>
+                                             <span id="spnCommodity"><o:p></o:p></span>
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;padding:0in 0in 0in 0in;'>
+                                         <span><b>7. Claimant</b></span>
+                                         <span ><o:p></o:p></span>
+
+                                    </td>
+                                    <td width=889 style='width:666.85pt;border:none;border-right:solid black 1.0pt; border-right:solid black .25pt;padding:0in 0in 0in 0in;'>
+
+                                            <span>:&nbsp;<o:p></o:p></span>
+                                                <span id="spnClaImagesnt"><o:p></o:p></span>
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td width=137 nowrap valign=bottom style='width:103.0pt;border:none; padding:0in 0in 0in 0in;'>
+
+
+
+                                                <span><b>8. Cargo Claim Form Number</b></span>
+                                            <span><o:p></o:p></span>
+
+                                    </td>
+                                    <td width=889 style='width:666.85pt;border:none;border-right:solid black 1.0pt; border-right:solid black .25pt;padding:0in 0in 0in 0in;'>
+
+                                            <span>:<o:p></o:p></span>
+                                        <span id="spnClaimFormNumber"><o:p></o:p></span>
+
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td width=137 nowrap valign=bottom style='width:103.0pt;border:none; padding:0in 0in 0in 0in;'>
+                                        <span><b>9. Claim Of Amount</b></span>
+                                         <span><o:p></o:p></span>
+
+                                    </td>
+                                    <td width=889 style='width:666.85pt;border:none;border-right:solid black 1.0pt; border-right:solid black .25pt;padding:0in 0in 0in 0in;'>
+
+                                            <span >:&nbsp;<o:p></o:p></span>
+                                        <span id="spnClaImagesmount"><o:p></o:p></span>
+
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td width=137 nowrap valign=bottom style='width:103.0pt;border:none; padding:0in 0in 0in 0in;'>
+
+                                                <span ><b>10. A Reason of Claim</b></span>
+                                            <span ><o:p></o:p></span>
+
+                                    </td>
+                                    <td width=889 style='width:666.85pt;border:none;border-right:solid black 1.0pt; border-right:solid black .25pt;padding:0in 0in 0in 0in;'>
+
+                                            <span>:&nbsp;<o:p></o:p></span>
+                                        <span id="spnReasonClaim"><o:p></o:p></span>
+
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td width=137 nowrap  valign=bottom style='width:103.0pt; border:none;padding:0in 0in 0in 0in;'>
+                                        <span><b>11. Supporting Documents Claim Attached </b></span>
+                                          <span><o:p></o:p></span>
+
+                                    </td>
+                                    <td width=889 style='width:666.85pt;border:none;border-right:solid black 1.0pt; border-right:solid black .25pt;padding:0in 0in 0in 0in;'>
+
+                                        <span>:&nbsp;<o:p></o:p></span>
+                                        <span><o:p></o:p></span>
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td width=137 nowrap colspan=2 valign=bottom style='width:103.0pt;
+      border:none;padding:0in 0in 0in 0in;'>
+
+                                                <span>
+                                                    <b>
+                                                        Please Check the shipment and fill the box with &quot;X&quot;
+                                                        sign.
+                                                    </b>
+                                                </span>
+                                            <span><o:p></o:p></span>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width=137 nowrap colspan=2 valign=bottom style='width:103.0pt;
+      border:none;padding:0in 0in 0in 0in;'>
+                                         <span ><b>if Yes or Not Applicable</b></span>
+                                           <span ><o:p></o:p></span>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td width=0 style='width:.3pt;border:solid black 1.0pt;border-left:none;
+    border-left:solid black .25pt;border:solid black .25pt;
+    padding:0in 0in 0in 0in'></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr >
+            <td style='border:none;padding:0in 0in 0in 0in'>
+                <table  border=1 cellspacing=0 cellpadding=0 width=1189
+                       style='width:891.65pt;border-collapse:collapse;border:none;border:solid black .25pt;padding:0in 0in 0in 0in'>
+                    <tr >
+                        <td width=1189 style='width:891.65pt;border:solid black 1.0pt;border:
+    solid black .25pt;padding:0in 0in 0in 0in'>
+                            <table  border=1 cellspacing=0 cellpadding=0
+                                   width=1117 style='width:837.5pt;border-collapse:collapse;border:none;
+     border:solid black .25pt;padding:
+     0in 0in 0in 0in'>
+                                <tr>
+                        <td width=821 style='width:616.0pt;border:solid black 1.0pt;border-right: none;border-top:solid black .25pt;border-left:solid black .25pt;
+      border-bottom:solid black .25pt;padding:0in 0in 0in 0in;'>
+                                        <table  border=1 cellspacing=0 cellpadding=0
+                                               width=820 style='width:615.0pt;border-collapse:collapse;border:none;
+       border:solid black .75pt;padding:
+       0in 0in 0in 0in'>
+                                            <tr >
+                                                <td width=401 nowrap colspan=4 valign=bottom style='width:301.0pt;
+        border:none;border-right:solid windowtext 1.0pt;border-right:
+        solid windowtext .75pt;padding:.75pt .75pt .75pt .75pt;'>
+                                                    <p class=MsoNormal align=center style='text-align:center'>
+                                                        <b>
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'>
+                                                                From
+                                                                Carrier's or Ground Handling<o:p></o:p>
+                                                            </span>
+                                                        </b>
+                                                    </p>
+                                                </td>
+                                                <td width=412 nowrap colspan=4 valign=bottom style='width:309.35pt;
+        border:none;border-right:solid windowtext 1.0pt;border-right:
+        solid windowtext .75pt;padding:.75pt .75pt .75pt .75pt;'>
+                                                    <p class=MsoNormal align=center style='text-align:center'>
+                                                        <b>
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'>
+                                                                From
+                                                                Shipper's or Consignee<o:p></o:p>
+                                                            </span>
+                                                        </b>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr style='yfti-irow:1;'>
+                                                <td width=18 nowrap valign=bottom style='width:13.5pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+                                                    <p class=MsoNormal align=center style='text-align:center'>
+                                                        <b>
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'>NO<o:p></o:p></span>
+                                                        </b>
+                                                    </p>
+                                                </td>
+                                                <td width=321 nowrap valign=bottom style='width:241.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+                                                    <p class=MsoNormal align=center style='text-align:center'>
+                                                        <b>
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'>
+                                                                Supporting
+                                                                Documents<o:p></o:p>
+                                                            </span>
+                                                        </b>
+                                                    </p>
+                                                </td>
+                                                <td width=26 nowrap valign=bottom style='width:19.35pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+                                                    <p class=MsoNormal align=center style='text-align:center'>
+                                                        <b>
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'>Yes<o:p></o:p></span>
+                                                        </b>
+                                                    </p>
+                                                </td>
+                                                <td width=27 nowrap valign=bottom style='width:20.2pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+                                                    <p class=MsoNormal align=center style='text-align:center'>
+                                                        <b>
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'>N/A<o:p></o:p></span>
+                                                        </b>
+                                                    </p>
+                                                </td>
+                                                <td width=19 nowrap valign=bottom style='width:14.35pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+                                                    <p class=MsoNormal align=center style='text-align:center'>
+                                                        <b>
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'>NO<o:p></o:p></span>
+                                                        </b>
+                                                    </p>
+                                                </td>
+                                                <td width=330 nowrap valign=bottom style='width:247.7pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+                                                    <p class=MsoNormal align=center style='text-align:center'>
+                                                        <b>
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'>
+                                                                Supporting
+                                                                Documents<o:p></o:p>
+                                                            </span>
+                                                        </b>
+                                                    </p>
+                                                </td>
+                                                <td width=27 nowrap valign=bottom style='width:20.2pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+                                                    <p class=MsoNormal align=center style='text-align:center'>
+                                                        <b>
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'>Yes<o:p></o:p></span>
+                                                        </b>
+                                                    </p>
+                                                </td>
+                                                <td width=27 nowrap valign=bottom style='width:20.2pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+                                                    <p class=MsoNormal align=center style='text-align:center'>
+                                                        <b>
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'>N/A<o:p></o:p></span>
+                                                        </b>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr >
+                                                <td align=center width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>1</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;'><b>Master Air Waybill</b>&nbsp;<o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+                                                  <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>1</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Letter of Claim from Shipper/Consignee</b>&nbsp;<o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>2</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>House Waybill</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>2</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Shipper's Invoice</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                            <tr >
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>3</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Carrier's Cargo Manifest</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>3</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Packing List</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>4</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Transfer Manifest for Interline Shipment</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>4</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Assignment of right/Subrogation Receipt</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                            <tr >
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>5</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Cargo Loss or Damage Report</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>5</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Salvage Value</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                            <tr >
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>6</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Carrier's Survey Report</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>6</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Destroy Certificate</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                            <tr >
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>7</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Irregularity Report</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>7</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Professional Survey Report</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                            <tr >
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>8</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Tracing Message(Email, telex)</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>8</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Photographs</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                            <tr >
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>9</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Build-up Checklist</b><o:p></o:p></span>
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>9</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Health Certificate for Live Animals</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                            <tr >
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>10</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td  width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Break down Checklist</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>10</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Veterinarian Certificate for Live Animals</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                            <tr >
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>11</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Loading/Unloading Checklist</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>11</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Import License for Live Animals</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>12</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Proof of Delivery (POD)</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>12</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>CITIES Certificate</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>13</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Market Price/Market Value</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>13</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Dangerous Goods Certificate</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                            <tr >
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>14</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>Delivery Order (DO)</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td align="center" width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;color:black;'><b>14</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'>
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;
+        '><b>PEB/PIB/PEBT/PIBT(Custom)</b><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+        padding:.75pt .75pt .75pt .75pt;'></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width=291 style='width:218.5pt;border:solid black 1.0pt;border-left:
+      none;border-top:solid black .25pt;border-bottom:solid black .25pt;
+      border-right:solid black .25pt;padding:0in 0in 0in 0in;
+      '>
+
+                                            <span  style='font-family:Calibri;
+      font-family:"Times New Roman";font-family:Calibri;
+      font-family:Calibri;'>&nbsp;&nbsp;&nbsp;<o:p></o:p></span>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr >
+            <td style='border:none;padding:0in 0in 0in 0in'>
+                <table  border=0 cellspacing=0 cellpadding=0 width=1012
+                       style='width:759.15pt;border-collapse:collapse;border:none;border:
+   none;padding:0in 0in 0in 0in'>
+                    <tr >
+                        <td width=1012 style='width:759.15pt;border:none;border:
+    none;padding:0in 0in 0in 0in'>
+                            <table  border=0 cellspacing=0 cellpadding=0 width=910
+                                   style='width:682.5pt;border-collapse:collapse;border:none;border:
+     none;padding:0in 0in 0in 0in'>
+                                <tr >
+                                    <td width=280 nowrap valign=bottom style='width:210.1pt;border:none;
+      padding:.75pt .75pt .75pt 0in;'></td>
+                                    <td align="right" width=627 nowrap valign=bottom style='width:470.2pt;border:none;
+      padding:.75pt .75pt .75pt .75pt;'>
+
+
+                                                <span>
+                                                    <b>
+                                                        *)Yes:
+                                                        No; N/A
+                                                    </b> <o:p></o:p>
+                                                </span>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width=280 nowrap valign=bottom style='width:210.1pt;border:none;
+      padding:.75pt .75pt .75pt 0in;'>
+
+                                                <span >
+                                                    <b>12.Claim Analysis</b><br>
+                                                    &nbsp;&nbsp;<o:p></o:p>
+                                                </span>
+
+                                    </td>
+                                    <td width=627 style='width:470.2pt;border:none;border-right:none;border-right:none;padding:0in 0in 0in 0in;'>
+
+                                            <span>: &nbsp;&nbsp;<o:p></o:p></span>
+                                        </td>
+                                </tr>
+                                <tr >
+                                    <td width=279 nowrap valign=bottom style='width:209.35pt;border:none;padding:.75pt .75pt .75pt .75pt;'>
+
+                                                <span >
+                                                    <b>13. Resume</b><br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;CLAIMABLE<o:p></o:p>
+                                                </span>
+
+                                    </td>
+                                    <td width=627 style='width:470.2pt;border-top:none;border-left:none;
+      border-bottom:none;border-right:none;
+      border-bottom:none;border-right:none;
+      padding:0in 0in 0in 0in;'>
+
+                                            <span>
+                                                :
+                                                &nbsp;&nbsp;&nbsp;<o:p></o:p>
+                                            </span>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td width=0 style='width:.3pt;border:solid black 1.0pt;border-left:none;
+    border-left:solid black .25pt;border:solid black .25pt;
+    padding:0in 0in 0in 0in'></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr >
+            <td style='border:none;padding:0in 0in 0in 0in'>
+                <table  border=1 cellspacing=0 cellpadding=0 width=1189
+                       style='width:891.65pt;border-collapse:collapse;border:none;border:
+   solid black .25pt;padding:0in 0in 0in 0in'>
+                    <tr >
+                        <td width=1189 style='width:891.65pt;border:solid black 1.0pt;border:
+    solid black .25pt;padding:0in 0in 0in 0in'>
+                            <table  border=1 cellspacing=0 cellpadding=0
+                                   width=1069 style='width:801.65pt;border-collapse:collapse;border:none;
+     border:solid black .75pt;padding:
+     0in 0in 0in 0in'>
+                                <tr >
+                                    <td width=313 nowrap valign=bottom style='width:235.1pt;border:none;
+      border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+      padding:.75pt .75pt .75pt 0in;'>
+
+                                                <span><b>Prepared By</b><o:p></o:p></span>
+
+                                    </td>
+                                    <td width=216 nowrap valign=bottom style='width:161.75pt;border:none;
+      border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+      padding:.75pt .75pt .75pt 0in;'>
+
+                                                <span>
+                                                    <b>
+                                                        Signature<br style='special-character:line-break'>
+                                                        <![if !supportLineBreakNewLine]><br style='special-character:line-break'>
+                                                        <![endif]>
+                                                    </b><o:p></o:p>
+                                                </span>
+
+                                    </td>
+                                    <td width=316 nowrap valign=bottom style='width:236.75pt;border:none;
+      border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+      padding:.75pt .75pt .75pt 0in;'>
+
+                                                <span ><b>Approved By</b><o:p></o:p></span>
+
+                                    </td>
+                                    <td width=216 nowrap valign=bottom style='width:161.75pt;border:none;
+      border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+      padding:.75pt .75pt .75pt 0in;'>
+
+                                                <span><b>Signature</b><o:p></o:p></span>
+
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td width=313 nowrap valign=bottom style='width:235.1pt;border:none;
+      border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+      padding:.75pt .75pt .75pt 0in;'>
+                                        <table  border=1 cellspacing=0 cellpadding=0 width=294 style='width:220.85pt;border-collapse:collapse;border:none;
+       border:solid black .25pt;padding: 0in 0in 0in 0in'>
+                                            <tr >
+                                                <td width=294 style='width:220.85pt;border:solid black 1.0pt;border:solid black .25pt;padding:0in 0in 0in 0in'>
+                                                    <table  border=1 cellspacing=0 cellpadding=0
+                                                           width=288 style='width:215.85pt;border-collapse:collapse;border:none; border:solid black .25pt;padding:  0in 0in 0in 0in'>
+                                                        <tr >
+                                                            <td width=146 nowrap valign=bottom style='width:109.25pt;border:none;padding:.75pt .75pt .75pt 0in;'>
+
+                                                                        <span>Date<o:p></o:p></span>
+
+                                                            </td>
+                                                            <td width=139 style='width:104.35pt;border-top:solid black 1.0pt;
+          border-left:none;border-bottom:none;border-right:solid black 1.0pt;
+          border-top:solid black .25pt;border-right:solid black .25pt;padding:0in 0in 0in 0in;'>
+
+                                                                    <span>
+                                                                        :
+                                                                        &nbsp;&nbsp;&nbsp;
+                                                                    </span>
+                                                                        <span></span>
+                                                                    <span ><o:p></o:p></span>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr >
+                                                            <td width=145 nowrap valign=bottom style='width:108.5pt;border:none;padding:.75pt .75pt .75pt .75pt;'>
+
+                                                                        <span>Name<o:p></o:p></span>
+
+                                                            </td>
+                                                            <td width=139 style='width:104.35pt;border:none;border-right:solid black 1.0pt;border-right:solid black .25pt;padding:0in 0in 0in 0in;'>
+
+                                                                    <span>
+                                                                        :
+                                                                        &nbsp;&nbsp;&nbsp;
+                                                                    </span>
+                                                                        <span><b></b><span class=SpellE><b></b></span></span>
+                                                                    <span ><o:p></o:p></span>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width=137 nowrap valign=bottom style='width:103.0pt;border:none; padding:0in 0in 0in 0in;'>
+
+                                                                        <span>Job Title</span>
+                                                                    <span><o:p></o:p></span>
+
+                                                            </td>
+                                                            <td width=139 style='width:104.35pt;border-top:none;border-left:none;
+          border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+          border-bottom:solid black .25pt;border-right:solid black .25pt;padding:0in 0in 0in 0in;'>
+
+                                                                    <span>
+                                                                        :
+                                                                        &nbsp;&nbsp;&nbsp;
+                                                                    </span>
+                                                                        <span><b></b></span>
+                                                                    <span><o:p></o:p></span>
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td width=0 style='width:.3pt;border:solid black 1.0pt;border-left:
+        none;border-left:solid black .25pt;border:solid black .25pt;  padding:0in 0in 0in 0in'></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width=216 nowrap valign=bottom style='width:161.75pt;border:none; border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;padding:.75pt .75pt .75pt 0in;'>
+                                        <table  border=1 cellspacing=0 cellpadding=0
+                                               width=202 style='width:151.65pt;border-collapse:collapse;border:none;border:solid black .25pt;padding: 0in 0in 0in 0in'>
+                                            <tr >
+                                                <td width=201 nowrap colspan=2 valign=bottom style='width:150.9pt;border:none;padding:.75pt .75pt .75pt 0in;'></td>
+                                            </tr>
+                                            <tr >
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;padding:.75pt .75pt .75pt .75pt;'></td>
+                                                <td width=78 style='width:58.5pt;border:none;border-right:solid black 1.0pt;border-right:solid black .25pt;padding:0in 0in 0in 0in; '>
+
+                                                        <span >&nbsp;&nbsp;&nbsp;<o:p></o:p></span>
+
+                                                </td>
+                                            </tr>
+                                            <tr >
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;padding:0in 0in 0in 0in;'></td>
+                                                <td width=78 style='width:58.5pt;border-top:none;border-left:none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;border-bottom:solid black .25pt;border-right:solid black .25pt; padding:0in 0in 0in 0in;'>
+
+                                                        <span style='font-family:Calibri;font-family:"Times New Roman";font-family:Calibri;font-family:Calibri;'>&nbsp;&nbsp;&nbsp;<o:p></o:p></span>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width=316 nowrap valign=bottom style='width:236.75pt;border:none;
+      border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+      padding:.75pt .75pt .75pt 0in;'>
+                                        <table  border=1 cellspacing=0 cellpadding=0
+                                               width=297 style='width:222.5pt;border-collapse:collapse;border:none;
+       border:solid black .25pt;padding:
+       0in 0in 0in 0in'>
+                                            <tr >
+                                                <td width=147 nowrap valign=bottom style='width:110.1pt;border:none;
+        padding:.75pt .75pt .75pt 0in;'>
+
+
+                                                            <span style='font-size:10.0pt; font-family:Calibri;font-family:"Times New Roman";font-family:Calibri;font-family:Calibri;color:black;'>
+                                                            Date<o:p></o:p>
+                                                            </span>
+
+
+                                                </td>
+                                                <td width=147 style='width:110.2pt;border-top:solid black 1.0pt;
+        border-left:none;border-bottom:none;border-right:solid black 1.0pt;
+        border-top:solid black .25pt;border-right:solid black .25pt;
+        padding:0in 0in 0in 0in;'>
+
+
+                                                        <span
+                                                              style='font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;font-family:Calibri;'>
+                                                            :
+                                                            &nbsp;&nbsp;&nbsp;<o:p></o:p>
+                                                        </span>
+
+                                                </td>
+                                            </tr>
+                                            <tr >
+                                                <td width=146 nowrap valign=bottom style='width:109.35pt;border:none;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span  style='font-size:10.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;' >Name<o:p></o:p></span>
+
+                                                </td>
+                                                <td width=147 style='width:110.2pt;border:none;border-right:solid black 1.0pt;
+        border-right:solid black .25pt;padding:0in 0in 0in 0in;
+        '>
+
+                                                        <span style='font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;'>
+                                                            :
+                                                            &nbsp;&nbsp;&nbsp;<o:p></o:p>
+                                                        </span>
+
+                                                </td>
+                                            </tr>
+                                            <tr >
+                                                <td width=146 nowrap valign=bottom style='width:109.35pt;border:none;
+        padding:.75pt .75pt .75pt .75pt;'>
+
+                                                            <span style='font-size:9.0pt;
+        font-family:Calibri;font-family:"Times New Roman";
+        font-family:Calibri;font-family:Calibri;color:black;'>Job Title</span>
+
+                                                            <span
+                                                                  style='font-size:10.0pt;font-family:Calibri;font-family:
+        "Times New Roman";font-family:Calibri;font-family:
+        Calibri;color:black;'><o:p></o:p></span>
+
+                                                </td>
+                                                <td width=147 style='width:110.2pt;border-top:none;border-left:none;
+        border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+        border-bottom:solid black .25pt;border-right:solid black .25pt;
+        padding:0in 0in 0in 0in;'>
+
+                                                        <span  style='font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;'>: &nbsp;&nbsp;<o:p></o:p></span>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width=216 nowrap valign=bottom style='width:161.75pt;border:none;
+      border-right:solid windowtext 1.0pt;border-right:solid windowtext .75pt;
+      padding:.75pt .75pt .75pt 0in;'>
+                                        <table  border=1 cellspacing=0 cellpadding=0
+                                               width=202 style='width:151.65pt;border-collapse:collapse;border:none;
+       border:solid black .25pt;padding:
+       0in 0in 0in 0in'>
+                                            <tr >
+                                                <td width=137 nowrap valign=bottom style='width:103.0pt;border:none;
+        padding:0in 0in 0in 0in;'></td>
+                                                <td width=78 style='width:58.5pt;border:solid black 1.0pt;border-left:
+        none;border-top:solid black .25pt;border-bottom:solid black .25pt;
+        border-right:solid black .25pt;padding:0in 0in 0in 0in;
+        '>
+
+                                                        <span style='font-family:Calibri;
+        font-family:"Times New Roman";font-family:Calibri;
+        font-family:Calibri;'>&nbsp;&nbsp;&nbsp;<o:p></o:p></span>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td width=0 style='width:.3pt;border:solid black 1.0pt;border-left:none;
+    border-left:solid black .25pt;border:solid black .25pt;
+    padding:0in 0in 0in 0in'></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style='border:none;padding:0in 0in 0in 0in'>
+
+                    <span  style='font-family:Calibri; font-family:Calibri;font-family:Calibri;color:#222222;background:#F8F9FA'>
+                        * This document does not require a signature and has been
+                        declared valid as a supporting document
+                    </span><span
+                                 style='font-family:Calibri;font-family:Calibri;
+  font-family:Calibri'><o:p></o:p></span>
+
+            </td>
+        </tr>
+    </table>
+
+    <p class=MsoNormal>
+        <span  style='font-family:Calibri;
+font-family:Calibri;font-family:Calibri'><o:p>&nbsp;</o:p></span>
+    </p>
+
+</div>
+
+</body>
+
+</html>

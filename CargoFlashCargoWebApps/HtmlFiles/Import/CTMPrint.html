@@ -1,0 +1,464 @@
+﻿
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <!--<script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>-->
+    <script type="text/javascript">
+        
+        //$(document).ready(function () {
+
+        //    if (window.opener)
+        //        userContext = window.opener.parent.userContext;
+        //      var LogoURL = userContext.SysSetting.LogoURL;
+          
+        //    $("#ImgLogo").attr("src", LogoURL);
+         
+        //});
+      
+     
+       
+           
+
+      
+
+        //function getParameterByName(name, url) {
+        //    if (!url) url = window.location.href;
+        //    name = name.replace(/[\[\]]/g, "\\$&");
+        //    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        //        results = regex.exec(url);
+        //    if (!results) return null;
+        //    if (!results[2]) return '';
+        //    return decodeURIComponent(results[2].replace(/\+/g, " "));
+        //}
+    </script>
+</head>
+<body>
+    <div align="center" id="divCtmPrint">
+        <center><img id="ImgLogo"  style="height:70px;width:200px">
+        <br/><b>  AIR CARGO TRANSFER MANIFEST </b></center>
+        <table style="width:100%;">
+            <!--<tr>
+                <td style="width:50%">
+                    <td style="text-align:center">
+                    <img id="ImgLogo" align="right" style="height:70px;width:200px"> <br /> <br />
+                    <strong></strong>
+                </td>
+                <td style="width:50%;text-align:right">
+
+                    &nbsp;
+                </td>
+            </tr>-->
+            <!--<tr>
+                <td>
+
+                    <strong></strong>
+                </td>
+                <td style="text-align:right">
+
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                    <strong></strong>
+                </td>
+                <itd style="text-align:right">
+
+                    &nbsp;
+                </itd>
+            </tr>-->
+            <tr>
+                <td style="text-align:right">
+
+              <b></b>
+                </td>
+                <td style="text-align:right">
+
+                    <strong>S.No.&nbsp;</strong>&nbsp;<span style="font-size:15pt" id="spnCTMNo">005766</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                    &nbsp;
+                </td>
+                <td>
+
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table style="width:100%">
+                        <tr>
+                            <td style="width:60%">
+                                <!--Airport :Date <span id="spnAirport"></span> <span style="font-size:15pt" id="spnCTMDate"> .............................................</span>-->
+                                Airport : <span id="spnAirport"></span><br/>                              
+                               
+                            <td style="width: 40%; text-align:right">
+                                Transferred To : <span style="font-weight:bold;" id="spnCTMTransferto"> ............................................</span>
+                        </tr>
+                        <tr>
+                            <td style="width:60%">                             
+                                Date : <span id="spnCTMDate"></span>
+                            <td style="width:40%">
+                               
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                    &nbsp;
+                </td>
+                <td>
+
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table style="width:100%;border:1px solid black;border-collapse:collapse">
+                        <tr>
+                            <td style="border:1px solid black;text-align:center" >Air Waybill Number</td>
+                            <td style="border:1px solid black;text-align:center" rowspan="2">Origin-Destination-Airport</td>
+                            <td style="border:1px solid black;text-align:center" rowspan="2">Number of Pieces</td>
+                            <td style="border:1px solid black;text-align:center" rowspan="2">Weight Kgs</td>
+                            <td style="border:1px solid black;text-align:center" rowspan="2">Remarks</td>
+
+                        </tr>
+                        <tr id="trFirst">
+                            <td style="border:1px solid black;text-align:center"colspan="5"></td>
+                            <!--<td style="border:1px solid black;text-align:center"></td>-->
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                           <!-- <td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                           <!-- <td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                           <!-- <td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <!--<tr>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+                        <tr>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>-->
+                        <tr id="trLast">
+                            <!--<td style="border:1px solid black;text-align:center">&nbsp;</td>-->
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">&nbsp;</td>
+
+                        </tr>
+
+
+
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td style="Width:75%;height:6px">
+                    <table style="width:100%; height: 1px;">
+                        <tr>
+                            <td style="font-size:10pt">
+                                <!--Transferred by&nbsp;&nbsp;&nbsp;: SAS as agent for:<br />
+                                Original&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : Revenue Accounting Airline<br />
+                                Duplicate&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : Revenue Accounting Airline<br />
+                                Triplicate&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : Receiving Carrier<br />
+                                Quandruplicate: Receiving Carrier<br />
+                                Quintuplicate&nbsp;&nbsp; : File SAS<br />-->
+                                <br />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="Width:25%;height:6px">
+                    <table style="width:100%;height: 1px;">
+                        <tr>
+                            <td style="font-size:10pt">
+                                <!--Above consignments&nbsp; received in full and apparent good<br />
+                                order and condition except as noted in the &#39;Remarks&#39;<br />
+                                Column<br />-->
+                                
+                                <!--<br />
+                                <br />-->
+                                <br />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="Width:60%;height:6px">
+                    <table style="width:100%">
+                        <tr>
+                            <td style="font-size:10pt">&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="Width:40%;height:6px">
+                    <table style="width:100%">
+                        <tr>
+                            <td style="font-size:10pt">
+                                Received by................................................................................<br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Name of receiving)<br />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="Width:60%;height:6px">
+                    <table style="width:100%">
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="Width:40%;height:6px">
+                    <table style="width:100%">
+                        <tr>
+                            <td style="font-size:10pt">
+                                By..................................................................................................<br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Signature)<br />
+                                <br />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="Width:60%;height:6px">
+                    <table style="width:100%">
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="Width:40%;height:6px">
+                    <table style="width:100%">
+                        <tr>
+                            <td style="font-size:10pt">Time..............................................Date.........................................</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

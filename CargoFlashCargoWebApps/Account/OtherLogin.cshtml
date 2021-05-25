@@ -1,0 +1,848 @@
+﻿<link type="text/css" rel="stylesheet" href="~/Styles/CfiMessage.css" />
+@System.Web.Optimization.Scripts.Render("~/bundles/jq")
+@System.Web.Optimization.Scripts.Render("~/bundles/Login")
+<script type="text/javascript" src="~/Scripts/CfiMessage.js"></script>
+@{
+    //Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Log in";
+
+    if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null)
+    {
+        @Html.Hidden("HdnUName", Request.Cookies["UserName"].Value)
+        @Html.Hidden("HdnPass", Request.Cookies["Password"].Value)
+    }
+
+    // Initialize general page variables
+    var email = ""; var CaptchaCode = "";
+    var password = "";
+    var rememberMe = false;
+    var browser = "";
+    //var ip = "";
+    var SessionID = "";
+
+    CargoFlash.Cargo.DataService.Common.CommonService CS = new CargoFlash.Cargo.DataService.Common.CommonService();
+    int ISCaptcha = Convert.ToInt32(CS.GetSystemSetting("ISCaptcha"));
+    string loginPage = CS.GetSystemSetting("LoginPage");
+
+    var hostname = "";
+    var returnUrl = Request.QueryString["ReturnUrl"];
+    if (returnUrl.IsEmpty())
+    {
+        // Some external login providers always require a return URL value
+
+        returnUrl = Href("~/");
+    }
+    var islogout = Request.QueryString["islogout"];
+    if (!string.IsNullOrEmpty(islogout))
+    {
+        CargoFlash.Cargo.DataService.LoginService loginservice = new CargoFlash.Cargo.DataService.LoginService();
+        bool isLogout = loginservice.LogoutSession(((CargoFlash.Cargo.Model.UserLogin)Session["UserDetail"]));
+        if (isLogout)
+        {
+            Session.Clear();
+            Session.Abandon();
+            Session["UserDetail"] = null;
+            if (Request.Cookies["UserDetail"] != null)
+            {
+                HttpCookie myCookie = new HttpCookie("UserDetail");
+                myCookie.Expires = DateTime.Now.AddDays(-1);
+                myCookie.Value = "0";
+                Response.Cookies.Add(myCookie);
+                Response.Cookies.Remove("UserDetail");
+            }
+            Response.Redirect("~/Account/" + loginPage);
+        }
+    }
+
+
+    // If this is a POST request, validate and process data
+    if (IsPost)
+    {
+        // Setup validation
+        if (string.IsNullOrEmpty(Request["email"]))
+        {
+            Validation.AddFormError("User ID is required.");
+        }
+        if (string.IsNullOrEmpty(Request["Password"]))
+        {
+            Validation.AddFormError("Password is required.");
+        }
+
+        if (ISCaptcha == 2)
+        {
+            if (string.IsNullOrEmpty(Request["CaptchaCode"]))
+            {
+                Validation.AddFormError("Captcha is required.");
+            }
+        }
+        Validation.Add("password",
+            Validator.StringLength(
+                maxLength: Int32.MaxValue));
+        //,
+        //minLength: 5,
+        //errorMessage: "Invalid UserID and Password."));
+
+        if (Session["UserDetail"] != null)
+        {
+            Response.Redirect("~/Index.cshtml");
+        }
+
+        if (Validation.IsValid())
+        {
+            try
+            {
+                email = Request.Form["email"];
+                password = Request.Form["password"];
+                rememberMe = Request.Form["rememberMe"].AsBool();
+                browser = Request.Browser.Type;
+                hostname = Dns.GetHostName();
+                SessionID = HttpContext.Current.Session.SessionID;
+
+                if (ISCaptcha == 2)
+                {
+                    CaptchaCode = Request.Form["CaptchaCode"];
+                }
+                else if (ISCaptcha == 3)
+                {
+                    CaptchaCode = Request["g-recaptcha-response"];
+                }
+
+
+
+                CargoFlash.Cargo.Model.UserLogin userLogin = new CargoFlash.Cargo.Model.UserLogin();
+                CargoFlash.Cargo.DataService.LoginService loginservice = new CargoFlash.Cargo.DataService.LoginService();
+
+                string ip = loginservice.GetIPAddress();
+
+                AntiForgery.Validate();
+
+                try
+                {
+                    userLogin = loginservice.GetLoginRecord(email, password, ip, hostname, browser, SessionID, CaptchaCode);
+                    loginservice.RememberMe(rememberMe, email, password);
+
+                    if (Request.Cookies["UserDetail"] == null)
+                    {
+                        HttpCookie myCookie = new HttpCookie("UserDetail");
+                        myCookie.Value = userLogin.SysSetting["SessionTimeout"];
+                        myCookie.Expires = DateTime.Now.AddDays(1);
+                        Response.Cookies.Add(myCookie);
+                    }
+                    Session["UserDetail"] = userLogin;
+                    Response.Redirect("~/Index.cshtml");
+                }
+                catch (System.ServiceModel.FaultException ex)
+                {
+                    Validation.AddFormError(ex.Message);
+                    if (ex.Message.ToLower() == "password expired.")
+                    {
+                        @Html.Hidden("HdnPasswordExpire", "true");
+                        @Html.Hidden("HdnUserEmail", email);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string strerror = ex.Message;
+                Validation.AddFormError(strerror);
+            }
+        }
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+    <title>Home » Login</title>  
+    @*<link rel="shortcut icon" href="https://cargo.garuda-indonesia.com/themes/cargoga/images/favicon.ico" />*@  
+    @*<link rel="stylesheet" type="text/css" href="~/Images/Login/combinedCSS.css" />*@ 
+    <style type="text/css">
+                html {
+                    /*background: url('https://www.dropbox.com/s/8v5gwyei2ubmkor/background-image.jpg?raw=1') no-repeat center center fixed;*/
+                    -webkit-background-size: cover !important;
+                    -moz-background-size: cover !important;
+                    -o-background-size: cover !important;
+                    background-size: cover !important;
+                    -webkit-box-sizing: border-box !important;
+                    -moz-box-sizing: border-box !important;
+                    box-sizing: border-box !important;
+                    background-color: #F7FEFF !important;
+                }
+
+                body {
+                    color: #2f2f2f !important;
+                    font-family: "Roboto", sans-serif !important;
+                    font-size: 14px !important;
+                    font-weight: 300 !important;
+                }
+
+                a {
+                    color: #2f2f2f !important;
+                    text-decoration: none !important;
+                    cursor: pointer !important;
+                }
+
+                .overlay {
+                    position: fixed !important;
+                    top: 0 !important;
+                    left: 0 !important;
+                    height: 100% !important;
+                    width: 100% !important;
+                    background-color: rgba(0, 0, 0, 0.6) !important;
+                    z-index: 10 !important;
+                }
+
+                .modal {
+                    width: 700px !important;
+                    margin-left: -350px !important;
+                    background-color: aliceblue !important;
+                    border-radius: 5px !important;
+                    z-index: 11 !important;
+                }
+
+                .close {
+                    font-size: 16px !important;
+                    font-weight: 100 !important;
+                    color: #D3D3D3 !important;
+                    float: right !important;
+                    border: none !important;
+                    margin-right: 5px !important;
+                    background-color: #fff !important;
+                    outline: none !important;
+                }
+
+
+                /* Left side content */
+
+                .logo {
+                    width: 150px !important;
+                    margin-top: 0px !important;
+                    margin-left: 9px !important;
+                }
+
+                .login-text {
+                    width: 250px !important ;
+                    margin-top: 9px !important;
+                }
+
+                .flat-button {
+                    color: #eaeaea !important;
+                    text-transform: uppercase !important;
+                    font-weight: 100 !important;
+                    font-size: 13px !important;
+                    border: none !important;
+                }
+
+                .facebook {
+                    background: url('https://www.dropbox.com/s/094vovcb4h8qznn/facebook-logo.png'), #3b5998 !important;
+                    background-size: 20px 20px, cover !important;
+                    background-position: 10px center, center center !important;
+                    background-repeat: no-repeat !important;
+                    margin-top: 50px !important;
+                    padding: 15px 30px 15px 45px !important;
+                }
+
+                .brand {
+                    margin-left: 25px !important;
+                }
+
+
+                /* Right-side */
+
+                .form {
+                    width: 400px !important;
+                    background-color: #fff !important;
+                    margin-left: -50px !important;
+                    border-top-right-radius: 5px !important;
+                    border-bottom-right-radius: 5px !important;
+                    z-indez: 12 !important;
+                }
+
+                .form-inner {
+                    padding-left: 30px !important;
+                    padding-right: 30px !important;
+                    padding-bottom: 30px !important;
+                    /*padding-top:30px !important;*/
+                }
+
+                .form-innerWhathappen {
+                    padding-top: 20px !important;
+                    padding-left: 30px !important;
+                    padding-right: 30px !important;
+                    padding-bottom: 30px !important;
+                }
+
+                /* Tabs */
+
+                .tabs {
+                    width: 340px !important;
+                    margin-top: 25px !important;
+                }
+
+                ul.tabs {
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    list-style: none !important;
+                    border-bottom: solid 1px #d8d8d8 !important;
+                }
+
+                    ul.tabs li {
+                        display: inline-block !important;
+                        width: 138px !important;
+                        padding: 15px !important;
+                        text-align: center !important;
+                        text-transform: uppercase !important;
+                        cursor: pointer !important;
+                    }
+
+                        ul.tabs li.current {
+                            font-weight: 500 !important;
+                            box-shadow: inset 0 -3px 0 0 rgba(50, 117, 193, 1) !important;
+                            -webkit-box-shadow: inset 0 -3px 0 0 rgba(50, 117, 193, 1) !important;
+                            -moz-box-shadow: inset 0 -3px 0 0 rgba(50, 117, 193, 1) !important;
+                        }
+
+                .form-content {
+                    display: none !important;
+                }
+
+                    .form-content.current {
+                        display: inherit !important;
+                    }
+
+                .field {
+                    width: 100% !important;
+                    margin-top: 15px !important;
+                    padding: 12px 15px 12px 30px !important;
+                    font-size: 14px !important;
+                    font-weight: 100 !important;
+                    line-height: 22px !important;
+                    border: 1px solid #d8d8d8 !important;
+                }
+
+
+                /*Custom checkbox*/
+
+                .check {
+                    opacity: 0 !important;
+                    position: absolute !important;
+                }
+
+                    .check .check-label {
+                        display: inline-block !important;
+                        vertical-align: middle !important;
+                        margin: 5px !important;
+                        cursor: pointer !important;
+                    }
+
+                .check-label {
+                    position: relative !important;
+                }
+
+                .check + .check-label:before {
+                    content: '' !important;
+                    background: #fff !important;
+                    border: 1px solid #c3c3c3 !important;
+                    display: inline-block !important;
+                    vertical-align: middle !important;
+                    width: 10px !important;
+                    height: 10px !important;
+                    padding: 2px !important;
+                    font-size: 12px !important;
+                    margin-right: 10px !important;
+                    text-align: center !important;
+                }
+
+                .check:checked + .check-label:before {
+                    content: "\f00c" !important;
+                    font-family: 'FontAwesome' !important;
+                    background: #fff !important;
+                    color: #2f2f2f !important;
+                }
+
+                .secondary-text,
+                .secondary-text a {
+                    color: #939393 !important;
+                }
+
+                    .secondary-text a:hover {
+                        color: #3275C1 !important;
+                    }
+
+                .forgot {
+                    float: right !important;
+                }
+
+                .promo {
+                    font-size: 10px !important;
+                }
+
+                .position {
+                    height: 480px !important;
+                    position: fixed !important;
+                    top: 50% !important;
+                    left: 50% !important;
+                    margin-top: -240px !important;
+                }
+
+                .clear {
+                    height: 15px !important;
+                }
+
+                /*input:first-of-type {
+          margin-top: 40px !important;
+        }*/
+
+                .signin {
+                    background-color: rgb(255, 183, 0) !important;
+                    padding: 15px !important;
+                    width: 100% !important;
+                    color: #fff !important;
+                    margin-top: 30px !important;
+                }
+
+
+                /*No support for IE9, default to standard*/
+
+                .field::-webkit-input-placeholder {
+                    color: #2f2f2f !important;
+                }
+
+                .field:-moz-placeholder {
+                    color: #2f2f2f !important;
+                    opacity: 1 !important;
+                }
+
+                .field::-moz-placeholder {
+                    color: #2f2f2f !important;
+                    opacity: 1 !important;
+                }
+
+                .field:-ms-input-placeholder {
+                    color: #2f2f2f !important;
+                }
+
+                .field:placeholder-shown {
+                    color: #2f2f2f !important;
+                }
+
+                input:focus,
+                .check:focus {
+                    outline: none !important;
+                    outline: 2px solid #3275C1 !important;
+                    border-radius: 5px !important;
+                }
+
+                .footer {
+                          position: absolute;
+                          right: 0;
+                          bottom: 0;
+                          left: 0;
+                          padding: 1rem;
+                          background-color: #efefef;
+                          text-align: center;
+                        }
+    </style>
+    <style>
+        .short {
+            font-weight: bold;
+            color: #FF0000;
+            font-size: 11px;
+        }
+
+        .weak {
+            font-weight: bold;
+            color: orange;
+            font-size: 11px;
+        }
+
+        .good {
+            font-weight: bold;
+            color: #2D98F3;
+            font-size: 11px;
+        }
+
+        .strong {
+            font-weight: bold;
+            color: limegreen;
+            font-size: 11px;
+        }
+
+
+        .divshort {
+            color: #FF0000;
+            width: 25%;
+            border: solid;
+            background-color: #FF0000;
+        }
+
+        .divweak {
+            color: orange;
+            width: 50%;
+            border: solid;
+            background-color: orange;
+        }
+
+        .divgood {
+            color: #2D98F3;
+            width: 75%;
+            border: solid;
+            background-color: #2D98F3;
+        }
+
+        .divstrong {
+            color: limegreen;
+            width: 97%;
+            border: solid;
+            background-color: limegreen;
+        }
+    </style>
+
+    <style>
+        .zoom {
+            
+            
+            transition: transform .2s; /* Animation */
+            /*width: 200px;
+            height: 200px;*/
+            margin: 0 auto;
+        }
+
+            .zoom:hover {
+                transform: scale(1.8);
+                padding-bottom:100px; 
+                padding-right:200px;/* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+            }
+
+        .zoom1 {           
+            transition: transform .2s; /* Animation */
+            /*width: 200px;
+            height: 200px;*/
+            margin: 0 auto;
+        }
+
+            .zoom1:hover {
+                transform: scale(2.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+                padding-top:5%;
+               
+            }
+        
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="modal position">
+        <img src="~/Images/OtherLoginImages/logo.png" class=" logo">
+        <div class="brand login-text">
+         
+            <img src="~/Images/OtherLoginImages/Promotional.jpg" height="350px" width="250px" class="zoom"/>
+        </div>
+        <div class="form position">
+            <div class="form-innerWhathappen"><img src="~/Images/OtherLoginImages/WhatHappen.jpg" height="180px" width="340px" class="zoom1" /></div>
+            <div class="form-inner">
+                <!-- Tabs-->
+                <!--Login Form -->
+                <div class="form-content current" id="member">
+                    <form method="post" autocomplete="off">
+                        @AntiForgery.GetHtml()
+                        <div id="validationMessage" style="display:none;">
+                            @Html.ValidationSummary("", excludeFieldErrors: true, htmlAttributes: null)
+                        </div>
+                        <label for="message" id="message" class="error-label"></label>
+
+
+                        @*<label for="email" @if (!ModelState.IsValidField("email")) { <text> class="error-label" </text>   }>User ID</label>*@
+                        <input type="text" id="email" class="field" name="email" autocomplete="off" placeholder="USERNAME / EMAIL" value="@email" @Validation.For("email") />
+                        @Html.ValidationMessage("email")
+                        @*<input type="email" name="email" id="email" placeholder="USERNAME / EMAIL" class="field"  value="@email" @Validation.For("email")>*@
+
+                        @*<label for="password" @if (!ModelState.IsValidField("password")) { <text> class="error-label" </text>  }>Password</label>*@
+                        <input type="password" id="password" autocomplete="off" class="field" placeholder="PASSWORD" name="password" @Validation.For("password") />
+                        @Html.ValidationMessage("password")
+
+                        @*<input type="password" name="usrpw" placeholder="PASSWORD" class="field" required>*@
+                        <div class="clear"></div>
+                        <a target="_blank" href="../Tracking/AWBTracking" class="Button"><span style="color:red;"><b>TRACK AWB</b></span></a>
+                        @*<label for="custom-check" class="check-label secondary-text">Remember me</label>*@
+                        @*<a id="fgp" style="color: #0b86c3;text-decoration:underline; cursor: pointer;font-style: oblique;margin-left:  20px;" onclick="return ForgetPassword();">Forgot password</a>*@
+                        @*<a id="fgp" onclick="return ForgetPassword();"><span class="forgot secondary-text">Forgot password?</span></a>*@
+
+                        @*@if (ISCaptcha == 2)
+                        {
+
+                            <label for="CaptchaCode" @if (!ModelState.IsValidField("CaptchaCode")) { <text> class="error-label" </text>                                                                   }>Captcha</label>
+                                <input type="text" id="CaptchaCode" name="CaptchaCode" style="margin-bottom: 4px;" autocomplete="off" value="@CaptchaCode" @Validation.For("CaptchaCode") />
+                                @Html.ValidationMessage("CaptchaCode")
+
+
+                                <img src="~/Handler/CaptchaHandler.ashx" id="imgCaptcha" />
+                                            <a href="#" onclick="RefreshCaptcha();">Refresh</a>
+
+                        }
+                        else if (ISCaptcha == 3)
+                        {
+
+                            <div class="g-recaptcha" data-sitekey="6LdYXhUUAAAAALCN4_9-F0tmH64kjpI88z79b8N1"></div>
+
+                        }*@
+
+                        <input type="submit" style="margin-top:5px;" value="Log In" class='flat-button signin btn btn-success' id="LogInBtn" onclick="return CompareSession();" />
+                        @*<button id="submit" name="sign-in-button" class="flat-button signin">Log In</button>*@
+                    </form>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>   
+    
+    <div class="footer"> <strong>© 2018 -Cargoflash</strong>.</div>
+
+    <script type="text/javascript">
+            //<![CDATA[
+
+            //$(window).load(function () {
+            //    $('#frmTrackShipment').validate();
+            //    $('#frmTrackShipmentEx').validate();
+            //    $('#departureDate').datepicker({
+            //        showAnim: 'slideDown',
+            //        changeMonth: true,
+            //        changeYear: true,
+            //        dateFormat: 'dd M yy',
+            //        monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+            //        //buttonImage: 'themes/cargoga/images/calendar_icon.png',
+            //        //showOn: 'button',
+            //        //buttonImageOnly: true,
+            //        onSelect: function (selectedDate) {
+            //            $(this).removeClass('errorB');
+            //        }
+            //    });
+
+            //    //$('#main-tab').easyTabs();
+
+            //    $('#slider').nivoSlider({ directionNav: false, pauseTime: 6000 });
+            //    $('#slider2').tinycarousel({ display: 2 });
+
+            //});
+            //var iFramed = (window.location != window.parent.location) ? true : false;
+            //if (iFramed == true) {
+            //    window.parent.location.href = "GarudaLogin.cshtml";
+            //}
+            //Added By Amit Yadav
+            var iFramed = (window.location != window.parent.location) ? true : false;
+            if (iFramed == true) {
+                window.parent.location.href = "GarudaLogin.cshtml";
+
+            }
+            //added by Pankaj
+            function ForgetPassword() {
+                $("#popForgetPassword").remove();
+                $("#LogInBtn").after('<div id="popForgetPassword" title="Forget Password" style="font-family: Arial; font-size:10px;"></div>');
+                $("#popForgetPassword").append('<table style="margin: 0px auto;"><tr><td><label style="margin-top: 5%;" name="mUserName">User ID</label></td></tr><tr><td><input type="text" style="margin-bottom: 2%;    padding: 6px 10px;    box-sizing: border-box;    border: 1px solid #4CAF50;  border-radius: 4px;" id="UserName" maxlength="30" onblur="requiredfn(this.id)" /></td></tr><tr><td><label name="mEmailID">Email Address</label></td></tr><tr><td><input type="text" style="margin-bottom: 2%;    padding: 6px 10px;    box-sizing: border-box;    border: 1px solid #4CAF50;  border-radius: 4px;" id="EmailID" maxlength="75" onblur="requiredfn(this.id)" /></tr></td><tr><td><label id="mValidateMessage" style="color:red;"></label></td></tr></table>');
+                $("#popForgetPassword").dialog(
+                {
+                    autoResize: true,
+                    maxWidth: 350,
+                    maxHeight: 275,
+
+                    width: 350,
+                    height: 275,
+                    modal: true,
+                    title: 'Forgot my Password',
+                    draggable: false,
+                    resizable: false,
+                    buttons: {
+                        "Reset": function () {
+                            var userName = $('#UserName').val();
+                            var EmailID = $('#EmailID').val();
+                            resetPassword(userName, EmailID);
+                            //$(this).dialog("close");
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    close: function () {
+                        $(this).dialog("close");
+                    }
+                });
+            }
+            function requiredfn(id) {
+                var value = $('#' + id).val();
+                if (value != "") {
+                    $('#' + id).css("border", "1px solid #4CAF50");
+                }
+            }
+            function resetPassword(UserName, EmailID) {
+
+                if (UserName == "" || EmailID == "") {
+                    if (UserName == "")
+                        $('#UserName').css("border", "1px solid red");
+                    if (EmailID == "")
+                        $('#EmailID').css("border", "1px solid red");
+
+                    $('#mValidateMessage').text("User ID and Email Address are mandatory !!!");
+                    return false;
+                }
+                else {
+                    if (ValidateEMail(EmailID)) {
+                        var path = window.location.href.split('/Account')[0].split('//')[1];
+                        $.ajax({
+                            url: "../Services/Permissions/ChangePasswordService.svc/ForgetPassword",
+                            async: false,
+                            type: "POST",
+                            cache: false,
+                            data: JSON.stringify({ UserName: UserName, EmailID: EmailID, Path: path }),
+                            contentType: "application/json; charset=utf-8",
+                            success: function (result) {
+                                if (result == 0) {
+                                    alert("Password reset link has been sent on the respective E-mail Address.");
+                                    location.href = "" + window.location.protocol + "//" + path + "/Account/@loginPage"
+                                }
+                                else {
+                                    if (result == 1)
+                                        $('#mValidateMessage').text("User profile does not exist !!!");
+                                    else
+                                        $('#mValidateMessage').text("Error !!!");
+                                }
+                            },
+                            error: function (result) {
+                                $('#mValidateMessage').text("Invaild Attempt !!!");
+                            }
+                        });
+                    }
+                    else {
+                        $('#mValidateMessage').text("Please enter valid email address !!!");
+                    }
+                }
+
+            }
+
+            function ValidateEMail(email) {
+                var regex = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                return regex.test(email);
+            }
+
+            $(function () {
+                if ($('.validation-summary-errors').length > 0 && $(".validation-summary-errors li:first").html() != "null" && $(".validation-summary-errors li:first").html() != "")
+                    InvokeMsg["warning"]($(".validation-summary-errors").html(), "");
+
+
+
+
+            });
+
+
+            function CompareSession() {
+                var userId = $("#email").val();
+                var captchaCode = $("#CaptchaCode").val();
+                var LoggedInMsg = "";
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    url: "../Services/CommonService.svc/CompareSession?userId=" + userId + "&CaptchaCode=" + captchaCode,
+                    success: function (response) {
+                        LoggedInMsg = response;
+                    },
+                    error: function (xhr) {
+                        InvokeMsg["warning"]("Captcha not valid!", "");
+                        return false;
+                    }
+                });
+
+                if (LoggedInMsg != "")
+                    return confirm(LoggedInMsg);
+
+                return true;
+            }
+
+
+            function ShowMessage(msgType, title, htmlText) {
+
+                if (htmlText != "") {
+                    CallMessageBox(msgType, title, htmlText);
+                }
+            }
+
+
+            ///MessageBox
+            function CallMessageBox(msgType, title, msg, position, fadeInTime, fadeOutTime, timeout) {
+
+                if (fadeInTime == undefined)
+                    fadeInTime = 200;
+                if (fadeOutTime == undefined)
+                    fadeOutTime = 300;
+                if (timeout == undefined)
+                    timeout = 2600;
+                if (position == undefined)
+                    position = "cfMessage-top-right";
+                InvokeMsg.options = {
+                    "debug": false,
+                    "positionClass": position,
+                    "onclick": null,
+                    "fadeIn": fadeInTime,
+                    "fadeOut": fadeOutTime,
+                    "timeOut": timeout
+
+                }
+                InvokeMsg[msgType](msg, title)
+            }
+
+
+
+            var strAirlineCode = "";
+            var strCity = "";
+            function AddAirline() {
+                $.ajax({
+                    url: "../DataSetToExcel/GetAirlineCode", async: false, type: "get", cache: false, contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        strAirlineCode = '<option value="0" >Select</option>';
+                        $(JSON.parse(result).Table).each(function (row, tr) {
+                            strAirlineCode += '<option value=' + tr.AirlineCode + ' >' + tr.AirlineCode + '</option>';
+                        });
+                    },
+                    error: function (jqXHR, textStatus) {
+                    }
+                });
+                $('#Text_AirlineCode').html('')
+                $('#Text_AirlineCode').append(strAirlineCode);
+            }
+
+
+            function GetCityDestination() {
+                $.ajax({
+                    url: "../DataSetToExcel/GetCityDestination", async: false, type: "get", cache: false, contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        strCity = '<option value="0" >Select</option>';
+                        $(JSON.parse(result).Table).each(function (row, tr) {
+                            strCity += '<option value=' + tr.CITYNAMES + ' >' + tr.CITYNAMES + '</option>';
+                        });
+                    },
+                    error: function (jqXHR, textStatus) {
+                    }
+                });
+
+                $('#Text_Origin').html('')
+                $('#Text_Destination').html('')
+                $('#Text_Destination').append(strCity);
+
+                $('#Text_Origin').append(strCity);
+            }
+
+
+            $('#tab-p3').click(function () {
+
+                GetCityDestination();
+            })
+            $('#tab-p2').click(function () {
+                AddAirline();
+
+            })
+
+    </script>
+</body>
+
+</html>

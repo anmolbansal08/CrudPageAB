@@ -1,0 +1,3 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="CargoFlash.Cargo.DataService.Rate.RateAirlineTransService" CodeBehind="RateAirlineTransService.cs"  %>
+<%@ Assembly Name="CargoFlash.Cargo.DataService" %>
+

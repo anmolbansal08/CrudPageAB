@@ -1,0 +1,37 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AirlineSNo</Name>
+    <Message>Airline can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>FlightNo</Name>
+    <Message>FlightNo can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>UCMType</Name>
+    <Message>UCMType can not be blank</Message>
+  </DataFieldName>
+  
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Duplicate Entry</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>UCM Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>UCM Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>UCM Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>3003</Key>
+    <value>Stock Not Available.</value>
+  </ServerMessage>
+  
+</Messages>

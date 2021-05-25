@@ -1,0 +1,63 @@
+﻿<!--#region Airline TimeZone XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  AirlineTimeZone
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Ajay
+  Created On:		24 feb 2014
+  
+  *****************************************************************************
+  */
+  #endregion-->
+
+<Messages>
+  <DataFieldName>
+    <Name>TimeDifference</Name>
+    <Message>Time Difference can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Prefix</Name>
+    <Message>Prefix can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Hour</Name>
+    <Message>Hour can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Minute</Name>
+    <Message>Minute can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Time Zone Name already exists</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+
+    <Key>2000</Key>
+    <value>Time Zone Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Time Zone Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Time Zone Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+
+</Messages>
+
+
+

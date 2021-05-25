@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="Scripts/json2.js"></script>
+    <style type="text/css">
+        span.cls_003 {
+            font-family: Times,serif;
+            font-size: 9.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: underline;
+        }
+
+        div.cls_003 {
+            font-family: Times,serif;
+            font-size: 9.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        span.cls_004 {
+            /*font-family: Times,serif;*/
+            font-size: 13px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+            /*font-weight: bold;*/
+            /*font-size: 12px;*/
+        }
+
+        div.cls_004 {
+            /*font-family: Times,serif;*/
+            font-size: 9.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        span.cls_002 {
+            font-family: Times,serif;
+            font-size: 17.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        div.cls_002 {
+            font-family: Times,serif;
+            font-size: 17.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        span.cls_005 {
+            font-family: Times,serif;
+            font-size: 10.1px;
+            color: rgb(0,0,0);
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: underline;
+        }
+
+        div.cls_005 {
+            font-family: Times,serif;
+            font-size: 10.1px;
+            color: rgb(0,0,0);
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        span.cls_006 {
+            font-family: Times,serif;
+            font-size: 12.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: underline;
+        }
+
+        div.cls_006 {
+            font-family: Times,serif;
+            font-size: 12.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        span.cls_007 {
+            font-family: Times,serif;
+            font-size: 11.1px;
+            color: rgb(0,0,0);
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        div.cls_007 {
+            font-family: Times,serif;
+            font-size: 11.1px;
+            color: rgb(0,0,0);
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+        }
+        span {
+            font-weight: bold;
+            font-size: 11px;
+        }
+    </style>
+    <script type="text/javascript">
+        var userContext = "";
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+
+            var CurrentClaimSNo = getParameterByName("sno", "");
+            var pageName = getParameterByName("pagename", "");
+            var FinalData;
+            var FinalData1;
+            var url;
+
+
+            url = "Services/Irregularity/ClaimService.svc/GetFinalReleasePrint"
+            $.ajax({
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ CurrentClaimSNo: CurrentClaimSNo }),
+                async: false,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    //alert(data); // this is Json data object
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table0;
+                    FinalData1 = ResultData.Table1;
+                    var FinalData2 = ResultData.Table2;
+
+
+
+
+                    var finalApproveamt =  FinalData[0].ApprovedAmount
+                    $('#spnsumof').text(finalApproveamt);
+                    //$('#spnequivalentto').text(FinalData1[0].IsInternational);
+                    $('#spnequivalentto').text(FinalData[0].AmountInWords);
+                    $('#ImgLogo').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineLogo);
+                    $('#ImgLogo').attr('onError', 'this.onerror=null;this.src="../Logo/aaa.jpg";');
+                    $('#spnname').text(FinalData[0].ClaimantName);
+                    $('#spnaddress').text(FinalData[0].Address);
+                    //$('#spnsumof').text(FinalData[0].ApprovedAmount);
+                    //$('#spnequivalentto').text(FinalData1[0].IsInternational);
+                    $('#spnvalidfilenumber').text(FinalData[0].ClaimNumber);
+                    $('#spnawbnumber').text(FinalData1[0].AWBNo);
+                    $('#spnfrom').text(FinalData1[0].AWBFrom);
+                    $('#spnto').text(FinalData1[0].AWBTo);
+                    $('#spndate').text(FinalData1[0].AWBDate);
+                    $('#spnwitness').text(FinalData1[0].Witness);
+                    $('#spnsignedaddress').text(FinalData1[0].SignAddress);
+                    $('#spnoccupation').text(FinalData1[0].Occupation);
+                    $('#spntitle').text(FinalData1[0].Title);
+                    $('#spnrevdate').text(FinalData1[0].RevDate);
+
+
+
+
+
+
+                }
+
+            });
+
+        });
+
+
+
+
+    </script>
+
+</head>
+<body>
+    <div style="position:absolute;left:50%;margin-left:-297px;top:0px;width:695px;height:841px;border-style:outset;overflow:hidden">
+        <div style="position:absolute;left:357.52px;top:48.84px" class="cls_003"><span class="cls_003">Untuk dikembalikan Kepada</span><span class="cls_004"> :</span></div>
+        <div style="position:absolute;left:71.04px;top:53.80px" class="cls_002"><span class="cls_002"><img id="ImgLogo" width='120' height='50' /><!--<img src="Images/GarudaIndonesiaGroupNew.png" width='120' height='50' />--></span></div>
+        <div style="position:absolute;left:357.04px;top:64.68px" class="cls_004"><span class="cls_004">CUSTOMER RELATION MANAGEMENT</span></div>
+
+        <div style="position:absolute;left:357.52px;top:80.76px" class="cls_004"><span class="cls_004">Kantor Pusat Cargo Garuda Indonesia</span></div>
+        <div style="position:absolute;left:357.56px;top:95.84px" class="cls_005"><span class="cls_005">JAKARTA</span></div>
+        <div style="position:absolute;left:142.08px;top:120.24px" class="cls_006"><span class="cls_006">SURAT PERNYATAAN PEMBEBASAN</span></div>
+        <div style="position:absolute;left:66.48px;top:145.56px" class="cls_004"><span class="cls_004">Saya yang bertandatangan di bawah ini,</span></div>
+        <div style="position:absolute;left:67.20px;top:164.52px" class="cls_004"><span class="cls_004">Nama</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;   <span id="spnname"></span></div>
+
+        <div style="position:absolute;left:66.48px;top:183.00px" class="cls_004"><span class="cls_004">Alamat</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spnaddress"></span></div>
+
+        <div style="position:absolute;left:66.72px;top:201.72px" class="cls_004"><span class="cls_004">No. Rekening</span></div>
+     
+        <div style="position:absolute;left:147.36px;top:201.48px" class="cls_004"><span class="cls_004"></span></div><!--&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; 0152779897/BNI/KUPANG/PT DHARMA BANDAR MANDALA-->
+        <div style="position:absolute;left:66.72px;top:220.20px" class="cls_004"><span class="cls_004">dengan ini menyatakan telah menerima pembayaran dari PT Garuda Indonesia (Persero) Tbk.</span></div>
+        <div style="position:absolute;left:515.64px;top:220.20px" class="cls_004"><span class="cls_004"></span></div>
+        <div style="position:absolute;left:555.88px;top:221.20px" class="cls_007"><span class="cls_007">("Cargo</span></div>
+        <div style="position:absolute;left:66.24px;top:234.16px" class="cls_007"><span class="cls_007">Garuda Indonesia")</span></div>
+        <div style="position:absolute;left:66.72px;top:251.64px" class="cls_004"><span class="cls_004">uang sejumlah</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spnsumof"></span></div>
+
+        <div style="position:absolute;left:66.24px;top:270.12px" class="cls_004"><span class="cls_004">atau setara dengan nilai</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spnequivalentto"></span></div>
+
+        <div style="position:absolute;left:66.44px;top: 294.30px;" class="cls_004"><span class="cls_004">sebagai penyelesaian menyeluruh dan terakhir dari segala tuntutan dalam segala sifatnya dan yang dengan</span></div>
+        <div style="position:absolute;left:66.24px;top: 304.80px" class="cls_004"><span class="cls_004">cara apapun timbul di masa sekarang ataupun di kemudian hari, yang telah atau mungkin saya ajukan</span></div>
+        <div style="position:absolute;left:65.52px;top:314.52px" class="cls_004"><span class="cls_004">terhadap Cargo Garuda Indonesia maupun para direktur, pegawai, agen mereka dan/atau pihak lainnya</span></div>
+        <div style="position:absolute;left:65.76px;top:327.48px" class="cls_004"><span class="cls_004">yang bekerja untuk kepentingan Cargo Garuda Indonesia, yang timbul sehubungan dengan kejadian</span></div>
+        <div style="position:absolute;left:66.00px;top:340.44px" class="cls_004"><span class="cls_004">kehilangan, kerusakan atau keterlambatan pengangkutan;</span></div>
+        <div style="position:absolute;left:65.76px;top:359.16px" class="cls_004"><span class="cls_004">Sesuai Berkas Nomor</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spnvalidfilenumber"></span></div>
+
+        <div style="position:absolute;left:66.00px;top:377.64px" class="cls_004"><span class="cls_004">Diangkut atau telah diterima untuk pengangkutan</span></div>
+        <div style="position:absolute;left:66.00px;top:396.36px" class="cls_004"><span class="cls_004">Dari</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spnfrom"></span></div>
+
+        <div style="position:absolute;left:65.28px;top:414.84px" class="cls_004"><span class="cls_004">Tujuan</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spnto"></span></div>
+
+        <div style="position:absolute;left:66.00px;top:433.56px" class="cls_004"><span class="cls_004">Nomor Air Waybill</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spnawbnumber"></span></div>
+
+        <div style="position:absolute;left:65.04px;top:452.28px" class="cls_004"><span class="cls_004">Tanggal</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; <span id="spndate"></span></div>
+
+        <div style="position:absolute;left:65.76px;top:470.76px" class="cls_007"><span class="cls_007">DENGAN  DITERIMANYA  PEMBAYARAN </span><span class="cls_004">sebagaimana disebutkan diatas, saya dengan ini melepaskan,</span></div>
+        <div style="position:absolute;left:65.76px;top:483.48px" class="cls_004"><span class="cls_004">menjamin, dan membebaskan pihak Cargo Garuda Indonesia maupun para direktur, pegawai, agen mereka</span></div>
+        <div style="position:absolute;left:65.52px;top:496.44px" class="cls_004"><span class="cls_004">dan/atau para pihak lainnya yang bekerja untuk kepentingan Cargo Garuda Indonesia dari dan terhadap</span></div>
+        <div style="position:absolute;left:65.04px;top:509.40px" class="cls_004"><span class="cls_004">setiap dan segala tuntutan dalam bentuk apapun yang mungkin diajukan terhadap mereka</span></div>
+        <div style="position:absolute;left:534.08px;top:509.40px" class="cls_004"><span class="cls_004">(termasuk</span></div>
+        <div style="position:absolute;left:65.04px;top:522.12px" class="cls_004"><span class="cls_004">semua biaya dan pengeluaran) dan saya menyatakan serta menyetujui hal-hal berikut:</span></div>
+        <div style="position:absolute;left:65.76px;top:540.60px" class="cls_004"><span class="cls_004">1. Saya menyatakan bahwa pembayaran diatas, dilakukan semata-mata karena itikad balk dari Cargo</span></div>
+        <div style="position:absolute;left:78.72px;top:553.80px" class="cls_004"><span class="cls_004">Garuda  Indonesia  dan  tanpa  adanya  pengakuan tanggung jawab,  dan/atau  kesalahan,  dan/atau</span></div>
+        <div style="position:absolute;left:78.96px;top:566.76px" class="cls_004"><span class="cls_004">kelalaian dari pihak Cargo Garuda Indonesia maupun para direktur, pegawai atau agen atau salah</span></div>
+        <div style="position:absolute;left:78.48px;top:579.48px" class="cls_004"><span class="cls_004">satu/beberapa dari mereka.</span></div>
+        <div style="position:absolute;left:64.80px;top:598.20px" class="cls_004"><span class="cls_004">2.  Pernyataan Pembebasan ini telah saya baca atau dibacakan dan diterangkan kepada saya dan Saya</span></div>
+        <div style="position:absolute;left:78.96px;top:611.16px" class="cls_004"><span class="cls_004">mengerti sepenuhnya seluruh ketentuan yang diatur di dalamnya.</span></div>
+        <div style="position:absolute;left:64.80px;top:629.88px" class="cls_004"><span class="cls_004">3.  Pernyataan Pembebasan ini tidak dapat ditarik kembali dan dibuat atas kehendak bebas tanpa adanya</span></div>
+        <div style="position:absolute;left:78.00px;top:642.84px" class="cls_004"><span class="cls_004">tekanan atau paksaan dari pihak manapun.</span></div>
+        <div style="position:absolute;left:65.04px;top:665.16px" class="cls_004"><span class="cls_004">Ditandatangani di</span></div>
+        <div style="position:absolute;left:341.28px;top:665.16px" class="cls_004"><span class="cls_004">tanggal ,</span><span id="spnrevdate"></span></div>
+
+        <div style="position:absolute;left:65.04px;top:692.32px" class="cls_007"><span class="cls_007">Nama Saksi</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; <span id="spnwitness"></span></div>
+
+        <div style="position:absolute;left:393.12px;top:690.84px" class="cls_004"><span class="cls_004">materai</span></div>
+        <div style="position:absolute;left:64.32px;top:711.04px" class="cls_007"><span class="cls_007">Alamat</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; <span id="spnsignedaddress"></span></div>
+
+        <div style="position:absolute;left:381.12px;top:709.56px" class="cls_004"><span class="cls_004">( tanda tangan )</span></div>
+        <div style="position:absolute;left:64.56px;top:729.76px" class="cls_007"><span class="cls_007">Pekerjaan</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spnoccupation"></span></div>
+
+        <div style="position:absolute;left:63.84px;top:748.48px" class="cls_007"><span class="cls_007">Jabatan</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spntitle"></span></div>
+
+        <div style="position:absolute;left:307.44px;top:748.00px" class="cls_007"><span class="cls_007">* Nama / Jabatan :</span></div>
+        <div style="position:absolute;left:307.44px;top:759.96px" class="cls_004"><span class="cls_004">*) Lampirkan Tanda pengenal</span></div>
+        <div style="position:absolute;left:64.56px;top:790.92px" class="cls_004"><span class="cls_004">FRM/J KTFM/006i</span></div>
+    </div>
+</body>
+</html>

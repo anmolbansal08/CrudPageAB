@@ -1,0 +1,54 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>CommodityGroupSNo</Name>
+    <Message>Commodity Group can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>StartRange</Name>
+    <Message>Start range can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>EndRange</Name>
+    <Message>End range can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>SubGroupName</Name>
+    <Message>Sub Group Name can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Sub Group Name already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Check Sub Group start and end range i.e. not match with master start and end range.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Commodity Sub Group Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Commodity Sub Group Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Commodity Sub Group Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Commodity Sub Group Cannot Be Deleted. It is being referenced in Commdity.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+
+</Messages>
+
+
+

@@ -1,0 +1,2 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="CargoFlash.Cargo.Permissions.DataService.GroupsService" CodeBehind="GroupsService.cs" Factory="System.ServiceModel.Activation.WebServiceHostFactory" %>
+<%@ Assembly Name="CargoFlash.Cargo.DataService" %>

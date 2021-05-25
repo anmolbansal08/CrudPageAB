@@ -1,0 +1,19 @@
+﻿<Messages>
+	<ServerMessage>
+		<Key>1001</Key>
+		<value>Country VAT already exists</value>
+	</ServerMessage>
+
+	<ServerMessage>
+		<Key>2000</Key>
+		<value>Country VAT Added Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2001</Key>
+		<value>Country VAT Updated Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2002</Key>
+		<value>Country VAT Deleted Successfully.</value>
+	</ServerMessage>
+</Messages>

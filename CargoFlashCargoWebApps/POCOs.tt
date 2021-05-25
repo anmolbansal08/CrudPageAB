@@ -1,0 +1,92 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".txt" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.XML" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#
+	//**********************************************************************************************
+		// Created by : Amit Yadav
+		// Created on : 12-nov-2015
+		// This T4 generates POCOs (Plain Old C# Objects) from the specified DB
+	//**********************************************************************************************
+   SqlConnection cn = new SqlConnection("Data Source=itserver,2012;Initial Catalog=CargoDB;User ID=cargodb;Password=cargodb;Connection Timeout=300; min pool size=1; max pool size=2000;");
+   cn.Open();
+
+   string tableName = "SLIAWB";
+   string className = "SLIAWBInfo";
+   string classNamespace="cf.cargoflash.com";
+
+   SqlCommand cmd = new SqlCommand("SELECT * FROM " + tableName, cn);
+   DataTable dt = cmd.ExecuteReader(CommandBehavior.CloseConnection).GetSchemaTable();
+#>
+using System;
+ 
+namespace <#= classNamespace #>
+{
+
+	[KnownType(typeof(<#= className #>))]
+	public class <#= className #>
+	 {
+	<# 
+	   foreach(DataRow dr in dt.Rows)
+	   {
+		Write("    public " + GetCSharpType(dr) + " " + dr["ColumnName"] + " { get; set; }" + Environment.NewLine);
+	   }
+	#>
+	 }
+}
+<#+
+	private string GetCSharpType(DataRow dr)
+	{
+		  bool isNullable = Convert.ToBoolean(dr["AllowDBNull"]);
+ 
+		  switch (dr["DataType"].ToString())
+		  {
+				case "System.Int16":
+					  if (isNullable)
+							return "Nullable<short>";         
+					  else
+							return "short";
+			    case "System.Int64":
+					  if (isNullable)
+							return "Nullable<long>";         
+					  else
+							return "long";
+
+				case "System.Int32":
+					  if (isNullable)
+							return "Nullable<int>";
+					  else
+							return "int";
+ 
+				case "System.String":
+					  return "string";
+ 
+				case "System.DateTime":
+					  return "DateTime";
+ 
+				case "System.Byte":
+					  if (isNullable)
+							return "Nullable<byte>";
+					  else
+							return "byte";
+ 
+				case "System.Byte[]":
+					  return "Binary";
+ 
+				case "System.Boolean":
+					  return "bool";
+ 
+				case "System.Decimal":
+					  return "double";
+ 
+				case "System.Guid":
+					  return "Guid";
+ 
+				default:
+					  throw new Exception("Type not known");
+		  }
+	}
+	
+#>

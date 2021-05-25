@@ -1,0 +1,21 @@
+﻿<Messages>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Payment Approved Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Payment Not Approved.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Data Submitted Successfully. Payment Is Not Approved.</value>
+  </ServerMessage>
+
+ <ServerMessage>
+    <Key>2008</Key>
+    <value>You Are Not Authorised To Approve Payment</value>
+  </ServerMessage>
+</Messages>

@@ -1,0 +1,113 @@
+﻿<!--  #region Short Acceptance HTML Description
+/*
+*****************************************************************************
+HTML Name:		  ShortAcceptance
+Purpose:		  This HTML used to Search Short Acceptance Details
+Company:		  CargoFlash Infotech Pvt Ltd.
+Author:			  Tarun Kumar
+Created On:		  04 July 2017
+Updated By:
+Updated On:
+Approved By:
+Approved On:
+*****************************************************************************
+*/
+ #endregion-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+    });
+</script>
+<div id="divContent1" style="height: auto; margin-bottom: 50px">
+    <div id="htmldivdetails">
+        <table id="MainTable" validateonsubmit="true" style="width: 100%; margin: 0px; padding: 0px;" cellspacing="0" cellpadding="0">
+            <!--<tr>
+                <td class="formSection" colspan="4">
+                    Short Acceptance :
+                </td>
+            </tr>-->
+            <tr>
+                <td class="formActiontitle" colspan="4">
+                    <span id="__SpanHeader__">Short Acceptance </span><div class="MandatoryTextCss"><font color="red">*</font> Mandatory Fields</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="formSection" colspan="4">
+                    <input type="radio" name="ShortAcceptanceType" id="AWBWise" tabindex="1" value="0"><label for="AWBWise">AWB Wise</label>
+                    <input type="radio" name="ShortAcceptanceType" id="DateWise" tabindex="2"  value="1"> <label for="DateWise">Date Wise</label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <table id="tblAWB" style="width: 100%; display: none;">
+                        <tr>
+                            <td class=" formlabel" title="AWB No">
+                                <font color="red">*</font>AWB No
+                            </td>
+                            <td class="formInputcolumn">
+                                <!--<input id="AWBNo1" name="AWBNo1" type="hidden" value="">
+                                <span class="k-widget k-combobox k-header" style=""><span tabindex="-1" unselectable="on" class="k-dropdown-wrap k-state-default"><input id="Text_AWBNo1_input" name="Text_AWBNo1_input" class="k-input" type="text" autocomplete="off" title="" role="combobox" aria-expanded="false" data-valid="required" data-valid-msg="AWBNo  can not be blank" data-role="autocomplete" tabindex="0" aria-disabled="false" aria-readonly="false" aria-autocomplete="list" aria-owns="Text_AWBNo1_listbox" style="width: 100%;"><span tabindex="-1" unselectable="on" class="k-select"><span unselectable="on" class="k-icon k-i-arrow-s" role="button" tabindex="-1" aria-controls="Text_AWBNo1_listbox">select</span></span></span><input controltype="autocomplete" data-role="autocomplete" data-valid-msg="AWBNo  can not be blank" id="Text_AWBNo1" name="Text_AWBNo1" type="text" value="" aria-disabled="false" aria-readonly="false" style="display: none;"></span>-->
+
+                                <input type="hidden" name="AWBNo" id="AWBNo" value="">
+                                <input type="text" class="" name="Text_AWBNo" id="Text_AWBNo" data-valid="required" data-valid-msg="Select AWB No" tabindex="3" controltype="autocomplete" value="">
+                            </td>
+                            <td class=" formlabel" title=""></td>
+                            <td class="formInputcolumn"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <table id="tblFlight" style="width: 100%; display: none;">
+                        <tr>
+                            <td class=" formlabel" title="Flight No">
+                                <font color="red">*</font>Flight No
+                            </td>
+                            <td class="formInputcolumn">
+                                <input type="hidden" name="FlightNo" id="FlightNo" value="">
+                                <input type="text" class="" name="Text_FlightNo" id="Text_FlightNo" data-valid="required" data-valid-msg="Select Flight No" tabindex="4" controltype="autocomplete" value="">
+                            </td>
+                            <td class=" formlabel" title="Flight Date">
+                                <font color="red">*</font>Flight Date
+                            </td>
+                            <td class="formInputcolumn">
+                                <span class="k-picker-wrap k-state-default k-widget k-datepicker k-header" style="width: 100px;">
+                                    <input type="text" class="k-input k-state-default" name="FlightDate" id="FlightDate" data-valid="required" data-valid-msg="Select Fligh tDate" style="color: rgb(0, 0, 0);" tabindex="5" controltype="datetype" value="" data-role="datepicker">
+                                    <span unselectable="on" class="k-select">
+                                        <span unselectable="on" class="k-icon k-i-calendar">select</span>
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class=" formlabel" title="Flight Origin">
+                                <font color="red">*</font>Flight Origin
+                            </td>
+                            <td class="formInputcolumn">
+                                <input type="hidden" name="FlightOrigin" id="FlightOrigin" value="">
+                                <input type="text" class="" name="Text_FlightOrigin" id="Text_FlightOrigin" data-valid="required" data-valid-msg="Select Flight Origin" tabindex="6" controltype="autocomplete" value="">
+                            </td>
+                            <td class=" formlabel" title="Flight Destination">Flight Destination</td>
+                            <td class="formInputcolumn">
+                                <input type="hidden" name="FlightDestination" id="FlightDestination" value="">
+                                <input type="text" class="" name="Text_FlightDestination" id="Text_FlightDestination" tabindex="7" controltype="autocomplete" value="">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr id="trSearch" style="display: none;">
+                <td class="formSection" colspan="4">
+                    <button class="btn btn-block btn-primary" tabindex="8" style="margin-top:0px;" id="btnSearch">Search</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div id="divSearchResult"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

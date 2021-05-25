@@ -1,0 +1,124 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>CheckListType</Name>
+    <Message>Checklist Type can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Checklist Type already exists</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Checklist Header already exists</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>1003</Key>
+    <value>Checklist Detail already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Checklist Type Added Successfully.</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Checklist Header Added Successfully.</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2004</Key>
+    <value>Checklist Detail Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Checklist Type Updated Successfully.</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2005</Key>
+    <value>Checklist Header Updated Successfully.</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2006</Key>
+    <value>Checklist Detail Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Checklist Type Deleted Successfully.</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2007</Key>
+    <value>Checklist Header Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2008</Key>
+    <value>Checklist Detail Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>50000</Key>
+    <value>Checklist Type already exists.</value>
+  </ServerMessage>
+</Messages>
+
+
+
+  <!--<Messages>
+ 
+
+  <ServerMessage>
+    <Key>548</Key>
+    <value>Registration No already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>549</Key>
+    <value>Aircraft Inventory not deleted because it is used in another page</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>546</Key>
+    <value>Aircraft Inventory not inactivated because it is used in another page</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Aircraft Inventory Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Aircraft Inventory Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Aircraft Inventory Deleted Successfully.</value>
+  </ServerMessage>
+  
+  
+  
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Aircraft Inventory not deleted because it is used in another page.</value>
+  </ServerMessage>
+  
+  
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2601</Key>
+    <value>Duplicate entries found. Please amend to proceed.</value>
+  </ServerMessage>
+</Messages>-->
+

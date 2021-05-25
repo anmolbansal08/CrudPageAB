@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/ULD/ULDGenInvoice.js"></script>
+    <title></title>
+    <style type="text/css">
+        .style1 {
+            width: 35%;
+            font-size: 11px;
+            font-weight: normal;
+        }
+
+        .style2 {
+            width: 30%;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .auto-style1 {
+            width: 10%;
+        }
+
+        .auto-style2 {
+            width: 12%;
+        }
+
+        th, td {
+            padding: 5px;
+            margin: 0px;
+        }
+
+        tr {
+            margin: 0px;
+        }
+
+        .auto-style3 {
+            width: 25%;
+        }
+
+        .auto-style4 {
+            width: 40%;
+        }
+
+        .auto-style5 {
+            height: 24px;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <form id="form1" runat="server">
+
+        <span style="float:left; padding:5px;"></span><input type="button" class="btn btn-block btn-primary" name="name" value="Print" onclick="funPrintRSReportData('#pridiv', '#bg-text');" />
+        <div id="pridiv" style="width: 100%; font-family:Arial; font-size:18px;  padding:0px; margin:0px;" align="center">
+
+            <table style="width: 90%; padding:0px; margin:0px;" cellspacing="0px">
+
+
+                <tr>
+                    <td colspan="3">
+                        <table style="width: 100%; font-size: 10px; padding: 0px; margin: 0px; border: 1px solid black;" cellspacing="0px">
+
+                            <tr>
+
+                                <td>
+
+                                    <center>
+                                        <img id="ImgLogo" height="100" width="300" alt="" />
+
+                                    </center>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 100%; margin: 0; padding: 0; ">
+                                    <!--<table id="recordTbl" style="width:100%; margin:0; padding:0; border-collapse:collapse;text-align:center;">
+                                
+                                        <tbody class="ui-widget-content">
+
+                                            <tr style="border: 1px solid black;">
+                                                <td style="width: 17%; padding: 10px;">Consignment Number:</td>
+                                                <td style="width:17%; text-align:left"><span id="spnConsignmentNo"></span></td>
+                                                <td style="width: 17%; padding: 10px; ">Carrier:</td>
+                                                <td style="width: 17%; text-align: left; "><span id="spnCarrier"></span></td>
+                                                <td style="width: 17%; padding: 10px; ">Planned RCS to planned NFD:</td>
+                                                <td style="width: 17%; text-align: left; "><span id="spnPlannedRCSplanned"></span></td>
+                                            </tr>
+
+                                            <tr style="border: 1px solid black;">
+                                                <td style="width: 17%; padding: 10px;">Total Pieces:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnTotalpieces"></span></td>
+                                                <td style="width: 17%; padding: 10px;">Forwarder:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnFarwarder"></span></td>
+                                                <td style="width: 17%; padding: 10px;">Planned RCS to last Event:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnPlannedRCSlast"> </span></td>
+                                            </tr>
+                                            <tr style="  border: 1px solid black;">
+                                                <td style="width: 17%; padding: 10px;">Total Weight:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnTotalWeight"></span></td>
+                                                <td style="width: 17%; padding: 10px;">Routing:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnRouting"></span></td>
+                                                <td style="width: 17%; padding: 10px;"></td>
+                                                <td style="width:17%;"></td>
+                                            </tr>
+                                            <tr style="  border: 1px solid black;">
+                                                <td style="width: 17%; padding: 10px;">Product Code:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnProductCode"> </span></td>
+                                                <td style="width: 17%; padding: 10px;">Baseline Routing:</td>
+                                                <td style="width: 17%; text-align: left"><span id="spnBaselineRouting"> </span></td>
+                                                <td style="width:17%;"></td>
+                                                <td style="width:17%;"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>-->
+                                    <br />
+
+                                    <br />
+                                    <br />
+
+                                    <br />
+                                    <table width="100%" >
+                                        <tr>
+
+                                            <td width="50%" >
+                                                <span id="spncustomerdetails"  />
+                                             
+                                             </td>
+                                        
+                                        
+                                       
+                                            <td width="50%" ><b> Customer : </b>GARUDA INDONESIA, PT SBU CARGO</td>
+                                           
+                                        </tr>
+                                        <tr>
+
+                                            <td width="50%">
+                                                <span id="spnaddress" />
+                                            </td>
+                                          
+                                       
+                                            <td width="50%" ><b> NPPA NO : </b><span id="spnnppano" /></td>
+                                          
+                                        </tr>
+
+                                        <tr>
+
+                                            <td width="50%" >
+                                                <b> Phone : </b><span id="spnphone" />
+                                            </td>
+                                        
+                                         
+                                            <td width="50%" ><b> Date : </b><span id="spnInvoicedate" /></td>
+                                          
+                                        </tr>
+                                        <tr>
+
+                                            <td width="50%" >
+                                                <b> Fax :</b><span id="spnfax" />
+</td>
+                                       
+                                          
+                                           
+                                            <td width="50%" ><b> Sales Order No. : </b><span id="spnsalesorderno" /></td>
+                                         
+                                        </tr>
+
+                                        <tr>
+
+                                            <td width="50%">
+                                                <span id="spncitycountry" />
+                                            </td>
+                                          
+                                         
+                                          
+                                            <td width="33%" ><b> AgreementNumber : </b><span id="spnAgreementNumberno" /></td>
+                                            
+                                        </tr>
+
+                                        <!--<tr>
+
+                                            <td width="17%"></td>
+                                            <td width="17%"></td>
+                                            <td width="17%"></td>
+                                            <td width="17%"></td>
+                                            <td width="17%"></td>
+                                            <td width="17%">
+                                               
+
+                                            </td>
+                                        </tr>-->
+
+                                    </table>
+                                    <br />
+
+                                    <br />
+                               
+
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+
+                                    <div id="DivDetails">
+
+
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>
+
+                                    <br />
+                                    <br />
+
+                                </td>
+
+                            </tr>
+                            <tr>
+
+                                <td>
+
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="50%">
+                                                <table width="100%">
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <b>Note : excluding tax.</b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <b>Prepared by,</b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <b><span id="spnfootervendorname" /></b>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td>
+                                                            <br />
+                                                            <br />
+                                                            <b>--------------------------------------------</b>
+                                                        </td>
+                                                    </tr>
+                                                    
+
+                                                </table>
+
+                                            </td>
+                                            <td width="50%">
+                                                <table width="100%">
+                                                    <tr>
+
+                                                        <td>
+                                                           
+                                                            <b>Approved by,</b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <b>GARUDA INDONESIA, PT SBU CARGO</b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td>
+                                                            <br />
+                                                            <br />
+                                                            <b>--------------------------------------------</b>
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                          
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>

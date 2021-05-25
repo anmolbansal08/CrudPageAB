@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    @*<title>@Page.Title - CMS</title>*@
+    <title>nGen Cargo System</title>
+    @*<link rel="shortcut icon" href="~/Images/GaurdaCMS%20Logo%20title.jpg" />*@
+
+    <link href="~/LoginCSS/Site.css" rel="stylesheet" type="text/css" />
+
+    @*added by pankaj khanna*@
+
+    <script src="~/Scripts/jquery-1.7.2.js"></script>
+    <link href="~/Styles/jquery-ui/jquery-ui-1.10.2.custom.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body style="background-color:#ff0041">
+    <header>
+        <div class="content-wrapper">
+            <div class="float-left">
+                @*<p class="site-title"><a href="~/">Integrated Cargo Management System (ICMS) </a></p>*@
+
+            </div>
+            <div style="float: right;TEXT-ALIGN: RIGHT;">
+                @*<img style="margin-top: 1.5em;margin-right: 1.5em;width: 59%;" src="~/Images/GaurdaCMS%20Logo.jpg" />*@
+                @* <img src="http://sharjahaviation.com/sites/default/files/SAS-Logo.png" alt="Home">*@
+            </div>
+            <div class="float-right">
+
+            </div>
+        </div>
+        @RenderSection("headerScripts", required: false)
+    </header>
+    <div id="">
+        @RenderSection("featured", required: false)
+        <section class="content-wrapper main-content clear-fix">
+            <table width="100%">
+                <tr>
+                    <td width="31%">@RenderBody()</td>
+                    <td>
+                        @*<img style="width: 93%;" src="~/Images/GaurdaAircraftLogo.jpg" />*@
+                        <img style="width: 93%;height: 52%;margin-left: 20px;" src="~/Images/e5c97efb-e936-4804-8d75-af654811e287.jpg" />
+                        @*<img style="width:950px;" src="http://sharjahaviation.com/sites/default/files/styles/home_banner_style/public/banners/Cargo_option1_1.jpg?itok=x-5F05wq" />*@
+                    </td>
+                </tr>
+            </table>
+
+        </section>
+    </div>
+
+
+    <div style="height:100%;    text-align: center;">
+        <p>&copy; Powered by: Cargoflash Infotech Pvt. Ltd.</p>
+
+    </div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

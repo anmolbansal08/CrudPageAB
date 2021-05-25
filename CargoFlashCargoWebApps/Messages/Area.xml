@@ -1,0 +1,21 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Area Name for office already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Area Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Area Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Area Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+
+

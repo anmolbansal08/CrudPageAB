@@ -1,0 +1,330 @@
+﻿@*// <copyright file="_ReplanFlight.cshtml" company="Cargoflash">
+           //
+           // Created On: 13-Feb-2017
+           // Created By: Braj
+           // Description:
+           //----------------------------------------------------------------------------
+           // Revison History:
+           // Please add a new line below for any update to this file
+           // Updated On  Updated By                     Significant Changes
+           // ----------------------------------------------------------------------------
+           //
+           //
+    </copyright>*@
+
+@{
+    string guidId = Guid.NewGuid().ToString();}
+
+<ul kendo-panel-bar>
+    <li class="k-state-active">
+        <span class="k-link">1. AWB Information</span>
+        <div style="padding: 10px;">
+            <table style="width:100%;">
+
+                <tr>
+                    <td>AWB No/Ref. No/CN38No</td>
+
+                    <td class="tdfont">{{AWBInfo.AWBNo.toUpperCase()}}</td>
+
+                    <td>Status</td>
+                    <td class="tdfont">{{AWBInfo.Status.toUpperCase()}}</td>
+
+                    <td>Agent Name</td>
+
+                    <td class="tdfont">{{AWBInfo.Agent}}</td>
+                </tr>
+
+                <tr>
+                    <td>Gross Weight</td>
+
+                    <td class="tdfont">{{AWBInfo.GrossWeight}}</td>
+
+                    <td>Volume(CBM)</td>
+                    <td class="tdfont">{{AWBInfo.CBM}}</td>
+
+                    <td>Pieces</td>
+
+                    <td class="tdfont">{{AWBInfo.Pieces}}</td>
+
+                </tr>
+
+                <tr>
+                    <td>Chargeable Weight</td>
+
+                    <td class="tdfont">{{AWBInfo.ChargeableWeight}}</td>
+
+                    <td>Commodity</td>
+                    <td class="tdfont">{{AWBInfo.CommodityDesc.toUpperCase().TrimRight(',')}}</td>
+
+                    <td>AWB Revenue</td>
+
+                    <td class="tdfont">{{AWBInfo.Revenue}}</td>
+
+                </tr>
+                <tr>
+                    <td>Origin-Destination</td>
+
+                    <td class="tdfont">{{AWBInfo.Sector}}</td>
+
+                    <td>Priority</td>
+                    <td class="tdfont">{{AWBInfo.PriorityName.toUpperCase()}}</td>
+
+                    <td>Special Handling</td>
+
+                    <td class="tdfont">{{AWBInfo.SHC.toUpperCase().TrimRight(',')}}</td>
+
+                </tr>
+
+            </table>
+        </div>
+    </li>
+    <li class="k-state-active" ng-repeat="item in ExistPlanData">
+        <span class="k-link k-state-selected">2. {{item.Header}}</span>
+        <div style="padding: 10px;">
+            <kendo-grid IsOffload="{{item.IsOffload}}" options="ExistPlanGridOptions(item.data,item.IsOffload)"></kendo-grid>
+
+            <table ng-show="IsOffload==item.IsOffload">
+                <tr>
+
+                    <td colspan="6">
+                        <input type="button" ng-hide="btnReplanHide" class="btn btn-success" ng-click="ReplanFlight();" value="Re-Plan">
+                        <input type="button" ng-hide="btnResetHide" class="btn btn-success" ng-click="ResetPlan();" style="width:80px;" value="Reset">
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </li>
+
+    @*<li class="k-state-active">
+        <span class="k-link k-state-selected">2. Existing Flight Plan</span>
+        <div style="padding: 10px;">
+            <table style="width:100%;">
+
+                <div kendo-grid="exitsPlanGrid" options="ExistPlanGridOptions"></div>
+
+                <table>
+                    <tr>
+
+                        <td colspan="6">
+                            <input type="button" ng-hide="btnReplanHide" class="btn btn-success" ng-click="ReplanFlight();" value="Re-Plan">
+                            <input type="button" ng-hide="btnResetHide" class="btn btn-success" ng-click="ResetPlan();" style="width:80px;" value="Reset">
+                        </td>
+                    </tr>
+                </table>
+
+            </table>
+        </div>
+    </li>
+    <li class="k-state-active">
+        <span class="k-link k-state-selected">2. Existing Offload Plan</span>
+        <div style="padding: 10px;">
+            <div kendo-grid="exitsPlanGrid" options="ExistOffloadPlanGridOptions"></div>
+        </div>
+    </li>*@
+
+
+    @*<li disabled="disabled">
+            Communication
+        </li>*@
+
+
+    <li ng-hide="ReplanFlightDivHide" class="k-state-active">
+        <span class="k-link k-state-selected">3. Flight Search</span>
+        <div style="padding: 10px;">
+            <table style="width:100%;">
+
+                <tr>
+                    <td>
+                        <label>Origin:</label>
+
+                        <input class="width50" kendo-combo-box="replancomboOrigin" k-placeholder="'Select Origin'"
+                               k-min-length="2"
+                               k-filter="'contains'" k-auto-bind="false"
+                               ng-model="SearchReplanRequest.Origin"
+                               k-ng-model="SearchReplanRequest.OriginModel"
+                               k-filterfield="'AirportCode'"
+                               k-options='K_Text_Options("Replan_Origin", "SpaceControl_Airport")' />
+
+                    </td>
+
+                    <td>
+                        <label>Destination:</label>
+                        <input class="width50" kendo-combo-box="replancomboDest" k-placeholder="'Select Destination'"
+                               k-min-length="2"
+                               k-filter="'contains'" k-auto-bind="false"
+                               ng-model="SearchReplanRequest.Destination"
+                               k-ng-model="SearchReplanRequest.DestinationModel"
+                               k-filterfield="'AirportCode'"
+                               k-options='K_Text_Options("Replan_Destination", "SpaceControl_Airport")' />
+
+                    </td>
+
+                    <td>
+                        <label>Flight Date:</label>
+
+                        <input class="width95" kendo-date-picker ng-model="SearchReplanRequest.ItineraryDate" data-valid='required' data-valid-msg='Select Flight Date'
+                               placeholder='Flight Date' id="rpDate" k-rebind="minDate" k-max="maxDate" k-rebind="maxDate" k-min="minDate" onchange="validDate(this);"
+                               k-format="'dd-MMM-yyyy'" ng-change="DateChangedReplan()" />
+                    </td>
+                    <td>
+                        <label>Carrier Code:</label>
+
+                        <input id="ItineraryCarrierCode" class="width50" kendo-combo-box k-placeholder="'Select Carrie Code'"
+                               k-min-length="2" k-auto-bind="false"
+                               k-filter="'contains'"
+                               k-ng-model="IsInterline"
+                               k-filterfield="'CarrierCode'"
+                               k-options='K_Options("Replan_CarrierCode", "SC_CarrierCode")' />
+
+                    </td>
+                    <td>
+
+
+                        <div ng-if="IsInterline.Key=='0' ||IsInterline==null">
+                            <label>Flight No:</label>
+                            <input id="ItineraryFlightNo" class="width95" kendo-combo-box k-placeholder="'Select Flight No'"
+                                   k-min-length="2" k-auto-bind="true"
+                                   k-filter="'contains'"
+                                   ng-model="SearchReplanRequest.ItineraryFlightNo"
+                                   k-filterfield="'FlightNo'"
+                                   k-options='K_Options("Replan_FlightNo", "SpaceControl_FlightNo")' />
+                        </div>
+                        <div ng-if="IsInterline.Key=='1'">
+                            <label>Flight No:</label>
+                            <input ng-init="SearchReplanRequest.InterlineFlightNo=''" maxlength="5" class="width90" ng-model="SearchReplanRequest.InterlineFlightNo"  />
+                        </div>
+                    </td>
+                    <td>
+                        <label>Pieces</label>
+                        <input class="width50" ng-disabled="AWBInfo.IsSplit=='1'" ng-change="CalculatePieces()" ng-model="SearchReplanRequest.ItineraryPieces" type="text" placeholder="Pieces" />
+                    </td>
+
+                    <td>
+                        <label>Gross Weight:</label>
+                        <input ng-change="CheckWeightNVol()" ng-disabled="AWBInfo.IsSplit=='1'" ng-model-options="{ updateOn: 'blur' }" ng-model="SearchReplanRequest.ItineraryGrossWeight" class="width90" type="text" placeholder="Gross Weight" />
+                    </td>
+                    <td>
+                        <label> Volume(CBM):</label>
+                        <input ng-change="CheckWeightNVol()" ng-disabled="AWBInfo.IsSplit=='1'" ng-model-options="{ updateOn: 'blur' }" ng-model="SearchReplanRequest.ItineraryVolumeWeight" type="text" class="width90" placeholder="Volume Weight" />
+                    </td>
+
+                    @*<td>
+            <label>Priority:</label>
+            @Html.Hidden("PriorityRFlight")
+            @Html.TextBox("Text_PriorityRFlight", null, new { placeholder = "Priority", @class = "width90", controltype = "autocomplete", data_role = "autocomplete" })
+
+        </td>*@
+                    @*<td >
+                        <input ng-change="OnChangeRoute();" type="checkbox" id="eq4" ng-model="CurrentPlan.IsRouteComplete" ng-true-value="1"
+                               ng-false-value="0" class="k-checkbox">
+                        <label class="k-checkbox-label fw" for="eq4">Routing Complete</label>
+                    </td>*@
+                    <td ng-show="IsMCTBCTShow">
+                        <input type="checkbox" id="eq2" ng-model="SearchReplanRequest.OverrideBCT" ng-true-value="1"
+                               ng-false-value="0" class="k-checkbox">
+                        <label class="k-checkbox-label fw" for="eq2">BCT</label>
+                    </td>
+                    <td ng-show="IsMCTBCTShow">
+                        <input type="checkbox" id="eq3" ng-model="SearchReplanRequest.OverrideMCT" ng-true-value="1"
+                               ng-false-value="0" class="k-checkbox">
+                        <label class="k-checkbox-label fw" for="eq3">MCT</label>
+                    </td>
+
+
+
+                </tr>
+
+
+                <tr>
+                    <td colspan="10">
+                        <input type="button" class="btn btn-success" ng-disabled="btnSearchDisable" ng-click="SearchFlightPlan();" style="width:80px;" value="Search Flight">
+                        <input type="button" class="btn btn-success" style="width:80px;" ng-click="ViewRoute()" value="View Route">
+                    </td>
+                    @*<td><label>Remarks:</label></td><td><textarea placeholder="Remarks" /></td>*@
+                </tr>
+            </table>
+        </div>
+    </li>
+
+    <li ng-hide="HideCurrentPlanGrid" ng-init="HideCurrentPlanGrid=true" class="k-state-active">
+        <span class="k-link k-state-selected">4. Current Flight Plan</span>
+        <div style="padding: 10px;">
+            <table style="width:100%;">
+                <kendo-grid options="CurrentPlanGridOptions"></kendo-grid>
+                <input ng-hide="btnSubmitHide" ng-click="SubmitReplan()" type="button" class="btn btn-success" style="width:80px;margin-top:10px;" value="Submit" />
+
+            </table>
+        </div>
+    </li>
+
+    <li ng-hide="divSearchPlanHide" ng-init="divSearchPlanHide=true" class="k-state-active">
+        <span class="k-link k-state-selected">4. Plan Flights</span>
+        <div style="padding: 10px;">
+            <kendo-grid options="SearchPlanGridOptions"></kendo-grid>
+        </div>
+    </li>
+
+</ul>
+
+
+
+
+
+
+<div kendo-window="win1" k-title="'Available Route'" k-width="300" k-visible="false">
+    <table class="WebFormTable">
+        <tbody>
+            <tr ng-repeat="route in ViewRouteList">
+                <td>{{$index+1}}</td>
+                <td><a href="javascript:void(0);" ng-click="SelectedRoute(route.Routing);">{{route.Routing}}</a></td>
+            </tr>
+            <tr>
+                <td>{{ViewRouteList.length+1}}</td>
+                <td><a href="javascript:void(0);" ng-click="win1.close()">Manual</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<style>
+    div[options="SearchPlanGridOptions"] > .k-grid-content {
+        max-height: 140px;
+        min-height: 40px;
+    }
+
+    .width90 {
+        width: 70px;
+    }
+    .width95 {
+        width: 95px;
+    }
+    .width50 {
+        width: 55px;
+    }
+
+    .legcls {
+        font-size: 1.3em;
+        font-weight: 400;
+    }
+
+    .tdfont {
+        font-weight: 600;
+    }
+
+    .k-window {
+        font-size: 95%;
+    }
+
+    .fw {
+        font-weight: bold;
+    }
+
+    .vA {
+        vertical-align: top;
+    }
+
+    .allotmentdd {
+        width: auto;
+    }
+</style>

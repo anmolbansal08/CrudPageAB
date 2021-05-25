@@ -1,0 +1,142 @@
+﻿<script type="text/javascript">
+
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+        //alert(userContext.SysSetting.LogoURL);
+       // $("#ImgLogo").attr("src", userContext.SysSetting.LogoURL);
+    });
+</script>
+   
+  
+    <!--<style>
+        table, th, td {
+            text-align: left;
+        }
+
+        .bod {
+            border: 1px solid black;
+            /*border-collapse: collapse;*/
+        }
+
+        .fnt {
+            font: 10px arial, sans-serif;
+        }
+    </style>-->
+
+
+<div id="divDetailCart" style="border: 1px solid black;" width="99%" cellpadding="0" cellspacing="0">
+    <div id="headdiv" style="width:100%">
+        <!--<table id="headtbl" style="width:100%">
+            <tr>
+                <td style="text-align:center"><h1><b>CARGO MANIFEST</b></h1><br />ICAO ANNEX9 APPENDIX 3</td>
+            </tr>
+            <tr>
+                <td style="text-align:center"><h1><b> LION AIR</b></h1><br /><strong>JT-0620</strong></td>
+            </tr>
+        </table>-->
+        <table id="headtbl" style="width:100%">
+            <tr>
+                <td align="center"  ><img id="ImgLogo" height="70px" width="150px" style="margin-left:-110px;" /></td>
+
+            </tr>
+            <tr>
+                <!--<td align="center" ><img id="ImgLogo" height="70px" width="200px" /></td>-->
+                <td align="center" ><h1><b style="margin-left:-120px;">CART MANIFEST</b></h1></td>
+            </tr>
+            <tr>
+                <td align="center" ><b style="margin-left:-120px;font-size:medium;font-weight:100;">ICAO ANNEX9 APPENDIX 3</b></td>
+            </tr>
+            <tr>
+                <td align="center" ><b style="margin-left:-150px;font-size:medium;" id="b_Airline">LION AIR</b></td>
+
+            </tr>
+            <tr>
+                <td align="center"  ><b style="margin-left:-150px;font-size:medium;" id="tdFlightNumber">JT-0620</b></td>
+            </tr>
+        </table>
+      
+        <table style="width:100%">
+            <tr>
+                <td align="left" width="20%"> Marks of Nationality and Registration</td>
+                <td align="left" width="20%"> <span id="spnNationality"></span></td>
+                <td width="20%"></td>
+                <td align="left" width="20%">Flight Date</td>
+                <td align="left" width="20%"><span id="spnFlightDate"></span></td>
+            </tr>
+
+            <tr>
+                <td align="left" width="20%">Point Of Loading</td>
+                <td align="left" width="20%"> <span id="spnPointOfLoading"></span></td>
+                <td width="20%"></td>
+                <td align="left" width="20%">Point Of Unloading</td>
+                <td align="left" width="20%"><span id="spnPointOfUnloading"></span></td>
+            </tr>
+            <tr>
+                <td align="left" width="20%">Updated On</td>
+                <td align="left" width="20%"><span id="spnUpdatedOn"></span></td>
+                <td align="left" width="20%"></td>
+                <td width="20%"></td>
+                <td width="20%"></td>
+
+            </tr>
+
+            <!--<tr>
+                <td colspan="5" style="text-align:center">
+                    <span id="spnlog">
+                        <img src="../Images-Logos/New Picture.png" alt="Garuda Indonesia">
+                    </span>
+                </td>
+            </tr>-->
+
+        </table>
+    </div>
+    <div id="Containerdiv" style="width:100%;">
+        <table id="maintbl" border="1" cellpadding="0" cellspacing="0" style="width:100%">
+
+
+            <!--<tr>
+                <td style="text-align:center" class="grdTableHeader">AWB_NUMBER</td>
+                <td style="text-align:center" class="grdTableHeader">PKGS</td>
+                <td style="text-align:center" class="grdTableHeader">NATURE OF GOODS</td>
+                <td style="text-align:left" colspan="4" class="grdTableHeader"><b> For use by owner operator only </b></td>
+            </tr>
+            <tr rowspan="2" id="trData">
+                <td colspan="3" ></td>
+                <td class="grdTableHeader">SPHC</td>
+                <td class="grdTableHeader">CART</td>
+                <td class="grdTableHeader">GROSS WEIGHT</td>
+                <td class="grdTableHeader">DESTINATION</td>
+            </tr>
+            <tr id="trData">
+                <td style="text-align:center"><span id="spnAWBNumber"></span></td>
+                <td style="text-align:center"><span id="spnPcs"></span></td>
+                <td style="text-align:center"><span id="spnNOG"></span></td>
+                <td style="text-align:center"><span id="spnSPHC"></span></td>
+                <td style="text-align:center"><span id="spnCART"></span></td>
+                <td style="text-align:center"><span id="spnGROSSWT"></span></td>
+                <td style="text-align:center"><span id="spnDESTINATION"></span></td>
+            </tr>
+            <tr>
+                <td style="text-align:center">Total</td>
+                <td style="text-align:center"><span id="spnTotalPcs"></span></td>
+                <td style="text-align:center" colspan="3"></td>
+                <td style="text-align:center"><span id="spnTotalGrossWt"></span></td>
+                <td style="text-align:center"></td>
+            </tr>-->
+            <!--<tr><td colspan="7">&nbsp;</td></tr>
+            <tr align="right"><td colspan="7"><input id="btnPrint" type="button" value="Print" class="no-print"></td></tr>
+            <tr align="right"><td colspan="7">&nbsp;</td></tr>-->
+        </table>
+       <div>
+           <input id="btnPrint" type="button" value="Print" class="btn btn-info btn-sm"  >
+       </div>
+        <!--<table id="tblprint">
+           <tr><td colspan="7">&nbsp;</td></tr>
+            <tr align="right"><td colspan="7"><input id="btnPrint" type="button" value="Print" class="no-print"></td></tr>
+            <tr align="right"><td colspan="7">&nbsp;</td></tr>
+        </table>-->
+    </div>
+
+</div>
+

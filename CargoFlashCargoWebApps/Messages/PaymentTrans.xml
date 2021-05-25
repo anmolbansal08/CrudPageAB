@@ -1,0 +1,25 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AirlineCode</Name>
+    <Message>Airline Code can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CustomerSNo</Name>
+    <Message>Customer SNo can not be blank</Message>
+  </DataFieldName>
+  
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Payment Request Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Payment Request Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Payment Request Deleted Successfully.</value>
+  </ServerMessage>
+ 
+</Messages>

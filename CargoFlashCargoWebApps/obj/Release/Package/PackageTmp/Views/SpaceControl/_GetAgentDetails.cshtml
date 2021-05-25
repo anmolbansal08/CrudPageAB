@@ -1,0 +1,122 @@
+﻿@*// <copyright file="_GetAgentDetails.cshtml" company="Cargoflash">
+           //
+           // Created On: 13-Feb-2017
+           // Created By: Braj
+           // Description:
+           //----------------------------------------------------------------------------
+           // Revison History:
+           // Please add a new line below for any update to this file
+           // Updated On  Updated By                     Significant Changes
+           // ----------------------------------------------------------------------------
+           //
+           //
+    </copyright>*@
+
+@model System.Data.DataSet
+@{
+    string gridId = Guid.NewGuid().ToString();}
+<table class='WebFormTable'>
+    @if (Model.Tables.Count > 0 && Model.Tables[0].Rows.Count > 0)
+    { 
+    <tr>
+        <td class='formSection' colspan='4'>Agent Information</td>
+    </tr>
+    <tr>
+        <td class='formlabel'>Agent Name:</td>
+        <td class='formInputcolumn'>
+
+            <span>@Convert.ToString(Model.Tables[0].Rows[0]["Name"]).ToUpper()</span>
+        </td>
+        <td class='formlabel'>Airline</td>
+        <td class='formInputcolumn'>
+            <span>@Convert.ToString(Model.Tables[0].Rows[0]["Airline"]).ToUpper()</span>
+        </td>
+    </tr>
+    <tr>
+        <td class='formlabel'>Country</td>
+        <td class='formInputcolumn'>
+            <span>@Convert.ToString(Model.Tables[0].Rows[0]["Country"]).ToUpper()</span>
+        </td>
+        <td class='formlabel'>City</td>
+        <td class='formInputcolumn'>
+            <span>@Convert.ToString(Model.Tables[0].Rows[0]["CityName"]).ToUpper()</span>
+        </td>
+    </tr>
+    <tr>
+        <td class='formlabel'>Customer Type</td>
+        <td class='formInputcolumn'>
+            <span>@Convert.ToString(Model.Tables[0].Rows[0]["CustomerType"]).ToUpper()</span>
+        </td>
+        <td class='formlabel'>Transaction Type</td>
+        <td class='formInputcolumn'>
+            <span>@Convert.ToString(Model.Tables[0].Rows[0]["TransactionType"]).ToUpper()</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td class='formSection' colspan='4'>Shipment Details</td>
+    </tr>
+    <tr>
+        <td colspan='4'>
+            <div id="agentshipment_@gridId"></div>
+            <script>
+               
+                $(document).ready(function () {
+                    $("#agentshipment_@gridId").kendoGrid({
+                        dataSource: {
+                            data: JSON.parse(@Html.Raw(Json.Encode(CargoFlashCargoWebApps.Common.Global.DStoJSON(Model,1)))),
+                            schema: {
+                                model: {fields: {FlightDate: { type: "date" }}}
+                            },
+                        },
+                        //height:180,
+                        scrollable: true,                       
+                        columns: [
+                            { field: "FlightNo", title: "Flight No", width: "70px" },
+                            { field: "FlightDate", title: "Flight Date", format: "{0: yyyy-MM-dd}", width: 70 },
+                            { template: "<span>#= ETD # /#= ETA#</span>", title: "ETD/ETA", width: 100 },
+                            { template: "<span>#= Board # /#= Off#</span>", title: "Board/Off", width: 90 },
+                            { field: "Pieces", title: "Pieces", width: "60px" },
+                            { field: "GrossWeight", title: "Gross", width: "60px" },
+                            { field: "VolumeWeight", title: "Volume", width: "60px" },
+                            { field: "AllotmentCode", title: "Allotment", width: "60px" },
+                            { field: "ShipmentStatusCode", title: "FSU", width: "50px" },
+                            { field: "StatusCode", title: "Status", width: "50px" },
+                        ]
+                    });
+                });
+            </script>
+        </td>
+    </tr>
+    <tr>
+        <td class='formSection' colspan='4'>Agent Ranking</td>
+    </tr>
+    <tr>
+        <td class='formtwolabel'>No Of Booking</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[2].Rows[0]["TotalBooking"]</span>
+        </td>
+        <td class='formtwolabel'>Total Revenue</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[2].Rows[0]["TotalRevenue"]</span>
+        </td>
+    </tr>
+    <tr>
+        <td class='formtwolabel'>Total Yield</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[2].Rows[0]["Yield"]</span>
+        </td>
+        @*<td class='formtwolabel'>Rank</td>*@
+        <td class='formInputcolumn' colspan="2">
+            
+        </td>
+    </tr>
+        }
+else { 
+    <tr>
+        <td class='formSection' colspan='4'>No data found</td>
+    </tr>
+
+}
+</table>
+

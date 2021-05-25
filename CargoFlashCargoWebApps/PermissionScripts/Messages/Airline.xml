@@ -1,0 +1,97 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AirlineCode</Name>
+    <Message>AWB Prefix cannot be blank. Minimum 3 Characters required</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CarrierCode</Name>
+    <Message>Carrier Code cannot be blank. Minimum 2 Characters required</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>AirlineName</Name>
+    <Message>Airline Name can not be blank</Message>
+  </DataFieldName>
+
+  <!--<DataFieldName>
+    <Name>CityCode</Name>
+    <Message>City Name can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Address</Name>
+    <Message>Address can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>SenderEmailId</Name>
+    <Message>Enter valid Sender Email Id</Message>
+  </DataFieldName>
+
+
+  <DataFieldName>
+    <Name>CurrencyCode</Name>
+    <Message>Currency can not be blank</Message>
+  </DataFieldName>-->
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>AWB Prefix already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Carrier Code already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1003</Key>
+    <value>Airline Name already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1004</Key>
+    <value>City Cannot be blank.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Airline Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Airline Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Airline Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Record Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2004</Key>
+    <value>Airline Parameters Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>3000</Key>
+    <value>City Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>3001</Key>
+    <value>City Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>3010</Key>
+    <value>City Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>3011</Key>
+    <value>City Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+</Messages>
+
+
+

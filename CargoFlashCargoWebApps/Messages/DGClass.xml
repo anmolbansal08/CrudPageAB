@@ -1,0 +1,24 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>BasisOfChargeSNo</Name>
+    <Message>Basis Of Chargee cannot be blank</Message>
+  </DataFieldName>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Item already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Item Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Item Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Item Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

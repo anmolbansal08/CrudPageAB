@@ -1,0 +1,260 @@
+﻿.k-form-field span {
+	font-weight: normal;
+}
+
+.mb12 {
+	margin-bottom: 12px;
+}
+
+.kendoDate {
+	width: 140px;
+}
+
+.fieldBlock {
+	margin-bottom: 14px;
+}
+
+	.fieldBlock label {
+		font-weight: 500;
+		color: black;
+	}
+
+	.fieldBlock input, .fieldBlock autocomplete, .fieldBlock kendo-maskedtextbox, .fieldBlock kendo-datepicker {
+		float: right;
+	}
+
+	.fieldBlock span {
+		vertical-align: middle;
+	}
+
+.bktop {
+	float: left;
+	margin-right: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+
+autocomplete {
+	display: flex;
+}
+
+.bup {
+	vertical-align: sub;
+	font-weight: 500;
+}
+
+.ml15 {
+	margin-left: -15px;
+}
+
+.ml5 {
+	margin-left: 5px;
+}
+
+
+
+.divInfo {
+	display: flex;
+	float: right;
+}
+
+	.divInfo a {
+		margin-left: 0.5em;
+	}
+
+		.divInfo a i {
+			font-size: 1.9em;
+			cursor: pointer;
+		}
+
+	.divInfo input {
+		width: 9.3em;
+	}
+
+autocomplete, input, kendo-datepicker {
+	/*width: 10.4em;*/
+}
+
+kendo-maskedtextbox {
+	width: 10.4em;
+	display: inline-flex !important;
+}
+
+.p0 {
+	padding: 0px;
+}
+
+.searchfilterpopup {
+	padding: 12px;
+	min-width: 285px;
+}
+
+	.searchfilterpopup input {
+		width: 8em;
+	}
+/*For responsive UI*/
+@media (min-width: 992px) {
+	.pl0 {
+		padding-left: 0px;
+	}
+
+	.pr0 {
+		padding-right: 0px;
+	}
+
+	.pt0 {
+		padding-top: 0px;
+	}
+}
+
+.mb5 {
+	margin-bottom: 5px;
+}
+
+.adInfo-btn {
+	float: right;
+	min-width: 10.4em;
+}
+
+.search-field {
+	font-weight: 500;
+	color: black;
+	float: left;
+	padding-right: 5px;
+	padding-bottom: 5px;
+
+	@media(min-width:1200px) {
+		autocomplete, kendo-datepicker {
+			float: none;
+		}
+
+		.k-field-info {
+			display: none;
+		}
+	}
+
+	@media(min-width:1200px) and (max-width:1300px) {
+		autocomplete, kendo-datepicker {
+			width: 8.4em;
+		}
+	}
+}
+
+	.search-field span {
+		vertical-align: middle;
+		padding-right: 0.5em;
+	}
+
+
+th {
+	font-size: inherit;
+}
+
+.filter-serach-btn {
+	margin: 0.5em 0;
+	width: 8em;
+}
+
+.mt07 {
+	margin-top: 0.7em;
+}
+
+
+.booking .mat-expansion-panel-header-title,
+.booking .mat-expansion-panel-header-description {
+	flex-basis: 0;
+}
+
+.booking .mat-expansion-panel-header-description {
+	justify-content: space-between;
+	align-items: center;
+}
+
+.wd112 {
+	width: 112px;
+}
+
+.wd {
+	width: 100px;
+}
+
+.wd65 {
+	width: 65px;
+}
+
+.wd80 {
+	max-width: 80px;
+}
+
+.wd60 {
+	max-width: 60px;
+}
+
+.search-section {
+	flex-direction: row;
+	display: flex;
+	justify-content: space-between;
+	padding: 0;
+}
+
+.search-action {
+	justify-content: space-between;
+	height: 45px;
+	padding: 5px 20px;
+	align-items: center;
+}
+
+
+.grid-f-info {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	.header
+
+{
+	font-weight: 600;
+}
+
+.fi1 {
+	flex-basis: 0;
+	flex-grow: 0.5;
+	margin-right: 8px;
+}
+
+.fi2 {
+	flex-basis: 0;
+	flex-grow: 2;
+}
+
+.search-brand {
+	width: 35px;
+	height: 35px;
+	flex-basis: 0;
+}
+
+.capName {
+	flex-basis: 0;
+	flex-grow: 1.4;
+	font-weight: 600;
+	div: first-child
+
+{
+	color: orangered;
+}
+
+div:last-child {
+	color: green;
+}
+
+}
+}
+
+
+
+
+
+
+
+
+
+

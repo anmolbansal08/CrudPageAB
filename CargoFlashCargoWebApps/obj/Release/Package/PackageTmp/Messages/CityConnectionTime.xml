@@ -1,0 +1,64 @@
+﻿<!--#region CityConnectionTime XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  CityConnectionTime
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Ajay
+  
+  *****************************************************************************
+  */
+  #endregion-->
+
+<Messages>
+ 
+  
+  <DataFieldName>
+    <Name>ConnectionTypeName</Name>
+    <Message>City Connection Time can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>City Connection Time already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+
+    <Key>2000</Key>
+    <value>City Connection Time Added Successfully.</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>City Connection Time Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>City Connection Time Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2601</Key>
+    <value>Duplicate entries found. Please amend to proceed.</value>
+  </ServerMessage>
+<!--added by arman ali-->
+<ServerMessage>
+    <Key>1002</Key>
+    <value>AircraftType cannot be Duplicate</value>
+  </ServerMessage>
+<ServerMessage>
+    <Key>1003</Key>
+    <value>SHC cannot be Duplicate</value>
+  </ServerMessage>
+<ServerMessage>
+    <Key>1004</Key>
+    <value>ProductType cannot be Duplicate</value>
+  </ServerMessage>
+</Messages>
+
+
+

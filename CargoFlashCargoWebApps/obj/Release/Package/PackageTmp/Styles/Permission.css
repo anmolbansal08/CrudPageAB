@@ -1,0 +1,59 @@
+﻿
+.k-treeview-lines .k-top,
+.k-treeview-lines .k-mid,
+.k-treeview-lines .k-bot
+{
+    background-image: url(../Images/treeview-nodes.png);
+}
+    
+.k-treeview-lines .k-item { background-image: url(../Images/treeview-line.png); }
+.k-treeview-lines .k-last { background-image: none; }
+    
+    
+.k-treeview-lines .k-top,
+.k-treeview-lines .k-mid,
+.k-treeview-lines .k-bot
+{
+    background-repeat: no-repeat;
+    margin-left: -16px;
+    padding-left: 16px;
+}
+    
+.k-treeview-lines .k-top { background-position: -91px 0; }
+.k-treeview-lines .k-bot { background-position: -69px -22px; }
+.k-treeview-lines .k-mid { background-position: -47px -44px; }
+.k-treeview-lines .k-last .k-top { background-position: -25px -66px; }
+.k-treeview-lines .k-group .k-last .k-bot { background-position: -69px -22px; }
+    
+.k-treeview-lines .k-item
+{
+    background-repeat: no-repeat;
+}
+    
+.k-treeview-lines .k-first
+{
+    background-repeat: no-repeat;
+    background-position: 0 16px;
+}
+
+.k-state-selected, .k-list > .k-state-selected, .k-list > .k-state-focused, .k-panelbar > .k-state-selected, .k-panel > .k-state-selected, .k-button:active, .k-ghost-splitbar-vertical, .k-ghost-splitbar-horizontal, .k-draghandle.k-state-selected:hover
+{
+    color: #FFFFFF !important;
+}
+#left-pane
+{
+    width:200px !important;
+}
+#vertical
+{
+    width:1330px !important; height:495px !important;
+}
+#center-pane
+{
+    width:1124px !important; position:relative; height:710px !important;
+}
+#horizontal
+{
+    height:493px;
+}
+      

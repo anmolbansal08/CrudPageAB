@@ -1,0 +1,49 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>TaxCode</Name>
+    <Message>Tax Code can not be blank.</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CountryCode</Name>
+    <Message>Country Code can not be blank.</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CountryCode</Name>
+    <Message>Country Code can not be blank.</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Tax Code already exists for selected criteria.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Country Code already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1003</Key>
+    <value>City Code already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1004</Key>
+    <value>Record not found.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Tax Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Tax Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Tax Slab Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CargoFlash.Cargo.DataService.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="CargoFlash_Cargo_DataService_ValidateEDIMsg_WebServiceValidateMsg" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://gares.bookmycargo.net/edi/PresentationLayer/Admin/Account/Public/WebServiceValidateMsg.asmx</Value>
+    </Setting>
+    <Setting Name="CargoFlash_Cargo_DataService_ValidateEdiMsg1_WebServiceValidateMsg" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://gares.bookmycargo.net/edi/PresentationLayer/Admin/Account/Public/WebServiceValidateMsg.asmx</Value>
+    </Setting>
+    <Setting Name="CargoFlash_Cargo_DataService_ValidateEDIMessage_WebServiceValidateMsg" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://gares.bookmycargo.net/edi/PresentationLayer/Admin/Account/Public/WebServiceValidateMsg.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

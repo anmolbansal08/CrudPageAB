@@ -1,0 +1,93 @@
+﻿
+
+
+<div id="divbody" style="height:auto">
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Flight Report</td></tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    Airline
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AirlineSNo")
+                                @Html.TextBox("Text_AirlineSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                            </td>
+
+
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    Flight No
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("FlightSNo")
+                                @Html.TextBox("Text_FlightSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    From Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+                            </td>
+                            <td class=' formlabel' title='Office'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    To Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' />
+                            </td>
+                           
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                                              Flight Status:
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("FlightStatus")
+                                @Html.TextBox("Text_FlightStatus", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class=' formlabel' title='Airlin' colspan="4">
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    <div id="exportflight" style="float:left;"><img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel_FlightCapacityDashboard()" /></div>
+                                    <center>    <input type='submit' name='operation' onclick="SearchFlightCapacityDashboard()" value='Search' id="btnSearch" class='btn btn-success btnSearch' /></center>
+                            </td>
+
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+
+                </div>
+
+            </div>
+        </div>
+        <div id="example">
+            <div id="grid" style="font-size:11px;"></div>
+            <script src="~/JScript/Reservation/FlightCapacityDashboard.js"></script>
+        </div>
+
+
+    </section>
+
+</div>
+
+
+

@@ -1,0 +1,23 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Invoice Group already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Invoice Group has been used, It is not allowed to delete.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Invoice Group Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Invoice Group Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Invoice Group Deleted Successfully.</value>
+  </ServerMessage>
+  
+</Messages>

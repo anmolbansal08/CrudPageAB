@@ -1,0 +1,105 @@
+﻿@*// <copyright file="_GetAllotmentDetails.cshtml" company="Cargoflash">
+           //
+           // Created On: 13-Feb-2017
+           // Created By: Braj
+           // Description:
+           //----------------------------------------------------------------------------
+           // Revison History:
+           // Please add a new line below for any update to this file
+           // Updated On  Updated By                     Significant Changes
+           // ----------------------------------------------------------------------------
+           //
+           //
+    </copyright>*@
+
+@model System.Data.DataSet
+@{
+    string gridId = Guid.NewGuid().ToString();
+ }
+<table class='WebFormTable'>
+@if (Model.Tables.Count > 0 && Model.Tables[0].Rows.Count>0)
+{
+
+    <tr>
+        <td class='formSection' colspan='4'>Allotment Information</td>
+    </tr>
+    <tr>
+        <td class='formlabel'>Allotment Code:</td>
+        <td class='formInputcolumn'>
+
+            <span>@Model.Tables[0].Rows[0]["AllotmentCode"]</span>
+        </td>
+        <td class='formlabel'>Allotment Type</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["AllotmentType"]</span>
+        </td>
+    </tr>
+    <tr>
+        <td class='formlabel'>Office Name</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["OfficeName"]</span>
+        </td>
+        <td class='formlabel'>Agent Name</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["AgentName"]</span>
+        </td>
+    </tr>
+    <tr>
+        <td class='formlabel'>Shipper Name</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["ShipperName"]</span>
+        </td>
+        <td class='formlabel'>Gross/Volume</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["GrossWeight"]/@Model.Tables[0].Rows[0]["Volume"]</span>
+        </td>
+    </tr>
+    @*<tr>
+        <td class='formlabel'>Valid From</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["VolumeWeight"]</span>
+        </td>
+        <td class='formlabel'>Valid To</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["ChargeableWeight"]</span>
+        </td>
+    </tr>*@
+    <tr>
+        <td class='formlabel'>Commodity</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["Text_Commodity"]</span>
+        </td>
+        <td class='formlabel'>Include/Exclude</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["CommodityExclude"]</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td class='formlabel'>SHC</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["Text_SHC"]</span>
+        </td>
+        <td class='formlabel'>Include/Exclude</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["SHCExclude"]</span>
+        </td>
+    </tr>
+    <tr>
+        <td class='formlabel'>Product</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["Text_Product"]</span>
+        </td>
+        <td class='formlabel'>Include/Exclude</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["ProductExclude"]</span>
+        </td>
+    </tr>
+    }
+else { 
+    <tr>
+        <td class='formSection' colspan='4'>No data found</td>
+    </tr>
+
+}
+</table>

@@ -1,0 +1,100 @@
+﻿<script src="../../Scripts/jspdf.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+
+    });
+
+    
+
+
+</script>
+<style>
+
+</style>
+<input type="hidden" id="htmladd" value="0" />
+<table class="WebFormTable" id="tblAdd" validateonsubmit='true'>
+
+    <tr>
+        <td class="formlabel" colspan="4" style="text-align:left" id="HeaderName">ULD STATISTIC (ULD UTILIZATION)</td>
+    </tr>
+
+    <tr>
+
+        <td class="formlabel">
+            Airport
+        </td>
+        <td class="formInputcolumn">
+            <input type="hidden" name="Airport" id="Airport">
+            <input type="text" name="Text_Airport" id="Text_Airport" data-valid="required" data-valid-msg="Select Airport" controltype="autocomplete" style="width:150px;">
+        </td>
+        <td class="formlabel">
+            Airline
+        </td>
+        <td class="formInputcolumn">
+            <input type="hidden" name="Airline" id="Airline">
+            <input type="text" name="Text_Airline" id="Text_Airline" data-valid="required" data-valid-msg="Select Airline" controltype="autocomplete" style="width:150px;">
+        </td>
+       
+    </tr>
+
+    <tr>
+        <td class="formlabel">
+            ULD Type
+        </td>
+        <td class="formInputcolumn">
+            <input type="hidden" name="ULDTypeWise" id="ULDTypeWise">
+            <input type="text" name="Text_ULDTypeWise" id="Text_ULDTypeWise" data-valid="required" data-valid-msg="Select ULD Type Wise" controltype="autocomplete" style="width:150px;">
+        </td>
+        <td class="formlabel">
+            Purchased from
+        </td>
+        <td class="formInputcolumn">
+            <input type="hidden" name="Manufactured" id="Manufactured">
+            <input type="text" name="Text_Manufactured" id="Text_Manufactured" data-valid="required" data-valid-msg="Select Manufactured Wise" controltype="autocomplete" style="width:150px;">
+        </td>
+        
+   
+    </tr>
+
+
+    <tr>
+        <td class="formlabel">
+          Year
+        </td>
+        <td class="formInputcolumn">
+            <input type="hidden" name="Yearofwriteofdate" id="Yearofwriteofdate">
+            <input type="text" name="Text_Yearofwriteofdate" id="Text_Yearofwriteofdate" controltype="autocomplete">
+        </td>
+        <td class="formlabel">ULD Number</td>
+        <td class="formInputcolumn">
+            <input type="hidden" name="UldNumber" id="UldNumber">
+            <input type="text" name="Text_UldNumber" id="Text_UldNumber" data-valid="required" data-valid-msg="Select Uld Number" controltype="autocomplete" style="width:150px;">
+        </td>
+    </tr>
+   <tr>
+       <td class="formlabel">
+          
+       </td>
+       <td class="formInputcolumn">
+         
+       </td>
+<td class="formlabel"></td>
+<td colspan="2" class="formInputcolumn">
+    <input type="button" class="btn btn-success" id="Search" value="Search" />
+    <!--<input type="button" class="btn btn-success" id="StockReportPrint" value="Print" onclick="ULDStockReportPrint(this)" />-->
+    <input type="button" class="btn btn-success" id="ExportExcel" value="Export Excel" />
+    <input type="button" class="btn btn-success" id="ExportPdf" value="Export Pdf" />
+</td>
+    </tr>
+
+</table>
+<div id="DivULDStatisticReports">
+
+</div>
+
+<div id="DivPrint" style="display:none">
+
+</div>

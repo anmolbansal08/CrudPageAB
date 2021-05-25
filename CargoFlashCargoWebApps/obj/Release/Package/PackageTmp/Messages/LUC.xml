@@ -1,0 +1,22 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>5001</Key>
+    <value>Consumables Saved Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>4001</Key>
+    <value>ESS Saved Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>ESS Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>3002</Key>
+    <value>Consumable Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Consumable Stock not found.</value>
+  </ServerMessage>
+</Messages>

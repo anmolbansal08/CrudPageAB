@@ -1,0 +1,28 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>WarehouseSetup</Name>
+    <Message>Warehouse Setup can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Warehouse Setup already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Warehouse Setup Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Warehouse Setup Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Warehouse Setup Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

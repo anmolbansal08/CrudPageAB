@@ -1,0 +1,468 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>DOPrint</title>
+
+    <style type="text/css">
+        @media print {
+            #btnPrint {
+             
+                display: none;
+            }
+            body{
+                font-size:16px;
+            }
+        }
+    </style>
+
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script type="text/javascript">
+      function  funPrintDOReportData()
+        {
+            window.print();
+        }
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            var LogoURL = getParameterByName("LogoURL", "");
+            GetDeliveryOrderPrint();
+            $('#divPrint1').append($('#content').html()
+                );
+            //$('#divPrint1').find('.watermark').map(function () { return $(this).text('Original'); })
+
+            //Edited By Rahul Kumar Singh to add Logo on 27-07-2017
+            $('#content').html("");
+
+
+
+            var str = LogoURL;
+            str = str.split('/');
+            //$('#ImgLogo').attr('src', LogoURL);
+
+
+            if (IsCancel == "1") {
+                $('#divPrint1').find('.watermark').map(function () { return $(this).text('Cancelled'); })
+            }
+
+            var IsCancel = 0;
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+
+
+
+
+            // CODE for Showing Current Time//
+            function startTime() {
+                var today = new Date();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                // add a zero in front of numbers<10
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('#spnTime').innerHTML = h + ":" + m + ":" + s;
+                t = setTimeout(function () {
+                    startTime()
+                }, 500);
+            }
+            startTime();
+            //END//
+            function GetDeliveryOrderPrint() {
+
+
+
+                var Particulars = "";
+                var Charges = 0;
+                var TotalCharges = 0;
+
+                //  debugger;
+                var DOSNo = getParameterByName("DOSNo", "");
+                var Type = getParameterByName("Type", "");
+                var POMailSNo = getParameterByName("POMailSNo", "") == null ? 0 : getParameterByName("POMailSNo", "");
+
+
+
+                $.ajax({
+                    url: "../../Services/Import/DeliveryOrderService.svc/GetDeliveryOrderPrint",
+                    async: false,
+                    type: "GET",
+                    dataType: "json",
+                    data: { DOSNo: DOSNo, Type: Type, InvoiceSNo: 0, POMailSNo: POMailSNo },
+                    contentType: "application/json; charset=utf-8",
+                    cache: false,
+                    success: function (result) {
+                        var ResultData = jQuery.parseJSON(result);
+                        FinalData = ResultData.Table0;
+                        FinalData1 = ResultData.Table1;
+                        FinalData2 = ResultData.Table2;
+                        LocationData = ResultData.Table3;
+                        StorageData = ResultData.Table4;
+                        NatureOfGoods = ResultData.Table5;
+                        DODetailsData = ResultData.Table6;
+
+                        var chargeType = "";
+                        var Pieces = 0;
+                        var GrossWeight = 0.0;
+                        var chargeType1 = "";
+                        var Pieces1 = 0;
+                        var chargeType2 = "";
+                        var Pieces2 = 0;
+                        if (FinalData.length > 0) {
+
+
+                            // var splitdate;
+                            // FinalData[0].DOTime.split(" ")
+                            //#spnConsigneeAddress to upper case by rahul on 27-12-2017 as per bug refrence 5163
+                            Pieces = FinalData[0].Pieces;
+                            GrossWeight = FinalData[0].GrossWeight;
+                            $("#spnDONo").text(FinalData[0].DeliveryOrderNo);
+                            $("#spnserialno").text(FinalData[0].SNo);
+                            $("#spnTime").text(FinalData[0].DOTime.split(" ")[1]);
+                            $("#spnDate").text(FinalData[0].DOTime.split(" ")[0]);
+                            $("#spnDODate").text(FinalData[0].DOTime.split(" ")[0]);
+                            $("#spnIssueNo").text(FinalData[0].DOTime.split(" ")[0]);
+                            
+                            $("#spnConsignee").html(FinalData[0].ConsigneeName);
+                            $("#idAWbNo").text(FinalData[0].AWBNo);
+                            $("#spnName").html(FinalData[0].Name);
+                            $("#spnHouseNo").html(FinalData[0].DOHouseNo);
+                            $("#spnPaymentMode").html(FinalData[0].ChargesType);
+                            $("#spnStaff").html(FinalData[0].Staff);
+                            $("#spnReciversName").html(FinalData[0].NOTIFY);
+
+                            $("#spnIssuedTo").html(FinalData[0].BillToText);
+                            $("#spnIssuedBy").html(FinalData[0].Staff);
+                            $("#spnRemarks").html(FinalData[0].Remarks);
+                            $("#spnHAWBNo").html(FinalData[0].HouseNo);
+                          //  $("#spnSignature").html(FinalData[0].Staff);
+
+
+
+
+
+
+                            $("#spnName1").html(FinalData[0].Name);
+                            $("#spnAirline").html(FinalData[0].AIRLINENAME);
+                            $("#spnConsigneeAddress").html((FinalData[0].STREET).toUpperCase());
+                            if (FinalData[0].AirlineLogo.toString() != "") {
+                                $('#ImgLogo').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineLogo.toString());                               
+                                $('#ImgLogo').attr('onError', 'this.onerror=null;this.src="' + LogoURL + '";');
+                            }
+                            else
+                            {
+
+                                $('#ImgLogo').attr('src', '/Logo/GaurdaCMS Logo.jpg');
+                                $('#ImgLogo').attr('onError', 'this.onerror=null;this.src="' + LogoURL + '";');
+                            }
+                            //$("#spntime").html(FinalData1[0].Time);
+                            chargeType = FinalData[0].ChargesType;
+                            if (FinalData[0].IsCancel == "False") {
+                                $("#spnReprintCount").html(FinalData[0].PrintCount > 1 ? "(RE-PRINT: " + (FinalData[0].PrintCount - 1).toString() + ")" : "");
+                                IsCancel = 0;
+                            }
+                            else {
+                                IsCancel = 1;
+                            }
+                        }
+
+                        if (FinalData1.length > 0) {
+                            var flightno = "";
+                            var totalpieces = 0;
+                            var totalGrossWeight = 0.0;
+                            var flightdate = "";
+
+                            for (var k = 0; k < FinalData1.length ; k++) {
+                                flightno += "/" + FinalData1[k].FlightDetails
+                                totalpieces += parseInt(FinalData1[k].Pieces)
+                                totalGrossWeight += parseFloat(FinalData1[k].GrossWeight)
+                                flightdate += FinalData1[k].FlightDate;
+
+                            }
+
+                            flightno = flightno.substring(1, flightno.length)
+                            $("#idFlightNo").html(flightno);
+                            $("#idNoOfPkgs").html(totalpieces);
+                            $("#idGWeight").html(totalGrossWeight);
+                            $("#spnTotalPieces").html(totalpieces);
+                            $("#FlightDate").html(flightdate);
+                        }
+
+
+                        if (DODetailsData.length > 0)
+                        {
+                            $("#idOrigin").text(DODetailsData[0].Origin);
+                            $("#idDest").text(DODetailsData[0].Destination);
+                            $("#idCommCode").text(DODetailsData[0].CommCode);
+                            $("#spnHandlingCode").text(DODetailsData[0].HandlingCode);
+                            $("#spnAgent").text(DODetailsData[0].AgentName);
+                            $("#spnNoOfHAWB").text(DODetailsData[0].NoOfHouse);
+                            $("#spnStation").text(DODetailsData[0].Destination);
+                        }
+
+
+
+
+
+                        //    if (FinalData2.length > 0) {
+                        if (NatureOfGoods.length > 0) {
+                            Particulars = Particulars + "</br>" + (NatureOfGoods[0].CommodityDescription);
+                        }
+                        //var length = FinalData2.length > 5 ? 5 : FinalData2.length;
+                        for (var S = 0; S < FinalData2.length ; S++) {
+
+                            // Particulars = Particulars + "</br>" + (FinalData2[S].IsWaveOff == "True" ? FinalData2[S].TariffName + '(Waived Off)' : FinalData2[S].TariffName);
+                            if (Charges == 0) {
+                                Charges = "</br>" + (FinalData2[S].IsWaveOff == "True" ? FinalData2[S].TariffName + '(Waived Off)' : FinalData2[S].TariffName) + '   ' + FinalData2[S].ChargeValue;
+
+                            }
+                            else {
+                                Charges = Charges + "</br>" + (FinalData2[S].IsWaveOff == "True" ? FinalData2[S].TariffName + '(Waived Off)' : FinalData2[S].TariffName) + '   ' + FinalData2[S].ChargeValue;
+
+                            }
+                            if (FinalData2[S].IsWaveOff != "True")
+                                TotalCharges = parseFloat(FinalData2[S].TotalAmount);
+                        }
+
+
+                        var strdata = '';
+                        var TotalPieces = 0;
+                        var TotalGrossWeight = 0.0;
+                        // var ChargesType = '';
+               
+
+
+
+
+                        $("#spnTotal").html(" (" + chargeType + ")&nbsp;" + TotalCharges.toFixed(2));
+
+
+                        $("#idDescription").html(Particulars.replace("undefined", ""));
+                        $("#spnAmount").html('');
+                        $("#spnAmount").html(Charges.replace("undefined", ""));
+
+
+
+                        $("#spntotalamountinwords").html(FinalData2[0].TotalAmountInWord);
+                        $("#spntp").html(LocationData.length == 0 ? '0' : LocationData[0].TotalPieces);
+                        $("#spnwt").html(LocationData.length == 0 ? '0' : LocationData[0].TotalGrossWeight);
+
+                        if (FinalData2.length > 5)
+                            $("#Total").hide();
+
+                    },
+                    error: function (err) {
+                        if (err.responseText.toLowerCase().indexOf("object reference not set") != -1) {
+                            document.cookie = "UserDetail=0";
+                            location.href = '../../Account/' + userContext.SysSetting.LoginPage + '?islogout=true';
+                        }
+                    }
+                });
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</head>
+
+<body style= font-family: Arial, Helvetica, sans-serif;size:5>
+    <table align="center" cellpadding="0" cellspacing="0"  width="100%" style=" border-collapse : collapse; padding 1cm; margin 1cm auto; border-radius 5px; page-break-after auto; margin-top 20px; box-shadow 0 0 5px rgba(0, 0, 0, 0); ">
+        <tbody>
+            <tr>
+
+                <td colspan="3" style="height:50%;width:33%;text-align:center; margin: 1cm auto; border: 1px #D3D3D3 solid; border-radius: 5px; page-break-after: auto; margin-top: 20px; box-shadow: 0 0 5px rgba(0, 0, 0, 0);">
+                    <img id="ImgLogo" alt="" width="150px" height="70px" />
+                </td>
+                <td colspan="2" style="height:50%;width:33%;text-align:center; margin: 1cm auto; border: 1px #D3D3D3 solid; border-radius: 5px; page-break-after: auto; margin-top: 20px; box-shadow: 0 0 5px rgba(0, 0, 0, 0);"><b>CARGO DELIVERY ORDER</b></td>
+                <td colspan="5" style="height:50%;width:33%;text-align:center; margin: 1cm auto; border: 1px #D3D3D3 solid; border-radius: 5px; page-break-after: auto; margin-top: 20px; box-shadow: 0 0 5px rgba(0, 0, 0, 0);"> 
+                    <table width="100%" align="left">
+                        <tr>
+                            <!--<td align="left">Doc No </td>
+                            <td align="right">AAI/CG/F/08</td>-->
+                            <td><span id="spnDocNo"></span></td>
+
+                        </tr>
+                        <tr>
+                            <td align="left">Issue Date   </td>
+                            <td align="right"><span id="spnIssueNo"></span></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td align="left">Issue 01  </td>
+                            <td align="right">Rev 00</td>
+                            <td><span id="spnIssue01"></span></td>
+
+                        </tr>
+                    </table>
+                </td>
+
+            </tr>
+
+
+            <tr>
+                <td colspan="9"> <br><br> DO Date  :<span id="spnDODate"></span></td>
+            </tr>
+            <tr>
+                <td colspan="9"> <br> Staff ID  :<span id="spnStaff"></span></td>
+            </tr>
+            <tr>
+                <td colspan="9"> <br> Station  :<span id="spnStation"></span></td>
+            </tr>
+            <tr>
+                <td colspan="9"> <br><center> Delivery Order </center>	</td>
+            </tr>
+            <tr>
+                <td colspan="4"><br /> Agent Name  :<u><span id="spnAgent"></span></u></td>
+                <td colspan="4"><br />Consignee  :<u><span id="spnConsignee"></span></u></td>
+            </tr>
+            <tr>
+                <td colspan="9"><br>Delivery Details</td>
+            </tr>
+            <tr>
+                <td colspan="4"><br />DO No :<u><span id="spnDONo"></span></u></td>
+                <td colspan="4"><br />IGMNo :<u><span id="spnIGMNo"></span></u></td>
+                <td colspan="3"><br />HAWB No :<u><span id="spnHAWBNo"></span></u></td>
+                <br/>
+            </tr>
+            <tr>
+                <br />
+                <td colspan="4.5"><br />No Of HAWB :<u><span id="spnNoOfHAWB"></span></u></td>
+                <td colspan="4.5"><br />Payment Mode :<u><span id="spnPaymentMode"></span></u></td>
+
+            </tr>
+            <tr>
+                <td colspan="4.5"><br />Handling Code:<span id="spnHandlingCode"></span></td>
+                <td colspan="4.5"><br /><u>Add. Handling Code:</u><span id="spnAddHandlingCode"></span></td>
+            </tr>
+            <tr>
+                <td colspan="9">
+                    <br> <table border="1" cellpadding="0" cellspacing="0" align="center" id="table1" width="100%" style="border-collapse collapse;">
+
+
+                        <thead>
+                            <tr colspan="9">
+                                <td>AWB NO.</td>
+                                <td>Origin</td>
+                                <td>Dest</td>
+                                <td>No.Of Pkgs</td>
+                                <td>G.Weight</td>
+                                <td>FlightNo.</td>
+                                <td>Flight Date</td>
+                                <td>Comm Code</td>
+                                <td>Description</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr colspan="9">
+                                <td id="idAWbNo">&nbsp;</td>
+                                <td id="idOrigin">&nbsp;</td>
+                                <td id="idDest">&nbsp;</td>
+                                <td id="idNoOfPkgs">&nbsp;</td>
+                                <td id="idGWeight">&nbsp;</td>
+                                <td id="idFlightNo">&nbsp;</td>
+                                <td id="FlightDate">&nbsp;</td>
+                                <td id="idCommCode">&nbsp;</td>
+                                <td id="idDescription">&nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </td>
+            </tr>
+            <tr colspan="9" style="width:50%"><td>&nbsp;</td></tr>
+            <tr>
+         
+                <td colspan="2" style="text-align:right;width: 17%;"><u>Issued To </u>: </td>
+                <td colspan="1" style="width: 20%;" ><span id="spnIssuedTo"></span></td>
+                <td colspan="1" style="text-align:right"><u>Issued By</u>: </td>
+                <td colspan="1"><span id="spnIssuedBy"></span></td>
+                <td colspan="2" style="text-align:right;width: 6%;"><u>TDS</u>:</td>
+                <td colspan="2"><span id="spnIssuedBy"></span></td>
+            </tr>
+            <tr colspan="9" style="width:50%"><td>&nbsp;</td></tr>
+            <tr>
+                <td colspan="2" style="text-align:right"><u>Receiver's  Name </u>: </td>
+                <td colspan="1"><span id="spnReciversName"></span></td>
+                <td colspan="1" style="text-align:right"><u>Total Pieces</u>:</td>
+                <td colspan="1"><span id="spnTotalPieces"></span></td>
+                <td colspan="2" style="text-align:right;width: 6%;"></td>
+                <td colspan="2"></td>
+            </tr>
+            <tr colspan="9" style="width:50%"><td>&nbsp;</td></tr>
+            <tr>
+                <td colspan="2"style="text-align:right" ><u>Remarks</u>:</td>
+                <td colspan="1"><span id="spnRemarks"></span></td>
+            </tr>
+            <tr colspan="9" style="width:50%"><td>&nbsp;</td></tr>
+            <tr>
+                <td colspan="2"style="text-align:right"><u>Signature</u>:</td>
+                <td colspan="1"><span id="spnSignature"></span></td>
+                <td colspan="1"style="text-align:right"><u>Date</u>:</td>
+                <td colspan="1"><span id="spnDate"></span></td>
+                <td colspan="2" style="text-align:right;width: 6%;"><u>Time</u>:</td>
+                <td colspan="2"><span id="spnTime"></span></td>
+            </tr>
+            <tr>
+                <td colspan="4"><br><div style="width: 250px;height: 150px;border:1px solid #000;"></div> </td>
+                <td colspan="5" align="left"><div style="width: 260px;height: 110px;border:1px solid #000;margin-top: 44px;vertical-align:bottom">By signing this form ,the CONSIGNEE certifies that shipment under the Air Way Bill No. is Received in Good Condition </div></td>
+            </tr>
+            <tr>
+                <td colspan="9">
+                    <br><br>
+                     <!--<table border="1" cellpadding="0" cellspacing="0" align="center" id="table1" width="100%" style="
+                                    border-collapse collapse;
+                                    ">
+                        <thead>
+                            <tr colspan="9">
+                                <td>Preapered By <br> i5 Cargo Regional Head</td>
+                                <td>Authority of <br> Head- Commercial Director , Air Asia(india) LTD</td>
+                                <td>Page 1 of 1</td>
+
+                            </tr>
+                        </thead>
+
+                    </table>-->
+                    <table border="1" cellpadding="0" cellspacing="0" align="center" id="table1" width="100%" style=" border-collapse collapse;">
+                        <thead>
+                            <tr colspan="9">
+                                <td>Preapered By <br> AAI cargo Manager</td>
+                                <td>Approved by <br> Chief Commercial Officer</td>
+                                <td>Page 1 of 1</td>
+
+                            </tr>
+                        </thead>
+
+                    </table>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div align="center">
+                <input type="button" id="btnPrint"  class="btn btn-block btn-primary" name="name" value="Print" onclick="funPrintDOReportData();"/>
+    </div>
+
+    <!--</div>-->
+</body>
+
+</html>

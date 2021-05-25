@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @{
+        CargoFlash.Cargo.DataService.Common.CommonService CS1 = new CargoFlash.Cargo.DataService.Common.CommonService();
+        string loginPage = CS1.GetSystemSetting("LoginPage");
+
+        if (Session["UserDetail"] == null)
+        {
+            System.Web.HttpContext.Current.Response.Redirect("~/Account/" + loginPage);
+            return;
+        }
+        if (Session["UserDetail"] != null && HttpContext.Current.Request.FilePath == "/")
+        {
+            System.Web.HttpContext.Current.Response.Redirect("~/Index.cshtml");
+            return;
+        }
+        else if (HttpContext.Current.Request.FilePath == "/")
+        {
+            System.Web.HttpContext.Current.Response.Redirect("~/Account/" + loginPage);
+            return;
+        }
+        var dttemp = ((CargoFlash.Cargo.Model.UserLogin)Session["UserDetail"]).SysSetting["JSVersion"];
+        var AirlineName = (((CargoFlash.Cargo.Model.UserLogin)(Session["UserDetail"])).AirlineCarrierCode).ToString() == "" ? "" : ((CargoFlash.Cargo.Model.UserLogin)(Session["UserDetail"])).AirlineCarrierCode.Split('-')[1];
+    }
+    <meta charset="utf-8" />
+    <title>@AirlineName</title>
+
+    @if (Request.Url.ToString().ToLower().Contains("module=shipment&apps=tracking&formaction=flight history"))
+    {
+
+        @System.Web.Optimization.Styles.Render("~/Content/AppCssV2")
+    }
+    else
+    {
+        <link type="text/css" rel="stylesheet" href="Styles/Application.css?+@dttemp" />
+        <link type="text/css" rel="stylesheet" href="Styles/Grid/kendo.common.min.css?+@dttemp" />
+        <link type="text/css" rel="stylesheet" href="Styles/Grid/kendo.blueopal.min.css?+@dttemp" />
+        <link type="text/css" rel="stylesheet" href="Styles/Site.css?+@dttemp" />
+        <link type="text/css" rel="stylesheet" href="Styles/validator.theme.red.css?+@dttemp" />
+        <link type="text/css" rel="stylesheet" href="Styles/jquery.appendGrid-1.3.2.css?+@dttemp" />
+        <link type="text/css" rel="stylesheet" href="Styles/jquery-ui/jquery-ui-1.10.2.custom.css?+@dttemp" />
+        <link type="text/css" rel="stylesheet" href="Styles/CfiMessage.css?+@dttemp" />
+        <link type="text/css" rel="stylesheet" href="Styles/font-awesome.min.css?+@dttemp" />
+        <link type="text/css" rel="stylesheet" href="Styles/jquery.alerts.css?+@dttemp" />
+    }
+    @*@System.Web.Optimization.Styles.Render("~/Content/default")*@
+
+    @if (Request.Url.ToString().ToLower().Contains("module=shipment&apps=buildup"))
+    {
+        @*@System.Web.Optimization.Scripts.Render("~/Scripts/default/buildup")*@
+        @*<script type="text/javascript" src="Scripts/jquery-2.1.3.js?+@dttemp"></script>
+            <script type="text/javascript" src="Scripts/kendo/kendoo.web.js?+@dttemp"></script>
+            <script type="text/javascript" src="~/Scripts/Commono.min.js?+@dttemp"></script>*@
+        @System.Web.Optimization.Scripts.Render("~/Scripts/default/buildup")
+        <script src="/signalr/hubs"></script>
+        @System.Web.Optimization.Scripts.Render("~/Scripts/default/commono")
+    }
+    else if (Request.Url.ToString().ToLower().Contains("module=shipment&apps=tracking&formaction=flight history"))
+    {
+        @System.Web.Optimization.Scripts.Render("~/bundles/jquery");
+
+    }
+    @*else if (Request.Url.ToString().ToLower().Contains("dashboard"))
+        {
+            <link type="text/css" rel="stylesheet" href="Styles/Application.css?+@dttemp">
+            <link type="text/css" rel="stylesheet" href="Styles/Grid/kendo.common.min.css?+@dttemp">
+            <link type="text/css" rel="stylesheet" href="Styles/Grid/kendo.blueopal.min.css?+@dttemp">
+            <link type="text/css" rel="stylesheet" href="Styles/Site.css?+@dttemp">
+            <link type="text/css" rel="stylesheet" href="Styles/validator.theme.red.css?+@dttemp">
+            <link type="text/css" rel="stylesheet" href="Styles/CfiMessage.css?+@dttemp">
+            <link type="text/css" rel="stylesheet" href="Styles/font-awesome.min.css?+@dttemp">
+
+            <script src="/Scripts/jquery-1.7.2.js?+@dttemp"></script>
+            <script src="/Scripts/kendo/Newkendo.web.js?+@dttemp"></script>
+            <script src="/Scripts/Common.js?+@dttemp"></script>
+            <script src="/Scripts/validator.js?+@dttemp"></script>
+            <script src="/Scripts/CfiMessage.js?+@dttemp"></script>
+
+        }*@
+    else if (Request.Url.ToString().ToLower().Contains("module=report&apps=operation"))
+    {
+        <link type="text/css" rel="stylesheet" href="Styles/Dashboard.css?+@dttemp" />
+        @*<script type="text/javascript" src="Scripts/jquery-1.9.1.min.js?+@dttemp"></script>
+            <script src="~/Scripts/KendoSchedular/Content/JS/kendo.all.min.js?+@dttemp"></script>
+            <script src="~/Scripts/KendoSchedular/Content/JS/kendo.dataviz.min.js?+@dttemp"></script>
+            <script type="text/javascript" src="~/Scripts/common.min.js"></script>*@
+        @System.Web.Optimization.Scripts.Render("~/Scripts/default/report")
+    }
+    else if (Request.Url.ToString().ToLower().Contains("module=report&apps=impoperation"))
+    {
+        <link type="text/css" rel="stylesheet" href="Styles/Dashboard.css?+@dttemp" />
+        @*<script type="text/javascript" src="Scripts/jquery-1.9.1.min.js?+@dttemp"></script>
+            <script src="~/Scripts/KendoSchedular/Content/JS/kendo.all.min.js?+@dttemp"></script>
+            <script src="~/Scripts/KendoSchedular/Content/JS/kendo.dataviz.min.js?+@dttemp"></script>
+            <script type="text/javascript" src="~/Scripts/common.min.js"></script>*@
+        @System.Web.Optimization.Scripts.Render("~/Scripts/default/report")
+    }
+    else
+    {
+        @System.Web.Optimization.Scripts.Render("~/Scripts/default/jqcommon")
+        <script src="/signalr/hubs"></script>
+        @System.Web.Optimization.Scripts.Render("~/Scripts/default/common")
+        @*<script type="text/javascript" src="Scripts/jquery-1.7.2.min.js?+@dttemp"></script>
+            <script type="text/javascript" src="Scripts/kendo/kendo.web.min.js?+@dttemp"></script>
+            <script type="text/javascript" src="~/Scripts/common.min.js"></script>
+            <script type="text/javascript" src="~/Scripts/jquery.toolbar.js?+@dttemp"></script>*@
+    }
+
+    @System.Web.Optimization.Scripts.Render("~/Scripts/default/all")
+    @*<script type="text/javascript" src="~/Scripts/validator.js?+@dttemp"></script>
+        <script src="~/Scripts/CfiMessage.js?+@dttemp"></script>
+        <script type="text/javascript" src="Scripts/maketrans.js?+@dttemp"></script>
+        <script src="Scripts/jquery.appendGrid-1.3.2.js?+@dttemp"></script>
+        <script src="Scripts/jquery.serializeToJSON.js?+@dttemp"></script>
+        <script src="Scripts/shortcut.js?+@dttemp"></script>
+        <script type="text/javascript" src="Scripts/jquery-ui-1.10.2.custom.min.js?+@dttemp"></script>
+        <script type="text/javascript" src="Scripts/jqueryPrintNew.js?+@dttemp"></script>
+        <script type="text/javascript" src="Scripts/jquery.alerts.js?+@dttemp"></script>*@
+
+    <meta name="viewport" content="width=device-width" />
+    <style type="text/css">
+        .completeprocess {
+            color: #fff;
+            background-color: #51a351;
+            border-color: #51a351;
+            font-size: 10px;
+        }
+
+        .incompleteprocess {
+            color: black;
+            /*background-color: #51a351;*/
+            /*background-color: #428bca;*/
+            background-color: #cbd5de;
+            border-color: #cbd5de;
+            font-size: 10px;
+        }
+
+        .fcincompleteprocess {
+            color: #fff;
+            background-color: #428bca;
+            border-color: #428bca;
+            font-size: 10px;
+        }
+
+        .partialprocess {
+            color: #fff;
+            background-color: #FE9D5A;
+            border-color: #FE9D5A;
+            font-size: 10px;
+        }
+
+        .failureprocess {
+            color: #fff;
+            background-color: #FE0404;
+            border-color: #FE9D5A;
+            font-size: 10px;
+        }
+
+        .dependentprocess {
+            color: #fff;
+            background-color: brown;
+            border-color: goldenrod;
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    @*<img src='./Styles/Grid/BlueOpal/loading-image.gif' alt='Loading Page...' style='z-index: 99999 !important;display: none;' id='divLoading'>*@
+    @{
+        CargoFlash.Cargo.DataService.Common.CommonService CS = new CargoFlash.Cargo.DataService.Common.CommonService();
+        int ISCaptcha = Convert.ToInt32(CS.GetSystemSetting("ISCaptcha"));
+
+        if (ISCaptcha == null)
+        {
+            ISCaptcha = 0;
+        }
+    }
+    <div id="divDialogSession" style="display:none;">
+        <table width="100%">
+            <tr>
+                <td>
+                    User Name
+                </td>
+                <td>
+                    <label id="txtReUserId" class="k-input" style="width:200px;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password
+                </td>
+                <td>
+                    <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
+                    <input style="width:0px;height0px;border: 0px;" type="text" name="fakeusernameremembered" />
+                    <input type="password" id="txtRePassword" class="k-input" style="width:200px;" />
+                </td>
+            </tr>
+            @if (ISCaptcha == 2)
+            {
+                <tr>
+                    <td>
+                        <img src="~/Handler/CaptchaHandler.ashx" id="imgCaptcha" />
+                    </td>
+                    <td>
+                        <input type="text" id="CaptchaCode" name="CaptchaCode" class="k-input" style="width:200px;" autocomplete="off" />
+                    </td>
+                </tr>
+                <tr><td colspan="2"><a href="#" onclick="RefreshCaptcha();">Refresh</a></td></tr>
+            }
+            else if (ISCaptcha == 3)
+            {
+                <tr>
+                    <td>
+                        <div class="g-recaptcha" data-sitekey="6LdYXhUUAAAAALCN4_9-F0tmH64kjpI88z79b8N1"></div>
+                    </td>
+                </tr>
+            }
+        </table>
+        <br />
+    </div>
+    <div id="divbody" style="height:auto">
+        @RenderSection("featured", required: false)
+        <section class="content-wrapper main-content clear-fix">
+            <div id="divValidationMessage" class="validation-summary-errors">
+            </div>
+            <div id="overlayDialogBox" class="black_overlay">
+            </div>
+            <div id="divDialogBox" style="display: none; text-align: center">
+                <br />
+                <span id="lblDialogBoxMessage"></span>
+                <br />
+                <div id="divDialogBoxControls" style="text-align: center">
+                </div>
+            </div>
+
+            @RenderBody()
+
+        </section>
+    </div>
+    <div id='divFooter' class='divFooter'></div>
+    @*<footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year -Cargoflash</p>
+                </div>
+            </div>
+        </footer>*@
+    @*@RenderSection("headerScripts", required: false)*@
+    @RenderSection("Scripts", required: true)
+    <script type="text/javascript">
+        function ResizedBody() {
+            var windowheight = window.innerHeight;
+            var divBody = document.getElementById('divbody');
+            var divFooter = document.getElementById('divFooter');
+            if (divFooter != undefined || divFooter != null) {
+                divBody.style.height = windowheight - 30 + 'px';
+                divFooter.style.height = 30 + 'px';
+                divFooter.style.position = 'fixed';
+                divFooter.style.bottom = '0px';
+                //  divBody.style.overflow = "auto";
+            }
+        }
+
+    </script>
+</body>
+</html>

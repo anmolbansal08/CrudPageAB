@@ -1,0 +1,26 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value> Name for already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Number can not be same</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1003</Key>
+    <value> already exist</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value> Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value> Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value> Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

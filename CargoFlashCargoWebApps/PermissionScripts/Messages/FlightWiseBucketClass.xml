@@ -1,0 +1,22 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Record already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Records can not be deleted since it contains references in other records</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Flight Wise Bucket Class Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Flight Wise Bucket Class Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Flight Wise Bucket Class  Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

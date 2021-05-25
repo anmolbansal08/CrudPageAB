@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "AWBTracking";
+
+}
+
+<head>
+    <title></title>
+    <style>
+        img {
+            height: 50px;
+            width: 50px;
+            background-color: white;
+            position: relative;
+        }
+    </style>
+</head>
+<div>
+    @using (Html.BeginForm("AWBTracking", "AWBTracking", FormMethod.Post, new { enctype = "multipart/form-data", @id = "aspnetForm" }))
+    {
+
+        <table class="WebFormTable" id="tbl" validateonsubmit="true">
+            <tbody>
+                <tr>
+                    <td class="formSection" colspan="4"><span id="__SpanHeader__">AWB Tracking:</span></td>
+                </tr>
+                @if (ViewBag.AWBNo == null)
+                {
+                <tr>
+                    <td class="formlabel" title="Select Based On"><font color="red">*</font><span id="spnBasedOn"> Based On</span></td>
+                    <td class="formInputcolumn">
+                        <input type="radio" tabindex="1" data-radioval="Yes" class="" name="BasedOn" checked="True" id="BasedOn" value="0">AWB No
+                        <input type="radio" tabindex="1" data-radioval="No" class="" name="BasedOn" id="BasedOn" value="1">Reference Number
+                        <input type="radio" tabindex="1" data-radioval="No" class="" name="BasedOn" id="BasedOn" value="2">PO Mail No
+                    </td>
+                    <td class="formlabel" title="Select AWB"><font color="red">*</font><span id="spnAWBSNo"> AWB No</span></td>
+                    <td class="formInputcolumn">
+                        <table>
+                            <tr>
+                                <td>
+                                    @*<input type="hidden" name="AirlineCode" id="AirlineCode" value="">
+                                        <span class="k-widget k-combobox k-header">
+                                            <span class="k-dropdown-wrap k-state-default" unselectable="on" style="width: 150px;">
+                                                <input type="text" class="k-input" name="Text_AirlineCode" id="Text_AirlineCode" style="width: 60px; text-transform: uppercase;" tabindex="3" data-valid='required' data-valid-msg='Airline code cannot be blank' controltype="autocomplete" maxlength="15" value="" data-role="autocomplete" autocomplete="off">
+                                                <span class="k-select" unselectable="on"><span class="k-icon k-i-arrow-s" unselectable="on" style="cursor:pointer;">select</span></span>
+                                            </span>
+                                        </span>*@
+
+                                    @*@Html.TextBox("Text_AirlineCode", null, new { data_valid = "required", @data_valid_msg = "Select Airline Code", @required = "required", controltype = "autocomplete", data_role = "autocomplete", placeholder = "Select Airline Code" , tabindex = "2" })*@
+                                    <select name="Text_AirlineCode" id="Text_AirlineCode" style="width:75px;">
+                                        @*<option value="None" selected="Selected">Select</option>*@
+
+                                    </select>
+
+                                </td>
+                                <td>
+                                    <textarea class="k-input" name="AWBNo" id="AWBNo" style="width: 280px; text-transform: uppercase;" controltype="alphanumericupper" allowchar="/-," tabindex="3" maxlength="190" data-role="alphabettextbox" autocomplete="off"></textarea>
+                                </td>
+                            </tr>
+                        </table>
+
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel" title="Select "><span id="spnSearchAWB"> </span></td>
+                    <td class="formInputcolumn"><input type="button" tabindex="4" class="btn btn-block btn-primary" name="SearchAWB" id="SearchAWB" style="width:90px; color: body{color : red;}" value="Search"></td>
+                    <td class="" title="Enter "></td>
+                    <td class="">&nbsp;</td>
+                </tr>
+
+                }
+
+                <tr><td colspan="4"><div name="AWBDetails" id="AWBDetails"></div></td></tr>
+            </tbody>
+        </table>
+
+    }
+</div>
+<script src="~/JScript/Shipment/AWBTrackingOuter.js" type="text/javascript"></script>
+@if (ViewBag.AWBNo != null)
+{
+<script   type="text/javascript" >
+    debugger
+    $(document).ready(function () {debugger Search(@ViewBag.AWBNo,@ViewBag.PreFix);});
+</script>
+}

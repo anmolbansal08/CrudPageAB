@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        table.blueTable {
+            font-family: "Times New Roman", Times, serif;
+            border: 1px solid #FFFFFF;
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+
+            table.blueTable td, table.blueTable th {
+                border: 1px solid #FFFFFF;
+                padding: 3px 2px;
+            }
+
+            table.blueTable tbody td {
+                font-size: 13px;
+            }
+
+            table.blueTable tr:nth-child(even) {
+                background: #D0E4F5;
+            }
+
+            table.blueTable thead {
+                background: #0B6FA4;
+                border-bottom: 5px solid #FFFFFF;
+            }
+
+                table.blueTable thead th {
+                    font-size: 17px;
+                    font-weight: bold;
+                    color: #FFFFFF;
+                    text-align: center;
+                    border-left: 2px solid #FFFFFF;
+                }
+
+                    table.blueTable thead th:first-child {
+                        border-left: none;
+                    }
+
+            table.blueTable tfoot {
+                font-size: 14px;
+                font-weight: bold;
+                color: #333333;
+                background: #D0E4F5;
+                border-top: 3px solid #444444;
+            }
+
+                table.blueTable tfoot td {
+                    font-size: 14px;
+                }
+    </style>
+</head>
+
+<body>
+    <div id="divWeekOffDays">
+        <table class="blueTable">
+            <thead>
+                <tr style="color:white!important">
+                    <td colspan="8" style="height: 27px !important; font-size: 15px !important; text-align: left !important; "> Select Week Off Days</td>
+                </tr>
+            </thead>
+            <tr>
+                <td style=" width:120px"> <input class="WeekOff" type="checkbox" id="chsun" value="1" /> Sun </td>
+                <td style=" width:120px"> <input class="WeekOff" type="checkbox" id="chMon" value="2" /> Mon </td>
+                <td style=" width:120px"> <input class="WeekOff" type="checkbox" id="chTue" value="3" /> Tue </td>
+                <td style=" width:120px"> <input class="WeekOff" type="checkbox" id="chWed" value="4" /> Wed </td>
+                <td style=" width:120px"> <input class="WeekOff" type="checkbox" id="chThu" value="5" /> Thu </td>
+                <td style=" width:120px"> <input class="WeekOff" type="checkbox" id="chFri" value="6" /> Fri </td>
+                <td style=" width:120px"> <input class="WeekOff" type="checkbox" id="chSat" value="7" /> Sat </td>
+                <td style=" width: 199px">
+                    <input class="btn btn-inverse" type="button" id="Add" value="Add" onclick="WeekOffAdd()" /><input type="button" id="SaveWeekOffDays" class="btn btn-block btn-success btn-sm" onclick="OnSaveWeekOffDays()" value="Update" />
+                    <input type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=ULD&amp;Apps=ULDSLACalendar&amp;FormAction=INDEXVIEW');" class="btn btn-inverse" oldvalue="Back" newvalue="">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align: left !important; font-size: 15px !important; color: #B66202 !important; ">  Week Off Details</td>
+                <td colspan="2">
+                    <div style="color: black !important; margin-right: 187px;">
+                        Active<input type="radio" id=" hallyes" value="1" name="AllHoliWeekOffDays" class="AllHoliWeekOffDays" />Yes
+                        <input type="radio" id="HAllyes" value="0" name="AllHoliWeekOffDays" class="AllHoliWeekOffDays" />No
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table id="TblWeekOffDays"></table>
+
+
+    </div>
+
+
+
+
+</body>
+</html>

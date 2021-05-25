@@ -1,0 +1,57 @@
+﻿<Messages>
+  <!--#region Country XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  Country
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Tarun Kumar
+  Created On:		24 feb 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>CountryCode</Name>
+    <Message>Country Code cannot be blank. Minimum 2 Characters required</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CountryName</Name>
+    <Message>Country Name can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CurrencyCode</Name>
+    <Message>Currency Code can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Country Code already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Country Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Country Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Country Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Country Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

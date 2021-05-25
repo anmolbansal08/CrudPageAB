@@ -1,0 +1,34 @@
+﻿<Messages>
+ 
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Vehicle Plate No.  already exists. Please Enter another Vehicle Plate No.</value>
+  </ServerMessage>  
+  
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Vehicle Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Vehicle Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Vehicle Deleted Successfully.</value>
+  </ServerMessage>
+ 
+</Messages>
+
+
+
+
+
+ 
+
+
+
+
+
+
+

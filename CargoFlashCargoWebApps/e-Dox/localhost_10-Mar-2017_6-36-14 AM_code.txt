@@ -1,0 +1,8 @@
+@UserCity VARCHAR(3)
+
+		SELECT @UserCity=u.CityCode FROM dbo.Users AS u WHERE u.SNo=@Usersno
+
+
+
+SET @WhereCondition=IIF(@WhereCondition!='',' AND ','1=1')
++IIF(@OriginCity='','',CONCAT(' AND Origin=','''',@OriginCity,''''))

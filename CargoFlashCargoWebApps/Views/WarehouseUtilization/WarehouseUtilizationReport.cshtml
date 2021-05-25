@@ -1,0 +1,110 @@
+﻿<style>
+    .formlabelMy {
+        font-weight: bold;
+        font-size: 10px;
+        color: rgb(0, 0, 0);
+        font-family: Verdana;
+        text-align: right;
+        background-color: rgb(245, 245, 245);
+        padding-left: 3px;
+        padding-right: 5px;
+        width: 9%;
+        height: 25px;
+        border-right: 1px solid rgb(190, 189, 190);
+        border-left: 0px solid rgb(190, 189, 190);
+        border-bottom: 1px solid rgb(190, 189, 190);
+    }
+
+    .formInputcolumnMy {
+        font-family: Verdana, Geneva, sans-serif;
+        font-size: 8pt;
+        width: 11%;
+        border-bottom: 1px solid rgb(190, 189, 190);
+    }
+
+    .k-grid-header th.k-header {
+        vertical-align: inherit !important;
+    }
+
+    .width {
+        width: 65px;
+    }
+</style>
+
+
+<table class='WebFormTable' id='tbl' validateonsubmit=true>
+    <tr><td class='formSection' colspan='10'>Warehouse Utilization Report</td></tr>
+    <tr><td class='formActiontitle' colspan='10'><span id='__SpanHeader__'>Warehouse Utilization Report</span><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+    <tr><td class='formbuttonrow' colspan='10'><input type='submit' onclick="GetGridData()" name='operation' value='Search' class='btn btn-success' /></td></tr>
+    <tr><td class='formSection' colspan='10'>Search Criteria</td></tr>
+    <tr>
+        <td class=' formlabelMy' title='Airport'>
+           @* <font color='red'>*</font>*@
+               <span id='spnAirport'>
+                Airport
+            </span>
+        </td>
+        <td class='formInputcolumnMy'>
+            @Html.Hidden("AirportSNo")
+            @Html.TextBox("Text_AirportSNo", null
+           ,
+           new
+           {
+
+               controltype = "autocomplete",
+               data_role = "autocomplete"
+               //,
+
+               //data_valid = "required",
+               //data_valid_msg = "Airline Name can not be blank"
+           }
+
+           )
+        </td>
+        <td class=' formlabelMy' title='Terminal'>
+            @*<font color='red'>*</font>*@
+            <span id='spnTerminal'>Terminal</span>
+        </td>
+        <td class='formInputcolumnMy'>
+            @Html.Hidden("TerminalSNo")
+            @Html.TextBox("Text_TerminalSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            @*data_valid = "required", data_valid_msg = "Destination can not be blank"*@
+        </td>       
+    </tr>
+
+    <tr>
+        <td class=' formlabelMy' title='Warehouse Name'>
+            @*<font color='red'>*</font>*@
+            <span id='spnWarehouse'>Warehouse Name</span>
+        </td>
+        <td class='formInputcolumnMy'>
+            @Html.Hidden("WarehouseSNo")
+            @Html.TextBox("Text_WarehouseSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            @*data_valid = "required", data_valid_msg = "Forwarder (Agent) Name can not be blank"*@
+        </td>        
+        <td class=' formlabelMy' title='Storage Area'>
+            @* <font color='red'>*</font>*@
+            <span id='spnStorageArea'>
+                Storage Area
+            </span>
+        </td>
+        <td class='formInputcolumnMy'>
+            @Html.Hidden("StorageAreaSNo")
+            @Html.TextBox("Text_StorageAreaSNo", null, new { controltype = "autocomplete", data_role = "autocomplete", })
+            @*data_valid = "required",data_valid_msg = "Origin can not be blank"*@
+        </td>
+
+    </tr>
+    <tr><td class='formSection' colspan='10'>Warehouse Utilization Report Information</td></tr>
+    <tr>
+        <td colspan='10'></td>
+    </tr>
+</table>
+
+<div id="grid">
+
+</div>
+<script src="~/JScript/Warehouse/WarehouseUtilization.js"></script>
+
+
+

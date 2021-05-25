@@ -1,0 +1,10 @@
+﻿<Messages>  
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Payment Request Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1006</Key>
+    <value>Payment Request Rejected.</value>
+  </ServerMessage>
+</Messages>

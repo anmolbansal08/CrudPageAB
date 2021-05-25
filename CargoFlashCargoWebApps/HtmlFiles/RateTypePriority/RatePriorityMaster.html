@@ -1,0 +1,80 @@
+﻿<style type="text/css">
+    .noselect {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: pointer;
+    }
+
+    .tbl {
+        background-color: transparent;
+        border-collapse: collapse;
+    }
+
+        .tbl td {
+            padding: 5px;
+        }
+
+    body {
+        font-size: 11px;
+    }
+
+    .valid_errmsg_area {
+        background-color: Blue;
+        color: white;
+    }
+</style>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+
+    });
+</script>
+
+
+
+<div id="divWindow"></div>
+<div id="divSearchWindow"></div>
+
+<div style="padding:5px;">
+    <table width="100%">
+        <tr>
+            <td class="formSection" colspan="4">Rate Priority Master</td>
+        </tr>
+        <tr>
+            <td class="formbuttonrow" colspan="4"><input id="btnSave" type="button" onclick="UpdateRatePriorityMaster();" value="Save" class="btn btn-inverse"></td>
+        </tr>
+        <tr>
+            <td>
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="100%" style="vertical-align:top;">
+                <table id="tblDetails" width="50%" class="tbl"></table>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+
+<table id="tbl1" class="WebFormTable">
+    <tr><td class="formSection" colspan="16">User Action Information</td></tr>
+    <tr>
+        <td class="formlabel" colspan="4" title="Created By"><span id="spnCreatedBy"> Created By</span></td>
+        <td class="formInputcolumn" colspan="4"><span id="CreatedBy"></span></td>
+        <td class="formlabel" colspan="4" title=" Updated By"><span id="spnUpdateBy">  Updated By</span></td>
+        <td class="formInputcolumn" colspan="4"><span id="UpdatedBy"></span></td>
+    </tr>
+</table>

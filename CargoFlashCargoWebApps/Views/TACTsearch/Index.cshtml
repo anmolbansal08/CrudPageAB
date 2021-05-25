@@ -1,0 +1,135 @@
+﻿<style type="text/css">
+    .k-grid-header th.k-header > .k-link {
+        cursor: auto;
+    }
+    #tbltact {
+        border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+#tbltact thead,#tbltact tbody,#tbltact td {
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+    
+}
+#tbltact > thead {
+    background-color: #5499C7;
+    color: white;
+    font-style: bold;
+    border: 2px solid blue;
+}
+#tbltact tbody,#tbltact td {
+    border: 1px solid blue;
+    
+}
+</style>
+
+
+<div id="divbody" style="height:auto">
+    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+        <tr><td class='formSection' colspan='4'>TACT Search</td></tr>
+
+        <tr class='formSection'>
+
+            <td class="formlabel"><font color='red'></font>Origin Airport</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("OriginSNo")
+                @Html.TextBox("Text_OriginSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+
+            </td>
+            <td class="formlabel">Destination Airport</td>
+            <td class="formInputcolumn">
+                @Html.Hidden("DestnationSNo")
+                @Html.TextBox("Text_DestnationSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            </td>
+
+        </tr>
+        <tr class='formSection'>
+
+            <td class="formlabel"><font color='red'></font>Origin City</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("OriginCitySNo")
+                @Html.TextBox("Text_OriginCitySNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+
+            </td>
+            <td class="formlabel"> Destination City</td>
+            <td class="formInputcolumn">
+                @Html.Hidden("DestinationCitySNo")
+                @Html.TextBox("Text_DestinationCitySNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            </td>
+
+        </tr>
+        <tr class='formSection'>
+
+            <td class="formlabel"><font color='red'></font>Origin Country</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("OriginCountry")
+                @Html.TextBox("Text_OriginCountry", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+
+            </td>
+            <td class="formlabel"> Destination Country</td>
+            <td class="formInputcolumn">
+                @Html.Hidden("DestinationCountry")
+                @Html.TextBox("Text_DestinationCountry", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            </td>
+
+        </tr>
+        <tr class='formSection'>
+
+            <td class="formlabel"><font color='red'></font>Commodity</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("Commodity")
+                @Html.TextBox("Text_Commodity", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+
+            </td>
+            <td class="formlabel"> CarrierCode</td>
+            <td class="formInputcolumn">
+                @Html.Hidden("CarrierCode")
+                @Html.TextBox("Text_CarrierCode", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            </td>
+
+        </tr>
+        <tr class='formSection'>
+
+            <td class="formlabel"><font color='red'></font>Valid From</td>
+            <td class="formInputcolumn">
+                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' 
+                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+            </td>
+            <td class="formlabel"> Valid To</td>
+            <td class="formInputcolumn">
+                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' 
+                       data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' />
+            </td>
+
+        </tr>
+        <tr class='formSection'>
+
+            <td class="formlabel"><font color='red'></font></td>
+            <td class="formInputcolumn"><input type='submit' name='operation' onclick="SearchTACT()" value='Search' id="btnSearch" class='btn btn-success btnSearch' /></td>
+            <td class="formlabel"></td>
+            <td class="formInputcolumn"></td>
+
+        </tr>
+    </table>
+    <br />
+    <br />
+</div>
+<table id='tbl'></table>
+
+<div id="example">
+    <div id="grid" style="font-size:11px;"></div>
+    <script src="~/JScript/Rate/TACTSearch.js"></script>
+</div>
+
+
+
+
+
+
+

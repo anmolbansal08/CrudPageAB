@@ -1,0 +1,148 @@
+﻿
+<style type="text/css">
+    body {
+        font-size: 11px;
+    }
+</style>
+
+<div>
+    <table width="100%" validateonsubmit='true' class="WebFormTable">
+        <!--<tr><td class="formActiontitle" colspan="6"><span id="__SpanHeader__">Warehouse:</span></td></tr>-->
+        <tr>
+            <td class="formlabel">
+                Warehouse Type
+            </td>
+            <td><label id="lblWarehouseType"></label> </td>
+            <td class="formlabel">
+                Storable
+            </td>
+            <td>
+                <input type="radio" onclick="rdStorableClick()" name="IsStorable" checked="True" value="1">Yes
+                <input type="radio" onclick="rdStorableClick()" name="IsStorable" value="0">No
+            </td>
+            <td class="formlabel"><!--<input id="background-color" type="color" />--></td>
+
+            <td><input type="button" style="display:none;" id="btnDeleteSubArea" onclick="DeleteSubArea()" value="Delete Selected Location" class="btn btn-danger"></td>
+        </tr>
+        <tr rel="trStorable">
+            <td class="formlabel"></td>
+            <td>
+                <input value="0" name="fixed" id="Fixed" checked="checked" type="radio" />Fixed
+                <input value="1" name="fixed" id="Movable" type="radio" />Movable
+            </td>
+            <td class="formlabel">
+
+                Terminal
+            </td>
+            <td>
+                <input type="hidden" name="Terminal" id="Terminal" value="">
+                <input type="text" class="" name="Text_Terminal" id="Text_Terminal" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel">
+                Airline
+            </td>
+            <td>
+                <input type="hidden" name="Airline" id="Airline" value="">
+                <input type="text" class="" name="Text_Airline" id="Text_Airline" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+        </tr>
+        <tr rel="trStorable">
+            <td class="formlabel">
+                SHC
+            </td>
+            <td>
+                <input type="hidden" name="SHC" id="SHC" value="">
+                <input type="text" class="" name="Text_SHC" id="Text_SHC" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel">
+                Dest Country
+            </td>
+            <td>
+                <input type="hidden" name="DestCountry" id="DestCountry" value="">
+                <input type="text" class="" name="Text_DestCountry" id="Text_DestCountry" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel">
+                Dest City
+            </td>
+            <td>
+                <input type="hidden" name="DestCity" id="DestCity" value="">
+                <input type="text" class="" name="Text_DestCity" id="Text_DestCity" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+        </tr>
+        <tr rel="trStorable">
+            <td class="formlabel">
+                Agent/Forwarder
+
+            </td>
+            <td>
+                <input type="hidden" name="AgentForwarder" id="AgentForwarder" value="">
+                <input type="text" class="" name="Text_AgentForwarder" id="Text_AgentForwarder" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel">
+                <font color="red">*</font>
+                Type of Location
+
+            </td>
+            <td>
+                <input type="hidden" name="Location" id="Location" value="">
+                <input type="text" class="" name="Text_Location" id="Text_Location" data-valid="required" data-valid-msg="Enter Location" style="width:150px;" controltype="autocomplete" value="">
+            </td>
+            <td class="formlabel">
+                <font color="red">*</font>
+                Sub Location Type
+            </td>
+            <td>
+                <input type="hidden" name="SubLocation" id="SubLocation" value="">
+                <input type="text" class="" name="Text_SubLocation" id="Text_SubLocation" data-valid="required" data-valid-msg="Enter Sub Location " style="width:150px;" controltype="autocomplete" value="">
+            </td>
+
+        </tr>
+        <tr>
+            <td class="formlabel">
+                <font color="red">*</font>
+                Sub Area Name
+
+            </td>
+            <td>
+                <input type="text" class="k-input" name="txtSubAreaName" id="txtSubAreaName" style="width: 150px; text-transform: uppercase;" controltype="uppercase" data-valid="required" data-valid-msg="Enter Sub Area Name" tabindex="1" maxlength="98" value="" data-role="alphabettextbox" autocomplete="off">
+
+            </td>
+            <td class="formlabel">
+                <font color="red">*</font>
+                Location Color
+
+            </td>
+            <td>
+                <input type="hidden" name="LocationColorCode" id="LocationColorCode" value="">
+                <input type="text" class="" placeholder="Select Color" name="Text_LocationColorCode" data-valid="required" data-valid-msg="Enter Location Color" id="Text_LocationColorCode" style="width:150px;" controltype="autocomplete" value="">
+
+            </td>
+            <td class="formlabel">
+                <div id="divColor" style="width: 70px; height: 20px;  margin: 4px;"></div>
+            </td>
+            <td></td>
+        <tr>
+            <td colspan="6">
+                <div rel="appendGrid" id="divRack">
+                    <table id="tblRack"></table>
+                </div>
+                <div rel="appendGrid" id="divFloor">
+                    <table id="tblFloor"></table>
+                </div>
+                <div rel="appendGrid" id="divCages">
+                    <table id="tblCages"></table>
+                </div>
+                <div rel="appendGrid" id="divDolly">
+                    <table id="tblDolly"></table>
+                </div>
+                <div rel="appendGrid" id="divRoom">
+                    <table id="tblRoom"></table>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div style="float:right;padding-top:10px">
+        <!--<input type="button" id="btnUpdateSubArea" onclick="SaveDialog('UpdateLocation')" rel="buttton" value="Update" />-->
+        <input type="button" id="btnSave" onclick="SaveDialog('SaveLocation')" rel="buttton" value="Save" />
+    </div>
+</div>

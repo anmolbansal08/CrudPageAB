@@ -1,0 +1,205 @@
+﻿@*// <copyright file="_GetCapacity.cshtml" company="Cargoflash">
+           //
+           // Created On: 19-March-2017
+           // Created By: Braj
+           // Description:
+           //----------------------------------------------------------------------------
+           // Revison History:
+           // Please add a new line below for any update to this file
+           // Updated On  Updated By                     Significant Changes
+           // ----------------------------------------------------------------------------
+           //
+           //
+    </copyright>*@
+@model System.Data.DataSet
+@{
+    string gridId = Guid.NewGuid().ToString();}
+
+
+
+    @*<legend>Existing Flight Plan</legend>*@
+
+    <div id="CapacityGridDiv_@gridId"></div>
+    @if (ViewBag.CapacityType == "Available")
+    {
+
+        <script>
+
+            $(document).ready(function () {
+                $("#CapacityGridDiv_@gridId").kendoGrid({
+                    dataSource: {
+                        data: JSON.parse(@Html.Raw(Json.Encode(CargoFlashCargoWebApps.Common.Global.DStoJSON(Model)))),
+                        
+                    },
+                    dataBound: function (e) { cfi.DisplayEmptyMessage(e, this); },
+                    // height:180,
+                    scrollable: true,
+                    columns: [
+                        { field: "AircraftType", title: "Aircraft Type", width: "70px" },
+                        {
+                            title: "Total Capacity",
+                            columns: [
+                                { field: "GrossWeight", title: "Gross", width: 70 },
+                                { field: "Volume", title: "Volume", width: "70px" },
+                                { field: "CBM", title: "CBM", width: "70px" },
+                            ]
+
+                        },
+                    {
+                        title: "Free Sale",
+                        columns: [
+                            { field: "FreeSaleGrossWeight", title: "Gross", width: 70 },
+                            { field: "FreeSaleVolume", title: "Volume", width: "70px" },
+                            { field: "FreeSaleCBM", title: "CBM", width: "70px" },
+                        ]
+
+                    },
+                        {
+                            title: "Allotment",
+                            columns: [
+                                { field: "AllocatedGross", title: "Gross", format: "{0: yyyy-MM-dd}", width: 70 },
+                                { field: "AllocatedVolume", title: "Volume", width: "70px" },
+                                { field: "AllocatedCBM", title: "CBM", width: "70px" },
+                            ]
+
+                        }
+                    ]
+                });
+            });
+        </script>
+    }
+    else if (ViewBag.CapacityType == "Used")
+    {
+
+        <script>
+
+            $(document).ready(function () {
+                $("#CapacityGridDiv_@gridId").kendoGrid({
+                    dataSource: {
+                        data: JSON.parse(@Html.Raw(Json.Encode(CargoFlashCargoWebApps.Common.Global.DStoJSON(Model)))),
+                        
+                    },
+                    dataBound: function (e) {cfi.DisplayEmptyMessage(e, this); },
+                    // height:180,
+                    scrollable: true,
+                    columns: [
+                        { field: "Station", title: "Station", width: "70px" },
+                         {
+                             title: "Used Capacity",
+                             columns: [
+                                 { field: "UsedGrossWeight", title: "Gross", width: 70 },
+                                 { field: "UsedVolume", title: "Volume", width: "70px" },
+
+                             ]
+
+                         }, {
+                             title: "Free Sale Used",
+                             columns: [
+                                 { field: "FreesaleUsedGross", title: "Gross", width: 70 },
+                                 { field: "FreesaleUsedVolume", title: "Volume", width: "70px" },
+
+                             ]
+
+                         },
+                          {
+                              title: "Reserved Used",
+                              columns: [
+                                  { field: "ReservedUsedGross", title: "Gross", width: 70 },
+                                  { field: "ReservedUsedVolume", title: "Volume", width: "70px" },
+
+                              ]
+
+                          },
+                           {
+                               title: "Allotment Used",
+                               columns: [
+                                   { field: "AllocatedUsedGross", title: "Gross", width: 70 },
+                                   { field: "AllocatedUsedVolume", title: "Volume", width: "70px" },
+
+                               ]
+
+                           }, {
+                               title: "Overbook Used",
+                               columns: [
+                                   { field: "OverbookUsedGross", title: "Gross", width: 70 },
+                                   { field: "OverbookUsedVolume", title: "Volume", width: "70px" },
+
+                               ]
+
+                           },
+                        //{ field: "UsedGrossWeight", title: "Used Capacity", width: "70px" },
+                        //{ field: "AllocatedUsedGross", title: "Allotment", width: 70 },
+                        //{ field: "FreesaleUsedGross", title: "Free Sale", width: "70px" },
+                        { template: "#=FreesaleUsedPer#%", title: "% of Free Sale Used", width: "70px" },
+                        { field: "AllocatedUsedPer", title: "% of Allotment Used", width: 70 }
+                    ]
+                });
+            });
+        </script>
+    }
+    else if (ViewBag.CapacityType == "Remaining")
+    {
+
+        <script>
+
+            $(document).ready(function () {
+                $("#CapacityGridDiv_@gridId").kendoGrid({
+                    dataSource: {
+                        data: JSON.parse(@Html.Raw(Json.Encode(CargoFlashCargoWebApps.Common.Global.DStoJSON(Model)))),
+                        
+                    },
+                    dataBound: function (e) { cfi.DisplayEmptyMessage(e, this); },
+                    // height:180,
+                    scrollable: true,
+                    columns: [
+                         {
+                             title: "Total Remaining",
+                             columns: [
+                                 { field: "RemainingGross", title: "Gross", width: 70 },
+                                 { field: "RemainingVolume", title: "Volume", width: "70px" },
+
+                             ]
+
+                         },
+                             {
+                                 title: "Free Sale Remaining",
+                                 columns: [
+                                     { field: "RemainingFreeSaleGross", title: "Gross", width: 70 },
+                                     { field: "RemainingFreeSaleVolume", title: "Volume", width: "70px" },
+                                     
+                                 ]
+
+                             },
+                              {
+                                  title: "Reserved Remaining",
+                                  columns: [
+                                      { field: "RemainingReservedGross", title: "Gross", width: 70 },
+                                      { field: "RemainingReservedVolume", title: "Volume", width: "70px" }
+
+                                  ]
+
+                              },
+                    {
+                        title: "Allotment Remaining",
+                        columns: [
+                            { field: "RemainingAllocatedGross", title: "Gross", width: 70 },
+                            { field: "AllocatedUsedVolume", title: "Volume", width: "70px" }
+                            
+                        ]
+
+                    },
+                     {
+                         title: "Overbook Remaining",
+                         columns: [
+                             { field: "RemainingOverbookGross", title: "Gross", width: 70 },
+                             { field: "RemainingOverbookVolume", title: "Volume", width: "70px" }
+
+                         ]
+
+                     },
+                    ]
+                });
+            });
+        </script>
+    }
+

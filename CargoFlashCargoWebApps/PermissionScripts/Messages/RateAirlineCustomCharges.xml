@@ -1,0 +1,18 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Custom Charges already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Custom Charges Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Custom Charges Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Custom Charges Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

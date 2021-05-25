@@ -1,0 +1,34 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>IncidentCategory</Name>
+    <Message>Incident Category cannot be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Incident Category already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1000</Key>
+    <value>Sub Category cannot be blank.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Irregularity Incident Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Irregularity Incident Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Irregularity Incident Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+</Messages>

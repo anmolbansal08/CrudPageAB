@@ -1,0 +1,42 @@
+﻿<Messages>
+  #region    UserType XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  UserTypeXML
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Devendra Singh
+  Created On:		07 March 2018
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion
+
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>User Type  Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>User Type  Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>User Type   Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>User Type Already Exists !</value>
+  </ServerMessage>
+  
+<ServerMessage>
+    <Key>1003</Key>
+    <value>User Exists  of this User Type so cannot delete it . </value>
+  </ServerMessage>
+
+</Messages>

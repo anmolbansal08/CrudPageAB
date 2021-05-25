@@ -1,0 +1,204 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+    });
+</script>
+<table style="width: 5.826in; height:7.5in; border:0px;" cellspacing="0" cellpadding="0">
+    <tr>
+        <td rowspan="2" style="border-top: 1px solid black; border-bottom: 0px solid black; border-right: 0px solid black; border-left:1px solid black;">&nbsp;</td>
+        <td colspan="2" align="right" style="border-top: 1px solid black; border-bottom: 0px solid black; border-right: 1px solid black; border-left:0px solid black;">
+            <b>CONTAINER/PALLET</b>
+        </td>
+    </tr>
+    <tr><td></td><td align="center" rowspan="2" style="border-left: 0px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:0px solid black;" height="70"> <span id="Barcode" style="text-align:center"></span></td></tr>
+    <tr>
+        <td height="70" style="border-left: 1px solid black; border-right:0px solid black; border-bottom:0px solid black; border-top:0px solid black;">
+            <b>AIRLINE</b>
+            <br /><b>
+                <i>
+                    <span id="spnAirline" style="text-transform: uppercase;"></span>
+                </i>
+            </b>
+        </td>
+    </tr>
+    <tr><td style="border-left: 1px solid black; border-right:0px solid black; border-bottom:0px solid black; border-top:1px solid black;" height="60"><b>DESTINATION</b></td><td colspan="2" style="border-left: 0px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;" height="60"><span id="spnDestination" style="text-transform: uppercase; font-size:20pt "></span></td></tr>
+    <tr><td align="center" style="border-left: 1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;"><b>NET WEIGHT (Kg)</b></td><td colspan="2" rowspan="2" align="center" style="border-left: 0px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;"><b>TOTAL(Kg)</b></td></tr>
+    <tr><td align="center" style="border-left: 1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;"><span id="spnNetWeight" style="text-transform: uppercase;height:40%;">1234</span></td></tr>
+    <tr><td align="center" style="border-left: 1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;"><b>TARE WEIGHT (Kg)</b></td><td colspan="2" rowspan="2" align="center" style="border-left: 0px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:0px solid black;"><span style="height:70%; width:120px;  color:black; font-size:30pt" id="spnTotal">1123</span></td></tr>
+    <tr><td align="center" style="border-left: 1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;"><span id="spnTareWeight" style="height:40%;">12457</span></td></tr>
+    <tr><td align="center" style="border-left: 1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;"><b>LOADED AT</b></td><td align="center" style="border-left: 0px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;"><b>FLIGHT 1st</b></td><td align="center" style="border-left: 0px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;"> <b>POSITION ON A/C 1</b></td></tr>
+    <tr><td align="center" style="border-left: 1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;"><span id="spnloadedat" style="height:40%;">978755</span></td><td align="center" style="border-left: 0px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;"><span id="spnflightat1st" style="height:40%; width:30%">45632</span></td><td style="border-left: 0px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;"></td></tr>
+    <tr><td align="center" style="border-left: 1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;"><b>TRANSFER AT</b></td><td align="center" style="border-left: 0px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;"><b>FLIGHT 2nd</b></td><td align="center" style="border-left: 0px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;"> <b>POSITION ON A/C 2</b></td></tr>
+    <tr><td align="center" style="border-left: 1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;"><span id="spntransferat" style="height:40%;">3456</span></td><td align="center" style="border-left: 0px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;"><span id="spnflight2nd" style="height:40%;"></span></td><td style="border-left: 0px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;"><span id="Span2" style="height:40%;"></span></td></tr>
+    <tr><td></td><td style="text-align:center;"><span id="spnbarcode" style="height:80%;text-align:center;"></span></td><td></td></tr>
+    <tr>
+        <td colspan="3" style="vertical-align: top; border-left: 1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;">
+            <b>CONTENTS</b>
+            <br /> <div align="center"> <span style="height:70%; font-size:20px;" id="spnContents"></span></div>
+
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" style="vertical-align: top; border-left: 1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;">
+            <b>REMARKS:</b><br />
+            <div align="center">  <span style="height:70%; font-size:14px;" id="spnRemark"></span></div>
+        </td>
+    </tr>
+</table>
+
+
+<!--<div id="divNewDetailForPrint" >
+
+
+    <table border="0" cellpadding="0" cellspacing="0" style=" width: 7.0in; height: 8.5in;">
+        <tr>
+
+            <td>
+
+                <center>
+                    <button class='btn btn-primary btn-sm' style='width:125px;' id='btnPrint'>Print</button>
+                </center>
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 6.0in; height: 7.5in;">
+
+                    <tr>
+                        <td>
+                            <center>
+                                <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 5.0in; height: 6.5in;">
+                                    <tr>
+
+                                        <td colspan="2">
+                                            ULD Serial Number :   <span id="spnuldno1"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td width="50%">
+                                            Destination : <span id="spnDestination1" style="text-transform: uppercase;"></span>
+                                        </td>
+                                        <td width="50%">
+                                            Position on A/C
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td width="50%">
+                                            Flight/Date :<span id="spnFlightDate1"></span>
+
+                                        </td>
+                                        <td width="50%">
+                                            Loaded At :<span id="spnloadedat1"></span>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td width="50%">
+                                            Contents (Circle) :<span style="color:black; font-size:50pt" id="spnContents1">C</span>
+
+
+                                        </td>
+                                        <td width="50%">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td>
+                                                        Transfer At :<span id="spntransferat1"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Flight/Date : <span id="spntransferFlightDate1"></span></td>
+                                                </tr>
+                                            </table>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td colspan="2">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="20%">
+                                                        Net Weight :
+                                                    </td>
+                                                    <td width="1%">:</td>
+                                                    <td width="80%"><span id="spnNetWeight1"></span></td>
+                                                    <td>Kg</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        Tare Weight
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td><span id="spnTareWeight1"></span></td>
+                                                    <td>Kg</td>
+                                                </tr>
+
+
+                                                <tr>
+                                                    <td>
+                                                        Total Weight :
+
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td><span id="spnTotal1"></span></td>
+                                                    <td>Kg</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Remarks
+
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td><span id="spnRemark1"></span></td>
+                                                    <td></td>
+                                                </tr>
+
+
+                                            </table>
+
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+
+                                        <td colspan="2">
+                                            <table width="100%">
+                                                <tr>
+
+                                                    <td>
+                                                        PIC
+                                                    </td>
+                                                    <td>Name</td>
+                                                    <td>Signature </td>
+                                                    <td>Position</td>
+                                                </tr>
+
+                                            </table>
+
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+
+
+    </table>
+
+
+
+    </div>-->
+<!--</body>
+</html>-->

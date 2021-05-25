@@ -1,0 +1,50 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>DocumentName</Name>
+    <Message>Document Name can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>ApplicableIn</Name>
+    <Message>ApplicableIn can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Document Name already exists for Export</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1003</Key>
+    <value>Document Name already exists for Import</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1004</Key>
+    <value>Document Name already exists for Both</value>
+  </ServerMessage>
+
+<ServerMessage>
+    <Key>1005</Key>
+    <value>Document Name already exists for Import/Export</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>ApplicableIn already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>E Dox Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>E Dox Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>E Dox Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

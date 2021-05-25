@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript">
+        var userContext = "";
+        $(document).ready(function ()
+        {
+          
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            var LogoURL = userContext.SysSetting.LogoURL;
+            var str = '';
+            str = LogoURL.split('..');
+            var final = str[3];
+            $('#ImgLogo').attr('src', final);
+        });
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+            function PrintNND(elem)
+            {
+                //$('#table1 tr[id^=trPrint]').remove();
+                Popup($(elem).html());
+            }
+
+            function Popup(data) {
+                var mywindow = window.open('', '', 'height=400,width=600');
+                mywindow.document.write('<html><head><title></title>');
+                /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+                mywindow.document.write('</head><body >');
+                mywindow.document.write(data);
+                mywindow.document.write('</body></html>');
+
+                mywindow.document.close(); // necessary for IE >= 10
+                mywindow.focus(); // necessary for IE >= 10
+
+                mywindow.print();
+                mywindow.close();
+
+                return true;
+            }
+    </script>
+    <!--<script src="../../JScript/Irregularity/IrregularityReport.js"></script>-->
+    <style>
+        table#table1 {
+            width: 70%;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+        /*#background {
+            position: absolute;
+            z-index: 0;
+            background: rgba(255, 255, 255, 0);
+            display: block;
+            color: yellow;
+            width: 60%;
+            margin-left: 20%;
+            margin-right: 15%;
+            margin-top: 12%;
+        }
+
+        #content {
+            position: absolute;
+            z-index: 1;
+        }
+
+        #bg-text {
+            color: lightgrey;
+            font-size: 75px;
+            transform: rotate(323deg);
+            -webkit-transform: rotate(323deg);
+        }*/
+    </style>
+</head>
+<body>
+    <div id="PrintTable">
+        <div id="background">
+            <p id="bg-text"></p>
+        </div>
+        <table id="table1" style=" background-color: rgba(0, 0, 255, 0.07); padding: 0px;">
+            <tr>
+                <td>
+                    <table style=" width: 100%;">
+                        <tr>
+                            <td style="text-align:center;">
+                                <!--<span>P.O. Box : 70888 Sharjah - U.A.E.</span><br />
+                                <span>Tel : 06-514 11 79</span><br />
+                                <span>SIT:SHJFFXH</span><br />
+                                <span>EMAIL : ctracing@sharjahaviation.com</span>-->
+                                <span style=""><img id="ImgLogo" height="50" width="150" alt="" /></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style=" width: 100%;">
+                        <tr>
+                            <td style="text-align:center;"><span style="font-size: large; font-weight: bolder;">Notice of Non Delivery - Cargo Irregularity Report</span></td>
+                        </tr>
+                    </table>
+                    <table style=" width: 100%; margin-top:20px;">
+                        <tr>
+                            <td style="width: 50%; padding-left: 50px; font-weight: bolder;"><span>Consignee:</span></td>
+                            <td style="width: 28%; padding-left: 219px; font-weight: bolder;"><span>No:</span></td>
+                            <td style="width: 22%;"><span id="SpnNo"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; padding-left:50px;"><span id="SpnConsignee"></span></td>
+                            <td style="width: 28%; padding-left: 210px; font-weight: bolder;"><span>Date:</span></td>
+                            <td style="width: 22%;"><span id="SpnDate"></span></td>
+                        </tr>
+                    </table>
+                    <table style=" width: 100%;">
+                        <tr>
+                            <td style="width: 100%; padding-left: 50px; font-weight: bolder;"><span>Shipper:</span></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100%; padding-left:50px;"><span id="SpnShipper"></span></td>
+                        </tr>
+                    </table>
+                    <div style="border-top: 1px solid black; border-bottom: 2px solid black; margin-top: 30px;">
+                        <table style=" width: 100%;">
+                            <tr>
+                                <td style="text-align: center; width: 15%; text-align: left; padding-left: 20px; font-weight: bolder;"><span>AWB No.</span></td>
+                                <td style="text-align: center; width: 15%; font-weight: bolder; "><span>Origin</span></td>
+                                <td style="text-align: center; width: 15%; font-weight: bolder;"><span>Destination</span></td>
+                                <td style="text-align: center; width: 10%; font-weight: bolder;"><span>CC/PP</span></td>
+                                <td style="text-align: center; width: 20%; font-weight: bolder;"><span>Cargo Type</span></td>
+                                <td style="text-align: center; width: 25%; font-weight: bolder;"><span>Flight Details</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--<table style="border:1px solid black;border-collapse:collapse; width:100%; ">
+                        <tr style="border: 1px solid black;">
+                            <td style="border: 1px solid black; text-align: left; padding-left: 20px; width: 30%; height: 30px; " colspan="2"><span id="spnAWBNumber"></span></td>
+                            <td style="border: 1px solid black; text-align: center; width: 15%;"><span id="spnAWBIssueDate"></span> </td>
+                            <td style="border: 1px solid black; text-align: center; width: 20%;"><span id="spnAirportOfOrgin"></span> </td>
+                            <td style="border: 1px solid black; text-align: center; width: 20%;"><span id="spnAirportOfDestination"></span> </td>
+                        </tr>
+                    </table>-->
+                    <table style=" width: 100%;">
+                        <tr>
+                            <td style="text-align: center; width: 15%; text-align: left; padding-left: 20px;"><span id="spnAWBNumber"></span></td>
+                            <td style="text-align: center; width: 15%;"><span id="SpnOrigin"></span></td>
+                            <td style="text-align: center; width: 15%;"><span id="SpnDestination"></span></td>
+                            <td style="text-align: center; width: 10%;"><span id="SpnCC"></span></td>
+                            <td style="text-align: center; width: 20%;"><span id="SpnCargoType"></span></td>
+                            <td style="text-align: center; width: 25%;"><span id="SpnFlightDetails"></span></td>
+                        </tr>
+                    </table>
+                    <div style="border-top: 1px solid black; border-bottom: 2px solid black; margin-top: 30px;">
+                        <table style=" width: 100%;">
+                            <tr>
+                                <td style="text-align: center; width: 25%; text-align: left; padding-left: 20px; font-weight: bolder;"><span>Pcs/Total pcs</span></td>
+                                <td style="text-align: center; width: 25%; font-weight: bolder; "><span>Weight/Total Weight</span></td>
+                                <td style="text-align: center; width: 50%; font-weight: bolder;"><span>Description of Goods</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <table style=" width: 100%;">
+                        <tr>
+                            <td style="text-align: center; width: 25%; text-align: left; padding-left: 20px;"><span id="spnPcs"></span></td>
+                            <td style="text-align: center; width: 25%;"><span id="SpnWeight"></span></td>
+                            <td style="text-align: center; width: 50%;"><span id="SpnDescription"></span></td>
+                        </tr>
+                    </table>
+                    <div style="border-top: 1px solid black; border-bottom: 2px solid black; margin-top: 30px;">
+                        <table style=" width: 100%;">
+                            <tr>
+                                <td style="text-align: center; width: 25%; text-align: left; padding-left: 20px; font-weight: bolder;"><span>Remarks</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width: 100%; text-align: left; padding-left: 20px; height: 40px; vertical-align:top; "><span id="spnRemarks0"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100%; text-align: left; padding-left: 20px; height: 60px; vertical-align:top; "><span id="spnRemarks1"></span></td>
+                        </tr>
+                    </table>
+                    <table style="width: 100%; margin-top: 10px;">
+                        <tr>
+                            <td style="">
+                                <span style="font-weight: bolder; padding-left: 20px;">Charge Description</span><br />
+                                <!--<span id="spnChargeDescription"></span><br />
+                                <span> ...................................... </span>-->
+                            </td>
+                            <td style="float: right; padding-right: 20px;">
+                                <span style="font-weight: bolder;">Amount in IDR</span><br />
+                                <span id="spnSigned" style="text-align: center; display: inherit;"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">
+                                <span>Delivery Order Fee</span><!--<br /><br />-->
+                            </td>
+                            <td style="float: right; padding-right: 20px;">
+                                <!--<span>Date:- </span>-->
+                                <span id="spnDeliveryOrderFee"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">
+                                <span>Handling Charges</span><!--<br /><br />-->
+                            </td>
+                            <td style="float: right; padding-right: 20px;">
+                                <!--<span>Date:- </span>-->
+                                <span id="spnHandlingCharges"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;">
+                                <span>Storage Charges</span><!--<br /><br />-->
+                            </td>
+                            <td style="float: right; padding-right: 20px;">
+                                <!--<span>Date:- </span>-->
+                                <span id="spnStorageCharges"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" width: 80%;">
+                                <span style="margin-top: 10px; float: right;">Total</span>
+                            </td>
+                            <td style=" margin-top: 10px; float: right; padding-right: 20px; ">
+                                <span style=" border-top: 1px solid black; border-bottom: 1px solid black;" id="SpnTotal"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width: 100%; margin-top: 10px;">
+                        <tr>
+                            <td style="padding-left: 20px;">
+                                <span style="font-weight: bolder;">Remarks:</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom: 1px solid black; padding-left: 20px; ">
+                                <span id="SpnRemarks2"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width: 100%; margin-top:50px;">
+                        <tr>
+                            <!--<td style="width:21%;"></td>-->
+                            <td style="width: 100%; text-align:center">
+                                <span style="width: 100%; font-size: 9px;"><!--Sharjah Aviation Services, PO Box 70888,Sharjah, UAE. Tel: +9716 5141186 Fax: +9716 5581503 Email: Impcustomerservice@sharjahaviation.com--></span>
+
+                            </td>
+                            <!--<td style="width:3%;"></td>-->
+                        </tr>
+                        <!--<tr>
+                            <td style="width:33%">
+                                Original - Consignee
+                            </td>
+                            <td style ="text-align:center;">
+                                <span>    Duplicate - Inbound Carrier Stn Mngr </span>
+                            </td>
+                            <td style=" float:right; padding-right:20px;">
+                                Triplicate - File (inbound papers)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                SAS/FC/GEN - 001
+                            </td>
+                            <td>
+
+                            </td>
+                            <td style="float: right; padding-right: 40px;">
+                                Quadruplicare - File
+                            </td>
+                        </tr>-->
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <table id="Print" style="width:100%;">
+        <tr style="padding-bottom:20px" id="trPrint">
+            <td style="width: 50%;">
+                <div style="align-content:center;">
+                    <input style="float: right;" type="button" id="btnNNDPrint" value="Print" onclick="PrintNND('#PrintTable');" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

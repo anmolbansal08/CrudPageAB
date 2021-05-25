@@ -1,0 +1,101 @@
+﻿
+@Scripts.Render("~/bundles/BTBReport")
+<div id="divbody" style="height:auto">
+    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+        <tr><td class='formSection' colspan='4'>BTB Report </td></tr>
+        <tr class="DateWiseRow">
+            <td class=' formlabel' title='From Date'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    Start Date :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' width="200px" />
+            </td>
+            <td class=' formlabel' title='To Date'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    End Date :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                       data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' width="200px" />
+            </td>
+        </tr>
+
+        <tr class='formSection'>
+            <td class="formlabel"><font color='red'>*</font>Airline</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("AirlineCode")
+                @Html.TextBox("Text_AirlineCode", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank", style = "width:200px;" })
+
+            </td>
+
+
+            <td class="formlabel"><font color='red'>*</font>Airport</td>
+            <td class="formInputcolumn">
+                @Html.Hidden("Airport")
+                @Html.TextBox("Text_Airport", null, new { data_valid = "required", controltype = "autocomplete", data_valid_msg = "Airline Name can not be blank", data_role = "autocomplete", style = "width:200px;" })
+            </td>
+            
+           
+
+        </tr>
+        <tr class='formSection'>
+
+            <td class="formlabel"><font color='red'></font>AWB No</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("AWBNo")
+                @Html.TextBox("Text_AWBNo", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:200px;" })
+
+            </td>
+            <td class="formlabel">User Id</td>
+        <td class="formInputcolumn">        
+
+            @Html.Hidden("UserName")
+            @Html.TextBox("Text_UserName", null, new { controltype = "autocomplete",  data_role = "autocomplete", style = "width:200px;" })
+
+            @*@Html.Hidden("BTBU")
+            @Html.TextBox("Text_BTBU", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:200px;", disabled = "true" })*@
+        </td>
+            <td class="formlabel"></td>
+            <td class="formInputcolumn"></td>
+
+
+        </tr>
+
+
+
+        <tr>
+            <td class=' formlabel'>
+                <div id="exportflight" style="float:left;">
+                    <img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" onclick="ExportToExcel()" title="Export To Excel" />
+                </div>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='submit' name='operation' onclick="SearchPaymentStatusReport()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+            </td>
+            <td class="formlabel"></td>
+            <td class="formInputcolumn"></td>
+
+        </tr>
+    </table>
+    <br />
+    <br />
+    <div id='divCreditLimitReport' style="overflow-x: auto;">
+
+        <span id='spnCreditLimitReport'>
+            <input id='hdnPageType' name='hdnPageType' type='hidden' />
+            <input id='hdnCreditLimitReportSNo' name='hdnCreditLimitReportSNo' type='hidden' />
+            <table id='tblCreditLimitReport' Style='margin-top: 20px;'></table>
+        </span>
+    </div>
+</div>
+
+
+
+
+

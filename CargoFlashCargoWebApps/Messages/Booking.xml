@@ -1,0 +1,51 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>Origin</Name>
+    <Message>Origin can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>Destination</Name>
+    <Message>Destination can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>AgentName</Name>
+    <Message>Agent Name can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>GrossWeight</Name>
+    <Message>Gross Weight can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>ProductName</Name>
+    <Message>Product Name can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>ValidFrom</Name>
+    <Message>Valid From can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Duplicate Entry</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Booking Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Booking Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Booking Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>3003</Key>
+    <value>Stock Not Available.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>3004</Key>
+    <value>Debit limit exceeded.Shipment can't be Booked.</value>
+  </ServerMessage>
+</Messages>

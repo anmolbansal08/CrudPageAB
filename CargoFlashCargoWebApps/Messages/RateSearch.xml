@@ -1,0 +1,18 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Account Target already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Account Target Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Account Target Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Account Target Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

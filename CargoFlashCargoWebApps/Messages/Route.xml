@@ -1,0 +1,27 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>Routing</Name>
+    <Message>Routing can not be blank</Message>
+  </DataFieldName>
+
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>This Route combination already exists.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Route Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Route Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Route Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

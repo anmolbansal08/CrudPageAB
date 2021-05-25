@@ -1,0 +1,133 @@
+﻿
+@*// <copyright file="_GetAWBNoDetails.cshtml" company="Cargoflash">
+           //
+           // Created On: 15-Feb-2017
+           // Created By: Braj
+           // Description:
+           //----------------------------------------------------------------------------
+           // Revison History:
+           // Please add a new line below for any update to this file
+           // Updated On  Updated By                     Significant Changes
+           // ----------------------------------------------------------------------------
+           //
+           //
+    </copyright>*@
+
+@model System.Data.DataSet
+@{
+    string gridId = Guid.NewGuid().ToString();}
+
+<table class='WebFormTable'>
+@if (Model.Tables.Count > 0 && Model.Tables[0].Rows.Count > 0)
+{
+    <tr>
+        
+        @if (ViewBag.IsTab!=null && ViewBag.IsTab)
+        {
+            <td class='formSection' colspan='3'>Shipment Information</td>
+            <td class='formSection'><input type="button" value="Replan Shipment" class="inProgress wa" ng-click="ReplanAWBFlight({AWBRefBookingSNo:'@Model.Tables[0].Rows[0]["AWBRefBookingSNo"]',BookedFrom:'@Model.Tables[0].Rows[0]["BookedFrom"]'},false);"></td>
+        }else{
+        <td class='formSection' colspan='4'>Shipment Information</td>
+        }
+    </tr>
+    <tr>
+        <td class='formlabel'>AWB No/CN38:</td>
+        <td class='formInputcolumn'>
+
+            <span>@Convert.ToString(Model.Tables[0].Rows[0]["AWBNo"]).ToUpper()</span>
+        </td>
+        <td class='formlabel'>AWB Status</td>
+        <td class='formInputcolumn'>
+            <span>@Convert.ToString(Model.Tables[0].Rows[0]["Status"]).ToUpper()</span>
+        </td>
+    </tr>
+    <tr>
+        <td class='formlabel'>Agent Name</td>
+        <td class='formInputcolumn'>
+            <span>@Convert.ToString(Model.Tables[0].Rows[0]["AgentName"]).ToUpper()</span>
+        </td>
+        <td class='formlabel'>Commodity</td>
+        <td class='formInputcolumn'>
+            <span>@Convert.ToString(Model.Tables[0].Rows[0]["Commodity"]).ToUpper()</span>
+        </td>
+    </tr>
+    <tr>
+        <td class='formlabel'>Pieces</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["Pieces"]</span>
+        </td>
+        <td class='formlabel'>Gross Weight</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["GrossWeight"]</span>
+        </td>
+    </tr>
+    <tr>
+        <td class='formlabel'>Volume</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["VolumeWeight"]</span>
+        </td>
+        <td class='formlabel'>Chargeable Weight</td>
+        <td class='formInputcolumn'>
+            <span>@Model.Tables[0].Rows[0]["ChargeableWeight"]</span>
+        </td>
+    </tr>
+    <tr>
+        <td class='formlabel'>SHC</td>
+        <td class='formInputcolumn'>
+            <span>@Convert.ToString(Model.Tables[0].Rows[0]["SHC"]).ToUpper()</span>
+        </td>
+        <td class='formlabel'>Product</td>
+        <td class='formInputcolumn'>
+            <span>@Convert.ToString(Model.Tables[0].Rows[0]["ProductName"]).ToUpper()</span>
+        </td>
+    </tr>
+    <tr>
+        <td class='formSection' colspan='4'>Itinerary Information</td>
+    </tr>
+    <tr>
+        <td colspan='4'>
+@if (ViewBag.IsTab != null && ViewBag.IsTab)
+{
+    <kendo-grid k-options="AWBDetailsInitGrid({DailyFlightSNo:'',AWBRefBookingSNo:@Model.Tables[0].Rows[0]["AWBRefBookingSNo"],BookedFrom:'@Model.Tables[0].Rows[0]["BookedFrom"]'},true)"></kendo-grid>
+}
+else
+{
+            <div id="agentshipment_@gridId"></div>
+            <script>
+                $(document).ready(function () {
+                    $("#agentshipment_@gridId").kendoGrid({
+                        dataSource: {
+                            data: JSON.parse(@Html.Raw(Json.Encode(CargoFlashCargoWebApps.Common.Global.DStoJSON(Model,1)))),
+                            schema: {
+                                model: {fields: {FlightDate: { type: "date" }}}
+                            },
+
+                        },
+                        //height: 180,
+                        scrollable: true,
+                        columns: [
+
+                            { field: "FlightNo", title: "FlightNo", width: "70px" },
+                            { field: "FlightDate", title: "FlightDate", format: "{0: yyyy-MM-dd}", width: 70 },
+                            { template: "<span>#= ETD # /#= ETA#</span>", title: "ETD/ETA", width: 100 },
+                            { template: "<span>#= Board # /#= Off#</span>", title: "Board/Off", width: 90 },
+                            { field: "Pieces", title: "Pieces", width: "60px" },
+                            { field: "GrossWeight", title: "Gross", width: "60px" },
+                            { field: "VolumeWeight", title: "Volume", width: "60px" }
+                            
+                          
+                        ]
+                    });
+                });
+            </script>
+}
+        </td>
+    </tr>
+}
+else { 
+    <tr>
+        <td class='formSection' colspan='4'>No data found</td>
+    </tr>
+
+}
+</table>

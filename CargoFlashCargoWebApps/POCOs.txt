@@ -1,0 +1,32 @@
+﻿using System;
+ 
+namespace cf.cargoflash.com
+{
+
+	[KnownType(typeof(SLIAWBInfo))]
+	public class SLIAWBInfo
+	 {
+	    public long SNo { get; set; }
+    public Nullable<byte> BookingType { get; set; }
+    public int MovementTypeSNo { get; set; }
+    public string AWBNo { get; set; }
+    public Nullable<int> DestinationAirportSNo { get; set; }
+    public int AirlineSNo { get; set; }
+    public int DestinationCitySNo { get; set; }
+    public string RoutingCity { get; set; }
+    public Nullable<int> OfficeSNo { get; set; }
+    public string DeclaredCarriagevalue { get; set; }
+    public string DeclaredCustomValue { get; set; }
+    public string ChargeCode { get; set; }
+    public double VolumeWeight { get; set; }
+    public string BOENo { get; set; }
+    public bool IDNumber { get; set; }
+    public bool IDRetained { get; set; }
+    public string SPHCCode { get; set; }
+    public int CreatedBy { get; set; }
+    public DateTime CreatedOn { get; set; }
+    public int UpdatedBy { get; set; }
+    public DateTime UpdatedOn { get; set; }
+    public Nullable<long> AccountSNo { get; set; }
+	 }
+}

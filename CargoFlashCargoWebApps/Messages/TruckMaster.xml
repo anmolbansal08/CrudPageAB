@@ -1,0 +1,22 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Truck No already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Assigned Truck Registration No already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Truck Master Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Truck Master Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Truck Master Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

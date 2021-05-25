@@ -1,0 +1,21 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Dolly Name for office already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Dolly Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Dolly Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Dolly Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+
+

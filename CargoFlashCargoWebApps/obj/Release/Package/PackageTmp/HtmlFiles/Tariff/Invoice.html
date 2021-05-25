@@ -1,0 +1,369 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Invoice</title>
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/Tariff/InvoiceReport.js"></script>
+    <script src="../../Scripts/JqueryPrint.js"></script>
+    <script src="../../Scripts/jspdf.min.js"></script>
+    <script src="../../Scripts/ExportToPDF.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            var LogoURL = getParameterByName("LogoUrl", "");
+            $('#imgLogo').attr('src', LogoURL);
+            $('#LogoUrls').attr('src', LogoURL);
+        });
+        function getParameterByName(name, url) 
+        {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+    </script>
+</head>
+<body>
+    <span style="float:right; padding:5px;"><input type="button" class="btn btn-block btn-primary" name="name" id="PrintInvoiceReports" value="Print" onclick="PrintInvoiceReports();" /></span>
+    <center>
+        <div id="InvoiceReportContentAll">
+            <div id="InvoiceReportContent" style="position: relative;width: 70%; margin-top: 20px; border: 1px solid #5a7570; width: 21cm; min-height: 27.7cm; padding: 1cm; margin: 1cm auto; border: 1px #D3D3D3 solid; border-radius: 5px; background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
+                <center>
+                    <div id="divHeight" style="height: auto; page-break-inside: auto">
+                        <center><img id="imgLogo" height="80" width="200" alt="" /><br /><h3 style="font-family: sans-serif;"><span id="spnHeader"></span></h3></center>
+                        <table style="margin: 0; position: relative; padding: 0rem; width: 96%; font-family: sans-serif; ">
+                            <tr><td align="left"><span id="spnName" style="font-family: sans-serif; font-size:13px;font-weight:bold;"></span></td><td align="right" style="font-family: sans-serif;  font-size: 13px;font-weight:bold;">&nbsp;</td><td align="right" style="font-family: sans-serif; font-size: 13px; font-weight: bold;">Period : <span id="spnInvoiceDate" style="font-family: sans-serif;  font-size:14px;font-weight:bold;"></span><span id="spnPeriodDate" style="font-family: sans-serif;  font-size:13px;font-weight:bold;"></span></td></tr>
+                            <tr><td align="left"><span id="spnAddress" style="font-family: sans-serif; font-size:13px;"></span></td><td align="right" style="font-family: sans-serif;  font-size: 14px;font-weight:bold;">&nbsp;</td><td align="right"></td><!--<td align="left"></td>--></tr>
+                            
+                            <tr><td align="left"></td><td align="right"></td><td align="left" colspan="2"></td></tr>
+                            <tr><td align="left" style="font-family: sans-serif; font-size:13px;"><div style="text-align:left; width: 25%; display: inline-block; vertical-align: top; "></div><div style="text-align: left; width: 75%; display: inline-block; vertical-align: top; "><span id="spnP" style="font-family: sans-serif; font-size:14px;font-weight:bold;"></span></div></td><td align="right">&nbsp;</td><td colspan="2" align="right" style="font-family: sans-serif; font-size:13px;"><div style="width: 68%; display: inline-block; vertical-align: top; ">Invoice Date &nbsp;&nbsp;: </div><div style="text-align:left; display: inline-block; vertical-align: top; width: 30%; ">&nbsp;<span id="spnInvoicedate" style="font-family: sans-serif;  font-size:13px;font-weight:bold;"></span></div></td></tr>
+                            <tr><td align="left" style="font-family: sans-serif; font-size:13px;"><div style="text-align:left; width: 25%; display: inline-block; vertical-align: top; ">Tel No</div><div style="text-align: left; width: 73%; display: inline-block; vertical-align: top; ">:&nbsp;<span id="spnPhoneNo" style="font-family: sans-serif; font-size:14px;font-weight:bold;"></span></div></td><td align="right">&nbsp;</td><td colspan="2" align="right" style="font-family: sans-serif; font-size:13px;"><div style="width: 68%; display: inline-block; vertical-align: top; ">Invoice No &nbsp;&nbsp;&nbsp;&nbsp; : </div><div style="text-align:left; display: inline-block; vertical-align: top; width: 30%; ">&nbsp;<span id="spnInvoiceNo" style="font-family: sans-serif;  font-size:13px;font-weight:bold;"></span></div></td></tr>
+                            <tr><td align="left" style="font-family: sans-serif; font-size:13px;"><div style="text-align:left; width: 25%; display: inline-block; vertical-align: top; ">Fax No</div><div style="text-align: left; width: 73%; display: inline-block; vertical-align: top; ">:&nbsp;&nbsp;<span id="spnFaxNo" style="font-family: sans-serif;  font-size:14px;font-weight:bold;"></span></div></td><td align="right" style="font-family: sans-serif;  font-size: 14px;font-weight:bold;">&nbsp;</td><td colspan="2" align="right" style="font-family: sans-serif; font-size:13px;"><div style="width: 68%; display: inline; vertical-align: top; ">&nbsp;&nbsp;Acct. Code&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </div><div style="text-align: left; display: inline-block; vertical-align: top; width: 29%; ">&nbsp;<span id="spnAccCode" style="font-family: sans-serif;  font-size: 13px;"></span></div></td></tr>
+                            <tr><td align="left"></td><td align="right"></td><td align="left" colspan="2"></td></tr>
+                            <tr>
+                            <!--<td colspan="2" align="left" style="border-top: thin dashed #000000; border-bottom: thin dashed #000000;font-family: sans-serif;  font-size: 14px;">-->
+                                <td colspan="2" align="left" style="border-top: thin solid #000000; border-bottom: thin solid #000000;font-family: sans-serif;  font-size: 13px;">
+                                    We charge you for
+                                </td><td style="border-top: thin solid #000000; border-bottom: thin solid #000000; " colspan="2" align="right"><span id="spnCurrencyCode" style="font-family: sans-serif;  font-size: 13px;font-weight:bold;"></span></td></tr>
+                            <tr><td colspan="4" align="left" style="height:10px">&nbsp;</td></tr>
+                            <tr>
+                                <td colspan="4">
+                                    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; " id="tblData"></table>
+                                </td>
+                            </tr>
+                            <tr><td id="tdHeight" colspan="4" style="height:10px;" align="left">&nbsp;</td></tr>
+
+                        </table>
+
+                        <div id="dvBottom" style="position: relative; bottom: 0; padding: 1rem; text-align: center;">
+                          <table cellpadding="0" cellspacing="0" border="0" style="page-break-inside: auto">
+                          
+                                <tr>
+                                    <td colspan="4" style="bottom:0;">
+                                        <table border="0" id="tblFooter" cellpadding="0" cellspacing="0" style="width:100%;">
+                                            <tr><td colspan="2" align="left" style="font-family: sans-serif; font-size: 13px;font-weight:bold;">Net Amount :</td><td style="border-top: thin solid #000000; " colspan="2" align="right"></td></tr>
+                                            <tr><td colspan="2" align="left" style="border-bottom: thin solid #000000; font-family: sans-serif; font-size: 12px;"><b>Dhs:</b> <span id="spnChargeAmountInWords" style="font-family: sans-serif; font-size: 12px; word-wrap: break-word; font-weight:bold; "></span></td><td style="border-bottom: thin solid #000000;" colspan="2" align="right"><span id="spnChargeAmount" style="font-family:sans-serif;font-size: 14px; font-weight:bold;"></span></td></tr>
+                                            <tr><td colspan="4" align="left"><p style="word-wrap:break-word;font-family: sans-serif; font-size: 13px;">This invoice will be considered correct unless, if any discrepancy is not notified within 10 days from the date of invoice delivered & indicate invoice number on remittance advise</p></td></tr>
+                                            <tr><td colspan="4" align="left" style="height:50px">&nbsp;</td></tr>
+                                            <tr><td colspan="2" align="left" style="font-family: sans-serif; font-size: 13px;"><span id="spanUserName"></span></td><td style="font-family: sans-serif; font-size: 14px;" align="right" colspan="2"><span id="spanUserSign"></span></td></tr>
+                                            <tr><td colspan="2" align="left" style="border-top: thin solid #000000; font-family: sans-serif; font-size: 13px; font-weight: bold;"><br/>Prepared & Checked By</td><td style="border-top: thin solid #000000; font-family: sans-serif; font-size: 13px; font-weight: bold;" align="right" colspan="2"><br />Authorized Signatory</td></tr>
+                                            <tr><td colspan="4" align="left" style="font-family: sans-serif; font-size: 13px;"><b>* For Billing Enquiries</b><br /><b>Contact:Garuda Airline Services</b></td></tr>
+                                        </table>
+                                        <!--<table border="0" id="tblFooter" cellpadding="0" cellspacing="0" style="width:100%;">
+                    <tr><td colspan="2" align="left" style="width:75%; font-family: sans-serif;  font-size:14px;font-weight:bold;">Net Amount :</td><td style="width: 25%; border-top: thin dashed #000000; " colspan="2" align="right"></td></tr>
+                    <tr><td colspan="2" align="left" style="width: 75%; border-bottom: thin dashed #000000; font-family: sans-serif; font-size: 12px;">Dhs: <span id="spnChargeAmountInWords" style="font-family: sans-serif;  font-size: 12px; word-wrap: break-word; font-weight:bold; "></span></td><td style="width: 25%; border-bottom: thin dashed #000000;" colspan="2" align="right"><span id="spnChargeAmount" style="font-family:sans-serif;font-family: sans-serif; font-size: 14px; font-weight:bold;"></span></td></tr>
+                    <tr><td colspan="4" align="left"><p style="word-wrap:break-word;font-family: sans-serif;  font-size: 14px;">This invoice will be considered correct unless, if any discrepancy is not notified within 10 days from the date of invoice delivered & indicate invoice number on remittance advise</p></td></tr>
+                    <tr><td colspan="4" align="left" style="height:50px">&nbsp;</td></tr>
+                    <tr><td colspan="2" align="left" style="width: 75%; border-top: thin dashed #000000; font-family: sans-serif; font-size: 14px; font-weight: bold;">Prepared & Checked By</td><td style="border-top: thin dashed #000000; font-family: sans-serif; width: 25%; font-size: 14px; font-weight: bold;" align="right" colspan="2">Authorized Signatory</td></tr>
+                    <tr><td colspan="4" align="left" style="font-family: sans-serif;  font-size: 14px;">* For Billing Enquiries <br /><br /></td></tr>
+                    <tr><td colspan="4" align="center" style="font-family: sans-serif; font-weight: bold; font-size: 9px;">Sharjah Aviation Services, PO BOX 70888, Sharjah, United Arab Emirates Tel: +97165141180,+97165141204 & +97165141206, Fax: +97165580474</td></tr>
+                </table>-->
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </center>
+            </div>
+            <!--<span style="float:right; padding:5px;"><input type="button" class="btn btn-block btn-primary" name="name" id="PrintInvoiceReportsNext" value="Print" onclick="PrintInvoiceReportsNext();" /></span>-->
+            <div id="dvDetailsinvoice" style="width: 11.69in; min-height: 8.27in; padding: 1cm; margin: 1cm auto; border: 1px #D3D3D3 solid; border-radius: 5px; background: white; page-break-after: auto; box-shadow: 0 0 5px rgba(0, 0, 0, 0); page-break-inside: auto; page-break-after: auto; ">
+                <!---webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg); filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);-->
+                <table style="width:98%;">
+                    <tr><td colspan="4" align="center"><center><img id="LogoUrls" height="80" width="200" alt="" /><br /><h3 style="font-family: sans-serif;"><span id="spnHeader1"></span></h3></center></td></tr>
+                    <tr>
+                        <td colspan="2" style="width:50%;">
+                            <table style=" width:100%; font-family:sans-serif; font-size:12px; ">
+                                <tr><th style="width: 30%; font-weight: normal; " align="left">PARTY</th><td style="width: 70%; font-weight: bold; " id="tdParty"></td></tr>
+                                <tr><th style="width: 30%; font-weight: normal; " align="left">CYCLE</th><td style="width: 70%; font-weight: bold;" id="tdType"></td></tr>
+                                <tr><th style="width: 30%; font-weight: normal; " align="left">BILL DATE</th><td style="width: 70%; font-weight: bold;" id="tdPeriod"></td></tr>
+                                <tr><th style="width: 30%; font-weight: normal; " align="left">START PERIOD</th><td style="width: 70%; font-weight: bold;" id="tdStartDate"></td></tr>
+                                <tr><th style="width: 30%; font-weight: normal; " align="left">END PERIOD</th><td style="width: 70%; font-weight:bold;" id="tdEndDate"></td></tr>
+                            </table>
+                        </td>
+                        <td colspan="2" style="width:50%;"></td>
+                    </tr>
+                    <tr><td colspan="4">&nbsp;</td></tr>
+                    <tr>
+                        <td colspan="4" valign="top" align="center">
+                            <table style="min-height:98%;width:100%;page-break-after:auto">
+                                <tr><td colspan="4" valign="top" style="-webkit-print-color-adjust: exact; border: 1px solid #000000; color: #000000 !important; height: 25px; font-family: sans-serif; font-size: 15px; font-weight:bold; padding: 5px; " id="tdSummary"></td></tr>
+                                <tr>
+                                    <td colspan="4" valign="top">
+                                        <!--Table for Report:- tblInvoiceDetails-->
+                                        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid black; text-align:left" id="tblInvoiceDetails"></table>
+                                    </td>
+                                </tr>
+                                <tr id="tblWorkOrderTR1"><td colspan="4" style="height:30px;">&nbsp;</td></tr>
+                                <tr id="tblWorkOrderTR2"><td colspan="4" valign="top" style="-webkit-print-color-adjust: exact; border: 1px solid #000000; color: #000000 !important; height: 25px; font-family: sans-serif; font-size: 15px; font-weight: bold; padding: 5px; ">HANDLING DETAILS</td></tr>
+                                <tr>
+                                    <td colspan="4" valign="top">
+                                        <!--tblWorkOrder   border-bottom: 1px solid black; border-top: 1px solid black; border-right: 1px solid black; border-left: 1px solid black;-->
+                                        <table cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid black;" id="tblWorkOrder">
+                                            <tr>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;">Work Order No</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;">Work Order Date</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;">Head Name</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;">Description</td>
+                                                <td style="padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;">Amount</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!--<tr id="tblHandlingChargesImportTR1"><td colspan="4" style="height:30px;"></td></tr>
+                                <tr id="tblHandlingChargesImportTR2"><td colspan="4" valign="top" style="-webkit-print-color-adjust: exact; border: 1px solid #5a7570; background: #5a7570 !important; color: #fff !important; height: 30px; font-family: sans-serif; font-size:18px; padding: 5px;">Import</td></tr>
+                                <tr>
+                                    <td colspan="4" valign="top">
+                                        Table for Report:- tblHandlingChargesImport
+                                        <table cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid black; " id="tblHandlingChargesImport">
+                                            <tr>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Type</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">AWB No</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">AWB Org.</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">AWB Dest.n</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight No</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight Date</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight Org.</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight Dest.</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Pieces</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Total Gr.Wt.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>-->
+
+                                <tr id="tblHandlingChargesImportFlightWiseTR1"><td colspan="4" style="height:25px;"></td></tr>
+                                <tr id="tblHandlingChargesImportFlightWiseTR2"><td colspan="4" valign="top" style="-webkit-print-color-adjust: exact; border: 1px solid #000000; color: #000000 !important; height: 25px; font-family: sans-serif; font-size: 15px; font-weight: bold; padding: 5px;">IMPORT AND IMPORT TRANSIT - FLIGHT WISE</td></tr>
+                                <tr>
+
+                                    <td colspan="4" valign="top">
+                                        <!--Table for Report:- tblHandlingChargesFlightWiseImport-->
+                                        <table cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid black; " id="tblHandlingChargesFlightWiseImport">
+                                            <tr>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center"> FLIGHT NO</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center">FLIGHT DATE</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center">FLIGHT ORG.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center">FLIGHT DEST.</td>
+                                                <!--<td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="right">Total Pieces</td>-->
+
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center">IMPORT CARGO GR. WT.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center">TRANSIT CARGO GR. WT.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center">TOTAL GR. WT.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <!-- <tr id="tblHandlingChargesImportTransitFlightWiseTR1"><td colspan="4" style="height:30px;"></td></tr>
+                                 <tr id="tblHandlingChargesImportTransitFlightWiseTR2"><td colspan="4" valign="top" style="-webkit-print-color-adjust: exact; border: 1px solid #000000; color: #000000 !important; height: 30px; font-family: sans-serif; font-size: 18px; padding: 5px;">Import-Transit - Flight Wise</td></tr>
+                                 <tr>
+                                     <td colspan="4" valign="top">
+                                         Table for Report:- tblHandlingChargesImportTransitFlightWise
+                                         <table cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid black; " id="tblHandlingChargesImportTransitFlightWise">
+                                             <tr>
+                                                 <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="left"> Flight No</td>
+                                                 <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="right">Flight Date</td>
+                                                 <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="right">Flight Org.</td>
+                                                 <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="right">Flight Dest.</td>
+                                                 <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="right">Total Pieces</td>
+                                                 <td style="padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="right">Total Gr.Wt.</td>
+                                             </tr>
+                                         </table>
+                                     </td>
+                                 </tr>-->
+
+                                <tr id="tblHandlingChargesExportFlightWiseTR1"><td colspan="4" style="height:30px;"></td></tr>
+                                <tr id="tblHandlingChargesExportFlightWiseTR2"><td colspan="4" valign="top" style="-webkit-print-color-adjust: exact; border: 1px solid #000000; color: #000000 !important; height: 25px; font-family: sans-serif; font-size: 15px; font-weight: bold; padding: 5px;">EXPORT AND EXPORT TRANSIT - FLIGHT WISE</td></tr>
+                                <tr>
+                                    <td colspan="4" valign="top">
+                                        <!--Table for Report:- tblHandlingChargesExportFlightWise-->
+                                        <table cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid black; " id="tblHandlingChargesExportFlightWise">
+                                            <tr>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center"> FLIGHT NO</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center">FLIGHT DATE</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center">FLIGHT ORG.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center">FLIGHT DEST.</td>
+                                                <!--<td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="right">Total Pieces</td>-->
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center">EXPORT CARGO GR. WT.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center">TRANSIT CARGO GR. WT.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="center">TOTAL GR. WT.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!--<tr id="tblHandlingChargesExportTransitFlightWiseTR1"><td colspan="4" style="height:30px;"></td></tr>
+                                <tr id="tblHandlingChargesExportTransitFlightWiseTR2"><td colspan="4" valign="top" style="-webkit-print-color-adjust: exact; border: 1px solid #000000; color: #000000 !important; height: 30px; font-family: sans-serif; font-size: 18px; padding: 5px;">Export-Transit - Flight Wise</td></tr>
+                                <tr>
+                                    <td colspan="4" valign="top">
+                                        Table for Report:- tblHandlingChargesExportTransitFlightWise
+                                        <table cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid black; " id="tblHandlingChargesExportTransitFlightWise">
+                                            <tr>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="left"> Flight No</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="right">Flight Date</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="right">Flight Org.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="right">Flight Dest.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="right">Total Pieces</td>
+                                                <td style="padding: 2px; font-family: sans-serif; font-size: 12px; font-weight: bold;" align="right">Total Gr.Wt.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+
+
+                                <tr id="tblHandlingChargesImport-TransitTR1"><td colspan="4" style="height:30px;"></td></tr>
+                                <tr id="tblHandlingChargesImport-TransitTR2"><td colspan="4" valign="top" style="-webkit-print-color-adjust: exact; border: 1px solid #5a7570; background: #5a7570 !important; color: #fff !important; height: 30px; font-family: sans-serif; font-size:18px; padding: 5px;">Import-Transit</td></tr>
+                                <tr>
+                                    <td colspan="4" valign="top">
+                                        Table for Report:- tblHandlingChargesImport-Transit
+                                        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid black;" id="tblHandlingChargesImport-Transit">
+                                            <tr>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Type</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">AWB No</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">AWB Org.</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">AWB Dest.n</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight No</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight Date</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight Org.</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight Dest.</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Pieces</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Total Gr.Wt.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr> -->
+                                <!--<tr id="tblHandlingChargesExportTR1"><td colspan="4" style="height:30px;"></td></tr>
+                                <tr id="tblHandlingChargesExportTR2"><td colspan="4" valign="top" style="-webkit-print-color-adjust: exact; border: 1px solid #5a7570; background: #5a7570 !important; color: #fff !important; height: 30px; font-family: sans-serif; font-size:18px; padding: 5px;">Export</td></tr>
+                                <tr>
+                                    <td colspan="4" valign="top">
+                                        Table for Report:- tblHandlingChargesExport
+                                        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid black;" id="tblHandlingChargesExport">
+                                            <tr>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Type</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">AWB No</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">AWB Org.</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">AWB Dest.n</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight No</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight Date</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight Org.</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight Dest.</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Pieces</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Total Gr.Wt.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>-->
+                                <!--<tr id="tblHandlingChargesExport-TransitTR1"><td colspan="4" style="height:30px;"></td></tr>
+                                <tr id="tblHandlingChargesExport-TransitTR2"><td colspan="4" valign="top" style="-webkit-print-color-adjust: exact; border: 1px solid #5a7570; background: #5a7570 !important; color: #fff !important; height: 30px; font-family: sans-serif; font-size:18px; padding: 5px;">Export-Transit</td></tr>
+                                <tr>
+                                    <td colspan="4" valign="top">
+                                        Table for Report:- tblHandlingChargesExport-Transit
+                                        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid black;" id="tblHandlingChargesExport-Transit">
+                                            <tr>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Type</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">AWB No</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">AWB Org.</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">AWB Dest.n</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight No</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight Date</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight Org.</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Flight Dest.</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Pieces</td>
+                                                <td style="color: rgb(255, 255, 255); border: 1px solid #5a7570; padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold; background: #5a7570;">Total Gr.Wt.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>-->
+                                <tr id="tblHandlingChargesStorageTR1"><td colspan="4" style="height:30px;"></td></tr>
+                                <tr id="tblHandlingChargesStorageTR2"><td colspan="4" valign="top" style="-webkit-print-color-adjust: exact; border: 1px solid #000000; color: #000000 !important; height: 25px; font-family: sans-serif; font-size: 15px; font-weight: bold; padding: 5px;">STORAGE</td></tr>
+                                <tr>
+                                    <td colspan="4" valign="top">
+                                        <!--Table for Report:- tblHandlingChargesStorage-->
+                                        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid #5a7570;" id="tblHandlingChargesStorage">
+                                            <tr>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">AWB No</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">AWB ORG.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">AWB DEST.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">FLIGHT No</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">FLIGHT DATE</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">FLIGHT ORG.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">FLIGHT DEST.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">PIECES</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">GR.WT.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">ACTUAL WT.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">REMARK</td>
+                                                <td style="padding: 2px; font-family: sans-serif;  font-size: 11px; font-weight: bold;">STORAGE AMOUNT</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr id="tblOffloadedDetailsRow"><td colspan="4" style="height:30px;"></td></tr>
+                                <tr><td colspan="6" valign="top" style="-webkit-print-color-adjust: exact; border: 1px solid #000000; color: #000000 !important; height: 25px; font-family: sans-serif; font-size: 15px; font-weight: bold; padding: 5px;">OFFLOAD DETAILS</td></tr>
+                                <tr>
+                                    <td colspan="6" valign="top">
+                                        <!--Table for Report:- tblHandlingChargesStorage-->
+                                        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid #5a7570;" id="tblOffloadedDetails">
+                                            <tr>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">AWB NO</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">AWB ORG.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">AWB DEST.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">FLIGHT NO</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">FLIGHT DATE</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">GR.WT.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr id="tblClericalDetailsRow"><td colspan="4" style="height:30px;"></td></tr>
+                                <tr id="ClericalDetailsRow"><td colspan="9" valign="top" style="-webkit-print-color-adjust: exact; border: 1px solid #000000; color: #000000 !important; height: 25px; font-family: sans-serif; font-size: 15px; font-weight: bold; padding: 5px;">CLERICAL CHARGES</td></tr>
+                                <tr>
+                                    <td colspan="6" valign="top">
+                                        <!--Table for Report:- tblHandlingChargesStorage-->
+                                        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid #5a7570;" id="tblClericalDetails">
+                                            <tr>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">AWB NO</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">SHIPMENT TYPE</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">AWB ORG.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">AWB DEST.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">FLIGHT NO</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">FLIGHT DATE</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">GR.WT.</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">RATE</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">MINIMUM AMOUNT</td>
+                                                <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11px; font-weight: bold;" align="center">AMOUNT</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </center>
+</body>
+</html>

@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Weighing</title>
+    <script src="Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function WebSocketTest() {
+            if ("WebSocket" in window) {
+                alert("WebSocket is supported by your Browser!");
+
+                // Let us open a web socket
+                var ws = new WebSocket("ws://" + $("#ip").val() + ":" + $("#port").val());
+
+                ws.onopen = function () {
+                    // Web Socket is connected, send data using send()
+                    ws.send("Message to send");
+                    alert("Message is sent...");
+                };
+
+                ws.onmessage = function (evt) {
+                    var received_msg = evt.data;
+                    alert("Message is received...");
+                };
+
+                ws.onclose = function () {
+                    // websocket is closed.
+                    alert("Connection is closed...");
+                };
+            }
+
+            else {
+                // The browser doesn't support WebSocket
+                alert("WebSocket NOT supported by your Browser!");
+            }
+        }
+        function getw() {            
+            var url = "Services/Common/CommonService.svc/GetWeighingData/" + $("#ip").val() + "/" + $("#port").val();
+            $.ajax({
+                url: url,
+                
+                contentType: "application/json; charset=utf-8",
+                async: true,
+                type: 'GET',
+                success: function (result) {                    
+                    $("#result").text("Result 26 IP    " + result.GetWeighingDataResult);
+                }
+            });
+        }
+        function getp() {
+            var url = "Services/Common/CommonService.svc/GetWeighingData/" + $("#ip1").val() + "/" + $("#port").val();
+            $.ajax({
+                url: url,
+
+                contentType: "application/json; charset=utf-8",
+                async: true,
+                type: 'GET',
+                success: function (result) {
+                    $("#result1").text("Result 24 IP    "+result.GetWeighingDataResult);
+                }
+            });
+        }
+        function gett() {
+            var url = "Services/Common/CommonService.svc/GetWeighingDataByTerminalID/5";
+            $.ajax({
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                async: true,
+                type: 'GET',
+                success: function (result) {
+                    $("#result2").text("Terminal 5   ----- " + result.GetWeighingDataByTerminalIDResult);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>Enter IP - 26</td>
+            <td><input type="text" id="ip" value="83.111.23.26" /></td>
+        </tr>
+        <tr>
+            <td>Enter IP - 24</td>
+            <td><input type="text" id="ip1" value="83.111.23.24" /></td>
+        </tr>
+        <tr>
+            <td>Enter Port</td>
+            <td><input type="text" id="port" value="10001" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" onclick="getw();getp()" value="Get Result" /> </td>
+        </tr>
+        <tr>
+            <td id="result" colspan="2"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br /><br /></td>
+        </tr>
+        <tr>
+            <td id="result1" colspan="2"></td>
+        </tr>
+    </table>
+</body>
+</html>

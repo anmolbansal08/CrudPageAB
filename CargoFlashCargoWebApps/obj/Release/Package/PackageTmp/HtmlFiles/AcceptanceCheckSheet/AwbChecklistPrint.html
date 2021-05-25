@@ -1,0 +1,2051 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../../Scripts/jquery-1.7.2.js"> </script>
+    <script src="../../Scripts/json2.js"> </script>
+    <!--<script src="../../JScript/Shipment/AcceptanceCheckSheet.js"> </script>-->
+    <link href="../../Styles/jquery-ui/jquery-ui-1.10.2.custom.css" rel="stylesheet" />
+    <script src="../../Scripts/jquery-ui-1.10.2.custom.min.js"></script>   
+
+    <style type="text/css">
+        @media print {
+            tr.page-break {
+                display: block;
+                page-break-before: always;
+            }
+
+            .page-break {
+                display: block;
+                page-break-before: always;
+            }
+            title{
+                display:none;
+            }
+            #btnPrint {
+                display: none;
+            }
+            #footer {                
+                position: fixed;
+                bottom: 0cm;
+            }
+        }
+        td {
+            font-size: 12px;
+            font-family: sans-serif;
+        }
+        @media screen {
+            #footer {
+                display: none;
+            }
+        }
+        @page {
+            margin-top: 5mm;
+            margin-bottom: 1cm;
+            margin-left: 1cm;
+            margin-right: 1cm;
+            /*margin: 1cm;*/
+            counter-increment: page;            
+        }
+    </style>
+    <script type="text/javascript">
+        var headerHeight = 145;
+        var tableHeight = 1000;
+        var i = 0;
+        var j = 0;
+        var nextPage = 0;
+        var nextPage1 = 0;
+        var SPHC = 0;
+        var count = 0;
+        var awbSNo = 0;
+        var SPHCSNo = 0;
+        var column1='';
+        var column2='';
+        var column3='';
+        var generalheader='';
+        var generalfooter = '';
+        var ChecklistTypeSno = 0;
+        var version='';
+        var type;
+        var title;
+        function PrintPreview(elem) {
+            $(document).prop('title', title);            
+            window.print();
+        }
+       
+        $(document).ready(function () {
+            SPHCSNo = getParameterByName("SSno", "");
+            awbSNo = getParameterByName("Sno", "");
+          //  getColumnName(awbSNo);            
+            optionPopUp();
+            //if (SPHCSNo == 0)
+            //    GetAcceptanceCheckSheetDetails(awbSNo);
+            //else {
+            //    $("#Page").hide();
+            //    getdetail(awbSNo);
+            //    GetAcceptanceCheckSheetOtherDetails(awbSNo, SPHCSNo);
+            //}
+            //getfooterhtml();
+            //if ($("#Page"+count).find('[id=rightTbl] tr').height() == 0)
+            //    $("#Page" + count).find('[id=rightTbl] tr').hide()
+        });
+
+        function optionPopUp() {
+            $("head").after('<div id="divWindow"><table validateonsubmit="true" class="WebFormTable"><tr><td class="formlabel"><b>Type of Checklist Required (Single line or Section View)</b></td><td class="formInputcolumn"><input type="radio" id="Single" name="Type" value="0" checked=1 >Single &emsp;<input type="radio" id="Section" name="Type" value="1" >Section</td></tr></table></div>');
+            $("#divWindow").dialog(
+             {
+                 autoResize: true,
+                 maxWidth: 500,
+                 maxHeight: 200,
+
+                 width: 500,
+                 height: 200,
+                 modal: true,
+                 title: 'Checklist Format',
+                 draggable: false,
+                 resizable: false,
+                 buttons: {
+                     "Get Checklist": function () {
+                         type = $('input:radio[name=Type]')[0].checked ? "1" : "0";
+                         $(this).dialog("close");
+                         if (type == 0) {
+                             if (SPHCSNo == 0)
+                                 GetAcceptanceCheckSheetDetails(awbSNo);
+                             else {
+                                 $("#Page").hide();
+                                 getdetail(awbSNo, SPHCSNo);
+                                 GetAcceptanceCheckSheetOtherDetails(awbSNo, SPHCSNo);
+                             }
+                             getfooterhtml();
+                             //$("#Page" + count).find("#rightTbl tr td").css({"width":"200px","word-wrap":"break-word"});
+                         }
+                             //single row
+                         else {
+                             if (SPHCSNo == 0)
+                                 GetAcceptanceCheckSheetDetailsLine(awbSNo);
+
+                             else {
+                                 $("#Page").hide();
+                                 getdetail(awbSNo, SPHCSNo);
+                                 GetAcceptanceCheckSheetOtherDetailsLine(awbSNo, SPHCSNo);
+                             }
+                             getfooterhtml();
+                         }
+                     },
+                     Cancel: function () {
+                         $(this).dialog("close");
+                     }
+                 },
+                 close: function () {
+                     $(this).dialog("close");
+                 }
+             });
+        }
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        
+        function GetAcceptanceCheckSheetDetails(awbSNo) {
+
+            var startPage = '1';
+            var pageSize = '400';
+            var where = '';
+            var orderBy = '';
+            var checkListTypeSNo = '5';
+            var SPHCSNo = '';
+            $.ajax({
+                url: "../../Services/Shipment/AcceptanceCheckSheetService.svc/GetAcceptanceCheckSheetRecordGeneral",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ pageNo: startPage, pageSize: pageSize, WhereCondition: where, orderBy: orderBy, awbSNo: awbSNo, checkListTypeSNo: checkListTypeSNo, SPHCSNo: SPHCSNo }),
+                async: false,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table0;
+                    if (FinalData.length > 0) {
+                        CheckListHeader(FinalData);
+                        PrintData(FinalData);
+                    }
+                   
+                },
+                error: function (err) {
+                    alert("Generated error" + err.status);
+                }
+            });
+
+        }
+
+        function CheckListHeader() {
+            var checkHeader = '';
+            checkHeader += '<table style="width:100%"><tr><td style=width:100%; colspan=3><center><strong>General CheckList</strong></center></td></tr><tr><td style=width:45%;></td> <td style=width:33%;><strong><span id=spnLive></span></strong></td> <td style=width:33%;></td></tr> <tr> <td style=width:33%;>AWB No.:<span id="spnAWBNo"></span></td><td style=width:33%;>Origin:<span id=spnOrigin></span></td><td style=width:33%;>Destination:<span id=spnDestination></span></td> </tr> <tr> <td style=width:33%;>Via:<span id=spnVia></span></td> <td colspan=2>Flight/Date:<span id=spnDates></span></td> </tr> <tr><td colspan=3>Name of Handling agent staff (Block Capitals):</td></tr><tr><td colspan=3><strong>Important:</strong> This check sheet does <strong>not</strong> replace the respective regulations of CHM/GHP!</td></tr> <tr><td colspan=3><hr /></td></tr></table><br/><table style="border:none;width:100%"><tr><td style="font-size: 12px; font-family: sans-serif;"><small><b><i>' + generalheader + '</small></i></b></td></tr></table> ';
+            if ((nextPage == 0) && (SPHC == 0))
+                $('#divHeader').append(checkHeader);
+            getHeader();
+        }
+
+        function PrintData(FinalData)  {
+            //var tbl = '';
+            var checkFirstRow = 0;
+            var checkBold = '<B>'
+            var mainHead = 0;
+            var checkFirstRight = 0;
+            i = 0;
+            for (; i < FinalData.length; i++) {
+                tbl = '';
+                if ($('#leftTbl').height() < 700) {
+                    if (checkFirstRow == 0) {
+                        tbl += '<tr><td style=width:5px;><strong></strong></td><td style=width:350px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                        $("#Page" + count).find("#leftTbl").append(tbl);
+                        checkFirstRow++;
+                    }
+                    if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                        if (checkFirstRow == 0) {
+                            tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo==0?"":FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                            checkFirstRow++;
+                        }
+                        else {
+                            tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                        }
+                        $('#leftTbl').append(tbl);
+                    }
+                    else {
+                        tbl += '<tr ><td style=vertical-align:auto;width:5px;>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:350px;word-wrap:break-word;max-width:350px;>' + FinalData[i].Description + '</td>';
+                        if (FinalData[i].Y == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Y == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].Y == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].N == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].N == '2')
+                            tbl += '<td><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].NA == '1')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].NA == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                        if (FinalData[i].Y == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '0')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Remarks == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                        if (FinalData[i].Column1 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                        if (FinalData[i].Column2 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                        if (FinalData[i].Column3 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                        tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                        $('#leftTbl').append(tbl);
+                    }
+
+
+                }
+                else {
+
+                    if ($('#rightTbl').height() < 700) {
+                        //
+
+                        if (checkFirstRight == 0) {
+                            //  checkFirstRow = 0;+
+                            tbl = '';
+                            tbl += '<tr ><td style=width:5px;><strong></strong></td><td style=width:350px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            $('#rightTbl').append(tbl);
+                            checkFirstRight++;
+                            if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                                if (checkFirstRow == 0) {
+                                    tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                    checkFirstRow++;
+                                    // $('#rightTbl').append(tbl);
+                                }
+                                else {
+                                    tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                    $('#rightTbl').append(tbl);
+                                }
+
+                            }
+                            else {
+                                tbl = '';
+                                tbl += '<tr ><td  style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:350px;word-wrap:break-word;max-width:350px;>' + FinalData[i].Description + '</td>';
+
+                                if (FinalData[i].Y == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Y == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].Y == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].N == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].N == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].NA == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].NA == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                                if (FinalData[i].Y == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '0')
+                                    tbl += '<td><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Remarks == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                                if (FinalData[i].Column1 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                                if (FinalData[i].Column2 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                                if (FinalData[i].Column3 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                                tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                                $('#rightTbl').append(tbl);
+                            }
+
+                        }
+                        else {
+                            if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                                if (checkFirstRow == 0) {
+                                    tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                    checkFirstRow++;
+                                }
+                                else {
+                                    tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                }
+                                $('#rightTbl').append(tbl);
+                            }
+                            else {
+
+                                tbl += '<tr ><td  style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:350px;word-wrap:break-word;max-width:350px;>' + FinalData[i].Description + '</td>';
+
+                                if (FinalData[i].Y == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Y == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].Y == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].N == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].N == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].NA == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].NA == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                                if (FinalData[i].Y == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '0')
+                                    tbl += '<td><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Remarks == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                                if (FinalData[i].Column1 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                                if (FinalData[i].Column2 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                                if (FinalData[i].Column3 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                                tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                                $('#rightTbl').append(tbl);
+
+                            }
+
+                        }
+                    }
+                    else {
+                        nextPage = 1;
+                        break;
+                    }
+                }
+            }
+            if (nextPage == 1) {
+                getpagehtml();
+                nextPageInfo(FinalData)
+            }
+            else
+            if (($('#rightTbl').height() > 700) && (i <= FinalData.length)) {
+                nextPage = 1;
+                getpagehtml();
+                nextPageInfo(FinalData);
+            }
+            checkFirstRight = 0;
+        }
+
+        function nextPageInfo(FinalData) {
+            var checkFirstRow = 0;
+            var checkBold = '<B>'
+            var mainHead = 0;
+            var checkFirstRight = 0;
+         
+            for (; i < FinalData.length; i++) {
+                tbl = '';
+                if ($("#Page" + count).find("#leftTbl").height() < tableHeight + 700) {
+
+                    if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                        if (checkFirstRow == 0) {
+                            tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                            checkFirstRow++;
+                        }
+                        else {
+                            tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                        }
+                        $("#Page" + count).find("#leftTbl").append(tbl);
+                    }
+                    else if (checkFirstRow == 0) {
+                        tbl += '<tr></tr><tr><td style=width:5px;><strong></strong></td><td style=width:350px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                        $("#Page" + count).find("#leftTbl").append(tbl);
+                       // $("#rightTbl").append(tbl);
+                        checkFirstRow++;
+                        //checkFirstRight++;
+                    }
+                    else {
+                        tbl += '<tr><td style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:350px;word-wrap:break-word;max-width:350px;>' + FinalData[i].Description + '</td>';
+                        if (FinalData[i].Y == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Y == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].Y == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].N == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].N == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].NA == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '')
+                            tbl += '<td></td>';
+                        if (FinalData[i].NA == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                        if (FinalData[i].Y == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '0')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Remarks == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                        if (FinalData[i].Column1 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                        if (FinalData[i].Column2 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                        if (FinalData[i].Column3 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                        tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                        $("#Page" + count).find("#leftTbl").append(tbl);
+                    }
+
+
+                }
+                else {
+                   
+
+                    if ($("#Page" + count).find("#rightTbl").height() < tableHeight + 700) {
+                        //
+                        if (checkFirstRight == 0) {
+                            //  checkFirstRow = 0;+
+                            tbl = '';
+                            tbl += '<tr><td style=width:5px;><strong></strong></td><td style=width:350px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            $("#Page" + count).find("#rightTbl").append(tbl);
+                            checkFirstRight++;
+                            if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                                if (checkFirstRow == 0) {
+                                    tbl = '';
+                                    tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                    checkFirstRow++;
+                                    $("#Page" + count).find("#rightTbl").append(tbl);
+                                }
+                                else {
+                                    tbl = '';
+                                    tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                    $("#Page" + count).find("#rightTbl").append(tbl);
+                                }
+
+                            }
+                            else if (checkFirstRight == 0) {
+                                tbl = '';
+                                tbl += '<tr class="page-break"></tr><tr><td style=width:5px;><strong></strong></td><td style=width:350px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                $("#Page" + count).find("#rightTbl").append(tbl);
+                                checkFirstRight++;
+                            }
+                            else {
+                                tbl = '';
+                                tbl += '<tr><td  style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:350px;word-wrap:break-word;max-width:350px;>' + FinalData[i].Description + '</td>';
+
+                                if (FinalData[i].Y == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Y == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].Y == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].N == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].N == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].NA == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].NA == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                                if (FinalData[i].Y == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '0')
+                                    tbl += '<td><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Remarks == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                                if (FinalData[i].Column1 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                                if (FinalData[i].Column2 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                                if (FinalData[i].Column3 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                                tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                                $("#Page" + count).find("#rightTbl").append(tbl);
+                            }
+
+                        }
+                        else {
+                            if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                                if (checkFirstRow == 0) {
+                                    tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                    checkFirstRow++;
+                                }
+                                else {
+                                    tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                }
+                                $("#Page" + count).find("#rightTbl").append(tbl);
+                            }
+                            else {
+
+                                tbl += '<tr><td  style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:350px;word-wrap:break-word;max-width:350px;>' + FinalData[i].Description + '</td>';
+
+                                if (FinalData[i].Y == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Y == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].Y == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].N == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].N == '2')
+                                    tbl += '<td><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].NA == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].NA == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                                if (FinalData[i].Y == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '0')
+                                    tbl += '<td><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Remarks == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                                if (FinalData[i].Column1 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                                if (FinalData[i].Column2 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                                if (FinalData[i].Column3 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                                tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                                $("#Page" + count).find("#rightTbl").append(tbl);
+
+                            }
+
+                        }
+                    }
+                    else {
+                        nextPage = 1;
+                        break;
+                    }
+                }
+            }
+
+            if ((nextPage == 1) && i < FinalData.length) {
+                getpagehtml();
+                nextPageInfo(FinalData)
+            }
+
+
+        }
+
+        function GetAcceptanceCheckSheetOtherDetails(awbSNo, SPHCSNo) {
+            
+            var startPage = '1';
+            var pageSize = '400';
+            var where = '';
+            var orderBy = '';
+            var checkListTypeSNo = '-1';
+            
+            $.ajax({
+                url: "../../Services/Shipment/AcceptanceCheckSheetService.svc/GetAcceptanceCheckSheetRecordOther",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ pageNo: startPage, pageSize: pageSize, WhereCondition: where, orderBy: orderBy, AWBSNo: awbSNo, SPHCSNo: SPHCSNo, checkListTypeSNo: checkListTypeSNo }),
+                async: false,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table;
+                    FinalData1 = ResultData.Table2;
+                    if (SPHCSNo != 0) {
+                        column1 = FinalData1[0].ColumnName1
+                        if (column1 == 0)
+                            column1 = '';
+                        column2 = FinalData1[0].ColumnName2
+                        if (column2 == 0)
+                            column2 = '';
+                        column3 = FinalData1[0].ColumnName3
+                        if (column3 == 0)
+                            column3 = '';
+                        version = FinalData1[0].Version;
+                        $("#spnversion").text(version);
+                        generalheader = FinalData1[0].GeneralHeader;
+                        if (generalheader != '') {
+                            var s = '';
+                            for (var i = 0; i < generalheader.split('\n').length; i++) {
+                                var str = generalheader.split('\n')[i];
+
+                                s = s + '<p>' + str + '</p>';
+                            }
+                            generalheader = s;
+                        }
+
+                        s = '';
+                        generalfooter = FinalData1[0].GeneralFooter;
+                        if (generalfooter != '') {
+                            for (var i = 0; i < generalfooter.split('\n').length; i++) {
+                                var str = generalfooter.split('\n')[i];
+
+                                s = s + '<p>' + str + '</p>';
+                            }
+                            generalfooter = s;
+                        }
+                    }
+                    else {
+                        column1 = '';
+                        column2 = '';
+                        column3 = '';
+                        version = '';
+                    }
+                    if (FinalData.length > 0) {
+                        count = count + 1;
+                        var str = ' <div id="Page' + count + '" style="border:double;"><div id="divHeader"></div><table id="outerTbl"><tr><td style="width: 396px; vertical-align: top;"><table id="leftTbl"></table></td><td style="width:396px;vertical-align:top;"><table id="rightTbl"></table></td></tr></table></div>';
+                        if (count == 1)
+                            $("#Page").after(str);
+                        CheckListHeader1();
+                        PrintData1(FinalData);                       
+                    }
+
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+            i = j;
+        }
+
+        function PrintData1(FinalData) {
+            // var tbl = '';
+            var checkFirstRow = 0;
+            var checkBold = '<B>'
+            var mainHead = 0;
+            var checkFirstRight = 0;
+
+            for (; i < FinalData.length; i++) {
+                tbl = '';
+
+                if ($("#Page" + count).find("#leftTbl").height() < 800) {
+                    if (checkFirstRow == 0) {
+                        tbl += '<tr><td style=width:5px;><strong></strong></td><td style=width:350px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+
+                        checkFirstRow++;
+                    }
+
+                    if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                        if (checkFirstRow == 0) {
+                            tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                            checkFirstRow++;
+                        }
+                        else {
+                            tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                        }
+                        //       $('#leftTbl').append(tbl);
+                        $("#Page" + count).find("#leftTbl").append(tbl);
+                    }
+
+                    else {
+                        tbl += '<tr ><td style=vertical-align:auto;width:5px;>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style="width:350px;word-wrap:break-word;max-width:350px;">' + FinalData[i].Description + '</td>';
+                        if (FinalData[i].Y == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Y == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].Y == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].N == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].N == '2')
+                            tbl += '<td><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].NA == '1')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].NA == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                        if (FinalData[i].Y == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '0')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Remarks == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                        if (FinalData[i].Column1 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                        if (FinalData[i].Column2 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                        if (FinalData[i].Column3 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                        tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                        //  $('#leftTbl').append(tbl);
+                        $("#Page" + count).find("#leftTbl").append(tbl);
+                    }
+
+
+                }
+                else {
+                    if ($("#Page" + count).find("#rightTbl").height() < 800) {
+                                                  
+                        if (checkFirstRight == 0) {
+                            //  checkFirstRow = 0;+
+                            tbl = '';
+                            tbl += '<tr ><td style=width:5px;><strong></strong></td><td style="width:350px;word-wrap: break-word;"><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                               
+                                $("#Page" + count).find("#rightTbl").append(tbl);
+                                checkFirstRight++;
+                            
+                            if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                                if (checkFirstRow == 0) {
+                                    tbl = '';
+                                    $("#Page" + count).find("#rightTbl").append(tbl);
+                                    tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style="width:350px;word-wrap: break-word;"><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                    checkFirstRow++;
+                                    // $('#rightTbl').append(tbl);
+                                }
+                                else {
+                                    tbl = '';
+                                    $("#Page" + count).find("#rightTbl").append(tbl);
+                                    tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style="width:350px;word-wrap: break-word;"><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                    //   $('#rightTbl').append(tbl);
+                                    $("#Page" + count).find("#rightTbl").append(tbl);
+                                }
+
+                            }
+                            
+                            else {
+                                tbl = '';
+                                tbl += '<tr ><td  style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style="width:350px;word-wrap: break-word;max-width:350px">' + FinalData[i].Description + '</td>';
+
+                                if (FinalData[i].Y == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Y == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].Y == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].N == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].N == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].NA == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].NA == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                                if (FinalData[i].Y == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '0')
+                                    tbl += '<td><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Remarks == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                                if (FinalData[i].Column1 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                                if (FinalData[i].Column2 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                                if (FinalData[i].Column3 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                                tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                                //     $('#rightTbl').append(tbl);
+                                $("#Page" + count).find("#rightTbl").append(tbl);
+                            }
+
+                        }
+                        else {
+                            if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                                if (checkFirstRow == 0) {
+                                    tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style="width:350px;word-wrap: break-word;"><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                    checkFirstRow++;
+                                }
+                                else {
+                                    tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style="width:350px;word-wrap: break-word;"><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                }
+                                $("#Page" + count).find("#rightTbl").append(tbl);
+                            }
+                            else {
+                                //if (FinalData[i].SrNo == '15')
+                                //tbl += '<tr ><td  style=vertical-align:auto>' + FinalData[i].SrNo + '</td><td style="width:350px;word-wrap: break-word;max-width:350px;">' + FinalData[i].Description + '</td>';
+                                //else
+                                tbl += '<tr ><td  style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style="width:350px;word-wrap:break-word;max-width:350px;">' + FinalData[i].Description + '</td>';
+                                if (FinalData[i].Y == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Y == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].Y == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].N == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].N == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].NA == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].NA == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                                if (FinalData[i].Y == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '0')
+                                    tbl += '<td><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Remarks == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                                if (FinalData[i].Column1 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                                if (FinalData[i].Column2 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                                if (FinalData[i].Column3 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                                tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                                $("#Page" + count).find("#rightTbl").append(tbl);
+
+                            }
+
+                        }
+                    }
+                    else {
+                        nextPage1 = 1;
+                        break;
+                    }
+                }
+            }
+            if (nextPage1 == 1) {
+                getpagehtml();
+                nextPageInfo1(FinalData)
+            }
+            else
+            if (($("#Page" + count).find("#rightTbl").height() > 800) && (i <= FinalData.length)) {
+                nextPage1 = 1;
+                getpagehtml();
+                nextPageInfo1(FinalData);
+            }
+        }
+
+        function nextPageInfo1(FinalData) {
+          
+            var checkFirstRow = 0;
+            var checkBold = '<B>'
+            var mainHead = 0;
+            checkFirstRight = 0;
+
+            for (; i < FinalData.length; i++) {
+                tbl = '';
+                if ($("#Page" + count).find("#leftTbl").height() < tableHeight + 1000) {
+
+                    if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                        if (checkFirstRow == 0) {
+                            tbl += '<tr class="page-break" ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                            checkFirstRow++;
+                            $("#Page" + count).find("#leftTbl").append(tbl);
+                            //tbl = '';
+                            //tbl += '<tr class="page-break"></tr><tr><td style=width:5px;><strong></strong></td><td style=width:350px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            //checkFirstRight++;
+                            //$("#Page" + count).find("#rightTbl").append(tbl);
+                        }
+                        else {
+                            
+                            tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                            $("#Page" + count).find("#leftTbl").append(tbl);
+                        }
+                        tbl = '';
+                    }
+                    else if (checkFirstRow == 0) {
+                        tbl = '';
+                        tbl += '<tr></tr><tr><td style=width:5px;><strong></strong></td><td style=width:350px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                        $("#Page" + count).find("#leftTbl").append(tbl);
+                      //  $("#Page" + count).find("#rightTbl").append(tbl);
+                        checkFirstRow++;
+                       // checkFirstRight++;
+                        tbl = '';
+                        tbl += '<tr><td style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:350px;word-wrap:break-word;max-width:350px;>' + FinalData[i].Description + '</td>';
+                        if (FinalData[i].Y == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Y == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].Y == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].N == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].N == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].NA == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '')
+                            tbl += '<td></td>';
+                        if (FinalData[i].NA == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                        if (FinalData[i].Y == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '0')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Remarks == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                        if (FinalData[i].Column1 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                        if (FinalData[i].Column2 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                        if (FinalData[i].Column3 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                        tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                        $("#Page" + count).find("#leftTbl").append(tbl);
+                    }
+                    else {
+                        tbl = '';
+                        tbl += '<tr><td style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:350px;word-wrap:break-word;max-width:350px;>' + FinalData[i].Description + '</td>';
+                        if (FinalData[i].Y == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Y == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].Y == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].N == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].N == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].NA == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '')
+                            tbl += '<td></td>';
+                        if (FinalData[i].NA == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                        if (FinalData[i].Y == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '0')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Remarks == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                        if (FinalData[i].Column1 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                        if (FinalData[i].Column2 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                        if (FinalData[i].Column3 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                        tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                        $("#Page" + count).find("#leftTbl").append(tbl);
+
+                    }
+
+
+                }
+                else {
+
+                    if ($("#Page" + count).find("#rightTbl").height() < tableHeight + 1000) {
+                        //
+                        if (checkFirstRight == 0) {
+                            //  checkFirstRow = 0;+
+                            tbl = '';
+                            tbl += '<tr><td style=width:5px;><strong></strong></td><td style=width:350px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            $("#Page" + count).find("#rightTbl").append(tbl);
+                            checkFirstRight++;
+                            if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                                if (checkFirstRow == 0) {
+                                    tbl = '';
+                                    tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                    checkFirstRow++;
+                                    // $('#rightTbl').append(tbl);
+                                    $("#Page" + count).find("#rightTbl").append(tbl);
+                                }
+                                else {
+                                    tbl = '';
+                                    tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                    $("#Page" + count).find("#rightTbl").append(tbl);
+                                }
+
+                            }
+                            else if (checkFirstRight == 0) {
+                                tbl = '';
+                                tbl += '<tr class="page-break"></tr><tr><td style=width:5px;><strong></strong></td><td style=width:350px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                $("#Page" + count).find("#rightTbl").append(tbl);
+                                checkFirstRight++;
+                            }
+                            else {
+                                tbl = '';
+                                tbl += '<tr><td  style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:350px;word-wrap:break-word;max-width:350px;>' + FinalData[i].Description + '</td>';
+
+                                if (FinalData[i].Y == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Y == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].Y == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].N == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].N == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].NA == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].NA == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                                if (FinalData[i].Y == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '0')
+                                    tbl += '<td><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Remarks == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                                if (FinalData[i].Column1 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                                if (FinalData[i].Column2 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                                if (FinalData[i].Column3 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                                tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                                $("#Page" + count).find("#rightTbl").append(tbl);
+
+                            }
+
+                        }
+                        else {
+                            if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                                if (checkFirstRow == 0) {
+                                    tbl = '';
+                                    tbl += '<tr class="page-break"><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                    checkFirstRow++;
+                                }
+                                else {
+                                    tbl = '';
+                                    tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                                    mainHead++;
+                                }
+                                $("#Page" + count).find("#rightTbl").append(tbl);
+                            }
+                            else {
+                                tbl = '';
+                                tbl += '<tr><td  style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:350px;word-wrap:break-word;max-width:350px;>' + FinalData[i].Description + '</td>';
+
+                                if (FinalData[i].Y == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Y == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].Y == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].N == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].N == '2')
+                                    tbl += '<td><input type=checkbox checked=checked disabled=disabled></td>';
+                                if (FinalData[i].NA == '1')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '')
+                                    tbl += '<td width=5px></td>';
+                                if (FinalData[i].NA == '2')
+                                    tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                                if (FinalData[i].Y == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].N == '0')
+                                    tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].NA == '0')
+                                    tbl += '<td><input type=checkbox disabled=disabled></td>';
+                                if (FinalData[i].Remarks == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                                if (FinalData[i].Column1 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                                if (FinalData[i].Column2 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                                if (FinalData[i].Column3 == '@')
+                                    tbl += '<td width=10px></td>';
+                                else
+                                    tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                                tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                                $("#Page" + count).find("#rightTbl").append(tbl);
+
+                            }
+
+                        }
+                    }
+                    else {
+                        nextPage1 = 1;
+                        break;
+                    }
+                }
+            }
+
+            if ((nextPage1 == 1) && i < FinalData.length) {
+                getpagehtml();
+                nextPageInfo1(FinalData)
+            }
+
+
+        }
+
+        function getpagehtml() {
+            count = count + 1;
+            var str = ' <div id="Page' + count + '"class="page-break" style="border:double;"><div id="divHeader"></div><table id="outerTbl"><tr><td style="width: 396px; vertical-align: top;"><table id="leftTbl"></table></td><td style="width:396px;vertical-align:top;"><table id="rightTbl"></table></td></tr></table></div>';
+            if (count == 1)
+                $("#Page").after(str);
+            else {
+                var no = count - 1;
+                tableHeight = 100;
+                $("#Page" + no).after(str);
+            }
+        }
+        
+
+        function GetAcceptanceCheckSheetDetailsLine(awbSNo) {
+
+            var startPage = '1';
+            var pageSize = '400';
+            var where = '';
+            var orderBy = '';
+            var checkListTypeSNo = '5';
+            var SPHCSNo = '';
+            $.ajax({
+                url: "../../Services/Shipment/AcceptanceCheckSheetService.svc/GetAcceptanceCheckSheetRecordGeneral",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ pageNo: startPage, pageSize: pageSize, WhereCondition: where, orderBy: orderBy, awbSNo: awbSNo, checkListTypeSNo: checkListTypeSNo, SPHCSNo: SPHCSNo }),
+                async: false,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table0;
+                    if (FinalData.length > 0) {
+                        CheckListHeader(FinalData);
+                        PrintDataLine(FinalData);
+                    }
+
+                },
+                error: function (err) {
+                    alert("Generated error" + err.status);
+                }
+            });
+
+        }
+
+        function CheckListHeader1(ChecklistSNo) {
+            var setHeight = tableHeight - $("#leftTblLine").height();
+            $("#leftTblLine").css("height", setHeight);
+            var checkHeader = '';
+            checkHeader += '<table style="width:100%"><tr><td style=width:100%; colspan=3><center><strong><span id="spnheading"></span></strong></center></td></tr><tr><td style=width:45%;></td> <td style=width:33%;><strong><span id=spnLive1></span></strong></td> <td style=width:33%;></td></tr> <tr> <td style=width:33%;>AWB No.:<span id="spnAWBNo1"></span></td><td style=width:33%;>Origin:<span id=spnOrigin1></span></td><td style=width:33%;>Destination:<span id=spnDestination1></span></td> </tr> <tr> <td style=width:33%;>Via:<span id=spnVia1></span></td> <td colspan=2>Flight/Date:<span id=spnDates1></span></td> </tr> <tr><td colspan=3>Name of Handling agent staff (Block Capitals):</td></tr><tr><td colspan=3><strong>Important:</strong> This check sheet does <strong>not</strong> replace the respective regulations of CHM/GHP!</td></tr> <tr><td colspan=3><hr /></td></tr></table><br/><table style="border:none;width:100%"><tr><td style="font-size: 12px; font-family: sans-serif;"><small><b><i>' + generalheader + '</small></i></b></td></tr></table> ';
+            $('#Page' + count + ' div').append(checkHeader);
+            getHeader();
+        }
+
+        function PrintDataLine(FinalData) {
+            //var tbl = '';
+            var checkFirstRow = 0;
+            var checkBold = '<B>'
+            var mainHead = 0;
+            var checkFirstRight = 0;
+            i = 0;
+            for (; i < FinalData.length; i++) {
+                tbl = '';
+                if ($('#leftTblLine').height() < 1000) {
+                    if (checkFirstRow == 0) {
+                        tbl += '<tr><td style=width:5px;><strong></strong></td><td style=width:600px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                        $("#Page" + count).find("#leftTblLine").append(tbl);
+                        checkFirstRow++;
+                    }
+                    if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                        if (checkFirstRow == 0) {
+                            tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:600px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                            checkFirstRow++;
+                        }
+                        else {
+                            tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:600px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                        }
+                        $('#leftTblLine').append(tbl);
+                    }
+                    else {
+                        tbl += '<tr ><td style=vertical-align:auto;width:5px;>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:600px;word-wrap:break-word;max-width:600px;>' + FinalData[i].Description + '</td>';
+                        if (FinalData[i].Y == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Y == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].Y == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].N == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].N == '2')
+                            tbl += '<td><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].NA == '1')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].NA == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                        if (FinalData[i].Y == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '0')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Remarks == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                        if (FinalData[i].Column1 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                        if (FinalData[i].Column2 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                        if (FinalData[i].Column3 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                        tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                        $('#leftTblLine').append(tbl);
+                    }
+
+
+                }
+                else {
+                    nextPage = 1;
+                    break;
+                }
+
+            }
+            if (nextPage == 1) {
+                getpagehtmlLine()
+                nextPageInfoLine(FinalData)
+            }
+            else
+            if (($('#leftTblLine').height() > 1000) && (i <= FinalData.length)) {
+                getpagehtmlLine();
+                nextPage = 1;
+                nextPageInfoLine(FinalData);
+            }
+
+        }
+
+        function nextPageInfoLine(FinalData) {
+            var checkFirstRow = 0;
+            var checkBold = '<B>'
+            var mainHead = 0;
+            var checkFirstRight = 0;
+
+          
+            for (; i < FinalData.length; i++) {
+                tbl = '';
+                if ($("#Page" + count).find("#leftTblLine").height() < tableHeight + 700) {
+
+                    if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                        if (checkFirstRow == 0) {
+                            tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                            checkFirstRow++;
+                        }
+                        else {
+                            tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:350px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                        }
+                        $("#Page" + count).find("#leftTblLine").append(tbl);
+                    }
+                    else if (checkFirstRow == 0) {
+                        tbl += '<tr></tr><tr><td style=width:5px;><strong></strong></td><td style=width:350px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                        $('#leftTblLine').append(tbl);
+                        checkFirstRow++;
+                    }
+                    else {
+                        tbl += '<tr><td style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:350px;word-wrap:break-word;max-width:350px;>' + FinalData[i].Description + '</td>';
+                        if (FinalData[i].Y == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Y == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].Y == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].N == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].N == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].NA == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '')
+                            tbl += '<td></td>';
+                        if (FinalData[i].NA == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                        if (FinalData[i].Y == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '0')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Remarks == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                        if (FinalData[i].Column1 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                        if (FinalData[i].Column2 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                        if (FinalData[i].Column3 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                        tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                        $("#Page" + count).find("#leftTblLine").append(tbl);
+                    }
+
+
+                }
+                else {
+                    nextPage = 1;
+                    break;
+                }
+            }
+
+            if ((nextPage == 1) && i < FinalData.length) {
+                getpagehtmlLine();
+                nextPageInfoLine(FinalData)
+            }
+
+
+        }
+
+        function GetAcceptanceCheckSheetOtherDetailsLine(awbSNo, SPHCSNo) {
+
+            var startPage = '1';
+            var pageSize = '400';
+            var where = '';
+            var orderBy = '';
+            var checkListTypeSNo = '-1';
+
+            $.ajax({
+                url: "../../Services/Shipment/AcceptanceCheckSheetService.svc/GetAcceptanceCheckSheetRecordOther",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ pageNo: startPage, pageSize: pageSize, WhereCondition: where, orderBy: orderBy, AWBSNo: awbSNo, SPHCSNo: SPHCSNo, checkListTypeSNo: checkListTypeSNo }),
+                async: false,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table;
+                    FinalData1 = ResultData.Table2;
+                    if (SPHCSNo != 0) {
+                        column1 = FinalData1[0].ColumnName1
+                        if (column1 == 0)
+                            column1 = '';
+                        column2 = FinalData1[0].ColumnName2
+                        if (column2 == 0)
+                            column2 = '';
+                        column3 = FinalData1[0].ColumnName3
+                        if (column3 == 0)
+                            column3 = '';
+                        version = FinalData1[0].Version;
+                        $("#spnversion").text(version);
+                        generalheader = FinalData1[0].GeneralHeader;
+                        if (generalheader != '') {
+                            var s = '';
+                            for (var i = 0; i < generalheader.split('\n').length; i++) {
+                                var str = generalheader.split('\n')[i];
+
+                                s = s + '<p>' + str + '</p>';
+                            }
+                            generalheader = s;
+                        }
+
+                        s = '';
+                        generalfooter = FinalData1[0].GeneralFooter;
+                        if (generalfooter != '') {
+                            for (var i = 0; i < generalfooter.split('\n').length; i++) {
+                                var str = generalfooter.split('\n')[i];
+
+                                s = s + '<p>' + str + '</p>';
+                            }
+                            generalfooter = s;
+                        }
+                    }
+                    else {
+                        column1 = '';
+                        column2 = '';
+                        column3 = '';
+                        version = '';
+                    }
+                    if (FinalData.length > 0) {
+                        count = count + 1;
+                        var str = '<div id="Page' + count + '" style="border:double;"><div id="divHeader"></div><table id="outerTblLine"><tr><td style="width: 1000px; vertical-align: top;"><table id="leftTblLine"></table></td></tr></table></div>';
+                        if (count == 1)
+                            $("#Page").after(str);
+                        CheckListHeader1();
+                        PrintData1Line(FinalData);
+                    }
+
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+            i = j;
+        }
+
+        function PrintData1Line(FinalData) {
+            // var tbl = '';
+            var checkFirstRow = 0;
+            var checkBold = '<B>'
+            var mainHead = 0;
+            var checkFirstRight = 0;
+
+            for (; i < FinalData.length; i++) {
+                tbl = '';
+
+                if ($("#Page" + count).find("#leftTblLine").height() < 900) {
+                    if (checkFirstRow == 0) {
+                        tbl += '<tr><td style=width:5px;><strong></strong></td><td style=width:600px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+
+                        checkFirstRow++;
+                    }
+
+                    if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                        if (checkFirstRow == 0) {
+                            tbl += '<tr ><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:600px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                            checkFirstRow++;
+                        }
+                        else {
+                            tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:600px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                        }
+                        $("#Page" + count).find("#leftTblLine").append(tbl);
+                    }
+
+                    else {
+                        tbl += '<tr ><td style=vertical-align:auto;width:5px;>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style="width:600px;word-wrap:break-word;max-width:350px;">' + FinalData[i].Description + '</td>';
+                        if (FinalData[i].Y == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Y == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].Y == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].N == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].N == '2')
+                            tbl += '<td><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].NA == '1')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].NA == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                        if (FinalData[i].Y == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '0')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Remarks == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                        if (FinalData[i].Column1 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                        if (FinalData[i].Column2 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                        if (FinalData[i].Column3 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                        tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                        $("#Page" + count).find("#leftTblLine").append(tbl);
+                    }
+
+
+                }
+                else {
+                    nextPage1 = 1;
+                    break;
+                }
+            }
+
+            if (nextPage1 == 1) {
+                getpagehtmlLine();
+                nextPageInfo1Line(FinalData)
+            }
+            else
+            if (($("#Page" + count).find("#leftTblLine").height() > 900) && (i <= FinalData.length)) {
+                nextPage1 = 1;
+                getpagehtmlLine();                
+                nextPageInfo1Line(FinalData);
+            }
+        }
+
+        function nextPageInfo1Line(FinalData) {
+
+            var checkFirstRow = 0;
+            var checkBold = '<B>'
+            var mainHead = 0;
+            checkFirstRight = 0;
+
+            for (; i < FinalData.length; i++) {
+                tbl = '';
+                if ($("#Page" + count).find("#leftTblLine").height() < tableHeight + 1000) {
+
+                    if ((FinalData[i].Description).indexOf(checkBold) > -1) {
+                        if (checkFirstRow == 0) {
+                            tbl += '<tr><tr><tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:600px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                            checkFirstRow++;
+                        }
+                        else {
+                            tbl += '<tr><td style=width:5px;><strong>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</strong></td><td style=width:600px;><b>' + FinalData[i].Description + '</b></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:5px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td><td style=width:10px;></td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                            mainHead++;
+                        }
+                        $("#Page" + count).find("#leftTblLine").append(tbl);
+                    }
+                    else if (checkFirstRow == 0) {
+                        tbl += '<tr></tr><tr><td style=width:5px;><strong></strong></td><td style=width:600px;><b></b></td><td style=width:5px;>Yes</td><td style=width:5px;>No</td><td style=width:5px;>N/A</td><td style=width:10px;>Remark</td><td style=width:10px;>' + column1 + '</td><td style=width:10px;>' + column2 + '</td><td style=width:10px;>' + column3 + '</td></tr><tr><td colspan=9>&nbsp;</td></tr>';
+                        $("#Page" + count).find("#leftTblLine").append(tbl);
+                        checkFirstRow++;
+                        tbl = '';
+                        tbl += '<tr><td style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:600px;word-wrap:break-word;max-width:600px;>' + FinalData[i].Description + '</td>';
+                        if (FinalData[i].Y == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Y == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].Y == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].N == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].N == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].NA == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '')
+                            tbl += '<td></td>';
+                        if (FinalData[i].NA == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                        if (FinalData[i].Y == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '0')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Remarks == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                        if (FinalData[i].Column1 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                        if (FinalData[i].Column2 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                        if (FinalData[i].Column3 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                        tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                        $("#Page" + count).find("#leftTblLine").append(tbl);
+                    }
+                    else {
+
+                        tbl += '<tr><td style=vertical-align:auto>' + (FinalData[i].SrNo == 0 ? "" : FinalData[i].SrNo) + '</td><td style=width:600px;word-wrap:break-word;max-width:600px;>' + FinalData[i].Description + '</td>';
+                        if (FinalData[i].Y == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Y == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].Y == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].N == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '')
+                            tbl += '<td width=5px></td>';
+                        if (FinalData[i].N == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+                        if (FinalData[i].NA == '1')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '')
+                            tbl += '<td></td>';
+                        if (FinalData[i].NA == '2')
+                            tbl += '<td width=5px><input type=checkbox checked=checked disabled=disabled></td>';
+
+                        if (FinalData[i].Y == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].N == '0')
+                            tbl += '<td width=5px><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].NA == '0')
+                            tbl += '<td><input type=checkbox disabled=disabled></td>';
+                        if (FinalData[i].Remarks == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Remarks + '</td>';
+                        if (FinalData[i].Column1 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column1 + '</td>';
+                        if (FinalData[i].Column2 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column2 + '</td>';
+                        if (FinalData[i].Column3 == '@')
+                            tbl += '<td width=10px></td>';
+                        else
+                            tbl += '<td width=10px>' + FinalData[i].Column3 + '</td>';
+                        tbl += '</tr><tr><td colspan=9>&nbsp;</td></tr>'
+                        $("#Page" + count).find("#leftTblLine").append(tbl);
+
+                    }
+
+
+                }
+                else {
+                    nextPage1 = 1;
+                    break;
+                }
+            }
+
+
+            if ((nextPage1 == 1) && i < FinalData.length) {                
+                getpagehtmlLine();
+                nextPageInfo1Line(FinalData)
+            }
+
+
+        }
+
+        function getpagehtmlLine() {
+            count = count + 1;
+            var str = '<div id="Page' + count + '"class="page-break" style="border:double;"><div id="divHeader"></div><table id="outerTblLine"><tr><td style="width: 1000px; vertical-align: top;"><table id="leftTblLine"></table></td></tr></table></div>';
+            if (count == 1)
+                $("#Page").after(str);
+            else
+            {
+                tableHeight = 100;
+                var no = count - 1;
+                $("#Page"+no).after(str);
+            }
+        }
+
+        function getfooterhtml() {
+            var str = '<div><table style="border:none;width:100%"><tr><td style="font-size: 12px; font-family: sans-serif;"><small><b><i>' + generalfooter + '</small></i></b></td></tr></table><br/><table style="border:none;width:100%"><tr><td width=90px><b>COMMENTS :- </b></td><td style="height:20%;width:100%; border-collapse:collapse;border: 1px solid black;"><span id="spnComment" style="font-size: 12px; font-family: sans-serif;"></span>&nbsp;</td></tr><tr></tr><tr><td colspan=5><table cellpadding="0" cellspacing="0" style="height:20%;width:100%; border-collapse:collapse;border: 1px solid black;" ><tr style= "border:none; width:100%;"><td style="border: 1px solid black;"><center><b>CHECKED BY</b></center></td><td style="border: 1px solid black;"><center><b>STATION CODE</b></center></td><td style="border: 1px solid black;"><center><b>SIGNATURE</b></center></td><td style="border: 1px solid black;"><center><b>NAME (BLOCK LETTERS)</b></center></td><td style="border: 1px solid black;"><center><b>TIME</b></center></td><td style="border: 1px solid black;"><center><b>DATE</b></center></td></tr><tr style="border: none;"><td style="border: 1px solid black;"><center><span id="spnChecked">&nbsp;</span></center></td><td style="border: 1px solid black;"><center><span id="spnStation">&nbsp;</span></center></td><td style="border: 1px solid black;"><center><span id="spnSignature">&nbsp;</span></center></td><td style="border: 1px solid black;"><center><span id="spnName">&nbsp;</span></center></td><td style="border: 1px solid black;"><center><span id="spnTime">&nbsp;</span></center></td><td style="border: 1px solid black;"><center><span id="spnDate">&nbsp;</center></span></td></tr></table></td></tr><tr></tr><tr><td colspan=4><b>SHIPPER/AGENT :-</b></td></tr><tr><td colspan=4></td></tr><tr style="height:100%;"><td colspan=4 style="height:20%;width:100%; border-collapse:collapse;border: 1px solid black;"><font size="3"><span id="spnShipper"></span>&nbsp;</font></td></tr></table></div>';
+            $("#container").after(str);
+            getfooter();
+        }
+
+        function getfooter() {
+            var SPHCSNo = getParameterByName("SSno", "");
+            var awbSNo = getParameterByName("Sno", "");
+            if (SPHCSNo == null)
+                SPHCSNo = 0;
+            $.ajax({
+                url: "../../Services/Shipment/AcceptanceCheckSheetService.svc/GetAcceptanceCheckSheetRecordFooter",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ awbSNo: awbSNo, SPHCSNo: SPHCSNo, ChecklistTypeSno: ChecklistTypeSno }),
+                async: false,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    var ResultData = JSON.parse(result);
+                    FinalData = ResultData.Table;
+                   
+                    if (FinalData.length > 0) {
+                        $('#spnComment').text(FinalData[0].Comment);
+                        $("#spnChecked").text(FinalData[0].CheckedBy);
+                        $("#spnStation").text(FinalData[0].StationCode);
+                        $("#spnSignature").text('');
+                        $('#spnName').text(FinalData[0].Name);
+                        $("#spnTime").text(FinalData[0].Time);
+                        $("#spnDate").text(FinalData[0].Date);
+                        $('#spnShipper').text(FinalData[0].ShipperAgent);
+                    }
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        }
+
+        function getHeader() {
+            var SPHCSNo = getParameterByName("SSno", "");
+            var awbSNo = getParameterByName("Sno", "");
+            if (SPHCSNo == null)
+                SPHCSNo = 0;
+            $.ajax({
+                url: "../../Services/Shipment/AcceptanceCheckSheetService.svc/GetAcceptanceCheckSheetRecordHeader",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ awbSNo: awbSNo, SPHCSNo: SPHCSNo }),
+                async: false,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    var ResultData = JSON.parse(result);
+                    FinalData1 = ResultData.Table0;
+                    if (FinalData1.length > 0) {
+                        $('#spnLiveAnml').text(FinalData1[0].Comment);
+                        $("#spnChecked").text(FinalData1[0].CheckedBy);
+                        $("#spnAWBNo").text(FinalData1[0].AWBNo);
+                        $("#spnOrigin").text(FinalData1[0].Origin);
+                        $('#spnDestination').text(FinalData1[0].Destination);
+                        $("#spnVia").text(FinalData1[0].routingcitycode);
+                        $("#spnDates").text(FinalData1[0].Date);
+
+
+                        $("#spnheading").text(FinalData1[0].Name);
+                        $('#spnLiveAnml1').text(FinalData1[0].Comment);
+                        $("#spnChecked1").text(FinalData1[0].CheckedBy);
+                        $("#spnAWBNo1").text(FinalData1[0].AWBNo);
+                        $("#spnOrigin1").text(FinalData1[0].Origin);
+                        $('#spnDestination1').text(FinalData1[0].Destination);
+                        $("#spnVia1").text(FinalData1[0].routingcitycode);
+                        $("#spnDates1").text(FinalData1[0].Date);
+
+                        title = FinalData1[0].AWBNo;
+                    }
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        }
+
+
+        function getColumnName(awbSNo) {
+            var awbSNo = awbSNo;
+            $.ajax({
+                url: "../../Services/Shipment/AcceptanceCheckSheetService.svc/GetColumnName",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ awbSNo: awbSNo }),
+                async: false,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+
+                    var dataTableobj = JSON.parse(result);
+                    var data = dataTableobj.Table0;
+                    if (data.length > 0) {
+                        column1 = data[0].ColumnName1;
+                        column2 = data[0].ColumnName2;
+                        column3 = data[0].ColumnName3;
+                        generalheader = data[0].GeneralHeader;
+                        generalfooter = data[0].GeneralFooter;
+                        version = data[0].Version;
+                    }
+                    else {
+                        column1 = '';
+                        column2 = '';
+                        column3 = '';
+                        generalheader = '';
+                        generalfooter = '';
+                        version = '';
+                    }
+                },
+                error: function (err) {
+                    alert("Generated Error");
+                }
+            });
+        }
+
+        function getdetail(awbSNo, SPHCSNo)
+        {
+            $.ajax({
+                url: "../../Services/Shipment/AcceptanceCheckSheetService.svc/GetSPHCCheckList?AWBSNo=" + awbSNo + "&SPHCSNo=", async: false, type: "get", dataType: "json", cache: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    var CheckListData = jQuery.parseJSON(result);
+                    var CheckListInfo = CheckListData.Table;
+                    if (CheckListInfo.length > 0) {
+                        ChecklistTypeSno = CheckListInfo[0].ChecklistTypeSno;
+                        if (ChecklistTypeSno == '')
+                            ChecklistTypeSno = 0;
+                        generalheader = CheckListInfo[0].GeneralHeader;
+                        if (generalheader != '') {
+                            var s = '';
+                            for (var i = 0; i < generalheader.split('\n').length; i++) {
+                                var str = generalheader.split('\n')[i];
+
+                                s = s + '<p>' + str + '</p>';
+                            }
+                            generalheader = s;
+                        }
+
+                        s = '';
+                        generalfooter = CheckListInfo[0].GeneralFooter;
+                        if (generalfooter != '') {
+                            for (var i = 0; i < generalfooter.split('\n').length; i++) {
+                                var str = generalfooter.split('\n')[i];
+
+                                s = s + '<p>' + str + '</p>';
+                            }
+                            generalfooter = s;
+                        }
+                       
+                    }
+                }
+            });
+        }
+       
+     
+
+        
+    </script>
+</head>
+<body style="width:1000px;">
+    <center>IATA (Check List) <input type="button" id="btnPrint" value="Print" onclick="document.title = '  ';PrintPreview();"  /><br/></center>
+    <div id="AllPage">
+        <div id="container">
+            <div id="Page" style="border:double;">
+                <div id="divHeader">
+
+                </div>
+                <table id="outerTbl">
+                    <tr>
+                        <td style="width: 500px; vertical-align: top;">
+
+                            <table id="leftTbl"></table>
+                        </td>
+                        <td style="width:500px;vertical-align:top;">
+
+                            <table id="rightTbl"></table>
+                        </td>
+                    </tr>
+                </table>
+                <table id="outerTblLine">
+                    <tr>
+                        <td style="width: 1000px; vertical-align: top;">
+                            <table id="leftTblLine"></table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="footer"><span id="spnversion"></span></div>
+</body>
+</html>

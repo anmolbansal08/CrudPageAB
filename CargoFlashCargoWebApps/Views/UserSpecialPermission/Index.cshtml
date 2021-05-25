@@ -1,0 +1,143 @@
+﻿
+
+<style type="text/css">
+    .completeprocess {
+        color: #fff;
+        background-color: #51a351;
+        border-color: #51a351;
+        font-size: 10px;
+    }
+
+    .incompleteprocess {
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+        font-size: 10px;
+    }
+
+    .partialprocess {
+        color: #fff;
+        background-color: #FE9D5A;
+        border-color: #FE9D5A;
+        font-size: 10px;
+    }
+
+    .failureprocess {
+        color: #fff;
+        background-color: #FE0404;
+        border-color: #FE9D5A;
+        font-size: 10px;
+    }
+
+    .dependentprocess {
+        color: #fff;
+        background-color: brown;
+        border-color: goldenrod;
+        font-size: 10px;
+    }
+
+    .k-grid-filter {
+        display: none;
+    }
+
+    .k-link {
+        cursor: text;
+    }
+</style>
+
+<div id="divbody" style="height:auto">
+
+    @*@using (Html.BeginForm("GetAirlineData", "AWBStockStatus", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {*@
+    <script src="~/JScript/Report/UserSpecialPermission.js"></script>
+
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>User Permission Report</td></tr>
+                        <tr><td class='formActiontitle' colspan='4'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+                     
+                       
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineSNo'>
+                                    Airline
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AirlineSNo")
+                                @Html.TextBox("Text_AirlineSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                            </td>
+                            <td class=' formlabel' title='City'>
+                                <font color='red'></font><span id='spnModuleName'>
+                                    User Name
+
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("UserSNo")
+                                @Html.TextBox("Text_UserSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                            </tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='GroupName'>
+
+                                Group Name
+
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("GroupSNo")
+
+
+                                @Html.TextBox("Text_GroupSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+
+                        </tr>
+                        <tr>
+
+
+                          
+                            <td class='formInputcolumn' colspan="4">
+                                <input type='submit' onclick="UserSpecialPermissionDetail()" name='operation' value='Search' class='btn btn-success' width="100" />&nbsp;&nbsp;<input type='submit' onclick="ExportToExcel_UserSpecialPermission()" name='operation' value='Export to Excel' class='btn btn-success' id="btnExportToExcel_UserSpecialPermission" style="display: none;" />
+                            </td>
+
+
+                        </tr>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <div style="overflow-x: scroll; height: 55vh">
+        <table id="tblUserSpecialPermissionDetails" class="appendGrid ui-widget" style="margin-bottom:10px;" align="center">
+            <thead class='ui-widget-header' style='text-align:center' id="theadid"></thead>
+            <tbody id="tbodyid" class="ui-widget-content"></tbody>
+        </table>
+            </div>
+
+
+    </section>
+    @*}*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".k-hierarchy-cell").click();
+        });
+
+        $('tr.k-master-row').click(function () {
+            $(this).nextUntil('tr.k-master-row').css('display', function (i, v) {
+                return this.style.display === 'table-row' ? 'none' : 'table-row';
+            });
+        });
+
+    </script>
+</div>
+
+

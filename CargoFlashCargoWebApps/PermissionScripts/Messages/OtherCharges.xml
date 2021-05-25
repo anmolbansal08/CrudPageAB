@@ -1,0 +1,23 @@
+﻿<Messages>
+	<ServerMessage>
+		<Key>1001</Key>
+		<value>Record already exists with same input parameters</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>1002</Key>
+		<value>Record already exists with same input parameters for given dates.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2000</Key>
+		<value>Record Added Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2001</Key>
+		<value>Record Updated Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2002</Key>
+		<value>Record Deleted Successfully.</value>
+	</ServerMessage>
+</Messages>
+

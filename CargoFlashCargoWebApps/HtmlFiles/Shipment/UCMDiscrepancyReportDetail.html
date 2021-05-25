@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../../Scripts/jspdf.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .UCMCiscrepancythead td {
+            background-color: #4f8098;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #CCC;
+            font-weight: bold;
+            height: 30px !important;
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        .tdReceived td {
+            background-color: #75a7e8;
+            color: black;
+            text-align: center;
+            border: 1px solid #CCC;
+            font-weight: bold;
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        .tdProcessed td {
+            background-color: #FFA500;
+            color: black;
+            text-align: center;
+            border: 1px solid #CCC;
+            font-weight: bold;
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        .tdRejected td {
+            background-color: #4acfee;
+            color: black;
+            text-align: center;
+            border: 1px solid #CCC;
+            font-weight: bold;
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        .tdremark td {
+            background-color: #4acfee;
+            color: black;
+            text-align: center;
+            border: 1px solid #CCC;
+            font-weight: bold;
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        .tdsno {
+            width: 30px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+        });
+    </script>
+</head>
+<body>
+    <table style="width:100%" id="PrintTable" align="center">
+        <tr style="height:20px">
+            <td colspan="8">
+
+                <input type="button" id="Ptint" style="margin-left:5px" class="btn btn-success" value="Print" onclick="BtnUCMCiscrepancyt()" />
+                <input type="button" id="Update" style="margin-left:5px" class="btn btn-success" value="Update" onclick="BtnUCMCiscrepancytUpdate()" />
+                <span style="margin-left:5px;font-weight:bold">Settled</span>
+                <input type="checkbox" id="chkSetall" style="margin-left: 5px" class="btn btn-success" />
+                <input type="button" id="btnReload" style="margin-left: 5px; float: right; " class="btn btn-success" value="Reload" onclick="BtnUCMCiscrepancytReload()" />
+                <input type="button" id="execute" style="margin-right:5px;float:right" class="btn btn-success" value="Execute" onclick="Btnexecute()" />
+            </td>
+        </tr>
+        <tr>
+            <td style="border-right: 1px solid #CCC; vertical-align: top;" align="center">
+                <div id="PrintDiv">
+
+                    <table id="tblRequest" style="width: 100%">
+                        <thead class="UCMCiscrepancythead" align="center">
+                            <tr style="height:10px"></tr>
+                            <tr>
+                                <td colspan="3" style="background-color: white !important;"></td>
+                                <td style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; width:160px ">UCM TYPE:</td>
+                                <td style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; "><span id="UCMType"></span> </td>
+                                <td style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; width: 160px; ">Airline:</td>
+                                <td style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; "><label id="Airline">GARUDA AIRLINE</label> </td>
+                                <td style="background-color: white !important;"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="background-color: white !important;"></td>
+                                <td style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; width: 160px;">FLIGHT NUMBER:</td>
+                                <td style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; "><span id="FLIGHTNUMBER"></span></td>
+                                <td style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; width: 160px; ">FLIGHT DATE:</td>
+                                <td style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; "><span id="FLIGHTDATE"></span></td>
+                                <td style="background-color: white !important;"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="background-color: white !important;"></td>
+                                <td style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; width: 160px;">STATUS:</td>
+                                <td style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important;text-transform:uppercase "><span id="UCMSTATUS"></span></td>
+                                <td style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; width: 160px; "></td>
+                                <td style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; "></td>
+                                <td style="background-color: white !important;"></td>
+                            </tr>
+                            <tr style="height:10px"></tr>
+                            <tr style="height:30px">
+                                <td class="tdsno">SNO</td>
+                                <td id="UCMOUT">ALL RECEIVED</td>
+                                <td id="UCMIN">PROCESSED</td>
+                                <td id="UCMDESC">REJECTED</td>
+                                <td>CONTENT</td>
+                                <td>DESTINATION</td>
+                                <td>PREVIOUS STATION</td>
+                                <td>REMARKS</td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <form method="post" name="aspnetForm" id="aspnetForm"><div style="display:none" id="DivUcmDes"><center><table id="tbleDivUcmDesReport" style="width:95%;"><tr><td><textarea rows="1000" id="Messgae" style="width:600px;height:200px" /></textarea></td></tr></table><center></div></form>
+</body>
+</html>

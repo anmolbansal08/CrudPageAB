@@ -1,0 +1,360 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css" media="print">
+        @page {
+            size: auto; /* auto is the initial value */
+            margin: 0; /* this affects the margin in the printer settings */
+        }
+    </style>
+    <script src="../../../Scripts/jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        function isBase64(str) {
+            try {
+                return btoa(atob(str)) == str;
+            }
+            catch (err) {
+                return false;
+            }
+        }
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            var ULDRepairSNo = getParameterByName("EditSNo", "");// "30243";
+            var pageName = getParameterByName("pagename", ""); //"ReservationBooking";
+            var tnc = getParameterByName("tnc", ""); // usercontext variable for hidding div #divCondition
+            if (isBase64(ULDRepairSNo))
+                ULDRepairSNo = atob(ULDRepairSNo);
+            if (isBase64(tnc))
+                tnc = atob(tnc);
+
+            if (tnc == 'Print') {
+
+                $("#btnPrint").hide();
+                GetULDRepairPrintRecordApproval(ULDRepairSNo)
+                setTimeout(function () {
+                    window.print();
+                    window.close();
+                }, 800)
+            }
+        });
+        function GetULDRepairPrintRecordApproval(ULDRepairSNo) {
+            if (ULDRepairSNo) {
+                $.ajax({
+                    url: "../../Services/ULD/ULDRepairService.svc/GetULDRepairPrintRecordApproval",
+                    async: false,
+                    type: "GET",
+                    dataType: "json",
+                    data: { ULDRepairSNo: ULDRepairSNo },
+                    contentType: "application/json; charset=utf-8", cache: false,
+
+                    success: function (result) {
+                        var ResultData = jQuery.parseJSON(result);
+                        FinalData = ResultData.Table0;
+                        FinalData1 = ResultData.Table1;
+                        var TotalCostApp = 0;
+                        var ManOurCost = 0;
+                        $("#ImgLogo").attr('src', '');
+                        var AirlineLogo = "";
+                        if (FinalData.length > 0) {
+                            if (FinalData[0].AirlineLogo == "") {
+                                $("#ImgLogo").attr('src', userContext.SysSetting.LogoURL);
+                            } else {
+                                AirlineLogo = "../../BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=" + FinalData[0].AirlineLogo;
+                                $("#ImgLogo").attr('src', AirlineLogo);
+                            }
+                            $("#spnULDNo").text(FinalData[0].ULDNo);
+                            $("#spnType").text(FinalData[0].ULDType);
+                            $("#spnManufacturer").text(FinalData[0].OwnerCode);
+                            $("#spnDateOfDelivery").text(FinalData[0].DLVDate);
+                            $("#spnMaterialManHoursCost").text(FinalData[0].ManHoursCost);
+                            ManOurCost = FinalData[0].ManHoursCost;
+                            $("#spnMaintenance").text(FinalData[0].Maintenancetype);
+                            $("#spnREPAIR").text(FinalData[0].RepairOrScrap);
+                            $("#spnfullname1").text(FinalData[0].FirstName);
+                            $("#spnId1").text(FinalData[0].ID1);
+                        }
+                        if (FinalData1[0]) {
+                            if (FinalData1.length > 0) {
+                                for (var i = 0; i < FinalData1.length; i++) {
+
+                                    if (FinalData1[i].Approval == "Yes") {
+                                        TotalCostApp += parseFloat(FinalData1[i].TotalCost)
+                                    }
+                                    $('table[id="Desctbl"]').append('<tr> <td style="border:1px solid black;text-align:center"><span>' + (i + 1) + '</span></td> <td style="border:1px solid black;text-align:center"><span>' + FinalData1[i].PartName + '</span></td> <td style="border:1px solid black;text-align:center"><span>' + FinalData1[i].MaterialDescription + '</span></td>  <td style="border:1px solid black;text-align:center"><span>' + FinalData1[i].Qty + '</span></td>  <td style="border:1px solid black;text-align:center"><span>' + FinalData1[i].MaterialPrice + '</span></td> <td style="border:1px solid black;text-align:center"><span>' + FinalData1[i].TotalCost + '</span></td><td style="border:1px solid black;text-align:center"><span>' + FinalData1[i].Approval + '</span></td></tr>');
+
+                                }
+                            }
+
+                            $("#totalcostapp").html((parseFloat(TotalCostApp) + parseFloat(ManOurCost)).toFixed(3));
+                            $("#TOTALCOST").html(parseFloat(TotalCostApp).toFixed(3));
+                            $("#spnMaterialCost").html(parseFloat(TotalCostApp).toFixed(3));
+                            $('table[id="Desctbl"]').append('<tr> <td style="border:1px solid black;text-align:center"><span></span></td><td style="border:1px solid black;text-align:center"><span></span></td><td style="border:1px solid black;text-align:center"><span></span></td><td style="border:1px solid black;text-align:center"><span></span></td><td style="border:1px solid black;text-align:center"><span></span></td><td style="border:1px solid black;text-align:center"><span></span></td><td style="border:1px solid black;text-align:center"><span></span></td> </tr>');
+                        }
+                        else {
+                            $('table[id="Desctbl"]').append('<tr> <td style="border:1px solid black;text-align:center"><span></span></td><td style="border:1px solid black;text-align:center"><span></span></td><td style="border:1px solid black;text-align:center"><span></span></td><td style="border:1px solid black;text-align:center"><span></span></td><td style="border:1px solid black;text-align:center"><span></span></td><td style="border:1px solid black;text-align:center"><span></span></td><td style="border:1px solid black;text-align:center"><span></span></td> </tr>');
+                        }
+                    }
+                });
+            }
+            else {
+                alert("Value Null");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div style=" width: 100%;"> <input type="button" id="btnPrint" value="Print" style="float:right" onclick="printULDApproval()" /> </div>
+    <div id="PrintdivApproval" style=" width: 100%;">
+
+        <table id="Printtable" style="width: 100%; border: 1px solid;">
+            <tr>
+                <td>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style=" font-weight: bold; font-size: 30px; text-align: center; width: 100%;">
+                                REPAIR ORDER APPROVAL
+                                <br>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:85%;">
+                                <br>
+                                <span style="float: right; font-weight: bold;">No.</span>
+                            </td>
+                            <td style="width:15%;">
+                                <br>
+                                <span id="spnSerialNo"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table style="width:100%;white-space:nowrap; border:1px solid">
+            <tr>
+                <td style="width:50%;border:1px solid">
+                    <div>
+                        <img id="ImgLogo" src="" style="width:75%; height:94px" />
+                      
+                    </div>
+                </td>
+                <td style="width:50%;">
+                    <table style="width:100%;float:right;white-space:nowrap;border: 1px solid black;border-collapse: collapse;">
+                        <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style=" font-size: 19px; font-weight: bold;">Type/Model</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><span style="font-size: 19px;" id="spnType"></span></td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style="font-size: 19px; font-weight: bold;">ULD No.</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><span style="font-size: 19px;" id="spnULDNo"></span></td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style="font-size: 19px; font-weight: bold;">MANUFACTURER</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><span style="font-size: 19px;" id="spnManufacturer"></span></td>
+                        </tr>
+
+                        <!--<tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style="font-size: 19px; font-weight: bold;">DATE OF DELIVERY</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><span style="font-size: 19px;" id="spnDateOfDelivery"></span></td>
+                        </tr>-->
+                        <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style="font-size: 19px; font-weight: bold;">Total MAN HOURS COST</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><span style="font-size: 19px;" id="spnMaterialManHoursCost"></span></td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style="font-size: 19px; font-weight: bold;">Total MATERIAL COST</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><span style="font-size: 19px;" id="spnMaterialCost"></span></td>
+                        </tr>
+                        <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <td style="width:20%;"><span style="font-size: 19px; font-weight: bold;"> TOTAL APPROVED COST</span></td>
+                            <td style="width:3%;"><strong>:</strong></td>
+                            <td style="width:27%;"><strong><span style="font-size: 19px;" id="totalcostapp"></span></strong> </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <table id="Desctbl" style="width:100%;border:1px solid black;border-collapse:collapse;">
+            <tr id="trDesctbl">
+                <td style="border:1px solid black;text-align:center"><strong>No.</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>PART NUMBER</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>MATERIAL  DESCRIPTION</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>QUANTITY</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>MATERIAL PRICE</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>TOTAL COST</strong></td>
+                <td style="border:1px solid black;text-align:center"><strong>APPROVED</strong></td>
+            </tr>
+            <tfoot>
+                <tr id="trDesctblheader">
+                    <td style="border:1px solid black;text-align:center"><strong></strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong></strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong></strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong></strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong>TOTAL APPROVED MATERIAL  COST</strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong><span id="TOTALCOST"></span> </strong></td>
+                    <td style="border:1px solid black;text-align:center"><strong></strong></td>
+                </tr>
+            </tfoot>
+
+        </table>
+
+        <table style="width:100%;border:1px solid black;border-collapse:collapse;">
+            <tr>
+                <td style=""><strong>REMARKS:</strong></td>
+                <td style=""><span style="font-size:15pt" id="spnREMARKS"></span></td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="text-align:left"><strong>TYPE OF MAINTENANCE :</strong></td>
+
+
+            </tr>
+            <tr>
+                <td>
+                    <span style="font-size:12pt" id="spnREPAIR"></span>
+                </td>
+                <!--<td><input id="Checkbox1" type="checkbox" /></td>-->
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <!--<td><input id="Checkbox1" type="checkbox" /></td>-->
+                <td>
+                    <span style="font-size:12pt" id="spnMaintenance"></span>
+                </td>
+            </tr>
+            <tr>
+                <!--<td>
+                    SCRAP <span style="font-size:15pt" id="spnSCRAP"></span>
+                </td>-->
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <!--<td><input id="Checkbox1" type="checkbox" /></td>-->
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <!--<td><input id="Checkbox1" type="checkbox" /></td>-->
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <!--<td><input id="Checkbox1" type="checkbox" /></td>-->
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            </tr>
+        </table>
+
+        <table style="width:100%;border:1px solid black;border-collapse:collapse;">
+            <tr>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style=""><strong>Delivery by,</strong></td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="text-align:left"><strong>Recieved by,</strong></td>
+            <tr>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style=""><strong>SBU Garuda Cargo</strong></td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="text-align:left;"><strong>GMF Aero Asia</strong></td>
+            </tr>
+            <tr>
+                <td> Full Name :</td>
+                <td> <span style="font-size:12pt" id="spnfullname1"></span></td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>Full Name :</td>
+                <td> <span style="font-size:12pt" id="spnfullname2"></span> </td>
+
+            </tr>
+            <tr>
+                <td>ID No. :</td>
+                <td> <span style="font-size:12pt" id="spnId1"></span></td>
+                <td style="border-left:1px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>ID No. :</td>
+                <td> <span style="font-size:12pt" id="spnId2"></span> </td>
+
+            </tr>
+        </table>
+
+        <table style="width:100%; border:1px solid ">
+            <tr>
+                <td style="width:50%;">
+                    <table id="lasttble1 " style="float:left;">
+                        <tr>
+                            <td>ORIGINAL</td>
+                            <td>:</td>
+                            <td>JOIN PAYMENT<span style="font-size:10pt" id="spnoriginal"></span></td>
+                        </tr>
+                        <tr>
+                            <td>COPY1</td>
+                            <td>:</td>
+                            <td>RECIEVER ORDER<span style="font-size:10pt" id="spncopy1"></span></td>
+                        </tr>
+                        <tr>
+                            <td>COPY2</td>
+                            <td>:</td>
+                            <td>H/O ULD MANAGEMENT<span style="font-size:10pt" id="spncopy2"></span></td>
+                        </tr>
+                        <tr>
+                            <td>COPY3</td>
+                            <td>:</td>
+                            <td>FILE<span style="font-size:10pt" id="spncopy3"></span></td>
+                        </tr>
+
+                    </table>
+                </td>
+                <td style="width:50%;">
+                    <table id="lasttable2" style="height: 85px; width: 100%">
+                        <tr>
+                            <td><span style="font-size:10pt">FRM/JKTFIJ/001</span><span style="font-size:10pt" id="spnODS"></span></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,28 @@
+﻿
+<Messages>
+  <DataFieldName>
+    <Name>IndustryTypeName</Name>
+    <Message>IndustryType Name can not be blank</Message>
+  </DataFieldName>
+
+ 
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>IndustryType Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>IndustryType Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>IndustryType Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>IndustryType Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

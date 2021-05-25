@@ -1,0 +1,184 @@
+﻿
+
+
+<style type="text/css">
+    .tdHeading {
+        text-align: center;
+        background-color: #daecf4;        
+        color: black;
+        vertical-align: central;
+    }
+    .charttd {
+        border: 1px solid #CCCCCC;
+        height: 50%;
+        width: 33%;
+        vertical-align: top;
+    }
+    span.k-i-arrow-s {
+        cursor: pointer;
+    }
+    .SpanHeading {
+        font-weight: bold;
+        vertical-align: -webkit-baseline-middle;
+    }
+
+</style>
+<script type="text/javascript">
+    var userContext = "";
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+
+    });
+</script>
+
+<div id="loader"></div>
+<div style="width: 100%;background-color: #F7F7F7;">
+    <table style="padding: 5px; position: relative; text-align: center; margin: auto;">
+        <tr style="background-color: #F7F7F7;">
+            <td align="left"><span><b>Import Process Monitoring :</b></span></td>
+            <td valign="middle">
+                <!--<input type="hidden" name="Type" id="Type" value="" />
+                <input type="text" class="" name="Text_Type" id="Text_Type" style="width:150px;" placeholder="Type" controltype='autocomplete'>-->
+
+                <!--<input onclick="ChangeData(this)" type="radio" name="rdType" checked="checked" />Agent
+                <input onclick="ChangeData(this)"  type="radio" name="rdType" />Destination
+                <input onclick="ChangeData(this)"  type="radio" name="rdType" />SHC-->
+               
+                <!--<input type="radio" tabindex="1" data-radioval="Agent" class="" name="Type" id="ReportType" value="1" checked="True" onclick="ChangeData(this)">Agent &nbsp;&nbsp;-->
+                <input type="radio" tabindex="1" data-radioval="Airline" class="" name="Type" id="ReportType" value="4" checked="True" onclick="ChangeData(this)" >Airline &nbsp;&nbsp;
+
+                <input type="radio" tabindex="1" data-radioval="Origin" class="" name="Type" id="ReportType" value="2" onclick="ChangeData(this)">Origin &nbsp;&nbsp;
+                <input type="radio" tabindex="1" data-radioval="SHC" class="" name="Type" id="ReportType" value="3" onclick="ChangeData(this)">SHC &nbsp;&nbsp;
+                
+            </td>
+            <td><span>From </span>&nbsp;</td>
+            <td><input name="StartDate" id="StartDate" type="text" /></td>
+            <td><span>To</span>&nbsp;</td>
+            <td><input name="EndDate" id="EndDate" type="text" /></td>
+            
+
+            <td><input type="button" id="Search" name="Search" value="Search" class="btn btn-info" onclick="Search();" /></td>
+
+            <td><input type="button" id="DownloadSummary" name="DownloadSummary" value="Download Summary" class="btn btn-info" onclick="SearchSummary();" /></td>
+            <td><input type="button" id="DownloadDetail" name="DownloadDetail" value="Download Detail" class="btn btn-info" onclick="SearchDetail();" /></td>
+            
+            <!--<td>&nbsp;</td>
+            <td>
+                <input onclick="ChageChart(this)" rel="chart" type="radio" name="rdChartgrid" checked="checked"/>Chart
+                <input onclick="ChageChart(this)" rel="grid" type="radio" name="rdChartgrid" />Grid
+            </td>-->
+        </tr>
+    </table>
+</div>
+<table class="WebFormTable">
+    <tr>
+        <td>
+            <div>
+                <table class="WebFormTable">
+                    <tr class="tdHeading">
+                        <td width="33%">
+                           
+                            <span class="SpanHeading">
+                                FFM RECEIVED
+                            </span>
+                            <div style="float:right;padding-right:5px;">
+                           
+                                <span class="fa fa-arrows-alt" title="Maximize" style="cursor:pointer;" onclick="FfmChartWindow('winFfm','250')"></span>
+                                
+                            </div>
+                            
+                        </td>
+
+                       
+                      
+                        <td width="33%">
+                            <span class="SpanHeading">
+                               FFM ARRIVED
+                            </span>
+                            <div style="float:right;padding-right:5px;">
+                              
+                                <span class="fa fa-arrows-alt" title="Maximize" style="cursor:pointer;" onclick="ArrChartWindow('winArr', '250')"></span>
+                            </div>
+                        </td>
+
+                        <td width="33%">
+                            <span class="SpanHeading">
+                                PENDING SEGREGATION
+                            </span>
+                            <div style="float:right;padding-right:5px;">
+                                <span class="fa fa-arrows-alt" title="Maximize" style="cursor:pointer;" onclick="PendingChartWindow('winPending', '250')"></span>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr >
+                        <td class="charttd">                           
+                            <div id="FfmChart" rel="chart" style="height: 260px;">&nbsp;</div>                            
+                        </td>
+                        
+                       
+                        <td class="charttd">
+                            <div id="ArrChart" rel="chart" style="height: 260px;">&nbsp;</div>
+                        </td>
+                        <td class="charttd"><div id="PendingChart" rel="chart" style="height: 260px;">&nbsp;</div></td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <table class="WebFormTable">
+                    <tr class="tdHeading">
+                      
+                       
+                        
+                        <td width="33%">
+                            <span class="SpanHeading">
+                                PENDING LOCATION
+                            </span>
+                            <div style="float:right;padding-left:5px;">
+
+                                <span class="fa fa-arrows-alt" title="Maximize" style="cursor:pointer;" onclick="LocationChartWindow('winLocation', '250')"></span>
+                            </div>
+                        </td>
+                        
+
+                        <td width="33%">
+                            <span class="SpanHeading">
+                             SEGREGATION COMPLETE
+                            </span>
+                            <div style="float:right;padding-right:5px;">
+                                <span class="fa fa-arrows-alt" title="Maximize" style="cursor:pointer;" onclick="CompleteChartWindow('winComplete', '250')"></span>
+                            </div>
+                        </td>
+
+                        <td width="33%">
+                            <span class="SpanHeading">
+                               ONGOING SEGREGATION  
+                            </span>
+                            <div style="float:right;padding-right:5px;">
+                                <span class="fa fa-arrows-alt" title="Maximize" style="cursor:pointer;" onclick="OngoingChartWindow('winOngoing', '250')"></span>
+                            </div>
+                        </td>
+                       
+                       
+                    </tr>
+                    <tr>                       
+                        <td class="charttd">
+                            <div id="LocationChart" rel="chart" style="height: 260px;">&nbsp;</div>
+                        </td>                      
+                        <td class="charttd">
+                            <div id="CompleteChart" rel="chart" style="height: 260px;">&nbsp;</div>
+                        </td>                      
+                        <td class="charttd">
+                            <div id="OngoingChart" rel="chart" style="height: 260px;">&nbsp;</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

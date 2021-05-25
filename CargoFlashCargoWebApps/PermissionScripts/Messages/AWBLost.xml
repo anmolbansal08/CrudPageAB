@@ -1,0 +1,27 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>StartRange</Name>
+    <Message>Start Range cannot be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>EndRange</Name>
+    <Message>End Range cannot be blank</Message>
+  </DataFieldName>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>AWB Stock does not exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>AWB Stock Already lost</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>AWB marked as Lost successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1003</Key>
+    <value>AWB Stock Already in Void/No Show/BlackListed.</value>
+  </ServerMessage>
+</Messages>
+

@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+        });
+    </script>
+</head>
+<body>
+
+    <table id='tblEditFlightwise' cellspacing='0' cellpadding="2" border='0' width='100%'>
+        <tr>
+            <td colspan='4' class="formSection"><strong>Flight Detail</strong></td>
+        </tr>
+        <!--<tr>
+            <td colspan='4'></td>
+        </tr>-->
+        <tr>
+            <td colspan='4' class="formActiontitle">
+                <!--<hr>-->
+                <input id='DFSNo' type='hidden' /><input id='orgsno' type='hidden' /><input id='destsno' type='hidden' />
+                <strong><span id='FlightNo'></span> : <span id='org'></span> - <span id='Dest'></span> on <span id='FlightDate'></span></strong>
+                <!--<hr>-->
+            </td>
+        </tr>
+        <!--<tr>
+            <td colspan='4'><hr></td>
+
+        </tr>-->
+        <tr>
+            <td class='formlabel'>Valid From</td>
+            <td class='formInputcolumn' width='20%'>
+                <span id='ValidFrom'></span>
+            </td>
+            <td class='formlabel'>Valid To</td>
+            <td class='formInputcolumn' width='20%'>
+                <span class="k-picker-wrap k-state-default k-widget k-datepicker k-header k-input" style="color: rgb(0, 0, 0);width:20%">
+                    <input name="ValidTo" class="k-input k-state-default" id="ValidTo" style="color: rgb(0, 0, 0); width :100%" type="text" maxlength="17" value="" data-role="datepicker" controltype="datetype" sqldatevalue="" formattedvalue=""><span class="k-select" unselectable="on"><span class="k-icon k-i-calendar" unselectable="on">select</span></span>
+                </span>
+            </td>
+
+        </tr>
+        <!--//Arman-->
+        <tr>
+            <td class='formlabel'>STD (HHMM)</td>
+            <td class='formInputcolumn' width='20%'>
+                <span id='lblETD'></span>
+            </td>
+            <td class='formlabel'>STA (HHMM)</td>
+            <td class='formInputcolumn' width='20%'>
+                <span id='lblETA'></span>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td class='formlabel'><font color='red'>*</font><span id='spnETD'>ETD (HHMM)</span></td>
+            <td class='formInputcolumn'>                                                <input type='text' class='k-input' name='ETD' id='ETD' oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" autocomplete='off'> <span id="spnETDGMT"></span> &nbsp;(GMT)                                          </td>
+            <td class='formlabel' title='ETA'><font color='red'>*</font><span id='spnETA'>ETA (HHMM)</span> </td>
+            <td class='formInputcolumn'>                                                <input type='text' class='k-input' name='ETA' id='ETA' oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" autocomplete='off'> <span id="spnETAGMT"></span>&nbsp;(GMT)                                           </td>
+
+        </tr>
+
+        <tr>
+            <td class='formlabel'><span id='spnATD'>ATD (HHMM)</span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='ATD' id='ATD' maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" autocomplete='off'><span id="spnATDGMT"></span> &nbsp;(GMT)</td>
+            <td class='formlabel' title='ATA'><span id='spnATA'>ATA (HHMM)</span> </td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='ATA' maxlength="4" id='ATA' oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" autocomplete='off'><span id="spnATAGMT"></span> &nbsp;(GMT)</td>
+
+        </tr>
+
+
+        <tr>
+            <td class='formlabel'>Flight Type</td>
+            <td class='formInputcolumn'><input type='hidden' id='FlightType' name='FlightType'><input type='text' name='Text_FlightType' id='Text_FlightType' data-role='autocomplete' controltype='autocomplete' data-valid='' data-valid-msg=''> </td>
+            <td class='formlabel'><font color='red'>*</font>&nbsp;&nbsp;Aircraft Type</td>
+            <td class='formInputcolumn'>
+                <input type='hidden' id='AircraftType' name='AircraftType'><input type='text' name='Text_AircraftType' id='Text_AircraftType' data-role='autocomplete' controltype='autocomplete' data-valid='required' data-valid-msg='Aircraft Type can not be blank'>
+                &nbsp;&nbsp;&nbsp;
+                <input type="button" style="color: #fff; background-color: #428bca; border-color: #357ebd; width: auto !important; text-align: left; cursor: pointer;" value="Previous Aircrafts" onclick="BindFlightPreviousRecord();">                
+            </td>
+        </tr>
+        <tr>
+            <td class='formlabel'>Booking Closure Time</td>
+            <td class='formInputcolumn'><input type='text' name='txtBookingClosureTimee' id='txtBookingClosureTimeet' value='0' oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"></td>
+            <td class='formlabel'>Intl Booking Closure Time</td>
+            <td class='formInputcolumn'><input type='text' name='txtintlBookingClosureTimee' id='txtintlBookingClosureTimeet' oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value='0'></td>
+        </tr>
+        <tr>
+            <td class='formlabel'>Booking</td>
+            <td class='formInputcolumn'><input type='radio' name='rdbBooking' id='rdbBookingOpen' value='0'>Open<input type='radio' name='rdbBooking' id='rdbBookingClosed' value='1'>Closed</td>
+            <td class='formlabel'>Cancel Flight</td>
+            <td class='formInputcolumn'><input type='radio' name='rdbCancelFlight' id='rdbCancelFlightYes' value='1'>Yes<input type='radio' name='rdbCancelFlight' id='rdbCancelFlightNo' value='0'>No</td>
+
+        </tr>
+
+
+        <tr>
+
+            <td class='formlabel'>Control City</td>
+            <td class='formInputcolumn'><input type='hidden' id='controlCity' name='controlCity'><input type='text' name='Text_controlCity' id='Text_controlCity' data-role='autocomplete' controltype='autocomplete' data-valid='' data-valid-msg=''></td>
+            <td class='formlabel'>Day Diff</td>
+            <td class='formInputcolumn'><select id="slctDayDiff"></select></td>
+        </tr>
+        <tr>
+            <td class='formlabel'><font color='red'>*</font>&nbsp;&nbsp;Week Days</td>
+            <td class='formInputcolumn'><input type='Checkbox' name='AllDays' id='AllDays' value='Days'>All Days<input type='Checkbox' name='Days' id='Sun' value='Sun'>Sun  <input type='Checkbox' name='Days' id='Mon' value='Mon'>Mon  <input type='Checkbox' name='Days' id='Tue' value='Tue'>Tue  <input type='Checkbox' name='Days' id='Wed' value='Wed'>Wed  <input type='Checkbox' name='Days' id='Thu' value='Thu'>Thu  <input type='Checkbox' name='Days' id='Fri' value='Fri'>Fri  <input type='Checkbox' name='Days' id='Sat' value='Sat'>Sat  </td>
+            <td class='formlabel'><font color='red'>*</font>&nbsp;&nbsp;CAO</td>
+            <td class='formInputcolumn'><input type='radio' name='IsCAO' id='IsCAO' value='1'>Yes<input type='radio' name='IsCAO' id='IsCAO' value='0'>No</td>
+        </tr>
+        <tr>
+            <td class='formlabel'><font color='red'>*</font>&nbsp;&nbsp;Remarks</td>
+            <td class='formInputcolumn'>
+                <textarea class="k-input" name="Remarks" id="Remarks" style="width: 250px; text-transform: none;" controltype="alphanumeric" allowchar="/-," data-valid="required" data-valid-msg="Remarks can not be blank" tabindex="8" maxlength="100" data-role="alphabettextbox" autocomplete="off"></textarea>
+            </td>
+            <td class='formlabel'>Aircraft Registration No.</td>
+            <td class='formInputcolumn'>
+                <input type='hidden' id='AircraftRegistration' name='AircraftRegistration'>
+                <input type='text' name='Text_AircraftRegistration' id='Text_AircraftRegistration' data-role='autocomplete' controltype='autocomplete'>
+            </td>
+            <!--data-valid='required' data-valid-msg='Registration can not be blank'>-->
+        </tr>
+        <tr>
+            <td class='formlabel'><font color='red'>*</font>&nbsp;&nbsp;Flight Delay</td>
+            <td class='formInputcolumn'><input type='radio' name='IsDelay' id='IsDelay' value='0'>No<input type='radio' name='IsDelay' id='IsDelay' value='1'>Yes</td>
+            <td class='formlabel'></td>
+            <td class='formInputcolumn'>
+                &nbsp;
+                <input type="button" style="color: #fff; background-color: #428bca; border-color: #357ebd; width: auto !important; text-align: left; cursor: pointer;" value="Flight SI Details" onclick="BindFlightSIRemarks();">
+            </td>
+        </tr>
+
+
+
+
+
+
+        <!--<tr>
+            <td colspan='4'>-->
+        <!--<table width='100%' border='0'>-->
+
+        <tr><td colspan='4' class='formInputcolumn' style="padding:5px;"><strong>Passenger Details</strong></td></tr>
+        <tr>
+
+            <td class='formlabel'><span id='spnPassengerLoad'>Passenger Load</span></td>
+            <td class='formInputcolumn'><span class='k-input' id='txtPassengerLoad' style='width: 80px; text-transform: uppercase;' controltype='uppercase'></span></td>
+            <td class='formlabel' title='Volume Wt'><span id='spnBaggageLoad'>Baggage Load</span></td>
+            <td class='formInputcolumn'>   <span class='k-input' id='txtBaggageload' style='width: 80px; text-transform: uppercase;' controltype='uppercase'></span>                                                                                                             </td>
+        </tr>
+        <tr>
+
+            <td class='formlabel'><span id='spnchkNoOfmaleDisable'>Weight Per Pax</span></td>
+            <td class='formInputcolumn'>
+
+                <input type='text' class='k-input' name='txtWhtPerPax' id='txtWhtPerPax' value="90.00" maxlength="11" controltype="decimal2" maxlength="11" style="width:140px;" autocomplete='off'>
+            </td>
+
+            <td class='formlabel' title='Volume Wt'><span id='spnNoOfFemale'>Open Seats</span></td>
+            <td class='formInputcolumn'>
+
+
+                <input type='text' class='k-input' name='txtOpenSeat' id='txtOpenSeat' maxlength="3" controltype="number" style="width:140px;" autocomplete='off' value="0">
+            </td>
+        </tr>
+        <!--<tr>
+
+            <td class='formlabel'><span id='spnGrossWt'>No Of Child</span></td>
+            <td class='formInputcolumn'><span class='k-input' id='txtNoOfChild' style='width: 80px; text-transform: uppercase;' controltype='uppercase'></span></td>
+            <td class='formlabel'></td><td class='formInputcolumn'></td>
+        </tr>-->
+        <tr><td colspan='4' class='formInputcolumn' style="padding:5px;"><strong>Commercial Capacity</strong></td></tr>
+        <tr>
+            <td class='formlabel'><span id='spnCommercialCapacity'>Commercial Capacity </span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='CommercialCapacity' id='CommercialCapacity' controltype="decimal2" maxlength="11" style="width:140px;" autocomplete='off'></td>
+
+            <td class='formlabel'><span id='spnCommercialCapacity'>Structural Capacity </span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='txtstructuralCapacity' id='txtstructuralCapacity' maxlength="9" controltype="decimal2" style="width:140px;" autocomplete='off'></td>
+
+
+        </tr>
+        <tr><td colspan='4' class='formInputcolumn' style="padding:5px;"><strong>Cargo Capacity</strong></td></tr>
+        <tr>
+
+            <td class='formlabel'><input type='checkbox' id='chkCargoCapacityenableDisable' /><font color='red'>*</font><span id='spnGrossWt'>Gross Weight</span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='txtCargoCapGrossWt' id='txtCargoCapGrossWt' maxlength="11" autocomplete='off' controltype="decimal2" style="width:140px;"></td>
+            <td class='formlabel' title='Volume Wt'><font color='red'>*</font><span id='spnVolumeWt'>Volume (CBM)</span></td>
+            <td class='formInputcolumn'> <input type='text' maxlength="9" class='k-input' name='txtCargoCapVolueWt' id='txtCargoCapVolueWt' controltype="decimal3" style="width:140px;" autocomplete='off' maxlength="7"></td>
+        </tr>
+        <tr style="display:none;"><td colspan='4' class='formInputcolumn' style="padding:5px;"><strong>Alert Capacity</strong></td></tr>
+        <tr style="display:none;">
+
+            <td class='formlabel'><input type='checkbox' id='chkAlertCapacityenableDisable' /> <font color='red'>*</font><span id='spnGrossWt'>Gross Weight</span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='alertCapGrossWt' id='alertCapGrossWt' autocomplete='off' maxlength="11" controltype="decimal2" style="width:140px;"></td>
+            <td class='formlabel' title='Volume Wt'><font color='red'>*</font><span id='spnVolumeWt'>Volume (CBM)</span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='alertCapVolueWt' id='alertCapVolueWt' autocomplete='off' maxlength="9" controltype="decimal3" style="width:140px;">                                                        </td>
+        </tr>
+        <!--</table>-->
+        <!--</td>
+        </tr>
+        <tr>
+            <td colspan='4'>-->
+        <!--<table width='100%'>-->
+        <tr><td colspan='5' class='formInputcolumn' style="padding:5px;"><strong>Reserved Capacity</strong></td></tr>
+        <tr>
+
+            <td class='formlabel'><input type='checkbox' id='chkReservedenableDisable' /><font color='red'>*</font><span id='spnGrossWt'>Gross Weight</span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='reservedCapGrossWt' id='reservedCapGrossWt' autocomplete='off' maxlength="11" controltype="decimal2" style="width:140px;"></td>
+            <td class='formlabel' title='Volume Wt'><font color='red'>*</font><span id='spnVolumeWt'>Volume (CBM)</span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='reservedCapVolueWt' id='reservedCapVolueWt' autocomplete='off' maxlength="9" controltype="decimal3" style="width:140px;"></td>
+        </tr>
+        <tr><td colspan='4' class='formInputcolumn' style="padding:5px;"><strong>Free sale Capacity</strong></td></tr>
+        <tr>
+            <td class='formlabel'><input type='checkbox' id='chkFreesaleenableDisable' /><font color='red'>*</font><span id='spnGrossWt'>Gross Weight</span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='freeSaleCapGrossWt' id='freeSaleCapGrossWt' autocomplete='off' maxlength="11" controltype="decimal2" style="width:140px;"></td>
+            <td class='formlabel' title='Volume Wt'><font color='red'>*</font><span id='spnVolumeWt'>Volume (CBM)</span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='freeSaleCapVolumeWt' id='freeSaleCapVolumeWt' autocomplete='off' maxlength="9" controltype="decimal3" style="width:140px;"> </td>
+        </tr>
+
+        <tr><td colspan='4' class='formInputcolumn' style="padding:5px;"><strong>Over Booking Capacity</strong></td></tr>
+        <tr>
+            <td class='formlabel'><input type='checkbox' id='chkOverbookingCapacity' /><font color='red'>*</font><span id='spnOverbookingCapacity'>Gross Weight</span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='OverbookingCapacityGrossWt' id='OverbookingCapacityGrossWt' maxlength="11" autocomplete='off' controltype="decimal2" style="width:140px;"></td>
+            <td class='formlabel' title='Volume Wt'><font color='red'>*</font><span id='spnOverbookingCapacity'>Volume (CBM)</span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='OverbookingCapacityVolumeWt' id='OverbookingCapacityVolumeWt' maxlength="9" autocomplete='off' controltype="decimal3" style="width:140px;"></td>
+        </tr>
+
+        <tr style="display:none;"><td colspan='4' class='formInputcolumn' style="padding:5px;"><strong>Queue Limit</strong></td></tr>
+        <tr style="display:none;">
+
+            <td class='formlabel'><input type='checkbox' id='chkQueueLimitenableDisable' /><font color='red'>*</font><span id='spnchkQueueLimitGrossWt'>Gross Weight</span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='QueueLimitGrossWt' id='QueueLimitGrossWt' controltype="decimal2" maxlength="11" style="width:140px;" autocomplete='off'></td>
+            <td class='formlabel' title='Volume Wt'><font color='red'>*</font><span id='spnVolumeWt'>Volume (CBM)</span></td>
+            <td class='formInputcolumn'><input type='text' class='k-input' name='QueueLimitVolumeWt' id='QueueLimitVolumeWt' maxlength="9" controltype="decimal3" style="width:140px;"></td>
+            </trstyle>
+            <!--</table>-->
+            <!--</td>
+            </tr>-->
+
+    </table>
+
+    <div id="FlightDetails" style="display:none;"></div>
+    <div id="FlightSIRemarks" style="display:none;"></div>
+</body>
+</html>

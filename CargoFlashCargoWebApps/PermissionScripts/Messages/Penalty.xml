@@ -1,0 +1,34 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>PenaltyTypeName</Name>
+    <Message>Penalty Type Name can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>PenaltyTypeKey</Name>
+    <Message>Penalty Type Key can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Penalty Type Key already exists</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Penalty Type Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Penalty Type Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Penalty Type Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Penalty Type Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

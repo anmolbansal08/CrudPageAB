@@ -1,0 +1,828 @@
+﻿<script type="text/javascript">
+	$(document).ready(function () {
+
+		if (window.opener)
+			userContext = window.opener.parent.userContext;
+	});
+</script>
+
+<div id="divContent1" style="height: auto; margin-bottom: 50px">
+	<div id="htmldivdetails">
+		<input type="hidden" name="hdnETDTime" id="hdnETDTime" value="00:00">
+		<input type="hidden" name="hdnFlightDate" id="hdnFlightDate" value="">
+		<input type="hidden" name="hdnIsMCTForFlightSearch" id="hdnIsMCTForFlightSearch" value="">
+		<input type="hidden" name="hdnRateShowOnAWBPrint" id="hdnRateShowOnAWBPrint" value="">
+		<input type="hidden" name="hdnHandlingInformation" id="hdnHandlingInformation" value="">
+		<input type="hidden" name="hdnIsItineraryCarrierCodeInterline" id="hdnIsItineraryCarrierCodeInterline" value="0">
+		<input type="hidden" name="hdnCurrency" id="hdnCurrency" value="">
+		<input type="hidden" name="hdnRateChargeCode" id="hdnRateChargeCode" value="">
+		<input type="hidden" name="hdnValuation" id="hdnValuation" value="">
+		<input type="hidden" name="hdnOtherCharge" id="hdnOtherCharge" value="">
+		<input type="hidden" name="hdnDeclaredCarriageValue" id="hdnDeclaredCarriageValue" value="">
+		<input type="hidden" name="hdnDeclaredCustomsValue" id="hdnDeclaredCustomsValue" value="">
+		<input type="hidden" name="hdnInsurance" id="hdnInsurance" value="">
+		<input type="hidden" name="hdnValuationCharge" id="hdnValuationCharge" value="">
+		<input type="hidden" name="hdnCDCCurrencyCode" id="hdnCDCCurrencyCode" value="">
+		<input type="hidden" name="hdnCDCConversionRate" id="hdnCDCConversionRate" value="">
+		<input type="hidden" name="hdnCDCDestCurrencyCode" id="hdnCDCDestCurrencyCode" value="">
+		<input type="hidden" name="hdnChargeAmount" id="hdnChargeAmount" value="">
+		<input type="hidden" name="hdnTotalChargeAmount" id="hdnTotalChargeAmount" value="">
+		<input type="hidden" name="hdnCallerCode" id="hdnCallerCode" value="">
+		<input type="hidden" name="hdnFlightDate" id="hdnArrFlightDate" value="">
+
+		<div id='MainDiv'>
+			<table width="100%"><tbody><tr><td class="formSection">Multiple Booking</td></tr></tbody></table>
+			<div id='ApplicationTabs'>
+				<ul id="ulReservation"> 
+					<li id='liReservation' class='k-state-active'>Booking</li>
+					<!--<li id='liDimension' onclick='DimensionTab("Dimension");'>Dimension</li>
+					<li id='liRate' onclick='RateTab();'>Rate</li>
+					<li style="display:none" id='liMessage' onclick='MessageTab();'>Message</li>
+					<li id='liCustoms' onclick='CustomsTab();'>Customs</li>
+					<li id='litermsandcondtion' onclick='termsandcondtionTab();'>Terms & Conditions</li>-->
+				</ul>
+				<div>
+					<div id='ApplicationTabs-1'>
+						<!--<table id="tblApplySpotCode" validateonsubmit="true" style="width: 100%; margin: 0px; padding: 0px;" cellspacing="0" cellpadding="0">
+	<tr>
+		<td colspan="2" style="text-align:right">
+			<input type="button" class="btn btn-success" name="" id="btnAWBLabel" onclick="AWBLabel();" value="AWB Label">
+			<input type="button" class="btn btn-success" name="" id="btnAWBPrint" onclick="AWBPrint();" value="AWB Print">
+		</td>
+	</tr>
+	<tr>
+		<td style="width:50%;" valign="top" class="tdInnerPadding">
+			<input type="hidden" name="hdnDimensionUnit" id="hdnDimensionUnit" value="">
+			<table border="1" cellspacing="0" cellpadding="0" style="width: 100%;  margin: 0px; padding: 0px; height:350px;">
+				<tr>
+					<td class="formSection" colspan="5">Reservation : <label id="lblBookingRefNo"></label></td>
+				</tr>
+				<tr>
+					<td colspan="5">
+						<table>
+							<tr>
+								<td>
+									<table>
+										<tr>
+											<td style="text-align:center;"><span id="spnBookingType">Booking Type</span></td>
+										</tr>
+										<tr>
+											<td style="white-space:nowrap">
+												<input type="radio" tabindex="1" data-radioval="Cargo" class="" name="BookingType" id="BookingType" checked="True" value="0">Cargo
+												<input type="radio" tabindex="1" data-radioval="Courier" class="" name="BookingType" id="BookingType" value="1">Courier
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td>
+									<table>
+										<tr>
+											<td style="text-align:center;"><span id="spnAWBStock">AWB Stock</span></td>
+										</tr>
+										<tr>
+											<td style="white-space:nowrap">
+												<input type="radio" tabindex="2" data-radioval="Manual" class="" name="AWBStock" id="AWBStock" value="0">Manual
+												<input type="radio" tabindex="2" data-radioval="Auto" class="" name="AWBStock" checked="True" id="AWBStock" value="1">Auto
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td>
+									<table>
+										<tr>
+											<td>
+												<label>Prefix :</label>
+												<input type="hidden" name="AWBCode" id="AWBCode" value="">
+												<input type="text" style="width: 50px;" class="" name="Text_AWBCode" id="Text_AWBCode" data-valid="required" data-valid-msg="Select Prefix" tabindex="3" controltype="autocomplete" maxlength="10" value="" placeholder="Prefix" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+											</td>
+											<td>
+												<label>SNR :</label>
+												<input type="text" class="" name="AWBNumber" id="AWBNumber" style="width: 50px;" placeholder="AWB NO." controltype="number" data-valid="minlength[8],required" data-valid-msg="Enter AWB Number" tabindex="4" maxlength="8" value="" placeholder="" data-role="numerictextbox">
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td>
+									<table>
+										<tr>
+											<td>
+												<label style="white-space:nowrap;">MOP :</label>
+												<input type="hidden" name="ChargeCode" id="ChargeCode" value="">
+												<input type="text" class="" name="Text_ChargeCode" id="Text_ChargeCode" data-valid="required" data-valid-msg="Select Payment Type" tabindex="5" controltype="autocomplete" maxlength="10" value="" placeholder="Payment Type" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+											</td>
+											<td>
+												<label style="white-space:nowrap;">No of HAWB :</label>
+												<input type="text" class="" name="NoofHouse" id="NoofHouse" style="width: 45px;" placeholder="" controltype="number" data-valid="min[1]" data-valid-msg="Enter No of House" tabindex="5" maxlength="2" value="" placeholder="" data-role="numerictextbox">
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td width="10px;">
+									<label style="white-space:nowrap;display:none;">BUP/Intact :</label>
+									<input type="checkbox" tabindex="6" style="display:none;" onclick="IsBUPCheckOrNot();" class="" name="chkIsBUP" id="chkIsBUP">
+								</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label>Origin :</label>
+									<input type="hidden" name="AWBOrigin" id="AWBOrigin" value="">
+									<input type="text" class="" name="Text_AWBOrigin" id="Text_AWBOrigin" data-valid="required" data-valid-msg="Select Origin" tabindex="7" controltype="autocomplete" value="" placeholder="Origin">
+								</td>
+								<td>
+									<label>Destination :</label>
+									<input type="hidden" name="AWBDestination" id="AWBDestination" value="">
+									<input type="text" class="" name="Text_AWBDestination" id="Text_AWBDestination" data-valid="required" data-valid-msg="Enter Destination" tabindex="8" controltype="autocomplete" maxlength="50" value="" placeholder="Destination" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+								</td>
+								<td>
+									<label>Agent :</label>
+									<input type="hidden" name="AWBAgent" id="AWBAgent" value="">
+									<input type="text" class="" name="Text_AWBAgent" id="Text_AWBAgent" data-valid="required" data-valid-msg="Select Agent" tabindex="9" controltype="autocomplete" maxlength="50" value="" placeholder="Agent" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+								</td>
+								<td>
+									<label>Product :</label>
+									<input type="hidden" name="Product" id="Product" value="">
+									<input type="text" class="" name="Text_Product" id="Text_Product" data-valid="required" data-valid-msg="Select Product" tabindex="10" controltype="autocomplete" maxlength="50" value="" placeholder="Product" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+								</td>
+								<td style="width:20%;">
+									<label>Booking Date :</label>
+									<span class="k-picker-wrap k-state-default k-widget k-datepicker k-header" style="width: 100px;">
+										<input type="text" class="k-input k-state-default" name="BookingDate" id="BookingDate" style="color: rgb(0, 0, 0);" tabindex="105" controltype="datetype" value="" data-role="datepicker">
+										<span unselectable="on" class="k-select">
+											<span unselectable="on" class="k-icon k-i-calendar">select</span>
+										</span>
+									</span>
+								</td>
+								<td colspan="2" id="tdAWBNoofBUP" style="display:none">
+									<table>
+										<tr>
+											<td>
+												<label>No of BUP :</label>
+												<input type="text" class="" name="AWBNoofBUP" id="AWBNoofBUP" style="width: 30px;" placeholder="" controltype="number" data-valid="min[1]" data-valid-msg="Enter No of BUP" tabindex="11" maxlength="2" value="" placeholder="" data-role="numerictextbox">
+											</td>
+											<td>
+												<label>No of Intact:</label>
+												<input type="text" class="" name="AWBNoofBUPIntact" id="AWBNoofBUPIntact" style="width: 30px;" placeholder="" controltype="number" data-valid="min[1]" data-valid-msg="Enter No of Intact BUP" tabindex="11" maxlength="2" value="" placeholder="" data-role="numerictextbox">
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td class="formSection" colspan="5">Weight Details :</td>
+				</tr>
+				<tr>
+					<td colspan="5">
+						<table width="100%">
+							<tr>
+								<td>
+									<label>Pieces :</label>
+									<input type="text" class="" name="AWBPieces" id="AWBPieces" style="width: 50px;" placeholder="" controltype="number" data-valid="min[1],required" data-valid-msg="Enter Pieces" tabindex="12" maxlength="5" value="" placeholder="" data-role="numerictextbox">
+								</td>
+								<td>
+									<label>Gr. Wt. :</label>
+									<input type="text" class="" name="AWBGrossWeight" id="AWBGrossWeight" style="width: 50px;" placeholder="" controltype="decimal1" data-valid="min[0.1],required" data-valid-msg="Enter Gross Weight" tabindex="13" maxlength="7" value="" placeholder="" data-role="numerictextbox">
+								</td>
+								<td width="60px">
+									<label>UM :</label>
+									<input type="hidden" name="UM" id="UM" value="">
+									<input type="text" class="" name="Text_UM" id="Text_UM" data-valid="required" data-valid-msg="Select UM" tabindex="14" controltype="autocomplete" maxlength="10" value="" placeholder="UM" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+								</td>
+								<td>
+									<label>CBM. :</label>
+									<input type="text" class="" name="AWBCBM" id="AWBCBM" style="width: 50px;" placeholder="" controltype="decimal3" data-valid="min[0.001],required" data-valid-msg="Enter CBM" tabindex="15" maxlength="8" value="" placeholder="" data-role="numerictextbox">
+								</td>
+								<td>
+									<label>Vol. Wt. :</label>
+									<input type="text" class="" name="AWBVolumeWeight" id="AWBVolumeWeight" style="width: 50px;" placeholder="" controltype="decimal1" data-valid="min[0.5],required" data-valid-msg="Enter Volume Weight" tabindex="16" maxlength="6" value="" placeholder="" data-role="numerictextbox">
+								</td>
+								<td>
+									<label>Ch. Wt. :</label>
+									<input type="text" class="" name="AWBChargeableWeight" id="AWBChargeableWeight" style="width: 50px;" placeholder="" controltype="decimal1" data-valid="min[0.5],required" data-valid-msg="Enter Chargeable Weight" tabindex="17" maxlength="9" value="" placeholder="" data-role="numerictextbox">
+								</td>
+								<td>
+									<input type="submit" name="Add Dim." id="AddDimension" tabindex="18" value="Add Dimension" class="btn btn-info" style="display:none;">
+								</td>
+								<td width="100px">
+									<label>Priority :</label>
+									<input type="hidden" name="Priority" id="Priority" value="">
+									<input type="text" class="" name="Text_Priority" id="Text_Priority" tabindex="19" controltype="autocomplete" maxlength="50" value="" placeholder="Priority" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td class="formSection" colspan="5">Content Details :</td>
+				</tr>
+				<tr>
+					<td colspan="5">
+						<table width="100%">
+							<tr>
+								<td>
+									<label>Commodity :</label>
+									<input type="hidden" name="Commodity" id="Commodity" value="">
+									<input type="text" class="" name="Text_Commodity" id="Text_Commodity" tabindex="20" data-valid="required" data-valid-msg="Select Commodity" controltype="autocomplete" maxlength="100" value="" placeholder="Commodity" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+
+								</td>
+								<td>
+									<label>NOG :</label>
+									<input type="text" class="" name="NatureOfGoods" id="NatureOfGoods" tabindex="21" style="width: 150px; text-transform: uppercase;" controltype="alphanumericupper" maxlength="20" value="" placeholder="NOG" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td>
+									<label>SHC :</label>
+									<input type="hidden" name="SHC" id="SHC" value="">
+									<input type="text" class="" name="Text_SHC" id="Text_SHC" tabindex="22" controltype="autocomplete" maxlength="50" value="" placeholder="SHC" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+		<td style="width:50%;" valign="top" class="tdInnerPadding">
+			<table border="1" cellspacing="0" cellpadding="0" style="width: 100%; margin: 0px; padding: 0px; height: 350px;">
+				<tr>
+					<td class="formSection">Shipper Information : <a title="Caller Information" style="color: blue; margin-left: 400px;" id="ahref_CallerCode" href="javascript:void(0);"><span id="CallerCode" style="display:none;">Caller Information</span></a></td>
+				</tr>
+				<tr>
+					<td>
+						<table style="width:100%">
+							<tr>
+								<td style="width:20%">
+									<label>Account Number :</label>
+									<table>
+										<tr>
+											<td>
+												<input type="hidden" name="SHIPPER_AccountNo" id="SHIPPER_AccountNo" value="">
+												<input type="text" class="" name="Text_SHIPPER_AccountNo" id="Text_SHIPPER_AccountNo" tabindex="51" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+											</td>
+											<td>
+												<input type="checkbox" tabindex="51" class="" name="chkShipper" id="chkShipper" validatename="chkShipper[]" style="text-transform: uppercase;" title="Select to add in Participant as Shipper">
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td style="width:20%">
+									<label>Name 1 :</label>
+									<input type="text" class="" name="SHIPPER_Name" id="SHIPPER_Name" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar=",.-_" tabindex="52" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td style="width:20%">
+									<label>Name 2 :</label>
+									<input type="text" class="" name="SHIPPER_Name2" id="SHIPPER_Name2" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar=",.-_" tabindex="53" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td style="width:20%">
+									<label>Address 1 :</label>
+									<input type="text" class="" name="SHIPPER_Street" id="SHIPPER_Street" style="text-transform: uppercase;" controltype="default" tabindex="54" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td style="width:20%">
+									<label>Address 2 :</label>
+									<input type="text" class="" name="SHIPPER_Street2" id="SHIPPER_Street2" style="text-transform: uppercase;" controltype="default" tabindex="55" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>Town/Location :</label>
+									<input type="text" class="" name="SHIPPER_TownLocation" id="SHIPPER_TownLocation" style="text-transform: uppercase;" controltype="uppercase" tabindex="56" maxlength="17" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td>
+									<label>State :</label>
+									<input type="text" class="" name="SHIPPER_State" id="SHIPPER_State" style="text-transform: uppercase;" controltype="uppercase" tabindex="57" maxlength="9" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td>
+									<label>Postal Code :</label>
+									<input type="text" class="" name="SHIPPER_PostalCode" id="SHIPPER_PostalCode" style="text-transform: uppercase;" controltype="alphanumericupper" tabindex="58" maxlength="9" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td>
+									<label>Contact Number :</label>
+									<input type="text" class="" name="SHIPPER_MobileNo" style="width:125px" id="SHIPPER_MobileNo" data-valid="minlength[1]" data-valid-msg="Enter Valid Contact Nbr" controltype="number" tabindex="59" maxlength="25" value="" placeholder="" data-role="numerictextbox">
+								</td>
+								<td>
+									<label>Telex :</label>
+									<input type="text" class="" name="SHIPPER_MobileNo2" id="SHIPPER_MobileNo2" data-valid="minlength[1]" data-valid-msg="Enter Valid Contact Nbr" style="text-transform: uppercase;" controltype="alphanumericupper" tabindex="60" maxlength="25" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>Email :</label>
+									<input type="text" class="" name="SHIPPER_Email" id="SHIPPER_Email" data-valid="email" data-valid-msg="Enter Email ID" style="text-transform: uppercase;" controltype="default" tabindex="61" maxlength="100" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td>
+									<label>Country :</label>
+									<input type="hidden" name="SHIPPER_CountryCode" id="SHIPPER_CountryCode" value="">
+									<input type="text" class="" name="Text_SHIPPER_CountryCode" id="Text_SHIPPER_CountryCode" tabindex="62" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+								</td>
+								<td>
+									<label>City :</label>
+									<input type="hidden" name="SHIPPER_City" id="SHIPPER_City" value="">
+									<input type="text" class="" name="Text_SHIPPER_City" id="Text_SHIPPER_City" tabindex="63" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+								</td>
+								<td>
+									<label>Fax :</label>
+									<input type="text" class="" name="SHipper_Fax" id="SHipper_Fax" style="width:125px" data-valid="minlength[1]" data-valid-msg="Enter Fax Number" controltype="number" tabindex="64" maxlength="25" value="" placeholder="" data-role="numerictextbox">
+								</td>
+								<td id="tdGarudaMiles">
+									<label>Garuda Miles :</label>
+									<input type="text" class="" name="SHipper_GarudaMiles" id="SHipper_GarudaMiles" style="width:125px" data-valid="minlength[1]" data-valid-msg="Enter Garuda Miles." controltype="number" tabindex="64" maxlength="9" value="" placeholder="" data-role="numerictextbox">
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td class="formSection">Consignee Information :</td>
+				</tr>
+				<tr>
+					<td>
+						<table style="width:100%">
+							<tr>
+								<td style="width:20%;">
+									<label>Account Number :</label>
+									<table>
+										<tr>
+											<td>
+												<input type="hidden" name="CONSIGNEE_AccountNo" id="CONSIGNEE_AccountNo" value="">
+												<input type="text" class="" name="Text_CONSIGNEE_AccountNo" id="Text_CONSIGNEE_AccountNo" tabindex="66" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+											</td>
+											<td>
+												<input type="checkbox" tabindex="66" class="" name="chkconsignee" id="chkconsignee" validatename="chkconsignee[]" title="Select to add in Participant as Consignee" style="text-transform: uppercase;">
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td style="width:20%">
+									<label>Name 1 :</label>
+									<input type="text" class="" name="CONSIGNEE_AccountNoName" id="CONSIGNEE_AccountNoName" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar=",.-_" tabindex="67" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td style="width:20%">
+									<label>Name 2 :</label>
+									<input type="text" class="" name="CONSIGNEE_AccountNoName2" id="CONSIGNEE_AccountNoName2" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar=",.-_" tabindex="68" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td style="width:20%">
+									<label>Address 1 :</label>
+									<input type="text" class="" name="CONSIGNEE_Street" id="CONSIGNEE_Street" style="text-transform: uppercase;" controltype="default" tabindex="69" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td style="width:20%">
+									<label>Address 2 :</label>
+									<input type="text" class="" name="CONSIGNEE_Street2" id="CONSIGNEE_Street2" style="text-transform: uppercase;" controltype="default" tabindex="70" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>Town/Location :</label>
+									<input type="text" class="" name="CONSIGNEE_TownLocation" id="CONSIGNEE_TownLocation" style="text-transform: uppercase;" controltype="uppercase" tabindex="71" maxlength="17" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td>
+									<label>State :</label>
+									<input type="text" class="" name="CONSIGNEE_State" id="CONSIGNEE_State" style="text-transform: uppercase;" controltype="uppercase" tabindex="72" maxlength="9" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td>
+									<label>Postal Code :</label>
+									<input type="text" class="" name="CONSIGNEE_PostalCode" id="CONSIGNEE_PostalCode" style="text-transform: uppercase;" controltype="alphanumericupper" tabindex="73" maxlength="9" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td>
+									<label>Contact Number :</label>
+									<input type="text" class="" name="CONSIGNEE_MobileNo" id="CONSIGNEE_MobileNo" style="width:125px" data-valid="minlength[1]" data-valid-msg="Enter Valid Contact Nbr" controltype="number" tabindex="74" maxlength="25" value="" placeholder="" data-role="numerictextbox">
+								</td>
+								<td>
+									<label>Telex :</label>
+									<input type="text" class="" name="CONSIGNEE_MobileNo2" id="CONSIGNEE_MobileNo2" data-valid="minlength[1]" data-valid-msg="Enter Valid Contact Nbr" style="text-transform: uppercase;" controltype="alphanumericupper" tabindex="75" maxlength="25" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>Email :</label>
+									<input type="text" class="" name="CONSIGNEE_Email" id="CONSIGNEE_Email" data-valid="email" data-valid-msg="Enter Email ID" style="text-transform: uppercase;" controltype="default" tabindex="76" maxlength="100" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td>
+									<label>Country :</label>
+									<input type="hidden" name="CONSIGNEE_CountryCode" id="CONSIGNEE_CountryCode" value="">
+									<input type="text" class="" name="Text_CONSIGNEE_CountryCode" id="Text_CONSIGNEE_CountryCode" tabindex="77" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+								</td>
+								<td>
+									<label>City :</label>
+									<input type="hidden" name="CONSIGNEE_City" id="CONSIGNEE_City" value="">
+									<input type="text" class="" name="Text_CONSIGNEE_City" id="Text_CONSIGNEE_City" tabindex="78" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+								</td>
+								<td>
+									<label>Fax :</label>
+									<input type="text" class="" name="CONSIGNEE_Fax" id="CONSIGNEE_Fax" data-valid="minlength[1]" style="width:125px" data-valid-msg="Enter Fax Number" controltype="number" tabindex="79" maxlength="25" value="" placeholder="" data-role="numerictextbox">
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<div id="divUserDetails"></div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" style="width:50%;" valign="top">
+			<table id="tblItinerary" border="1" cellspacing="0" cellpadding="0" style="width: 100%; margin: 0px; padding: 0px;">
+				<tr>
+					<td class="formSection" colspan="6">Itinerary : </td>
+				</tr>
+				<tr>
+					<td colspan="6">
+						<table width="100%">
+							<tr>
+								<td>
+									<label>Origin Airport :</label>
+									<input type="hidden" name="ItineraryOrigin" id="ItineraryOrigin" value="">
+									<input type="text" class="" name="Text_ItineraryOrigin" id="Text_ItineraryOrigin" tabindex="101" controltype="autocomplete" maxlength="50" value="" placeholder="Origin Airport" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+								</td>
+								<td>
+									<label>Destination Airport :</label>
+									<input type="hidden" name="ItineraryDestination" id="ItineraryDestination" value="">
+									<input type="text" class="" name="Text_ItineraryDestination" id="Text_ItineraryDestination" tabindex="102" controltype="autocomplete" maxlength="50" value="" placeholder="Destination Airport" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+								</td>
+								<td>
+									<label>Carrier Code :</label>
+									<input type="hidden" name="ItineraryCarrierCode" id="ItineraryCarrierCode" value="">
+									<input type="text" class="" name="Text_ItineraryCarrierCode" id="Text_ItineraryCarrierCode" tabindex="103" controltype="autocomplete" maxlength="50" value="" placeholder="Carrier Code" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+								</td>
+								<td id="tdItineraryFlightNo">
+									<label>Flight No. :</label>
+									<input type="hidden" name="ItineraryFlightNo" id="ItineraryFlightNo" value="">
+									<input type="text" class="" name="Text_ItineraryFlightNo" id="Text_ItineraryFlightNo" tabindex="104" controltype="autocomplete" maxlength="50" value="" placeholder="Flight No" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+								</td>
+								<td id="tdItineraryInterlineFlightNo">
+									<label>Flight No. :</label>
+									<input type="text" class="" name="ItineraryInterlineFlightNo" id="ItineraryInterlineFlightNo" tabindex="104" style="width: 50px; text-transform: uppercase;" controltype="alphanumericupper" onblur="CheckFlightNoLength();" maxlength="4" value="" data-role="alphabettextbox" autocomplete="off">
+								</td>
+								<td>
+									<label>Date :</label>
+									<span class="k-picker-wrap k-state-default k-widget k-datepicker k-header" style="width: 100px;">
+										<input type="text" class="k-input k-state-default" name="ItineraryDate" id="ItineraryDate" style="color: rgb(0, 0, 0);" tabindex="105" controltype="datetype" value="" data-role="datepicker">
+										<span unselectable="on" class="k-select">
+											<span unselectable="on" class="k-icon k-i-calendar">select</span>
+										</span>
+									</span>
+								</td>
+								<td>
+									<label>Pieces :</label>
+									<input type="text" class="" name="ItineraryPieces" id="ItineraryPieces" style="width: 50px;" placeholder="Pieces" controltype="number" data-valid="min[1]" data-valid-msg="Enter Pieces" tabindex="106" maxlength="5" value="" placeholder="" data-role="numerictextbox">
+								</td>
+								<td>
+									<label>Gr. Wt. :</label>
+									<input type="text" class="" name="ItineraryGrossWeight" id="ItineraryGrossWeight" style="width: 50px;" placeholder="Gr. Wt." controltype="decimal1" data-valid="min[0.1]" data-valid-msg="Enter Gross Weight" tabindex="107" maxlength="7" value="" placeholder="" data-role="numerictextbox">&nbsp;
+								</td>
+								<td>
+									<label>Vol.(CBM) :</label>
+									<input type="text" class="" name="ItineraryVolumeWeight" id="ItineraryVolumeWeight" style="width: 50px;" placeholder="Vol.(CBM)" controltype="decimal3" data-valid="min[0.001]" data-valid-msg="Enter Volume (CBM)" tabindex="108" maxlength="8" value="" placeholder="" data-role="numerictextbox">
+								</td>
+								<td>
+									<label>Vol.Wt. :</label>
+									<input type="text" class="" name="ItineraryMainVolumeWeight" id="ItineraryMainVolumeWeight" style="width: 50px;" placeholder="Vol.Wt." controltype="decimal1" data-valid="min[0.1]" data-valid-msg="Enter Volume Weight" tabindex="108" maxlength="8" value="" placeholder="" data-role="numerictextbox">
+								</td>
+								<td>
+									<label>Routing Complete :</label>
+									<input type="checkbox" tabindex="109" class="" name="chkIsRoutingComplete" id="chkIsRoutingComplete">
+								</td>
+								<td id="tdBCT" title="Override BCT">
+									<div style="display:none;">
+										<label>BCT :</label>
+										<input type="checkbox" tabindex="110" class="" name="chkBCTOverrideConnectionTime" id="chkBCTOverrideConnectionTime">
+										<span id="spnBCTOverrideConnectionTime"></span>
+									</div>
+								</td>
+								<td id="tdMCT" title="Override MCT">
+									<div style="display:none;">
+										<label>MCT :</label>
+										<input type="checkbox" tabindex="110" class="" name="chkMCTOverrideConnectionTime" id="chkMCTOverrideConnectionTime">
+										<span id="spnMCTOverrideConnectionTime"></span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="formSection" style="text-align: left; white-space: nowrap;" colspan="13">
+									<input type="submit" name="ItineraryViewRoute" id="ItineraryViewRoute" tabindex="111" onclick="ViewRoute();" value="View Route" class="btn btn-block btn-primary" style="display:none;">
+									<input type="submit" name="ItinerarySearch" id="ItinerarySearch" tabindex="112" onclick="SearchFlight();" value="Select" class="btn btn-block btn-primary">
+									<input type="submit" name="btnClearItineraryRoute" id="btnClearItineraryRoute" tabindex="112" onclick="ClearItineraryRoute();" value="Clear Itinerary Route" class="btn btn-block btn-primary" style="display:none;">
+
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" style="width:50%;" valign="top">
+			<table id="tblFlightItinerary"></table>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<div id="divFinalSelectedroute"></div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<div id="divFlightSearchResult"></div>
+		</td>
+	</tr>
+						<tr>
+							<td colspan="2">
+								<div id="divOperationalDetails"></div>
+							</td>
+						</tr>
+						</table>-->
+						<table id='tblShortBookingTab' width='100%'></table>
+						<!--<table width='100%'>
+							<tr>
+								<td>
+
+
+									<table id="tblItinerary" border="1" cellspacing="0" cellpadding="0" style="width: 100%; margin: 0px; padding: 0px;">
+										<tr>
+											<td class="formSection" colspan="6">Itinerary : </td>
+										</tr>
+										<tr>
+											<td colspan="6">
+												<table width="100%">
+													<tr>
+														<td>
+															<label>Origin Airport :</label>
+															<input type="hidden" name="ItineraryOrigin" id="ItineraryOrigin" value="">
+															<input type="text" class="" name="Text_ItineraryOrigin" id="Text_ItineraryOrigin" tabindex="101" controltype="autocomplete" maxlength="50" value="" placeholder="Origin Airport" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+														</td>
+														<td>
+															<label>Destination Airport :</label>
+															<input type="hidden" name="ItineraryDestination" id="ItineraryDestination" value="">
+															<input type="text" class="" name="Text_ItineraryDestination" id="Text_ItineraryDestination" tabindex="102" controltype="autocomplete" maxlength="50" value="" placeholder="Destination Airport" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+														</td>
+														<td>
+															<label>Carrier Code :</label>
+															<input type="hidden" name="ItineraryCarrierCode" id="ItineraryCarrierCode" value="">
+															<input type="text" class="" name="Text_ItineraryCarrierCode" id="Text_ItineraryCarrierCode" tabindex="103" controltype="autocomplete" maxlength="50" value="" placeholder="Carrier Code" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+														</td>
+														<td id="tdItineraryFlightNo">
+															<label>Flight No. :</label>
+															<input type="hidden" name="ItineraryFlightNo" id="ItineraryFlightNo" value="">
+															<input type="text" class="" name="Text_ItineraryFlightNo" id="Text_ItineraryFlightNo" tabindex="104" controltype="autocomplete" maxlength="50" value="" placeholder="Flight No" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+														</td>
+														<td id="tdItineraryInterlineFlightNo">
+															<label>Flight No. :</label>
+															<input type="text" class="" name="ItineraryInterlineFlightNo" id="ItineraryInterlineFlightNo" tabindex="104" style="width: 50px; text-transform: uppercase;" controltype="alphanumericupper" onblur="CheckFlightNoLength();" maxlength="4" value="" data-role="alphabettextbox" autocomplete="off">
+														</td>
+														<td>
+															<label>Date :</label>
+															<span class="k-picker-wrap k-state-default k-widget k-datepicker k-header" style="width: 100px;">
+																<input type="text" class="k-input k-state-default" name="ItineraryDate" id="ItineraryDate" style="color: rgb(0, 0, 0);" tabindex="105" controltype="datetype" value="" data-role="datepicker">
+																<span unselectable="on" class="k-select">
+																	<span unselectable="on" class="k-icon k-i-calendar">select</span>
+																</span>
+															</span>
+														</td>
+														<td>
+															<label>Pieces :</label>
+															<input type="text" class="" name="ItineraryPieces" id="ItineraryPieces" style="width: 50px;" placeholder="Pieces" controltype="number" data-valid="min[1]" data-valid-msg="Enter Pieces" tabindex="106" maxlength="5" value="" placeholder="" data-role="numerictextbox">
+														</td>
+														<td>
+															<label>Gr. Wt. :</label>
+															<input type="text" class="" name="ItineraryGrossWeight" id="ItineraryGrossWeight" style="width: 50px;" placeholder="Gr. Wt." controltype="decimal1" data-valid="min[0.1]" data-valid-msg="Enter Gross Weight" tabindex="107" maxlength="7" value="" placeholder="" data-role="numerictextbox">&nbsp;
+														</td>
+														<td>
+															<label>Vol.(CBM) :</label>
+															<input type="text" class="" name="ItineraryVolumeWeight" id="ItineraryVolumeWeight" style="width: 50px;" placeholder="Vol.(CBM)" controltype="decimal3" data-valid="min[0.001]" data-valid-msg="Enter Volume (CBM)" tabindex="108" maxlength="8" value="" placeholder="" data-role="numerictextbox">
+														</td>
+														<td>
+															<label>Vol.Wt. :</label>
+															<input type="text" class="" name="ItineraryMainVolumeWeight" id="ItineraryMainVolumeWeight" style="width: 50px;" placeholder="Vol.Wt." controltype="decimal1" data-valid="min[0.1]" data-valid-msg="Enter Volume Weight" tabindex="108" maxlength="8" value="" placeholder="" data-role="numerictextbox">
+														</td>
+														<td>
+															<label>Routing Complete :</label>
+															<input type="checkbox" tabindex="109" class="" name="chkIsRoutingComplete" id="chkIsRoutingComplete">
+														</td>
+														<td id="tdBCT" title="Override BCT">
+															<div style="display:none;">
+																<label>BCT :</label>
+																<input type="checkbox" tabindex="110" class="" name="chkBCTOverrideConnectionTime" id="chkBCTOverrideConnectionTime">
+																<span id="spnBCTOverrideConnectionTime"></span>
+															</div>
+														</td>
+														<td id="tdMCT" title="Override MCT">
+															<div style="display:none;">
+																<label>MCT :</label>
+																<input type="checkbox" tabindex="110" class="" name="chkMCTOverrideConnectionTime" id="chkMCTOverrideConnectionTime">
+																<span id="spnMCTOverrideConnectionTime"></span>
+															</div>
+														</td>
+													</tr>
+													<tr>
+														<td class="formSection" style="text-align: left; white-space: nowrap;" colspan="13">
+															<input type="submit" name="ItineraryViewRoute" id="ItineraryViewRoute" tabindex="111" onclick="ViewRoute();" value="View Route" class="btn btn-block btn-primary" style="display:none;">
+															<input type="submit" name="ItinerarySearch" id="ItinerarySearch" tabindex="112" onclick="SearchFlight();" value="Select" class="btn btn-block btn-primary">
+															<input type="submit" name="btnClearItineraryRoute" id="btnClearItineraryRoute" tabindex="112" onclick="ClearItineraryRoute();" value="Clear Itinerary Route" class="btn btn-block btn-primary" style="display:none;">
+
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" style="width:50%;" valign="top">
+									<table id="tblFlightItinerary"></table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div id="divFinalSelectedroute"></div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div id="divFlightSearchResult"></div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div id="divOperationalDetails"></div>
+								</td>
+							</tr>
+						</table>-->
+					</div>
+				</div>
+				<div>
+					<div id='ApplicationTabs-2'>
+						<div id="divDimensionTab"></div>
+						<table id='tblDimensionInformation' class="appendGrid ui-widget" width='100%'>
+							<thead class="ui-widget-header">
+								<tr>
+									<td class="formSection" colspan="3">Dimension Information</td>
+									<td class="formSection" style="text-align:right">
+										<input type="submit" name="btnBackToReservation" id="btnBackToReservation" tabindex="1" onclick="BackToReservation();" value="Back to Reservation" class="btn btn-inverse">
+									</td>
+								</tr>
+								<tr>
+									<td class="ui-widget-content">Total AWB Pieces : <label id="lblDimensionTotalPieces"></label></td>
+									<td id="tdlblNoofBups" class="ui-widget-content">No of BUP : <label id="lblNoofBups"></label></td>
+									<td class="ui-widget-content">Gross Weight : <label id="lblDimensionGrossWeight"></label></td>
+									<td class="ui-widget-content">Volume Weight : <label id="lblDimensionVolumeWeight"></label></td>
+								</tr>
+							</thead>
+						</table>
+						<table id='tblDimensionTab' width='100%'></table>
+						<table id='tblDimensionULDTab' width='100%'></table>
+					</div>
+				</div>
+				<div>
+					<div id='ApplicationTabs-3'>
+						<div id="DivRateTab">
+							<table id="tblAppliedRateType" width="100%">
+								<tr>
+									<!--<td class="formSection" colspan="3">Rate Information</td>-->
+
+									<td class="formSection" style="text-align:right">
+										<input type="button" class="btn btn-success" name="" id="btnApplySpotCode" onclick="ApplySpotCode();" value="Apply Spot Code">
+
+										<input type="submit" name="btnBackToReservationRate" id="btnBackToReservationRate" tabindex="1" onclick="BackToReservation();" value="Back to Reservation" class="btn btn-inverse">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div id="divRateDetailsTab"></div>
+									</td>
+								</tr>
+							</table>
+							<table id='tblDueCarrierOtherChargeTab' width='100%'></table>
+							<table id='tblAgentOtherChargeTab' width='100%'></table>
+							<table id='tblTaxChargeInformationTab' width='100%'></table>
+							<table id='tblTotalAmountTab' width='100%'>
+								<tr>
+									<td>
+										<div id="divtblTotalAmountTab"></div>
+									</td>
+								</tr>
+							</table>
+							<table id='tblRateTab' width='100%'>
+								<tr>
+									<td>
+										<div id="divtblRateTab"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="formSection" style="text-align:right">
+										<input type="submit" name="btnSaveRateData" id="btnSaveRateData" tabindex="1" onclick="SaveChargeDeclarationsRateData();" value="Save Charge Declarations" class="btn btn-block btn-success btn-sm">
+									</td>
+								</tr>
+							</table>
+							<div style="display:none;" id="DivULDDetails"></div>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div id='ApplicationTabs-4'>
+						<table id='tblMessageTab' width='100%'></table>
+					</div>
+				</div>
+				<div>
+					<div id='ApplicationTabs-5'>
+						<table width='100%'>
+							<tr>
+								<td class="formSection" style="text-align:right">
+									<input type="submit" name="btnBackToReservationRateCustom" id="btnBackToReservationRateCustom" tabindex="1" onclick="BackToReservation();" value="Back to Reservation" class="btn btn-inverse">
+								</td>
+							</tr>
+						</table>
+						<!--<table id="tblItinerary" border="1" cellspacing="0" cellpadding="0" style="width: 100%; margin: 0px; padding: 0px;">
+							<tr>
+								<td class="formSection" colspan="6">Handling Information : </td>
+							</tr>-->
+						<table width='100%'>
+							<tr>
+								<td>
+									<label>Handling Information :</label>
+									<textarea class="transSection k-input" name="HandlingInformation" id="HandlingInformation" recname="HandlingInformation" style="width: 250px; text-transform: uppercase;" controltype="alphanumericupper" tabindex="1" maxlength="250" data-role="alphabettextbox" autocomplete="off"></textarea>
+									<!--<input type="text" class="" name="HandlingInformation" id="HandlingInformation" tabindex="1" style="width: 250px; text-transform: uppercase;" controltype="alphanumericupper" maxlength="200" value="" data-role="alphabettextbox" autocomplete="off">-->
+								</td>
+							</tr>
+						</table>
+						</br>
+						<table id='tblCustomsOtherInformationTab' width='100%'></table>
+						<table id='tblCustomsOCIInformationTab' width='100%'></table>
+						<div id="DivNotifyTab">
+							<table id='tblNotifyTab' width='100%'>
+								<tr>
+									<td>
+										<div id="divtblNotify"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="formSection" style="text-align:right">
+										<input type="submit" name="btnSaveNotifyData" id="btnSaveNotifyData" tabindex="1" onclick="SaveNotifyData();" value="Save Notify" class="btn btn-block btn-success btn-sm">
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div id='ApplicationTabs-6'>
+						<table width='100%'>
+							<tr>
+								<td class="formSection" style="text-align:right">
+									<input type="submit" name="btnBackToReservationRateCustom" id="btnBackToReservationRateCustom" tabindex="1" onclick="BackToReservation();" value="Back to Reservation" class="btn btn-inverse">
+								</td>
+							</tr>
+						</table>
+						<div style="font-size:26">
+
+							<!--<label>SYARAT – SYARAT PENGANGKUTAN :</label-->
+							<h1 style="font-weight:bold">SYARAT – SYARAT PENGANGKUTAN :</h1>
+
+							<p style="font-size: 20px">
+
+								1.              a. Perjanjian pengangkutan tunduk kepada ketentuan-ketentuan Ordonansi Pengangkutan Udara (Stbl. 1939 – 100)<br />
+								b. Sesuai dengan syarat-syarat pengangkutan yang tersebut di atas dan syarat-syarat perjanjian ini, maka pengangkutan dan jasa-jasa lain yang akan diberikan oleh pengangkut tunduk kepada (I) “Syarat-syarat Umum bagi Pengangkutan Barang”  (para) pengangkut, (II) Undang –undang serta peraturan-peraturan pemerintah yang berlaku, (III) syarat-syarat yang disebutkan dalam hal ini dan (IV) peraturan-peraturan, ketentuan-ketentuan serta peraturan-peraturan dinas penerbangan (akan tetapi tidak waktu-waktu berangkat dan waktu-waktu datang yang disebutkan di dalamnya) yang dijadikan sebagian dari padanya dan yang dapat dilihat di kantor-kantor dan pelabuhan-pelabuhan mana pengangkut mengadakan dinas penerbangan yang teratur.
+								Pengangkut berhak mengubah tempat-tempat perhentian yang telah disetujui.
+
+							</p>
+							<p style="font-size: 20px;"> 2.              Pengangkut tidak bertanggung jawab atas kerugian-kerugian yang bagaimanapun juga yang ditimbulkan oleh kelambatan dalam pengangkutan, termasuk juga kelambatan datang serta kelambatan dalam penyerahan barang-barang.</p>
+							<p style="font-size: 20px;"> 3.              Pengangkut sekali-kali tidak akan menerima barang-barang angkutan, jika untuk permulaan atau selesainya pengangkutan dikehendaki waktu yang tertentu.</p>
+							<p style="font-size: 20px;">4.               Agen, pegawai atau wakil pengangkut tidak berwenang mengubah, membatasi atau menyatakan tidak berlaku sesuatu ketentuan dari perjanjian pengangkutan ini.</p>
+							<table width='100%'>
+								<tr>
+									<td>
+										<p style="font-size: 16px;"><input type="checkbox" name="terms" id="chkterms"> <strong>I accept the <u>Terms and Conditions.</strong></u></p>
+
+
+									</td>
+								</tr>
+
+							</table>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+
+
+
+
+
+		</div>
+	</div>
+	<!--<table style="width:100%" validateonsubmit='true'>
+
+	</table>-->
+</div>
+</div>

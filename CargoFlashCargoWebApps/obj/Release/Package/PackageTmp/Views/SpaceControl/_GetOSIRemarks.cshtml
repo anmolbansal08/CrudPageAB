@@ -1,0 +1,51 @@
+﻿
+@*// <copyright file="_GetOSIRemarks.cshtml" company="Cargoflash">
+           //
+           // Created On: 13-Feb-2017
+           // Created By: Braj
+           // Description:
+           //----------------------------------------------------------------------------
+           // Revison History:
+           // Please add a new line below for any update to this file
+           // Updated On  Updated By                     Significant Changes
+           // ----------------------------------------------------------------------------
+           //
+           //
+    </copyright>*@
+
+@model System.Data.DataSet
+@{
+    string gridId = Guid.NewGuid().ToString();}
+<table class='WebFormTable'>
+
+    @*<tr>
+            <td class='formSection' colspan='4'>Flight Summary</td>
+        </tr>*@
+    <tr>
+        <td colspan='4'>
+            <div id="gridDiv_@gridId"></div>
+            <script>
+                $(document).ready(function () {
+                    $("#gridDiv_@gridId").kendoGrid({
+                        dataSource: {
+                            data: JSON.parse(@Html.Raw(Json.Encode(CargoFlashCargoWebApps.Common.Global.DStoJSON(Model)))),
+                            schema: {
+                                model: { fields: { Remarks: { type: "string" },  UpdatedOn: { type: "date" } } }
+                            },
+
+                        },
+                        height: 250,
+                        scrollable: true,
+                        columns: [
+                            { field: "Remarks", title: "Remarks" },                            
+                            { field: "UpdatedOn", title: "Updated On", format: "{0: yyyy-MM-dd HH:MM tt}", width: 150 },
+                            { field: "UpdatedBy", title: "Updated By", width: "100px" },
+                            
+                        ]
+                    });
+                });
+            </script>
+        </td>
+    </tr>
+
+</table>

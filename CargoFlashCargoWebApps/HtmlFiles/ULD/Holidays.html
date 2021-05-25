@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        table.blueTable {
+            font-family: "Times New Roman", Times, serif;
+            border: 1px solid #FFFFFF;
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+
+            table.blueTable td, table.blueTable th {
+                border: 1px solid #FFFFFF;
+                padding: 3px 2px;
+            }
+
+            table.blueTable tbody td {
+                font-size: 13px;
+            }
+
+            table.blueTable tr:nth-child(even) {
+                background: #D0E4F5;
+            }
+
+            table.blueTable thead {
+                background: #0B6FA4;
+                border-bottom: 5px solid #FFFFFF;
+            }
+
+                table.blueTable thead th {
+                    font-size: 17px;
+                    font-weight: bold;
+                    color: #FFFFFF;
+                    text-align: center;
+                    border-left: 2px solid #FFFFFF;
+                }
+
+                    table.blueTable thead th:first-child {
+                        border-left: none;
+                    }
+
+            table.blueTable tfoot {
+                font-size: 14px;
+                font-weight: bold;
+                color: #333333;
+                background: #D0E4F5;
+                border-top: 3px solid #444444;
+            }
+
+                table.blueTable tfoot td {
+                    font-size: 14px;
+                }
+
+       
+    </style>
+
+</head>
+<body>
+    <div id="divHoliday">
+        <table class="blueTable">
+            <thead>
+                <tr style="color: white !important; font-size: 15px !important;">
+                    <td style="width: 120px; height: 27px !important;  "> Holiday And Date </td>
+                    <td style=" width:120px">  Holiday Description  </td>
+                    <td style=" width:120px">
+                        Active
+                    </td>
+                    <td style=" width:120px"></td>
+                </tr>
+            </thead>
+            <tr>
+                <td style=" width:120px"><input type="text" id="txtdate" /> </td>
+                <td style=" width:120px"> <input type="text" style="width:250px" maxlength="30" id="HolidayDescription" /></td>
+                <td style=" width:120px"> <input type="radio" id="rda" name="hactive" checked="checked" value="true" />Yes <input type="radio" id="rdab" name="hactive" value="false" />No</td>
+                <td style=" width:120px">
+                    <input type="button" id="HAdd" class="btn btn-inverse" value="Add" onclick="HolidayAdd()" /><input type="button" id="SaveHoliday" class="btn btn-block btn-success btn-sm" onclick="OnSaveHoliday()" value="Update" />
+                    <input type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=ULD&amp;Apps=ULDSLACalendar&amp;FormAction=INDEXVIEW');" class="btn btn-inverse" oldvalue="Back" newvalue="">
+                </td>
+            </tr>
+            <tr>
+                <td class="formActiontitle" colspan="4" style="text-align: left !important;"> Holiday Details </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+
+                    <table class="blueTable" id="TblHolidaysCreate">
+                        <thead>
+                            <tr style="color:white!important">
+                                <td class="TblHolidaysCreate" style="width: 251px;">Holiday Date</td>
+                                <td class="TblHolidaysCreate" style="width: 537px;">Holiday Description </td>
+                                <td class="TblHolidaysCreate" style="width: 251px;">
+                                    <div style="margin-right: 40px">
+                                        Active<input type="radio" id="HAllyes" value="1" name="AllHoliDaysactive" class="AllHoliDaysactive" />Yes
+                                        <input type="radio" id="HAllyes" value="0" name="AllHoliDaysactive" class="AllHoliDaysactive" />No
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+
+
+
+    </div>
+</body>
+</html>

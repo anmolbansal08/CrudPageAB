@@ -1,0 +1,33 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Rack Name for office already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Rack Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Rack Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Rack Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Shipments lying at respective location. Kindly remove shipments from this location to proceed with Location delete.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2004</Key>
+    <value>Movable lying at respective location. Kindly remove Movable from this location to proceed with Location delete.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2005</Key>
+    <value>ULD lying at respective location. Kindly remove ULD from this location to proceed with Location delete.</value>
+  </ServerMessage>
+</Messages>
+
+

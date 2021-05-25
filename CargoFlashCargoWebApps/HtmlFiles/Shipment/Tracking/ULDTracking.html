@@ -1,0 +1,86 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+    });
+</script>
+<style>
+    th {
+        padding-top: 4px;
+        padding-right: 2px;
+        padding-bottom: 4px;
+        white-space: nowrap;
+        font-size: 10px;
+        font-family: Verdana;
+    }
+
+    legend {
+        font-size: 1.2em;
+        font-weight: bold;
+        padding: 2px 4px 8px;
+        color: #222222;
+    }
+</style>
+<div id="divWindow" style="width:100%">
+    <fieldset>
+        <legend>ULD Infomation:</legend>
+        <table id="tblULDDetails" class="appendGrid ui-widget">
+            <tr>
+                <td class="formlabel">
+                    ULD Code
+                </td>
+                <td class='formInputcolumn'>
+                    <label id="lblULDCode"></label>
+                </td>
+                <td class="formlabel">
+                    ULD No.
+                </td>
+                <td class='formInputcolumn'>
+                    <label id="lblULDNo"></label>
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel">
+                    Container Type
+                </td>
+                <td class='formInputcolumn'>
+                    <label id="lblContainerType"></label>
+                </td>
+                <td class="formlabel">
+                    City Code
+                </td>
+                <td class='formInputcolumn'>
+                    <label id="lblCityCode"></label>
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel">
+                    Airline Code
+                </td>
+                <td class='formInputcolumn'>
+                    <label id="lblAirlineCode"></label>
+                </td>
+                <td class="formlabel">
+                    Tare Weight
+                </td>
+                <td class='formInputcolumn'>
+                    <label id="lblTareWeight"></label>
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel">
+                    Gross Capacity
+                </td>
+                <td class='formInputcolumn'>
+                    <label id="lblGross"></label>
+                </td>
+                <td class="formlabel">
+                    Volume Capacity
+                </td>
+                <td class='formInputcolumn'>
+                    <label id="lblVolume"></label>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>

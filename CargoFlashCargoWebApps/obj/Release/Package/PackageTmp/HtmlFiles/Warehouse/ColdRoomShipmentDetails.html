@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        td {
+            font-family: Arial;
+            font-size: 12px;
+            padding-bottom: 0px;
+            padding-top: 5px;
+            padding-right: 0px;
+            padding-left: 4px;
+            vertical-align: text-top;
+        }
+        span {
+            font-size: medium;
+            font-weight: bold;
+            padding-left: 1em;
+        }
+       
+    </style>
+    <script src="../../Scripts/jquery-1.7.2.js"> </script>
+    <script src="../../Scripts/json2.js"> </script>
+    <script src="../../JScript/Warehouse/ColdRoomShipmentDetails.js"> </script>
+</head>
+
+<body>
+    <div style="width: 793px; height: 60px; margin-left: 20px;">
+        <div style="float:left;"><img src="../../Logo/LOGO_Cgarge.png" width="200px;" /></div>
+        <div style="float:right;margin-right:100px;"><h2>COLD ROOM SHIPMENT DETAILS</h2></div>
+    </div>
+<table border="1" style="width:793px;height:1000px;margin:0px; border:solid" cellspacing="0">
+    <tr>
+        <td colspan="3">FLIGHT NUMBER<span id="spnFlightNo"></span></td>
+        <td colspan="3">AIRWAY BILL NUMBER<span id="spnAWBNo" ></span></td>
+    </tr>
+    <tr>
+        <td>DATE<br /><span id="spnDate" style="padding-left:0px;"></span></td>
+        <td>ORIGIN<br /><span id="spnOrigin" style="padding-left:0px;"></span></td>
+        <td>DESTINATION<br /><span id="spnDestination" style="padding-left:0px;"></span></td>
+        <td colspan="3">TOTAL NUMBER OF PIECES<span id="spnTotalPieces"></span></td>
+    </tr>
+    <tr>
+        <td colspan="3">PALLET / ULD NUMBER<span id="spnULDNo"></span></td>
+        <td colspan="3">NUMBER OF PCS RECEIVED</td>
+    </tr>
+    <tr>
+        <td colspan="3">IATA - IMP Code:<span id="spnIMPCode"></span></td>
+        <td colspan="3">WEIGHT<span id="spnWeight"></span></td>
+    </tr>
+    <tr>
+        <td colspan="3">REQUIRED TEMPERATURE<span id="spnRequiredTemp"></span></td>
+        <td colspan="3">COLD ROOM LOCATION<br /><span id="spnLocation" style="padding-left:0px;"></span></td>
+    </tr>
+    <tr style="height:105px;">
+        <td colspan="6">SHIPMENT CONDITION (IF ANY DAMAGE) DETAILS:</td>
+    </tr>
+    <tr style="height: 105px; border-bottom: solid;">
+        <td colspan="6">SHIPMENT ON HOLD, REASON:<span id="spnHoldReason"></span></td>
+    </tr>
+    <tr style="height: 10px;">
+        <td colspan="3" style="text-align: center; border-top: solid; border-bottom: solid; border-right:solid; ">CARGO IN</td>
+        <td colspan="3" style="text-align: center; border-top: solid; border-bottom: solid; ">CARGO OUT</td>
+    </tr>
+    <tr >
+        <td>DATE</td>
+        <td>TIME</td>
+        <td style="border-right:solid">
+            TEMPRATURE
+        </td>
+        <td>DATE</td>
+        <td>TIME</td>
+        <td>TEMPRATURE</td>
+    </tr>
+    <tr>
+        <td colspan="2">CHECKING / ACC STAFF NAME / SHIFT</td>
+        <td style="border-right:solid">SIGNATURE</td>
+        <td colspan="2">COLD ROOM STAFF NAME</td>
+        <td >SIGNATURE</td>
+    </tr>
+    <tr>
+        <td colspan="2">COLD ROOM STAFF NAME</td>
+        <td style="border-right:solid">SIGNATURE</td>
+        <td colspan="2">DELIVERY / Exp W  /H STAFF NAME</td>
+        <td >SIGNATURE</td>
+    </tr>
+    <tr>
+        <td colspan="6" style="border-top: solid;height:80px;">REMARKS</td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,44 @@
+﻿<Messages>
+  <!--#region Consumable Stock XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  ConsumableStock
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Vinay Yadav
+  Created On:		3 Nov 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>AddStock</Name>
+    <Message>Add Stock can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Inventory Stock Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Inventory Stock Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Inventory Stock Deleted Successfully.</value>
+  </ServerMessage>
+   <ServerMessage>
+    <Key>1005</Key>
+    <value>Can not delete stock already issued.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1006</Key>
+    <value>Stock series already exists .</value>
+  </ServerMessage>
+</Messages>

@@ -1,0 +1,52 @@
+﻿<Messages>
+   <ServerMessage>
+		<Key>1001</Key>
+		<value>Agent Name for office already exists</value>
+	</ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Account Number can not be same</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1003</Key>
+    <value>Participant Id already exist</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1004</Key>
+    <value>Garuda Mile already exist</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1547</Key>
+    <value>Transaction Type  can not be  changed.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1005</Key>
+    <value>IATA Number Already Exist</value>
+  </ServerMessage>
+   <ServerMessage>
+    <Key>1006</Key>
+    <value>Branch ID Already Exist</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1007</Key>
+    <value>CASSNo Already Exist</value>
+  </ServerMessage>
+	<ServerMessage>
+		<Key>2000</Key>
+		<value>Account Added Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2001</Key>
+		<value>Account Updated Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2002</Key>
+		<value>Account Deleted Successfully.</value>
+	</ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Record Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+
+

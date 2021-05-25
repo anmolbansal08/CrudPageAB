@@ -1,0 +1,38 @@
+﻿<Messages>
+ 
+
+  <!--<DataFieldName>
+    <Name>ZoneSNo</Name>
+    <Message>Zone Name can not be blank</Message>
+  </DataFieldName>-->
+
+ 
+
+  <!--<DataFieldName>
+    <Name>TimeDifference</Name>
+    <Message>TimeDifference can not be blank</Message>
+  </DataFieldName>-->
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Document Name already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>City Name already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Document Master Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Document Master Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Document Master Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

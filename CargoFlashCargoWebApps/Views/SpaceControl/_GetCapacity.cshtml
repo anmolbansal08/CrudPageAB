@@ -1,0 +1,441 @@
+﻿@*// <copyright file="_GetCapacity.cshtml" company="Cargoflash">
+           //
+           // Created On: 19-March-2017
+           // Created By: Braj
+           // Description:
+           //----------------------------------------------------------------------------
+           // Revison History:
+           // Please add a new line below for any update to this file
+           // Updated On  Updated By                     Significant Changes
+           // ----------------------------------------------------------------------------
+           //
+           //
+    </copyright>*@
+@model System.Data.DataSet
+@{
+    string gridId = Guid.NewGuid().ToString();}
+
+
+
+@*<legend>Existing Flight Plan</legend>*@
+
+<div id="CapacityGridDiv_@gridId"></div>
+<div style="height:65vh;" id="chart_@gridId"></div>
+@if (ViewBag.CapacityType == "Total")
+{
+
+<script>
+    var gridDs = JSON.parse(@Html.Raw(Json.Encode(CargoFlashCargoWebApps.Common.Global.DStoJSON(Model))));
+        $(document).ready(function () {
+            $("#CapacityGridDiv_@gridId").kendoGrid({
+                dataSource: {
+                    data: gridDs,
+
+                },
+                dataBound: function (e) { cfi.DisplayEmptyMessage(e, this); },
+                // height:180,
+                scrollable: true,
+                columns: [
+                    { field: "AircraftType", title: "Aircraft Type", width: "70px" },
+                    {
+                        title: "Total Capacity",
+                        columns: [
+                            { field: "GrossWeight", title: "Gross", width: 70 },
+                            { field: "CBM", title: "CBM", width: "70px" },
+                        ]
+
+                    },
+                {
+                    title: "Free Sale Capacity",
+                    columns: [
+                        { field: "FreeSaleGrossWeight", title: "Gross", width: 70 },
+                        { field: "FreeSaleCBM", title: "CBM", width: "70px" },
+                    ]
+
+                },
+                {
+                    title: "Reserved Capacity",
+                    columns: [
+                        { field: "ReservedGross", title: "Gross", width: 70 },
+                        { field: "ReservedCBM", title: "CBM", width: "70px" },
+                    ]
+
+                },
+                {
+                    title: "Overbooked Capacity",
+                    columns: [
+                        { field: "OverbookGross", title: "Gross", width: 70 },
+                        { field: "OverbookCBM", title: "CBM", width: "70px" },
+                    ]
+
+                },
+                    {
+                        title: "Allotment",
+                        columns: [
+                            { field: "AllocatedGross", title: "Gross", format: "{0: yyyy-MM-dd}", width: 70 },
+                            { field: "AllocatedCBM", title: "CBM", width: "70px" },
+                        ]
+
+                    }
+                ]
+            });
+        });
+
+
+
+        function GetP(val, Tval) {
+            var val = parseFloat((parseFloat(val) * 100 / parseFloat(Tval)).toFixed(2));
+            if (isNaN(val))
+                return 0;
+            else
+                return val;
+        }
+
+
+        var chartDs = [];
+        var gdata = [];
+        var vdata = [];
+        var cdata = gridDs[0];
+        var gt = parseFloat(cdata['GrossWeight']);
+        var vt = parseFloat(cdata['CBM']);
+        
+
+        //gdata.push({ category: 'Total', value: GetP(cdata['RemainingGross'], gt), color: 'green', visibleInLegend: false });
+        gdata.push({ category: 'Free Sale', value: GetP(cdata['FreeSaleGrossWeight'], gt), visibleInLegend: false });
+        gdata.push({ category: 'Reserved', value: GetP(cdata['ReservedGross'], gt), color: 'green', visibleInLegend: false });
+        gdata.push({ category: 'Allotment', value: GetP(cdata['AllocatedGross'], cdata['ReservedGross']), visibleInLegend: false, color: 'blue'  });
+        gdata.push({ category: 'Overbook', value: GetP(cdata['OverbookGross'], gt), color: 'red', visibleInLegend: false });
+
+        //vdata.push({ category: 'Total', value: GetP(cdata['RemainingVolume'],vt), color: 'green' });
+        vdata.push({ category: 'Free Sale', value: GetP(cdata['FreeSaleCBM'], vt)});
+        vdata.push({ category: 'Reserved', value: GetP(cdata['ReservedCBM'], vt), color: 'green'});
+        vdata.push({ category: 'Allotment', value: GetP(cdata['AllocatedCBM'], cdata['ReservedCBM']), color: 'blue' });
+        vdata.push({ category: 'Overbook', value: GetP(cdata['OverbookCBM'], vt) , color: 'red' });
+
+        chartDs.push({ name: 'CBM', data: vdata});
+        chartDs.push({
+            name: 'Gross', data: gdata, labels: {
+                visible: true,
+                background: "transparent",
+                position: "outsideEnd",
+                template: "#= category #: \n #= value#%"
+            }
+        });
+        
+        if ($("div").kendoChart == undefined)
+            addScript(createChart);
+        else
+            createChart();
+
+        function createChart() {
+            $("#chart_@gridId").empty();
+            $("#chart_@gridId").kendoChart({
+                title: {
+                    position: "bottom",
+                    text: '@ViewBag.CapacityType' +" Capacity in percentage"
+                },
+                legend: {
+                    visible: true,
+                    position: "right"
+                },
+                chartArea: {
+                    background: ""
+                },
+                seriesDefaults: {
+                    type: "donut",
+                    startAngle: 150
+                },
+                series: chartDs,
+                tooltip: {
+                    visible: true,
+                    template: "#= category # (#= series.name #): #= value #%"
+                }
+            });
+        }
+</script>
+}
+else if (ViewBag.CapacityType == "Used")
+{
+
+    <script>
+        var gridDs = JSON.parse(@Html.Raw(Json.Encode(CargoFlashCargoWebApps.Common.Global.DStoJSON(Model))));
+        $(document).ready(function () {
+            $("#CapacityGridDiv_@gridId").kendoGrid({
+                dataSource: {
+                    data: gridDs,
+
+                },
+                dataBound: function (e) { cfi.DisplayEmptyMessage(e, this); },
+                // height:180,
+                scrollable: true,
+                columns: [
+                    { field: "Station", title: "Station", width: "70px" },
+                     {
+                         title: "Used Capacity",
+                         columns: [
+                             { field: "UsedGrossWeight", title: "Gross", width: 70 },
+                             { field: "UsedVolume", title: "CBM", width: "70px" },
+
+                         ]
+
+                     }, {
+                         title: "Free Sale Used",
+                         columns: [
+                             { field: "FreesaleUsedGross", title: "Gross", width: 70 },
+                             { field: "FreesaleUsedVolume", title: "CBM", width: "70px" },
+
+                         ]
+
+                     },
+                      {
+                          title: "Reserved Used",
+                          columns: [
+                              { field: "ReservedUsedGross", title: "Gross", width: 70 },
+                              { field: "ReservedUsedVolume", title: "CBM", width: "70px" },
+
+                          ]
+
+                      },
+                       {
+                           title: "Allotment Used",
+                           columns: [
+                               { field: "AllocatedUsedGross", title: "Gross", width: 70 },
+                               { field: "AllocatedUsedVolume", title: "CBM", width: "70px" },
+
+                           ]
+
+                       }, {
+                           title: "Overbook Used",
+                           columns: [
+                               { field: "OverbookUsedGross", title: "Gross", width: 70 },
+                               { field: "OverbookUsedVolume", title: "CBM", width: "70px" },
+
+                           ]
+
+                       },
+                    //{ field: "UsedGrossWeight", title: "Used Capacity", width: "70px" },
+                    //{ field: "AllocatedUsedGross", title: "Allotment", width: 70 },
+                    //{ field: "FreesaleUsedGross", title: "Free Sale", width: "70px" },
+                    { template: "#=FreesaleUsedPer#%", title: "% of Free Sale Used", width: "70px" },
+                    { field: "AllocatedUsedPer", title: "% of Allotment Used", width: 70 }
+                ]
+            });
+        });
+
+
+        function GetP(val, Tval) {
+            var val = parseFloat((parseFloat(val) * 100 / parseFloat(Tval)).toFixed(2));
+            if (isNaN(val))
+                return 0;
+            else
+                return val;
+        }
+
+       
+
+        var chartDs = [];
+        var gdata = [];
+        var vdata = [];
+        var cdata = gridDs[0];
+        var gt = parseFloat(cdata['UsedGrossWeight']);
+        var vt = parseFloat(cdata['UsedVolume']);
+
+        //gdata.push({ category: 'Total', value: GetP(cdata['RemainingGross'], gt), color: 'green', visibleInLegend: false });
+        gdata.push({ category: 'Free Sale', value: GetP(cdata['FreesaleUsedGross'], gt), visibleInLegend: false });
+        gdata.push({ category: 'Reserved', value: GetP(cdata['ReservedUsedGross'], gt), color: 'green', visibleInLegend: false });
+        gdata.push({ category: 'Allotment', value: GetP(cdata['AllocatedUsedGross'], cdata['ReservedUsedGross']), visibleInLegend: false, color: 'blue' });
+        gdata.push({ category: 'Overbook', value: GetP(cdata['OverbookUsedGross'], gt), color: 'red', visibleInLegend: false });
+
+        //vdata.push({ category: 'Total', value: GetP(cdata['RemainingVolume'],vt), color: 'green' });
+        vdata.push({ category: 'Free Sale', value: GetP(cdata['FreesaleUsedVolume'], vt)});
+        vdata.push({ category: 'Reserved', value: GetP(cdata['ReservedUsedVolume'], vt), color: 'green'});
+        vdata.push({ category: 'Allotment', value: GetP(cdata['AllocatedUsedVolume'], cdata['ReservedUsedVolume']), color: 'blue'  });
+        vdata.push({ category: 'Overbook', value: GetP(cdata['OverbookUsedVolume'], vt) , color: 'red' });
+
+        chartDs.push({ name: 'CBM', data: vdata});
+        chartDs.push({
+            name: 'Gross', data: gdata, labels: {
+                visible: true,
+                background: "transparent",
+                position: "outsideEnd",
+                template: "#= category #: \n #= value#%"
+            }
+        });
+        
+        if ($("div").kendoChart == undefined)
+            addScript(createChart);
+        else
+            createChart();
+
+        function createChart() {
+            $("#chart_@gridId").empty();
+            $("#chart_@gridId").kendoChart({
+                title: {
+                    position: "bottom",
+                    text: '@ViewBag.CapacityType' +" Capacity in percentage"
+                },
+                legend: {
+                    visible: true,
+                    position: "right"
+                },
+                chartArea: {
+                    background: ""
+                },
+                seriesDefaults: {
+                    type: "donut",
+                    startAngle: 150
+                },
+                series: chartDs,
+                tooltip: {
+                    visible: true,
+                    template: "#= category # (#= series.name #): #= value #%"
+                }
+            });
+        }
+
+    </script>
+}
+else if (ViewBag.CapacityType == "Remaining")
+{
+
+    <script>
+        var gridDs = JSON.parse(@Html.Raw(Json.Encode(CargoFlashCargoWebApps.Common.Global.DStoJSON(Model))));
+        $(document).ready(function () {
+            $("#CapacityGridDiv_@gridId").kendoGrid({
+                dataSource: {
+                    data: gridDs,
+
+                },
+                dataBound: function (e) { cfi.DisplayEmptyMessage(e, this); },
+                // height:180,
+                scrollable: true,
+                columns: [
+                     {
+                         title: "Total Remaining",
+                         columns: [
+                             { field: "RemainingGross", title: "Gross", width: 70 },
+                             { field: "RemainingVolume", title: "CBM", width: "70px" },
+
+                         ]
+
+                     },
+                         {
+                             title: "Free Sale Remaining",
+                             columns: [
+                                 { field: "RemainingFreeSaleGross", title: "Gross", width: 70 },
+                                 { field: "RemainingFreeSaleVolume", title: "CBM", width: "70px" },
+
+                             ]
+
+                         },
+                          {
+                              title: "Reserved Remaining",
+                              columns: [
+                                  { field: "RemainingReservedGross", title: "Gross", width: 70 },
+                                  { field: "RemainingReservedVolume", title: "CBM", width: "70px" }
+
+                              ]
+
+                          },
+                {
+                    title: "Allotment Remaining",
+                    columns: [
+                        { field: "RemainingAllocatedGross", title: "Gross", width: 70 },
+                        { field: "AllocatedUsedVolume", title: "CBM", width: "70px" }
+
+                    ]
+
+                },
+                 {
+                     title: "Overbook Remaining",
+                     columns: [
+                         { field: "RemainingOverbookGross", title: "Gross", width: 70 },
+                         { field: "RemainingOverbookVolume", title: "CBM", width: "70px" }
+
+                     ]
+
+                 },
+                ]
+            });
+        });
+
+
+        function GetP(val, Tval) {
+            var val = parseFloat((parseFloat(val) * 100 / parseFloat(Tval)).toFixed(2));
+            if (isNaN(val))
+                return 0;
+            else
+                return val;
+        }
+
+     
+
+
+        var chartDs = [];
+        var gdata = [];
+        var vdata = [];
+        var cdata = gridDs[0];
+        var gt = parseFloat(cdata['RemainingGross']);
+        var vt = parseFloat(cdata['RemainingVolume']);
+        
+        //gdata.push({ category: 'Total', value: GetP(cdata['RemainingGross'], gt), color: 'green', visibleInLegend: false });
+        gdata.push({ category: 'Free Sale', value: GetP(cdata['RemainingFreeSaleGross'], gt), visibleInLegend: false });
+        gdata.push({ category: 'Reserved', value: GetP(cdata['RemainingReservedGross'], gt), color: 'green', visibleInLegend: false });
+        gdata.push({ category: 'Allotment', value: GetP(cdata['RemainingAllocatedGross'], cdata['RemainingReservedGross']), visibleInLegend: false, color: 'blue' });
+        gdata.push({ category: 'Overbook', value: GetP(cdata['RemainingOverbookGross'], gt), color: 'red', visibleInLegend: false });
+
+        //vdata.push({ category: 'Total', value: GetP(cdata['RemainingVolume'],vt), color: 'green' });
+        vdata.push({ category: 'Free Sale', value: GetP(cdata['RemainingFreeSaleVolume'], vt)});
+        vdata.push({ category: 'Reserved', value: GetP(cdata['RemainingReservedVolume'], vt), color: 'green'});
+        vdata.push({ category: 'Allotment', value: GetP(cdata['AllocatedUsedVolume'], cdata['RemainingReservedVolume']), color: 'blue' });
+        vdata.push({ category: 'Overbook', value: GetP(cdata['RemainingOverbookVolume'], vt) , color: 'red' });
+
+        chartDs.push({ name: 'CBM', data: vdata});
+        chartDs.push({
+            name: 'Gross', data: gdata, labels: {
+                visible: true,
+                background: "transparent",
+                position: "outsideEnd",
+                template: "#= category #: \n #= value#%"
+            }
+        });
+
+        if ($("div").kendoChart == undefined)
+            addScript(createChart);
+        else
+            createChart();
+       
+        function createChart() {
+            $("#chart_@gridId").kendoChart({
+                title: {
+                    position: "bottom",
+                    text: '@ViewBag.CapacityType' +" Capacity in percentage"
+                },
+                legend: {
+                    visible: true,
+                    position: "right"
+                },
+                chartArea: {
+                    background: ""
+                },
+                seriesDefaults: {
+                    type: "donut",
+                    startAngle: 150
+                },
+                series: chartDs,                
+                tooltip: {
+                    visible: true,
+                    template: "#= category # (#= series.name #): #= value #%"
+                }
+            });
+        }
+
+
+    </script>
+    <style>
+        datalist {
+            color: red
+        }
+    </style>
+}
+

@@ -1,0 +1,1759 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <!--<link type="text/css" href="~/Styles/Application.css" rel="stylesheet" />-->
+    <script src="Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="Scripts/json2.js"></script>
+    <link href="../Styles/CfiMessage.css" type="text/css" rel="stylesheet" />
+    <script src="Scripts/jquery.validate.min.js"></script>
+
+    <script type="text/javascript" src="../Scripts/CfiMessage.js"></script>
+    <script type="text/javascript" src="../Scripts/commono.js"></script>
+    <script type="text/javascript" src="../Scripts/common.js"></script>
+    <script type="text/javascript">
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        $(document).ready(function () {
+
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            var CurrentClaimSNo = getParameterByName("sno", "");
+            var pageName = getParameterByName("pagename", "");
+            var FinalData;
+            var FinalData1;
+            var url;
+            $("[id='Masterairwaybillyescross']").hide();
+            url = "Services/Irregularity/ClaimService.svc/GetCargoClaimFormPrint"
+            $.ajax({
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ CurrentClaimSNo: CurrentClaimSNo }),
+                async: true,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table0;
+                    FinalData1 = ResultData.Table1;
+                    var FinalData2 = ResultData.Table2;
+                    var x = FinalData1[0].EDoxdocumenttypeSNo;
+                    if (FinalData.length > 0) {
+                        $('#spnplace').text(FinalData[0].Place);
+                        $('#spndate').text(FinalData[0].SubmittedByDate);
+                        $('#spnclaimDescription').text(FinalData[0].ClaimDescription);
+                        $('#spnhousewaybill').text(FinalData[0].HAWBNumber);
+                        $('#spnhousewaybilltotalpieces').text(FinalData[0].HPieces);
+                        $('#spnhousetotalweight').text(FinalData[0].HWeight);
+                        $('#spnvalueofclaim').text(FinalData[0].ValueofClaim);
+                        $('#spnamountinword').text(FinalData[0].AmountInWords);
+                        $('#spnbranchoffice').text(FinalData[0].Place);
+                        $('#spnclaimnumber').text(FinalData[0].ClaimNumber);
+                        $('#spnsubmitedbydate').text(FinalData[0].SubmittedByDate);
+                        $('#spnsubmitedbyname').text(FinalData[0].SubmittedByName);
+                        $('#spnsubmitedbyjobtitle').text(FinalData[0].SubmittedJObTitle);
+                        $('#spnreceivedate').text(FinalData[0].SubmittedByDate);
+
+                        $('#spnreceivename').text(FinalData[0].ReceivedByName);
+                        $('#spnreceiveJobTitle').text(FinalData[0].ReceivedJObTitle);
+
+                        $('#spnrecievesignname').text(FinalData[0].ReceivedByName);
+                        $('#spnsubmitedsignname').text((FinalData[0].SubmittedByName));
+                        //$('#ImgLogo').text((FinalData[0].AirlineLogo));
+                        $('#ImgLogo').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineLogo);
+                        $('#ImgLogo').attr('onError', 'this.onerror=null;this.src="../Logo/aaa.jpg";');
+                        
+                    }
+
+                    if (FinalData1.lenght > 0) {
+
+                    }
+
+                    if (FinalData2.length > 0) {
+                        $('#spnshippername').text(FinalData2[0].ShipperName);
+                        $('#spnshipperaddress').text(FinalData2[0].ShipperCityName);
+
+                        $('#spnconsigneename').text(FinalData2[0].ConsigneeName);
+                        $('#spnconsigneeaddress').text(FinalData2[0].ConsigneeCityName);
+                        $('#spnagentname').text(FinalData2[0].Name);
+                        $('#spnagentaddress').text(FinalData2[0].CityName);
+
+                        $('#spnmasterairwaybill').text(FinalData2[0].AWBNumber);
+                        $('#spntotalpieces').text(FinalData2[0].TotalPieces);
+                        $('#spntotalweight').text(FinalData2[0].TotalGrossWeight);
+                        $('#spnhousewaybill').text(FinalData2[0].HouseWaybill);
+
+                        $('#spnhousewaybilltotalpieces').text(FinalData2[0].HouseWaybillTotalPieces);
+                        $('#spnhousetotalweight').text(FinalData2[0].HouseWaybillTotalWeight);
+
+                    }
+
+
+                    if (x.indexOf(60) !== -1) {
+
+                        $('#letterofreserveyescross').show();
+                        $('#letterofreserveyesempty').hide();
+                        $('#letterofreservenacross').hide();
+                        $('#letterofreservenaempty').show();
+                    }
+                    else {
+                        $('#letterofreserveyescross').hide();
+                        $('#letterofreserveyesempty').show();
+                        $('#letterofreservenacross').show();
+                        $('#letterofreservenaempty').hide();
+                    }
+
+                    if (x.indexOf(71) !== -1) {
+
+                        $('#DestroyCertificateyescross').show();
+                        $('#DestroyCertificateyesempty').hide();
+                        $('#DestroyCertificatenacross').hide();
+                        $('#DestroyCertificatenaempty').show();
+                    }
+                    else {
+                        $('#DestroyCertificateyescross').hide();
+                        $('#DestroyCertificateyesempty').show();
+                        $('#DestroyCertificatenacross').show();
+                        $('#DestroyCertificatenaempty').hide();
+
+                    }
+
+                    if (x.indexOf(88) !== -1) {
+                        $('#shipperinvoiceyescross').show();
+                        $('#shipperinvoiceyesempty').hide();
+
+                        $('#shipperinvoicenacross').hide();
+                        $('#shipperinvoicenaempty').show();
+                    }
+                    else {
+                        $('#shipperinvoiceyescross').hide();
+                        $('#shipperinvoiceyesempty').show();
+
+                        $('#shipperinvoicenacross').show();
+                        $('#shipperinvoicenaempty').hide();
+                    }
+
+                    if (x.indexOf(89) !== -1) {
+                        $('#ProfessionalSurveyReportyescross').show();
+                        $('#ProfessionalSurveyReportyesempty').hide();
+                        $('#ProfessionalSurveyReportnacross').hide();
+                        $('#ProfessionalSurveyReportnaempty').show();
+                    }
+                    else {
+
+                        $('#ProfessionalSurveyReportyescross').hide();
+                        $('#ProfessionalSurveyReportyesempty').show();
+                        $('#ProfessionalSurveyReportnacross').show();
+                        $('#ProfessionalSurveyReportnaempty').hide();
+                    }
+
+                    if (x.indexOf(65) !== -1) {
+                        $('#Packinglistyescross').show();
+                        $('#Packinglistyesempty').hide();
+                        $('#Packinglistnacross').hide();
+                        $('#Packinglistnaempty').show();
+
+                    }
+                    else {
+                        $('#Packinglistyescross').hide();
+                        $('#Packinglistyesempty').show();
+                        $('#Packinglistnacross').show();
+                        $('#Packinglistnaempty').hide();
+                    }
+                    if (x.indexOf(61) !== -1) {
+
+                        $('#Photograpsyescross').show();
+                        $('#Photograpsyesempty').hide();
+                        $('#Photograpsnacross').hide();
+                        $('#Photograpsnaempty').show();
+                    }
+
+                    else {
+                        $('#Photograpsyescross').hide();
+                        $('#Photograpsyesempty').show();
+                        $('#Photograpsnacross').show();
+                        $('#Photograpsnaempty').hide();
+                    }
+
+                    if (x.indexOf(90) !== -1) {
+                        $('#Assignmentreceiptyescross').show();
+                        $('#Assignmentreceiptyesempty').hide();
+                        $('#Assignmentreceiptnacross').hide();
+                        $('#Assignmentreceiptnaempty').show();
+                    }
+                    else {
+                        $('#Assignmentreceiptyescross').hide();
+                        $('#Assignmentreceiptyesempty').show();
+                        $('#Assignmentreceiptnacross').show();
+                        $('#Assignmentreceiptnaempty').hide();
+                    }
+
+                    if (x.indexOf(91) !== -1) {
+                        $('#HealthCertificateyescross').show();
+                        $('#HealthCertificateyesempty').hide();
+                        $('#HealthCertificatenacross').hide();
+                        $('#HealthCertificatenaempty').show();
+                    }
+                    else {
+                        $('#HealthCertificateyescross').hide();
+                        $('#HealthCertificateyesempty').show();
+                        $('#HealthCertificatenacross').show();
+                        $('#HealthCertificatenaempty').hide();
+                    }
+                    if (x.indexOf(69) !== -1) {
+                        $('#Salvagevalueyescross').show();
+                        $('#Salvagevalueyesempty').hide();
+                        $('#Salvagevaluenacross').hide();
+                        $('#Salvagevaluenaempty').show();
+
+                    }
+                    else {
+                        $('#Salvagevalueyescross').hide();
+                        $('#Salvagevalueyesempty').show();
+                        $('#Salvagevaluenacross').show();
+                        $('#Salvagevaluenaempty').hide();
+                    }
+                    if (x.indexOf(92) !== -1) {
+                        $('#VeterinarianCertificateyescross').show();
+                        $('#VeterinarianCertificateyesempty').hide();
+                        $('#VeterinarianCertificatenacross').hide();
+                        $('#VeterinarianCertificatenaempty').show();
+                    }
+
+                    else {
+                        $('#VeterinarianCertificateyescross').hide();
+                        $('#VeterinarianCertificateyesempty').show();
+                        $('#VeterinarianCertificatenacross').show();
+                        $('#VeterinarianCertificatenaempty').hide();
+                    }
+                    if (x.indexOf(87) !== -1) {
+                        $('#ImportLicenseyescross').show();
+                        $('#ImportLicenseyesempty').hide();
+                        $('#ImportLicensenacross').hide();
+                        $('#ImportLicensenaempty').show();
+                    }
+
+                    else {
+                        $('#ImportLicenseyescross').hide();
+                        $('#ImportLicenseyesempty').show();
+                        $('#ImportLicensenacross').show();
+                        $('#ImportLicensenaempty').hide();
+                    }
+                    if (x.indexOf(93) !== -1) {
+                        $('#CITIESCertificateyescross').show();
+                        $('#CITIESCertificateyesempty').hide();
+                        $('#CITIESCertificatenacross').hide();
+                        $('#CITIESCertificatenaempty').show();
+                    }
+                    else {
+                        $('#CITIESCertificateyescross').hide();
+                        $('#CITIESCertificateyesempty').show();
+                        $('#CITIESCertificatenacross').show();
+                        $('#CITIESCertificatenaempty').hide();
+                    }
+                    if (x.indexOf(94) !== -1) {
+
+                        $('#DangerousGoodyescross').show();
+                        $('#DangerousGoodyesempty').hide();
+                        $('#DangerousGoodnacross').hide();
+                        $('#DangerousGoodnaempty').show();
+
+
+                    }
+                    else {
+                        $('#DangerousGoodyescross').hide();
+                        $('#DangerousGoodyesempty').show();
+                        $('#DangerousGoodnacross').show();
+                        $('#DangerousGoodnaempty').hide();
+                    }
+
+
+                    //$("#spnDescription").html(( FinalData[0].ClaimDescription.toUpperCase()));
+                    // $("#spnCommodity").text(FinalData2[0].CommodityDescription);
+                }
+            });
+        });
+
+        //---- selected manadotry field by user for Carrier's or Ground Handling and  Shipper's or ConSignee---//   updated by indra pratap singh
+
+        function PrintElem(elem) {
+
+
+            var isValid = true;
+
+
+
+            $(".WebFormTabledetail tr").each(function () {
+                if ($(this).find("input[name*='check']").length > 0) {
+                    if ($(this).find('td:eq(2)').find("input[name*='check']").is(":checked")
+                             == false && $(this).find('td:eq(3)').find("input[name*='check']").is(":checked")
+                                == false) {
+                        ShowMessage('warning', 'Warning', 'Please select an option for ' + $(this).find('td:eq(1)').text());
+                        isValid = false;
+                        return false;
+
+                    }
+
+                    if ($(this).find('td:eq(6)').find("input[name*='check']").is(":checked")
+                           == false && $(this).find('td:eq(7)').find("input[name*='check']").is(":checked")
+                                 == false && this.rowIndex != $(".WebFormTabledetail tr").length - 1) {
+
+                        ShowMessage('warning', 'Warning', 'Please select an option for ' + $(this).find('td:eq(5)').text());
+                        isValid = false;
+                        return false;
+
+                    }
+
+
+
+
+
+                }
+
+            });
+            if (isValid) {
+                $(".WebFormTabledetail tr").each(function () {
+                    if ($(this).find("input[name*='check']").length > 0) {
+                        if ($(this).find('td:eq(2)').find("input[name*='check']").is(":checked") == true) {
+
+                            $(this).find('td:eq(2)').find('img').show();
+                            $(this).find('td:eq(2)').find("input[name*='check']").hide();
+
+
+                        }
+                        else {
+                            $(this).find('td:eq(2)').find("input[name*='check']").hide();
+                        }
+                        if ($(this).find('td:eq(3)').find("input[name*='check']").is(":checked") == true) {
+
+                            $(this).find('td:eq(3)').find('img').show();
+                            $(this).find('td:eq(3)').find("input[name*='check']").hide();
+
+
+                        }
+                        else {
+                            $(this).find('td:eq(3)').find("input[name*='check']").hide();
+                        }
+                        if ($(this).find('td:eq(6)').find("input[name*='check']").is(":checked") == true) {
+
+                            $(this).find('td:eq(6)').find('img').show();
+                            $(this).find('td:eq(6)').find("input[name*='check']").hide();
+
+
+                        }
+                        else {
+                            $(this).find('td:eq(6)').find("input[name*='check']").hide();
+                        }
+                        if ($(this).find('td:eq(7)').find("input[name*='check']").is(":checked") == true) {
+
+                            $(this).find('td:eq(7)').find('img').show();
+                            $(this).find('td:eq(7)').find("input[name*='check']").hide();
+
+
+                        }
+                        else {
+                            $(this).find('td:eq(7)').find("input[name*='check']").hide();
+                        }
+
+                    }
+                });
+            }
+
+            if (isValid) {
+                $("#tblSTTStatus").find("input[type='button']").hide();
+                Popup($(elem).html());
+                $("#tblSTTStatus").find("input[type='button']").show();
+            }
+        }
+
+        function Popup(data) {
+
+            window.print();
+
+
+            return true;
+        }
+        //------------------------------------------------------------------//   
+
+    </script>
+
+    <style type="text/css">
+        .webtable {
+            border-collapse: collapse;
+        }
+
+            .webtable tr {
+                border: 1px solid black;
+            }
+
+                .webtable tr td {
+                    border: 1px solid black;
+                    font-size: 10px;
+                    border-right: 1px solid;
+                }
+
+        .webtablechld tr td {
+            font-size: 10px;
+        }
+
+        .webtabletd {
+            font-size: 10px;
+        }
+
+
+        .webth {
+            border: 1px solid black;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 6px;
+        }
+
+
+        body {
+            font-family: Verdana;
+            margin: 0px;
+            padding: 0px;
+            color: black;
+        }
+@media print {
+        @page {
+            margin :0;
+        }
+  body { font-size: 10pt; margin:1.6cm;}
+  
+
+}
+        .prs {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: normal;
+            font-family: Verdana, Geneva, sans-serif;
+        }
+
+        .fsttd {
+            width: 100% !important;
+        }
+
+        .scndtd {
+            width: 35% !important;
+        }
+
+        .thrdtd {
+            width: 30% !important;
+        }
+
+        .WebFormTableNoWidth {
+            padding: 10px;
+            border: 0;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .WebFormMTable {
+            width: 100%;
+            height: 100%;
+            padding: 0px;
+            border: 0px solid #000;
+            margin-bottom: 0px;
+        }
+
+        .WebFormTable {
+            width: 100%;
+            padding: 0px;
+            border: 0px solid #000;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-weight: normal;
+        }
+
+        .WebFormTabledetail {
+            width: 100%;
+            padding: 0px;
+            border: 0px solid #000;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-weight: normal;
+        }
+
+            .WebFormTabledetail tr {
+                border: 1px solid #000;
+            }
+
+                .WebFormTabledetail tr td {
+                    border-right: 1px solid;
+                }
+
+                    .WebFormTabledetail tr td img {
+                        padding: 1px 1px 2px 1px;
+                    }
+
+
+        .WebFormTablebottomdetail {
+            width: 100%;
+            padding: 0px;
+            border: 0px solid #000;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-weight: normal;
+        }
+
+            .WebFormTablebottomdetail tr td {
+                border-right: 1px solid;
+            }
+
+        .tdLabel {
+            font-size: 8px;
+            text-align: left;
+            padding-left: 1px;
+            width: 15%;
+        }
+
+        .tdColon {
+            font-size: 8px;
+            font-weight: bold;
+            width: 5%;
+        }
+
+        .tdValue {
+            font-size: 7px;
+            font-weight: bold;
+            text-align: left;
+            padding-left: 1px;
+            width: 30%;
+        }
+
+        .tdBarcodeLabel {
+            font-size: 8px;
+            font-weight: bold;
+            text-align: left;
+            width: 30%;
+        }
+
+        .tdFooter {
+            font-size: 7px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .tdAddress {
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .tdILabel {
+            font-size: 8px;
+            text-align: left;
+            padding-left: 1px;
+            width: 30%;
+        }
+
+        .tdIColon {
+            font-size: 8px;
+            font-weight: bold;
+            width: 5%;
+        }
+
+        .tdIValue {
+            font-size: 7px;
+            font-weight: bold;
+            text-align: left;
+            padding-left: 1px;
+            width: 65%;
+        }
+
+        .tdHeaderCgValue {
+            font-size: 8px;
+            text-align: right;
+            padding-left: 1px;
+            font-weight: bold;
+        }
+
+        .tdHeaderValue {
+            font-size: 8px;
+            text-align: center;
+            padding-left: 1px;
+            width: 14%;
+        }
+
+        .tdHeader {
+            font-size: 8px;
+            text-align: center;
+            font-weight: bold;
+            padding-left: 1px;
+            width: 14%;
+        }
+
+        .tdHeader {
+            font-size: 8px;
+            text-align: center;
+            font-weight: bold;
+            padding-left: 1px;
+            width: 14%;
+        }
+
+        .tdSLabel {
+            font-size: 8px;
+            text-align: center;
+            padding-left: 1px;
+        }
+
+        .tdBLLabel {
+            font-size: 8px;
+            text-align: left;
+            padding-left: 1px;
+        }
+
+        .tdBRLabel {
+            font-size: 8px;
+            text-align: right;
+            padding-left: 1px;
+        }
+
+        .style1 {
+            width: 163px;
+            height: 16px;
+        }
+
+        .fontfamilyHeader {
+            font-weight: bold;
+            font-size: 8px;
+            color: #000000;
+            font-family: Verdana;
+        }
+
+        .fontfamily {
+            font-size: 7px;
+            color: #000000;
+            font-family: Verdana;
+        }
+
+        span {
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        .myclass {
+            font-weight: normal !important;
+            font-size: 15px !important;
+        }
+
+        .myclass1 {
+            font-weight: bold !important;
+            font-size: 10px !important;
+        }
+
+        .myclass2 {
+            font-weight: normal !important;
+            font-size: 10px !important;
+            font-style: italic;
+        }
+
+        .myclass3 {
+            font-weight: normal !important;
+            font-size: 10px !important;
+            white-space: pre-wrap;
+        }
+
+        .myclass4 {
+            font-weight: normal !important;
+            font-size: 12px !important;
+        }
+
+        .auto-style1 {
+            height: 13.5pt;
+            width: 103pt;
+            color: windowtext;
+            font-size: 6.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            /*font-family: "Courier New", monospace;*/
+            font-family: Verdana;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 0px;
+        }
+
+        .auto-style2 {
+            height: 14pt;
+            width: 103pt;
+            color: black;
+            font-size: 7.0pt;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+            /*font-family: "Courier New", monospace;*/
+            font-family: Verdana;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 1px;
+            text-align: center;
+        }
+
+        .auto-styletext {
+            height: 14pt;
+            width: 103pt;
+            color: black;
+            font-size: 7.0pt;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+            /*font-family: "Courier New", monospace;*/
+            font-family: Verdana;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 1px;
+        }
+
+        .auto-style3 {
+            width: 25%;
+            height: 14pt;
+        }
+
+        .auto-style4 {
+            height: 14pt;
+            width: 12%;
+            color: windowtext;
+            font-size: 6.0pt;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+            /*font-family: "Courier New", monospace;*/
+            font-family: Verdana;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 0px;
+        }
+
+        .auto-style5 {
+            width: 100%;
+            height: 14pt;
+        }
+
+        .auto-style8 {
+            height: 22px;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="divMainSTTStatus">
+
+        <div id="divConnNotePrinttab" style="width:98%;height: 100%;margin: 0% 1%;">
+            <table class="WebFormMTable" id="tblSTTStatus" style="width: 100%; height: 100%;">
+
+                <tr>
+                    <td valign="top" class="formbuttonrow">
+                        <table class="WebFormTable fontfamilyHeader">
+                            <tr>
+                                <td style="text-align: left; width:10%; padding: 0px;" align="left" valign="top">
+                                    <table class="WebFormTable">
+                                        <tr>
+                                            <td>
+                                                <img id="ImgLogo" width='120' height='50' />
+                                                <!--<img src="Images/GarudaIndonesiaGroupNew.png" width='120' height='50' />-->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 0px;"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+
+                                <td style="text-align: left; width: 15%; padding: 0px;" align="left" valign="top">
+                                    <table class="WebFormTable">
+                                        <tr>
+                                            <td>
+                                                <span style="font-size: 16px;">CARGO CLAIM FORM</span>  <br /><span class="myclass" style="font-size: 15px;font-style:italic;">(Formulir klaim Kargo)</span>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 0px;">
+                                                <span style="font-size: 12px;">NO : <span style="font-size:12px;" id="spnclaimnumber"></span></span>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td style="text-align: left; width:15%;" align="left" valign="top">
+
+                                    <table class="WebFormTable">
+                                        <tr>
+                                            <td>
+                                                <span class="myclass" style="font-size: 10px;">Sent to (Dikirim ke):</span>  <br /><span class="myclass" style="font-size:10px;">Local Cargo Branch Office or</span>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 0px;">
+                                                <span class="myclass" style="font-size: 8px;"><span style="font-size:12px;" id="spnbranchoffice"></span><br />Cargo Garuda Indonesia</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+
+                    <td>
+
+
+                        <table class="webtable">
+
+                            <tr>
+
+                                <td style="width:400px;">
+
+                                    <span class="myclass1">Place</span><span class="myclass2">(Tempat)</span>:<span class="myclass3" id="spnplace"></span>
+
+                                </td>
+
+
+                                <td colspan="5" style="width:450px;">
+
+                                    <span class="myclass1">Date</span><span class="myclass2">(Tanggal)</span>:<span class="myclass3" id="spndate"></span>
+
+                                </td>
+
+
+                            </tr>
+                            <tr>
+
+                                <td style="width:150px;">
+
+                                    <span class="myclass1">Shipper Name</span><br /><span class="myclass2">(Nama Pengirim)</span>
+
+                                </td>
+
+
+                                <td style="width:250px;">
+
+                                    :<span class="myclass3" id="spnshippername"></span>
+
+                                </td>
+
+                                <td style="width:150px;">
+
+                                    <span class="myclass1">Address</span> <span class="myclass2">(Alamat)</span>
+
+                                </td>
+
+
+                                <td colspan="3" style="width:300px;">
+
+                                    :<span class="myclass3" id="spnshipperaddress"></span>
+
+                                </td>
+
+
+                            </tr>
+
+                            <tr>
+
+                                <td style="width:150px;">
+
+                                    <span class="myclass1">Consignee Name</span><br /><span class="myclass2">(Nama PenerImages Barang)</span>
+
+                                </td>
+
+
+                                <td style="width:250px;">
+
+                                    :<span class="myclass3" id="spnconsigneename"></span>
+
+                                </td>
+
+                                <td style="width:150px;">
+
+                                    <span class="myclass1">Address</span><span class="myclass2"> (Alamat)</span>
+
+                                </td>
+
+
+                                <td colspan="3" style="width:300px;">
+
+                                    :<span class="myclass3" id="spnconsigneeaddress"></span>
+
+                                </td>
+
+
+                            </tr>
+
+                            <tr>
+
+                                <td style="width:150px;">
+
+                                    <span class="myclass1">AgentName</span><br /><span class="myclass2">(Nama Agen)</span>
+
+                                </td>
+
+
+                                <td style="width:250px;">
+
+                                    :<span class="myclass3" id="spnagentname"></span>
+
+                                </td>
+
+                                <td style="width:150px;">
+
+                                    <span class="myclass1">Address</span><span class="myclass2"> (Alamat)</span>
+
+                                </td>
+
+
+                                <td colspan="3" style="width:250px;">
+
+                                    :<span class="myclass3" id="spnagentaddress"></span>
+
+                                </td>
+
+
+                            </tr>
+
+                            <tr>
+
+                                <td style="width:150px;">
+
+                                    <span class="myclass1">Master Air Waybill</span>
+
+                                </td>
+
+
+                                <td style="width:250px;">
+
+                                    :<span class="myclass3" id="spnmasterairwaybill"></span>
+
+                                </td>
+
+                                <td style="width:150px;">
+
+                                    <span class="myclass1"> Total Of Pieces</span><br /><span class="myclass2">(Total Koli)</span>
+
+                                </td>
+
+
+                                <td style="width:100px;">
+
+                                    :<span class="myclass3" id="spntotalpieces"></span>
+
+                                </td>
+
+                                <td style="width:150px;">
+
+                                    <span class="myclass1"> Total Of Weight</span><br /><span class="myclass2">(Total Berat)</span>
+
+                                </td>
+                                <td style="width:400px;">
+
+                                    :<span class="myclass3" id="spntotalweight"></span>
+
+                                </td>
+
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td style="width:150px;">
+
+                                    <span class="myclass1"> House Waybill</span>
+
+                                </td>
+
+
+                                <td style="width:250px;">
+
+                                    :<span class="myclass3" id="spnhousewaybill"></span>
+
+                                </td>
+
+                                <td style="width:150px;">
+
+                                    <span class="myclass1"> Total Of Pieces</span><br /><span class="myclass2">(Total Koli)</span>
+
+                                </td>
+
+
+                                <td style="width:100px;">
+
+                                    :<span class="myclass3" id="spnhousewaybilltotalpieces"></span>
+
+                                </td>
+
+                                <td style="width:150px;">
+
+                                    <span class="myclass1">Total Of Weight</span><br /><span class="myclass2">(Total Berat)</span>
+
+                                </td>
+                                <td style="width:100px;">
+
+                                    :<span class="myclass3" id="spnhousetotalweight"></span>
+
+                                </td>
+
+
+                            </tr>
+
+
+                        </table>
+
+
+
+
+                    </td>
+
+
+                </tr>
+
+
+
+
+                <tr>
+
+                    <td class="webtabletd"><span class="myclass1">Use Of Insurance/No</span>&nbsp;<span class="myclass2">(Menggunakan Asuransi/tidak menggunakan asuransi) </span> :&nbsp;<span id="useinsuranceno"></span></td>
+
+                    <td></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+
+                        <table class="webtablechld" style="border: 1px solid black; width:100%;">
+
+                            <tr>
+                                <td>
+
+                                    <span class="myclass4">Description of the claim represents and value of claim</span><span class="myclass2">
+                                        (penjelasan tentang apa yang diklaim dan berapa jumlah perhitungan nilai klaim)
+                                    </span>
+                                </td>
+
+                            </tr>
+                            <tr>
+
+                                <td>
+
+                                    <span class="myclass3"></span><span id="spnclaimDescription"></span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td></td>
+
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+
+
+                                <td>
+
+                                    <span class="myclass1">Value of Claim</span><span class="myclass2">(Nilai Klaim)</span>:&nbsp;<span id="spnvalueofclaim"></span>
+                                </td>
+
+
+                            </tr>
+
+                            <tr>
+                                <td>
+
+                                    <span class="myclass3"> Amount In Words</span><span class="myclass2">(terbilang):&nbsp;</span><span id="spnamountinword"></span>
+                                </td>
+
+
+                            </tr>
+                        </table>
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+
+                        <table>
+
+                            <tr>
+                                <td class="webtabletd">
+
+                                    <span class="myclass1">The UnderSigned hereby certifies That The Information or Data Submitted are true and correct</span><span class="myclass2">
+                                        ( Yang Bertanda tangan dibawah ini menyatakan bahwa informasi atau data-data Yang
+                                        disampaikan adalah benar dan tepat).
+                                    </span>
+                                </td>
+
+
+                            </tr>
+
+                            <tr>
+                                <td class="webtabletd">
+
+                                    <span class="myclass1">Document Attached</span><span class="myclass2">(Dokumen Yang dilampirkan).</span>
+                                </td>
+
+
+                            </tr>
+
+                            <tr>
+                                <td class="webtabletd">
+
+                                    <span class="myclass1">Please Checked and fill the box with "X" Sign</span><span class="myclass2">(Mohon di cek dan isi box dengan tanda "X").</span>
+                                </td>
+
+
+                            </tr>
+
+                            <!--<tr>
+                                <td></td>
+
+
+                            </tr>
+
+                            <tr>
+                                <td></td>
+
+
+                            </tr>-->
+
+                            <tr>
+                                <td valign="middle">
+                                    <table class="WebFormTable">
+
+
+
+
+                                        <tr>
+                                            <td class="thrdtd WebFormTable searchHeader">
+
+
+                                                <table class="WebFormTable">
+
+
+
+
+
+
+
+
+                                                    <tr>
+                                                        <td class="auto-style3">
+
+                                                            <table class="WebFormTabledetail">
+
+
+
+
+                                                                <tr>
+
+
+
+
+                                                                    <td class="auto-style4" style="text-align:center;"><span class="myclass1">Documents Name</span><span class="myclass2">(Name Dokumen)</span></td>
+
+                                                                    <td class="auto-style4" style="text-align:center;"><span class="myclass1">Yes</span></td>
+
+                                                                    <td class="auto-style4" style="text-align:center;"><span class="myclass1">N/A</span></td>
+                                                                    <td class="auto-style4" style="text-align:center;"><span class="myclass1">Documents Name</span><span class="myclass2">(Name Dokumen)</span></td>
+
+                                                                    <td class="auto-style4" style="text-align:center;"><span class="myclass1">Yes</span></td>
+
+                                                                    <td class="auto-style4" style="text-align:center;"><span class="myclass1">N/A</span></td>
+
+
+
+                                                                </tr>
+
+
+
+
+
+                                                                <tr>
+                                                                    <td class="auto-style2" style="display:none"> 1</td>
+
+                                                                    <td class="auto-styletext">Letter of Reserves or Notice of Intent<br />to Claim&nbsp;</td>
+
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check1"
+                                                                               onclick='SetCheck(this)' value="chck2">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check1"
+                                                                               onclick='SetCheck(this)' value="chck3">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2" style="display:none">2</td>
+
+                                                                    <td class="auto-styletext">Destroy Certificate</td>
+
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check2"
+                                                                               onclick='SetCheck(this)' value="chck4">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check2"
+                                                                               onclick='SetCheck(this)' value="chck5">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+
+
+
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td class="auto-style2" style="display:none"> 3</td>
+
+                                                                    <td class="auto-styletext">Shipper's Invoice</td>
+
+
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check3"
+                                                                               onclick='SetCheck(this)' value="chck6">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check3"
+                                                                               onclick='SetCheck(this)' value="chck7">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2" style="display:none"> 4</td>
+                                                                    <td class="auto-styletext">Professional Survey Report&nbsp;</td>
+
+
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check4"
+                                                                               onclick='SetCheck(this)' value="chck8">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check4"
+                                                                               onclick='SetCheck(this)' value="chck9">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+
+
+                                                                </tr>
+
+                                                                <tr>
+
+                                                                    <td class="auto-style2" style="display:none"> 5</td>
+                                                                    <td class="auto-styletext">Packing List</td>
+
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check5"
+                                                                               onclick='SetCheck(this)' value="chck10">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check5"
+                                                                               onclick='SetCheck(this)' value="chck11">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2" style="display:none"> 6</td>
+                                                                    <td class="auto-styletext">Photograps</td>
+
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check6"
+                                                                               onclick='SetCheck(this)' value="chck12">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check6"
+                                                                               onclick='SetCheck(this)' value="chck13">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td class="auto-style2" style="display:none">7</td>
+
+                                                                    <td class="auto-styletext">Assignment of right/Subrogation Receipt</td>
+
+
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check7"
+                                                                               onclick='SetCheck(this)' value="chck14">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check7"
+                                                                               onclick='SetCheck(this)' value="chck15">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2" style="display:none">8</td>
+                                                                    <td class="auto-styletext">Health Certificate for Live<br />Animals</td>
+
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check8"
+                                                                               onclick='SetCheck(this)' value="chck16">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check8"
+                                                                               onclick='SetCheck(this)' value="chck17">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+
+
+
+                                                                </tr>
+
+                                                                <tr>
+
+                                                                    <td class="auto-style2" style="display:none">9</td>
+                                                                    <td class="auto-styletext">Salvage Value</td>
+
+
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check9"
+                                                                               onclick='SetCheck(this)' value="chck18">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check9"
+                                                                               onclick='SetCheck(this)' value="chck19">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2" style="display:none">10</td>
+                                                                    <td class="auto-styletext">Veterinarian Certificate for Live<br />Animals</td>
+
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check10"
+                                                                               onclick='SetCheck(this)' value="chck20">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check10"
+                                                                               onclick='SetCheck(this)' value="chck21">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+
+
+                                                                </tr>
+
+
+                                                                <tr>
+
+                                                                    <td class="auto-style2" style="display:none">11</td>
+                                                                    <td class="auto-styletext">Import License for Live Animals</td>
+
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check11"
+                                                                               onclick='SetCheck(this)' value="chck22">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check11"
+                                                                               onclick='SetCheck(this)' value="chck23">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2" style="display:none">12</td>
+                                                                    <td class="auto-styletext">CITIES Certificate</td>
+
+
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check12"
+                                                                               onclick='SetCheck(this)' value="chck24">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check12"
+                                                                               onclick='SetCheck(this)' value="chck25">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+
+                                                                    <td class="auto-style" style="display:none">13</td>
+                                                                    <td class="auto-styletext">Dangerous Good Certificate</td>
+
+
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check13"
+                                                                               onclick='SetCheck(this)' value="chck26">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style2">
+                                                                        <input type="radio" name="check13"
+                                                                               onclick='SetCheck(this)' value="chck27">
+                                                                        <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                                    </td>
+                                                                    <td class="auto-style" style="display:none">14</td>
+                                                                    <td class="auto-style2"></td>
+                                                                    <td class="auto-style2"></td>
+                                                                    <td class="auto-style2"></td>
+
+
+
+                                                                </tr>
+
+
+                                                            </table>
+
+
+                                                        </td>
+
+                                                    </tr>
+
+
+
+
+                                                </table>
+
+                                            </td>
+
+
+
+                                        </tr>
+
+
+
+                                    </table>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td valign="middle">
+                                    <table class="WebFormTable">
+
+
+
+
+                                        <tr>
+                                            <td class="fsttd WebFormTable searchHeader">
+
+                                                <table class="WebFormTable" style="font-size:6px;border:1px solid black;">
+
+
+                                                    <tr>
+                                                        <td class="auto-style4" style="padding-left: 0px;  border-right: 1px solid; "><span class="myclass1">Submitted By Claimant</span> <span class="myclass2">(Disiapkan Oleh penuntut)</span> </td>
+
+
+
+                                                        <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid; text-align: center;"><span class="myclass1">Signature</span></td>
+
+                                                        <td class="auto-style4" style="padding-left: 0px;  border-right: 1px solid; "><span class="myclass1">Received By(DiterImages oleh)</span></td>
+
+
+                                                        <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid; text-align: center; "><span class="myclass1">Signature</span></td>
+                                                    </tr>
+
+
+                                                    <tr>
+                                                        <td class="auto-style4" style="padding-left: 0px;  border-right: 1px solid; ">
+
+                                                            <table class="WebFormTable">
+
+
+
+
+                                                                <tr>
+                                                                    <td class="fsttd WebFormTable searchHeader">
+
+                                                                        <table class="WebFormTable">
+
+
+                                                                            <tr>
+                                                                                <td class="auto-style4" style="padding-left: 0px;"> <span class="myclass1">Date</span><span class="myclass2">(Tanggal)</span> </td>
+
+
+
+                                                                                <td class="auto-style5" style="width:100px;">: &nbsp&nbsp <span class="myclass3" id="spnsubmitedbydate"></span></td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td class="auto-style4"><span class="myclass1">Name</span><span class="myclass2">(Nama)</span> </td>
+                                                                                <td class="auto-style3" style="width:100px;">
+
+                                                                                    : &nbsp&nbsp
+                                                                                    <span class="myclass3" id="spnsubmitedbyname"></span>
+
+
+
+                                                                                </td>
+                                                                            </tr>
+
+
+
+                                                                            <tr>
+                                                                                <td class="auto-style1"> <span class="myclass1" style="font-size:12px;">Job Title</span><span class="myclass2">(Jabatan)</span> </td>
+                                                                                <td style="width: 40%;">
+
+                                                                                    : &nbsp&nbsp
+                                                                                    <span class="myclass3" style="font-size:12px;" id="spnsubmitedbyjobtitle"></span>
+
+
+
+                                                                                </td>
+                                                                            </tr>
+
+
+                                                                        </table>
+
+                                                                    </td>
+
+
+                                                                    <td class="thrdtd WebFormTable searchHeader"></td>
+
+                                                                </tr>
+
+
+
+
+                                                            </table>
+
+                                                        </td>
+
+
+
+                                                        <td class="auto-style4" style="padding-left: 0px;  border-right: 1px solid; ">
+                                                            <span id=""></span>
+
+                                                            <table class="WebFormTable">
+
+
+                                                                <tr>
+                                                                    <td colspan="2" class="auto-style4" style="padding-left: 0px;text-align:center; "> <span style="font-size:8px;" id="spnsubmitedsignname"></span> <span class="myclass2">(tanda tangan)</span> </td>
+
+
+
+                                                                    <!--<td class="auto-style5"> &nbsp&nbsp <span id="spnBranchOffice"></span></td>-->
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td class="auto-style2"> </td>
+                                                                    <td class="auto-style3">
+
+                                                                        &nbsp&nbsp
+                                                                        <span id="spnAWBNO"></span>
+
+
+
+                                                                    </td>
+                                                                </tr>
+
+
+
+                                                                <tr>
+                                                                    <td class="auto-style1"> <span style="font-size:12px;"></span> </td>
+                                                                    <td style="width: 40%;">
+
+                                                                        &nbsp&nbsp
+                                                                        <span style="font-size:12px;" id="spnflightnodate"></span>
+
+
+
+                                                                    </td>
+                                                                </tr>
+
+
+                                                            </table>
+
+                                                        </td>
+
+                                                        <td class="auto-style4" style="padding-left: 0px;  border-right: 1px solid; ">
+
+                                                            <table class="WebFormTable">
+
+
+                                                                <tr>
+                                                                    <td class="auto-style4" style="padding-left: 0px; "> <span class="myclass1">Date</span><span class="myclass2">(Tanggal)</span> </td>
+
+
+
+                                                                    <td class="auto-style5" style="width:100px;">: &nbsp&nbsp <span class="myclass3" id="spnreceivedate"></span></td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td class="auto-style4"><span class="myclass1">Name</span><span class="myclass2">(Nama)</span> </td>
+                                                                    <td class="auto-style3" style="width:100px;">
+
+                                                                        : &nbsp&nbsp
+                                                                        <span class="myclass3" id="spnreceivename"></span>
+
+
+
+                                                                    </td>
+                                                                </tr>
+
+
+
+                                                                <tr>
+                                                                    <td class="auto-style1"> <span class="myclass1" style="font-size:12px;">Job Title</span><span class="myclass2">(Jabatan)</span> </td>
+                                                                    <td style="width: 40%;">
+
+                                                                        : &nbsp&nbsp
+                                                                        <span class="myclass3" style="font-size:12px;" id="spnreceiveJobTitle"></span>
+
+
+
+                                                                    </td>
+                                                                </tr>
+
+
+                                                            </table>
+                                                        </td>
+
+
+                                                        <td class="auto-style4" style="padding-left: 0px;  border-right: 1px solid; ">
+
+                                                            <table class="WebFormTable">
+
+
+                                                                <tr>
+                                                                    <td colspan="2" class="auto-style4" style="padding-left: 0px;text-align:center; "><span style="font-size:8px;" id="spnrecievesignname"></span>  <span class="myclass2">(tanda tangan)</span> </td>
+
+
+
+                                                                    <!--<td class="auto-style5" style="width:100px;"> &nbsp&nbsp <span id="spnANGELOBOLENG"></span></td>-->
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td class="auto-style2"> </td>
+                                                                    <td class="auto-style3">
+
+                                                                        &nbsp&nbsp
+                                                                        <span id="spnAWBNO"></span>
+
+
+
+
+
+
+                                                                    </td>
+                                                                </tr>
+
+
+                                                                <tr>
+                                                                    <td class="auto-style1"> <span style="font-size:12px;"></span> </td>
+                                                                    <td style="width: 40%;">
+
+                                                                        &nbsp&nbsp
+                                                                        <span style="font-size:12px;" id="spnflightnodate"></span>
+
+
+
+                                                                    </td>
+                                                                </tr>
+
+
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+
+                                                </table>
+
+                                            </td>
+
+
+                                            <td class="thrdtd WebFormTable searchHeader"></td>
+
+                                        </tr>
+
+
+
+
+
+
+
+
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td valign="middle">
+                                    <table class="WebFormTable">
+
+
+
+
+                                        <tr>
+                                            <td class="fsttd WebFormTable searchHeader">
+
+                                                <table class="WebFormTable">
+
+
+                                                    <tr>
+
+
+                                                        <td class="auto-style4" style="text-align: left;font-size:10px" colspan="2">
+                                                            *Dokumen ini tidak memerlukan tanda tangan dan telah dinyatakan sah sebagai dokumen Pendukung Claim
+                                                        </td>
+                                                    </tr>
+
+
+
+                                                </table>
+
+                                            </td>
+
+
+                                            <td class="thrdtd WebFormTable searchHeader"></td>
+
+                                        </tr>
+
+
+                                        <tr style="text-align:center;background-color:white;padding-bottom:20px" id="trPrint"><td><div style="align-content:center;"><input type="button" id="btnCSRPrint" onclick="PrintElem('#divConnNotePrinttab')" value="Print"></div></td></tr>
+
+ </table>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </td>
+
+                </tr>
+
+
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

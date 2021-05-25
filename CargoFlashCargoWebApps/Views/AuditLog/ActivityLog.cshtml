@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "ActivityLog";
+    Layout = "~/Views/Shared/_LayoutGaruda.cshtml";
+}
+    
+
+@*<script src="~/JScript/AuditLog/ActivityLog.js"></script>*@
+<script src="~/JScript/AuditLog/ActivityLog.js"></script>
+<script src="~/Scripts/jquery.appendGrid-1.3.2.js"></script>
+@*<script src="~/PermissionScripts/jquery.appendGrid-1.3.1.js"></script>*@
+
+
+
+<div id="divbody" style="height:auto">
+
+    @*@using (Html.BeginForm("GetAirlineData", "AWBStockStatus", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {*@
+
+
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Activity Log</td></tr>
+
+                        <tr><td class='formSection' colspan='4'>Activity Log Information</td></tr>
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnUserId'>
+                                    User ID
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("UserIdSNo")
+                                @Html.TextBox("Text_UserIdSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnModule'>
+                                   Module
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("ModuleSNo")
+                                @Html.TextBox("Text_ModuleSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnPage'>
+                                    Page
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("PageSNo")
+                                @Html.TextBox("Text_PageSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnAction'>
+                                    Action
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("ActionSNo")
+                                @Html.TextBox("Text_ActionSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnFromDate'>
+                                    From Date
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.TextBox("Text_StartDate", null, new { data_valid = "required", controltype = "date", data_role = "autocomplete", data_valid_msg = "Start Date can not be blank" })
+                            </td>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnEndDate'>
+                                    To Date
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+
+                                @Html.TextBox("Text_EndDate", null, new { data_valid = "required", controltype = "date", data_role = "autocomplete", data_valid_msg = "End Date can not be blank" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnSearch'>
+
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type="button" value="Search" onclick="ExportActivitySearch()" />
+                            </td>
+                          
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnDownload'>
+
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type="button" value="Download"  onclick="ExportActivityToExcel()"/>
+                            </td>
+                        </tr>
+                       @* <div id="divCreditLimitReport"><span id="spnCreditLimitReport"><input id="hdnPageType" name="hdnPageType" type="hidden" value="NEW"><input id="hdnCreditLimitReportSNo" name="hdnCreditLimitReportSNo" type="hidden" value=""><table id="tblCreditLimitReport" style="margin-top: 20px; display: table;" class="appendGrid ui-widget"></table></span></div>*@
+                        <div id="divActivityLogReport"><span id="spnActivityLogReport"><input id="hdnPageType" name="hdnPageType" type="hidden" value="NEW"><input id="hdnActivityLogReportSNo" name="hdnActivityLogReportSNo" type="hidden" value=""><table id="tblActivityLogReport" style="margin-top: 20px; display: table;" class="appendGrid ui-widget"></table></span></div>
+
+
+
+                    </table>
+
+                                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="example">
+            <div id="grid" style="font-size:14px;"></div>
+
+         
+           
+            @*<script src="~/Scripts/jquery.appendGrid-1.3.1.js"></script>*@
+
+
+          
+
+
+        </div>
+
+
+    </section>
+    @*}*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".k-hierarchy-cell").click();
+        });
+
+        $('tr.k-master-row').click(function () {
+            $(this).nextUntil('tr.k-master-row').css('display', function (i, v) {
+                return this.style.display === 'table-row' ? 'none' : 'table-row';
+            });
+        });
+
+    </script>
+</div>

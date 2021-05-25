@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Return Shipment Report</title>
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/Shipment/ReturntoShipperPrint.js"></script>
+
+    <style>
+        #background {
+            position: absolute;
+            z-index: 0;
+            display: block;
+            min-height: 50%;
+            min-width: 50%;
+        }
+
+        #content {
+            position: absolute;
+            z-index: 1;
+        }
+
+        #bg-text {
+            left: 100px;
+            color: lightgrey;
+            font-size: 100px;
+            transform: rotate(300deg);
+            width: 70%;
+            margin-left: 40%;
+            margin-right: 0%;
+            margin-top: 21%;
+            -webkit-transform: rotate(300deg);
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <div style="width:90%; margin-top:20px;">
+
+            <!--<div id="background" style="display:none">
+                <p id="bg-text"></p>
+            </div>-->
+
+            <!--onclick="funPrintFCReportData('#ULDReportContent', '#bg-text');"-->
+            <span style="float:right; padding:5px;"></span><input type="button" class="btn btn-block btn-primary" name="name" value="Print" onclick="funPrintRSReportData('#ReturnShipmentContent', '#bg-text');" />
+            <div id="ReturnShipmentContent" style="width: 21cm; min-height: 27.7cm; padding: 1cm; margin: 1cm auto; border: 1px #D3D3D3 solid; border-radius: 5px; background: white; page-break-after: auto; margin-top: 20px; box-shadow: 0 0 5px rgba(0, 0, 0, 0); ">
+                <center>
+                    <span style="padding: 20px; margin: 50px; font-weight: bold; font-size: 22px; font-family: sans-serif; color: #333340;text-decoration:underline;">Return to Shipper</span>
+                </center>
+                <br /><br /><br />
+                <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+                    <tr>
+                        <td align="left" style="font-weight: bold;font-size:20px; padding: 5px; font-family: sans-serif; color: #333340;">Return to Shipper Information</td>
+            
+                        <td align="right"></td>
+                        <td align="right"></td>
+                        <td align="right"></td>
+                    </tr>
+                </table>
+                <hr />
+                <table border="0" cellpadding="0" cellspacing="0" style="width:100%;" id="tblReturnShipmentDetails">
+                    <tr>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;">AWB No : </td>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;"><span id="spnAWBNo" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+                        <td></td>
+                        <td></td>
+                       
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;" width="25%">Origin : </td>
+
+                        <td width="25%"><span id="spnOrigin" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;" width="25%">Destination :</td>
+                        <td width="25%"><span id="spnDestination" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;">Product :</td>
+                        <td><span id="spnProduct" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;">Forwarder(Agent) : </td>
+                        <td><span id="spnForwarder" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;">Pieces :</td>
+                        <td><span id="spnPieces" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;">Gr. Wt. : </td>
+                        <td><span id="spnGrWt" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;">SHC :</td>
+                        <td><span id="spnSHC" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;">Nature of Goods : </td>
+                        <td><span id="spnNatureofGoods" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+
+                    </tr>
+
+
+                    <tr>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;">CBM :</td>
+                        <td><span id="spnCBM" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;">Vol. Wt. : </td>
+                        <td><span id="spnVolWt" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+
+                    </tr>
+                </table>
+                <br />
+                <br />
+
+                <hr />
+
+                <table border="0" cellpadding="0" cellspacing="0" style="width:100%;" id="tblItineraryInformationetails">
+              
+               
+                    <tr>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;" colspan="4">
+                            <h2> Itinerary Information</h2>
+                        </td>
+
+
+
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;" >
+
+                            <div id="DivItineraryInformation">
+
+
+                            </div>
+
+                        </td>
+
+                        
+
+                    </tr>
+              
+                </table>
+                <br />
+                <br />
+
+                <hr />
+                <table border="0" cellpadding="0" cellspacing="0" style="width:100%;" id="tblClearanceInformationDetails">
+
+
+
+                    <tr>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;" colspan="4">
+                            <h2> Clearance Information</h2>
+                        </td>
+
+
+
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;" colspan="4">
+                            Custome Ref No
+                        </td>
+                        <td ><span id="spnCustomeRefNo" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;" colspan="4">NOC Ref No</td>
+                        <td ><span id="spnNOCRefNo" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+
+
+
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;" colspan="4">
+                            Reason
+                        </td>
+                        <td><span id="spnReason" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+                        <td style="padding: 4px; font-family: sans-serif; font-size: 12px;" colspan="4">Total Charges</td>
+                        <td><span id="spnTotalCharges" style="font-weight: bold; font-family: sans-serif; font-size: 12px; color: #5a5a5a;"></span></td>
+
+
+
+                    </tr>
+
+
+                </table>
+            
+
+ 
+            </div>
+        </div>
+    </center>
+</body>
+</html>

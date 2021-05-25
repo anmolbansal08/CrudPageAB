@@ -1,0 +1,151 @@
+﻿<style type="text/css">
+    .noselect {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: pointer;
+    }
+
+    .tbl {
+        background-color: transparent;
+        border-collapse: collapse;
+    }
+
+        .tbl td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+    body {
+        font-size: 11px;
+    }
+    .valid_errmsg_area {
+        background-color: Blue;
+       color:white;
+    }
+</style>
+
+<div id="divWindow"></div>
+<div id="divSearchWindow"></div>
+<div id="divSaveArea" style="display:none">
+    <table width="100%" validateonsubmit='true' style="margin-top:14px">
+        <tr>
+            <td >
+                <font color="red" style=" margin-left: 10px;">*</font>
+                Area
+            </td>
+            <td>
+                <input type="hidden" name="Area" id="Area" value="">
+                <input type="text" class="" name="Text_Area" id="Text_Area" data-valid="required" data-valid-msg="Enter Terminal" style="width:150px;" controltype="autocomplete" value="">
+                <div id="divAreaColor" style="width: 40px; height: 20px; float: right; margin: 4px;"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div style="float:right;">
+                    <input type="button" id="btnSaveArea" onclick="SaveAreaDialog()" rel="buttton" value="Save" />
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<div style="padding:5px;">
+    <table width="100%">
+        <tr>
+            <td class="formSection" colspan="4">Warehouse Planning</td>
+        </tr>
+        <tr>
+            <td class="formbuttonrow" colspan="4"><input type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=Warehouse&amp;Apps=WarehouseSetup&amp;FormAction=INDEXVIEW');" class="btn btn-inverse"></td>
+        </tr>
+        <tr>
+            <td width="79%" id="tdMatrix">
+                <table id="tblMatrix" style="cursor:pointer;border-collapse: collapse;-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;"></table>
+            </td>
+            <td width="21%" style="vertical-align:top;">
+                <table id="tblDetails" class="tbl">
+                    <tr>
+                      
+                        <td colspan="2" class="formlabel" style="text-align: left;">
+                            <input type="hidden" name="WarehouseSNo" id="WarehouseSNo" value="">
+                            <input type="hidden" name="AirportSNo" id="hdnAirportSNo" value="" />
+                            Warehouse Details
+                            <input type="button" style="font-size: 10px;" id="btn" value="Hide Grid" class="ui-button ui-widget ui-state-default ui-corner-all ui-state-hover" data-view="Hide" onclick="HideEmptyGridCells(this)" />
+                        </td>
+                        
+                    </tr>
+                    <tr>
+
+                        <td>
+                            <input type="button" style="font-size: 10px;" id="btn" value="Hide Labels" class="ui-button ui-widget ui-state-default ui-corner-all ui-state-hover" data-view="Hide" onclick="HideLabels(this)" />
+                        </td>
+                        <td>
+                            <input type="button" style="font-size: 10px;" id="btn" value="Show Labels" class="ui-button ui-widget ui-state-default ui-corner-all ui-state-hover" data-view="Hide" onclick="ShowLabels(this)" />
+                          
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Warehouse Name</td>
+                        <td>
+                            <!--<label id="lblWarehouseName"></label>-->
+                            <input type="hidden" name="WarehouseName" id="WarehouseName" value="" />
+                            
+                            <input type="text" class="" name="Text_WarehouseName" id="Text_WarehouseName" style="width:150px;" controltype="autocomplete" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Sub Location Type</td>
+                        <td>
+                            <!--<label id="lblWarehouseName"></label>-->
+                            <input type="hidden" name="WarehouseSubLocation" id="WarehouseSubLocation" value="" />
+
+                            <input type="text" class="" name="Text_WarehouseSubLocation" id="Text_WarehouseSubLocation" style="width:150px;" controltype="autocomplete" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Terminal</td>
+                        <td>
+                            <!--<label id="lblWarehouseName"></label>-->
+                            <input type="hidden" name="WHTerminal" id="WHTerminal" value="" />
+
+                            <input type="text" class="" name="Text_WHTerminal" id="Text_WHTerminal" style="width:150px;" controltype="autocomplete" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Warehouse City</td>
+                        <td><label id="lblCityName"></label></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Airport Name</td>
+                        <td><label id="lblAirportName"></label></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Warehouse Code</td>
+                        <td><label id="lblWarehouseCode"></label></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Total area</td>
+                        <td><label id="lblTotalArea"></label></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Cell area</td>
+                        <td><label id="lblCellArea"></label></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" id="btn" style="font-size: 10px;" value="Search" class="ui-button ui-widget ui-state-default ui-corner-all ui-state-hover" onclick="SearchLocation()" />
+                            &emsp;&emsp;&emsp;
+                            <input type="button" id="Lbtn" style="font-size: 10px;" value="Created Location" class="ui-button ui-widget ui-state-default ui-corner-all ui-state-hover" onclick="CreateLocation()" />
+                        </td>
+                        
+                            
+                        
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

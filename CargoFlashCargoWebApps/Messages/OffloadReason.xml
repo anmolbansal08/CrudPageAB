@@ -1,0 +1,37 @@
+﻿<Messages>
+  <!--#region Offload Reason XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		Offload Reason
+  Purpose:		This XML used for Message information.
+  Company:		CargoFlash Infotech Pvt Ltd.
+  Author:			Priti Yadav
+  Created On:		15 Apr 2020
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>OffloadReason</Name>
+    <Message>Offload Reason can not be blank</Message>
+  </DataFieldName>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Offload Reason already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Offload Reason Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Offload Reason Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Offload Reason Deleted Successfully.</value>
+  </ServerMessage>
+</Messages> 

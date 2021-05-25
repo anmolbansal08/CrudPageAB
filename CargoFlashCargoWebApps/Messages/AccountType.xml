@@ -1,0 +1,60 @@
+﻿<!--#region AccountType XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  AccountType
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Ajay
+  Created On:		24 feb 2014
+  
+  *****************************************************************************
+  */
+  #endregion-->
+
+<Messages>
+  <DataFieldName>
+    <Name>AccountTypeName</Name>
+    <Message>Account Type Name can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Account Type already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Prefix Code already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Account Type Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Account Type Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Account Type Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+	<!--Add New Message for GSA/CSA/Consignee/Forwarder/Shipper account type can not remove or edit[Task #15]
+	Add message by Vipin on 26th Dec 2016-->
+	<ServerMessage>
+		<Key>3001</Key>
+		<value>Above account type can not remove or edit.</value>
+	</ServerMessage>
+  <ServerMessage>
+    <Key>3002</Key>
+    <value>Above account type is already used, cannot be removed.</value>
+  </ServerMessage>
+	<!--Ends-->
+</Messages>
+
+
+

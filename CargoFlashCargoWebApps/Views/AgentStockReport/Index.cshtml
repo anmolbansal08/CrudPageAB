@@ -1,0 +1,146 @@
+﻿
+
+<style type="text/css">
+    .completeprocess {
+        color: #fff;
+        background-color: #51a351;
+        border-color: #51a351;
+        font-size: 10px;
+    }
+
+    .incompleteprocess {
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+        font-size: 10px;
+    }
+
+    .partialprocess {
+        color: #fff;
+        background-color: #FE9D5A;
+        border-color: #FE9D5A;
+        font-size: 10px;
+    }
+
+    .failureprocess {
+        color: #fff;
+        background-color: #FE0404;
+        border-color: #FE9D5A;
+        font-size: 10px;
+    }
+
+    .dependentprocess {
+        color: #fff;
+        background-color: brown;
+        border-color: goldenrod;
+        font-size: 10px;
+    }
+
+    .k-grid-filter {
+        display: none;
+    }
+
+    .k-link {
+        cursor: text;
+    }
+</style>
+
+<div id="divbody" style="height:auto">
+
+    @*@using (Html.BeginForm("GetAirlineData", "AWBStockStatus", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {*@
+
+
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Agent Stock Report</td></tr>
+                        <tr><td class='formActiontitle' colspan='4'><span id='__SpanHeader__'>Agent Stock Report</span><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+                        <tr><td class='formbuttonrow' colspan='4'><input type='submit' onclick="DownloadExcelReport()" name='operation' value='Download Report' class='btn btn-success' /></td></tr>
+                        <tr><td class='formSection' colspan='4'>Agent Stock Report Information</td></tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    Airline
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AirlineSNo")
+
+
+                                @Html.TextBox("Text_AirlineSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                            </td>
+                            <td class=' formlabel' title='City'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    City
+
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("CitySNo")
+                                @Html.TextBox("Text_CitySNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "City can not be blank" })
+                            </td>
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class='formlabel' title='Office'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    Office
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("OfficeSNo")
+
+
+                                @Html.TextBox("Text_OfficeSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Office can not be blank" })
+                            </td>
+                            <td class='formlabel' title='Agent'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    Agent
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AgentSNo")
+
+
+                                @Html.TextBox("Text_AgentSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Agent can not be blank" })
+                            </td>
+                        </tr>
+                     
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="example">
+            <div id="grid" style="font-size:14px;"></div>
+            <script src="~/JScript/Stock/AgentStockReport.js"></script>
+
+           
+        </div>
+
+
+    </section>
+    @*}*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".k-hierarchy-cell").click();
+        });
+
+        $('tr.k-master-row').click(function () {
+            $(this).nextUntil('tr.k-master-row').css('display', function (i, v) {
+                return this.style.display === 'table-row' ? 'none' : 'table-row';
+            });
+        });
+
+    </script>
+</div>
+
+
+

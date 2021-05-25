@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+        });
+    </script>
+</head>
+<body>
+    <div id="InfoDiv">
+        <table id="tblUCMDiscrepancyReport" style="border-collapse:collapse;width:100%" border="1" class="WebFormTable"></table>
+        <input type="button" id="Del" value="Delete" onclick="Delete()" style="float:left" />
+        <input type="button" id="Add" value="Add Row" onclick="AddRow()" style="float:left" />
+        <table id="tblAppendChargesService">
+
+            <tr><td colspan="6">ULD CHARGE</td></tr>
+            <tr><td style="text-align:center">Charge Names</td><td style="text-align:center">Amount</td><td style="text-align:center">Tax</td><td style="text-align:center">Total</td><td style="text-align:center">Remarks</td><td style="text-align:center">Mode</td></tr>
+            <tr>
+                <td align="center"><input type="text" id="ChargeName" style="width:100px" /></td>
+                <td align="center"><input type="text" id="Amount" style="width:100px" /></td>
+                <td align="center"><input type="text" id="TotalTaxAmount" style="width:100px" /></td>
+                <td align="center"><input type="text" id="TotalAmount" style="width:100px" /></td>
+                <td align="center"><input type="text" id="Remarks" style="width:100px" /></td>
+                <td align="center">CASH:<input type="radio" id="PaymentMode" name="PaymentMode" value="0" checked="checked" style="width:100px" />CREDIT:<input type="radio" id="PaymentMode" name="PaymentMode" style="width:100px" /></td>
+            </tr>
+        </table>
+
+    </div>
+    <table>
+        <tr>
+            <td>AWB No./Carrier Code</td>
+            <td><input type="text" id="txtawbno" style="width:120px" /> </td>
+            <td></td>
+            <td></td>
+
+        </tr>
+        <tr>
+            <td>Origin</td>
+            <td><input type="hidden" name="Origin" id="Origin"><input type="text" name="Text_Origin" id="Text_Origin" data-valid="required" data-valid-msg="Select Origin" controltype="autocomplete" style="width:150px;"></td>
+            <td>Destination</td>
+            <td><input type="hidden" name="destination" id="destination"><input type="text" name="Text_destination" id="Text_destination" data-valid="required" data-valid-msg="Select Destination" controltype="autocomplete" style="width:150px;"></td>
+        </tr>
+        <tr>
+            <td>
+                Carrier Code
+            </td>
+            <td><input type="hidden" name="carriercode" id="carriercode"><input type="text" name="Text_carriercode" id="Text_carriercode" data-valid="required" data-valid-msg="Select Carrier ccode" controltype="autocomplete" style="width:150px;"></td>
+            <td>
+                Flight No
+            </td>
+            <td><input type="hidden" name="AwbFlightNo" id="AwbFlightNo"><input type="text" name="Text_AwbFlightNo" id="Text_AwbFlightNo" data-valid="required" data-valid-msg="Select FlightNo" controltype="autocomplete" style="width:150px;"></td>
+        </tr>
+        <tr>
+            <td>
+                Flight Date
+            </td>
+            <td><input type="text" name="AwbFlightDate" id="AwbFlightDate" ></td>
+            <td>Pieces</td>
+            <td><input type="text" name="pieces" id="pieces" style="width:120px"></td>
+        </tr>
+        <tr>
+            <td>Ch.Wt.	</td>
+            <td><input type="text" name="chweight" id="chweight" style="width:120px"></td>
+            <td>Gr.Wt.	</td>
+            <td><input type="text" name="grwt" id="grwt" style="width:120px"></td>
+        </tr>
+        <tr>
+            <td>Commodity</td>
+            <td><input type="hidden" name="commodity" id="commodity"><input type="text" name="Text_commodity" id="Text_commodity" data-valid="required" data-valid-msg="Select commodity" controltype="autocomplete" style="width:150px;"></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+</body>
+</html>

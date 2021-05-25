@@ -1,0 +1,18 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Due Carrier Global Rate already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Due Carrier Global Rate Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Due Carrier Global Rate Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Due Carrier Global Rate Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

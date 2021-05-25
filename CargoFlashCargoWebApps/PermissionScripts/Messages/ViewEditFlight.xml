@@ -1,0 +1,20 @@
+﻿<Messages>
+<ServerMessage>
+  <Key>2001</Key>
+  <value>User Updated Successfully.</value>
+</ServerMessage>
+<ServerMessage>
+  <Key>2002</Key>
+  <value>User Deleted Successfully.</value>
+</ServerMessage>
+
+<ServerMessage>
+  <Key>2003</Key>
+  <value>Allotment Deleted Successfully.</value>
+</ServerMessage>
+
+<ServerMessage>
+  <Key>2004</Key>
+  <value>Allotment can not alloed to delete, it has been used.</value>
+</ServerMessage>
+</Messages>

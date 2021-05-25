@@ -1,0 +1,3 @@
+﻿
+<%@ ServiceHost Language="C#" Debug="true" Service="CargoFlash.Cargo.DataService.Export.UldTransfer.LucService" CodeBehind="LucService.cs" %>
+<%@ Assembly Name="CargoFlash.Cargo.DataService" %>

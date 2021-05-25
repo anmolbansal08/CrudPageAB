@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head id='head1'>
+    <title>PETTY CASH VOUCHER</title>
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../Scripts/JqueryPrint.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            
+            GetPettyCashVoucherPrint();
+            
+            var LogoURL = getParameterByName("LogoURL", "");
+           
+            var str = "";
+            str = LogoURL.split('/');
+             
+            $('#ImgLogo').attr('src', str[1] + "/" + str[2] + "/" + str[3] + "/" + str[4]);
+        });
+
+        function getParameterByName(name, url)
+        {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        function GetPettyCashVoucherPrint()
+        {
+           
+            
+
+           
+
+            var StartDate = getParameterByName("StartDate", "");
+            var EndDate = getParameterByName("EndDate", "");
+
+            $.ajax({
+                url: "../../Services/RFS/RFSService.svc/GetPettyCashVoucherPrint?StartDate=" + StartDate + "&EndDate=" + EndDate,
+                async: false,
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8", cache: false,
+                success: function (result) {
+                    var Data = jQuery.parseJSON(result);
+                    resData = Data.Table0;
+                    if (resData.length > 0) {
+                        for (var key in resData) {
+                            $("#tblPettyCashVoucher").append('<tr><td style="border-top: 1px solid black; border-right: 1px solid black; padding:2px;font-family:sans-serif;font-size: 10px;">' + resData[key].SrNo + '</td><td style="border-top: 1px solid black; border-right: 1px solid black; padding:2px;font-family:sans-serif;font-size: 10px;">' + resData[key].InvoiceNo + '</td><td style="border-top: 1px solid black; border-right: 1px solid black; padding:2px;font-family:sans-serif;font-size: 10px;">' + resData[key].FlightNo + '</td><td style="border-top: 1px solid black; border-right: 1px solid black; padding:2px;font-family:sans-serif;font-size: 10px;">' + resData[key].FlightDate + '</td><td style="border-top: 1px solid black; border-right: 1px solid black; padding:2px;font-family:sans-serif;font-size: 10px;">' + resData[key].ESSParty + '</td><td style="border-top: 1px solid black; border-right: 1px solid black; padding:2px;font-family:sans-serif;font-size: 10px;">' + resData[key].EssColAmount + '</td><td style="border-top: 1px solid black; border-right: 1px solid black; padding:2px;font-family:sans-serif;font-size: 10px;">' + resData[key].Sector + '</td><td style="border-top: 1px solid black; border-right: 1px solid black; padding:2px;font-family:sans-serif;font-size: 10px;">' + resData[key].IPT + '</td><td style="border-top: 1px solid black; border-right: 1px solid black; padding:2px;font-family:sans-serif;font-size: 10px;">' + resData[key].CSL + '</td><td style="border-top: 1px solid black; border-right: 1px solid black; padding:2px;font-family:sans-serif;font-size: 10px;">' + resData[key].OAC + '</td><td style="border-top: 1px solid black; border-right: 1px solid black; padding:2px;font-family:sans-serif;font-size: 10px;">' + resData[key].PrCashAmount + '</td><td style="border-top: 1px solid black; border-right: 1px solid black; padding:2px;font-family:sans-serif;font-size: 10px;">' + resData[key].Margin + '</td></tr>');
+                        }
+                    }
+                },
+                error: function (err)
+                {
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="printPettyCashVoucher" align="center" style="padding: 5px; font-family:Verdana;font-size:11px;">
+        <table style="width: 800px; border: 1px solid black; padding:5px;">
+            <tr>
+                <td colspan="8" align="center">
+                    <img id="ImgLogo" height="100" width="300" alt="" /><br /><br /><span id="spnReprint" style="font-family:sans-serif;color:red;font-size:13px;"></span><br /><br /><span id="spnReprint" style="font-family:sans-serif;color:red;font-size:14px;font-weight:bold;">PETTY CASH PAYMENT VOUCHER</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">&nbsp;</td>
+                <td align="right">Staff No</td>
+                <td style="border:1px solid #000;width:20%;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="6">&nbsp;</td>
+                <td align="right">Voucher No</td>
+                <td style="border:1px solid #000;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="width:150px;">Receipt enclosed</td>
+                <td style="border:1px solid #000;width:50px;" align="center">Yes:</td>
+                <td style="border: 1px solid #000; width: 50px;">&nbsp;</td>
+                <td style="border: 1px solid #000; width: 50px;" align="center">No:</td>
+                <td>&nbsp;</td>
+                <td align="right">Date</td>
+                <td style="border:1px solid #000;"> &nbsp;</td>
+            </tr>
+            <tr><td colspan="8"></td></tr>
+            <tr><td colspan="8"></td></tr>
+            <tr><td colspan="8"></td></tr>
+            <tr><td colspan="8" style="font-weight:bold;font-family:sans-serif;font-size:13px;">In settlement of following expenditure:</td></tr>
+            <tr><td colspan="8"></td></tr>
+            <tr>
+                <td colspan="8" valign="top">
+                    <table cellpadding="0" cellspacing="0" style="width: 100%; -webkit-print-color-adjust: exact; border: 1px solid black; " id="tblPettyCashVoucher">
+                        <tr>
+                            <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11.7px; font-weight: bold;" align="center"> Sr. NO</td>
+                            <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11.7px; font-weight: bold;" align="center">ESS No.</td>
+                            <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11.7px; font-weight: bold;" align="center">Flight No</td>
+                            <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11.7px; font-weight: bold;" align="center">Flight Date</td>
+                            <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11.7px; font-weight: bold;" align="center">ESS PARTY</td>
+                            <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11.7px; font-weight: bold;" align="center">ESS COLLECTED AMOUNT</td>
+                            <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11.7px; font-weight: bold;" align="center">SECTOR</td>
+                            <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11.7px; font-weight: bold;" align="center">IPT</td>
+                            <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11.7px; font-weight: bold;" align="center">CSL</td>
+                            <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11.7px; font-weight: bold;" align="center">Others (OAC)</td>
+                            <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11.7px; font-weight: bold;" align="center">PETTY CASH Amount - AED</td>
+                            <td style="border-right: 1px solid black; padding: 2px; font-family: sans-serif; font-size: 11.7px; font-weight: bold;" align="center">MARGIN</td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+            <tr><td colspan="8"></td></tr>
+            <tr><td colspan="8"></td></tr>
+            <tr>
+                <td colspan="3" valign="bottom">Prepared by</td>
+                <td colspan="2">Verified by</td>
+                <td colspan="3" align="right">Approved by</td>
+            </tr>
+            <tr><td colspan="8"></td></tr>
+            <tr><td colspan="8"></td></tr>
+            <tr><td colspan="8"></td></tr>
+    </div>
+</body>
+</html>

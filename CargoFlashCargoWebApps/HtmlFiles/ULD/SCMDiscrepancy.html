@@ -1,0 +1,231 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+    });
+</script>
+<style>
+    .short {
+        font-weight: bold;
+        color: #FF0000;
+        font-size: 11px;
+    }
+
+    .weak {
+        font-weight: bold;
+        color: orange;
+        font-size: 11px;
+    }
+
+    .good {
+        font-weight: bold;
+        color: #2D98F3;
+        font-size: 11px;
+    }
+
+    .strong {
+        font-weight: bold;
+        color: limegreen;
+        font-size: 11px;
+    }
+
+
+    .divshort {
+        color: #FF0000;
+        width: 25%;
+        border: solid;
+        background-color: #FF0000;
+    }
+
+    .divweak {
+        color: orange;
+        width: 50%;
+        border: solid;
+        background-color: orange;
+    }
+
+    .divgood {
+        color: #2D98F3;
+        width: 75%;
+        border: solid;
+        background-color: #2D98F3;
+    }
+
+    .divstrong {
+        color: limegreen;
+        width: 97%;
+        border: solid;
+        background-color: limegreen;
+    }
+
+    table.blueTable {
+        border: 1px solid #1C6EA4;
+        background-color: #fcfdfd;
+        width: 100%;
+        text-align: left;
+        border-collapse: collapse;
+    }
+
+        table.blueTable td, table.blueTable th {
+            border: 1px solid #AAAAAA;
+            padding: 3px 2px;
+        }
+
+        table.blueTable tbody td {
+            font-size: 10px;
+            text-align: center;
+        }
+
+
+
+        table.blueTable thead {
+            background: #daecf4;
+            border-bottom: 1px solid #444444;
+        }
+
+            table.blueTable thead th {
+                font-size: 10px;
+                font-weight: bold;
+                color: black;
+            }
+</style>
+
+
+<table class="WebFormTable" id="tbl" validateonsubmit='true'>
+
+    <tr><td class="formActiontitle" colspan="8"><span id="__SpanHeader__">SCM DISCREPANCY</span></td></tr>
+    <tr>
+        <td class="formbuttonrow" colspan="8">
+            <input id="btnback" type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=ULD&Apps=SCMDiscrepancy&FormAction=INDEXVIEW');" class="btn btn-inverse">&nbsp;&nbsp;
+            <input style="display:none" id="Print" type="button" value="Print" class="btn btn-success">&nbsp;&nbsp;
+            <input style="display:none" id="ExportToExcel" type="button" value="Export To Excel" class="btn btn-info">
+            <input type="button" id="execute" style="margin-right:5px;float:right" class="btn btn-success" value="Execute" onclick="Btnexecute()" />
+            <input type="button" id="Reload" style="margin-right:5px;float:right" class="btn btn-success" value="Reload" onclick="BtnReload()" />
+            <input type="button" id="Search" style="margin-right:5px;float:right" class="btn btn-success" value="Search" onclick="BtnSearch()" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="8">
+
+
+
+            <div id="InfoDiv">
+                <table id="tbldiscrepancyDetails" style="border-collapse:collapse;width:100%" border="1" class="blueTable">
+                    <thead>
+                        <tr style="height:10px"></tr>
+                        <tr>
+
+                            <td colspan="3" style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important;font-weight:bold ">Airport:</td>
+                            <td style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; font-weight: bold;"><span id="Airport"></span> </td>
+                            <td colspan="2" style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; font-weight: bold">Airline:</td>
+                            <td colspan="2" style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; font-weight: bold;"><label id="Airline">GARUDA AIRLINE</label> </td>
+
+                        </tr>
+                        <tr>
+
+                            <td colspan="3" style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; font-weight: bold">Date:</td>
+                            <td style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; font-weight: bold;"><span id="Date"></span></td>
+                            <td colspan="2" style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; font-weight: bold;">Remarks:</td>
+                            <td colspan="2" style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; font-weight: bold;"><span id="Remarks"></span></td>
+
+                        </tr>
+                        <tr>
+
+                            <td colspan="3" style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; font-weight: bold">SCM Remarks:</td>
+                            <td style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; font-weight: bold;">
+                                <input type="hidden" name="ScmRemarks" id="ScmRemarks">
+                                <input type="text" name="Text_ScmRemarks" id="Text_ScmRemarks" data-valid="required" data-valid-msg="Select Scm Remarks" controltype="autocomplete" style="widtd:150px;">
+                            </td>
+                          
+                            <td colspan="2" style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; font-weight: bold;">
+                                  ULD Number </td>
+                            <td colspan="2" style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; font-weight: bold;">
+                                <input type="hidden" name="ULDNumber" id="ULDNumber">
+                                <input type="text" name="Text_ULDNumber" id="Text_ULDNumber" data-valid="required" data-valid-msg="Select ULDNumber" controltype="autocomplete" style="width:150px;">
+
+                            </td>
+
+                          
+                        </tr>
+                        <tr style="height:10px"></tr>
+
+                    </thead>
+                 
+                    
+                </table>
+
+            </div>
+            <div id="ScmDv">
+
+            </div>
+            <div id="PopDiv" style="display:none">
+                <span id="ConfSms">
+
+                </span>
+
+            </div>
+
+            <div id="PopDivULD" style="display:none">
+                <table id="tblULDDetails" style="border-collapse:collapse;width:100%" border="1" class="blueTable">
+                    <thead>
+                        <tr>
+                            <th align="center">SNO</th>
+                            <th align="center">Flight No</th>
+                            <th align="center">Date</th>
+                            <th align="center">Flight Origin</th>
+                            <th align="center">Dest</th>
+                            <th align="center">ULD Station</th>
+                            <th align="center">ULD Stage</th>
+                            <th align="center">Date</th>
+                            <th align="center">Event Details</th>
+                            <th align="center">Event Date/Time	</th>
+                            <th align="center">User</th>
+                        </tr>
+                    </thead>
+                    <tbody id="UldDetails"></tbody>
+                </table>
+            </div>
+            <!--<div id="PrintDiv" style="display: none">
+                <table id="tblPrint" style="border-collapse:collapse;width:100%;" border="1" class="blueTable">
+                    <thead>
+                        <tr style="height:10px"></tr>
+                        <tr>
+                            <th colspan="2" style="background-color: white !important;"></th>
+                            <th style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important;font-weight:bold ">Airport:</th>
+                            <th style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; font-weight: bold;"><span id="Airport1"></span> </th>
+                            <th style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; font-weight: bold">Airline:</th>
+                            <th style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; font-weight: bold;"><label id="Airline1">GARUDA AIRLINE</label> </th>
+                            <th style="background-color: white !important;"></th>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="background-color: white !important;"></th>
+                            <th style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; font-weight: bold">Date:</th>
+                            <th style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; font-weight: bold;"><span id="Date1"></span></th>
+                            <th style="background-color: #f0f2f5 !important; color: black !important; font-size: 10px !important; text-align: right !important; font-weight: bold;">Remarks:</th>
+                            <th style="background-color: white !important; color: black !important; font-size: 10px !important; text-align: left !important; font-weight: bold;"><span id="Remarks1"></span></th>
+                            <th style="background-color: white !important;"></th>
+                        </tr>
+
+                        <tr style="height:10px"></tr>
+                        <tr>
+                            <th align="center">SNO</th>
+                            <th align="center">CURRENT INVENTORY</th>
+                            <th align="center">RECEIVED</th>
+                            <th align="center">PROCESS</th>
+                            <th align="center">DISCREPANCY</th>
+                            <th align="center">REMARKS</th>
+                            <th align="center">SCM STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblPrintDetails"></tbody>
+                </table>
+            </div>-->
+        </td>
+
+    </tr>
+
+
+
+
+</table>
+

@@ -1,0 +1,80 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>CarrierCode</Name>
+    <Message>Carrier Code can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>FlightNumber</Name>
+    <Message>Flight No can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>Text_Origin</Name>
+    <Message>Origin can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>Text_Destination</Name>
+    <Message>Destination can not be blank</Message>
+  </DataFieldName>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Schedule already exists within same date range.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1007</Key>
+    <value>Selected aircraft is not as per cargo classification.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1008</Key>
+    <value>Schedule is expired.</value>
+  </ServerMessage>
+  
+   <ServerMessage>
+    <Key>1009</Key>
+    <value>Schedule does not exists.</value>
+  </ServerMessage>
+   <ServerMessage>
+    <Key>1010</Key>
+    <value>Schedule is already opened. It can not be inactive.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1011</Key>
+    <value>Schedule is already opened. No more changes allowed.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1004</Key>
+    <value>Same day not allowed.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1005</Key>
+    <value>End Date can not be less than Start Date.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1006</Key>
+    <value>Schedule does not allowed to delete. Flight has been opened.</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Schedule Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Schedule Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Schedule Deleted Successfully.</value>
+  </ServerMessage>  
+  
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+
+</Messages>
+
+
+

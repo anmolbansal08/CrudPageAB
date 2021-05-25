@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/Import/Notificationofarrival.js"></script>
+    <title></title>
+
+
+    <style>
+        table#table1 {
+            width: 70%;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+    </style>
+    <style type="text/css">
+        @media print {
+            body, html {
+                margin-top: -115px;
+                margin-left: 0px;
+                padding-top: -115px;
+                margin-bottom: 2px;
+                transform: scale(1.2,.84);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div align="center">
+        <br />
+        <br />
+        <br />
+        <br />
+        <table id="table1">
+            <tr>
+                <td>
+                    <table style="width: 90%; border:1px solid black; padding: 0px;margin-left :5%;margin-right :5%">
+                        <tr style="margin-left: 5%">
+                            <td style="border: 0px;">
+                                <table cellpadding="0" cellspacing="0" style="text-align: center; width: 100%;">
+                                    <tr>
+                                        <td style="width: 40px; height: 70px; vertical-align: bottom; padding-left: 15px; border: 0px; text-align: center">
+                                            <br />
+                                            <img src="" style="height:70px;width:200px" id="ImgLogo"> <br /> <br />
+                                           <!-- <img src="GaurdaCMS Logo.jpg" style="align-content:" " alt=" " height=" 70" width="200"> <br /> <br />-->
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold;">CARGO</td>
+                                    </tr>
+                                    <tr style="text-align: center">
+                                        <td style="font-weight: bold; text-decoration: underline;">PEMBERITAHUAN KIRIMAN BARANG</td>
+                                    </tr>
+                                    <tr>
+                                        <td>NOTICE OF ARRIVAL</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            Kepada Yth :
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <br />
+                                            <br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Diberitahukan bahwa telah tiba barang kiriman di gudang kami dengan data sebagai berikut :
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i> Here with notified that your consignment has arrived at our warehouse,detail as follow.</i>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><br /></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <table style=" width:100%">
+                                                <tr>
+                                                    <td style="width:25%">No. Surat Muatan Udara </td>
+                                                    <td style="width:2%">:</td>
+                                                    <td style="width:67%;text-align:left;"><span id="spnAWBNo"></span></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2"><i> Air Waybill No  </i> </td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td>No. Penerbangan / Tanggal</td>
+                                                    <td>:</td>
+                                                    <td><span id="spnFlightNo"></span> <span id="spnDate"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2"><i> Flight No / Date  </i> </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Kolli / Berat</td>
+                                                    <td>:</td>
+                                                    <td><span id="spnPieces"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2"><i> Pieces / Weight  </i> </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Pengrim / Shipper</td>
+                                                    <td>:</td>
+                                                    <td><span id="spnShipper"></span></td>
+                                                </tr>
+
+                                            </table>
+                                            <table>
+                                                <tr>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <u>Syarat- syarat pengambilan:</u>
+                                                    </td>
+                                                </tr>
+
+
+                                                <tr>
+                                                    <td>
+                                                        <i>Conditions of contract</i>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        1.<u>Pengambilan AWB asli harus menunjukan bukti identitas diri KTP/Pasport </u>
+                                                        <br />
+                                                        <i>Pick up Airwaybill must be shown identity card</i>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        2.<u>Pengambilan AWB asli oleh orang lain harus dengan surat kuasa bermaterai Rp.6000</u><br />
+                                                        <i>Pick up Airwaybill by any others person must be shown Authorize Letters</i>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        3.<u>
+                                                            Pengambilan maksimal 30 hari sejak tanggal tiba dan selanjutnya barang akan diserahkan ke Pihak Bea Cukai
+                                                            <br />
+                                                            dan pihak kami tidak bertanggung jawab atas kerusakan dan kehilangan barang kiriman tersebut
+                                                        </u>
+                                                        <br />
+                                                        <i>Storage maximal 30 days since arrival date ,next shipment will delivery to Customs and we are not responsibility of lost or Damage of shipment</i>
+                                                    </td>
+                                                </tr>
+
+
+                                                <tr>
+                                                    <td>
+                                                        4.<u>Informmasi Tarif Jasa penitipan barang :</u><br />
+                                                        <i>Storage Charges Information</i>
+                                                    </td>
+                                                </tr>
+
+
+
+
+                                                <tr>
+                                                    <td>
+                                                        <div id="divcharge"> </div>
+                                                        <!--<table border="1" style="width:100%;border-collapse: collapse;">
+                                                            <tr>
+                                                                <th>Warehouse</th>
+                                                                <th>Components</th>
+                                                                <th>Remark</th>
+                                                                <th>Tarrif</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td rowspan="9" style="text-align:center">Import</td>
+                                                                <td></td>
+                                                                <td>First 3 day will charge as 1 day only per kgs</td>
+                                                                <td>IDR 1.250</td>
+
+                                                            </tr>
+                                                            <tr>
+
+                                                                <td>Storage Charges</td>
+                                                                <td>4th-10 Per kg/ day</td>
+                                                                <td>IDR 1.250</td>
+                                                            </tr>
+                                                            <tr>
+
+
+                                                                <td></td>
+                                                                <td>Thereafter,per kg/ day</td>
+                                                                <td>IDR 1.250</td>
+                                                            </tr>
+                                                            <tr>
+
+
+                                                                <td>Consolidation fee</td>
+                                                                <td>Per Document</td>
+                                                                <td>IDR 50.000</td>
+                                                            </tr>
+                                                            <tr>
+
+                                                                <td>Adm fee</td>
+                                                                <td>Per Document</td>
+                                                                <td>IDR 20.000</td>
+                                                            </tr>
+                                                            <tr>
+
+                                                                <td>Cargo Service Charges</td>
+                                                                <td>Per kg</td>
+                                                                <td>IDR 100</td>
+                                                            </tr>
+                                                            <tr>
+
+                                                                <td>Kade service Charges</td>
+                                                                <td>Per kg</td>
+                                                                <td>IDR 250</td>
+                                                            </tr>
+                                                            <tr>
+
+                                                                <td>Cool/Cold/Strong Room</td>
+                                                                <td>Per kg per day</td>
+                                                                <td>IDR 200% Surcharge</td>
+
+                                                            </tr>
+                                                            <tr>
+
+                                                                <td>AC Room</td>
+                                                                <td>Per kg per day</td>
+                                                                <td>IDR 100% Surcharge</td>
+                                                            </tr>
+
+                                                        </table>-->
+                                                    </td>
+                                                </tr>
+
+                                                <br />
+                                                <tr>
+                                                    <td>
+                                                        <br />
+                                                        NOTE : LAMPIRAN(SCAN AWB)
+                                                        <br />
+                                                        <br />
+                                                        Demikian disampaikan untuk dapat diketahui atas NOA yang dimasaksud
+                                                        <br />
+                                                        <br />
+
+                                                        12. November 2016
+                                                        <br />
+                                                        PT.GARUDA INDONESIA
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        Terima kasih dan Salam
+                                                        <br />
+                                                        <br />
+
+                                                        Asep ahmadi
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+

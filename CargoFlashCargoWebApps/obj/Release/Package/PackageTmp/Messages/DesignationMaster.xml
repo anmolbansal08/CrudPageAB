@@ -1,0 +1,43 @@
+﻿<Messages>
+  <!--#region IrregularityPacking XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  IrregularityPacking
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Santosh Gupta
+  Created On:		9 oct 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>Name</Name>
+    <Message>Event Name can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Designation Master Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Designation Master Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Designation Master Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

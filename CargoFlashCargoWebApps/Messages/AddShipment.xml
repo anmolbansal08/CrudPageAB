@@ -1,0 +1,37 @@
+﻿<Messages>
+  <!--#region Flight Arrival Add Shipment XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  Flight Arrival Add Shipment
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Deepak Sharma
+  Created On:		19 March 2016
+  *****************************************************************************
+  */
+  #endregion-->
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Shipment Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Shipment Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Shipment Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Flight Detail Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2004</Key>
+    <value>Flight Detail Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

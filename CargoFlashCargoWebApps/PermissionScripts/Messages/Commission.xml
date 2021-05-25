@@ -1,0 +1,23 @@
+﻿<Messages>
+	<ServerMessage>
+		<Key>1001</Key>
+		<value>Commission already exists with same input parameters</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>1002</Key>
+		<value>Commission already exists for given dates.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2000</Key>
+		<value>Commission Added Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2001</Key>
+		<value>Commission Updated Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2002</Key>
+		<value>Commission Deleted Successfully.</value>
+	</ServerMessage>
+</Messages>
+

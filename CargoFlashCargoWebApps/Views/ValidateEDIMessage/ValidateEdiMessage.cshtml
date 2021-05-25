@@ -1,0 +1,93 @@
+﻿@{
+   // ViewBag.Title = "ValidateEdiMessage";
+    Layout = "~/Views/Shared/_LayoutGaruda.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div>
+        <table class='WebFormTable' id='tbl'>
+            <tr><td class='formSection' colspan='10'>Validate Message</td></tr>
+            <tr><td><br /><br /></td></tr>
+            <tr class='formSection'>
+                <td align="left" style="padding-left:30px;">
+                    @Html.TextArea("txtmessage", null, new { style = "width: 500px; height:300px;" })
+                </td>
+                <td>@Html.TextArea("txtmessages", null, new { style= "width: 500px; height:300px; display:none;" })</td>
+            </tr>
+            <tr class='formSection'>
+                <td colspan='10' style="padding-left:24px;">
+                    <input type="button" name='btnValidate' value='Validate Message' class='btn btn-success' id="btnValidate" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br /><br /><br />
+    <div id="mainDiv" style="display:none;">
+        <table  cellspacing="0" cellpadding="4" rules="all" id="tblInfo" style="background-color:White;width:100%;border-color:#CC9966;border-width:1px;border-style:None;border-collapse:collapse;">
+            <thead>
+                <tr style="color:#FFFFCC;background-color:#990000;font-weight:bold;">
+                    <th scope="col">ID</th>
+                    <th scope="col">Area</th>
+                    <th scope="col">ReturnCode</th>
+                    <th scope="col">ReasonCode</th>
+                    <th scope="col">Language</th>
+                    <th scope="col">TechinicalDescription</th>
+                    <th scope="col">UserDescription</th>
+                    <th scope="col">CorrectiveAction</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Severity</th>
+                    <th scope="col">ModuleName</th>
+                    <th scope="col">ProcName</th>
+            </thead>
+            <tbody id="tblInfoBody">
+            </tbody>
+        </table>
+        <br /><br /><br />
+        <table cellspacing="0" cellpadding="4" rules="cols" id="tblMain" style="color:Black;background-color:White;border-color:#DEDFDE;border-width:1px;border-style:None;height:16px;width:507px;border-collapse:collapse;">
+            <thead>
+                <tr style="color:White;background-color:#6B696B;font-weight:bold;">
+                    <th scope="col">CarImpRefNo</th>
+                    <th scope="col">MessageDefinition</th>
+                    <th scope="col">DataFoundText</th>
+                    <th scope="col">sucess</th>
+                    <th scope="col">Regexstring</th>
+                    <th scope="col">SEQNumber</th>
+                    <th scope="col">CarImpAlphaNo</th>
+                    <th scope="col">LineNumberInMessage</th>
+                    <th scope="col">DataGroupId</th>
+                    <th scope="col">DataElementId</th>
+                    <th scope="col">LineIdentifier</th>
+                    <th scope="col">InternalGroupId</th>
+                    <th scope="col">IsRepeatable</th>
+                    <th scope="col">RepeatCount</th>
+                    <th scope="col">MinRepeatCount</th>
+                    <th scope="col">NextLineMessagREGEX</th>
+                    <th scope="col">RepeatCarIMPId</th>
+                    <th scope="col">SeqOfGroupCountWithinElement</th>
+                    <th scope="col">DataFound</th>
+                    <th scope="col">IsGroupMandatory</th>
+                    <th scope="col">LinesIncluded</th>
+                    <th scope="col">IncludedLinesMinCount</th>
+                    <th scope="col">IncludedLinesMaxCount</th>
+                    <th scope="col">IncludedLineRepeatCondition</th>
+                    <th scope="col">IncludedLineMessagREGEX</th>
+                    <th scope="col">IsThisImmediateChild</th>
+                </tr>
+            </thead>
+            <tbody id="tblMainBody">
+            </tbody>
+        </table>
+    </div>
+    <script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>
+    <script src="~/JScript/EDI/ValidateEDIMessage.js"></script>
+</body>
+</html>
+
+
+
+

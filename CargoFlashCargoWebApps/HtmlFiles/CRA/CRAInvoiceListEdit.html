@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript">
+        var userContext = "";
+        $(document).ready(function () {
+
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+        });
+    </script>
+
+    <title></title>
+</head>
+<body>
+    <div id="MainDiv">
+        <div id="ApplicationTabs" data-role="tabstrip" class="k-widget k-header k-tabstrip">
+            <ul class="k-tabstrip-items k-reset">
+                <li id="liAirwayBill" class="k-item k-state-default k-first k-tab-on-top k-state-active">
+                    <a class="k-link">Airwaybill Invoice Summary</a>
+                </li>
+                <li id="liCharges" onclick="ChargesTab();" class="k-item k-state-default">
+                    <a class="k-link">Miscellaneous Charges</a>
+                </li>
+            </ul>
+            <div id="ApplicationTabs-1" class="k-content k-state-active" style="display: block;">
+                <table class="WebFormTable" id="tbl">
+                    <tr><td  class="formSection" colspan="4">CRA-INVOICE LIST EDIT : <span id="RecordInfo"></span>  </td></tr>
+                    <tr>
+                        <td class="formbuttonrow" colspan="4">
+                            <input id="btnUpdate" type="button" value="Update" class="btn btn-success">
+                            <input type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=CRA&amp;Apps=CRAInvoiceList&amp;FormAction=INDEXVIEW');" class="btn btn-inverse">
+                            
+                       </td>
+                    <tr>
+                
+                    <!-- <tr><td class="formActiontitle" colspan="4"><span id="__SpanHeader__">CRA-INVOICE LIST : READ</span><div class="MandatoryTextCss"><font color="red">*</font> Mandatory Fields</div></td></tr>-->
+                    <tr>
+                        <td class="formSection" colspan="4">Basics</td>
+                    </tr>
+                    <tr><td class=" formlabel">Batch ID :</td><td class="formInputcolumn"> <span id="BatchID"> </span></td> <td class=" formlabel">Party ID :</td><td class="formInputcolumn"> <span id="PartyID"> </span></td></tr>
+
+                    <tr><td class=" formlabel">Party type :	</td><td class="formInputcolumn"> <span id="Partytype"> </span></td><td class=" formlabel">Status  :</td><td class="formInputcolumn"> <span id="Status"> </span></td></tr>
+                    <tr><td class=" formlabel">No Of CCAs :</td><td class="formInputcolumn"> <span id="CCAs"> </span></td><td class=" formlabel">No Of DCM :</td><td class="formInputcolumn"> <span id="DCMs"> </span></td></tr>
+                    <tr><td class=" formlabel">N0 Of AWBs :	</td><td class=" formInputcolumn"><span id="AWBs"></span></td><td class=" formlabel"></td><td class="formlabel"></td></tr>
+                    <tr> <td class="formSection" colspan="4">Invoice Detail</td></tr>
+                    <tr><td class="formlabel">Invoice No : </td><td class=" formInputcolumn">
+                   <input type="text" class="k-input" name="InvoiceNo" id="InvoiceNo" style="width: 100px; text-transform: uppercase;" controltype="alphanumericupper" tabindex="43" maxlength="14" value="" data-role="alphabettextbox" autocomplete="off">
+                      </td>
+                      <td class="formlabel">Invoice Currency : </td><td class=" formInputcolumn"><span id="InvoiceCurrency"></span><td></td></tr>
+                    <tr><td class="formlabel">From Date : </td><td class=" formInputcolumn"><span id="FromDate"></span></td><td class="formlabel">Until Date : </td><td class=" formInputcolumn"><span id="UntilDate"></span><td></td></tr>
+                    <tr><td class="formlabel">Party Name : </td><td class=" formInputcolumn"><span id="PartyName"></span></td><td class="formlabel">Party Address1 : </td><td class=" formInputcolumn"><span id="PartyAddress1"></span><td></td></tr>
+                    <tr><td class="formlabel">Party Address2 : </td><td class=" formInputcolumn"><span id="PartyAddress2"></span></td><td class="formlabel">Party VAT Reg. : </td><td class=" formInputcolumn"><span id="PartyVATReg"></span><td></td></tr>
+                    <tr><td class="formlabel">Party IATA Code :	</td><td class=" formInputcolumn"><span id="PartyIATACode"></span></td><td class="formlabel">Invoice Type :	</td><td class=" formInputcolumn"><span id="InvoiceType"></span><td></td></tr>
+                    <tr><td class="formlabel">Gen. Date : </td><td class=" formInputcolumn"><span id="GenDate"></span></td><td class="formlabel">Gen. By userid :</td><td class=" formInputcolumn"><span id="GenByuserid"></span><td></td></tr>
+                    <tr><td class="formlabel">Verified date : </td><td class=" formInputcolumn"><span id="Verifieddate"></span></td><td class="formlabel">Verified Userid : </td><td class=" formInputcolumn"><span id="VerifiedUserid"></span><td></td></tr>
+                    <tr><td class="formlabel">Printed Date : </td><td class=" formInputcolumn"><span id="PrintedDate"></span></td><td class="formlabel">Printed Userid : </td><td class=" formInputcolumn"><span id="PrintedUserid"></span><td></td></tr>
+                    <!--   <tr><td class="formlabel">Printed Date : </td><td class=" formInputcolumn"><span id="PrintedDate"></span></td><td class="formlabel">Printed Userid : </td><td class=" formInputcolumn"><span id="PrintedUserid"></span><td></td></tr>-->
+                    <tr><td class=" formlabel">Is invoice locked : </td><td class=" formInputcolumn"><span id="isinvoicelocked"></span></td><td class=" formlabel"></td><td class="formlabel"></td></tr>
+                    <tr> <td class="formSection" colspan="4">Total Charges</td></tr>
+                    <tr><td class="formlabel">MAIN Items Billed :</td><td class=" formInputcolumn"><span id="MAIN Items Billed"></span></td><td class="formlabel">Tot. Corr. Billed : </td><td class=" formInputcolumn"><span id="TotCorrBilled"></span><td></td></tr>
+                    <tr><td class="formlabel">DR CR Billed : </td><td class=" formInputcolumn"><span id="DRCRBilled"></span></td><td class="formlabel">PP Wgt Chrg : </td><td class=" formInputcolumn"><span id="PPWgtChrg"></span><td></td></tr>
+                    <tr><td class="formlabel">PP Val. Chrg :	</td><td class=" formInputcolumn"><span id="PPValChrg"></span></td><td class="formlabel">PP Wgt Val. Chrg :	</td><td class=" formInputcolumn"><span id="PPWgtValChrg"></span><td></td></tr>
+                    <tr><td class="formlabel">CC Wgt Chrg : </td><td class=" formInputcolumn"><span id="CCWgtChrg"></span></td><td class="formlabel">CC Val. Chrg :	</td><td class=" formInputcolumn"><span id="CCValChrg"></span><td></td></tr>
+                    <tr><td class="formlabel">CC Wgt Val. Chrg :</td><td class=" formInputcolumn"><span id="CCWgtValChrg"></span></td><td class="formlabel">Comm. Sale :</td><td class=" formInputcolumn"><span id="CommSale"></span><td></td></tr>
+                    <tr><td class="formlabel">Comm. :</td><td class=" formInputcolumn"><span id="Comm"></span></td><td class="formlabel">Amnt :	</td><td class=" formInputcolumn"><span id="Amnt"></span><td></td></tr>
+                    <tr><td class="formlabel">Inc. :	</td><td class=" formInputcolumn"><span id="Inc"></span></td><td class="formlabel">PP OC Due Carrier :	</td><td class=" formInputcolumn"><span id="PPOCDueCarrier"></span><td></td></tr>
+                    <tr><td class="formlabel">PP OC Due Agent :	</td><td class=" formInputcolumn"><span id="PPOCDueAgent"></span></td><td class="formlabel">CC OC Due Carrier :	</td><td class=" formInputcolumn"><span id="CCOCDueCarrier"></span><td></td></tr>
+                    <tr><td class="formlabel">CC OC Due Agent :	</td><td class=" formInputcolumn"><span id="CCOCDueAgent"></span></td><td class="formlabel">Tot. Records :	</td><td class=" formInputcolumn"><span id="TotRecords"></span><td></td></tr>
+                    <tr><td class=" formlabel">Hash Tot. :	</td><td class=" formInputcolumn"><span id="HashTot"></span></td><td class=" formlabel">Tot. Misc Chrgs :	</td><td class="formInputcolumn"><span id="TotMiscChrgs"></span></td></tr>
+                 <!--   <tr> <td class="formSection"> Invoice AWB Details </td></tr>-->
+                </table>
+               
+            </div>
+
+            <!--contents of other Tab-->
+            <div class="k-content" id="ApplicationTabs-2" style="overflow: visible; opacity: 1; display: none; height: auto;">
+                <div id="ApplicationTabs-2">
+                    <div id="divChargesTab"></div>
+                    <table id="tblChargesInformation" class="appendGrid ui-widget" width="100%">
+                        <tr>
+                            <td>put some information here
+                            <td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<errorlog>
+  <error>
+    <datetime></datetime>
+    <filename></filename>
+    <classname></classname>
+    <methodname></methodname>
+    <errormethod></errormethod>
+    <message></message>
+    <errordetails>  </errordetails>
+    <IP> </IP>
+    <url></url>
+  </error>
+</errorlog>

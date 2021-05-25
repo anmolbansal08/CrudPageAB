@@ -1,0 +1,170 @@
+﻿
+<style>
+    .change-background1 {
+        background-color: #ff4d94;
+    }
+    .change-background2 {
+        background-color: #ff531a;
+    }
+    .change-background3 {
+        background-color:silver;
+    }
+    .change-background4 {
+        background-color: #70db70;
+    }
+    .change-background5 {
+        background-color: #66ccff;
+    }
+</style>
+
+<div id="divbody" style="height:auto">
+
+    @*@using (Html.BeginForm("GetAirlineData", "AWBStockStatus", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {*@
+
+
+
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Flight Status Report</td></tr>
+
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='ToDate'>
+                                <font color='red'>*</font><span id='spnToDate'>
+                                    Search By:
+                                </span>
+                            </td>  <td class='formInputcolumn'>
+    Inbound:  <input checked="checked"
+                     id="rdinbound"
+                     name="searchby"
+                     type="radio"
+                     value="1" />
+
+    Outbound: <input id="rdoutbound"
+                     name="searchby"
+                     type="radio"
+                     value="2" />
+</td>
+                            </tr>
+
+<tr class="DateWiseRow">
+
+
+
+
+
+                            <td class=' formlabel' title='From Date'>
+                                <font color='red'>*</font><span id='spnFromDate'>
+                                    From Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />&nbsp; <span class="k-widget k-timepicker k-header" style=""><span class="k-picker-wrap k-state-default"><input type="text" class="timePicker k-input" id="txtFromTime" data-role="timepicker" style="width: 100px;" data-valid='required' data-valid-msg='Select From Time'><span unselectable="on" class="k-select"><span unselectable="on" class="k-icon k-i-clock">select</span></span></span></span>
+                            </td>
+
+
+                            <td class=' formlabel' title='ToDate'>
+                                <font color='red'>*</font><span id='spnToDate'>
+                                    To Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select To Date' controltype='datetype' value='' placeholder='To Date' />&nbsp; <span class="k-widget k-timepicker k-header" style=""><span class="k-picker-wrap k-state-default"><input type="text" class="timePicker k-input" id="txtToTime" data-role="timepicker" style="width: 100px;" data-valid='required' data-valid-msg='Select To Time'><span unselectable="on" class="k-select"><span unselectable="on" class="k-icon k-i-clock">select</span></span></span></span>
+                            </td>
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    Airline
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AirlineSNo")
+                                @Html.TextBox("Text_AirlineSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                            </td>
+                            <td class=' formlabel' title='Flight No'>
+                                <font color='red'></font><span id='spnFlightNo'>
+                                    FlightNo :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+
+                                @Html.TextBox("Text_FlightNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                            </tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Origin Airport'>
+                                <font color='red'></font><span id='spnOrigin'>
+                                    Origin :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("OriginSNo")
+                                @Html.TextBox("Text_OriginSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+
+                            <td class=' formlabel' title='Destination Airport'>
+                                <font color='red'></font><span id='spnDestination'>
+                                    Destination :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("DestinationSNo")
+                                @Html.TextBox("Text_DestinationSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+
+
+                          
+
+                            </tr>
+
+                            <tr>
+                <td class=' formlabel' title='Airlin' colspan="4">
+                    <font color='red'></font><span id='spnAirlineCode'>
+                        <center>    <input type='submit' name='operation' onclick="SearchFlightStatusReport()" value='Search' id="btnSearch" class='btn btn-success btnSearch' /></center>
+
+                                                 @*<div id="exportflight" style="float:left;"><img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel_DailyStockTransactionReport()" /></div>*@
+                </td>
+
+            </tr>
+</table>
+                    <br />
+                    <br />
+
+
+
+                    <div id="BindBlakListTable" style="width:100%">
+
+                    </div>
+                    <table id='tbl'></table>
+                    <div id="FlightDetails">
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        @*<br />
+            <br />
+            <br />
+            <br />*@
+        <div id="example">
+            <div id="grid" style="font-size:11px;"></div>
+            <script src="~/JScript/Report/FlightStatusReport.js"></script>
+          
+        </div>
+
+
+    </section>
+
+</div>
+
+
+

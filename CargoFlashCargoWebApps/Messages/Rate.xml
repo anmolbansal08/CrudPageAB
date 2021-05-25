@@ -1,0 +1,28 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>Rate</Name>
+    <Message>Rate can not be blank</Message>
+  </DataFieldName>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Rate Name already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Rate Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Rate Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Rate Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+
+
+
+
+
+

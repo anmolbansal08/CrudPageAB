@@ -1,0 +1,32 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>Name</Name>
+    <Message>Name can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Age</Name>
+    <Message>Age can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>City</Name>
+    <Message>City can not be blank</Message>
+  </DataFieldName>
+
+ 
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>EDIMaster Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>EDIMaster Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>EDIMaster Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

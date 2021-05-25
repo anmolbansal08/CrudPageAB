@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+</head>
+<body>
+    <table class="WebFormTable" id="tbl1" validateonsubmit="true">
+        <tbody>
+
+            <tr>
+                <td class="formSection" colspan="4">BTL Information</td>
+            </tr>
+            <tr>
+                <td class="formlabel" title="Enter BTL Name">
+                    <font color="red">*</font><span id="spnBTLName"> BTL Name</span>
+                </td>
+                <td class="formInputcolumn">
+                    <input type="text" class="k-input" name="BTLName" id="BTLName" style="width: 150px; text-transform: uppercase;" controltype="uppercase" data-valid="required" data-valid-msg="BTL Name cannot be blank" tabindex="2" maxlength="50" value="" data-role="alphabettextbox" autocomplete="off">
+                </td>
+
+                <td class="formlabel" title="Select Airline">
+                    <font color="red">*</font>
+                    <span id="spnAirlineSNo"> Airline</span>
+                </td>
+                <td class="formInputcolumn">
+                    <input type="hidden" name="AirlineSNo" id="AirlineSNo" value="">
+                    <span class="k-widget k-combobox k-header">
+                        <span class="k-dropdown-wrap k-state-default" unselectable="on" style="width: 150px;">
+                            <input type="text" class="k-input" name="Text_AirlineSNo" id="Text_AirlineSNo" style="width: 100%; text-transform: uppercase;" tabindex="3" data-valid='required' data-valid-msg='Airline cannot be blank' controltype="autocomplete" maxlength="15" value="" data-role="autocomplete" autocomplete="off">
+                            <span class="k-select" unselectable="on">
+                                <span class="k-icon k-i-arrow-s" unselectable="on" style="cursor:pointer;">select</span>
+                            </span>
+                        </span>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel" title="Select Valid From"><font color="red">*</font><span id="spnValidFrom"> Valid From</span></td>
+                <td class="formInputcolumn">
+                    <input type='text' name='ValidFrom' id='ValidFrom' style='width: 133px;' data-valid='required'
+                           data-role="datepicker" data-valid-msg='Select Valid From Date' controltype='datetype' value='' />
+                </td>
+                <td class="formlabel" title="Select Valid To"><font color="red">*</font><span id="spnValidTo"> Valid To</span></td>
+                <td class="formInputcolumn">
+                    <input type='text' name='ValidTo' id='ValidTo' style='width: 133px;' data-valid='required'
+                           data-role="datepicker" data-valid-msg='Select Valid To Date' controltype='datetype' value='' />
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel" title="Select Type"><font color="red">*</font><span id="spnType"> Type</span></td>
+                <td class="formInputcolumn">
+                    <input type="hidden" name="Type" id="Type" value="">
+                    <span class="k-widget k-combobox k-header">
+                        <span class="k-dropdown-wrap k-state-default" unselectable="on" style="width: 150px;">
+                            <input type="text" class="k-input" name="Text_Type" id="Text_Type" style="width: 100%; text-transform: uppercase;" tabindex="3" data-valid='required' data-valid-msg='Type cannot be blank' controltype="autocomplete" maxlength="15" value="" data-role="autocomplete" autocomplete="off"><span class="k-select" unselectable="on"><span class="k-icon k-i-arrow-s" unselectable="on" style="cursor:pointer;">select</span></span>
+                        </span>
+                    </span>
+                </td>
+                <td class="formlabel" title="Days Of Week">Days Of Week</td>
+                <td class="formInputcolumn">
+                    <input type="hidden" name="DaysOfWeek" id="DaysOfWeek" value="" data-valid-msg='Select Days'>
+                    <span style="max-width: 250px; word-wrap: break-word; display: none; max-height: 50px; overflow: auto;" class="" id="DaysOfWeek"></span>
+                    <input type="checkbox" tabindex="17" class="" name="Day0" id="Day0" onclick="handleClick();" validatename="Days[]" value="8">ALL
+                    <input type="checkbox" tabindex="17" class="" name="Day1" id="Day1" onclick="changeClick();" validatename="Days[]" value="1">Sun
+                    <input type="checkbox" tabindex="17" class="" name="Day2" id="Day2" onclick="changeClick();" validatename="Days[]" value="2">Mon
+                    <input type="checkbox" tabindex="17" class="" name="Day3" id="Day3" onclick="changeClick();" validatename="Days[]" value="3">Tue
+                    <input type="checkbox" tabindex="17" class="" name="Day4" id="Day4" onclick="changeClick();" validatename="Days[]" value="4">Wed
+                    <input type="checkbox" tabindex="17" class="" name="Day5" id="Day5" onclick="changeClick();" validatename="Days[]" value="5">Thu
+                    <input type="checkbox" tabindex="17" class="" name="Day6" id="Day6" onclick="changeClick();" validatename="Days[]" value="6">Fri
+                    <input type="checkbox" tabindex="17" class="" name="Day7" id="Day7" onclick="changeClick();" validatename="Days[]" value="7">Sat
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="formlabel" title="Select Type"><font color="red">*</font><span id="spnBTLLevel"> BTL Level</span></td>
+                <td class="formInputcolumn">
+                    <input type="hidden" name="BTLLevel" id="BTLLevel" value="">
+                    <span class="k-widget k-combobox k-header">
+                        <span class="k-dropdown-wrap k-state-default" unselectable="on" style="width: 150px;">
+                            <input type="text" class="k-input" name="Text_BTLLevel" id="Text_BTLLevel" style="width: 100%; text-transform: uppercase;" tabindex="3" data-valid='required' data-valid-msg='BTL Level cannot be blank' controltype="autocomplete" maxlength="15" value="" data-role="autocomplete" autocomplete="off"><span class="k-select" unselectable="on"><span class="k-icon k-i-arrow-s" unselectable="on" style="cursor:pointer; ">select</span></span>
+                        </span>
+                    </span>
+                </td>
+                <td class="formlabel" title="Select Type"><font color="red">*</font><span id="spnBTLStatus"> BTL Status</span></td>
+                <td class="formInputcolumn">
+                    <input type="hidden" name="BTLStatus" id="BTLStatus" value="">
+                    <span class="k-widget k-combobox k-header">
+                        <span class="k-dropdown-wrap k-state-default" unselectable="on" style="width: 150px;">
+                            <input type="text" class="k-input" name="Text_BTLStatus" id="Text_BTLStatus" style="width: 100%; text-transform: uppercase;" tabindex="3" controltype="autocomplete" data-valid='required' data-valid-msg='BTL Status cannot be blank' maxlength="15" value="" data-role="autocomplete" autocomplete="off"><span class="k-select" unselectable="on"><span class="k-icon k-i-arrow-s" unselectable="on" style="cursor:pointer;">select</span></span>
+                        </span>
+                    </span>
+                </td>
+
+            </tr>
+            <tr>
+                <td class="formlabel" title="Enter BTL Remarks"><font color="red">*</font><span id="spnBTLRemarks"> BTL Remarks</span></td>
+                <td class="formInputcolumn"><textarea class="k-input" name="BTLRemarks" id="BTLRemarks" style="width: 250px; text-transform: none;" controltype="alphanumeric" allowchar="/-," data-valid="required" data-valid-msg="BTL Remarks cannot be blank" tabindex="19" maxlength="250" data-role="alphabettextbox" autocomplete="off"></textarea></td>
+                <td class="" title="Select "></td>
+                <td class="formInputcolumn"></td>
+            </tr>
+            <tr>
+                <td class="formSection" colspan="4">General Information</td>
+            </tr>
+            <tr>
+                <td class="formlabel" title="Select Aircraft"><font color="red">*</font><span id="spnAircraft"> Aircraft</span></td>
+                <td class="formInputcolumn">
+                    <input type="hidden" name="Aircraft" id="Aircraft" value="">
+                    <span class="k-widget k-combobox k-header">
+                        <span class="k-dropdown-wrap k-state-default" unselectable="on" style="width: 150px;">
+                            <input type="text" class="k-input" name="Text_Aircraft" id="Text_Aircraft" style="width: 100%; text-transform: uppercase;" data-valid="required" data-valid-msg="Aircraft cannot be blank" tabindex="25" controltype="autocomplete" maxlength="15" value="" data-role="autocomplete" autocomplete="off"><span class="k-select" unselectable="on"><span class="k-icon k-i-arrow-s" unselectable="on" style="cursor:pointer;">select</span></span>
+                        </span>
+                    </span>
+                </td>
+                <td class="formlabel" title="Select Agent Name"><font color="red">*</font><span id="spnAccountSNo"> Agent Name</span></td>
+                <td class="formInputcolumn">
+                    <input type="hidden" name="AccountSNo" id="AccountSNo" value="">
+                    <span class="k-widget k-combobox k-header">
+                        <span class="k-dropdown-wrap k-state-default" unselectable="on" style="width: 150px;">
+                            <input type="text" class="k-input" name="Text_AccountSNo" id="Text_AccountSNo" style="width: 100%; text-transform: uppercase;" tabindex="27" data-valid="required" data-valid-msg="Agent cannot be blank" controltype="autocomplete" maxlength="15" value="" data-role="autocomplete" autocomplete="off">
+                            <span class="k-select" unselectable="on"><span class="k-icon k-i-arrow-s" unselectable="on" style="cursor:pointer;">select</span></span>
+                        </span>
+                    </span>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</body>
+</html>
+
+

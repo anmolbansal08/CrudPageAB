@@ -1,0 +1,47 @@
+﻿<Messages>
+  <!--#region IrregularityPacking XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  IrregularityPacking
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Santosh Gupta
+  Created On:		9 oct 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>AreaName</Name>
+    <Message>Duty Area can not be blank</Message>
+  </DataFieldName>
+  
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Duplicate entry found.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Hash color code already utilized please select another one.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Duty Area Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Duty Area Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Duty Area Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

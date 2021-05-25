@@ -1,0 +1,394 @@
+﻿<!DOCTYPE html>
+<div style="text-align:right">
+    <input type="button" id="btnUCRPrint" value="Print" onclick="FunPrintDataNew('UldTransferPrintContent');" />
+</div>
+<div id="UldTransferPrintContent">
+    <head runat="server">
+        <title></title>
+        <style type="text/css">
+            .style1 {
+                width: 35%;
+                font-size: 11px;
+                font-weight: normal;
+            }
+
+            .style2 {
+                font-weight: bold;
+                font-size: 15px;
+            }
+
+            .auto-style1 {
+                width: 10%;
+            }
+
+            .auto-style2 {
+                width: 12%;
+            }
+
+
+            .auto-style3 {
+                width: 25%;
+            }
+
+            .auto-style4 {
+                width: 40%;
+            }
+
+            .auto-style5 {
+                height: 24px;
+            }
+
+            .tdstyle {
+                border: 1px solid black;
+               width: 20px;
+                height: 20px;
+            }
+
+            .trstyle {
+                height: 50px;
+                vertical-align: top;
+                text-align: center;
+            }
+
+            .fontstyle {
+                width: 100%;
+                font-family: monospace;
+                font-size: initial;
+            }
+
+            @media print {
+                .no-print {
+                    display: none;
+                }
+            }
+        </style>
+        <!--<script src="../../../Scripts/jquery-1.7.2.js"></script>
+        <script src="../../../Scripts/json2.js"></script>
+
+        <script src="../../../Scripts/jqueryPrintNew.js"></script>-->
+        <!--<script type="text/javascript">
+            //var counter = 0;
+            //$(document).ready(function () {
+            //    counter++;             
+            //    GetUldHandOverRecordData();                 
+            //})
+            //function GetUldHandOverRecordData() {
+            //    var str = "";
+            //    var day = "";
+            //    var month = "";
+            //    var year = "";
+            //     var Sno = 1;
+            //     $.ajax({
+            //         // url: "/Services/Tariff/HandlingChargesService.svc/GetNotocRecord?Sno=" + Sno, async: false, type: "get", dataType: "json", cache: false,
+            //         //url: "/Services/Shipment/UwsPrintService.svc/GetUldHandOverRecord?Sno=" + Sno, async: false, type: "get", dataType: "json", cache: false,
+            //        // url: "/Services/Tariff/HandlingChargesService.svc/GetUldHandOverRecord?Sno=" + Sno, async: false, type: "get", dataType: "json", cache: false,
+            //         url: "/Services/Tariff/HandlingChargesService.svc/GetUldHandOverRecord?Sno=" + Sno, async: false, type: "get", dataType: "json", cache: false,
+
+            //                  contentType: "application/json; charset=utf-8",
+            //                  success: function (result) {
+            //                  var ResultData = jQuery.parseJSON(result);
+            //                  FinalData = ResultData.Table0;
+            //                  if ((FinalData != undefined)) {                                 
+            //                      $(FinalData).each(function (row, tr) {
+            //                          str = str + (tr.ConsumableNameQty) + ','
+            //                      })
+            //                // len = FinalData.length;
+            //                 $("span#spntrf1").text(FinalData[0].AirportCode.substr(0,1)).text();
+            //                 $("span#spntrf2").text(FinalData[0].AirportCode.substr(1,1)).text();
+            //                 $("span#spntrf3").text(FinalData[0].AirportCode.substr(2,1)).text();
+            //                 $("span#UFH1").text(FinalData[0].UHFReceiptNo).text();
+            //                 //$("span#UFH2").text(FinalData[0].UHFReceiptNo.substr(7,1)).text();
+            //                 //$("span#UFH3").text(FinalData[0].UHFReceiptNo.substr(8,1)).text();
+            //                 //$("span#UFH4").text(FinalData[0].UHFReceiptNo.substr(9,1)).text();
+            //                 //$("span#UFH5").text(FinalData[0].UHFReceiptNo.substr(10,1)).text();
+            //                 $("span#cons1").text(FinalData[0].IsDamageds.substr(0,1)).text();
+            //                 $("span#cons2").text(FinalData[0].IsDamageds.substr(1,1)).text();
+            //                 $("span#cons3").text(FinalData[0].IsDamageds.substr(2,1)).text();
+            //                 $("span#nameid").text(FinalData[0].Receivedname).text();
+            //                 $("span#addressid").text(FinalData[0].ReceivedAddress).text();
+            //                 $("span#Transfernameid").text(FinalData[0].TransferName).text();
+            //                 $("span#Transferaddressid").text(FinalData[0].TransferAddress).text();
+            //                 $("span#Usernameid").text(FinalData[0].UserName).text();
+            //                 $("span#UserAddressid").text(FinalData[0].EMailID).text();
+            //                      //Add Append Tr To Consumable
+            //                 $('tr#Consumid').after("<tr style='border:1px solid black;'><td class='tdstyle' style='width:12%;padding:7px;'>" + str + "</td></tr>")
+            //                 day = FinalData[0].Day
+            //                 month = FinalData[0].Month
+            //                 year = FinalData[0].Year
+            //                 var SNo = '';
+            //                 for (var i = 0; i < FinalData.length; i++) {
+            //                     $('tr#spDes').after("<tr style='border:1px solid black;'><td class='tdstyle' style='width:12%;padding:7px;'>" + FinalData[i].ULDCode + "</td><td class='tdstyle' style='width:14%; padding:7px;' colspan='2'>" + FinalData[i].ULDNumber + "</td><td class='tdstyle' style='width:7%; padding:7px; text-align:center;'>" + FinalData[i].OwnerCode + "</td></tr>")
+
+            //                      //Add Apend Tr To Date
+            //                     $('tr#trdt').after("<tr style='border:1px solid black;'><td class='tdstyle' style='width:12%;padding:7px;'>" + day + "</td><td class='tdstyle' style='width:14%; padding:7px;'>" + month + "</td><td class='tdstyle' style='width:7%; padding:7px; text-align:center;'>" + year + "</td><td class='tdstyle' style='width:7%; padding:7px; text-align:center;'>" + FinalData[i].UTCTime + "</td></tr>")
+                       
+
+            //                 }
+
+            //             }
+            //             else {
+            //                // $('#divhtml').html(' ');
+            //                 Alert('error', 'Need your Kind Attention!', 'Sorry Records Not Found !!');
+            //             }
+            //         },
+            //         error: {
+
+            //         }
+            //     });
+            //}
+
+            //function funPrintUCRData(divID) {
+            //    var divContents = $("#" + divID).html();
+            //    // $(divContents).find('input:button[id=' + printButtonID + ']').remove();
+            //    var printWindow = window.open('', '', '');
+            //    // printWindow.document.write('<html><head><title>SLI Information</title>');
+            //    // printWindow.document.write('</head><body >');
+            //    printWindow.document.write(divContents);
+            //    //printWindow.document.write('</body></html>');
+            //    printWindow.document.close();
+            //    printWindow.print();
+            //}
+        </script>-->
+    </head>
+    <body>
+        <div style="width: 100%; font-family:Arial; font-size:18px;  padding:0px; margin:0px;" align="center">
+            <table class="fontstyle">
+                <tbody>
+                    <tr class="trstyle">
+                        <td class="style2" colspan="4" style="font-size: xx-large; font-weight: 800; font-style: normal;">ULD HANDOVER FORM</td>
+                    </tr>
+                    <tr style="border-top:1px solid black; width:100%; border-right:1px solid black; border-left:1px solid black;" class="trstyle">
+                        <td colspan="2" style="text-align-last: left;"><span style=" font-weight: bold;">UHF Receipt Nbr:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="UFH1"></span></td>
+                                               
+                            <!--<table>
+                                <tbody><tr><td class="tdstyle"><span id="UFH1"></span></td><td class="tdstyle"><span id="UFH2"></span></td><td class="tdstyle"><span id="UFH3"></span></td><td class="tdstyle"><span id="UFH4"></span></td><td class="tdstyle"><span id="UFH5"></span></td></tr></tbody>
+                            </table>-->     
+                                                 
+                        <td colspan="2" >
+                            <div style="float: left;"></div>
+                            <div style="float:right;">                                
+                                <table>
+                                    <tbody>                                       
+                                    <tr >
+                                        <td><span>TRF.POINT</span></td>
+                                        <td class="tdstyle" style="text-align:center;"><span id="spntrf1"></span></td>
+                                        <td class="tdstyle" style="text-align:center;"><span id="spntrf2"></span></td>
+                                        <td class="tdstyle" style="text-align:center;"><span id="spntrf3"></span></td>
+                                   </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="border-top:1px solid black; border-right:1px solid black; border-left:1px solid black;" class="trstyle">
+                        <td colspan="2" style="width:45%">
+                            <table id="recordTbl" style="width: 100%; margin: 0; padding: 0; border-collapse: collapse; text-align: center;">
+                                <tbody>
+                                    <tr id="spDes" style="background-color: #b3b3b3; font-weight: bold; border: 1px solid black;">
+                                        <td style="width: 12%; padding: 10px; border: 1px solid black;">TYPE CODE</td>
+                                        <td style="width: 14%; padding: 10px; border: 1px solid black;" colspan="2">SERIAL NBR</td>
+                                        <td style="width: 12%; padding: 10px; border: 1px solid black;" colspan="2">OWNER</td>
+                                    </tr>
+                                    <!--<tr id="spDes" style="border:1px solid black;">
+                                        <td style="width: 12%; padding: 10px; border: 1px solid black;"></td>
+                                        <td style="width: 14%; padding: 10px; border: 1px solid black;" colspan="2"></td>
+                                        <td style="width: 12%; padding: 10px; border: 1px solid black;" colspan="2"></td>
+                                    </tr>-->
+                                </tbody>
+                            </table>
+                        </td>
+                        <td colspan="2" style="width:45%">
+                            <table style=" height:auto;">
+                                <tbody>
+                                    <tr style="font-weight:bold;">
+                                         <td colspan="4" align="right">
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><span>CONDIT. CODE:</span></td>
+                                                        <td class="tdstyle" style="text-align:center;"><span id="cons1"></span></td>
+                                                        <td class="tdstyle" style="text-align:center;"><span id="cons2"></span></td>
+                                                        <td class="tdstyle" style="text-align:center;"><span id="cons3"></span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr style="font-weight:bold;">
+                                        
+                                        <td class="style2" style="width:14%; padding:10px;" colspan="4" align="center">ULD RELEASED ( OUT )</td>
+                                        
+                                    </tr>
+
+                                    <tr style="font-weight:bold;">
+                                        
+                                        <td style="width:14%; padding:10px;" colspan="4" align="center">Please Release To:</td>
+                                        
+                                    </tr>
+
+                                    <tr style="font-weight:bold;">
+                                        <td class="tdstyle" style="width:14%; padding:7px;" colspan="4">
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="font:bolder;">Name:></td>                                                        
+                                                        <td><span id="nameid"></span></td>
+                                                        
+                                                    </tr> 
+                                                    <tr>
+                                                        <td style="font:bolder;">Address:></td>   
+                                                        <td style=" font-family: monospace; font-size: initial;"><span id="addressid"></span></td>
+                                                    </tr>                                                  
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="4">
+                                            <table id="recordTbl" style="width:100%; margin:0; padding:0; border-collapse:collapse;text-align:center;">
+                                                <tbody>
+                                                    <tr><td colspan="4" style="text-align:center;">DATE OF TRANSFER</td></tr>
+                                                    <tr id="trdt" style="background-color:#b3b3b3; font-weight:bold; border:1px solid black;">
+                                                        <td style="width: 12%; padding: 10px; border: 1px solid black;">DAY</td>
+                                                        <td style="width: 14%; padding: 10px; border: 1px solid black;">MONTH</td>
+                                                        <td style="width: 12%; padding: 10px; border: 1px solid black;">YEAR</td>
+                                                        <td style="width: 12%; padding: 10px; border: 1px solid black;">TIME</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="4">
+                                            <table id="recordTbl" style="width: 100%; margin: 0; padding: 0; border-collapse: collapse; text-align: center;">
+                                                <tbody>
+                                                    <tr id="Consumid" style="background-color: #b3b3b3; font-weight: bold; border: 1px solid black;">
+                                                        <td style="width: 12%; padding: 10px; border: 1px solid black;">ULD Equipment detail</td>
+                                                    </tr>                                                  
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>               
+                    <tr style="border-top:1px solid black; border-right:1px solid black; border-left:1px solid black;" class="trstyle">
+                        <td colspan="2" style="width:45%">
+                            <table id="recordTbl" style="width: 100%; height: auto;padding: 0; text-align: center;">
+                                <tbody>
+                                    <tr style="font-weight:bold;">
+                                        <td style="width:12%; padding:10px; font:bolder;" colspan="2">TRANSFERRING CARRIER OR AGENT</td>
+                                    </tr>
+                                    <tr style="font-weight:bold;">
+                                        <td style="width:12%; padding: 10px; height:100%; font: bolder; border: 1px solid black;" colspan="2">
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="font:bolder;">Name:></td>                                                      
+                                                      
+                                                        <td><span id="Transfernameid"></span></td>
+                                                    </tr>   
+                                                    <tr>
+                                                        <td style="font:bolder;">Address:></td>   
+                                                        <td><span id="Transferaddressid"></span></td>
+                                                    </tr>                                              
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td colspan="2" style="width:45%">
+                            <table id="recordTbl" style="width: 100%; height: auto;padding: 0; text-align: center;">
+                                <tbody>
+                                    <tr style="font-weight:bold;">
+                                        <td style="width:12%; padding:10px; font:bolder;" colspan="2">RECEIVING CARRIER OR AGENT</td>
+                                    </tr>
+                                    <tr style="font-weight:bold;">
+                                        <td style="width:12%; padding: 10px; height:100%; font: bolder; border: 1px solid black;" colspan="2">
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Name:></td>
+                                                        <td><span id="nameid"></span></td>
+                                                       
+                                                    </tr> 
+                                                    <tr>
+                                                        <td>Address:></td>
+                                                        <td><span id="addressid"></span></td>
+                                                    </tr>        
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="border-top:1px solid black; border-right:1px solid black; border-left:1px solid black;" class="trstyle">
+                        <td colspan="2" style="width:45%">
+                            <table id="recordTbl" style="width: 100%; height: auto;padding: 0; text-align: center;">
+                                <tbody>
+                                    <tr style="font-weight:bold;">
+                                        <td style="width:12%; padding:10px; font:bolder;" colspan="2">Prepared by:</td>
+                                    </tr>
+                                    <tr style="font-weight:bold;">
+                                        <td style="width:12%; padding: 10px; height:100%; font: bolder; border: 1px solid black;" colspan="2">
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="font:bold;">User Name:></td>
+                                                        <td><span id="Usernameid"></span></td>
+                                                        
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="font:bolder;">Email ID:></td>
+                                                        <td><span id="UserAddressid"></span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td colspan="2" style="width:45%">
+                            <table id="recordTbl" style="width: 100%; height: auto;padding: 0; text-align: center;">
+                                <tbody>
+                                    <tr style="font-weight:bold;">
+                                        <td style="width:12%; padding:10px; font:bolder;" colspan="2">Loaded by:</td>
+                                    </tr>
+                                    <tr style="font-weight:bold;">
+                                        <td style="width:12%; padding: 10px; height:100%; font: bolder; border: 1px solid black;" colspan="2">
+                                        <!--<textarea style=" margin: 0px; width: 347px; height: 31px;"></textarea>-->
+                                            <span id="LoadedBy" style=" margin: 0px; width: 347px; height: 31px;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <table class="fontstyle">
+                                 <tbody>
+                                         <tr class="trstyle"><td class="style2" colspan="4" style="font-size: xx-large; font-weight: 800; font-style: normal;"></td></tr>                                       
+                                </tbody>
+            </table>
+        </div>
+
+
+    </body>
+</div>
+
+

@@ -1,0 +1,39 @@
+﻿<Messages>
+  <!--#region CustomerType XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		CustomerType
+  Purpose:		This XML used for Message information.
+  Company:		CargoFlash Infotech Pvt Ltd.
+  Author:			Tarun Kumar
+  Created On:		13 feb 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>CustomerTypeName</Name>
+    <Message>Participant Type can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Participant Type already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Participant Type Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Participant Type Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Participant Type Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

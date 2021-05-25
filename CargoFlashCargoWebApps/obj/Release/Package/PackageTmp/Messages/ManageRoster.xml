@@ -1,0 +1,33 @@
+﻿<Messages>
+  <!--#region Manage Roster XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  ManageRoster
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Farogh Haider
+  Created On:		12 Nov 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Roster Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Roster Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Roster Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

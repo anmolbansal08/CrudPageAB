@@ -1,0 +1,971 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{455F79B5-2A13-488C-B7B4-94CBAF157C6B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CargoFlash.Cargo.DataService</RootNamespace>
+    <AssemblyName>CargoFlash.Cargo.DataService</AssemblyName>
+    <ProjectTypeGuids>{3D9AD99F-2412-4246-B90B-4EAA41C64699};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <StartArguments>/client:"WcfTestClient.exe"</StartArguments>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.87.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CargoFlashCargoWebApps\bin\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>C:\Users\vipin\Desktop\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="KLAS.Business, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dlls\KLAS.Business.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Visual Studio Tools for Office\PIA\Office14\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Blend\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accounts\ApprovePaymentService.cs" />
+    <Compile Include="Accounts\CashRegisterService.cs" />
+    <Compile Include="Accounts\CreditLimitReportService.cs" />
+    <Compile Include="Accounts\IApprovePaymentService.cs" />
+    <Compile Include="Accounts\ICreditLimitReportService.cs" />
+    <Compile Include="Accounts\IReversePaymentService.cs" />
+    <Compile Include="Accounts\ISummaryReportService.cs" />
+    <Compile Include="Accounts\ITransactionHistoryService.cs" />
+    <Compile Include="Accounts\IVerifyPaymentService.cs" />
+    <Compile Include="Accounts\LedgerService.cs" />
+    <Compile Include="Accounts\ChargeGroupService.cs" />
+    <Compile Include="Accounts\CreditdebitNoteApprovalService.cs" />
+    <Compile Include="Accounts\CreditDebitNoteService.cs" />
+    <Compile Include="Accounts\DirectPaymentService.cs" />
+    <Compile Include="Accounts\ICashRegisterService.cs" />
+    <Compile Include="Accounts\ILedgerService.cs" />
+    <Compile Include="Accounts\IChargeGroupService.cs" />
+    <Compile Include="Accounts\ICreditDebitNoteApprovalService.cs" />
+    <Compile Include="Accounts\ICreditDebitNoteService.cs" />
+    <Compile Include="Accounts\IDirectPaymentService.cs" />
+    <Compile Include="Accounts\IInvoiceGroupService.cs" />
+    <Compile Include="Accounts\INOTOCService.cs" />
+    <Compile Include="Accounts\InvoiceGroupService.cs" />
+    <Compile Include="Accounts\IPaymentService.cs" />
+    <Compile Include="Accounts\NOTOCService.cs" />
+    <Compile Include="Accounts\PaymentService.cs" />
+    <Compile Include="Accounts\ReversePaymentService.cs" />
+    <Compile Include="Accounts\SummaryReportService.cs" />
+    <Compile Include="Accounts\TransactionHistoryService.cs" />
+    <Compile Include="Accounts\VerifyPaymentService.cs" />
+    <Compile Include="AuditLog\ActivityLogService.cs" />
+    <Compile Include="AuditLog\IActivityLogService.cs" />
+    <Compile Include="AWBStockStatus\AWBStockStatusService.cs" />
+    <Compile Include="AWBStockStatus\IAWBStockStatusService.cs" />
+    <Compile Include="BuildUp\AgentBuildUpService.cs" />
+    <Compile Include="BuildUp\AgentBuildUpWeighingService.cs" />
+    <Compile Include="BuildUp\BuildUpProcessService.cs" />
+    <Compile Include="BuildUp\BuildUpService.cs" />
+    <Compile Include="BuildUp\IAgentBuildUpService.cs" />
+    <Compile Include="BuildUp\IAgentBuildUpWeighingService.cs" />
+    <Compile Include="BuildUp\IBuildUpProcessService.cs" />
+    <Compile Include="BuildUp\IBuildUpService.cs" />
+    <Compile Include="Common\GTGetBills.cs" />
+    <Compile Include="Common\WebServiceCIMPMessageGeneration.cs" />
+    <Compile Include="Common\WebServiceEDIMSGValidateAndReturnDS.cs" />
+    <Compile Include="CRA\CRAInvoiceListService.cs" />
+    <Compile Include="CRA\ICRAInvoiceListService.cs" />
+    <Compile Include="Dashboard\IMainDashboardService.cs" />
+    <Compile Include="Dashboard\MainDashboardService.cs" />
+    <Compile Include="EDIMessageFunction.cs" />
+    <Compile Include="EDI\EventMasterService.cs" />
+    <Compile Include="EDI\EventMessageTransService.cs" />
+    <Compile Include="EDI\IEventMasterService.cs" />
+    <Compile Include="EDI\IEventMessageTransService.cs" />
+    <Compile Include="EDI\IMessageTypeMasterService.cs" />
+    <Compile Include="EDI\IRecipientMsgConfigService.cs" />
+    <Compile Include="EDI\ITelexTypeService.cs" />
+    <Compile Include="EDI\MessageTypeMasterService.cs" />
+    <Compile Include="EDI\RecipientMsgConfigService.cs" />
+    <Compile Include="EDI\TelexTypeService.cs" />
+    <Compile Include="ErrorHandler.cs" />
+    <Compile Include="Export\IRampOffloadService.cs" />
+    <Compile Include="Import\AddShipmentAdjustmentService.cs" />
+    <Compile Include="Import\IAddShipmentAdjustmentService.cs" />
+    <Compile Include="Inventory\IInventoryStockListService.cs" />
+    <Compile Include="Inventory\InventoryStockListService.cs" />
+    <Compile Include="Master\BTBMachinePalletService.cs" />
+    <Compile Include="Master\CityConnectionTimePriorityService.cs" />
+    <Compile Include="Master\CrudPageABService.cs" />
+    <Compile Include="Master\DetailsService.cs" />
+    <Compile Include="Master\DriverMasterService.cs" />
+    <Compile Include="Master\DriversService.cs" />
+    <Compile Include="Master\HSCodeService.cs" />
+    <Compile Include="Master\IBTBMachinePalletService.cs" />
+    <Compile Include="Master\ICityConnectionTimePriorityService.cs" />
+    <Compile Include="Master\ICrudPageABService.cs" />
+    <Compile Include="Master\IDetailsService.cs" />
+    <Compile Include="Master\IDriverMasterService.cs" />
+    <Compile Include="Master\IDriversService.cs" />
+    <Compile Include="Master\IHSCodeService.cs" />
+    <Compile Include="Master\IOffloadReasonService.cs" />
+    <Compile Include="Master\IRatePriorityMasterService.cs" />
+    <Compile Include="Master\IVehicleMakeService.cs" />
+    <Compile Include="Master\IVehicleService.cs" />
+    <Compile Include="Master\IVehicleTypeService.cs" />
+    <Compile Include="Master\OffloadReasonService.cs" />
+    <Compile Include="Master\RatePriorityMasterService.cs" />
+    <Compile Include="Master\VehicleMakeService.cs" />
+    <Compile Include="Master\VehicleService.cs" />
+    <Compile Include="Master\VehicleTypeService.cs" />
+    <Compile Include="Permissions\AlertEventTypeService.cs" />
+    <Compile Include="Permissions\BannerService.cs" />
+    <Compile Include="Permissions\EmailAlertService.cs" />
+    <Compile Include="Permissions\IAlertEventTypeService.cs" />
+    <Compile Include="Permissions\IBannerService.cs" />
+    <Compile Include="Permissions\IUsersService - Copy.cs" />
+    <Compile Include="Permissions\IUserTypeService.cs" />
+    <Compile Include="Permissions\UserTypeService.cs" />
+    <Compile Include="Report\DailyFinalDeliveryReportService.cs" />
+    <Compile Include="Report\ESS_DailyReportService.cs" />
+    <Compile Include="Report\IDailyFinalDeliveryReportService.cs" />
+    <Compile Include="Report\IESS_DailyReportService.cs" />
+    <Compile Include="Report\INonExecutedBookingService.cs" />
+    <Compile Include="Report\NonExecutedBookingService.cs" />
+    <Compile Include="Schedule\IUpdateSchedule.cs" />
+    <Compile Include="Schedule\UpdateSchedule.cs" />
+    <Compile Include="Shipment\BackDateBookingService.cs" />
+    <Compile Include="Shipment\IBackDateBookingService.cs" />
+    <Compile Include="Shipment\IMarineInsuranceService.cs" />
+    <Compile Include="Shipment\IRushHandlingApprovalService.cs" />
+    <Compile Include="Export\RampOffloadService.cs" />
+    <Compile Include="Shipment\IShortBookingService.cs" />
+    <Compile Include="Shipment\MarineInsuranceService.cs" />
+    <Compile Include="Shipment\RushHandlingApprovalService.cs" />
+    <Compile Include="Export\UldTransfer\ILucInService.cs" />
+    <Compile Include="Export\UldTransfer\ILucService.cs" />
+    <Compile Include="Export\UldTransfer\IUldOutService.cs.cs" />
+    <Compile Include="Export\UldTransfer\LucInService.cs" />
+    <Compile Include="Export\UldTransfer\LucService.cs" />
+    <Compile Include="Export\UldTransfer\UldOutService.cs" />
+    <Compile Include="Export\UWS\UWSPrint\IUWSPrintService.cs" />
+    <Compile Include="Export\UWS\UWSPrint\UWSPrintService.cs" />
+    <Compile Include="FlightControl\FlightControlService.cs" />
+    <Compile Include="FlightControl\IFlightControlService.cs" />
+    <Compile Include="GatePass\GatePassService.cs" />
+    <Compile Include="GatePass\IGatePassService.cs" />
+    <Compile Include="GlobalErrorHandler.cs" />
+    <Compile Include="GlobalErrorHandlerBehaviourAttribute.cs" />
+    <Compile Include="House\HouseAcceptanceService.cs" />
+    <Compile Include="House\HouseService.cs" />
+    <Compile Include="House\IHouseAcceptanceService.cs" />
+    <Compile Include="House\IHouseService.cs" />
+    <Compile Include="Import\CTMService.cs" />
+    <Compile Include="Import\DeliveryOrderService.cs" />
+    <Compile Include="Import\FreightarrivalnotifactionService.cs" />
+    <Compile Include="Import\FWBImportService.cs" />
+    <Compile Include="Import\ICTMService.cs" />
+    <Compile Include="Import\IImportRFSService.cs" />
+    <Compile Include="Import\ImportFWBService.cs" />
+    <Compile Include="Import\IDeliveryOrderService.cs" />
+    <Compile Include="Import\IFreightarrivalnotifactionService.cs" />
+    <Compile Include="Import\IFWBImportService.cs" />
+    <Compile Include="Import\IImportFWBService.cs" />
+    <Compile Include="Import\ImportRFSService.cs" />
+    <Compile Include="Import\IReceivedConsumableService.cs" />
+    <Compile Include="Import\ITransitMonitoringService.cs" />
+    <Compile Include="Import\ReceivedConsumableService.cs" />
+    <Compile Include="Import\TransitMonitoringService.cs" />
+    <Compile Include="Inventory\ConsumableService.cs" />
+    <Compile Include="Inventory\IConsumableService.cs" />
+    <Compile Include="Inventory\IInventoryItemService.cs" />
+    <Compile Include="Inventory\InventoryItemService.cs" />
+    <Compile Include="Irregularity\ApplcationEntityValueListService.cs" />
+    <Compile Include="Irregularity\ApplicationEntityService.cs" />
+    <Compile Include="Irregularity\ClaimService.cs" />
+    <Compile Include="Irregularity\ComplaintService.cs" />
+    <Compile Include="Irregularity\IApplcationEntityValueListService.cs" />
+    <Compile Include="Irregularity\IApplicationEntityService.cs" />
+    <Compile Include="Irregularity\IClaimService.cs" />
+    <Compile Include="Irregularity\IComplaintService.cs" />
+    <Compile Include="Irregularity\IIrregularityAWBReportService.cs" />
+    <Compile Include="Irregularity\IIrregularityFlightReportService.cs" />
+    <Compile Include="Irregularity\IrregularityAWBReportService.cs" />
+    <Compile Include="Irregularity\IrregularityFlightReportService.cs" />
+    <Compile Include="Master\BTLService.cs" />
+    <Compile Include="Master\ExcelUploadService.cs" />
+    <Compile Include="Master\IBTLService.cs" />
+    <Compile Include="Master\IExcelUploadService.cs" />
+    <Compile Include="Master\ILoginColorCodeService.cs" />
+    <Compile Include="Master\IMessageTestService.cs" />
+    <Compile Include="Master\IPenaltyParametersService.cs" />
+    <Compile Include="Irregularity\IIrregularityReportService.cs" />
+    <Compile Include="Irregularity\IrregularityReportService.cs" />
+    <Compile Include="Irregularity\ISpecialCargoService.cs" />
+    <Compile Include="Irregularity\SpecialCargoService.cs" />
+    <Compile Include="Mail\AirMailManifestService.cs" />
+    <Compile Include="Mail\AirMailService.cs" />
+    <Compile Include="Mail\IAirMailManifestService.cs" />
+    <Compile Include="Mail\IAirMailService.cs" />
+    <Compile Include="Master\AircraftDimensionMatrixService.cs" />
+    <Compile Include="Master\AirlineCheckListService.cs" />
+    <Compile Include="Master\AirlineHubService.cs" />
+    <Compile Include="Master\CheckListTypeService.cs" />
+    <Compile Include="Master\CommissionService.cs" />
+    <Compile Include="Master\CreditLimitUpdateService.cs" />
+    <Compile Include="Master\DistanceService.cs" />
+    <Compile Include="Master\DocumentMasterService.cs" />
+    <Compile Include="Master\EdiInboundAndOutboundService.cs" />
+    <Compile Include="Master\EDoxService.cs" />
+    <Compile Include="Master\ExchangeRateConfigurationService.cs" />
+    <Compile Include="Master\FocTypeService.cs" />
+    <Compile Include="Master\HoldTypeService.cs" />
+    <Compile Include="Master\IAircraftDimensionMatrixService.cs" />
+    <Compile Include="Master\IAirlineCheckListService.cs" />
+    <Compile Include="Master\IAirlineHubService.cs" />
+    <Compile Include="Master\ICheckListTypeService.cs" />
+    <Compile Include="Master\ICommissionService.cs" />
+    <Compile Include="Master\ICreditLimitUpdateService.cs" />
+    <Compile Include="Master\IDistanceService.cs" />
+    <Compile Include="Master\IDocumentMasterService.cs" />
+    <Compile Include="Master\IEdiInboundAndOutboundService.cs" />
+    <Compile Include="Master\IEDoxService.cs" />
+    <Compile Include="Master\IEmployeeService.cs" />
+    <Compile Include="ILoginService.cs" />
+    <Compile Include="Import\IFlightArrivalService.cs" />
+    <Compile Include="Import\IInboundFlightService.cs" />
+    <Compile Include="Import\FlightArrivalService.cs" />
+    <Compile Include="Import\InboundFlightService.cs" />
+    <Compile Include="Inventory\ConsumableStockService.cs" />
+    <Compile Include="Inventory\IConsumableStockService.cs" />
+    <Compile Include="Inventory\IInventoryVehTypeService.cs" />
+    <Compile Include="Inventory\IInvVehicleService.cs" />
+    <Compile Include="Inventory\IInvVehicleServiceService.cs" />
+    <Compile Include="Inventory\IIssueConsumablesService.cs" />
+    <Compile Include="Inventory\InventoryVehTypeService.cs" />
+    <Compile Include="Inventory\InvVehicleService.cs" />
+    <Compile Include="Inventory\InvVehicleServiceService.cs" />
+    <Compile Include="Inventory\IReturnConsumableService.cs" />
+    <Compile Include="Inventory\IssueConsumablesService.cs" />
+    <Compile Include="Inventory\ReturnConsumableService.cs" />
+    <Compile Include="Irregularity\IIrregularityDisposalAdviceService.cs" />
+    <Compile Include="Irregularity\IIrregularityEventService.cs" />
+    <Compile Include="Irregularity\IIrregularityIncident.cs" />
+    <Compile Include="Irregularity\IIrregularityIncidentService.cs" />
+    <Compile Include="Irregularity\IIrregularityPackingService.cs" />
+    <Compile Include="Irregularity\IIrregularityRecuperationService.cs" />
+    <Compile Include="Irregularity\IIrregularityService.cs" />
+    <Compile Include="Irregularity\IIrregularityNonDeliveryReasonService.cs" />
+    <Compile Include="Irregularity\IIrregularityDamageService.cs" />
+    <Compile Include="Irregularity\IIrregularitySeverityService.cs" />
+    <Compile Include="Irregularity\IIrregularityStatusService.cs" />
+    <Compile Include="Irregularity\IIrregularityStatusSevice.cs" />
+    <Compile Include="Irregularity\IrregularityDisposalAdviceService.cs" />
+    <Compile Include="Irregularity\IrregularityEventService.cs" />
+    <Compile Include="Irregularity\IrregularityPackingService.cs" />
+    <Compile Include="Irregularity\IrregularityRecuperationService.cs" />
+    <Compile Include="Irregularity\IrregularityService.cs" />
+    <Compile Include="Irregularity\IrregularityNonDeliveryReasonService.cs" />
+    <Compile Include="Irregularity\IrregularityDamageService.cs" />
+    <Compile Include="Irregularity\IrregularitySeverityService.cs" />
+    <Compile Include="Irregularity\IrregularityStatusService.cs" />
+    <Compile Include="Irregularity\IrregularityStatusSevice.cs" />
+    <Compile Include="Master\AccountCommisionService.cs" />
+    <Compile Include="Master\AccountGroupService.cs" />
+    <Compile Include="Master\AccountTargetService.cs" />
+    <Compile Include="Master\AccountService.cs" />
+    <Compile Include="Master\AccountTypeService.cs" />
+    <Compile Include="Master\AccountVatExemptService.cs" />
+    <Compile Include="Master\AirCraftCapacityService.cs" />
+    <Compile Include="Master\AirCraftService.cs" />
+    <Compile Include="Master\AirlineTimeZoneService.cs" />
+    <Compile Include="Master\AirportService.cs" />
+    <Compile Include="Master\ChargesService.cs" />
+    <Compile Include="Master\CityConnectionTimeService.cs" />
+    <Compile Include="Master\EDIMasterService.cs" />
+    <Compile Include="Master\CommodityDensityGroupService.cs" />
+    <Compile Include="Master\CommodityGroupService.cs" />
+    <Compile Include="Master\CommodityPackageService.cs" />
+    <Compile Include="Master\CommoditySubGroupService.cs" />
+    <Compile Include="Master\ConnectionTypeService.cs" />
+    <Compile Include="Master\ContactsService.cs" />
+    <Compile Include="Master\CountryVatService.cs" />
+    <Compile Include="Master\CustomerAddressService.cs" />
+    <Compile Include="Master\EmployeeService.cs" />
+    <Compile Include="Master\IAccountGroupService.cs" />
+    <Compile Include="Master\IChargesService.cs" />
+    <Compile Include="Master\IEDIMasterService .cs" />
+    <Compile Include="Master\ICommodityDensityGroupService.cs" />
+    <Compile Include="Master\ICommodityPackageService.cs" />
+    <Compile Include="Master\IExchangeRateConfigurationService.cs" />
+    <Compile Include="Master\IFocTypeService.cs" />
+    <Compile Include="Master\IHoldTypeService.cs" />
+    <Compile Include="Master\IIndustryTypeService.cs" />
+    <Compile Include="Master\IndustryTypeService.cs" />
+    <Compile Include="Master\IPageCreationService.cs" />
+    <Compile Include="Master\IRateCardService.cs" />
+    <Compile Include="Master\IRateTypePriorityService.cs" />
+    <Compile Include="Master\IRateTypeService.cs" />
+    <Compile Include="Master\IRegionService.cs" />
+    <Compile Include="Master\IRegistryControlService.cs" />
+    <Compile Include="Master\IRouteService.cs" />
+    <Compile Include="Master\ISLAService.cs" />
+    <Compile Include="Master\ISPHCDocumentService.cs" />
+    <Compile Include="Master\ISPHCGroupService.cs" />
+    <Compile Include="Master\ITaskAreaService.cs" />
+    <Compile Include="Master\ITaskMasterService.cs" />
+    <Compile Include="Master\ITaxService.cs" />
+    <Compile Include="Master\ITempratureSensorService.cs" />
+    <Compile Include="Master\ITerminalService.cs" />
+    <Compile Include="Master\ITimeZoneService.cs" />
+    <Compile Include="Master\ITruckTypeService.cs" />
+    <Compile Include="Master\IUnLockedPageService.cs" />
+    <Compile Include="Master\IWeighingScaleService.cs" />
+    <Compile Include="Master\IXRayMachineService.cs" />
+    <Compile Include="Master\LoginColorCodeService.cs" />
+    <Compile Include="Master\MessageTestService.cs" />
+    <Compile Include="Master\PageCreationService.cs" />
+    <Compile Include="Master\RateCardService.cs" />
+    <Compile Include="Master\RateTypePriorityService.cs" />
+    <Compile Include="Master\RateTypeService.cs" />
+    <Compile Include="Master\RegionService.cs" />
+    <Compile Include="Master\RegistryControlService.cs" />
+    <Compile Include="Master\RouteService.cs" />
+    <Compile Include="Master\SLAService.cs" />
+    <Compile Include="Master\SPHCDocumentService.cs" />
+    <Compile Include="Master\SPHCGroupService.cs" />
+    <Compile Include="Master\TaskAreaService.cs" />
+    <Compile Include="Master\TaskMasterService.cs" />
+    <Compile Include="Master\TaxService.cs" />
+    <Compile Include="Master\TempratureSensorService.cs" />
+    <Compile Include="Master\TerminalService.cs" />
+    <Compile Include="Master\TimeZoneService.cs" />
+    <Compile Include="Master\TruckTypeService.cs" />
+    <Compile Include="Master\UnLockedPageService.cs" />
+    <Compile Include="Master\WeighingScaleService .cs" />
+    <Compile Include="Master\XRayMachineService.cs" />
+    <Compile Include="Master\PenaltyParametersService.cs" />
+    <Compile Include="Permissions\AlertEventsService.cs" />
+    <Compile Include="Permissions\AllotmentService.cs" />
+    <Compile Include="Permissions\ChangePasswordService.cs" />
+    <Compile Include="Permissions\DefaultParameterService.cs" />
+    <Compile Include="Permissions\IDefaultParameterService.cs" />
+    <Compile Include="Permissions\ILoginSecurityService.cs" />
+    <Compile Include="Permissions\IProcessDependencyService.cs" />
+    <Compile Include="Permissions\IReleaseNoteService.cs" />
+    <Compile Include="Permissions\IServiceConfigService.cs" />
+    <Compile Include="Permissions\ISystemSettingService.cs" />
+    <Compile Include="Permissions\IWindowServicesReportService.cs" />
+    <Compile Include="Permissions\LoginSecurityService.cs" />
+    <Compile Include="Permissions\ProcessDependencyService.cs" />
+    <Compile Include="Permissions\HoldShptService.cs" />
+    <Compile Include="Permissions\IAlertEventsService.cs" />
+    <Compile Include="Permissions\IAllotmentService.cs" />
+    <Compile Include="Permissions\IChangePasswordService.cs" />
+    <Compile Include="Permissions\IHoldShptService.cs" />
+    <Compile Include="Permissions\ISystemSettingsService.cs" />
+    <Compile Include="Permissions\IUserStatusService.cs" />
+    <Compile Include="Permissions\ReleaseNoteService.cs" />
+    <Compile Include="Permissions\ServiceConfigService.cs" />
+    <Compile Include="Permissions\SystemSettingService.cs" />
+    <Compile Include="Permissions\SystemSettingsService.cs" />
+    <Compile Include="Permissions\UserStatusService.cs" />
+    <Compile Include="Permissions\WindowServicesReportService.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Rate\AgentGroupService.cs" />
+    <Compile Include="Rate\IAgentGroupService.cs" />
+    <Compile Include="Rate\IManageClassRateService.cs" />
+    <Compile Include="Rate\IManageTactRateService.cs" />
+    <Compile Include="Rate\IOtherChargesHistoryService.cs" />
+    <Compile Include="Rate\IOtherChargesService.cs" />
+    <Compile Include="Rate\IRateAirlineCustomChargesService.cs" />
+    <Compile Include="Rate\IRateDetailsHistoryService.cs" />
+    <Compile Include="Rate\IRateService.cs" />
+    <Compile Include="Rate\IRateSurchargeService.cs" />
+    <Compile Include="Rate\ISpotRateService.cs" />
+    <Compile Include="Rate\ITaxLogsService.cs" />
+    <Compile Include="Rate\ITaxRateService.cs" />
+    <Compile Include="Rate\ManageClassRateService.cs" />
+    <Compile Include="Rate\ManageTactRateService.cs" />
+    <Compile Include="Rate\OtherChargesHistoryService.cs" />
+    <Compile Include="Rate\OtherChargesService.cs" />
+    <Compile Include="Rate\RateDetailsHistoryService.cs" />
+    <Compile Include="Rate\SpotRateService.cs" />
+    <Compile Include="Rate\RateAirlineCustomChargesService.cs" />
+    <Compile Include="Rate\RateService.cs" />
+    <Compile Include="Rate\RateSurchargeService.cs" />
+    <Compile Include="Rate\TaxLogsService.cs" />
+    <Compile Include="Rate\TaxRateService.cs" />
+    <Compile Include="Report\CommonExportImportReportService.cs" />
+    <Compile Include="Report\BalanceStockService.cs" />
+    <Compile Include="Report\CargoRankingEIService.cs" />
+    <Compile Include="Report\CargoAirlineVolumeService.cs" />
+    <Compile Include="Report\ConsumeService.cs" />
+    <Compile Include="Report\CreditLimitService.cs" />
+    <Compile Include="Report\CreditLimitTransactionReportService.cs" />
+    <Compile Include="Report\DeliveryPendingService.cs" />
+    <Compile Include="Report\ICommonExportImportReportService.cs" />
+    <Compile Include="Report\IPettyService.cs" />
+    <Compile Include="Report\IBuiltupreportService.cs" />
+    <Compile Include="Report\IULDMovementHistoryService.cs" />
+    <Compile Include="Report\PettyService.cs" />
+    <Compile Include="Report\MovementRegisterService.cs" />
+    <Compile Include="Report\HandlingService.cs" />
+    <Compile Include="Report\ESSService.cs" />
+    <Compile Include="Report\ExportCSRService.cs" />
+    <Compile Include="Report\ICreditLimitTransactionReportService.cs" />
+    <Compile Include="Report\IMovementRegisterService.cs" />
+    <Compile Include="Report\IHandlingService.cs" />
+    <Compile Include="Report\ImportStatusService.cs" />
+    <Compile Include="Report\ExportFlightMonitoringService.cs" />
+    <Compile Include="Report\ExportImportService.cs" />
+    <Compile Include="Report\FlightStatusService.cs" />
+    <Compile Include="Report\IBalanceStockService.cs" />
+    <Compile Include="Report\ICargoAirlineVolumeService.cs" />
+    <Compile Include="Report\IConsumeService.cs" />
+    <Compile Include="Report\ICreditLimitService.cs" />
+    <Compile Include="Report\IDeliveryPendingService.cs" />
+    <Compile Include="Report\IESSService.cs" />
+    <Compile Include="Report\IExportCSRService.cs" />
+    <Compile Include="Report\IImportStatusService.cs" />
+    <Compile Include="Report\IExportFlightMonitoringService.cs" />
+    <Compile Include="Report\IExportImportService.cs" />
+    <Compile Include="Report\IFlightStatusService.cs" />
+    <Compile Include="Report\IHandedOverService.cs" />
+    <Compile Include="Report\HandedOverService.cs" />
+    <Compile Include="Report\IImpOperationService.cs" />
+    <Compile Include="Report\IImportCSRService.cs" />
+    <Compile Include="Report\IImportFlightMonitoringService.cs" />
+    <Compile Include="Report\ImpOperationService.cs" />
+    <Compile Include="Report\ImportCSRService.cs" />
+    <Compile Include="Report\ImportFlightMonitoringService.cs" />
+    <Compile Include="Report\IOperationService.cs" />
+    <Compile Include="Report\ISeaAirService.cs" />
+    <Compile Include="Report\ISLAService.cs" />
+    <Compile Include="Report\IULDInventoryService.cs" />
+    <Compile Include="Report\IULDOutService.cs" />
+    <Compile Include="Report\IUnclearedShipmentService.cs" />
+    <Compile Include="Report\IExportDepartureService.cs" />
+    <Compile Include="Report\IUWSPendingService.cs" />
+    <Compile Include="Report\OperationService.cs" />
+    <Compile Include="Report\SeaAirService.cs" />
+    <Compile Include="Report\TariffHistoryService.cs" />
+    <Compile Include="Report\ITariffHistoryService.cs" />
+    <Compile Include="Report\IULDMonitoringService.cs" />
+    <Compile Include="Report\BuiltupreportService.cs" />
+    <Compile Include="Report\ULDInventoryService.cs" />
+    <Compile Include="Report\ULDMonitoringService.cs" />
+    <Compile Include="Report\ULDHistoryService.cs" />
+    <Compile Include="Report\IULDHistoryService.cs" />
+    <Compile Include="Report\ImportCargoService.cs" />
+    <Compile Include="Report\ConsigneeSummaryService.cs" />
+    <Compile Include="Report\CargoRankingService.cs" />
+    <Compile Include="Report\ICargoRankingEIService.cs" />
+    <Compile Include="Report\IImportCargoService.cs" />
+    <Compile Include="Report\IConsigneeSummaryService.cs" />
+    <Compile Include="Report\ICargoRankingService.cs" />
+    <Compile Include="Report\IWorkOrderService.cs" />
+    <Compile Include="Report\SLAService.cs" />
+    <Compile Include="Report\ULDMovementHistoryService.cs" />
+    <Compile Include="Report\ULDOutService.cs" />
+    <Compile Include="Report\UnclearedShipmentService.cs" />
+    <Compile Include="Report\ExportDepartureService.cs" />
+    <Compile Include="Report\UWSPendingService.cs" />
+    <Compile Include="Report\WorkOrderService.cs" />
+    <Compile Include="RFS\IRFSService.cs" />
+    <Compile Include="RFS\RFSService.cs" />
+    <Compile Include="Roster\DesignationMasterService.cs" />
+    <Compile Include="Roster\DutyAreaService.cs" />
+    <Compile Include="Roster\IDesignationMasterService.cs" />
+    <Compile Include="Roster\IDutyAreaService.cs" />
+    <Compile Include="Roster\IManageRosterService.cs" />
+    <Compile Include="Roster\IManageTeamService.cs" />
+    <Compile Include="Roster\IRosterEmployeeService.cs" />
+    <Compile Include="Roster\IRosterResourceAllocationService.cs" />
+    <Compile Include="Roster\IRosterTeamIDService.cs" />
+    <Compile Include="Roster\IShiftMasterService.cs" />
+    <Compile Include="Roster\ISkillMasterService.cs" />
+    <Compile Include="Roster\ManageRosterService.cs" />
+    <Compile Include="Roster\ManageTeamService.cs" />
+    <Compile Include="Roster\RosterEmployeeService.cs" />
+    <Compile Include="Roster\RosterResourceAllocationService.cs" />
+    <Compile Include="Roster\RosterTeamIDService.cs" />
+    <Compile Include="Roster\ShiftMasterService.cs" />
+    <Compile Include="Roster\SkillMasterService.cs" />
+    <Compile Include="Schedule\FlightOpenService.cs" />
+    <Compile Include="Schedule\IFlightOpenService.cs" />
+    <Compile Include="Schedule\ISASSSIMUploadService.cs" />
+    <Compile Include="Schedule\ISSIMUploadService.cs" />
+    <Compile Include="Schedule\IViewEditFlightService.cs" />
+    <Compile Include="Schedule\SASSSIMUploadService.cs" />
+    <Compile Include="Schedule\SSIMUploadService.cs" />
+    <Compile Include="Schedule\ViewEditFlightService.cs" />
+    <Compile Include="Shipment\AcceptanceCheckSheetService.cs" />
+    <Compile Include="Shipment\AmendFlightStatusService.cs" />
+    <Compile Include="Shipment\AssignTeamService.cs" />
+    <Compile Include="Shipment\AWBTrackingService.cs" />
+    <Compile Include="Shipment\BackLogCargoService.cs" />
+    <Compile Include="Shipment\CCAService.cs" />
+    <Compile Include="Shipment\IAWBTrackingService.cs" />
+    <Compile Include="Shipment\IReturntoShipperService.cs" />
+    <Compile Include="Shipment\IShortAcceptanceService.cs" />
+    <Compile Include="Shipment\IUCMDiscrepancyReportService.cs" />
+    <Compile Include="Shipment\IUCMInOutAlertService.cs" />
+    <Compile Include="Shipment\ReturntoShipperService.cs" />
+    <Compile Include="Shipment\FHLExportService.cs" />
+    <Compile Include="Shipment\FWBService.cs" />
+    <Compile Include="Shipment\FBLService.cs" />
+    <Compile Include="Shipment\IAcceptanceCheckSheetService.cs" />
+    <Compile Include="Shipment\IAmendFlightStatusService.cs" />
+    <Compile Include="Shipment\IAssignTeamService.cs" />
+    <Compile Include="Shipment\IBackLogCargoService.cs" />
+    <Compile Include="Shipment\ICCAService.cs" />
+    <Compile Include="Shipment\IFHLExportService.cs" />
+    <Compile Include="Shipment\IFWBService.cs" />
+    <Compile Include="Shipment\IFBLService.cs" />
+    <Compile Include="Shipment\IPaymentService.cs" />
+    <Compile Include="Shipment\IReadyToUnloadService.cs" />
+    <Compile Include="Shipment\IReservationBookingService.cs" />
+    <Compile Include="Shipment\ISLICancellationService.cs" />
+    <Compile Include="Shipment\ITrackingService.cs" />
+    <Compile Include="Shipment\IUCMService.cs" />
+    <Compile Include="Shipment\IUldHandOverService.cs" />
+    <Compile Include="Shipment\IUWSInfoService.cs" />
+    <Compile Include="Shipment\IUwsPrintService.cs" />
+    <Compile Include="Shipment\IXrayExemptionService.cs" />
+    <Compile Include="Shipment\PaymentService.cs" />
+    <Compile Include="Shipment\ReadyToUnloadService.cs" />
+    <Compile Include="Shipment\ReservationBookingService.cs" />
+    <Compile Include="Shipment\ShortAcceptanceService.cs" />
+    <Compile Include="Shipment\ShortBookingService.cs" />
+    <Compile Include="Shipment\SLICancellationService.cs" />
+    <Compile Include="Shipment\TrackingService.cs" />
+    <Compile Include="Shipment\UCMDiscrepancyReportService.cs" />
+    <Compile Include="Shipment\UCMInOutAlertService.cs" />
+    <Compile Include="Shipment\UCMService.cs" />
+    <Compile Include="Shipment\UldHandOverService.cs" />
+    <Compile Include="Shipment\UWSInfoService.cs" />
+    <Compile Include="Shipment\UwsPrintService.cs" />
+    <Compile Include="Shipment\XrayExemptionService.cs" />
+    <Compile Include="Reservation\SpaceControl\FreightBookingListService.cs" />
+    <Compile Include="Reservation\SpaceControl\IFlightPlanService.cs" />
+    <Compile Include="Reservation\SpaceControl\IFreightBookingListService.cs" />
+    <Compile Include="Stock\AWBReservedService.cs" />
+    <Compile Include="Stock\IAWBReservedService.cs" />
+    <Compile Include="Stock\IIssueDistributedStocktoSubBranchService.cs" />
+    <Compile Include="Stock\IssueDistributedStocktoSubBranchService.cs" />
+    <Compile Include="Tariff\IRoundOffCurrencyService.cs" />
+    <Compile Include="Tariff\ITariffSearchService.cs" />
+    <Compile Include="Tariff\ITariffInvoiceService.cs" />
+    <Compile Include="Tariff\RoundOffCurrencyService.cs" />
+    <Compile Include="Tariff\TariffSearchService.cs" />
+    <Compile Include="Tariff\TariffInvoiceService.cs" />
+    <Compile Include="Tariff\ESSChargesService.cs" />
+    <Compile Include="Tariff\HolidayListService.cs" />
+    <Compile Include="Tariff\IESSChargesService.cs" />
+    <Compile Include="Tariff\IHolidayListService.cs" />
+    <Compile Include="Tariff\HandlingChargesService.cs" />
+    <Compile Include="Rate\ExchangeRateService.cs" />
+    <Compile Include="Master\FlightTypeService.cs" />
+    <Compile Include="Master\IAccountCommisionService.cs" />
+    <Compile Include="Master\IAccountTargetService .cs" />
+    <Compile Include="Master\IAccountService.cs" />
+    <Compile Include="Master\IAccountTypeService.cs" />
+    <Compile Include="Master\IAccountVatExemptService.cs" />
+    <Compile Include="Master\IAirCraftCapacityService.cs" />
+    <Compile Include="Master\IAirCraftService.cs" />
+    <Compile Include="Master\IAirlineTimeZoneService.cs" />
+    <Compile Include="Master\IAirportService.cs" />
+    <Compile Include="Master\ICityConnectionTimeService.cs" />
+    <Compile Include="Master\ICommodityGroupService.cs" />
+    <Compile Include="Master\ICommoditySubGroupService.cs" />
+    <Compile Include="Master\IConnectionTypeService.cs" />
+    <Compile Include="Master\IContactsService.cs" />
+    <Compile Include="Master\ICountryVatService.cs" />
+    <Compile Include="Master\ICustomerAddressService.cs" />
+    <Compile Include="Tariff\IHandlingChargesService.cs" />
+    <Compile Include="Rate\IExchangeRateService.cs" />
+    <Compile Include="LoginService.cs" />
+    <Compile Include="Master\IFlightTypeService.cs" />
+    <Compile Include="Master\IOfficeService.cs" />
+    <Compile Include="Master\IOfficeTargetService.cs" />
+    <Compile Include="Master\OfficeTargetService.cs" />
+    <Compile Include="Rate\DueCarrierCommodityTransService.cs" />
+    <Compile Include="Rate\DueCarrierSpecialHandlingTransService.cs" />
+    <Compile Include="Rate\IDueCarrierCommodityTransService.cs" />
+    <Compile Include="Rate\IDueCarrierSpecialHandlingTransService.cs" />
+    <Compile Include="Rate\IRateAirlineMasterService.cs" />
+    <Compile Include="Rate\IRateDueCarrierTransService.cs" />
+    <Compile Include="Rate\IRateAirlineTransService.cs" />
+    <Compile Include="Rate\IRateExchangeDueCarrierService.cs" />
+    <Compile Include="Rate\IRateGlobalDueCarrierService.cs" />
+    <Compile Include="Rate\IRateGlobalDueCarrierTransService.cs" />
+    <Compile Include="Rate\IRateHeavyWeightSPHCExemptionService.cs" />
+    <Compile Include="Rate\IRateHeavyWeightCommodityExemptionService.cs" />
+    <Compile Include="Rate\IRateServiceTypeService.cs" />
+    <Compile Include="Rate\IRateSurchargeCommodityService.cs" />
+    <Compile Include="Rate\IRateSurchargeSPHCServices.cs" />
+    <Compile Include="Rate\RateDueCarrierTransService.cs" />
+    <Compile Include="Rate\RateAirlineTransService .cs" />
+    <Compile Include="Rate\RateExchangeDueCarrierService.cs" />
+    <Compile Include="Rate\RateGlobalDueCarrierService.cs" />
+    <Compile Include="Rate\RateGlobalDueCarrierTransService.cs" />
+    <Compile Include="Rate\RateHeavyWeightSPHCExemptionService.cs" />
+    <Compile Include="Rate\RateHeavyWeightCommodityExemptionService.cs" />
+    <Compile Include="Rate\DueCarrierService.cs" />
+    <Compile Include="Rate\RateAirlineMasterService .cs" />
+    <Compile Include="Rate\RateHeavyWeightSurchargeService.cs" />
+    <Compile Include="Rate\IDueCarrierService.cs" />
+    <Compile Include="Rate\IRateHeavyWeightSurchargeService.cs" />
+    <Compile Include="Rate\RateServiceTypeService.cs" />
+    <Compile Include="Rate\RateSurchargeCommodityService.cs" />
+    <Compile Include="Rate\RateSurchargeSPHCService.cs" />
+    <Compile Include="Reservation\IReservationService.cs" />
+    <Compile Include="Reservation\ReservationService.cs" />
+    <Compile Include="Schedule\IScheduleService.cs" />
+    <Compile Include="Master\ISlabMasterService.cs" />
+    <Compile Include="Master\ISlabService.cs" />
+    <Compile Include="Master\ISpecialHandlingCodeService.cs" />
+    <Compile Include="Master\HandOverCutOffTimeService.cs" />
+    <Compile Include="Master\IHandOverCutOffTimeService.cs" />
+    <Compile Include="Master\AirlineAuctionService.cs" />
+    <Compile Include="Master\AirlineService.cs" />
+    <Compile Include="AutoCompleteService.cs" />
+    <Compile Include="Master\CityService.cs" />
+    <Compile Include="Master\CommodityService.cs" />
+    <Compile Include="Master\DepartmentService.cs" />
+    <Compile Include="Master\ICustomerBidService.cs" />
+    <Compile Include="Master\CustomerBidService.cs" />
+    <Compile Include="Master\CountryService.cs" />
+    <Compile Include="Master\CurrencyService.cs" />
+    <Compile Include="Master\CustomerService.cs" />
+    <Compile Include="Master\CustomerTypeService.cs" />
+    <Compile Include="Master\EmbargoService.cs" />
+    <Compile Include="Master\IAirlineAuctionService.cs" />
+    <Compile Include="Master\IAirlineService.cs" />
+    <Compile Include="IAutoCompleteService.cs" />
+    <Compile Include="Master\ICityService.cs" />
+    <Compile Include="Master\ICommodityService.cs" />
+    <Compile Include="Master\ICountryService.cs" />
+    <Compile Include="Master\ICurrencyService.cs" />
+    <Compile Include="Master\ICustomerService.cs" />
+    <Compile Include="Master\ICustomerTypeService.cs" />
+    <Compile Include="Master\IDepartmentService.cs" />
+    <Compile Include="Master\IEmbargoService.cs" />
+    <Compile Include="Master\ISPHCClassService.cs" />
+    <Compile Include="Master\ISPHCSubClassService.cs" />
+    <Compile Include="Master\OfficeService.cs" />
+    <Compile Include="Schedule\IScheduleTransService.cs" />
+    <Compile Include="Schedule\ScheduleService.cs" />
+    <Compile Include="Master\SlabMasterService.cs" />
+    <Compile Include="Master\SlabService.cs" />
+    <Compile Include="Master\SPHCClassService.cs" />
+    <Compile Include="Master\IPriorityService.cs" />
+    <Compile Include="Master\IProductService.cs" />
+    <Compile Include="Master\IZoneService.cs" />
+    <Compile Include="Master\PriorityService.cs" />
+    <Compile Include="Master\ProductService.cs" />
+    <Compile Include="Master\SpecialHandlingCodeService.cs" />
+    <Compile Include="Master\SPHCSubClassService.cs" />
+    <Compile Include="Permissions\GroupPageRightTransService.cs" />
+    <Compile Include="Permissions\GroupsService.cs" />
+    <Compile Include="Permissions\IGroupPageRightTransService.cs" />
+    <Compile Include="Permissions\IGroupsService.cs" />
+    <Compile Include="Permissions\IPageRightsService.cs" />
+    <Compile Include="Permissions\IPagesService.cs" />
+    <Compile Include="Permissions\IPermissionService.cs" />
+    <Compile Include="Permissions\IUserGroupService.cs" />
+    <Compile Include="Permissions\IUserPageRightTransService.cs" />
+    <Compile Include="Permissions\IEmailAlertService.cs" />
+    <Compile Include="Permissions\PageRightsService.cs" />
+    <Compile Include="Permissions\PagesService.cs" />
+    <Compile Include="Permissions\PermissionService.cs" />
+    <Compile Include="Permissions\UserGroupService.cs" />
+    <Compile Include="Permissions\UserPageRightTransService.cs" />
+    <Compile Include="Permissions\UsersService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common\ICommonService.cs" />
+    <Compile Include="Common\CommonService.cs" />
+    <Compile Include="Master\ZoneService.cs" />
+    <Compile Include="Schedule\ScheduleTransService.cs" />
+    <Compile Include="Shipment\AcceptanceService.cs" />
+    <Compile Include="Shipment\AWBSwappingService.cs" />
+    <Compile Include="Shipment\BookingService.cs" />
+    <Compile Include="Shipment\FlightTransferService.cs" />
+    <Compile Include="Shipment\IAcceptanceService.cs" />
+    <Compile Include="Shipment\IAWBSwappingService.cs" />
+    <Compile Include="Shipment\IBookingService.cs" />
+    <Compile Include="Shipment\IFlightTransferService.cs" />
+    <Compile Include="Shipment\ISLInfoService.cs" />
+    <Compile Include="Shipment\IULDBreakdownService.cs" />
+    <Compile Include="Shipment\IUNKBookingService.cs" />
+    <Compile Include="Shipment\SLInfoService.cs" />
+    <Compile Include="Shipment\ULDBreakdownService.cs" />
+    <Compile Include="Shipment\UNKBookingService.cs" />
+    <Compile Include="Reservation\SpaceControl\AllocationAccountService.cs" />
+    <Compile Include="Reservation\SpaceControl\AllocationService.cs" />
+    <Compile Include="Reservation\SpaceControl\AllocationTransService.cs" />
+    <Compile Include="Reservation\SpaceControl\AWBQueueManagementService.cs" />
+    <Compile Include="Reservation\SpaceControl\IAllocationAccountService.cs" />
+    <Compile Include="Reservation\SpaceControl\IAllocationService.cs" />
+    <Compile Include="Reservation\SpaceControl\IAllocationTransService.cs" />
+    <Compile Include="Reservation\SpaceControl\IAWBQueueManagementService.cs" />
+    <Compile Include="Stock\AWBBlacklistedService.cs" />
+    <Compile Include="Stock\AWBLostService.cs" />
+    <Compile Include="Stock\AWBStockService.cs" />
+    <Compile Include="Stock\AWBVoidService.cs" />
+    <Compile Include="Stock\IAWBBlacklistedService.cs" />
+    <Compile Include="Stock\IAWBLostService.cs" />
+    <Compile Include="Stock\IAWBStockService.cs" />
+    <Compile Include="Stock\IAWBVoidService.cs" />
+    <Compile Include="Stock\IReturnFromAccountService.cs" />
+    <Compile Include="Stock\IReturnToOfficeService.cs" />
+    <Compile Include="Stock\IStockManagementService.cs" />
+    <Compile Include="Stock\IStockAWBService.cs" />
+    <Compile Include="Stock\IStockValidateService.cs" />
+    <Compile Include="Stock\ReturnFromAccountService.cs" />
+    <Compile Include="Stock\ReturnToOfficeService.cs" />
+    <Compile Include="Stock\StockManagementService.cs" />
+    <Compile Include="Stock\StockAWBService.cs" />
+    <Compile Include="Stock\StockValidateService.cs" />
+    <Compile Include="Tariff\BasisOfChargeService.cs" />
+    <Compile Include="Tariff\IBasisOfChargeService.cs" />
+    <Compile Include="Tariff\IManageTariffService.cs" />
+    <Compile Include="Tariff\ManageTariffService.cs" />
+    <Compile Include="Tools\ISeaAirToolService.cs" />
+    <Compile Include="Tools\SeaAirToolService.cs" />
+    <Compile Include="ULD\IULDAllocationReportService.cs" />
+    <Compile Include="ULD\IUldChargeService.cs" />
+    <Compile Include="ULD\ISCMDiscrepancyService.cs" />
+    <Compile Include="ULD\IULDSLACalendarService.cs" />
+    <Compile Include="ULD\IULDStatisticReportsService.cs" />
+    <Compile Include="ULD\IULDStockReportDetailsService.cs" />
+    <Compile Include="ULD\IULDStockNonInventoryService.cs" />
+    <Compile Include="ULD\ULDAllocationReportService.cs" />
+    <Compile Include="ULD\CityWiseULDAllocationService.cs" />
+    <Compile Include="ULD\DemurrageFreePeriodService.cs" />
+    <Compile Include="ULD\ICityWiseULDAllocationService.cs" />
+    <Compile Include="ULD\IDemurrageFreePeriodService.cs" />
+    <Compile Include="ULD\IMaintenanceTypeService.cs" />
+    <Compile Include="ULD\IULDBaggageTypeService.cs" />
+    <Compile Include="ULD\IULDRepairSLAReportService.cs" />
+    <Compile Include="ULD\IULDSLAService.cs" />
+    <Compile Include="ULD\IULDSupportAssignedService.cs" />
+    <Compile Include="ULD\IULDSupportProcessedService.cs" />
+    <Compile Include="ULD\IULDSupportRequestService.cs" />
+    <Compile Include="ULD\IULDInvoiceService.cs" />
+    <Compile Include="ULD\IULDRepairableItemsService.cs" />
+    <Compile Include="ULD\IULDInCompatibilityService.cs" />
+    <Compile Include="ULD\IULDInventoryService.cs" />
+    <Compile Include="ULD\IULDRepairService.cs" />
+    <Compile Include="ULD\IULDReportService.cs" />
+    <Compile Include="ULD\IUldStackService.cs" />
+    <Compile Include="ULD\IULDStockService.cs" />
+    <Compile Include="ULD\IULDTrackingService.cs" />
+    <Compile Include="ULD\IULDTypeService.cs" />
+    <Compile Include="ULD\IULDVendorPriceListService.cs" />
+    <Compile Include="ULD\MaintenanceTypeService.cs" />
+    <Compile Include="ULD\ULDBaggageTypeService.cs" />
+    <Compile Include="ULD\UldChargeService.cs" />
+    <Compile Include="ULD\SCMDiscrepancyService.cs" />
+    <Compile Include="ULD\ULDRepairSLAReportService.cs" />
+    <Compile Include="ULD\ULDSLACalendarService.cs" />
+    <Compile Include="ULD\ULDSLAService.cs" />
+    <Compile Include="ULD\ULDStatisticReportsService.cs" />
+    <Compile Include="ULD\ULDStockNonInventoryService.cs" />
+    <Compile Include="ULD\ULDSupportAssignedService.cs" />
+    <Compile Include="ULD\ULDSupportProcessedService.cs" />
+    <Compile Include="ULD\ULDSupportRequestService.cs" />
+    <Compile Include="ULD\ULDInvoiceService.cs" />
+    <Compile Include="ULD\ULDRepairableItemsService.cs" />
+    <Compile Include="ULD\ULDInCompatibilityService.cs" />
+    <Compile Include="ULD\ULDInventoryService.cs" />
+    <Compile Include="ULD\ULDRepairService.cs" />
+    <Compile Include="ULD\ULDReportService.cs" />
+    <Compile Include="ULD\UldStackService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ULD\ULDStockService.cs" />
+    <Compile Include="ULD\ULDTrackingService.cs" />
+    <Compile Include="ULD\ULDTypeService.cs" />
+    <Compile Include="ULD\ULDStockReportDetailsService.cs" />
+    <Compile Include="ULD\ULDVendorPriceListService.cs" />
+    <Compile Include="Warehouse\AreaService.cs" />
+    <Compile Include="Warehouse\ColdRoomShipmentDetailsService.cs" />
+    <Compile Include="Warehouse\IAreaService.cs" />
+    <Compile Include="Warehouse\IColdRoomShipmentDetailsService.cs" />
+    <Compile Include="Warehouse\ILocationSearchService.cs" />
+    <Compile Include="Warehouse\ILocationSubTypeService.cs" />
+    <Compile Include="Warehouse\ILocationTypeService.cs" />
+    <Compile Include="Warehouse\IWarehouseLocationService.cs" />
+    <Compile Include="Warehouse\IWarehousePlanningService.cs" />
+    <Compile Include="Warehouse\IWarehouseSetupService.cs" />
+    <Compile Include="Warehouse\LocationSearchService.cs" />
+    <Compile Include="Warehouse\LocationSubTypeService.cs" />
+    <Compile Include="Warehouse\LocationTypeService.cs" />
+    <Compile Include="Warehouse\WarehouseLocationService.cs" />
+    <Compile Include="Warehouse\WarehousePlanningService.cs" />
+    <Compile Include="Warehouse\WarehouseSetupService.cs" />
+    <Compile Include="Web References\ValidateEDIMessage\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\ValidateEDIMessage\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\ValidateEDIMessage\WebServiceValidateMsg.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CargoFlash.ROMS.Business\CargoFlash.Cargo.Business.csproj">
+      <Project>{04DECFAA-EAB6-4E14-B2AC-930C1E429B20}</Project>
+      <Name>CargoFlash.Cargo.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CargoFlash.ROMS.Model\CargoFlash.Cargo.Model.csproj">
+      <Project>{35AEA97A-EE6D-4DB0-9767-E668A5BBF5AE}</Project>
+      <Name>CargoFlash.Cargo.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CargoFlash.SoftwareFactory.Data\CargoFlash.SoftwareFactory.Data.csproj">
+      <Project>{1c17eb6b-8e0e-4aa2-8005-dcf1783dbc14}</Project>
+      <Name>CargoFlash.SoftwareFactory.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CargoFlash.SoftwareFactory.WebUI\CargoFlash.SoftwareFactory.WebUI.csproj">
+      <Project>{fbfc49f8-dcef-46f7-b31d-3991b1317b92}</Project>
+      <Name>CargoFlash.SoftwareFactory.WebUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WCF.Validation.Engine\WCF.Validation.Engine.csproj">
+      <Project>{4be5d56e-0535-406b-9ccd-16e11cf47faa}</Project>
+      <Name>WCF.Validation.Engine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\CargoFlash.Cargo.DataService.dll" />
+    <Content Include="bin\Debug\CargoFlash.Cargo.DataService.pdb" />
+    <Content Include="bin\Debug\CargoFlash.Cargo.Model.dll" />
+    <Content Include="bin\Debug\CargoFlash.Cargo.Model.pdb" />
+    <Content Include="bin\Debug\CargoFlash.SoftwareFactory.Data.dll" />
+    <Content Include="bin\Debug\CargoFlash.SoftwareFactory.Data.pdb" />
+    <Content Include="bin\Debug\CargoFlash.SoftwareFactory.WebUI.dll" />
+    <Content Include="bin\Debug\CargoFlash.SoftwareFactory.WebUI.pdb" />
+    <Content Include="bin\Debug\Microsoft.Office.Interop.Excel.dll" />
+    <Content Include="bin\Debug\Microsoft.Office.Interop.Excel.xml" />
+    <Content Include="bin\Debug\Newtonsoft.Json.dll" />
+    <Content Include="bin\Debug\System.Net.Http.dll" />
+    <Content Include="bin\Debug\System.Net.Http.Formatting.dll" />
+    <Content Include="bin\Debug\System.Net.Http.Formatting.xml" />
+    <Content Include="bin\Debug\System.Net.Http.WebRequest.dll" />
+    <Content Include="bin\Debug\System.Net.Http.WebRequest.xml" />
+    <Content Include="bin\Debug\System.Net.Http.xml" />
+    <Content Include="bin\Debug\System.ServiceModel.dll" />
+    <Content Include="bin\Release\Newtonsoft.Json.dll" />
+    <Content Include="Dlls\KLAS.Business.dll" />
+    <None Include="Web References\ValidateEDIMessage\WebServiceValidateMsg.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://gares.bookmycargo.net/edi/PresentationLayer/Admin/Account/Public/WebServiceValidateMsg.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ValidateEDIMessage\</RelPath>
+      <UpdateFromURL>http://gares.bookmycargo.net/edi/PresentationLayer/Admin/Account/Public/WebServiceValidateMsg.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>CargoFlash_Cargo_DataService_ValidateEDIMessage_WebServiceValidateMsg</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{3D9AD99F-2412-4246-B90B-4EAA41C64699}">
+        <WcfProjectProperties>
+          <AutoStart>True</AutoStart>
+        </WcfProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

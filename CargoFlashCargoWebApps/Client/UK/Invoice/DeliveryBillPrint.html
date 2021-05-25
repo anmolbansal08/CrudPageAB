@@ -1,0 +1,649 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Delivery Bill Print</title>
+    <script src="../../../Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="../../../Scripts/html2canvas.js"></script>
+    <script src="../../../Scripts/jspdf.debug.js"></script>
+    <script type="text/javascript">
+        var InvoiceSNo = getParameterByName("InvoiceSNo", ""); var userContext = "";
+        $(document).ready(function () {
+            userContext = window.opener.parent.userContext;
+            GetDeliveryBillPrint();
+        });
+
+        function callpdf() {
+            var PDFCode = "DeliveryBill";
+            var pdf = new jsPDF('p', 'pt', 'a4');
+
+            pdf.internal.scaleFactor = 1.3;
+
+            $('#printDeliveryBill').append("<style>.highcharts-container>svg>g>text{display:none;}</style>");
+            pdf.addHTML(document.body, 10, 10, {
+                pagesplit: true, retina: true, width: 900, border:10, html2canvas: { scale: 5, logging: true },
+            }, function () {
+
+                pdf.save(PDFCode + '.pdf');        //save pdf onLoad
+                setTimeout(function () { $('#printDeliveryBill').html(""); }, 2000);
+                window.close();
+            });
+        }
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        function GetDeliveryBillPrint() {
+            var InvoiceSNo = getParameterByName("InvoiceSNo", "");
+            var InvoiceType = getParameterByName("InvoiceType", "");
+            var UserSNo = userContext.UserSNo;
+            var Environment = userContext.SysSetting.ICMSEnvironment;
+            UserSNo = (UserSNo == "" || UserSNo == null ? "0" : UserSNo);
+            $.ajax({
+                url: "../../../Services/Shipment/PaymentService.svc/GetChargeNotePrintRecordExport",
+                async: false,
+                type: "GET",
+                dataType: "json",
+                data: { InvoiceSNo: InvoiceSNo, InvoiceType: InvoiceType, UserSNo: UserSNo },
+                contentType: "application/json; charset=utf-8", cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    var total = 0.00;
+                    var total1 = 0.00;
+                    var totalsum = 0.00;
+                    FinalData = ResultData.Table0;
+                    FinalData1 = ResultData.Table1;
+                    //FinalData1 = ResultData.Table4;
+                    //FinalDataCancelInvoice = ResultData.Table2;
+                    //if (FinalDataCancelInvoice.length > 0) {
+                    //    if (FinalDataCancelInvoice[0].InvoiceCancel == "1") {
+                    //        $('#bgtext').attr('style', 'display:block');
+                    //    }
+                    //    else {
+                    //        $('#bgtext').attr('style', 'display:none');
+                    //    }
+                    //}
+                    //else {
+                    //    $('#bgtext').attr('style', 'display:none');
+                    //}
+
+                    if (FinalData.length > 0) {
+                        //var UD = FinalData[0].ULD
+                        //var ES = FinalData[0].ESS
+                        //var isInt = FinalData[0].ISinternational == '0' || FinalData[0].ISinternational == 'False' ? '0' : '1'
+                        //var RCH = FinalData[0].RUSH == null || FinalData[0].RUSH == undefined || FinalData[0].RUSH == 'False' || FinalData[0].RUSH == "" ? "" : FinalData[0].RUSH
+
+                       // if (FinalData.length > 0) {
+                            //if (InvoiceType == '0' && isInt != undefined && ES == 'False' && UD == '0' && (isInt == '1')) {
+                            //    $("#spnhdr").html("EXPORT-INTERNATIONAL" + (FinalData[0].PaymentMode ? ' - ' + FinalData[0].PaymentMode : ''));
+                            //} else if (InvoiceType == '0' && isInt != undefined && ES == 'False' && UD == '0' && (isInt == '0')) {
+
+                            //    $("#spnhdr").html("EXPORT-DOMESTIC" + (FinalData[0].PaymentMode ? ' - ' + FinalData[0].PaymentMode : ''));
+                            //} else if (InvoiceType == '1' && ES == 'False' && (RCH != "" && RCH == 'True') && UD == '0' && (isInt == '0')) {  ///// true rushhandling for dom
+                            //    $("#spnhdr").html("IMPORT-DOMESTIC(Rush Handling)" + (FinalData[0].PaymentMode ? ' - ' + FinalData[0].PaymentMode : ''));
+
+                            //} else if (InvoiceType == '1' && ES == 'False' && (RCH != "" && RCH == 'True') && UD == '0' && (isInt == '1')) {   //// true rushhandling for int
+                            //    $("#spnhdr").html("IMPORT-INTERNATIONAL(Rush Handling)" + (FinalData[0].PaymentMode ? ' - ' + FinalData[0].PaymentMode : ''));
+                            //}
+                            //else if (InvoiceType == '1' && (RCH == "") && ES == 'False' && UD == '0' && (isInt == '1')) {   //// false rushhandling for int
+                            //    $("#spnhdr").html("IMPORT-INTERNATIONAL" + (FinalData[0].PaymentMode ? ' - ' + FinalData[0].PaymentMode : ''));
+                            //}
+                            //else if (InvoiceType == '1' && ES == 'False' && (RCH == "") && UD == '0' && (isInt == '0')) {   ///// false rushhandling for dom
+                            //    $("#spnhdr").html("IMPORT-DOMESTIC" + (FinalData[0].PaymentMode ? ' - ' + FinalData[0].PaymentMode : ''));
+                            //} else if (InvoiceType == '0' && UD == '0' && ES == 'True') {
+                            //    $("#spnhdr").html("EXPORT-CASH");
+                            //} else if (InvoiceType == '1' && UD == '0' && ES == 'True') {
+                            //    $("#spnhdr").html("IMPORT-CASH");
+                            //} else if (UD != '0') {
+                            //    $("#spnhdr").html("CASH");
+                            //}
+                            //else {
+                            //    $("#spnhdr").html("");
+                            //}
+
+                            if (Environment == "GA") {
+                                $('#ImgLogo').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineLogo);
+                                $('#ImgLogo1').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineLogo);
+                            } else {
+                                $('#ImgLogo').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineLogo);
+                                $('#ImgLogo').attr('onError', 'this.onerror=null;this.src="/Images/new GA logo cargo-05.png";');
+                            }
+                      //  }
+                        //*****Ends here******Added by Devendra*****
+
+                    //    $("#spninvoicenodate").html(FinalData[0].InvoiceDate);
+                        $("#spnaddress").html(FinalData[0].Address);
+                        $("#spnaddress1").html(FinalData[0].Address);
+                     
+                        $("#spngstno").html(FinalData[0].DefaultGSTNumber);
+                        $("#spngstno1").html(FinalData[0].DefaultGSTNumber);
+                        $("#spnname").html(FinalData[0].AirlineName);
+                        $("#spnname1").html(FinalData[0].AirlineName);
+                        $("#spnname2").html(FinalData[0].AirlineName);
+                        $("#spnname3").html(FinalData[0].AirlineName);
+                        //$("#spnDate").html(FinalData[0].InvoiceDate);
+                        //$("#spndo").html(FinalData[0].DONumber);
+                        //$("#spnsapdoc").html(FinalData[0].document);
+                        //$("#spnawbno").html(FinalData[0].AWBNo);
+                        //$("#spnorigin").html(FinalData[0].AirportName);
+                        //$("#spndateofarrival").html(FinalData[0].FlightDate);
+                        //$("#spnalamat").html(FinalData[0].ShiperAddress);
+                        //$("#spnflightno").html(FinalData[0].FlightNo);
+                        //$("#spnnamas").html(FinalData[0].ShipperName);
+                        //$("#spntotalweight").html(FinalData[0].TotalGrossWeight)
+                        //$("#spnpsc").html(FinalData[0].TotalPieces);
+                        //$('#spannomor').html(FinalData[0].TaxID);
+                        //$("#spncontent").html(FinalData[0].NatureOfGoods);
+                      //  $("#spninvoicenovalue").html(FinalData[0].InvoiceNo);
+                        //$('#spnsignatureofconsignee').html(FinalData[0].ShipperName);
+                        //$('#spnnamepersonalno').html(FinalData[0].UserName);
+
+                        //var myTable = "<table style='width: 100%;' cellspacing='0' cellpadding='2'>"
+                      //  myTable += "<tr><td colspan='6' align='center' style='border: none; border-left: none; border-top: 2px solid black; border-right: 2px solid black;'><span><b>Descriptions</b></span></td><td colspan='2' style='border:2px solid black;border-left: none;border-bottom:none;border-right:none'><span><b>Amount</b></span></td></tr>";
+
+                      //  for (var i = 0; i < ResultData.Table0.length; i++) {
+                         //   myTable += "<tr><td colspan='2' style='border-right:none; border:2px solid black;border-left: none;border-bottom:2px solid black;'>" + ResultData.Table0[i].Address + ":</td><td colspan='4' style='border: none; border-top: 2px solid black;border-bottom: 2px solid black; border-right:2px solid black'>" + ResultData.Table0[i].AirlineName + "</tr>";
+
+                            //if (ResultData.Table0[i].Chargewaveoff_Remarks == "NOWAVEOFF") {
+                            //    total = (parseFloat(total) + parseFloat(ResultData.Table0[i].ChargeValue_waveoff));
+                            //}
+                     //   }
+
+
+                     //   myTable += '<tr><td style="border-right:none; border:2px solid black;border-left: none;border-bottom:2px solid black;" colspan="8">Tax Information:</td></tr>';
+
+                      //  for (var i = 0; i < ResultData.Table1.length; i++) {
+                         //  myTable += "<tr><td colspan='2' style='border-right:none; border:2px solid black;border-left: none;border-bottom:2px solid black;'>" + ResultData.Table1[i].AirlineName + ":</td><td colspan='4' style='border: none; border-top: 2px solid black;border-bottom: 2px solid black; border-right:2px solid black'>" + ResultData.Table1[i].Address +"</tr>";
+                        //    total1 = (parseFloat(total1) + parseFloat(ResultData.Table1[i].TaxpercentAmount));
+                        //   // total = (parseFloat(total) + parseFloat(ResultData.Table1[i].TaxpercentAmount));
+                       // }
+                       // total += total1;
+                      //  ConvertNumberIntoWords(total, InvoiceSNo);
+                      //  myTable += "<tr><td colspan='2' align='right' style='border: none; border-bottom:1px solid black; border-right: 2px solid black'></td><td colspan='4' style='border: none; border-top: 2px solid black;border-bottom: 2px solid black; text-align:right; border-right:2px solid black'><b>Total</b></td><td colspan='2' style='border-right:none; border-bottom:2px solid black'>" + total + "</td></tr>"
+                     //   myTable += "</table>";
+                      //  $('#LastTable').append(myTable);
+
+                        if (FinalData[0].PrintCount > 0) {
+                            $('#spnReprint').show();
+                        }
+                        else {
+                            $('#spnReprint').hide();
+                        }
+                    }
+                    // callpdf();
+                    if (FinalData1.length > 0) {
+                        $("#spninvoicenodate").html(FinalData1[0].invoicedate);
+                        $("#spninvoicenodate1").html(FinalData1[0].invoicedate);
+                        $("#spndateof").html(FinalData1[0].invoicedate);
+                        $("#spnflightdate").html(FinalData1[0].invoicedate);
+                        $("#spnplaceofdelivery").html(FinalData1[0].CityName);
+                        $("#spnplaceofdelivery1").html(FinalData1[0].CityName);
+                        $("#spnpsc").html(FinalData1[0].TotalPieces);
+                        $("#spnmawbno").html(FinalData1[0].AWBNo);
+                        $("#spnmawbno1").html(FinalData1[0].AWBNo);
+                        $("#spngrwt").html(FinalData1[0].TotalGrossWeight);
+                        $("#spninvoicenovalue").html(FinalData1[0].InvoiceNo);
+                        $("#spninvoicenovalue1").html(FinalData1[0].InvoiceNo);
+                        $("#spncommodity_no").html(FinalData1[0].CommodityDescription);
+                        $("#spnflightno").html(FinalData1[0].FlightNo);
+                        $("#spnflightno1").html(FinalData1[0].FlightNo);
+                        $("#spnflightno2").html(FinalData1[0].FlightNo);
+                        $("#spncitycode").html(FinalData1[0].CityCode);
+                        $("#spncitycode1").html(FinalData1[0].CityCode);
+                        if (FinalData1[0].PrintCount > 0) {
+                            $('#spnReprint').show();
+                        }
+                        else {
+                            $('#spnReprint').hide();
+                        }
+                        
+                    }
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        }
+
+        function prependZeros(num) {
+            var str = ("" + num);
+            return (Array(Math.max(8 - str.length, 0)).join("0") + str);
+        }
+
+        function ConvertNumberIntoWords(TotalAmount, InvoiceSNo) {
+            $.ajax({
+                url: "../../../Services/Shipment/PaymentService.svc/ConvertNumberIntoWords",
+                async: false,
+                type: "GET",
+                dataType: "json",
+                data: { TotalAmount: TotalAmount, InvoiceSNo: InvoiceSNo },
+                contentType: "application/json; charset=utf-8", cache: false,
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table0;
+                    if (FinalData.length > 0) {
+                        $("#spnname").text(FinalData[0].AirlineName);
+                        $("#spnamountreceivedinwriting").text(FinalData[0].TotalAmountInWord);
+                        if (FinalData[0].PrintCount > 0) {
+                            $('#spnReprint').show();
+                        }
+                        else {
+                            $('#spnReprint').hide();
+                        }
+                    }
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+        }
+    </script>
+    <style type="text/css">
+        .BorderCss {
+            border: 1px solid black;
+            border-left: none;
+            border-bottom: none;
+            border-right: 1px solid black;
+        }
+
+        .BorderTop {
+            border: 1px solid black;
+            border-left: none;
+            border-right: none;
+            border-bottom: 1px solid black;
+        }
+
+        #bgtext {
+            color: lightgrey;
+            font-size: 200px;
+            transform: rotate(300deg);
+            -webkit-transform: rotate(300deg);
+        }
+
+        #background {
+            position: absolute;
+            z-index: 0;
+            margin-left: 150px;
+            margin-top: 138px;
+            /*background: white;
+            display: block;
+            min-height: 50%;
+            min-width: 50%;
+            color: yellow;*/
+        }
+
+        #printDeliveryBill {
+            position: absolute;
+            z-index: 1;
+            margin-right: 400px;
+            margin-left: 50px;
+        }
+       
+    </style>
+</head>
+<body>
+    <div id="background">
+
+    </div>
+    <div id="tempStyleDiv"></div>
+    <div id="printDeliveryBill" align="center" style="padding: 5px; font-family:Arial;font-size:11px; font-weight:bold;">
+        <table style="width: 850px;">
+          
+            <tr>
+                <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="8" align="right"><img id="ImgLogo" style="width:150px;height:50px" /><br /></td>
+            </tr>
+            <tr><th colspan="8" align="center" style="font-size:11px;font-weight:bold; font-family:verdana; ">DELIVERY ORDER </th></tr>
+            <tr><th colspan="8" align="center" style="font-size:13px; font-weight:bold; font-family:verdana;"><span id="spnname"></span></th></tr>
+
+            <tr>
+                <td colspan="8">
+            <tr>
+                <td style="width:80%;" align="center">
+                    <table cellpadding="0" cellspacing="5" border="0" style="width: 70%; float: left;">
+                        <tr>
+                            <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="width: 150px; text-align: left; vertical-align: top; font-size:10.5px; font-weight:bold; font-family:verdana;"><span id="spnaddress"></span></td>
+                        </tr>
+                       
+                        <tr>
+                            <td colspan="7" width: 150px; text-align: left; vertical-align: top; font-size:10.5px;font-weight:bold; font-family:verdana;">TEL. NO. 01141530805,</td>
+
+                        </tr>
+                        <tr>
+                            <td style="width: 150px; text-align: left; vertical-align: top; font-size:10.5px;font-weight:bold; font-family:verdana;">FAX NO. 01141530822.</td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="8"></td>
+
+                            <td style="text-align:left;"><b style="margin-left: -96px; font-size:9.5px;font-weight:bold; font-family:verdana;">Date:&nbsp;<span id="spninvoicenodate"></span></b></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 300px; text-align: left; vertical-align: top; font-size:10px;font-weight:bold; font-family:verdana;">The Collector of Customs</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 150px; text-align: left; vertical-align: top; font-size:10px;font-weight:bold; font-family:verdana;">Cargo Terminal(Import)</td>
+                            <td align="right" colspan="6"></td>
+
+                            <td  text-align:left"><b style="margin-left: -96px; font-size:9.5px;font-weight:bold; font-family:verdana;">INVOICE No.&nbsp;<span id="spninvoicenovalue"></span></b></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 150px; text-align: left; vertical-align: top; font-size:10px;font-weight:bold; font-family:verdana;">I.G.I. Airport</td>
+
+                        </tr>
+                        <tr>
+                            <td style="width: 150px; text-align: left; vertical-align: top; font-size:10px;font-weight:bold; font-family:verdana;">New Delhi</td>
+
+                        </tr>
+
+                        <tr>
+                            <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 300px; text-align: left; vertical-align: top; font-size:10.5px; font-family:verdana;">Please deliver to M/S&nbsp; <span id="spnsignatureofconsignee"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 150px; text-align: left; vertical-align: top; font-size:10.5px;font-weight:bold; font-family:Arial;">GST Address:&nbsp;<span id="spncitycode"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 150px; text-align: left; vertical-align: top; font-size:10.5px;font-weight:bold; font-family:Arial;">GST No:<span id="spngstno"></span></td>
+
+                        </tr>
+                        <tr>
+                            <td style="width: 150px; text-align: left; vertical-align: top; font-size:10.5px;font-weight:bold; font-family:Arial;">Place of Delivery:&nbsp;<span id="spnplaceofdelivery"></span></td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="width: 500px; text-align: left; vertical-align: top; font-size:10px; font-family:Verdana;">order the following packages which arrived&nbsp;<span id="spnflightno2"></span>/<span id="spnflightdate"></span></td>
+                            <td align="right" colspan="1"></td>
+
+                            <td style="text-align:right"><b style="margin-left: -96px; font-size:10px; font-family:Verdana;">IGM NO:&nbsp;<span id="spnigmnovalue"></span></b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 150px; text-align: left; vertical-align: top; font-size:10px; font-family:Verdana;">MAWB:&nbsp;<span id="spnmawbno"></span></td>
+                            <td align="right"></td>
+                            <td style="width: 150px; text-align: left; vertical-align: top; font-size:10px; font-family:Arial;">Pcs&nbsp;<span id="spnpsc"></span></td>
+                            <td align="right"></td>
+                            <td style="width: 200px; text-align: right; vertical-align: top; font-size:10px; font-family:Arial;">GR.Wt (In Kg):&nbsp;<span id="spngrwt"></span></td>
+                            <td align="right"></td>
+                            <td align="right"></td>
+                            <td style="width: 150px; text-align: right; vertical-align: top; font-size:10px; font-family:Arial;">Commdy:&nbsp;<span id="spncommodity_no"></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align="right" width="750px" colspan="7"></td>
+
+                            <td style="width: 150px; text-align: right; font-size:10px; font-family:Arial; ">FOR</td>
+                        </tr>
+                        <tr>
+                            <td align="right" width="750px" colspan="7"></td>
+
+                            <td style="width: 150px; text-align: right; font-size:10.5px; font-family:Arial; "><span id="spnname2"></span></td>
+                        </tr>
+                        <tr></tr>
+                    </table>
+
+            <tr>
+                <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+            </tr>
+            <tr><td colspan="8"><hr style="border: 1px dashed  black;" /></td></tr>
+
+
+            <tr>
+                <td colspan="3" id='spn_blank' style="font-size:12px;">&nbsp;</td>
+            </tr>
+      
+        <tr>
+            <td colspan="3" id='spn' style="font-size:12px;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="8" align="right"><br /></td>
+        </tr>
+      
+
+        <tr>
+            <td colspan="8">
+        <tr>
+            <td style="width:80%;" align="center">
+
+                <table style="width: 850px;">
+                  
+                    <tr>
+                        <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                    </tr>
+                    <tr><td width="100px" height="700px" colspan="7"></td></tr>
+                    <tr>
+                        <td colspan="8" align="right"><img id="ImgLogo1" style="width:150px;height:50px" /><br /></td>
+                    </tr>
+                    <tr><th colspan="8" align="center" style="font-size:12px;font-weight:bold; font-size:11px;font-weight:bold; font-family:verdana;">TAX INVOIVE</th></tr>
+                    <tr><th colspan="8" align="center" style="font-size:20px; font-weight:bold; font-size:13px;font-weight:bold; font-family:verdana;"><span id="spnname1"></span></th></tr>
+
+                    <tr>
+                        <td colspan="8">
+                    <tr>
+                        <td style="width:80%;" align="center">
+                            <table cellpadding="0" cellspacing="5" border="0" style="width: 70%; float: left;">
+                                <tr>
+                                    <td colspan="2" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="width: 150px; text-align: left; vertical-align: top; font-size:10.5px; font-weight:bold; font-family:verdana;"><span id="spnaddress1"></span></td>
+                                </tr>
+                               
+                                <tr>
+                                    <td colspan="7" style="width: 150px; text-align: left; vertical-align: top; font-size:10.5px;font-weight:bold; font-family:verdana;">TEL. NO. 01141530805,</td>
+
+
+                                    <td  style="text-align:left;"><b style="margin-left: -96px; font-size:9.5px;font-weight:bold; font-family:verdana;">Date:&nbsp;<span id="spninvoicenodate1"></span></b></td>
+
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="width: 150px; text-align: left; vertical-align: top; font-size:10.5px;font-weight:bold; font-family:verdana;">FAX NO. 01141530822.</td>
+
+                                </tr>
+
+                                <tr></tr>
+                                <tr>
+                                    <td colspan="5"></td>
+
+                                    <td colspan="2" text-align:left"><b style="margin-left: -96px; font-size:9.5px;font-weight:bold; font-family:verdana;">INVOICE No.&nbsp;<span id="spninvoicenovalue1"></span></b></td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="width: 500px; text-align: left; vertical-align: top; font-size:10px; font-family:verdana;">
+                                        Received with thanks from &nbsp;<span id="spnsignatureofconsignee"></span>M/S LINKERS INDIA LOGISTICS PVT LTD
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="width: 150px; text-align: left; vertical-align: top; font-size:10px; font-weight:bold; font-family:verdana;">GST Address:&nbsp;<span id="spncitycode1"></span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="width: 150px; text-align: left; vertical-align: top; font-size:10px; font-weight:bold; font-family:verdana;">GST No:&nbsp;<span id="spngstno1"></span></td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="width: 150px; text-align: left; vertical-align: top; font-size:10px; font-weight:bold; font-family:verdana;">Place of Delivery:&nbsp;<span id="spnplaceofdelivery1"></span></td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="width: 250px; text-align: left; vertical-align: top; font-size:10px; font-weight:bold; font-family:verdana;">an amount of Rs.&nbsp;<span id="spnamount"></span>3,200.00</td>
+
+
+                                    <td colspan="6" style="text-align:left; font-size:10px; font-weight:bold; font-family:Arial;"><b>(Rs. Amount Collect by VIA RECP:&nbsp;<span id="spninvoicenovalue2"></span>).</b></td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2" style="width: 150px; text-align: left; vertical-align: top; font-size:10px; font-family:Arial;">MAWB Chrgs:</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="2" style="font-size:13px; font-weight:bold; font-family:Arial;">1900.00</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2" style="width: 150px; text-align: left; vertical-align: top; font-size:9px; font-family:Arial;">HAWB Chrgs:</td>
+                                    <td colspan="2"></td>
+                                    <td style="font-size:13px; font-weight:bold; font-family:Arial;">1300.00</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                                </tr>
+                                <tr><td></td><td colspan="6"><hr style="border: .5px dashed black;" /></td></tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2" style="width: 450px; text-align: left; vertical-align: top;font-size:11px; font-weight:bold; font-family:Verdana;">Total DO Amt (Inc.Gst):</td>
+                                    <td colspan="2"></td>
+                                    <td style="font-size:9.5px; font-weight:bold; font-family:Verdana;"><u>3200.00</u></td>
+
+                                </tr>
+
+                                <tr><td></td><td colspan="6"><hr style="border: .5px dashed black;" /></td></tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2" style="width: 150px; text-align: left; vertical-align: top; font-size:10px; font-family:Arial;">DoCharge :</td>
+                                    <td colspan="2"></td>
+                                    <td style="font-size:13px; font-weight:bold; font-family:Verdana;">2,710.00</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2" style="width: 150px; text-align: left; vertical-align: top; font-size:10px; font-family:Arial;">CGST Amount@9% :</td>
+                                    <td colspan="2"></td>
+                                    <td style="font-size:13px; font-weight:bold; font-family:Verdana;">245.00</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2" style="width: 150px; text-align: left; vertical-align: top; font-size:10px; font-family:Arial;">SGST Amount@9% :</td>
+                                    <td colspan="2"></td>
+                                    <td style="font-size:13px; font-weight:bold; font-family:Verdana;">245.00</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2" style="width: 150px; text-align: left; vertical-align: top; font-size:10px; font-family:Arial;">IGST Amount@18% :</td>
+                                    <td colspan="2"></td>
+                                    <td style="font-size:13px; font-weight:bold; font-family:Verdana;">0.00</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" id='spnReciptNumber' style="font-size:13px;">&nbsp;</td>
+                                </tr>
+                                <tr><td></td><td colspan="6"><hr style="border: .5px dashed black;" /></td></tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2" style="width: 450px; text-align: left; vertical-align: top;font-size:11px; font-weight:bold; font-family:Verdana;">Total Amt: </td>
+                                    <td colspan="2"></td>
+                                    <td style="font-size:9.5px; font-weight:bold; font-family:Verdana;">3,200.00</td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2" style="width: 450px; text-align: left; vertical-align: top;font-size:11px; font-weight:bold; font-family:Verdana;">Less Agent Tds:</td>
+                                    <td colspan="2"></td>
+                                    <td style="font-size:9.5px; font-weight:bold; font-family:Verdana;">0</td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2" style="width: 450px; text-align: left; vertical-align: top;font-size:11px; font-weight:bold; font-family:Verdana;">Total Amt Recievable:</td>
+                                    <td colspan="2"></td>
+                                    <td style="font-size:9.5px; font-weight:bold; font-family:Verdana;"><u>3,200.00</u></td>
+
+                                </tr>
+                                <tr></tr>
+                                <tr></tr>
+                                <tr>
+
+                                    <td colspan="5" style="width: 100%; text-align: left; vertical-align: top;font-size:10.5px;">Amount &nbsp; <span id="spntotalamount"></span> Three Thousand Two Hundred in Cash (INCLUSIVE OF SERVICE TAX)only</td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="width: 150px; text-align: left; vertical-align: top; font-size:10px; font-family:Verdana;">being freight charges&nbsp; <span id="spnfreightcharges"></span> PP</td>
+
+                                    <td style="width: 500px; text-align: left; vertical-align: top; font-size:10px; font-family:Verdana;" colspan="3">Plus Delivery Order Charges</td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="width: 150px; text-align: left; vertical-align: top; font-size:10px; font-family:Verdana;">on MAWB:&nbsp;<span id="spnmawbno1"></span> </td>
+
+                                    <td colspan="1" style="width: 100px; text-align: center; vertical-align: top; font-size:10px; font-family:Arial; font-weight:bold; padding-right:90px;">&nbsp;<span id="spnflightno1"></span></td>
+
+
+                                    <td colspan="3" style="text-align: right; vertical-align: top; font-size:10px; font-family:Arial; font-weight:bold;">Of &nbsp;<span id="spndateof"></span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align: right; vertical-align: top; font-size:10.5px; font-family:Arial; font-weight:bold;"><span id="spnname3"></span></td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" id='spnReciptNumber' style="font-size:12px;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align:left; vertical-align: top; font-size:10px; font-family:Verdana;">In accordance with notification stamps No. 3 dated 21st December issued by</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align:left; vertical-align: top; font-size:10px; font-family:Verdana;">the Finance Department Government of India, the Company is exempted from</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align:left; vertical-align: top; font-size:10px; font-family:Verdana;">affixing stamps on receipts for passage fares, excess baggage and freight charges.</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align:left; vertical-align: top; font-size:10px; font-family:Verdana; font-weight:bold;">Acumen Overseas Pvt Ltd </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align:left; vertical-align: top; font-size:10px; font-family:Verdana; font-weight:bold;">GSSA AIR CHINA</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align:left; vertical-align: top; font-size:9px; font-family:Verdana; font-weight:bold;">54, Gole Market, New Delhi 110001, GST NO.07AADCA8499B3ZI, HSN CODE:996719 </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align:center; vertical-align: top; font-size:11.5px; font-family:Arial; font-weight:bold;">This is System Generated invoice, Signature and Stamp is not mandatory.</td>
+                                </tr>
+                            </table>
+                            </td>
+                            </tr>
+                    </table>
+                    </tr>
+            
+                </table>
+        
+
+    </div>
+
+</body>
+</html>

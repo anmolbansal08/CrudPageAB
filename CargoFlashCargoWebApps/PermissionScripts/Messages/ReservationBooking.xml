@@ -1,0 +1,89 @@
+﻿<Messages>
+  <!--Reservation Dimension-->
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Dimension Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Dimension Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Dimension Deleted Successfully.</value>
+  </ServerMessage>
+
+  <!--Reservation Dimension ULD-->
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>ULD Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2004</Key>
+    <value>ULD Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2005</Key>
+    <value>ULD Deleted Successfully.</value>
+  </ServerMessage>
+
+  <!--Due Agent Other Charges Information-->
+  <ServerMessage>
+    <Key>2006</Key>
+    <value>Other Charges Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2007</Key>
+    <value>Other Charges Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2008</Key>
+    <value>Other Charges Deleted Successfully.</value>
+  </ServerMessage>
+  
+  <!--Other Information-->
+  <ServerMessage>
+    <Key>2009</Key>
+    <value>Other Information Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2010</Key>
+    <value>Other Information Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2011</Key>
+    <value>Other Information Deleted Successfully.</value>
+  </ServerMessage>
+
+  <!--Due Agent Other Charges Information-->
+  <ServerMessage>
+    <Key>2012</Key>
+    <value>Details Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2013</Key>
+    <value>Details Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2014</Key>
+    <value>Details Deleted Successfully.</value>
+  </ServerMessage>
+
+
+
+  <!--Due Agent Other Charges Information-->
+  <ServerMessage>
+    <Key>2015</Key>
+    <value>Marin Insurance Detail Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2016</Key>
+    <value>Marin Insurance Detail Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2017</Key>
+    <value>Marin Insurance Detail Deleted Successfully.</value>
+  </ServerMessage>
+  
+  
+</Messages>

@@ -1,0 +1,103 @@
+﻿<table class='WebFormTable' id='tbl' validateonsubmit=true>
+    <tr><td class='formSection' colspan='10'>GSA CSR Report </td></tr>
+    <tr><td class='formlabel' colspan='10'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+    <tr class='formSection'>      
+
+        <td class="formlabel"><font color='red'>*</font>Airline Name</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("Airline")
+            @Html.TextBox("Text_Airline", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank", style = "width:200px;" })
+
+        </td>
+        <td class="formlabel"><font color='red'>*</font>GSA Name</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("AgentName")
+            @Html.TextBox("Text_AgentName", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete",
+           data_valid_msg = "Agent Name can not be blank",
+           style = "width:200px;" })
+
+
+        </td>
+
+
+    </tr>  
+    <tr class='formSection'>
+        <td class="formlabel"><font color='red'>*</font>Year</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("Year")
+            @Html.TextBox("Text_Year", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", style = "width:150px;", data_valid_msg = "Year can not be blank", })
+
+        </td>
+        <td class="formlabel"><font color='red'>*</font>Month</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("Month")
+            @Html.TextBox("Text_Month", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", style = "width:90px;", data_valid_msg = "Month can not be blank", })
+
+            @Html.Hidden("FortNight")
+            @Html.TextBox("Text_FortNight", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", style = "width:104px;", data_valid_msg = "FortNight can not be blank", })
+
+
+        </td>
+    </tr> 
+
+    <tr class='formSection'>
+        <td class="formlabel"><font color='red'>*</font>Currency</td>
+        <td class="formInputcolumn">
+
+            @Html.Hidden("Currency")
+            @Html.TextBox("Text_Currency", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", style = "width:150px;", data_valid_msg = "Currency can not be blank", })
+
+        </td>
+        <td class="formlabel"><font color='red'></font>Booking Type</td>
+        <td class="formInputcolumn">        
+            @Html.RadioButton("BookingType", "0", new { @id = "BookingTypeAwb" })
+            <label>AWB</label>
+            @Html.RadioButton("BookingType", "1", new { @id = "BookingTypeAwbCourier" })
+            <label>Courier</label>
+        </td>
+    </tr>
+
+    <tr class='formSection'>
+        <td class="formlabel"></td>
+        <td class="formInputcolumn">
+            @Html.RadioButton("CSRbtn", "0", new { @id = "CSRbtnG" })
+            <label>Generate CSR</label>
+            @Html.RadioButton("CSRbtn", "1", new { @id = "CSRbtnV" })
+            <label>View CSR</label>
+        </td>
+        <td class="formlabel"></td>
+        <td class="formInputcolumn">
+          
+        </td>
+    </tr>
+<tr>
+        <td align="center" colspan="6">
+            <label id="lblerror"></label>
+        </td>
+    </tr>
+
+    <tr class='formSection'>
+        <td colspan='10'>
+            <input type="button" name='SearchSave' value='Search' class='btn btn-success' id="btnSubmit" />
+            @*<input type="button" name='ExcelVersionDetails' value='Export To Excel' class='btn btn-success' id="btnSubmit" src="../Images/IconExcel.png" />*@
+            <div id="exportflight" style="margin-left: 68px;margin-top: -26px;"><img id=" imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer;" title="Export To Excel" onclick="ExportToExcel_GSACSR()" /></div>
+        </td>
+    </tr>
+
+
+</table>
+@*<div class='k-grid-header-wrap' id='grid_bookingprofile' style='display: none; width: 100%; height: 100%; overflow-x: scroll; overflow-y: scroll;'>*@
+
+
+    <br />
+    <table class="appendGrid ui-widget" style="margin-bottom:10px;" align="center" id="tbl_bookingprofile">
+               
+        <tbody id="tbodygridbookingprofile" class="ui-widget-content"></tbody>
+    </table>
+@*</div>*@
+<script src="~/JScript/Schedule/GSACSRReport.js"></script>
+<script src="~/Scripts/jquery.appendGrid-1.3.2.js"></script>

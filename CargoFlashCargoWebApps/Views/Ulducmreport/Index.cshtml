@@ -1,0 +1,98 @@
+﻿<style type="text/css">
+    .k-grid-header th.k-header > .k-link {
+        cursor: auto;
+    }
+</style>
+
+
+<div id="divbody" style="height:auto">
+    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+        <tr><td class='formSection' colspan='4'>ULD UCM REPORT</td></tr>
+      
+        <tr class='formSection'>
+
+            <td class="formlabel"><font color='red'></font>Station</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("OriginSNo")
+                @Html.TextBox("Text_OriginSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+
+            </td>
+            <td class="formlabel">Report Date</td>
+            <td class="formInputcolumn">
+                <label id="ReportDate"></label>
+            </td>
+
+        </tr>
+        <tr class="DateWiseRow">
+            <td class=' formlabel' title='From Date'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    From Date :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+            </td>
+            <td class=' formlabel' title='To Date'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    To Date :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                       data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' />
+            </td>
+        </tr>
+        <tr class='formSection'>
+
+            <td class="formlabel"><font color='red'></font>UCM Type</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("UCMType")
+                @Html.TextBox("Text_UCMType", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+
+            </td>
+            <td class="formlabel">Flight Number</td>
+            <td class="formInputcolumn">
+               @Html.Hidden("FlightNumber")
+               @Html.TextBox("Text_FlightNumber", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            </td>
+
+        </tr>
+       
+        <tr>
+            <td class=' formlabel'>
+                <div id="exportflight" style="float:left;">
+                    <img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" onclick="ExportExcelHoldType()" title="Export To Excel" />
+                </div>
+                Status
+            </td>
+            <td class='formInputcolumn'>
+                @Html.Hidden("Status")
+                @Html.TextBox("Text_Status", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+            </td>
+            <td class="formlabel"></td>
+            <td class="formInputcolumn">
+                <input type='submit' name='operation' onclick="SearchFPRReport()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+            </td>
+
+        </tr>
+    </table>
+    <br />
+    <br />
+</div>
+<table id='tbl'></table>
+
+<div id="example">
+    <div id="grid" style="font-size:11px;"></div>
+    <script src="~/JScript/ULD/Ulducmreportreport.js"></script>
+
+</div>
+
+
+
+
+
+
+

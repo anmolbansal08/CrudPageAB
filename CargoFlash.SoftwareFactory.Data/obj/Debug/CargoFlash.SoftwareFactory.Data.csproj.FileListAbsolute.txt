@@ -1,0 +1,27 @@
+E:\WorkSpace_Garuda\Cargoflash.Garuda.Reservation\GADev\CargoFlash.SoftwareFactory.Data\bin\Debug\CargoFlash.SoftwareFactory.Data.dll
+E:\WorkSpace_Garuda\Cargoflash.Garuda.Reservation\GADev\CargoFlash.SoftwareFactory.Data\bin\Debug\CargoFlash.SoftwareFactory.Data.pdb
+E:\WorkSpace_Garuda\Cargoflash.Garuda.Reservation\GADev\CargoFlash.SoftwareFactory.Data\bin\Debug\System.ServiceModel.dll
+E:\WorkSpace_Garuda\Cargoflash.Garuda.Reservation\GADev\CargoFlash.SoftwareFactory.Data\bin\Debug\System.ServiceModel.Web.dll
+E:\WorkSpace_Garuda\Cargoflash.Garuda.Reservation\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.csprojAssemblyReference.cache
+E:\WorkSpace_Garuda\Cargoflash.Garuda.Reservation\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.csproj.CoreCompileInputs.cache
+E:\WorkSpace_Garuda\Cargoflash.Garuda.Reservation\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.csproj.CopyComplete
+E:\WorkSpace_Garuda\Cargoflash.Garuda.Reservation\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.dll
+E:\WorkSpace_Garuda\Cargoflash.Garuda.Reservation\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.pdb
+C:\Users\mailm\Downloads\GADev\GADev\CargoFlash.SoftwareFactory.Data\bin\Debug\CargoFlash.SoftwareFactory.Data.dll
+C:\Users\mailm\Downloads\GADev\GADev\CargoFlash.SoftwareFactory.Data\bin\Debug\CargoFlash.SoftwareFactory.Data.pdb
+C:\Users\mailm\Downloads\GADev\GADev\CargoFlash.SoftwareFactory.Data\bin\Debug\System.ServiceModel.dll
+C:\Users\mailm\Downloads\GADev\GADev\CargoFlash.SoftwareFactory.Data\bin\Debug\System.ServiceModel.Web.dll
+C:\Users\mailm\Downloads\GADev\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.csproj.CoreCompileInputs.cache
+C:\Users\mailm\Downloads\GADev\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.csproj.CopyComplete
+C:\Users\mailm\Downloads\GADev\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.dll
+C:\Users\mailm\Downloads\GADev\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.pdb
+C:\Users\mailm\Downloads\GADev\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.csprojAssemblyReference.cache
+C:\Users\mailm\Downloads\CrudPageAB-master (1)\CrudPageAB-master\GADev\CargoFlash.SoftwareFactory.Data\bin\Debug\CargoFlash.SoftwareFactory.Data.dll
+C:\Users\mailm\Downloads\CrudPageAB-master (1)\CrudPageAB-master\GADev\CargoFlash.SoftwareFactory.Data\bin\Debug\CargoFlash.SoftwareFactory.Data.pdb
+C:\Users\mailm\Downloads\CrudPageAB-master (1)\CrudPageAB-master\GADev\CargoFlash.SoftwareFactory.Data\bin\Debug\System.ServiceModel.dll
+C:\Users\mailm\Downloads\CrudPageAB-master (1)\CrudPageAB-master\GADev\CargoFlash.SoftwareFactory.Data\bin\Debug\System.ServiceModel.Web.dll
+C:\Users\mailm\Downloads\CrudPageAB-master (1)\CrudPageAB-master\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.csprojAssemblyReference.cache
+C:\Users\mailm\Downloads\CrudPageAB-master (1)\CrudPageAB-master\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.csproj.CoreCompileInputs.cache
+C:\Users\mailm\Downloads\CrudPageAB-master (1)\CrudPageAB-master\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.csproj.CopyComplete
+C:\Users\mailm\Downloads\CrudPageAB-master (1)\CrudPageAB-master\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.dll
+C:\Users\mailm\Downloads\CrudPageAB-master (1)\CrudPageAB-master\GADev\CargoFlash.SoftwareFactory.Data\obj\Debug\CargoFlash.SoftwareFactory.Data.pdb

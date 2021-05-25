@@ -1,0 +1,453 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    @{
+        if (Session["UserDetail"] == null)
+        {
+            System.Web.HttpContext.Current.Response.Redirect("~/Account/GarudaLogin.cshtml");
+            return;
+        }
+        var dttemp = ((CargoFlash.Cargo.Model.UserLogin)Session["UserDetail"]).SysSetting["JSVersion"];
+    }
+    <title>Garuda Indonesia Cargo System</title>
+    <link type="text/css" rel="stylesheet" href="Styles/Application.css?+@dttemp" />
+    <link type="text/css" rel="stylesheet" href="Styles/Grid/kendo.common.min.css?+@dttemp" />
+    <link type="text/css" rel="stylesheet" href="Styles/Grid/kendo.blueopal.min.css?+@dttemp" />
+
+    <link type="text/css" rel="stylesheet" href="Styles/Site.css?+@dttemp" />
+    <script type="text/javascript" src="Scripts/jquery-1.7.2.js?+@dttemp"></script>
+    <script type="text/javascript" src="Scripts/kendo/kendo.web.js?+@dttemp"></script>
+    <script src="Scripts/shortcut.js?+@dttemp"></script>
+    <script type="text/javascript" src="Scripts/index.js"></script>
+    <link href="~/Styles/jquery-ui/jquery-ui-1.10.2.custom.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>
+    <meta name="viewport" content="width=device-width" />
+
+
+    <style>
+        .short {
+            font-weight: bold;
+            color: #FF0000;
+            font-size: 11px;
+        }
+
+        .weak {
+            font-weight: bold;
+            color: orange;
+            font-size: 11px;
+        }
+
+        .good {
+            font-weight: bold;
+            color: #2D98F3;
+            font-size: 11px;
+        }
+
+        .strong {
+            font-weight: bold;
+            color: limegreen;
+            font-size: 11px;
+        }
+
+
+        .divshort {
+            color: #FF0000;
+            width: 25%;
+            border: solid;
+            background-color: #FF0000;
+        }
+
+        .divweak {
+            color: orange;
+            width: 50%;
+            border: solid;
+            background-color: orange;
+        }
+
+        .divgood {
+            color: #2D98F3;
+            width: 75%;
+            border: solid;
+            background-color: #2D98F3;
+        }
+
+        .divstrong {
+            color: limegreen;
+            width: 97%;
+            border: solid;
+            background-color: limegreen;
+        }
+    </style>
+</head>
+@{
+    var MenuItem = "";
+    var UserName = "";
+    var CityCode = "";
+    var AirportCode = "";
+    var GroupName = "";
+    var NewTerminalName = "";
+    var UserSNo = 0;
+
+    //CargoFlash.Cargo.DataService.LoginService ls = new CargoFlash.Cargo.DataService.LoginService();
+    //NewTerminalName = ((CargoFlash.Cargo.Model.UserLogin)(System.Web.HttpContext.Current.Session["UserDetail"])).NewTerminalName;
+    if (((CargoFlash.Cargo.Model.UserLogin)(System.Web.HttpContext.Current.Session["UserDetail"])).DefaultTerminalSNo != ((CargoFlash.Cargo.Model.UserLogin)(System.Web.HttpContext.Current.Session["UserDetail"])).TerminalSNo)
+    {
+        //NewTerminalName = "["+ ((CargoFlash.Cargo.Model.UserLogin)(System.Web.HttpContext.Current.Session["UserDetail"])).NewTerminalName +"]";
+    }
+
+    if (Session["UserDetail"] != null)
+    {
+        CargoFlash.Cargo.Model.UserLogin userLogin = (CargoFlash.Cargo.Model.UserLogin)Session["UserDetail"];
+
+        if (HttpContext.Current.Request.QueryString["AirportSNo"] != "" && HttpContext.Current.Request.QueryString["AirportCode"] != null)
+        {
+            System.Data.DataSet ds = new System.Data.DataSet();
+            CargoFlash.Cargo.DataService.LoginService l = new CargoFlash.Cargo.DataService.LoginService();
+            ds = l.GetCitySNo(Convert.ToInt32(HttpContext.Current.Request.QueryString["AirportSNo"]), Convert.ToInt32(HttpContext.Current.Request.QueryString["UserSNo"]));
+            userLogin.AirportSNo = Convert.ToInt32(HttpContext.Current.Request.QueryString["AirportSNo"]);
+            userLogin.AirportCode = HttpContext.Current.Request.QueryString["AirportCode"].Substring(0, 3);
+            userLogin.AirportName = ds.Tables[0].Rows[0]["AirportName"].ToString();
+            userLogin.CitySNo = Convert.ToInt32(ds.Tables[0].Rows[0]["CitySNo"]);
+            userLogin.CityCode = ds.Tables[0].Rows[0]["CityCode"].ToString();
+            userLogin.CityName = ds.Tables[0].Rows[0]["CityName"].ToString();
+            userLogin.TerminalSNo = ds.Tables[0].Rows[0]["TerminalSNo"].ToString() == "" ? 0 : Convert.ToInt32(ds.Tables[0].Rows[0]["TerminalSNo"].ToString());
+
+            try
+            {
+                int result = l.UpdateUserInfoOnAirportChanges(Convert.ToInt32(HttpContext.Current.Request.QueryString["UserSNo"]), userLogin.TerminalSNo, userLogin.CitySNo, userLogin.AirportSNo);
+            }
+            catch (Exception Ex)
+            {
+
+            }
+        }
+        UserName = userLogin.UserName;
+        MenuItem = userLogin.MenuDetails;
+        CityCode = userLogin.CityCode;
+        AirportCode = userLogin.AirportCode;
+        GroupName = userLogin.GroupName;
+        UserSNo = userLogin.UserSNo;
+        @Html.Hidden("HdnGroupName", GroupName)
+    }
+    else
+    {
+        System.Web.HttpContext.Current.Response.Redirect("~/Account/GarudaLogin.cshtml");
+
+    }
+
+
+}
+
+@*Added By Arman*@
+@{
+    var Creditlimit = "";
+    var RemainingCreditLimit = "";
+    if (Session["UserDetail"] != null)
+    {
+        CargoFlash.Cargo.Model.UserLogin userLogin = (CargoFlash.Cargo.Model.UserLogin)Session["UserDetail"];
+        System.Data.DataSet ds = new System.Data.DataSet();
+        CargoFlash.Cargo.DataService.LoginService l = new CargoFlash.Cargo.DataService.LoginService();
+        ds = l.GetCredit(userLogin.AgentSNo);
+        if (ds != null && ds.Tables[0].Rows.Count > 0)
+        {
+            Creditlimit = ds.Tables[0].Rows[0]["Creditlimit"].ToString();
+            RemainingCreditLimit = ds.Tables[0].Rows[0]["RemainingCreditLimit"].ToString();
+        }
+        else
+        {
+            Creditlimit = "";
+            RemainingCreditLimit = "0.00";
+        }
+    }
+
+}
+@*End Here*@
+
+<body onload="ResizedIFrame(70)" onresize="    ResizedIFrame(70)">
+    <style type="text/css">
+        body, html {
+            overflow: hidden;
+        }
+
+        .sgrad {
+            background: #C8CDD1; /* For browsers that do not support gradients */
+            background: -webkit-linear-gradient(left,rgba(202,207,210,1),rgba(255,0,0,0)); /*Safari 5.1-6*/
+            background: -o-linear-gradient(right,rgba(202,207,210,1),rgba(255,0,0,0)); /*Opera 11.1-12*/
+            background: -moz-linear-gradient(right,rgba(202,207,210,1),rgba(255,0,0,0)); /*Fx 3.6-15*/
+            background: linear-gradient(to right, rgba(202,207,210,1), rgba(255,0,0,0)); /*Standard*/
+        }
+
+        .MarqueBlue {
+            color: blue;
+        }
+    </style>
+
+    <header id="header">
+        <div class="sgrad" style="height: 27px;">
+            <div id="divMarquee" style="float: left; text-align: center; width: 70%;padding-top: 2px;font-weight:bold;color:red;">
+                <label id="marTicker" style="display:none;"></label>
+            </div>
+            <div id="welcomeMsg" style="float: right;padding: 0px 20px 0px 0px;font-weight: bold">
+                <input type="hidden" id="hdnUserContext" value="" />
+                <table id="tblPickup" border="0" style="padding-top: 2px;" cellpadding="0" cellspacing="0" width="100%">
+                    <tbody>
+                        <tr>
+                            @* added by   Arman*@
+                            @if (@GroupName == "AGENT")
+                            {
+
+                                <td align="center">
+                                    <span style="color:Red">
+                                        Available Credit Limit : &nbsp;&nbsp;
+                                    </span>
+                                    <span id="spnCreditLimit" style="color:black">
+                                        @RemainingCreditLimit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </span>
+                                </td>
+                                @*end  here*@
+                            }
+                            <td align="left" style="display:none"><span id="spnSession"></span> </td>
+
+                            <td align="left">
+                                <span>
+                                    <span style="margin-right:15px;">
+
+                                    </span>
+                                    <span style="color:Red" id="spnterminal">
+                                        @NewTerminalName
+                                    </span>
+
+                                    <span style="margin-left:5px;">
+                                        <a style="color:black" href="#" title="@UserName" onclick="GetCityAutocomplete()">
+                                            @UserName.ToUpper() (@GroupName)-<span id="spnCityCode"> @AirportCode </span><span id="spnCity" style="display:none">
+                                                <input type="hidden" id="hdnUserSNo" value="@UserSNo">
+                                                <input type="hidden" name="AirportCode" id="AirportCode" value="">
+                                                <input type="text" class="k-input" name="Text_AirportCode" id="Text_AirportCode" tabindex="0" controltype="autocomplete" maxlength="40" style="font-family: Verdana; font-size: 12px; position: relative; vertical-align: top; text-transform: uppercase; background-color: transparent;width:90px;" value="" placeholder="Airport Code" data-role="autocomplete" autocomplete="off">
+                                            </span>
+                                        </a>
+                                    </span>
+
+                                    @*<span style="vertical-align: super;color:black">
+                                            [@CityCode]
+                                        </span>*@<span style="vertical-align: super;color:black">
+                                    </span>
+
+                                </span>
+                            </td>
+                            <td id="LogoutPanal">
+                                <div style="width:100px;float:right;margin-left:20px;">
+                                    <a id="tracking" target="iMasterFrame" href="Default.cshtml?Module=Shipment&amp;Apps=Tracking&amp;FormAction=New" title="Tracking">
+                                        <img alt="" border="0" style="height:20px ;margin-right:5px;" src="~/Images/TrackingIcon.png">
+                                    </a>
+
+                                    <img alt="" border="0" style="height: 21px; width: 21px; cursor:pointer; margin-right:5px;" title="Change Password" onclick="PopChangePassword()" src="~/Images/key.png">
+                                    <a id="logout" onclick="delcook()" href="#" title="Logout">
+                                        <img alt="" border="0" style="height:20px" src="~/Images/logout.png">
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="ContentsHolder">
+                </div>
+
+            </div>
+        </div>
+        <div class="menu-title" style="display:none;">
+            @Html.Raw(@MenuItem)
+
+        </div>
+    </header>
+    <div style="position: absolute; width: 100%; height: 0px;">
+        <div id="divSlider" onclick="CollapseAll()" style="float: right; cursor: pointer; padding-right: 20px; ">
+            <img id="imgArrow" src="~/Images/expand.png" style="height:20px;width:20px;" title="Collapse (shift+C)" />
+        </div>
+    </div>
+    <div>
+        <iframe class="iframeCss" frameborder="0" id="iMasterFrame" name="iMasterFrame" src="default.cshtml" style="height: 100%;  width: 100%" marginheight="0" marginwidth="0"></iframe>
+    </div>
+
+    <script>
+
+        $(document).ready(function () {
+            $("#menu").kendoMenu({
+                select: function (e) {
+                    this.close();
+                }
+            });
+
+            $(".menu-title").show();
+            shortcut.add("f1", function (e) {
+                CollapseAll();
+            }, {
+                'type': 'keydown',
+                'target': document
+            });
+
+        });
+
+        function delcook() {
+            //cfi.SaveUpdateLockedProcess(0, 0, "", "", $("#hdnUserSNo").val(), 0, " ", 2, "");
+            $.ajax({
+                url: "Services/CommonService.svc/SaveUpdateLockedProcess", async: false, type: "POST", dataType: "json", cache: false,
+                data: JSON.stringify({ AWBSNo: 0, DailyFlightSNo: 0, FlightNo: "", FlightDate: "", UpdatedBy: $("#hdnUserSNo").val(), SubprocessSNo: 0, SUbprocess: "", Event: 2, ULDNo: "" }),
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                url: "Services/CommonService.svc/Logout?UserSNo=" + $("#hdnUserSNo").val(),
+                success: function (response) {
+
+                    document.cookie = "UserDetail=0"
+                    location.href = 'Account/GarudaLogin.cshtml?islogout=true';
+
+                }
+            });
+        }
+        var slide = 0;
+        function CollapseAll() {
+            if (slide == 0) {
+                slide = 1;
+                $("#header").fadeOut('fast');
+                //$("iframe").contents().find(".k-selectable").find("tr").not("tr[class$='selected']").fadeOut('fast');
+                //$("iframe").contents().find("table[cfi-aria-search='search']").closest("div").fadeOut('fast');
+                //$("iframe").contents().find(".formSection:eq(0)").fadeOut('fast');
+                //$("iframe").contents().find("div[data-role='pager']").fadeOut('fast');
+                ResizedIFrame(10);
+                $("#imgArrow").attr('src', 'Images/collapse.png').attr("title", "Expand (shift+C)");
+            }
+            else {
+                slide = 0;
+                $("#header").fadeIn('fast');
+                $("iframe").contents().find(".k-selectable").find("tr").not("tr[class$='selected']").fadeIn('fast');
+                $("iframe").contents().find("table[cfi-aria-search='search']").closest("div").fadeIn('fast');
+                $("iframe").contents().find(".formSection").fadeIn('fast');
+                $("iframe").contents().find("div[data-role='pager']").fadeIn('fast');
+                ResizedIFrame(70);
+                $("#imgArrow").attr('src', 'Images/expand.png').attr("title", "Collapse (shift+C)");;
+
+            }
+        }
+
+        function requiredfn(id) {
+            var value = $('#' + id).val();
+            if (value != "") {
+                $('#' + id).css("border", "1px solid #4CAF50");
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        @{var obj="";
+            if (Session["UserDetail"] != null)
+            {
+                System.Web.Script.Serialization.JavaScriptSerializer s = new System.Web.Script.Serialization.JavaScriptSerializer();
+                CargoFlash.Cargo.Model.UserLogin userContext = new CargoFlash.Cargo.Model.UserLogin((CargoFlash.Cargo.Model.UserLogin)Session["UserDetail"]);
+                userContext.MenuDetails = "";
+                userContext.PageRights = null;
+                obj = s.Serialize(userContext);
+            }
+        }
+        $(function () {
+            $("#hdnUserContext").val(JSON.stringify(@Html.Raw(@obj)));
+        });
+
+        function ResizedIFrame(obj) {
+            var newheight;
+            var frame = document.getElementById('iMasterFrame');
+            var browser = navigator.appName;
+            var windowheight = window.screen.height;
+            if (document.layers) {
+                //netscape not tested
+                newheight = window.innerHeight - obj;
+                frame.style.height = (parseInt(newheight) - parseInt(20)) + "px";
+                frame.style.overflow = "auto";
+
+            } else if (document.all) {
+                //mac IE and (not PC IE)
+                newheight = document.body.parentNode.offsetHeight - obj;
+                if (newheight < windowheight) {
+                    frame.style.height = (parseInt(newheight) - parseInt(20)) + "px";
+                    frame.style.overflow = "auto";
+                }
+            } else {
+                //works for safari - same code as for netscape
+                newheight = window.innerHeight - obj;
+                frame.style.height = (parseInt(newheight) - parseInt(20)) + "px";
+                frame.style.overflow = "auto";
+            }
+        }
+        this.AutoComplete = function (textId, basedOn, tableName, keyColumn, textColumn, templateColumn, addOnFunction, filterCriteria, separator, newAllowed, confirmOnAdd, procName, onSelect, rightAlign, template) {
+            var keyId = textId;
+            textId = "Text_" + textId;
+            if (IsValid(textId, autoCompleteType)) {
+                if (keyColumn == null || keyColumn == undefined)
+                    keyColumn = basedOn;
+                if (textColumn == null || textColumn == undefined)
+                    textColumn = basedOn;
+                var dataSource = GetDataSource(textId, tableName, keyColumn, textColumn, templateColumn, procName);
+                $("input[type='text'][name='" + textId + "']").kendoAutoComplete({
+                    filter: (filterCriteria == undefined || filterCriteria == null || filterCriteria == "" ? "startswith" : filterCriteria),
+                    dataSource: dataSource,
+                    select: (onSelect == undefined ? null : onSelect),
+                    filterField: basedOn,
+                    rightAlign: (rightAlign == undefined ? false : rightAlign),
+                    separator: (separator == undefined ? null : separator),
+                    dataTextField: autoCompleteText,
+                    dataValueField: autoCompleteKey,
+                    valueControlID: $("input[type='hidden'][name='" + keyId + "']"),
+                    template: template == null ? '<span>#: TemplateColumn #</span>' : template,
+                    addOnFunction: (addOnFunction == undefined ? null : addOnFunction),
+                    newAllowed: newAllowed,
+                    confirmOnAdd: confirmOnAdd
+                });
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var bkgUrl = window.location.search.slice(1);
+            var $iframe = $('#iMasterFrame');
+            if ($iframe.length && bkgUrl != "" && bkgUrl.indexOf('ReservationBooking') > 0) {
+                $iframe.attr('src', window.location.search.slice(1));
+                history.pushState({ urlPath: window.location.pathname }, "", window.location.pathname);
+            }
+
+
+        });
+        var iSiteUrl = "";
+        function navigatecraurl(currenturl) {
+            //          var res = false;
+            $.ajax({
+                type: "GET",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: iSiteUrl + "Services/CommonService.svc/CheckSession",
+                success: function (response) {
+                    if (response.CheckSessionResult == true) {
+                        location.href = iSiteUrl + 'Account/GarudaLogin.cshtml?islogout=true';
+                        //                    res = false;
+                    } else {
+                        document.getElementById('iMasterFrame').src = currenturl;
+                        //window.location.href = currenturl;
+                    }
+                }, error: function () {
+                    location.href = iSiteUrl + 'Account/GarudaLogin.cshtml?islogout=true';
+                }
+            });
+            //            return res;
+        }
+
+    </script>
+
+</body>
+</html>

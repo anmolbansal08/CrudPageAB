@@ -1,0 +1,59 @@
+﻿<div id="divbody" style="height:auto">
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Manage Application Validities</td></tr>
+                        <tr class="DateWiseRow">
+                            <td class='formlabel' title='From Date'>
+                                <font color='red'></font><span id='spnFromDate'>
+                                                             Select Duration :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("DurationSNo")
+                                @Html.TextBox("Text_DurationSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                            <td class='formlabel' title='To Date'>
+                                <font color='red'></font><span id='spnToDate'>
+                                                             Select Module :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("ModuleSNo")
+                                @Html.TextBox("Text_ModuleSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                        </tr>
+                        <tr class="DateWiseRow">
+                            
+                            <td class='formlabel' title='Search'></td>
+                            <td class='formInputcolumn'><input type='submit' name='operation' onclick="GetValidityOfModules()" value='Search' id="btnSearch" class='btn btn-success btnSearch' /></td>
+                            <td class='formlabel' title='Destination'></td>
+                            <td class='formInputcolumn'></td>
+                         </tr>
+                        <tr>
+                            <td class='formlabel'>
+                                <form id="ASToExcel" action="../ValidityOfModules/ExportToExcel" method="post">
+                                    <input id="DurationSNo" type="hidden" name="DurationSNo" value="" />
+                                    <input id="ModuleSNo" type="hidden" name="ModuleSNo" value="" />
+                                   
+                                    <div style="float:left; display: block;">
+                                        <img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel()" />
+                                    </div>
+                                </form>
+                            </td>
+                            <td class='formInputcolumn' title='Search'></td>
+                            <td class='formlabel'></td>
+                            <td class='formlabel'></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <div id="grid" style="font-size:11px;"></div>
+                <script src="~/JScript/Report/ValidityOfModules.js"></script>
+            </div>
+        </div>
+    </section>
+</div>

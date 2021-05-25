@@ -1,0 +1,23 @@
+﻿<Messages>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Payment Reverse Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Payment Not Reversed.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Amount for reversal is greater than the  balance Credit Limit available with the Customer. Cannot proceed.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2008</Key>
+    <value>Selected BG validity is already expired.</value>
+  </ServerMessage>
+	<ServerMessage>
+		<Key>2020</Key>
+		<value>You are not authorized to Reverse the payment.</value>
+	</ServerMessage>
+</Messages>

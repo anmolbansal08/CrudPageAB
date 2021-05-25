@@ -1,0 +1,342 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="Scripts/json2.js"></script>
+    <script type="text/javascript">
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            var CurrentClaimSNo = getParameterByName("sno", "");
+            var pageName = getParameterByName("pagename", "");
+            var FinalData;
+            var FinalData1;
+            var FinalData2;
+
+            var url;
+            url = "Services/Irregularity/ClaimService.svc/GetFinalReleasePrint"
+            $.ajax({
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ CurrentClaimSNo: CurrentClaimSNo }),
+                async: false,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    //alert(data); // this is Json data object
+                    var ResultData = jQuery.parseJSON(result);
+                    
+                   
+                    FinalData = ResultData.Table0;
+                 
+                    FinalData1 = ResultData.Table1;
+                    FinalData2 = ResultData.Table2;
+                    if (FinalData.length > 0) {
+
+                        $('#ImgLogo').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineLogo);
+                        $('#ImgLogo').attr('onError', 'this.onerror=null;this.src="../Logo/aaa.jpg";');
+                        $('#spnname').text(FinalData[0].ClaimantName);
+                        $('#spnaddress').text(FinalData[0].Address);
+                        var finalApproveamt =  FinalData[0].ApprovedAmount
+                        $('#spnsumof').text(finalApproveamt);
+                        //$('#spnequivalentto').text(FinalData1[0].IsInternational);
+                        $('#spnequivalentto').text(FinalData[0].AmountInWords);
+                        $('#spnvalidfilenumber').text(FinalData[0].ClaimNumber);
+                        $('#spnawbnumber').text(FinalData1[0].AWBNo);
+                        $('#spnfrom').text(FinalData1[0].AWBFrom);
+                        $('#spnto').text(FinalData1[0].AWBTo);
+                        $('#spndate').text(FinalData1[0].AWBDate);
+                       
+                        //$('#spnwitness').text(FinalData1[0].Witness);
+                        //$('#spnsignedaddress').text(FinalData1[0].SignAddress);
+                        //$('#spnoccupation').text(FinalData1[0].Occupation);
+                        //$('#spntitle').text(FinalData1[0].Title);
+                        //$('#spnrevdate').text(FinalData1[0].RevDate);
+                    }
+                    else
+
+                    {
+                        $('#spnname').text(FinalData1[0].ClaimantName);
+                        $('#spnaddress').text(FinalData1[0].Address);
+                        var finalApproveamt =  FinalData1[0].ApprovedAmount
+                        $('#spnsumof').text(finalApproveamt);
+                        //$('#spnequivalentto').text(FinalData1[0].IsInternational);
+                        $('#spnequivalentto').text(FinalData1[0].AmountInWords);
+                        $('#spnvalidfilenumber').text(FinalData1[0].ClaimNumber);
+                        $('#spnawbnumber').text(FinalData2[0].AWBNo);
+                        $('#spnfrom').text(FinalData2[0].AWBFrom);
+                        $('#spnto').text(FinalData2[0].AWBTo);
+                        $('#spndate').text(FinalData2[0].AWBDate);
+
+                    }
+
+
+                }
+            });
+        });
+
+    </script>
+
+    <style type="text/css">
+
+        span.cls_002 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+            font-size: 16.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        div.cls_002 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+            font-size: 16.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        span.cls_003 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+              font-size: 9.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: underline;
+        }
+
+        div.cls_003 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+              font-size: 9.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        span.cls_004 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+              font-size: 11px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        div.cls_004 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+              font-size: 9.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        span.cls_005 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+            font-size: 10.1px;
+            color: rgb(0,0,0);
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: underline;
+        }
+
+        div.cls_005 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+            font-size: 10.1px;
+            color: rgb(0,0,0);
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        span.cls_006 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+            font-size: 13.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: underline;
+        }
+
+        div.cls_006 {
+            
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+            font-size: 13.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        span.cls_007 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+              font-size: 9.1px;
+            color: rgb(0,0,0);
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        div.cls_007 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+              font-size: 9.1px;
+            color: rgb(0,0,0);
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        span.cls_008 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+              font-size: 9.1px;
+            color: rgb(0,0,0);
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: none;
+        }
+
+        div.cls_008 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+              font-size: 9.1px;
+            color: rgb(0,0,0);
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: none;
+        }
+
+        span.cls_009 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+            font-size: 8.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: italic;
+            text-decoration: none;
+        }
+
+        div.cls_009 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+            font-size: 8.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: italic;
+            text-decoration: none;
+        }
+
+        span.cls_010 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+            font-size: 8.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        div.cls_010 {
+            /*font-family: Times,serif;*/
+            font-family: Verdana;
+            font-size: 8.1px;
+            color: rgb(0,0,0);
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+        span {
+            font-weight: bold;
+            font-size: 10px;
+        }
+    </style>
+    <script type="text/javascript" src="wz_jsgraphics.js"></script>
+</head>
+<body>
+    <div style="position:absolute;left:50%;margin-left:-297px;top:0px;width:695px;height:841px;border-style:outset;overflow:hidden">
+        <div style="position:absolute;left:223.20px;top:46.40px" class="cls_002"><span class="cls_002"><img id="ImgLogo" width='120' height='50' /><!--<img src="Images/GarudaIndonesiaGroupNew.png" width='120' height='50' />--></span></div>
+       
+        <div style="position:absolute;left:377.04px;top:50.52px" class="cls_003"><span class="cls_003">To be returned to:</span></div>
+     
+        <div style="position:absolute;left:377.52px;top:68.04px" class="cls_004"><span class="cls_004">CUSTOMER RELATION MANAGEMENT</span></div>
+        <div style="position:absolute;left:378.00px;top:85.80px" class="cls_004"><span class="cls_004">Head Office Cargo Garuda Indonesia</span></div>
+        <div style="position:absolute;left:376.80px;top:102.56px" class="cls_005"><span class="cls_005">JAKARTA</span></div>
+        <div style="position:absolute;left:224.40px;top:129.32px" class="cls_006"><span class="cls_006">FINAL RELEASE</span></div>
+        <div style="position:absolute;left:56.16px;top:147.00px" class="cls_004"><span class="cls_004">I the undersigned,</span></div>
+        <div style="position:absolute;left:56.16px;top:167.16px" class="cls_004"><span class="cls_004">Name</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp  <span id="spnname"></span></div>
+        <div style="position:absolute;left:55.20px;top:187.32px" class="cls_004"><span class="cls_004">Address</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp <span id="spnaddress"></span></div>
+        <div style="position:absolute;left:55.92px;top:207.24px" class="cls_004"><span class="cls_004">hereby acknowledge receipt from PT Garuda Indonesia (Persero) Tbk. </span><span class="cls_007">("Cargo Garuda Indonesia"),</span></div>
+        <div style="position:absolute;left:55.20px;top:227.64px" class="cls_004"><span class="cls_004">the Sum of</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id="spnsumof"></span></div>
+        <div style="position:absolute;left:55.44px;top:247.56px" class="cls_004"><span class="cls_004">or equivalent to </span>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:<span id="spnequivalentto"></span></div>
+      <div style="position:absolute;left:55.44px;top:271.40px" class="cls_004"><span class="cls_004">in full and final settlement of all claims of whatsoever nature and however arising whether now or in the</span></div>
+        <div style="position:absolute;left:54.96px;top:280.92px" class="cls_004"><span class="cls_004">future, which I have or may have against Cargo Garuda Indonesia, its respective directors, employees,</span></div>
+        <div style="position:absolute;left:54.96px;top:294.36px" class="cls_004"><span class="cls_004">agents and/or other parties who works on behalf of Cargo Garuda Indonesia, which appears in connection</span></div>
+        <div style="position:absolute;left:54.96px;top:308.04px" class="cls_004"><span class="cls_004">to the loss, damage or delay of the carriage :</span></div>
+        <div style="position:absolute;left:54.96px;top:327.24px" class="cls_004"><span class="cls_004">Vide file number</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spnvalidfilenumber"></span></div>
+        <div style="position:absolute;left:54.96px;top:347.64px" class="cls_004"><span class="cls_004">Carried or accepted for carriage</span></div>
+        <div style="position:absolute;left:55.20px;top:367.80px" class="cls_004"><span class="cls_004">From</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spnfrom"></span></div>
+        <div style="position:absolute;left:54.48px;top:387.96px" class="cls_004"><span class="cls_004">To</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spnto"></span></div>
+        <div style="position:absolute;left:55.44px;top:407.88px" class="cls_004"><span class="cls_004">Under AWB Number</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spnawbnumber"></span></div>
+        <div style="position:absolute;left:55.20px;top:427.80px" class="cls_004"><span class="cls_004">Date</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp<span id="spndate"></span></div>
+        <div style="position:absolute;left:54.72px;top:447.72px" class="cls_007"><span class="cls_007">IN CONSIDERATION OF THE PAYMENT </span><span class="cls_004">as aforesaid, I hereby release, indemnify and hold harmless Cargo</span></div>
+        <div style="position:absolute;left:54.72px;top:461.16px" class="cls_004"><span class="cls_004">Garuda Indonesia, its respective directors, employees, agents and/or other parties who work on behalf of</span></div>
+        <div style="position:absolute;left:54.72px;top:474.60px" class="cls_004"><span class="cls_004">Cargo Garuda Indonesia from any and all claims of whatsoever nature which may be made against them</span></div>
+        <div style="position:absolute;left:54.72px;top:488.04px" class="cls_004"><span class="cls_004">(including all costs and expenses) and I state and agree to the following :</span></div>
+        <div style="position:absolute;left:54.96px;top:507.72px" class="cls_004"><span class="cls_004">1.</span></div>
+        <div style="position:absolute;left:76.56px;top:507.24px" class="cls_004"><span class="cls_004">I acknowledge that the above payment is made by Cargo Garuda Indonesia in good faith and without</span></div>
+        <div style="position:absolute;left:76.32px;top:520.68px" class="cls_004"><span class="cls_004">any admission of liability, and/or fault, and/or negligence on the part of Cargo Garuda Indonesia, its</span></div>
+        <div style="position:absolute;left:76.56px;top:534.12px" class="cls_004"><span class="cls_004">respective directors, employees or agents or any one or more of them.</span></div>
+        <div style="position:absolute;left:54.24px;top:553.80px" class="cls_004"><span class="cls_004">2.</span></div>
+        <div style="position:absolute;left:75.84px;top:553.56px" class="cls_004"><span class="cls_004">This Final Release has been read by me or read and explained to me and I fully understand all the</span></div>
+        <div style="position:absolute;left:75.84px;top:567.24px" class="cls_004"><span class="cls_004">terms herein;</span></div>
+        <div style="position:absolute;left:54.24px;top:586.92px" class="cls_004"><span class="cls_004">3.</span></div>
+        <div style="position:absolute;left:75.36px;top:586.44px" class="cls_004"><span class="cls_004">This Final Release shall be irrevocable and is made under free will without duress or compulsion from</span></div>
+        <div style="position:absolute;left:75.84px;top:600.12px" class="cls_004"><span class="cls_004">whomsoever.</span></div>
+        <div style="position:absolute;left:53.76px;top:627.24px" class="cls_004"><span class="cls_004">Signed and Stamp at :</span></div>
+        <div style="position:absolute;left:341.52px;top:627.00px" class="cls_004"><span class="cls_004">on the</span></div>
+        <div style="position:absolute;left:496.56px;top:627.00px" class="cls_004"><span class="cls_004">20</span></div>
+        <div style="position:absolute;left:53.76px;top:650.76px" class="cls_007"><span class="cls_007">Witness</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp <span id="spnwitness"></span></div>
+        <div style="position:absolute;left:342.00px;top:650.52px" class="cls_004"><span class="cls_004">Place for receipt stamp (if locally required)</span></div>
+        <div style="position:absolute;left:53.76px;top:674.52px" class="cls_007"><span class="cls_007">Address</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp <span id="spnsignedaddress"></span></div>
+        <div style="position:absolute;left:422.40px;top:674.04px" class="cls_008"><span class="cls_008">(Signature)</span></div>
+        <div style="position:absolute;left:54.00px;top:697.80px" class="cls_007"><span class="cls_007">Occupation</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;  <span id="spnoccupation"></span></div>
+        <div style="position:absolute;left:53.28px;top:721.56px" class="cls_007"><span class="cls_007">Title</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp <span id="spntitle"></span></div>
+        <div style="position:absolute;left:353.04px;top:721.08px" class="cls_007"><span class="cls_007">* Name and Title</span></div>
+        <div style="position:absolute;left:355.92px;top:744.64px" class="cls_009"><span class="cls_009">*) Please attach Copy ID</span></div>
+        <div style="position:absolute;left:53.76px;top:814.00px" class="cls_010"><span class="cls_010">Rev / Date :</span></div>
+        <div style="position:absolute;left:111.12px;top:813.76px" class="cls_010"><span class="cls_010"></span><span id="spnrevdate"></span></div>
+        <div style="position: absolute; top: 813.52px; left: 511.12px;" class="cls_010"><span class="cls_010">FRM/JKTFM/006e</span></div>
+    </div>
+
+
+
+</body>
+</html>

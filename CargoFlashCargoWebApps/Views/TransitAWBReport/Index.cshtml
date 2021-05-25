@@ -1,0 +1,93 @@
+﻿<style type="text/css">
+    .k-grid-header th.k-header > .k-link {
+        cursor: default;
+    }
+</style>
+
+
+<div id="divbody" style="height:auto">
+
+
+
+    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+        <tr><td class='formSection' colspan='4'>Transit AWB Report</td></tr>
+        <tr class="DateWiseRow">
+            <td class=' formlabel' title='Staion'>
+                <font color='red'>*</font><span id='spnAirportCode'>
+                    Station
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                @Html.Hidden("AirportCode")
+                @Html.TextBox("Text_AirportCode", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Station Name can not be blank", style = "width:200px;" })
+            </td>
+
+            <td class=' formlabel'></td>
+            <td class='formInputcolumn'></td>
+        </tr>
+        <tr class="DateWiseRow">
+            <td class=' formlabel' title='From Date'>
+                <font color='red'>*</font><span id='spnFromDate'>
+                    From Date :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='text' name='FromDate' id='FromDate' style='width: 200px;' data-valid='required'
+                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+            </td>
+            <td class=' formlabel' title='To Date'>
+                <font color='red'>*</font><span id='spnToDate'>
+                    To Date :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='text' name='ToDate' id='ToDate' style='width: 200px;' data-valid='required'
+                       data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' />
+            </td>
+        </tr>
+
+
+        <tr>
+            <td class=' formlabel'>
+                <form id="df" action="../TransitAwBReport/ExportToExcel" method="post">
+                    <input id="AirportCode" type="hidden" name="AirportCode" value="" />
+                    <input id="FromDate" type="hidden" name="FromDate" value="" />
+                    <input id="ToDate" type="hidden" name="ToDate" value="" />
+                    <div id="exportflight" style="float:left;">
+                        <button type="submit">
+                            <img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel_GetTransitAwBReport()" />
+                        </button>
+                    </div>
+                </form>
+            </td>
+            <td class='formInputcolumn'>
+                <input type='submit' name='operation' onclick="GetAwbTransitReport()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+            </td>
+            <td class="formlabel"></td>
+            <td class="formInputcolumn"></td>
+        </tr>
+    </table>
+    <br />
+    <br />
+
+    @*<br />
+        <br />
+        <br />
+        <br />*@
+    <br />
+    <table class='WebFormTable' id="tblSUMOfCharges">
+        <tr class="formSection">
+            <td colspan='3'></td>
+            <td style="float:right">
+                <div style="width:500px;">
+                    <span style="margin-right:20px;"> <b>Sum of Gr.Wt : <label id="lblGrWt"></label>   </b></span>
+                    <span><b>Sum of Ch.Wt : <label id="lblChWt"></label>   </b></span>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div id="example">
+        <div id="grid" style="font-size:11px;"></div>
+        <script src="~/JScript/Report/TransitAWBReport.js"></script>
+    </div>
+</div>

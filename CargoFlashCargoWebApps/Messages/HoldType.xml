@@ -1,0 +1,28 @@
+﻿<Messages> 
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Hold Type already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Hold Type Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Hold Type Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Hold Type Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Add at least One Country.</value>
+  </ServerMessage>
+  
+</Messages>

@@ -1,0 +1,56 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>CityCode</Name>
+    <Message>City Code can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CityName</Name>
+    <Message>City Name can not be blank</Message>
+  </DataFieldName>
+
+  <!--<DataFieldName>
+    <Name>ZoneSNo</Name>
+    <Message>Zone Name can not be blank</Message>
+  </DataFieldName>-->
+  
+  <DataFieldName>
+    <Name>CountryCode</Name>
+    <Message>Country Name can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>TimeZoneSNo</Name>
+    <Message>Time Zone can not be blank</Message>
+  </DataFieldName>
+  
+  <!--<DataFieldName>
+    <Name>TimeDifference</Name>
+    <Message>TimeDifference can not be blank</Message>
+  </DataFieldName>-->
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>City Code already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>City Name already exists</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>City Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>City Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>City Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

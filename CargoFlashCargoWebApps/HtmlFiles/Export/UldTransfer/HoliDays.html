@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="divHoliday">
+        <table>
+
+            <tr>
+                <td style=" width:120px"> Holiday And Date </td>
+                <td style=" width:120px">  Holiday Description  </td>
+                <td style=" width:120px"> Active </td>
+                <td style=" width:120px"><input type="button" id="Add" value="Add" /></td>
+            </tr>
+            <tr>
+                <td style=" width:120px"><input type="text" id="txtdate" /> </td>
+                <td style=" width:120px"> <input type="text" id="HolidayDescription" /></td>
+                <td style=" width:120px"> <input type="radio" id="rda" name="hactive" value="0" /> <input type="radio" id="rdab" name="hactive" value="1" /></td>
+                <td style=" width:120px"></td>
+            </tr>
+            <tr>
+                <td class="formActiontitle" colspan="4"> Holiday Details </td>
+            </tr>
+        </table>
+        <div id="divHolidayappen">
+
+        </div>
+        <input type="button" id="SaveHoliday" class="btn btn-block btn-success btn-sm" onclick="OnSaveHoliday()" value="Update" />
+    </div>
+</body>
+</html>

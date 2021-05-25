@@ -1,0 +1,541 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>DOPrint</title>
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+
+    <style>
+        .watermark {
+            opacity: 0.5;
+            color: #808080;
+            font-size: 150px;
+            transform: rotate(300deg);
+            -webkit-transform: rotate(300deg);
+            position: absolute;
+            margin-top: 25%;
+            margin-left: 20%;
+        }
+
+        #PrintDO {
+            width: 70px;
+            height: 30px;
+        }
+
+        .auto-style1 {
+            height: 23px;
+        }
+
+        .auto-style3 {
+        }
+
+        .auto-style12 {
+            width: 490px;
+        }
+
+        .auto-style36 {
+            width: 133px;
+            height: 40px;
+        }
+
+        .auto-style39 {
+            width: 93px;
+        }
+
+        .auto-style40 {
+            height: 42px;
+        }
+
+        table#table1, #table2, #table3 {
+            /*width: 100%;
+            margin-left: 15%;
+            margin-right: 15%;*/
+            width: 100%;
+            font-size: smaller;
+        }
+
+        #content {
+            position: initial;
+            z-index: 1;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function funPrintDOReportData(divID, bac) {
+            PrintDiv($(divID).html(), $(bac).html());
+        }
+
+        function PrintDiv(data, bac) {
+            var mywindow = window.open('', 'my div', 'height=400,width=600');
+            mywindow.document.write('<html><head><title></title>');
+            mywindow.document.write('</head><body >');
+            mywindow.document.write(data);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close();
+            mywindow.focus();
+            mywindow.print();
+            mywindow.close();
+            return true;
+        }
+
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            var LogoURL = getParameterByName("LogoURL", "");
+            GetDeliveryOrderPrint();
+            $('#divPrint1').append($('#content').html()
+            );
+
+            //Edited By Rahul Kumar Singh to add Logo on 27-07-2017
+            $('#content').html("");
+
+            var str = LogoURL;
+            str = str.split('/');
+
+            if (IsCancel == "1") {
+                $('#divPrint1').find('.watermark').map(function () { return $(this).text('Cancelled'); })
+            }
+
+            var IsCancel = 0;
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+
+            // CODE for Showing Current Time//
+            function startTime() {
+                var today = new Date();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                // add a zero in front of numbers<10
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('#spntime').innerHTML = h + ":" + m + ":" + s;
+                t = setTimeout(function () {
+                    startTime()
+                }, 500);
+            }
+            startTime();
+            //END//
+            function GetDeliveryOrderPrint() {
+                var Particulars = "";
+                var Charges = 0;
+                var TotalCharges = 0;
+                var DOSNo = getParameterByName("DOSNo", "");
+                var Type = getParameterByName("Type", "");
+                var POMailSNo = getParameterByName("POMailSNo", "") == null ? 0 : getParameterByName("POMailSNo", "");
+
+                $.ajax({
+                    url: "../../Services/Import/DeliveryOrderService.svc/GetDeliveryOrderPrint",
+                    async: false,
+                    type: "GET",
+                    dataType: "json",
+                    data: { DOSNo: DOSNo, Type: Type, InvoiceSNo: 0, POMailSNo: POMailSNo },
+                    contentType: "application/json; charset=utf-8",
+                    cache: false,
+                    success: function (result) {
+                        var ResultData = jQuery.parseJSON(result);
+                        FinalData = ResultData.Table0;
+                        FinalData1 = ResultData.Table1;
+                        FinalData2 = ResultData.Table2;
+                        LocationData = ResultData.Table3;
+                        StorageData = ResultData.Table4;
+                        NatureOfGoods = ResultData.Table5;
+                        Data = ResultData.Table8;
+                        AirportData = ResultData.Table7;
+
+                        var chargeType = "";
+                        var Pieces = 0;
+                        var GrossWeight = 0.0;
+                        var chargeType1 = "";
+                        var Pieces1 = 0;
+                        var chargeType2 = "";
+                        var Pieces2 = 0;
+                        var POSNo = "";
+                        var CustomRefNo = "";
+
+                        var spnArrivalDetails = "";
+
+
+                        if (FinalData.length > 0) {
+                            POSNo = FinalData[0].POSNO;
+                            CustomRefNo = FinalData1[0].CustomRefNo;
+
+                            //#spnConsigneeAddress to upper case by rahul on 27-12-2017 as per bug refrence 5163
+                            Pieces = FinalData[0].Pieces;
+                            GrossWeight = FinalData1[0].GrossWeight;
+
+
+                            $("#spnpcwtcommodity").text(Pieces + '/' + GrossWeight + '/' + FinalData1[0].DescriptionOfGoods);
+                            $("#spnDONo").text(CustomRefNo + '/' + POSNo);
+                            $("#spnserialno").text(FinalData[0].SNo);
+                            $("#spnDate").text(FinalData[0].DOTime.split(" ")[0] + " / " + FinalData[0].DOTime.split(" ")[1]);
+                            $("#spnConsignee").html(FinalData[0].Consignee);
+                            $("#spnAirWaybillNo").text(FinalData[0].AWBNo);
+                            $("#spnName").html(FinalData[0].Name);
+                            $("#spnHouseNo").html(FinalData[0].DOHouseNo);
+                            $("#spnName1").html(FinalData[0].Name);
+                            $("#spnRemarks").html(FinalData[0].Remarks);
+
+
+                            $("#spnDateTimeReleased").html(FinalData[0].DOTime);
+
+                            $("#spnAirline").html(FinalData[0].AIRLINENAME);
+                            $("#spnConsigneeAddress").html(FinalData[0].STREET);
+                            $('#ImgLogo').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineLogo.toString());
+                            $('#ImgLogo').attr('onError', 'this.onerror=null;this.src="' + LogoURL + '";');
+                            var loginCity = window.opener.parent.userContext.CityName;
+                            $("#loginCity").text('').text(loginCity + ',')
+                            chargeType = FinalData[0].ChargesType;
+                            if (FinalData[0].IsCancel == "False") {
+                                $("#spnReprintCount").html(FinalData[0].PrintCount > 1 ? "(RE-PRINT: " + (FinalData[0].PrintCount - 1).toString() + ")" : "");
+                                IsCancel = 0;
+                            }
+                            else {
+                                IsCancel = 1;
+                            }
+                        }
+                        if (AirportData.length > 0) {
+
+                            $("#spnAirportAddress").html(AirportData[0].AirportAddress);
+                            $("#spnAirportTelephone").html(AirportData[0].Telephone);
+                        }
+
+                        if (NatureOfGoods.length > 0) {
+                            Particulars = Particulars + "</br>" + (NatureOfGoods[0].CommodityDescription);
+                        }
+
+                        for (var S = 0; S < FinalData2.length; S++) {
+                            if (Charges == 0) {
+                                Charges = "</br>" + (FinalData2[S].IsWaveOff == "True" ? FinalData2[S].TariffName + '(Waived Off)' : FinalData2[S].TariffName) + '   ' + FinalData2[S].ChargeValue;
+                            }
+                            else {
+                                Charges = Charges + "</br>" + (FinalData2[S].IsWaveOff == "True" ? FinalData2[S].TariffName + '(Waived Off)' : FinalData2[S].TariffName) + '   ' + FinalData2[S].ChargeValue;
+                            }
+                            if (FinalData2[S].IsWaveOff != "True")
+                                TotalCharges = parseFloat(FinalData2[S].TotalAmount);
+                        }
+                        $("#spntermcharges").html(TotalCharges.toFixed(2));
+                        var strdata = '';
+                        var TotalPieces = 0;
+                        var TotalGrossWeight = 0.0;
+
+                        if (FinalData1.length > 0) {
+                            strdata = strdata + "<tr style='border:1px solid black;font-family:'Verdana''><td  style='text-align:center; border-right:1px solid black;'>Commodity</br></td><td style='text-align:center; border-right:1px solid black;'>Pieces</br></td><td style='text-align:center; border-right:1px solid black;'>Gross Weight(Kg)</br></td><td style='text-align:center; border-right:1px solid black;'>Information</td></tr>";
+                            var flightno = "";
+                            var totalpieces = 0;
+                            var totalGrossWeight = 0.0;
+                            var ArrivalDateTime = "";
+                            var AgentName = "";
+                            for (var k = 0; k < FinalData1.length; k++) {
+                                flightno += "/" + FinalData1[k].FlightDetails
+                                totalpieces += parseInt(FinalData1[k].Pieces)
+                                totalGrossWeight += parseFloat(FinalData1[k].GrossWeight)
+
+                            }
+
+                            AgentName = ResultData.Table6[0].AgentName;
+
+                            ArrivalDateTime = FinalData[0].ArrivalDateTime;
+                            flightno = flightno.substring(1, flightno.length)
+                            TotalPieces = Number(TotalPieces) + Number(Pieces);
+                            TotalGrossWeight = Number(TotalGrossWeight) + Number(GrossWeight);
+
+                            $("#spnFlightNo").html(flightno);
+
+                            $("#spnAirlineName").html(FinalData[0].AirlineName);
+
+                            $("#spnAgent").html(AgentName);
+                            $("#spnAgentConsigneeName").html(AgentName + "/" + FinalData[0].Consignee);
+
+                            var currentdate = new Date();
+                            var datetime =
+
+                                +currentdate.getFullYear() + "-"
+                                + (currentdate.getMonth() + 1) + "-"
+                                + currentdate.getDate()
+                                + "  "
+                                + currentdate.getHours() + ":"
+                                + currentdate.getMinutes() + ":"
+                                + currentdate.getSeconds();
+
+                          
+
+
+                            $("#spnDateTimeDOReleased").html(FinalData[0].DOReleasedTime);
+                            $("#spnAirlineUserName").html(userContext.FirstName + " " + userContext.LastName);
+
+
+                            $("#spnArrivalDetails").html(flightno + " " + ArrivalDateTime);
+                            strdata += "<tr style='border:1px solid black;padding:4px;'>";
+                            if (NatureOfGoods.length > 0) {
+                                strdata += "<td style='text-align:left; border-right:1px solid black;font-size:15px;'><span id='spnParticulars'>" + NatureOfGoods[0].CommodityDescription + "</span></td>"
+                            }
+                            else {
+                                strdata += "<td style='text-align:left; border-right:1px solid black;font-size:15px;'><span id='spnParticulars'></span></td>"
+                            }
+                            strdata += "<td style='text-align:right; border-right:1px solid black;font-size:15px;'><span id='spnPieces'>" + totalpieces + "</span></td>";
+                            strdata += "<td style='text-align:right; border-right:1px solid black;font-size:15px;'><span id='spnGrossWt'>" + totalGrossWeight + "</span></td>";
+                            strdata += "<td style='text-align:left; border-right:1px solid black;font-size:15px;'><span id='spnAmount'></span></td>";
+                            strdata += "<tr>"
+                            $('#tabletrans').html(strdata);
+                        }
+                        //For Charges of TH(Raya)//
+                        if (Data.length > 0) {
+                            var strCharges = '';
+                            strCharges = strCharges + "<table><tr style='border:1px solid black;font-family:'Verdana''><td  style='text-align:center; border-right:1px solid black;'>Charges</br></td><td style='text-align:center; border-right:1px solid black;'>Amount</br></td><td style='text-align:center; border-right:1px solid black;'>Remarks</td></tr>";
+
+                            for (var i = 0; i < Data.length; i++) {
+                                $("#spnFlightNo").html(flightno);
+                                strCharges += "<tr style='border:1px solid black;padding:4px;'>";
+
+                                strCharges += "<td style='text-align:left; border-right:1px solid black;font-size:15px;'>" + Data[i].ChargesName + "</td>"
+
+
+                                strCharges += "<td style='text-align:right; border-right:1px solid black;font-size:15px;'>" + Data[i].Amount + "</td>";
+
+                                strCharges += "<td style='text-align:left; border-right:1px solid black;font-size:15px;'>" + Data[i].Remarks + "</td>";
+                                strCharges += "</tr>"
+                            }
+                            strCharges += "</table>";
+                            $('#tabletrans1').html(strCharges);
+                        }
+
+                        $("#spnParticulars").html(Particulars.replace("undefined", ""));
+                        $("#spnAmount").html('');
+
+                        if (FinalData2.length != 0)
+                            $("#spntotalamountinwords").html(FinalData2[0].TotalAmountInWord);
+                        $("#spntp").html(LocationData.length == 0 ? '0' : LocationData[0].TotalPieces);
+                        $("#spnwt").html(LocationData.length == 0 ? '0' : LocationData[0].TotalGrossWeight);
+
+                        if (FinalData2.length > 5)
+                            $("#Total").hide();
+
+                    },
+                    error: function (err) {
+                        if (err.responseText.toLowerCase().indexOf("object reference not set") != -1) {
+                            document.cookie = "UserDetail=0";
+                            location.href = '../../Account/' + userContext.SysSetting.LoginPage + '?islogout=true';
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <form id="form1">
+        <div id="divPrint1">
+            <div class="watermark">
+            </div>
+        </div>
+        <div class="example"></div>
+        <div id="content">
+            <table id="table1">
+                <tr>
+                    <td>
+                        <div id="DivHead" width="90%" align="center">
+                            <table width="100%" style="border-bottom:1px solid black;">
+                                <tr>
+                                    <td style="width:30%;"><h1>Delivery Order</h1></td>
+                                    <td style="text-align:right;"><b><span id="spnAirlineName" style="font:bold;"></span></b><br /><span id="spnAirportAddress"></span><br />TELP.   <span id="spnAirportTelephone" style="margin-left:9px; "></span></td>
+                                    <td align="right" style="text-align:right;width:30%;"><center><img id="ImgLogo" alt="" width="180px" height="90px" /></center></td>
+                                </tr>
+                            </table>
+                            <table width="100%">
+                                <tr>
+                                    <td style="width:40%;">
+                                        <table width="100%" align="left" style="border-collapse:collapse;font-family:'Verdana'; font-size:13px;">
+                                            <tr>
+                                                <td style="width:60%;font-weight:bold;">AWB NO.</td>
+                                                <td>:</td>
+                                                <td style="width:50%"><span id="spnAirWaybillNo"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:60%;font-weight:bold;">CONSIGNEE</td>
+                                                <td>:</td>
+                                                <td style="width:50%;"><span id="spnConsignee"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:60%;font-weight:bold;">AGENT</td>
+                                                <td>:</td>
+                                                <td style="width:50%"><span id="spnAgent"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:60%;font-weight:bold;">ARRIVAL DETAILS</td>
+                                                <td>:</td>
+                                                <td style="width:50%"><span id="spnArrivalDetails"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:60%;font-weight:bold;">MANIFEST NO</td>
+                                                <td>:</td>
+                                                <td style="width:50%"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:60%;font-weight:bold;">Remark</td>
+                                                <td>:</td>
+                                                <td style="width:50%"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:60%;font-weight:bold;">CUSTOM REGISTRATION NO</td>
+                                                <td>:</td>
+                                                <td style="width:50%"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width:60%;">
+                                        <table width="100%" align="left" style="font-family:'Verdana'; font-size:13px;">
+                                            <tr>
+                                                <td style="text-align:left;font-weight:bold;">SERIAL NO.</td>
+                                                <td style="text-align:left;">:</td>
+                                                <td style="text-align:left;"><span id="spnserialno">120147</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;font-weight:bold;">PC/WT/COMMODITY</td>
+                                                <td style="text-align:left;">:</td>
+                                                <td style="text-align:left;"><span id="spnpcwtcommodity"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;font-weight:bold;">TERMINAL CHARGES</td>
+                                                <td style="text-align:left;">:</td>
+                                                <td style="text-align:left;"><span id="spntermcharges"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;font-weight:bold;">PENALTY CHARGES</td>
+                                                <td style="text-align:left;">:</td>
+                                                <td style="text-align:left;"><span id="spnpenaltycharges"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;font-weight:bold;">DATE & TIME RELEASED</td>
+                                                <td style="text-align:left;">:</td>
+                                                <td style="text-align:left;"><span id="spnDateTimeReleased"></span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="border:1px solid black;">
+                                    <td style="width:50%;border:1px solid black;">
+                                        <table width="100%" cellpadding="12" cellspacing="0" style="font-size:13px; margin-top:15px; ">
+                                            <tr>
+                                                <td colspan="3">This is to acknowledge receipt of the AWB and goods described herein, in good order and condition,<br />I/we understand that the signage of this document will indemnify the carrier from any liability.</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;font-weight:bold;" colspan="3">(FOR AGENT/CONSIGNEE USE ONLY)</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;">NAME:</td>
+                                                <td><span id="spnAgentConsigneeName"></span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;">I/C NO. & SIGNATURE:</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;">TIME/DATE:</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width:50%; border:1px solid black;">
+                                        <table width="100%" cellpadding="12" cellspacing="0" style="font-size:13px;border-collapse:collapse; margin-top:0px; ">
+                                            <tr>
+                                                <td style="text-align:left;font-weight:bold;">CO.STAMP</td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="5"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; border:1px solid black;">
+                                        <table width="100%" cellpadding="12" cellspacing="0" style="font-size:13px;border-collapse:collapse; margin-top:0px; ">
+                                            <tr>
+                                                <td style="font-weight:bold;">(FOR AIRLINE USE ONLY)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>NAME:</td>
+                                                <td><span id="spnAirlineUserName"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>S/N & SIGNATURE:</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;">TIME/DATE D/O RELEASED:</td>
+                                                <td><span id="spnDateTimeDOReleased"></span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width:50%; border:1px solid black;">
+                                        <table width="100%" cellpadding="12" cellspacing="0" style="font-size:13px;border-collapse:collapse; margin-top:0px; ">
+                                            <tr>
+                                                <td style="font-weight:bold;">(FOR AIRLINE SECURITY USE ONLY)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>NAME:</td>
+                                            </tr>
+                                            <tr>
+                                                <td>S/N & SIGNATURE:</td>
+                                            </tr>
+                                            <tr>
+                                                <td>TIME/DATE CARGO RELEASED:</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%;">
+                                        <table width="100%" cellpadding="12" cellspacing="0" style="font-size:13px;border-collapse:collapse; margin-top:0px; ">
+                                            <tr>
+                                                <td>1<sup>st</sup> Copy - Agent</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2<sup>nd</sup> Copy -Account/Carrier </td>
+                                            </tr>
+                                            <tr>
+                                                <td>3<sup>rd</sup> Copy - Security</td>
+                                            </tr>
+                                            <tr>
+                                                <td>4<sup>th</sup> Copy - Tax Account</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width:50%; border:1px solid black;">
+                                        <table width="100%" cellpadding="12" cellspacing="0" style="font-size:13px;border-collapse:collapse; margin-top:0px; ">
+                                            <tr>
+                                                <td style="font-weight:bold;">(FOR CUSTOM USE ONLY)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>NAME:</td>
+                                            </tr>
+                                            <tr>
+                                                <td>S/N & SIGNATURE:</td>
+                                            </tr>
+                                            <tr>
+                                                <td>TIME/DATE CUSTOM CLEARED:</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <table width="100%">
+            <tr>
+                <td align="center">
+                   
+                    <!--<input type="button" class="btn btn-block btn-primary" name="name" value="Print" onclick="funPrintDOReportData('#divPrint1', '#bg-text');" />-->
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

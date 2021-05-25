@@ -1,0 +1,13 @@
+﻿<Messages>
+ 
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Demurrage Free Period  Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Demurrage Free Period Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

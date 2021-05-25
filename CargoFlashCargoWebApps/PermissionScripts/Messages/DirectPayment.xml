@@ -1,0 +1,27 @@
+﻿<Messages>  
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Payment Request Added Successfully.</value>
+  </ServerMessage>
+  
+     <ServerMessage>
+    <Key>2001</Key>
+    <value>Payment Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1006</Key>
+    <value>Payment Request Rejected.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1005</Key>
+    <value>Cheque No Already Exists.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1004</Key>
+    <value>Reference No Already Exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1008</Key>
+    <value>Debit Amount Cannot Be Greater Than Remaining Credit Limit</value>
+  </ServerMessage>
+</Messages>

@@ -1,0 +1,40 @@
+﻿<Messages>
+  <!--#region IrregularitySeverity XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  IrregularitySeverity
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Swati Rastogi.
+  Created On:		08 Oct 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>SeverityName</Name>
+    <Message>Irregularity Severity Name cannot be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Irregularity Severity Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Irregularity Severity Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Irregularity Severity Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Irregularity Severity Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

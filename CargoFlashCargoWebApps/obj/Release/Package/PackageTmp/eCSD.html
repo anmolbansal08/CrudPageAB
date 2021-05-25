@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
+    <style type="text/css">
+        .textContents {
+            line-height: 20px;
+            height: 100px;
+            vertical-align: text-top;
+            color: #000000;
+            font-size: 16px;
+            color: #6666cc;
+        }
+
+        table {
+            border-collapse: collapse;
+            border: 1px solid black;
+            font-family: ArialMT, Verdana, Tahoma, Helvetica, sans-serif;
+            width: 845px;
+            height: 1000px;
+            align-content: center;
+            font-size: 16px;
+        }
+
+        .contents {
+            font-size: 12px;
+            font: normal;
+        }
+
+        span {
+            font: bold 14px arial;
+            color: black;
+        }
+    </style>
+    <script type="text/javascript">
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        $(document).ready(function () {
+            var AwbNo = getParameterByName("sno", "");
+            $.ajax({
+                url: "Services/Tariff/HandlingChargesService.svc/geteCSDPrint",
+                contentType: 'application/json;charset=utf-8',
+                data: JSON.stringify({ AwbNo: AwbNo }),
+                type: 'post',
+                cache: false,
+                async: false,
+                success: function (data) {
+
+                    var table = jQuery.parseJSON(data);
+                    if (table.Table0.length > 0) {
+                        $("#spnRec").text(table.Table0[0].RegulatedEntityCategory);
+                        $("#spnUci").text(table.Table0[0].AWBNo);
+                        $("#spnCOC").text(table.Table0[0].Commodity);
+                        $("#spnOrg").text(table.Table0[0].Origin);
+                        $("#spnDes").text(table.Table0[0].Destination);
+                        $("#spnSsta").text(table.Table0[0].SecurityStaus);
+                        $("#spnScr").text(table.Table0[0].ScreeningMethod);
+                        $("#spnGrn").text(table.Table0[0].GroundExemption);
+                        $("#spnRf").text(table.Table0[0].ReceivedFrom);
+                        $("#spnNamOfPer").text(table.Table0[0].IssuedBy);
+                        $("#spnDate").text(table.Table0[0].IssuedDate);
+                        $("#spnTime").text(table.Table0[0].IssuedTime);
+                        $("#spnOthScrMet").text(table.Table0[0].OtherScreening);
+                        // $("#spnNamOfPer").text(table.Table0[0].Employee);
+                        $("#spnCSD").text(table.Table0[0].CSDCode);
+                        $("#spnRegulatedAgentRegNo").text(table.Table0[0].RegulatedAgentRegNo);
+
+                    }
+                },
+                error: function (err) {
+                    alert("Generated Error");
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <center>
+        <span class="textContents">IATA (eCSD)</span>
+
+    </center>
+    <table cellpadding="1" cellspacing="1" border="1" align="center">
+
+        <caption style="font-weight:bold;font-size:18px;">
+            <!--<img src="Images/Iata.png" />-->
+
+
+            <br />
+        </caption>
+        <thead></thead>
+        <tfoot></tfoot>
+        <tbody>
+            <tr class="textContents">
+                <td colspan="2">
+                    Regulated Entity Category (RA, KC or AO) and<br /> <font size="2"> (Of the regulated party issuing the security status)</font><br />
+                    <span id="spnRec"></span><br />
+                    <span id="spnCSD"></span><br />
+                </td>
+                <td colspan="2">Unique Consignment Identifier<br /><font size="2">(if AWB format is nnn-nnnnnnnn)<br /></font><span id="spnUci"></span></td>
+
+            </tr>
+            <tr class="textContents">
+                <td colspan="4">Contents Of Consignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spnCOC"></span><br />  <input type="checkbox" id="chkconsol" />            Consolidation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spnCon"></span></td>
+
+            </tr>
+            <tr class="textContents">
+                <td>Origin<br /><span id="spnOrg"></span></td>
+                <td>Destination<br /><span id="spnDes"></span></td>
+                <td colspan="2">Transfer/Transit points (if known)<br /></td>
+            </tr>
+            <tr class="textContents">
+                <td rowspan="2">Security Status<br /><span id="spnSsta"></span></td>
+                <td colspan="3">Reason for Issuing the Security Status</td>
+            </tr>
+            <tr class="textContents">
+                <td>Received from <br /><font size="2">(codes)</font><br /><span id="spnRf"></span></td>
+                <td>Screening Method<br /><font size="2">(codes)</font><br /><span id="spnScr"></span></td>
+                <td>Grounds Of Exemption<br /><font size="2">(codes)</font><br /><span id="spnGrn"></span></td>
+            </tr>
+            <tr class="textContents">
+                <td colspan="4">Other Screening Method(s)<br /><font size="2">(If Applicable)</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spnOthScrMet"></span></td>
+
+            </tr>
+            <tr class="textContents">
+                <td colspan="2">Security Status Issued By &nbsp;&nbsp;<span id="spnSecIssu"></span><br /><font size="2">Name Of Person Or Employee ID</font> <br /><span id="spnNamOfPer"></span></td>
+                <td colspan="2">Security Status Issued On<br /><font size="2">Date(dd-mmm-yy)</font>&nbsp;<span id="spnDate"></span>&nbsp;&nbsp;<font size="2">Time(tttt)</font>&nbsp;&nbsp;<span id="spnTime"></span></td>
+            </tr>
+            <tr class="textContents">
+                <td colspan="4">Regulated Entity Category(RA, KC or AO) and Identifier<br /><font size="2">(Of any regulated party who has accepted the security status given to consignment by another regulated party)</font><br /><span id="spnRegulatedAgentRegNo"></span></td>
+
+            </tr>
+            <tr class="textContents">
+                <td colspan="4">Additional Security Information</td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+﻿<!--#region Zone XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  Zone
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Ajay
+  
+  *****************************************************************************
+  */
+  #endregion-->
+
+<Messages>
+  <DataFieldName>
+    <Name>ZoneName</Name>
+    <Message>Zone Name can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Zone already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+
+    <Key>2000</Key>
+    <value>Zone Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Zone Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Zone Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+
+</Messages>
+
+
+

@@ -1,0 +1,22 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Charges for office already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Charges Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Charges Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Charges Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+
+
+

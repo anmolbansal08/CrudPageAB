@@ -1,0 +1,18 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Release Note Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Release Note Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Release Note Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Release Note already exists.</value>
+  </ServerMessage>
+</Messages>

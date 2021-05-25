@@ -1,0 +1,15 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Duplicate Entry</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Operation Performed Successfully</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1006</Key>
+    <value>Payment Request Rejected.</value>
+  </ServerMessage>
+</Messages>

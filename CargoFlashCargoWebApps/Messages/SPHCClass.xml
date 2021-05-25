@@ -1,0 +1,29 @@
+﻿<Messages>
+	<DataFieldName>
+		<Name>ClassName</Name>
+		<Message>Class Name can not be blank</Message>
+	</DataFieldName>
+
+	<!--<DataFieldName>
+		<Name>ClassDescription</Name>
+		<Message>Class Description Can't be Blank.</Message>
+	</DataFieldName>-->
+
+	<ServerMessage>
+		<Key>1001</Key>
+		<value>DG Class already exists</value>
+	</ServerMessage>
+
+	<ServerMessage>
+		<Key>2000</Key>
+		<value>DG Class Added Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2001</Key>
+		<value>DG Class Updated Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2002</Key>
+		<value>DG Class Deleted Successfully.</value>
+	</ServerMessage>
+</Messages>

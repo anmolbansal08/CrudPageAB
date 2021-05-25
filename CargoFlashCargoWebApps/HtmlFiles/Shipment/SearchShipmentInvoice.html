@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <style type="text/css">
+        #formsearch label {
+            display: block;
+            text-align: center;
+            line-height: 150%;
+            font-size: .85em;
+        }
+    </style>
+</head>
+<body>
+    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+        <tr><td class='formSection' colspan='10'> </td></tr>
+        <!--<tr><td class='formlabel' colspan='10'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>-->
+        <tr class='formSection'>
+           
+            <td class='formInputcolumn' colspan="2">
+             
+                <label id="lblerror"></label>
+                <input type="radio" name="Filter" value="0" id="isRoute" checked="checked">Payment
+                <input type="radio" name="Filter" value="1" id="ISSchedule">Receipt
+
+            </td>
+        </tr>
+        <tr class='formSection'>
+
+        
+            <td class="formInputcolumn">
+
+               
+                <input type="hidden" name="AWBSNo" id="AWBSNo" value="">
+                <!--<input type="text" class="" name="Text_AWBSNo" id="Text_AWBSNo" style="width:150px;" controltype="autocomplete" value="">-->
+                <input type="text" class="" name="Text_AWBSNo" id="Text_AWBSNo" tabindex="1" controltype="autocomplete" maxlength="12" value="" placeholder="AWb No." data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+
+                <!--<input type="hidden" id="AWBNo" value=""/>
+                <input type="text" class="" name="Text_AWBNo" id="Text_AWBNo" tabindex="1" controltype="autocomplete" maxlength="12" value="" placeholder="AWb No." data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">-->
+                <input type="hidden" name="invoiceNo" id="invoiceNo" value="">
+                 <input type="text" class="" name="Text_invoiceNo" id="Text_invoiceNo" tabindex="2" controltype="autocomplete" maxlength="12" value="" placeholder="Invoice No." data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+               
+                <input type="text" class="k-input k-state-default" name="ValidFrom" id="ValidFrom" style="width: 100%; color: rgb(0, 0, 0);" data-valid="required" data-valid-msg="Select From Date" colname="from date" tabindex="4" controltype="datetype" maxlength="10" value="From Date" placeholder="From Date" data-role="datepicker" sqldatevalue="" formattedvalue="">
+                <input type="text" class="k-input k-state-default" name="ValidTo" id="ValidTo" style="width: 100%; color: rgb(0, 0, 0);" data-valid="required" data-valid-msg="Select TO Date" colname="To date" tabindex="4" controltype="datetype" maxlength="10" value="TO Date" placeholder="TO Date" data-role="datepicker" sqldatevalue="" formattedvalue="">
+                <input type="button" name='SearchSave' value='Search' class='btn btn-success' id="btnSearch" />
+            
+               </td>
+          
+          
+         
+
+        </tr>
+       
+      
+
+    </table>
+    <div id="divDeliveryOrderDetails">
+
+    </div>
+</body>
+</html>

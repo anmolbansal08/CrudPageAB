@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript">
+
+    </script>
+    <title></title>
+    <style type="text/css">
+        .bc {
+            text-align: center;
+            font-family: Arial;
+            height: 20px;
+        }
+
+        .c {
+            text-align: left;
+            font-family: Arial;
+            height: 20px;
+        }
+
+        body {
+            font-family: Arial;
+            font-size: 12px;
+        }
+
+        span {
+            text-align: center;
+        }
+
+
+        .ui-widget-overlay ui-front {
+            opacity: 0.1 !important;
+        }
+
+        .ui-widget-overlay {
+            background: none !important;
+            opacity: 0.1 !important;
+        }
+
+        .coverBorder {
+            border: 1px solid lightgray;
+        }
+
+        .CurveRectangle {
+            /*padding: 10px;*/
+            /*background: #dddddd;*/
+            border-top-right-radius: 6.5em;
+            border-top-left-radius: 6.5em;
+            -ms-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+            border-top: 1px solid lightgrey;
+        }
+
+        .CurveBackRectangle {
+            -ms-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            /* transform: rotate(360deg); */
+            display: block;
+        }
+
+        .formlabelcss {
+            font-size: 14px;
+            font-weight: bold;
+            color: rgb(0, 0, 0);
+            font-family: Arial;
+            padding-left: 3px;
+            padding-right: 5px;
+            text-align: left;
+            width: 17%;
+            height: 25px;
+            background-color: #F5F5F5;
+            border-right: 1px solid rgb(190, 189, 190);
+            border-left: 2px solid rgb(190, 189, 190);
+            border-bottom: 1px solid rgb(190, 189, 190);
+            border-top: 1px solid rgb(190, 189, 190);
+        }
+        .forminputcss {
+            font-size: 14px;
+           
+            color: rgb(0, 0, 0);
+            font-family: Arial;
+            padding-left: 3px;
+            padding-right: 5px;
+            text-align: left;
+            width: 17%;
+            height: 25px;
+           
+            border-right: 1px solid rgb(190, 189, 190);
+            border-left: 2px solid rgb(190, 189, 190);
+            border-bottom: 1px solid rgb(190, 189, 190);
+            border-top: 1px solid rgb(190, 189, 190);
+        }
+    </style>
+</head>
+<body>
+    <div id="MainDiv">
+        <div id="ApplicationTabs" data-role="tabstrip" class="k-widget k-header k-tabstrip">
+            <ul class="k-tabstrip-items k-reset"><li id="liAirline" class="k-state-active k-item k-tab-on-top k-state-default k-first"><a class="k-link">Update</a></li></ul>
+            <div id="ApplicationTabs-1" class="k-content k-state-active" style="display: block;">
+                <table class="WebFormTable" id="tbl">
+                    <tr><td class="formSection" colspan="4">Rush Handling Approval</td></tr>
+                    <tr><td class="formActiontitle" colspan="4">Approve Rush Handling <b><span id="spnawb"></span></b><hr /></td></tr>
+                    <tr>
+                        <td>
+
+                            <div id="htmldivdetails" style="margin-left:auto;margin-right:auto;width:100%;margin-top:20px; height:100%;">
+
+                               
+                                <fieldset style="margin-left: 1%; margin-right: 1%; border-color: rgb(190, 189, 190);">
+                                    <legend style="font-size:2.0em;">AWB Information</legend>
+                                    <table style="width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse; border: 0px; " validateonsubmit='true'>
+
+                                        <tr>
+                                            <td colspan="2" class="bc formlabelcss">AWB</td>
+                                            <td colspan="2" class="bc forminputcss">
+                                               <span id="AWB"></span>
+                                                <input id="hdnAWBSNo" type="hidden" name="hdnAWBSNo" value="" />
+                                            </td>
+                                            <td colspan="2" class="bc formlabelcss">Pieces</td>
+                                            <td colspan="2" class="bc forminputcss"><span id="Pieces"></span></td>
+                                        </tr>
+                                         <tr>
+                                            <td colspan="2" class="bc formlabelcss">Origin</td>
+                                             <td colspan="2" class="bc forminputcss">
+                                                 <span id="Origin"></span>
+                                                 <input id="hdnOriginSNo" type="hidden" name="hdnOriginSNo" value="" />
+                                             </td>
+                                            <td colspan="2" class="bc formlabelcss">Destination</td>
+                                             <td colspan="2" class="bc forminputcss">
+                                                 <span id="Destination"></span>
+                                                 <input id="hdnDestinationSNo" type="hidden" name="hdnDestinationSNo" value="" />
+                                             </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2" class="bc formlabelcss">Flight No</td>
+                                            <td colspan="2" class="bc forminputcss"><span id="FlightNo"></span></td>
+                                            <td colspan="2" class="bc formlabelcss">Flight Date</td>
+                                            <td colspan="2" class="bc forminputcss"><span id="FlightDate"></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2" class="bc formlabelcss">Grosss Weight</td>
+                                            <td colspan="2" class="bc forminputcss"><span id="GrosssWeight"></span></td>
+                                            <td colspan="2" class="bc formlabelcss">Volume Weight</td>
+                                            <td colspan="2" class="bc forminputcss"><span id="VolumeWeight"></span></td>
+                                        </tr>
+
+                                         <tr>
+                                             <td colspan="2" class="bc formlabelcss">Agent Name</td>
+                                             <td colspan="2" class="bc forminputcss">
+                                                 <span id="AgentName"></span>
+                                                 <input id="hdnAccountSNo" type="hidden" name="hdnAccountSNo" value="" />
+                                             </td>
+                                             <td colspan="2" class="bc formlabelcss"></td>
+                                             <td colspan="2" class="bc forminputcss"></td>
+                                        </tr>
+
+                                       
+                                    </table>
+                                </fieldset>
+
+                                <div>
+                                    <br />
+                                </div>
+                                <fieldset style="margin-left: 1%; margin-right: 1%; border-color: rgb(190, 189, 190);">
+                                    <legend style="font-size:2.0em;">Rush Handling Approval Information</legend>
+                                    <table style="width: 100%; border-collapse: collapse; border: 0px ; " validateonsubmit='true'>
+
+                                        <tr>
+                                            <td colspan="2" class="bc formlabelcss">Name</td>
+                                            <td colspan="2" class="bc forminputcss"><span id="Name"></span></td>
+                                            <td colspan="2" class="bc formlabelcss">Id</td>
+                                            <td colspan="2" class="bc forminputcss"><span id="Id"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="bc formlabelcss">Reason</td>
+                                            <td colspan="2" class="bc forminputcss"><span id="Reason"></span></td>
+                                            <td colspan="2" class="bc formlabelcss"></td>
+                                            <td colspan="2" class="bc forminputcss"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2" class="bc formlabelcss">Request By</td>
+                                            <td colspan="2" class="bc forminputcss"><span id="Request"></span></td>
+                                            <td colspan="2" class="bc formlabelcss">Request Date</td>
+                                            <td colspan="2" class="bc forminputcss"><span id="Requestdate"></span></td>
+                                        </tr>
+
+
+
+
+                                    </table>
+                                </fieldset>
+
+                                <div>
+                                    <br />
+                                </div>
+                                <fieldset style="margin-left: 1%; margin-right: 1%; border-color: rgb(190, 189, 190);">
+                                    <legend style="font-size:2.0em;">Approve / Reject</legend>
+                                    <table style="width: 100%; border-collapse: collapse; border: 0px ; " validateonsubmit='true'>
+
+                                        <tr>
+                                            <td colspan="2" class="bc formlabelcss">Approve</td>
+                                            <td colspan="2" class="bc forminputcss">
+
+                                                <input id="ApproveType" type="radio" name="Group" style="font-size:16px" value="Yes">Yes
+                                                <input id="ApproveType1" type="radio" name="Group" style="font-size:16px" value="No">No
+                                            </td>
+                                            <td colspan="2" class="bc formlabelcss"></td>
+                                            <td colspan="2" class="bc forminputcss"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="bc formlabelcss">Remarks</td>
+                                            <td colspan="2" class="bc forminputcss"><textarea class="k-input" id="Text_RemarksApproved" style="width:100%;height: 80px;" rows="5" cols="25"></textarea></td>
+                                            <td colspan="2" class="bc formlabelcss"></td>
+                                            <td colspan="2" class="bc forminputcss"></td>
+                                        </tr>
+
+                                    </table>
+                                </fieldset>
+
+                            </div>
+                            <div id="DisplayButton" style="text-align:center;margin-bottom:2px;">
+                                
+                                <input type="submit" name="operation" value="Update" class="btn btn-success" onclick="SaveRush();" id="btnUpdate">
+                                <input id="btnBack" type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=Shipment&Apps=RushHandlingApproval&FormAction=INDEXVIEW');" class="btn btn-inverse">
+                                <!--<input id="btnPrint" type="button" value="Print" class="btn btn-success" onclick='printDiv();'>-->
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>

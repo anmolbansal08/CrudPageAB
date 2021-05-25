@@ -1,0 +1,109 @@
+﻿@*// <copyright file="_Layout.cshtml" company="Cargoflash">
+        //
+        // Created On: 2-Feb-2017
+        // Created By: Braj
+        // Description:
+        //----------------------------------------------------------------------------
+        // Revison History:
+        // Please add a new line below for any update to this file
+        // Updated On  Updated By                     Significant Changes
+        // ----------------------------------------------------------------------------
+        //
+        //
+    </copyright>*@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/AppCssV2")
+    
+    @Scripts.Render("~/bundles/jquery")
+    
+</head>
+<body ng-controller="GraudaController as Garuda">
+    <div id="kendoWindowDiv"></div>
+    <div id="divDialogSession" style="display:none;">
+        <table width="100%">
+            <tr>
+                <td>
+                    User Name
+                </td>
+                <td>
+                    <label id="txtReUserId" class="k-input" style="width:200px;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password
+                </td>
+                <td>
+                    <input type="password" id="txtRePassword" class="k-input" style="width:200px;" />
+                </td>
+            </tr>
+        </table>
+        <br />
+    </div>
+    <div id="divbody" style="height:auto">
+
+        <section class="content-wrapper main-content clear-fix">
+            <div id="divValidationMessage" class="validation-summary-errors">
+            </div>
+            <div id="overlayDialogBox" class="black_overlay">
+            </div>
+            <div id="divDialogBox" style="display: none; text-align: center">
+                <br />
+                <span id="lblDialogBoxMessage"></span>
+                <br />
+                <div id="divDialogBoxControls" style="text-align: center">
+                </div>
+            </div>
+
+
+
+
+            <hgroup class="title">
+
+                <h1></h1>
+            </hgroup>
+
+            <section id="loginForm">
+                @RenderBody()
+
+            </section>
+
+
+        </section>
+    </div>
+    <div id='divFooter' class='divFooter'></div>
+
+
+
+
+    <script type="text/javascript">
+        function ResizedBody() {
+            var windowheight = window.innerHeight;
+            var divBody = document.getElementById('divbody');
+            var divFooter = document.getElementById('divFooter');
+            if (divFooter != undefined || divFooter != null) {
+                divBody.style.height = windowheight - 30 + 'px';
+                divFooter.style.height = 30 + 'px';
+                divFooter.style.position = 'fixed';
+                divFooter.style.bottom = '0px';
+                //  divBody.style.overflow = "auto";
+            }
+        }
+
+    </script>
+
+    <script>
+        
+        SiteUrl = '@System.Configuration.ConfigurationManager.AppSettings["SiteUrl"].ToString()';
+    </script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,24 @@
+﻿<Messages>
+
+
+  <DataFieldName>
+    <Name>CommoditySno</Name>
+    <Message>Reporting Station can not be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>AirlineSno</Name>
+    <Message>Incident Category can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1005</Key>
+    <value>Selected record deleted successfully</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Record already exists</value>
+  </ServerMessage>
+
+
+</Messages>

@@ -1,0 +1,28 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>EventMessageTrans</Name>
+    <Message>Event Message can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Event Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Event Message Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Event Message Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Event Message Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

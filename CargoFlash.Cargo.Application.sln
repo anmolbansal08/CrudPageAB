@@ -1,0 +1,99 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoFlash.Cargo.DataService", "CargoFlash.ROMS.DataService\CargoFlash.Cargo.DataService.csproj", "{455F79B5-2A13-488C-B7B4-94CBAF157C6B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1C17EB6B-8E0E-4AA2-8005-DCF1783DBC14} = {1C17EB6B-8E0E-4AA2-8005-DCF1783DBC14}
+		{35AEA97A-EE6D-4DB0-9767-E668A5BBF5AE} = {35AEA97A-EE6D-4DB0-9767-E668A5BBF5AE}
+		{04DECFAA-EAB6-4E14-B2AC-930C1E429B20} = {04DECFAA-EAB6-4E14-B2AC-930C1E429B20}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoFlash.Cargo.Model", "CargoFlash.ROMS.Model\CargoFlash.Cargo.Model.csproj", "{35AEA97A-EE6D-4DB0-9767-E668A5BBF5AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoFlash.Cargo.WebUI", "CargoFlash.ROMS.WebUI\CargoFlash.Cargo.WebUI.csproj", "{110B0075-9BC0-4D39-AD1D-659C84B071A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoFlash.Cargo.Business", "CargoFlash.ROMS.Business\CargoFlash.Cargo.Business.csproj", "{04DECFAA-EAB6-4E14-B2AC-930C1E429B20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoFlash.SoftwareFactory.WebUI", "CargoFlash.SoftwareFactory.WebUI\CargoFlash.SoftwareFactory.WebUI.csproj", "{FBFC49F8-DCEF-46F7-B31D-3991B1317B92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoFlash.SoftwareFactory.Data", "CargoFlash.SoftwareFactory.Data\CargoFlash.SoftwareFactory.Data.csproj", "{1C17EB6B-8E0E-4AA2-8005-DCF1783DBC14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoFlashCargoWebApps", "CargoFlashCargoWebApps\CargoFlashCargoWebApps.csproj", "{F431FC0C-8D59-4CC7-90E5-4AA28E741927}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF.Validation.Engine", "WCF.Validation.Engine\WCF.Validation.Engine.csproj", "{4BE5D56E-0535-406B-9CCD-16E11CF47FAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{455F79B5-2A13-488C-B7B4-94CBAF157C6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{455F79B5-2A13-488C-B7B4-94CBAF157C6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{455F79B5-2A13-488C-B7B4-94CBAF157C6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{455F79B5-2A13-488C-B7B4-94CBAF157C6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35AEA97A-EE6D-4DB0-9767-E668A5BBF5AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35AEA97A-EE6D-4DB0-9767-E668A5BBF5AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35AEA97A-EE6D-4DB0-9767-E668A5BBF5AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35AEA97A-EE6D-4DB0-9767-E668A5BBF5AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{110B0075-9BC0-4D39-AD1D-659C84B071A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{110B0075-9BC0-4D39-AD1D-659C84B071A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{110B0075-9BC0-4D39-AD1D-659C84B071A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{110B0075-9BC0-4D39-AD1D-659C84B071A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04DECFAA-EAB6-4E14-B2AC-930C1E429B20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04DECFAA-EAB6-4E14-B2AC-930C1E429B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04DECFAA-EAB6-4E14-B2AC-930C1E429B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04DECFAA-EAB6-4E14-B2AC-930C1E429B20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBFC49F8-DCEF-46F7-B31D-3991B1317B92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBFC49F8-DCEF-46F7-B31D-3991B1317B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBFC49F8-DCEF-46F7-B31D-3991B1317B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBFC49F8-DCEF-46F7-B31D-3991B1317B92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C17EB6B-8E0E-4AA2-8005-DCF1783DBC14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C17EB6B-8E0E-4AA2-8005-DCF1783DBC14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C17EB6B-8E0E-4AA2-8005-DCF1783DBC14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C17EB6B-8E0E-4AA2-8005-DCF1783DBC14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F431FC0C-8D59-4CC7-90E5-4AA28E741927}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F431FC0C-8D59-4CC7-90E5-4AA28E741927}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F431FC0C-8D59-4CC7-90E5-4AA28E741927}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F431FC0C-8D59-4CC7-90E5-4AA28E741927}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BE5D56E-0535-406B-9CCD-16E11CF47FAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BE5D56E-0535-406B-9CCD-16E11CF47FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BE5D56E-0535-406B-9CCD-16E11CF47FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BE5D56E-0535-406B-9CCD-16E11CF47FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 9
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.2.145:8080/tfs/cargoflash.garuda
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CargoFlash.ROMS.Business\\CargoFlash.Cargo.Business.csproj
+		SccProjectName1 = CargoFlash.ROMS.Business
+		SccLocalPath1 = CargoFlash.ROMS.Business
+		SccProjectUniqueName2 = CargoFlash.ROMS.DataService\\CargoFlash.Cargo.DataService.csproj
+		SccProjectName2 = CargoFlash.ROMS.DataService
+		SccLocalPath2 = CargoFlash.ROMS.DataService
+		SccProjectUniqueName3 = CargoFlash.ROMS.Model\\CargoFlash.Cargo.Model.csproj
+		SccProjectName3 = CargoFlash.ROMS.Model
+		SccLocalPath3 = CargoFlash.ROMS.Model
+		SccProjectUniqueName4 = CargoFlash.ROMS.WebUI\\CargoFlash.Cargo.WebUI.csproj
+		SccProjectName4 = CargoFlash.ROMS.WebUI
+		SccLocalPath4 = CargoFlash.ROMS.WebUI
+		SccProjectUniqueName5 = CargoFlash.SoftwareFactory.Data\\CargoFlash.SoftwareFactory.Data.csproj
+		SccProjectName5 = CargoFlash.SoftwareFactory.Data
+		SccLocalPath5 = CargoFlash.SoftwareFactory.Data
+		SccProjectUniqueName6 = CargoFlash.SoftwareFactory.WebUI\\CargoFlash.SoftwareFactory.WebUI.csproj
+		SccProjectName6 = CargoFlash.SoftwareFactory.WebUI
+		SccLocalPath6 = CargoFlash.SoftwareFactory.WebUI
+		SccProjectUniqueName7 = CargoFlashCargoWebApps\\CargoFlashCargoWebApps.csproj
+		SccProjectName7 = CargoFlashCargoWebApps
+		SccLocalPath7 = CargoFlashCargoWebApps
+		SccProjectUniqueName8 = WCF.Validation.Engine\\WCF.Validation.Engine.csproj
+		SccProjectName8 = WCF.Validation.Engine
+		SccLocalPath8 = WCF.Validation.Engine
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,119 @@
+﻿<input type="hidden"  id="HUldNumber"/>
+<table class="WebFormTable" id="tblAdd" validateonsubmit='true'>
+   
+    <tr><td class="formSection" >LUC Information  </td>
+        <td class="formSection" colspan="7" >Auto <input type="radio" onchange="LucAutomanual(this)" name="Manualauto" value="1" id="AutoChek" />Manual  <input type="radio" onchange="LucAutomanual(this)" name="Manualauto" checked="checked" value="0" id="ManualChek" /></td>
+    </tr>
+    <tr>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            UCR Number
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="text" name="Text_UCRCarrierCode" data-valid="maxlength[3],minlength[3],required,Number" controltype="0123456789" style="width:30px;" size="3" maxlength="3" data-valid-msg="Enter Carrier Code.Minimum 3 character" id="Text_UCRCarrierCode"><span style="font-size:large">-</span><input type="text" name="Text_UCRNumber" data-valid="maxlength[8],minlength[5],required,Number" style="width:80px;" size="8" maxlength="8" data-valid-msg="Enter UCR Number.Minimum 5 & Maximum 8 character" id="Text_UCRNumber">
+        </td>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            UHF Number
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="text" name="Text_UHFCarrierCode" data-valid="maxlength[3],minlength[3],required,Number" controltype="0123456789" style="width:30px;" size="3" maxlength="3" data-valid-msg="Enter Carrier Code.Minimum 3 character" id="Text_UHFCarrierCode"><span style="font-size:large">-</span><input type="text" name="Text_UHFNumber" data-valid="maxlength[8],minlength[5],required,Number" style="width:80px;" size="8" maxlength="8" data-valid-msg="Enter UHF Number.Minimum 5 & Maximum 8 character " id="Text_UHFNumber">
+        </td>
+        <td class="formthreelabel"></td>
+        <td class="formthreeInputcolumn"></td>
+    </tr>
+    <tr>
+
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            Date
+        </td>
+        <td class="formthreeInputcolumn">
+
+            <input type="text" name="Text_IssuedDate" data-valid="required" data-valid-msg="Enter IssuedDate" controltype="datetype" id="Text_IssuedDate">
+        </td>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            Time
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="text" name="Text_IssuedTime" placeholder="24 Hr Format" size="5" maxlength="5" data-valid="required" style="width:100px;" data-valid-msg="Enter Issued Time" id="Text_IssuedTime" onblur="CheckTimeFormat();" onkeyup="PutHyphenINTime();">
+        </td>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            Origin
+            <!--Sending Location-->
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="hdnSendLocLHR" id="hdnSendLocLHR" />
+            <span id="span_SendLocLHR" name="span_SendLocLHR"></span>
+        </td>
+    </tr>
+    <tr>
+
+
+        <td class="formthreelabel">
+            Status
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="Text_status" value="DRAFT" id="Text_Status">
+            <span>DRAFT</span>
+        </td>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            ULD
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="hidden" name="ULD" id="ULD">
+            <input type="text" name="Text_ULD" id="Text_ULD" data-valid="required" data-valid-msg="Enter  ULD" controltype="autocomplete" style="width:150px;">
+        </td>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            Loaded By
+        </td>
+        <td class="formthreeInputcolumn">
+            <textarea name="Text_LoadedBy" id="Text_LoadedBy" data-valid="required" data-valid-msg="Enter Loaded By" />
+        </td>
+    </tr>
+    <tr><td class="formSection" colspan="8">Representative Details</td></tr>
+    <tr>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            Name
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="text" name="Text_Name" style='text-transform:uppercase' maxlength="50" id="Text_Name" data-valid="maxlength[50],required" data-valid-msg="Enter Name" style="width:100px;">
+        </td>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            ID Number
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="text" name="Text_IDNumber" style='text-transform:uppercase' maxlength="20" id="Text_IDNumber" data-valid="maxlength[20],required" data-valid-msg="Enter ID Number" style="width:100px;">
+        </td>
+        <td class="formthreelabel">
+            <font color="red">*</font>
+            Mobile No
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="text" name="Text_MobileNo" maxlength="15" id="Text_MobileNo" data-valid="Number,required" data-valid-msg="Enter valid MobileNo" style="width:100px;">
+        </td>
+    </tr>
+    <tr>
+        <td class="formthreelabel">
+            &nbsp;&nbsp;&nbsp;Supplementary Info 1
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="text" name="Text_SI1" style='text-transform:uppercase' maxlength="100" id="Text_SI1" data-valid="maxlength[100]" data-valid-msg="Enter Supplementary Info 1" style="width:100px;">
+        </td>
+        <td class="formthreelabel">
+            &nbsp;&nbsp;&nbsp;Supplementary Info 2
+        </td>
+        <td class="formthreeInputcolumn">
+            <input type="text" name="Text_SI2" style='text-transform:uppercase' maxlength="100" id="Text_SI2" data-valid="maxlength[100]" data-valid-msg="Enter Supplementary Info 2" style="width:100px;">
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+
+</table>

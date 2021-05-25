@@ -1,0 +1,45 @@
+﻿<Messages>
+  <!--#region IrregularityDamage XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  IrregularityDamage
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Swati Rastogi.
+  Created On:		13 Oct 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>Damage</Name>
+    <Message>Irregularity Damage cannot be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>DamageType</Name>
+    <Message>Irregularity Damage Type cannot be blank</Message>
+  </DataFieldName>
+  
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Irregularity Damage Already Exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Irregularity Damage Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Irregularity Damage Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Irregularity Damage Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

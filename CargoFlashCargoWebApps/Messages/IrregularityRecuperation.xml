@@ -1,0 +1,44 @@
+﻿<Messages>
+  <!--#region IrregularityPacking XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  IrregularityRecuperation
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Santosh Gupta
+  Created On:		12 oct 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  
+  <DataFieldName>
+    <Name>RecuperationType</Name>
+    <Message>Recuperation Type can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Recuperation Type already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Irregularity Recuperation Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Irregularity Recuperation Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Irregularity Recuperation Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

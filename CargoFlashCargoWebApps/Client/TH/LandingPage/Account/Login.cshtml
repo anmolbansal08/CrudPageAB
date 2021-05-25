@@ -1,0 +1,497 @@
+﻿@* Remove this section if you are using bundling *@
+<script type="text/javascript" src="~/Scripts/Login.js"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<link type="text/css" rel="stylesheet" href="~/Styles/CfiMessage.css" />
+<script type="text/javascript" src="~/Scripts/CfiMessage.js"></script>
+<script type="text/javascript" src="~/Scripts/commono.js"></script>
+
+@{
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Log in";
+
+    if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null)
+    {
+        @Html.Hidden("HdnUName", Request.Cookies["UserName"].Value)
+        @Html.Hidden("HdnPass", Request.Cookies["Password"].Value)
+    }
+
+    var Envoirnment = "";
+    // Initialize general page variables
+    var email = ""; var CaptchaCode = "";
+    var password = "";
+    var rememberMe = false;
+    var browser = "";
+    //var ip = "";
+    var SessionID = "";
+
+    CargoFlash.Cargo.DataService.LoginService loginservice1 = new CargoFlash.Cargo.DataService.LoginService();
+
+    Envoirnment = loginservice1.GetAirline();
+
+    CargoFlash.Cargo.DataService.Common.CommonService CS = new CargoFlash.Cargo.DataService.Common.CommonService();
+    Int32 ISCaptcha = Convert.ToInt32(CS.GetSystemSetting("ISCaptcha"));
+
+    var hostname = "";
+    var returnUrl = Request.QueryString["ReturnUrl"];
+    if (returnUrl.IsEmpty())
+    {
+        // Some external login providers always require a return URL value
+
+        returnUrl = Href("~/");
+    }
+    var islogout = Request.QueryString["islogout"];
+    if (!string.IsNullOrEmpty(islogout))
+    {
+        CargoFlash.Cargo.DataService.LoginService loginservice = new CargoFlash.Cargo.DataService.LoginService();
+        bool isLogout = loginservice.LogoutSession(((CargoFlash.Cargo.Model.UserLogin)Session["UserDetail"]));
+        if (isLogout)
+        {
+            Session.Clear();
+            Session.Abandon();
+            Session["UserDetail"] = null;
+            if (Request.Cookies["UserDetail"] != null)
+            {
+                HttpCookie myCookie = new HttpCookie("UserDetail");
+                myCookie.Expires = DateTime.Now.AddDays(-1);
+                myCookie.Value = "0";
+                Response.Cookies.Add(myCookie);
+                Response.Cookies.Remove("UserDetail");
+            }
+            Response.Redirect("~/Account/Login.cshtml");
+        }
+    }
+
+
+    // If this is a POST request, validate and process data
+    if (IsPost)
+    {
+        // Setup validation
+        if (string.IsNullOrEmpty(Request["email"]))
+        {
+            Validation.AddFormError("User ID is required.");
+        }
+        if (string.IsNullOrEmpty(Request["Password"]))
+        {
+            Validation.AddFormError("Password is required.");
+        }
+
+        if (ISCaptcha == 2)
+        {
+            if (string.IsNullOrEmpty(Request["CaptchaCode"]))
+            {
+                Validation.AddFormError("Captcha is required.");
+            }
+        }
+        Validation.Add("password",
+            Validator.StringLength(
+                maxLength: Int32.MaxValue));
+        //,
+        //minLength: 5,
+        //errorMessage: "Invalid UserID and Password."));
+
+        if (Session["UserDetail"] != null)
+        {
+            Response.Redirect("~/Index.cshtml");
+        }
+
+        if (Validation.IsValid())
+        {
+            try
+            {
+                email = Request.Form["email"];
+                password = Request.Form["password"];
+                rememberMe = Request.Form["rememberMe"].AsBool();
+                browser = Request.Browser.Type;
+                hostname = Dns.GetHostName();
+                SessionID = HttpContext.Current.Session.SessionID;
+
+                if (ISCaptcha == 2)
+                {
+                    CaptchaCode = Request.Form["CaptchaCode"];
+                }
+                else if (ISCaptcha == 3)
+                {
+                    CaptchaCode = Request["g-recaptcha-response"];
+                }
+
+
+
+                CargoFlash.Cargo.Model.UserLogin userLogin = new CargoFlash.Cargo.Model.UserLogin();
+                CargoFlash.Cargo.DataService.LoginService loginservice = new CargoFlash.Cargo.DataService.LoginService();
+
+                string ip = loginservice.GetIPAddress();
+
+                AntiForgery.Validate();
+
+                try
+                {
+                    userLogin = loginservice.GetLoginRecord(email, password, ip, hostname, browser, SessionID, CaptchaCode);
+                    loginservice.RememberMe(rememberMe, email, password);
+
+                    if (Request.Cookies["UserDetail"] == null)
+                    {
+                        HttpCookie myCookie = new HttpCookie("UserDetail");
+                        myCookie.Value = userLogin.SysSetting["SessionTimeout"];
+                        myCookie.Expires = DateTime.Now.AddDays(1);
+                        Response.Cookies.Add(myCookie);
+                    }
+                    Session["UserDetail"] = userLogin;
+                    Response.Redirect("~/Index.cshtml");
+                }
+                catch (System.ServiceModel.FaultException ex)
+                {
+                    Validation.AddFormError(ex.Message);
+                    if (ex.Message == "Your password has been expired kindly proceed with change password")
+                    {
+                        @Html.Hidden("HdnPasswordExpire", "true");
+                        @Html.Hidden("HdnUserEmail", email);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string strerror = ex.Message;
+                Validation.AddFormError(strerror);
+            }
+        }
+    }
+}
+
+<style type="text/css">
+
+    .loginButton {
+        -moz-box-shadow: inset 0px 1px 0px 0px #f29c93;
+        -webkit-box-shadow: inset 0px 1px 0px 0px #f29c93;
+        box-shadow: inset 0px 1px 0px 0px #f29c93;
+        background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #cc0029) );
+        background: -moz-linear-gradient( center top, #fe1a00 5%, #cc0029 100% );
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#cc0029');
+        background-color: #fe1a00;
+        -moz-border-radius: 6px;
+        -webkit-border-radius: 6px;
+        border-radius: 6px;
+        border: 1px solid #d83526;
+        display: inline-block;
+        color: #ffffff;
+        font-family: arial;
+        font-size: 15px;
+        font-weight: bold;
+        padding: 6px 24px;
+        text-decoration: none;
+        text-shadow: 1px 1px 0px #b03466;
+        width: 100px;
+    }
+
+        .loginButton:hover {
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #cc0029), color-stop(1, #fe1a00) );
+            background: -moz-linear-gradient( center top, #cc0029 5%, #fe1a00 100% );
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc0029', endColorstr='#fe1a00');
+            background-color: #cc0029;
+        }
+
+        .loginButton:active {
+            position: relative;
+            top: 1px;
+        }
+
+
+
+
+    .promptButton {
+        display: inline-block;
+        outline: none;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        font: 14px/100% Arial, Helvetica, sans-serif;
+        padding: .5em 2em .55em;
+        text-shadow: 0 1px 1px rgba(0,0,0,.3);
+        -webkit-border-radius: .5em;
+        -moz-border-radius: .5em;
+        border-radius: .5em;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    }
+
+        .promptButton:hover {
+            text-decoration: none;
+        }
+
+        .promptButton:active {
+            position: relative;
+            top: 1px;
+        }
+</style>
+
+<style type="text/css">
+
+    body {
+        min-width: 980px;
+        background: url("../Images/map.png") no-repeat 50% 180px;
+    }
+
+    #mapBackground {
+        background-image: url("../Images/map.png");
+        text-align: center;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        width: 907px;
+        height: 466px;
+        margin-top: 0px;
+        background-position: center;
+    }
+
+
+
+    .auto-style1 {
+        background: #dbdbdb; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: -webkit-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* IE10+ */
+        background: linear-gradient(to bottom, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
+        font-family: tahoma, arial, sans-serif;
+        width: 260px;
+        height: 20px;
+        font-size: 13px;
+    }
+
+    .column1 {
+        text-align: left;
+        width: 300px;
+        font-family: "Myriad Pro";
+        font-size: 14px;
+        color: #4B4A4A;
+    }
+
+    /*new*/
+    td {
+        padding: 0;
+        border: 0 none;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin-top: 0;
+        border: 0 none;
+    }
+
+    input:hover, input:focus {
+        outline-style: solid;
+        outline-width: 0px;
+        border: 1px solid #3BB3E2;
+    }
+
+    #Tracking {
+        margin: 10px;
+        height: 20px;
+    }
+
+    /* Filters Menu Style */
+</style>
+
+<div id="Container" style="display: block;">
+    <form method="post" autocomplete="off">
+
+        @AntiForgery.GetHtml()
+        @* If one or more validation errors exist, show an error *@
+        <div id="validationMessage" style="display:none;">
+            @Html.ValidationSummary("", excludeFieldErrors: true, htmlAttributes: null)
+        </div>
+        <table style="width:100%;">
+            <thead>
+                <tr style="height:114px;">
+                    <td></td>
+                    <td style="width:1024px; text-align:center; vertical-align:top;">
+                        <a id="imglink" target="_blank" style="display: inline;" href="http://rayaairways.com/">
+                            <img id="loginlogo" style="margin-top: 50px; width: 290px; height: 114px;" src="~/Images/vs.png">
+                        </a>
+                    </td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td>
+                        <div id="mapBackground">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td id="DefultLoginScreen" style="width: 1140px; text-align: center; vertical-align: top; display: block;">
+                                            <table style="width:100%; margin-top:80px;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <img width="980" height="16" style="opacity:0.5;margin-bottom:-8px" src="~/Images/shadow1.png">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background:white;">
+                                                            <table style="width:100%; height:320px; border-collapse:collapse; border-spacing:0; ">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style=" width:2px; text-align:right;border:0;">
+                                                                            <img src="~/Images/line.png" style="width:2px;height:260px;margin-right:-3px;border:thick">
+                                                                        </td>
+                                                                        <td>
+                                                                            <div style="float: left;margin-left:60px;width:300px;" id="myform">
+                                                                                <table id="loginForm" style="display:normal">
+                                                                                    <tbody>
+
+                                                                                        <tr>
+                                                                                            <td class="column1">
+                                                                                                User ID:
+                                                                                                <br>
+                                                                                                <input type="text" id="email" class="auto-style1" name="email" autocomplete="off" value="@email" @Validation.For("email") placeholder="User ID">
+                                                                                                @Html.ValidationMessage("email")
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="column1">
+                                                                                                Password:
+                                                                                                <br>
+                                                                                                <input type="password" placeholder="Password" id="password" class="auto-style1" autocomplete="off" name="password" @Validation.For("password")>
+                                                                                                @Html.ValidationMessage("password")
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        @if (ISCaptcha == 2)
+                                                                                        {
+                                                                                            <tr>
+                                                                                                <td class="column1">
+                                                                                                    Captcha:
+                                                                                                    <br>
+                                                                                                    <input type="text" id="CaptchaCode" class="auto-style1" name="CaptchaCode" style="margin-bottom: 4px;" autocomplete="off" value="@CaptchaCode" @Validation.For("CaptchaCode") />
+                                                                                                    @Html.ValidationMessage("CaptchaCode")
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="column1">
+                                                                                                    <img src="~/Handler/CaptchaHandler.ashx" id="imgCaptcha" />
+                                                                                                    <a href="#" onclick="RefreshCaptcha();">Refresh</a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        }
+                                                                                        <tr>
+                                                                                            <td class="column1">
+                                                                                                <table style="width:100%">
+                                                                                                    <tr>
+                                                                                                        <td>
+                                                                                                            <input type="submit" value="  Log In  > " id="LogInBtn" class="loginButton" />
+
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                        <td>                                                                                                           <a style="font-size: 3px;" onclick="ForgetPassword();" title="Forgot Password" role="button" aria-disabled="false"><img id="Tracking" src="~/Images/forgotpassword.png" /> </a>                                                                                                           <a style="font-size: 3px;" title="AWB Tracking" target="_blank" href="../Tracking/AWB"><span class="Tracking"></span><img id="Tracking" src="~/Images/tracking.jpg" /></a>                                                                                                           <a style="font-size: 3px;" title="Flight Schedule" target="_blank" href="../SearchSchedule/SearchScheduleView"><img id="Tracking" src="~/Images/flightscedule.png" /></a>                                                                                                       </td>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td colspan="4">
+                                                                                                <p>&copy; Powered by: Cargoflash Infotech Pvt. Ltd.</p>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                </table>
+
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                        </div>
+                    </td>
+                    <td style=" width:2px; text-align:right;border:0;">
+                        <img src="~/Images/line.png" style="width:2px;height:260px;margin-right:-3px;border:thick">
+                    </td>
+                    <td style="width:639px;">
+                        <img id="DirectlyLayerImage" width="650" style="display: inline; height: 305px; min-width: 650px; width: 650px; border: 0px;" src="~/Images/rayaLogin.png">
+                    </td>
+                    <td style="width:85px;"></td>
+                </tr>
+            </tbody>
+        </table>
+        </td>
+        </tr>
+        <tr style="float:left;margin-top:-8.5px">
+            <td>
+                <img width="980" height="16" style="opacity:0.5" src="~/Images/shadow2.png">
+            </td>
+        </tr>
+        </tbody>
+        </table>
+        </td>
+        <td></td>
+        </tr>
+        </tbody>
+        </table>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+<script>
+    //Added By Amit Yadav
+    var iFramed = (window.location != window.parent.location) ? true : false;
+    if (iFramed == true) {
+        window.parent.location.href = "Login.cshtml";
+    }
+    //added by Pankaj
+    //added by arman
+    $(document).ready(function () {
+        //$('div[id="body"] table tr td:eq(1)').find('img').attr('src', '');
+        $('div p:contains(© 2017 -Cargoflash)').remove();
+    });
+    // end
+    function ForgetPassword() {
+        $("#popForgetPassword").remove();
+        $("#LogInBtn").after('<div id="popForgetPassword" title="Forget Password" style="font-family: Arial; font-size:10px;"></div>');
+        $("#popForgetPassword").append('<table style="margin: 0px auto;"><tr><td><label style="margin-top: 5%;" name="mUserName">User ID</label></td></tr><tr><td><input type="text" style="margin-bottom: 2%;    padding: 6px 10px;    box-sizing: border-box;    border: 1px solid #4CAF50;  border-radius: 4px;" id="UserName" maxlength="30" onblur="requiredfn(this.id)" /></td></tr><tr><td><label name="mEmailID">Email Address</label></td></tr><tr><td><input type="text" style="margin-bottom: 2%;    padding: 6px 10px;    box-sizing: border-box;    border: 1px solid #4CAF50;  border-radius: 4px;" id="EmailID" maxlength="75" onblur="requiredfn(this.id)" /></tr></td><tr><td><label id="mValidateMessage" style="color:red;"></label></td></tr></table>');
+        $("#popForgetPassword").dialog(
+            {
+                autoResize: true,
+                maxWidth: 350,
+                maxHeight: 275,
+
+                width: 350,
+                height: 275,
+                modal: true,
+                title: 'Forgot Password',
+                draggable: false,
+                resizable: false,
+                buttons: {
+                    "Reset": function () {
+                        var userName = $('#UserName').val();
+                        var EmailID = $('#EmailID').val();
+                        resetPassword(userName, EmailID);
+                        //$(this).dialog("close");
+                    },
+                    Cancel: function () {
+                        $(this).dialog("close");
+                    }
+                },
+                close: function () {
+                    $(this).dialog("close");
+                }
+            });
+    }
+
+
+    function ValidateEMail(email) {
+        var regex = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        return regex.test(email);
+    }
+
+    $(function () {
+        if ($('.validation-summary-errors').length > 0 && $(".validation-summary-errors li:first").html() != "null" && $(".validation-summary-errors li:first").html() != "")
+            InvokeMsg["warning"]($(".validation-summary-errors").html(), "");
+    });
+
+
+
+</script>

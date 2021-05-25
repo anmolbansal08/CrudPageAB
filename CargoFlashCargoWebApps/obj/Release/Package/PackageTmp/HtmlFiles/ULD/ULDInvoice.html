@@ -1,0 +1,112 @@
+﻿<style>
+    .short {
+        font-weight: bold;
+        color: #FF0000;
+        font-size: 11px;
+    }
+
+    .weak {
+        font-weight: bold;
+        color: orange;
+        font-size: 11px;
+    }
+
+    .good {
+        font-weight: bold;
+        color: #2D98F3;
+        font-size: 11px;
+    }
+
+    .strong {
+        font-weight: bold;
+        color: limegreen;
+        font-size: 11px;
+    }
+
+
+    .divshort {
+        color: #FF0000;
+        width: 25%;
+        border: solid;
+        background-color: #FF0000;
+    }
+
+    .divweak {
+        color: orange;
+        width: 50%;
+        border: solid;
+        background-color: orange;
+    }
+
+    .divgood {
+        color: #2D98F3;
+        width: 75%;
+        border: solid;
+        background-color: #2D98F3;
+    }
+
+    .divstrong {
+        color: limegreen;
+        width: 97%;
+        border: solid;
+        background-color: limegreen;
+    }
+</style>
+
+
+    <table class="WebFormTable" id="tbl" validateonsubmit='true'>
+
+        <tr><td class="formActiontitle" colspan="8"><span id="__SpanHeader__">NEW ULD Invoice:</span><div class="MandatoryTextCss"><font color="red">*</font> Mandatory Fields</div></td></tr>
+        <tr>
+            <td class="formbuttonrow" colspan="8">
+                <input type="submit" name="operation" value="Generate Invoice" class="btn btn-success"><!--onclick="SaveReturntoShipper();"-->
+                <input id="btnPrint" type="button" value="Print" class="btn btn-success" onclick="printDiv()" />
+                <input id=" btnback" type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=ULD&Apps=ULDInvoice&FormAction=INDEXVIEW');" class="btn btn-inverse">
+            </td>
+        </tr>
+        <tr><td class="formSection" colspan="8">ULD Invoice Information</td></tr>
+        <tr id="trsearch">
+            <td class="formlabel"> Vendor :</td>
+            <td class="formInputcolumn">
+                <input type="hidden" name="VendorSNo" id="VendorSNo" value="">
+                <input type="text" class="" name="Text_VendorSNo" id="Text_VendorSNo" data-valid="required" data-valid-msg="Select Vendor" tabindex="4" controltype="autocomplete" maxlength="10" value="" placeholder="">
+            </td>
+            <td class="formlabel">
+            NPPA No.
+            </td>
+            <td class="formInputcolumn">
+                <input type="hidden" name="NPPANo" id="NPPANo" value="">
+                <input type="text" class="" name="Text_NPPANo" id="Text_NPPANo" style=" text-transform: uppercase;" controltype="alphanumericupper" data-valid="required" data-valid-msg="Insert NPPA No" tabindex="3" maxlength="20" value=""></td>
+         
+            
+             <td class="formlabel">Agreement No.</td>
+            <td class="formInputcolumn">
+                <input type="hidden" name="AgreementNo" id="AgreementNo" value="">
+                <input type="text" class="" name="Text_AgreementNo" id="Text_AgreementNo" style=" text-transform: uppercase;" controltype="alphanumericupper" data-valid="required" data-valid-msg="Insert Agreement No" tabindex="2" maxlength="20" value="">
+           
+             </td>
+            <td class="formlabel"></td>
+            <td class="formInputcolumn"></td>
+
+            
+        </tr>
+
+        <tr>
+            <td colspan="8">
+                <div id="InfoDiv" >
+                    
+                    <table id="tblULDGridDetails" style="border-collapse:collapse;width:100%" border="1" class="WebFormTable">
+                      
+
+                    </table>
+                </div>
+         
+            </td>
+
+        </tr>
+
+
+
+
+    </table>
+

@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{110B0075-9BC0-4D39-AD1D-659C84B071A0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CargoFlash.Cargo.WebUI</RootNamespace>
+    <AssemblyName>CargoFlash.ROMS.WebUI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CargoFlash.ROMS.DataService\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accounts\ApprovePaymentManagementWebUI.cs" />
+    <Compile Include="Accounts\CashRegisterManagementWebUI.cs" />
+    <Compile Include="Accounts\CreditLimitReportManagementWebUI.cs" />
+    <Compile Include="Accounts\LedgerManagementWebUI.cs" />
+    <Compile Include="Accounts\ChargeGroupManagementWebUI.cs" />
+    <Compile Include="Accounts\CreditDebitNoteApprovalManagementWebUI.cs" />
+    <Compile Include="Accounts\CreditDebitNoteManagementWebUI.cs" />
+    <Compile Include="Accounts\DirectPaymentManagementWebUI.cs" />
+    <Compile Include="Accounts\InvoiceGroupManagementWebUI.cs" />
+    <Compile Include="Accounts\ReversePaymentManagementWebUI.cs" />
+    <Compile Include="Accounts\SummaryReportManagementWebUI.cs" />
+    <Compile Include="Accounts\TransactionHistoryManagementWebUI.cs" />
+    <Compile Include="Accounts\VerifyPaymentManagementWebUI.cs" />
+    <Compile Include="AgentBuildUp\AgentBuildUpManagementWebUI.cs" />
+    <Compile Include="AgentBuildUp\AgentBuildUpWeighingManagementWebUI.cs" />
+    <Compile Include="ApplicationWebUI.cs" />
+    <Compile Include="CRA\CRAInvoiceListManagementWebUI.cs" />
+    <Compile Include="EDI\EventMasterManagementWebUI.cs" />
+    <Compile Include="EDI\EventMessageTransManagementWebUI.cs.cs" />
+    <Compile Include="EDI\MessageTypeMasterManagementWebUI.cs" />
+    <Compile Include="EDI\MOPManagementWebUI.cs" />
+    <Compile Include="EDI\RecipientMsgConfigManagementWebUI.cs" />
+    <Compile Include="EDI\TelexTypeManagementWebUI.cs" />
+    <Compile Include="Import\TransitFlightArrivalManagementWebUI.cs" />
+    <Compile Include="Inventory\ConsumableManagementWebUI.cs" />
+    <Compile Include="Inventory\ConsumableStockManagementWebUI.cs" />
+    <Compile Include="Inventory\InventoryItemManagementWebUI.cs" />
+    <Compile Include="Inventory\InventoryVehTypeManagementWebUI.cs" />
+    <Compile Include="Inventory\InvVehicleManagementWebUI.cs" />
+    <Compile Include="Inventory\InvVehicleServiceManagementWebUI.cs" />
+    <Compile Include="Inventory\IssueConsumablesManagementWebUI.cs" />
+    <Compile Include="Inventory\ReturnConsumableManagementWebUI.cs" />
+    <Compile Include="Inventory\InventoryStockListManagementWebUI.cs" />
+    <Compile Include="Irregularity\ApplicationEnityManagementWebUI.cs" />
+    <Compile Include="Irregularity\ComplaintManagementWebUI.cs" />
+    <Compile Include="Irregularity\IrregularityDisposalAdviceManagementWebUI.cs" />
+    <Compile Include="Irregularity\IrregularityEventManagementWebUI.cs" />
+    <Compile Include="Irregularity\IrregularityIncidentManagementWebUI.cs" />
+    <Compile Include="Irregularity\IrregularityManagementWebUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Irregularity\IrregularityNonDeliveryReasonManagementWebUI.cs" />
+    <Compile Include="Irregularity\IrregularityPackingManagementWebUI.cs" />
+    <Compile Include="Irregularity\IrregularityRecuperationManagementWebUI.cs" />
+    <Compile Include="Irregularity\IrregularityDamageManagementWebUI.cs" />
+    <Compile Include="Irregularity\IrregularitySeverityManagementWebUI.cs" />
+    <Compile Include="Irregularity\IrregularityStatusManagementWebUI.cs" />
+    <Compile Include="Mail\AirMailManagementWebUI.cs" />
+    <Compile Include="Master\AccountGroupManagementWebUI.cs" />
+    <Compile Include="Master\AccountTargetManagementWebUI.cs" />
+    <Compile Include="Master\AccountTypeManagementWebUI.cs" />
+    <Compile Include="Master\AirCraftCapacityManagementWebUI.cs" />
+    <Compile Include="Master\AircraftDimensionMatrixManagementWebUI.cs" />
+    <Compile Include="Master\AirCraftManagementWebUI.cs" />
+    <Compile Include="Master\AirlineAuctionManagementWebUI.cs" />
+    <Compile Include="Master\AccountManagementWebUI.cs" />
+    <Compile Include="Master\AirlineCheckListManagementWebUI.cs" />
+    <Compile Include="Master\AirlineHubManagementWebUI.cs" />
+    <Compile Include="Master\AirlineManagementWebUI.cs" />
+    <Compile Include="Master\AirlineTimeZoneManagementWebUI.cs" />
+    <Compile Include="Master\AirportManagementWebUI.cs" />
+    <Compile Include="Master\BTBMachinePalletManagementWebUI.cs" />
+    <Compile Include="Master\BTLManagementWebUI.cs" />
+    <Compile Include="Master\ChargesManagementWebUI.cs" />
+    <Compile Include="Master\CheckListTypeManagementWebUI.cs" />
+    <Compile Include="Master\CityConnectionTimeManagementWebUI.cs" />
+    <Compile Include="Master\CityConnectionTimePriorityManagementWebUI.cs" />
+    <Compile Include="Master\CommissionManagementWebUI.cs" />
+    <Compile Include="Master\CreditLimitUpdateManagementWebUI.cs" />
+    <Compile Include="Master\CrudPageABManagementWebUI.cs" />
+    <Compile Include="Master\DetailsManagementWebUI.cs" />
+    <Compile Include="Master\DistanceManagementWebUI.cs" />
+    <Compile Include="Master\DocumentMasterManagementWebUI.cs" />
+    <Compile Include="Master\DriverMasterManagementWebUI.cs" />
+    <Compile Include="Master\DriversManagementWebUI.cs" />
+    <Compile Include="Master\EdiInboundAndOutboundManagementWebUI.cs" />
+    <Compile Include="Master\EDIMasterWebUI.cs" />
+    <Compile Include="Master\CityManagementWebUI.cs" />
+    <Compile Include="Master\CommodityDensityGroupManagementWebUI.cs" />
+    <Compile Include="Master\CommodityGroupManagementWebUI.cs" />
+    <Compile Include="Master\CommodityManagementWebUI.cs" />
+    <Compile Include="Master\CommodityPackageManagementWebUI.cs" />
+    <Compile Include="Master\ConnectionTypeManagementWebUI.cs" />
+    <Compile Include="Master\ContactsManagementWebUI.cs" />
+    <Compile Include="Master\CustomerBidManagementWebUI.cs" />
+    <Compile Include="Master\CountryManagementWebUI.cs" />
+    <Compile Include="Master\CurrencyManagementWebUI.cs" />
+    <Compile Include="Master\CustomerManagementWebUI.cs" />
+    <Compile Include="Master\CustomerTypeManagementWebUI.cs" />
+    <Compile Include="Master\DepartmentManagementWebUI.cs" />
+    <Compile Include="Master\EDoxManagementWebUI.cs" />
+    <Compile Include="Master\EmbargoManagementWebUI.cs" />
+    <Compile Include="Master\EmployeeManagementWebUI.cs" />
+    <Compile Include="Master\ExcelUploadManagementWebUI.cs" />
+    <Compile Include="Master\ExchangeRateConfigurationManagementWebUI.cs" />
+    <Compile Include="Master\FocTypeManagementWebUI .cs" />
+    <Compile Include="Master\HoldTypeManagementWebUI.cs" />
+    <Compile Include="Master\HSCodeManagementWebUI.cs" />
+    <Compile Include="Master\IndustryTypeManagementWebUI.cs" />
+    <Compile Include="Master\LoginColorCodeManagementWebUI.cs" />
+    <Compile Include="Master\MessageTestManagementWebUI.cs" />
+    <Compile Include="Master\OffloadReasonManagementWebUI.cs" />
+    <Compile Include="Master\PageCreationManagementWebUI.cs" />
+    <Compile Include="Master\PenaltyParametersManagementWebUI.cs" />
+    <Compile Include="Master\RateCardManagementWebUI.cs" />
+    <Compile Include="Master\RatePriorityMasterManagementWebUI.cs" />
+    <Compile Include="Master\RateTypeManagementWebUI.cs" />
+    <Compile Include="Master\RateTypePriorityManagementWebUI.cs" />
+    <Compile Include="Master\RegionManagementWebUI.cs" />
+    <Compile Include="Master\RegistryControlManagementWebUI.cs" />
+    <Compile Include="Master\RFSLocationManagementWebUI.cs" />
+    <Compile Include="Master\RouteManagementWebUI.cs" />
+    <Compile Include="Master\SLAManagementWebUI.cs" />
+    <Compile Include="Master\SPHCDocumentManagementWebUI.cs" />
+    <Compile Include="Master\SPHCGroupManagementWebUI.cs" />
+    <Compile Include="Master\StateManagementWebUI.cs" />
+    <Compile Include="Master\TaskAreaManagementWebUI.cs" />
+    <Compile Include="Master\TaskMasterManagementWebUI.cs" />
+    <Compile Include="Master\TaxManagementWebUI.cs" />
+    <Compile Include="Master\TempratureSensorManagementWebUI.cs" />
+    <Compile Include="Master\TerminalManagementWebUI.cs" />
+    <Compile Include="Master\TimeZoneManagementWebUI.cs.cs" />
+    <Compile Include="Master\TruckMasterManagementWebUI.cs" />
+    <Compile Include="Master\TruckTypeManagementWebUI.cs" />
+    <Compile Include="Master\UnLockedPageManagementWebUI.cs" />
+    <Compile Include="Master\VehicleMakeManagementWebUI.cs" />
+    <Compile Include="Master\VehicleManagementWebUI.cs" />
+    <Compile Include="Master\VehicleTypeManagementWebUI.cs" />
+    <Compile Include="Master\WeighingScaleWebUI.cs" />
+    <Compile Include="Master\XRayMachineManagementWebUI.cs" />
+    <Compile Include="Permissions\AlertEventsManagementWebUI.cs" />
+    <Compile Include="Permissions\AlertEventTypeManagementWebUI.cs" />
+    <Compile Include="Permissions\AllotmentManagementWebUI.cs" />
+    <Compile Include="Permissions\BannerManagementWebUI.cs" />
+    <Compile Include="Permissions\ChangePasswordManagementWebUI.cs" />
+    <Compile Include="Permissions\DefaultParameterManagementWebUI.cs" />
+    <Compile Include="Permissions\HoldShptManagementWebUI.cs" />
+    <Compile Include="Permissions\LoginSecurityManagementWebUI.cs" />
+    <Compile Include="Permissions\ProcessDependencyManagementWebUI.cs" />
+    <Compile Include="Permissions\ReleaseNoteManagementWebUI.cs" />
+    <Compile Include="Permissions\ServiceConfigManagementWebUI.cs" />
+    <Compile Include="Permissions\SystemSettingManagementWebUI.cs" />
+    <Compile Include="Permissions\SystemSettingsManagementWebUI.cs" />
+    <Compile Include="Permissions\EmailAlertManagementWebUI.cs" />
+    <Compile Include="Permissions\UserStatusManagementWebUI.cs" />
+    <Compile Include="Permissions\UserTypeManagementWebUI.cs" />
+    <Compile Include="Permissions\WindowServicesReportManagementWebUI.cs" />
+    <Compile Include="Rate\AgentGroupManagementWebUI.cs" />
+    <Compile Include="Rate\ManageClassRateManagementWebUI.cs" />
+    <Compile Include="Rate\ManageTactRateManagementWebUI.cs" />
+    <Compile Include="Rate\OtherChargesHistoryManagementWebUI.cs" />
+    <Compile Include="Rate\OtherChargesManagementWebUI.cs" />
+    <Compile Include="Rate\RateDetailsHistoryManagementWebUI.cs" />
+    <Compile Include="Rate\RateManagementWebUI.cs" />
+    <Compile Include="Rate\RateSearchManagementWebUI.cs" />
+    <Compile Include="Rate\RateSurchargeManagementWebUI.cs" />
+    <Compile Include="Rate\SearchTactRateManagementWebUI.cs" />
+    <Compile Include="Rate\SpotRateManagementWebUI.cs" />
+    <Compile Include="Rate\TaxLogsManagementWebUI.cs" />
+    <Compile Include="Rate\TaxRateManagementWebUI.cs" />
+    <Compile Include="Report\CommonExportImportReportManagementWebUI.cs" />
+    <Compile Include="Report\BalanceStockManagementWebUI.cs" />
+    <Compile Include="Report\CargoAirlineVolumeManagementWebUI.cs" />
+    <Compile Include="Report\ConsumeManagementWebUI.cs" />
+    <Compile Include="Report\CreditLimitManagementWebUI.cs" />
+    <Compile Include="Report\CreditLimitTransactionReportManagementWebUI.cs" />
+    <Compile Include="Report\DeliveryPendingManagementWebUI.cs" />
+    <Compile Include="Report\DailyFinalDeliveryReportManagementWebUI.cs" />
+    <Compile Include="Report\ESS_DailyReportManagementWebUI.cs" />
+    <Compile Include="Report\PettyManagementWebUI.cs" />
+    <Compile Include="Report\MovementRegisterManagementWebUI.cs" />
+    <Compile Include="Report\HandlingManagementWebUI.cs" />
+    <Compile Include="Report\ESSManagementWebUI.cs" />
+    <Compile Include="Report\ExportCSRManagementWebUI.cs" />
+    <Compile Include="Report\ImportStatusManagementWebUI.cs" />
+    <Compile Include="Report\ExportImportManagementWebUI.cs" />
+    <Compile Include="Report\FlightStatusManagementWebUI.cs" />
+    <Compile Include="Report\HandedOverManagementWebUI.cs" />
+    <Compile Include="Report\ImportCSRManagementWebUI.cs" />
+    <Compile Include="Report\SeaAirManagementWebUI.cs" />
+    <Compile Include="Report\TariffHistoryManagementWebUI.cs" />
+    <Compile Include="Report\BuiltupreportManagementWebUI.cs" />
+    <Compile Include="Report\ULDHistoryManagementWebUI.cs" />
+    <Compile Include="Report\CargoRankingEIManagementWebUI .cs" />
+    <Compile Include="Report\ImportCargoManagementWebUI.cs" />
+    <Compile Include="Report\ConsigneeSummaryManagementWebUI.cs" />
+    <Compile Include="Report\CargoRankingManagementWebUI.cs" />
+    <Compile Include="Report\ULDInventoryDManagementWebUI.cs" />
+    <Compile Include="Report\ULDMovementHistoryManagementWebUI.cs" />
+    <Compile Include="Report\ULDOutManagementWebUI.cs" />
+    <Compile Include="Report\UnclearedShipmentManagementWebUI.cs" />
+    <Compile Include="Report\ExportDepartureManagementWebUI.cs" />
+    <Compile Include="Report\UWSPendingManagementWebUI.cs" />
+    <Compile Include="Report\WorkOrderManagementWebUI.cs" />
+    <Compile Include="Schedule\FlightOpenManagementWebUI.cs" />
+    <Compile Include="Schedule\SASSSIMUploadManagementWebUI.cs" />
+    <Compile Include="Schedule\SSIMUploadManagementWebUI.cs" />
+    <Compile Include="Schedule\ViewEditFlightManagementWebUI.cs" />
+    <Compile Include="Shipment\AmendFlightStatusManagementWebUI.cs" />
+    <Compile Include="Shipment\AssignTeamManagementWebUI.cs" />
+    <Compile Include="Shipment\AWBTrackingManagementWebUI.cs" />
+    <Compile Include="Shipment\BackLogCargoManagementWebUI.cs" />
+    <Compile Include="Shipment\CCAManagementWebUI.cs" />
+    <Compile Include="Shipment\MarineInsuranceManagementWebUI.cs" />
+    <Compile Include="Shipment\PaymentManagementWebUI.cs" />
+    <Compile Include="Shipment\ReturntoShipperManagementWebUI.cs" />
+    <Compile Include="Shipment\RushHandlingApprovalManagementWebUI.cs" />
+    <Compile Include="Shipment\TrackingManagementWebUI.cs" />
+    <Compile Include="Shipment\UCMDiscrepancyReportManagementWebUI.cs" />
+    <Compile Include="Shipment\UCMInOutAlertManagementWebUI.cs" />
+    <Compile Include="Shipment\UCMManagementWebUI.cs" />
+    <Compile Include="Shipment\UWSPrintManagementWebUI.cs" />
+    <Compile Include="Shipment\WalkingRateManagementWebUI.cs.cs" />
+    <Compile Include="Shipment\XrayExemptionManagementWebUI.cs" />
+    <Compile Include="Stock\AWBReservedManagementWebUI..cs" />
+    <Compile Include="SpaceControl\FlightPlanManagementWebUI.cs" />
+    <Compile Include="Stock\IssueDistributedStocktoSubBranchManagementWebUI.cs" />
+    <Compile Include="Tariff\ESSChargesManagementWebUI.cs" />
+    <Compile Include="Tariff\HolidayListManagementWebUI.cs" />
+    <Compile Include="Roster\RosterResourceAllocationManagementWebUI.cs" />
+    <Compile Include="Tariff\HandlingChargesManagementWebUI.cs" />
+    <Compile Include="Rate\ExchangeRateManagementWebUI.cs" />
+    <Compile Include="Master\FlightTypeManagementWebUI.cs" />
+    <Compile Include="Master\HandOverCutOffTimeManagementWebUI.cs" />
+    <Compile Include="Master\OfficeManagementWebUI.cs" />
+    <Compile Include="Master\OfficeTargetManagementWebUI.cs" />
+    <Compile Include="Rate\DueCarrierManagementWebUI.cs.cs" />
+    <Compile Include="Rate\RateAirlineMasterManagementWebUI.cs" />
+    <Compile Include="Rate\RateExchangeDueCarrierManagementWebUI.cs" />
+    <Compile Include="Rate\RateGlobalDueCarrierManagementWebUI.cs" />
+    <Compile Include="Rate\RateServiceTypeManagementWebUI.cs" />
+    <Compile Include="Rate\RateSurchargeCommodityManagementWebUI.cs" />
+    <Compile Include="Rate\RateSurchargeSPHCManagementWebUI.cs" />
+    <Compile Include="Roster\DesignationMasterManagementWebUI.cs" />
+    <Compile Include="Roster\DutyAreaManagementWebUI.cs" />
+    <Compile Include="Roster\ManageRosterManagementWebUI.cs" />
+    <Compile Include="Roster\ManageTeamManagementWebUI.cs" />
+    <Compile Include="Roster\RosterEmployeeManagementWebUI.cs" />
+    <Compile Include="Roster\RosterTeamIDManagementWebUI.cs" />
+    <Compile Include="Roster\ShiftMasterManagementWebUI.cs" />
+    <Compile Include="Roster\SkillMasterManagementWebUI.cs" />
+    <Compile Include="Schedule\ScheduleManagementWebUI.cs" />
+    <Compile Include="Master\SlabMasterManagementWebUI.cs" />
+    <Compile Include="Master\SpecialHandlingCodeManagementWebUI.cs" />
+    <Compile Include="Master\SPHCClassManagementWebUI.cs" />
+    <Compile Include="Master\PriorityManagementWebUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Master\ProductManagementWebUI.cs" />
+    <Compile Include="Permissions\GroupPageRightTransManagementWebUI.cs" />
+    <Compile Include="Permissions\GroupsManagementWebUI.cs" />
+    <Compile Include="Permissions\PagesManagementWebUI.cs" />
+    <Compile Include="Permissions\UserGroupManagementWebUI.cs" />
+    <Compile Include="Permissions\UserPageRightTransManagementWebUI.cs" />
+    <Compile Include="Permissions\UsersManagementWebUI.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Master\ZoneManagementWebUI.cs" />
+    <Compile Include="Rate\RateHeavyWeightSurchargeManagementWebUI.cs" />
+    <Compile Include="Shipment\AWBSwappingManagementWebUI.cs" />
+    <Compile Include="Shipment\BookingManagementWebUI.cs" />
+    <Compile Include="Shipment\FlightTransferManagementWebUI.cs" />
+    <Compile Include="Shipment\ULDBreakdownManagementWebUI.cs" />
+    <Compile Include="Shipment\UNKBookingManagementWebUI.cs" />
+    <Compile Include="SpaceControl\AllocationAccountManagementWebUI.cs" />
+    <Compile Include="SpaceControl\AllocationManagementWebUI.cs" />
+    <Compile Include="SpaceControl\AWBQueueManagementWebUI.cs" />
+    <Compile Include="Stock\AWBBlacklistedManagementWebUI.cs" />
+    <Compile Include="Stock\AWBLostManagementWebUI.cs" />
+    <Compile Include="Stock\AWBStockManagementWebUI.cs" />
+    <Compile Include="Stock\AWBVoidManagementWebUI.cs" />
+    <Compile Include="Stock\ReturnFromAccountManagementWebUI.cs" />
+    <Compile Include="Stock\ReturnToOfficeManagementWebUI.cs" />
+    <Compile Include="Stock\StockAWBManagementWebUI.cs" />
+    <Compile Include="Stock\StockManagementWebUI.cs" />
+    <Compile Include="Stock\StockValidateManagementWebUI.cs" />
+    <Compile Include="Tariff\BasisOfChargeManagementWebUI.cs" />
+    <Compile Include="Tariff\ManageTariffManagementWebUI.cs" />
+    <Compile Include="Tariff\RoundOffCurrencyManagementWebUI.cs" />
+    <Compile Include="Tariff\TariffSearchManagementWebUI.cs" />
+    <Compile Include="Tools\SeaAirToolManagementWebUI.cs" />
+    <Compile Include="ULD\SCMDiscrepancyManagementWebUI.cs" />
+    <Compile Include="ULD\ULDStatisticReportsManagementWebUI.cs" />
+    <Compile Include="ULD\ULDStockNonInventoryManagementWebUI.cs" />
+    <Compile Include="ULD\ULDStockReportDetailsManagementWebUI.cs" />
+    <Compile Include="ULD\ULDAllocationReportManagementWebUI.cs" />
+    <Compile Include="ULD\CityWiseULDAllocationManagementWebUI.cs" />
+    <Compile Include="ULD\DemurrageFreePeriodManagementWebUI.cs" />
+    <Compile Include="ULD\MaintenanceTypeManagementWebUI.cs" />
+    <Compile Include="ULD\ULDBaggageTypeManagementWebUI.cs" />
+    <Compile Include="ULD\ULDChargeManagementWebUI.cs" />
+    <Compile Include="ULD\ULDInvoiceManagementWebUI.cs" />
+    <Compile Include="ULD\ULDRepairableItemsManagementWebUI.cs" />
+    <Compile Include="ULD\UldInCompatibilityManagementWebUI.cs" />
+    <Compile Include="ULD\ULDInventoryManagementWebUI.cs" />
+    <Compile Include="ULD\ULDRepairSLAReportManagementWebUI.cs" />
+    <Compile Include="ULD\ULDSLACalendarManagementWebUI.cs" />
+    <Compile Include="ULD\ULDSLAManagementWebUI.cs" />
+    <Compile Include="ULD\UldStackManagementWebUI.cs" />
+    <Compile Include="ULD\ULDStockManagementWebUI.cs" />
+    <Compile Include="ULD\ULDSupportProcessedManagementWebUI.cs" />
+    <Compile Include="ULD\ULDTrackingManagementWebUI.cs" />
+    <Compile Include="ULD\ULDTypeManagementWebUI.cs" />
+    <Compile Include="ULD\ULDVendorPriceListManagementWebUI.cs" />
+    <Compile Include="Warehouse\AreaManagementWebUI.cs" />
+    <Compile Include="Warehouse\LocationSearchManagementWebUI.cs" />
+    <Compile Include="Warehouse\LocationSubTypeManagementWebUI.cs" />
+    <Compile Include="Warehouse\LocationTypeManagementWebUI.cs" />
+    <Compile Include="Warehouse\WarehouseLocationManagementWebUI.cs" />
+    <Compile Include="Warehouse\WarehouseSetupManagementWebUI.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CargoFlash.ROMS.Business\CargoFlash.Cargo.Business.csproj">
+      <Project>{04DECFAA-EAB6-4E14-B2AC-930C1E429B20}</Project>
+      <Name>CargoFlash.Cargo.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CargoFlash.ROMS.DataService\CargoFlash.Cargo.DataService.csproj">
+      <Project>{455F79B5-2A13-488C-B7B4-94CBAF157C6B}</Project>
+      <Name>CargoFlash.Cargo.DataService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CargoFlash.ROMS.Model\CargoFlash.Cargo.Model.csproj">
+      <Project>{35AEA97A-EE6D-4DB0-9767-E668A5BBF5AE}</Project>
+      <Name>CargoFlash.Cargo.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CargoFlash.SoftwareFactory.WebUI\CargoFlash.SoftwareFactory.WebUI.csproj">
+      <Project>{fbfc49f8-dcef-46f7-b31d-3991b1317b92}</Project>
+      <Name>CargoFlash.SoftwareFactory.WebUI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+    <Folder Include="bin\Release\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

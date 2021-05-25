@@ -1,0 +1,479 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="MSHTML 6.00.3790.1830" name="GENERATOR" />
+
+
+    <title></title>
+    <script src="../../../../Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="../../../../Scripts/json2.js"></script>
+    <style>
+        .newtbl td {
+            padding-top: 0em;
+        }
+
+        #PrintDO {
+            width: 70px;
+            height: 30px;
+        }
+
+        .auto-style1 {
+            height: 23px;
+        }
+
+        .auto-style3 {
+        }
+
+        .auto-style12 {
+            width: 490px;
+        }
+
+        .auto-style36 {
+            width: 133px;
+            height: 40px;
+        }
+
+        .auto-style39 {
+            width: 93px;
+        }
+
+        .auto-style40 {
+            height: 42px;
+        }
+
+        table#table1, #table2, #table3 {
+            /*width: 100%;
+            margin-left: 15%;
+            margin-right: 15%;*/
+            width: 100%;
+            font-size: smaller;
+        }
+
+        td {
+            /*padding-top: .5em;*/
+            /*padding-bottom: 1em;*/
+        }
+
+        .contentCells {
+            margin-top: -25px;
+            margin-left: 25px;
+            font-weight: bold;
+        }
+
+        .fontweight {
+            font-weight: bold;
+        }
+
+        #content {
+            position: initial;
+            z-index: 1;
+        }
+
+        .dimclass1 {
+            margin-top: -20px;
+            margin-left: 25px;
+            font-weight: bold;
+        }
+
+        .dimclass2 {
+            margin-top: -16px;
+            margin-left: 185px;
+            font-weight: bold;
+        }
+
+        .dimclass3 {
+            margin-top: -16px;
+            margin-left: 328px;
+            font-weight: bold;
+        }
+
+        .dimclass4 {
+            margin-top: -16px;
+            margin-left: 513px;
+            font-weight: bold;
+        }
+    </style>
+    <script type="text/javascript">
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+
+
+        $(document).ready(function () {
+            
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            var Hawb = ''
+            var K = 1;
+            var AwbNo = getParameterByName("sno", "");
+            var ProcName = "Acceptance_BTBPrintData_HouseWise"
+            url = "/Services/Tariff/HandlingChargesService.svc/AcceptanceHouseBTBPrintData"
+            $.ajax({
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ AwbNo: AwbNo, ProcName: ProcName }),
+                async: false,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+
+                    var str = '';
+
+	
+                    var ResultData = jQuery.parseJSON(result);
+                    var  FinalData = ResultData.Table0;
+                    var FinalData1 = ResultData.Table1;
+                    var FinalData2 = ResultData.Table2;
+                    var FinalData3 = ResultData.Table3;
+                    var FinalData4 = ResultData.Table4;
+
+                    var FinalData5 = ResultData.Table7;
+
+                    var FinalData6 = ResultData.Table8;
+
+
+                    if (FinalData5.length == 0)
+            {
+                        alert('There Is No HAWB Number Affiliated With This AWB Number');
+                        window.top.close();
+                        setTimeout(function () {
+                            closeWin()
+                        }, 3000);
+            }
+
+
+                    if (FinalData.length > 0) {
+                       
+                        var commodity = FinalData[0].CommodityCode + '/' + FinalData[0].NatureOfGoods;
+                        var startTime = FinalData[0].UpdatedOn;
+                        var Tanggal =FinalData[0].Date;
+                    }
+
+                    if (FinalData1.length > 0) {
+                        for (var i = 0; i < FinalData1.length; i++) {
+
+                            str = str + FinalData1[i].DestinationAirportCode + '/' + FinalData1[i].FlightNo + '      ,'
+                        }
+                       str=  str.slice(0, -1);
+                     var FlightNo =str;
+                    }
+                   
+                    if (FinalData4.length > 0) {
+                        var AcceptanceStaff = FinalData4[0].UserName;
+                        var SerialNo = FinalData4[0].SerialNo;
+                    }
+
+
+                 
+
+                           
+                    if (FinalData5.length >= 0)
+                    {
+
+                        for ( h = 0; h <= FinalData5.length; h++)
+                        {
+                               
+                              var myvar = '<div id="content" style="margin:60px; margin-top:20px">' +
+'        <table id="table1">'+
+'            <tr>'+
+'                <td>'+
+'                    <div id="DivHead" width="90%" align="center">'+
+'                        <table width="90%">'+
+'                            <tr>'+
+''+
+'                                <td><center><img id="ImgLogo_' + h + '" width="200px" height="100px" style="margin-left:223px" /></center></td>'+
+'                                <td align="center"><div><b> Serial No.</b> </div><div id="SerialNo" style="font-weight:bold;">'+SerialNo+'</div></td>'+
+'                            </tr>'+
+'                            <tr>'+
+'                                <td><center style="margin-left:223px; font-weight:bold"><u>BUKTI TIMBANG BARANG</u></center></td>'+
+'                                <td></td>'+
+'                            </tr>'+
+'                        </table>'+
+''+
+'                        <table width="90%">'+
+'                            <tr>'+
+'                                <td style="width:80%">'+
+'                                    <table width="100%" align="left" style="border-collapse:collapse;font-family:\'Verdana\'; font-size:13px;">'+
+'                                        <tr>'+
+'                                            <td style="width:30%; font-family:Calibri;font-size: 18px">No. SMU/ AWB / House AWB No.  </td>'+
+                                  '                                            <td>' +
+                                  '                                                : .................................................................................................................................<div class="contentCells" id="AWBNo_' + h + '"></div><!--<span>/</span><div class="contentCells" id="AWBNo"></div>-->' +
+'                                            </td>'+
+'                                            <!--//  <td style="width:50%"><span id="spnConsignee"></span></td>-->'+
+'                                        </tr>'+
+''+
+'                                        <tr>'+
+'                                            <td style="width:30%;font-family:Calibri;font-size: 18px">Tujuan/ Flight No.   </td>'+
+'                                            <td>:  .................................................................................................................................<div class="contentCells" id="FlightNo">'+FlightNo+'</div>  </td>'+
+'                                            <!--<td style="width:50%"><span id="spnConsigneeAddress"></span></td>-->'+
+'                                        </tr>'+
+''+
+'                                        <tr>'+
+'                                            <td style="width:30% ;font-family:Calibri;font-size: 18px">Jumlah / Koli</td>'+
+'                                            <td>:  ................................................................................................................................<div class="contentCells" id="Pieces_' + h + '"></div>  </td>'+
+'                                            <!--<td style="width:50%"><span id="spnName"></span></td>-->'+
+'                                        </tr>'+
+''+
+''+
+'                                        <tr>'+
+                                  '                                            <td style="width:30% ;font-family:Calibri;font-size: 18px">Berat</td>' +
+                                  '                                            <td>:  .................... Kg / ........................ Koli ........................... Kg /............................. Koli <div id="Gross1_' + h + '"></div><div id="Piece1_' + h + '"></div><div id="Gross2_' + h + '"></div><div id="Piece2_' + h + '"></div></td>' +
+'                                            <!--<td style="width:50%"><span id="spnHouseNo"></span></td>-->'+
+'                                        </tr>'+
+'                                        <tr>'+
+                                  '                                            <td style="width:30%"></td>' +
+                                  '                                            <td>      .................... Kg / ....................... Koli ........................... Kg / ............................ Koli <div id="Gross3_' + h + '"></div><div id="Piece3_' + h + '"></div><div id="Gross4_' + h + '"></div><div id="Piece4_' + h + '"></div></td>' +
+'                                            <!--<td style="width:50%"><span id="spnHouseNo"></span></td>-->'+
+'                                        </tr>'+
+'                                        <tr>'+
+                                  '                                            <td style="width:30%"></td>' +
+                                  '                                            <td style=" padding-top: .3em;">      .................... Kg / ....................... Koli ........................... Kg / ............................ Koli <div id="Gross5_' + h + '"></div><div id="Piece5_' + h + '"></div><div id="Gross6_' + h + '"></div><div id="Piece6_' + h + '"></div></td>' +
+'                                            <!--<td style="width:50%"><span id="spnHouseNo"></span></td>-->'+
+'                                        </tr>'+
+'                                        <tr>'+
+                                  '                                            <td style="width:30%"></td>' +
+                                  '                                            <td style=" padding-top: .3em;">      .................... Kg / ....................... Koli ........................... Kg / ............................ Koli <div id="Gross7_' + h + '"></div><div id="Piece7_' + h + '"></div><div id="Gross8_' + h + '"></div><div id="Piece8_' + h + '"></div></td>' +
+'                                            <!--<td style="width:50%"><span id="spnHouseNo"></span></td>-->'+
+'                                        </tr>'+
+''+
+''+
+''+
+'                                        <tr>'+
+                                    '                                            <td style="width:30% ;font-family:Calibri;font-size: 18px">Ukuran / Dimensi</td>' +
+                                    '                                            <td>:  .............................................................. / ................................................................... <div id="dim1_' + h + '"></div><div id="dim2_' + h + '"></div></td>' +
+'                                            <!--<td style="width:50%"><span id="spnHouseNo"></span></td>-->'+
+'                                        </tr>'+
+'                                        <tr>'+
+                                    '                                            <td style="width:30%"></td>' +
+                                    '                                            <td>    ............................................................. / ................................................................... <div id="dim3_' + h + '"></div><div id="dim4_' + h + '"></div></td>' +
+'                                            <!--<td style="width:50%"><span id="spnHouseNo"></span></td>-->'+
+'                                        </tr>'+
+'                                        <tr>'+
+                                    '                                            <td style="width:30%"></td>' +
+                                    '                                            <td style=" padding-top: .3em;">    ............................................................. / ................................................................... <div id="dim5_' + h + '"></div><div id="dim6_' + h + '"></div></td>' +
+'                                            <!--<td style="width:50%"><span id="spnHouseNo"></span></td>-->'+
+'                                        </tr>'+
+'                                        <tr>'+
+                                    '                                            <td style="width:30%"></td>' +
+                                    '                                            <td style=" padding-top: .3em;">    ............................................................. / ................................................................... <div id="dim7_' + h + '"></div><div id="dim8_' + h + '"></div></td>' +
+'                                            <!--<td style="width:50%"><span id="spnHouseNo"></span></td>-->'+
+'                                        </tr>'+
+''+
+'                                        <tr>'+
+'                                            <td style="width:30% ;font-family:Calibri;font-size: 18px">Jenis / Barang</td>'+
+'                                            <td>: .................................................................................................................................. <div class="contentCells" id="commodity">'+commodity+'</div> </td>'+
+'                                            <!--<td style="width:50%"><span id="spnHouseNo"></span></td>-->'+
+'                                        </tr>'+
+'                                        <tr>'+
+'                                            <td style="width:30%"></td>'+
+'                                            <td>   ......................................................................................................................................... </td>'+
+''+
+'                                        </tr>'+
+''+
+''+
+''+
+'                                    </table>'+
+'                                </td>'+
+''+
+''+
+''+
+''+
+'                                <!-- <td style="width:2%;"></td>-->'+
+''+
+''+
+'                            </tr>'+
+'                            <tr>'+
+'                                <td style="width:40%">'+
+'                                    <table width="100%" align="left" style="border-collapse:collapse;font-family:\'Verdana\'; font-size:13px;">'+
+'                                        <tr>'+
+                       '                                            <td style="font-family:Calibri;font-size: 18px">Tanggal</td>' +
+                       '                                            <td>: ................................<div class="contentCells" id="Tanggal">' + Tanggal + '</div></td>' +
+''+
+'                                            <td style="font-family:Calibri;font-size: 18px">Jam Masuk</td>'+
+'                                            <td>: ............................... <div class="contentCells" id="startTime">'+startTime+'</div></td>'+
+''+
+'                                        </tr>'+
+'                                        <tr>'+
+'                                            <td style="font-family:Calibri;font-size: 18px">Pengirim/Shipper </td>'+
+                                  '' +
+                                  '                                            <td>: ................................<div class="contentCells" id="shipper_' + h + '"></div></td>' +
+''+
+''+
+'                                            <td style=" text-align:left;font-family:Calibri;font-size: 18px">Penimbang  </td>'+
+'                                            <td>: ............................... <div class="contentCells" id="AcceptanceStaff">'+AcceptanceStaff+'</div></td>'+
+''+
+''+
+'                                        </tr>'+
+''+
+'                                        <tr>'+
+''+
+'                                            <td style="width:30%"> <span> </br></br><span>(........................................)</td>'+
+''+
+'                                            <td style="width:25%"><span id="spnHouseNo"></span></td>'+
+'                                            <td></td>'+
+'                                            <td style="width:30%; text-align:right"><span> </br></br><span>(........................................)</td>'+
+''+
+''+
+'                                        </tr>'+
+''+
+'                                    </table>'+
+'                                </td>'+
+'                            </tr>'+
+'                            <tr>'+
+'                                <td>'+
+'                                    <table class="newtbl" width="100%" align="left" style="border-collapse:collapse;font-family:\'Verdana\'; font-size:13px;">'+
+'                                        <tr>'+
+'                                            <td style="width:30%">Distribusi</td>'+
+'                                            <td style="width:1%">:</td>'+
+'                                            <td style="width:25%"><span id="spnHouseNo"></span></td>'+
+'                                            <td style="width:30%"></td>'+
+'                                            <td style="width:1%"></td>'+
+'                                            <td style="width:25%"><span id="spnHouseNo"></span></td>'+
+'                                        </tr>'+
+'                                        <tr>'+
+'                                            <td style="width:30%">Lbr 1. Putih</td>'+
+'                                            <td>:</td>'+
+'                                            <td style="width:30%">peningram /shipper</td>'+
+'                                            <td></td>'+
+''+
+'                                        </tr>'+
+'                                        <tr>'+
+'                                            <td style="width:30%">Lbr 1. Putih</td>'+
+'                                            <td>:</td>'+
+'                                            <td style="width:30%">Acceptance</td>'+
+'                                            <td></td>'+
+''+
+'                                        </tr>'+
+'                                        <tr>'+
+'                                            <td style="width:30%">Lbr 2. (Miruh Muda)</td>'+
+'                                            <td>:</td>'+
+'                                            <td style="width:30%">Acceptance</td>'+
+'                                            <td></td>'+
+''+
+'                                        </tr>'+
+'                                        <tr>'+
+'                                            <td style="width:30%">Lbr 3. (Binu)</td>'+
+'                                            <td>:</td>'+
+'                                            <td style="width:30%">Kasir (Lamparinan)</td>'+
+'                                            <td></td>'+
+''+
+'                                        </tr>'+
+'                                        <tr>'+
+'                                            <td style="width:30%">Lbr 4. (Kuning)</td>'+
+'                                            <td>:</td>'+
+'                                            <td style="width:30%">AA(finance Manager )</td>'+
+'                                            <td></td>'+
+''+
+'                                        </tr>'+
+'                                        <tr>'+
+'                                            <td style="width:30%">Lbr 5. (Hiaju)</td>'+
+'                                            <td>:</td>'+
+'                                            <td style="width:30%">WAC()</td>'+
+'                                            <td></td>'+
+''+
+'                                        </tr>'+
+'                                    </table>'+
+'                                </td>'+
+'                            </tr>'+
+'                        </table>'+
+'                        <br />'+
+''+
+'                    </div>'+
+''+
+'                </td>'+
+'            </tr>'+
+''+
+'        </table>'+
+''+
+                                '    </div>';
+
+                            for (var j = 0; j <= h; j++) {
+                                $("#AWBNo_" + j).text(FinalData[0].AWBno + '/' + FinalData5[j].HawbNo);
+                                $("#ImgLogo_" + j).attr({ "src": "/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=" + FinalData[0].AirlineImage });
+                                $("#ImgLogo_" + j).attr('onError', 'this.style.display="none";');
+                                $("#Pieces_" + j).text(FinalData5[j].TotalPieces);
+                                if (FinalData6.length > 0) {
+                                    $("#shipper_" + j).text(FinalData6[j].CustomerName); 
+                                }
+                                if (FinalData2.length > 0) {
+                                    var str = "";
+                                    var str1 = "";
+                                    for (var i = 0; i < FinalData2.length; i++) {
+                                        str = "";
+                                        str1 = "";
+                                        if (i > 7 && i % 2 == 0) {
+                                            //alert('a')
+                                            str = str + '<tr><td style="width:30%"></td>'
+                                            str = str + '<td style=" padding-top: .3em;">   &nbsp;&nbsp; .................... Kg / ....................... Koli ........................... Kg / ............................ Koli <div  id="Gross' + (i + 1) + '"></div><div  id="Piece' + (i + 1) + '"></div><div  id="Gross' + (i + 2) + '"></div><div  id="Piece' + (i + 2) + '"></div></td>'
+                                            str = str + '</tr>'
+                                            str1 = str1 + '<tr><td style="width:30%"></td>'
+                                            str1 = str1 + '  <td style=" padding-top: .3em;"> &nbsp;&nbsp; ............................................................. / ................................................................... <div id="dim' + (i + 1) + '"></div><div id="dim' + (i + 2) + '"></div></td>'
+                                            str1 = str1 + '</tr>'
+
+                                            $("#Piece" + i + '_' + j).closest('tr').after(str)
+                                            $("#dim" + i + '_' + j).closest('tr').after(str1)
+                                        }
+
+                                        $("#Gross" + (i + 1) + '_' + j).text(FinalData5[j].GrossWeight)
+                                        $("#Piece" + (i + 1) + '_' + j).text(FinalData5[j].Pieces)
+                                        $("#dim" + (i + 1) + '_' + j).text(FinalData2[i].Length + 'x' + FinalData2[i].Width + 'x' + FinalData2[i].Height)
+                                        if ((i + 1) % 2 == 0) {
+                                            $("#Gross" + (i + 1) + '_' + j).addClass('dimclass3')
+                                            $("#Piece" + (i + 1) + '_' + j).addClass('dimclass4')
+                                            $("#dim" + (i + 1) + '_' + j).addClass('dimclass3')
+                                        }
+                                        else {
+                                            $("#Gross" + (i + 1) + '_' + j).addClass('dimclass1')
+                                            $("#Piece" + (i + 1) + '_' + j).addClass('dimclass2')
+                                            $("#dim" + (i + 1) + '_' + j).addClass('dimclass1')
+                                        }
+
+
+                                    }
+                                }
+
+
+
+                            }
+                            
+                           
+
+                            $("#content").append(myvar);
+                            $("#content").append('</br><div class="page-break"></div>');
+                            
+                        }
+                        
+                    }
+                    
+     
+                   
+
+                },
+                error: function (err) {
+                    alert("Generated error");
+                }
+            });
+
+
+        });
+    </script>
+</head>
+<body>
+
+    <div id="content" style="margin:60px; margin-top:20px">
+     
+
+    </div>
+   
+
+</body>
+</html>

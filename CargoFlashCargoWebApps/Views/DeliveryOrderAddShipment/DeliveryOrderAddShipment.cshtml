@@ -1,0 +1,330 @@
+﻿
+@{
+    ViewBag.Title = "DeliveryOrderAddShipment";
+}
+<div>
+    <div>
+        <div>
+            <table class="WebFormTable" validateonsubmit="true">
+                <tbody>
+                    <tr><th class="formSection" colspan="6">AIR WAYBILL</th></tr>
+                    <tr>
+                        <td class="formthreelabel" title="Select Type">
+                            <font>&nbsp;&nbsp;&nbsp;</font><span>Type</span>
+                        </td>
+                        <td class="formthreeInputcolumn">
+                            <input type="radio" data-radioval="AWB" name="ShipmentType" id="AWBType" onclick="selectType()" value="1" checked="checked">AWB
+                            <input type="radio" data-radioval="OAL" name="ShipmentType" id="OALType" onclick="selectType()" value="2">OAL
+                            <input type="radio" data-radioval="CBV" name="ShipmentType" id="CBVType" onclick="selectType()" value="3">CBV
+                            <input type="radio" data-radioval="MAIL" name="ShipmentType" id="MAILType" onclick="selectType()" value="4">MAIL
+                        </td>
+
+                        <td class="formthreelabel" title="Select AWB No./Carrier Code">
+                            <font color="red">*</font> <span> AWB No./Carrier Code</span>
+                        </td>
+                        <td class="formthreeInputcolumn">
+                            <span id="spnexceptawbno" style="display:none">
+                                <input tabindex="0" id="exceptawbno" name="exceptawbno" value="">
+                            </span>
+                            <span id="spnawbno">
+                                <input id="awbno" name="awbno" type="hidden" value="">
+                                <input tabindex="1" id="Text_awbno" name="Text_awbno" type="text" value="" controltype="autocomplete" data-role="autocomplete" data-valid="required">
+                            </span>
+                        </td>
+                        <td class="formthreelabel"></td>
+                        <td class="formthreeInputcolumn"></td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Select Origin">
+                            <font color="red">*</font>
+                            <span id="spnShipmentOrigin"> Origin</span>
+                        </td>
+                        <td class="formthreeInputcolumn">
+                            <span>
+                                <input id="ShipmentOriginDO" name="ShipmentOriginDO" type="hidden" value="">
+                                <input tabindex="2" controltype="autocomplete" data-role="autocomplete" data-valid="required" id="Text_ShipmentOriginDO" name="Text_ShipmentOriginDO" type="text" value="">
+                            </span>
+                        </td>
+                        <td class="formthreelabel" title="Select Destination">
+                            <font color="red">*</font>
+                            <span id="spnShipmentDestination"> Destination</span>
+                        </td>
+                        <td class="formthreeInputcolumn">
+                            <span>
+                                <input id="ShipmentDestinationDO" name="ShipmentDestinationDO" type="hidden" value="">
+                                <input tabindex="3" controltype="autocomplete" data-role="autocomplete" data-valid="required" id="Text_ShipmentDestinationDO" name="Text_ShipmentDestinationDO" type="text" value="">
+                            </span>
+                        </td>
+                        <td class="formthreelabel" title="Select Product">
+                            <font color="red">*</font>
+                            <span id="spnProduct"> Product</span>
+                        </td>
+                        <td class="formthreeInputcolumn">
+                            <span>
+                                <input id="Product" name="Product" type="hidden" value="">
+                                <input tabindex="4" controltype="autocomplete" data-role="autocomplete" data-valid="required" id="Text_Product" name="Text_Product" type="text" value="">
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Select AWB Date">
+                            <font color="red">*</font><span id="spnAWBDate"> AWB Date</span>
+                        </td>
+                        <td class="formthreeInputcolumn">
+                            <span>
+                                <input tabindex="5" id="AWBDateDO" name="AWBDateDO" type="hidden" value="">
+                            </span>
+                        </td>
+                        <td class="formthreelabel" title="Enter Forwarder(Agent)">
+                            <font color="red">*</font><span id="spnIssuingAgent"> Forwarder(Agent)</span>
+                        </td>
+                        <td class="formthreeInputcolumn">
+                            <span id="IssuingAgentnutextsp" style="display:none">
+                                <input tabindex="6" id="IssuingAgentnutext" name="IssuingAgentnutext" value="">
+                            </span>
+                            <span id="IssuingAgentnusp">
+                                <input id="IssuingAgentnudd" name="IssuingAgentnudd" type="hidden" value="">
+                                <input tabindex="6" id="Text_IssuingAgentnudd" name="Text_IssuingAgentnudd" type="text" value="" controltype="autocomplete" data-role="autocomplete" data-valid="required">
+                            </span>
+                        </td>
+                        <td class="formthreelabel" title="Enter No Of House">
+                            <font>&nbsp;&nbsp;&nbsp;</font>No Of House
+                        </td>
+                        <td class="formthreeInputcolumn">
+                            <input type="text" class="k-input k-state-default" name="NoofHouse" id="NoofHouse" style=" display: none;" controltype="number" colname="no of house" maxlength="4" value="" placeholder="" data-role="numerictextbox">
+                            <input tabindex="7" id="_tempNoofHouse" name="_tempNoofHouse" autocomplete="off" class="k-formatted-value k-input k-state-default" type="text" placeholder="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Select Pieces">
+                            <font color="red">*</font><span id="spn"> Pieces</span>
+                        </td>
+                        <td class="formthreeInputcolumn">
+                            <span>
+                                <input type="number" class="k-input k-state-default" name="Pieces" id="Pieces" style="display: none;" controltype="number" colname="pieces" data-valid="min[1],required" data-valid-msg="Enter Pieces" maxlength="5" value="" placeholder="" data-role="numerictextbox">
+                                <input id="_tempPieces" name="_tempPieces" tabindex="8" autocomplete="off" class="k-formatted-value k-input k-state-default" type="number" maxlength="4" placeholder="" style="display: inline-block;">
+                            </span>&nbsp;
+                        </td>
+                        <td class="formthreelabel" title="Enter Gr. Wt.">
+                            <font color="red">*</font><span id="spnGrossWt"> Gr. Wt.</span>
+                        </td>
+                        <td class="formthreeInputcolumn">
+                            <input id="_tempGrossWt" name="_tempGrossWt" tabindex="9" autocomplete="off" class="k-formatted-value k-input k-state-default" type="number" placeholder="" style="display: inline-block;" onblur="updateDetailOnChange()" maxlength="4">
+                            <input type="text" class="k-input k-state-default" name="GrossWt" id="GrossWt" style="display: none;" controltype="decimal3" allowchar="." colname="gr. wt." data-valid="min[.1],required" data-valid-msg="Minimum Gross Weight required- 0.1Kg" maxlength="7" value="" placeholder="" data-role="numerictextbox">
+                        </td>
+                        <td class="formthreelabel" title="Enter CBM"><font>&nbsp;&nbsp;</font><span id="spnCBM"> CBM</span></td>
+                        <td class="formthreeInputcolumn">
+                            <input id="_tempCBM" name="_tempCBM" tabindex="10" autocomplete="off" class="k-formatted-value k-input k-state-default" type="number" placeholder="" style="display: inline-block;" disabled="disabled" maxlength="6">
+                            <input type="text" class="k-input k-state-default" name="CBM" id="CBM" style="display: none;" controltype="decimal3" allowchar="." colname="cbm" maxlength="10" value="" placeholder="" data-role="numerictextbox" disabled="disabled">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Enter Ch. Wt."><font color="red">*</font><span id="spnChargeableWt"> Ch. Wt.</span></td>
+                        <td class="formthreeInputcolumn">
+                            <input id="_tempChargeableWt" name="_tempChargeableWt" tabindex="11" autocomplete="off" class="k-formatted-value k-input k-state-default" type="number" placeholder="" style="display: inline-block;" maxlength="4" disabled="disabled">
+                            <input type="text" class="k-input k-state-default" name="ChargeableWt" id="ChargeableWt" style="width: 99.0078px; display: none;" controltype="decimal3" allowchar="." colname="ch. wt." data-valid="min[0.01],required" data-valid-msg="Enter Chargeable Weight" tabindex="27" maxlength="10" value="" placeholder="" data-role="numerictextbox">
+                        </td>
+                        <td class="formthreelabel" title="Enter Vol. Wt."><font color="red">*</font><span id="spnVolumeWt"> Vol. Wt.</span></td>
+                        <td class="formthreeInputcolumn">
+                            <input id="_tempVolumeWt" name="_tempVolumeWt" tabindex="28" autocomplete="off" class="k-formatted-value k-input k-state-default" type="number" placeholder="" style="display: inline-block;" onblur="updateDetailOnChange()" maxlength="4">
+                            <input type="text" class="k-input k-state-default" name="VolumeWt" id="VolumeWt" style="width: 99.0078px; display: none;" controltype="decimal3" allowchar="." colname="vol. wt." tabindex="28" maxlength="9" value="" placeholder="" data-role="numerictextbox">
+                        </td>
+                        <td class="formthreelabel">
+                        </td>
+                        <td class="formthreelabel">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Select SHC"><font>&nbsp;&nbsp;</font><span id="spn"> SHC</span></td>
+                        <td class="formthreeInputcolumn">
+                            <span>
+                                <input id="SpecialHandlingCode" name="SpecialHandlingCode" type="hidden" value="">
+                                <input id="Text_SpecialHandlingCode" name="Text_SpecialHandlingCode" type="text" controltype="autocomplete" data-role="autocomplete" data-valid="required" value="">
+                            </span>
+                        </td>
+                        <td class="formthreelabel" title="Select Commodity"><font color="red">*</font><span id="spn"> Commodity</span></td>
+                        <td class="formthreeInputcolumn">
+                            <span>
+                                <input id="NatureofGoods" name="NatureofGoods" type="hidden" value="">
+                                <input id="Text_NatureofGoods" name="Text_NatureofGoods" type="text" controltype="autocomplete" data-role="autocomplete" data-valid="required" value="">
+                            </span>
+                        </td>
+                        <td class="formthreelabel">
+                        </td>
+                        <td class="formthreelabel">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Select BUP"><font>&nbsp;&nbsp;&nbsp;</font>BUP</td>
+                        <td class="formthreeInputcolumn">
+                            <input type="checkbox" tabindex="35" class="" name="chkisBup" id="chkisBup" colname="bup" validatename="chkisBup[]">
+                        </td>
+                        <td class="formthreelabel" title="Select BUP Type"><font>&nbsp;&nbsp;&nbsp;</font>BUP Type</td>
+                        <td class="formthreeInputcolumn">
+                            @Html.Hidden("buptype")
+                            @Html.TextBox("Text_buptype", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                        </td>
+                        <td class="formthreelabel" title="Select Density Group"><font>&nbsp;&nbsp;&nbsp;</font>Density Group</td>
+                        <td class="formthreeInputcolumn">
+                            @Html.Hidden("densitygroup")
+                            @Html.TextBox("Text_densitygroup", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <div>
+            <table class="WebFormTable">
+                <tbody id="itinery">
+                    <tr><th class="formSection" colspan="6">Itinerary Information</th></tr>
+                    <tr>
+                        <td class="formHeaderLabel snowidth" id="transSNo" name="transSNo">SNo</td>
+                        <td class="formHeaderLabel" title="Select Board Point"><font color="red">*</font><span id="spnBoardPoint"> Board Point</span></td>
+                        <td class="formHeaderLabel" title="Select Off Point"><font color="red">*</font><span id="spnoffPoint"> Off Point</span></td>
+                        <td class="formHeaderLabel" title="Select Flight Date">Flight Date</td>
+                        <td class="formHeaderLabel" title="Enter Flight No">Flight No.</td>
+                        <td class="formHeaderLabel"></td>
+                    </tr>
+                    <tr>
+                        <td class="formthreeInputcolumn" id="tdSNoCol" class="formSNo snowidth"> 1</td>
+                        <td class="formthreeInputcolumn">
+                            <input id="BoardPoint" name="BoardPoint" type="hidden" value="" disabled="disabled">
+                            <input controltype="autocomplete" data-role="autocomplete" data-valid="required" data-valid-msg="Airline Name can not be blank" id="Text_BoardPoint" name="Text_BoardPoint" type="text" value="" disabled="disabled">
+                        </td>
+                        <td class="formthreeInputcolumn">
+                            <input id="offPoint" name="offPoint" type="hidden" value="" disabled="disabled">
+                            <input controltype="autocomplete" data-role="autocomplete" data-valid="required" data-valid-msg="Airline Name can not be blank" id="Text_offPoint" name="Text_offPoint" type="text" value="" disabled="disabled">
+                        </td>
+                        <td class="formthreeInputcolumn">
+                            <span>
+                                <input type="hidden" name="FlightDate" id="FlightDate" disabled="disabled">
+                            </span>
+                        </td>
+                        <td class="formthreeInputcolumn">
+                            <input id="SearchFlightNo" name="SearchFlightNo" type="hidden" value="" disabled="disabled">
+                            <input controltype="autocomplete" data-role="autocomplete" data-valid="required" data-valid-msg="Airline Name can not be blank" id="Text_SearchFlightNo" name="Text_SearchFlightNo" type="text" value="" disabled="disabled">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <div>
+            <table class="WebFormTable">
+                <tbody>
+                    <tr>
+                        <td class="formSection" colspan="6">Shipper Information</td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel"></td>
+                        <td class="formthreeInputcolumn"></td>
+                        <td class="formthreelabel" title="Select Account Number"><font color="red">*</font> Account Number</td>
+                        <td class="formthreeInputcolumn"><input type="hidden" name="SHIPPERDOAccountNo" id="SHIPPERDOAccountNo" value=""><span class="k-widget k-combobox k-header"><span class="k-dropdown-wrap k-state-default" unselectable="on" style=""><input type="text" class="k-input" name="Text_SHIPPERDOAccountNo" id="Text_SHIPPERDOAccountNo" tabindex="31" controltype="autocomplete" colname="account number" maxlength="14" value="" placeholder="" data-role="autocomplete" autocomplete="off" style=" text-transform: uppercase;"><span class="k-select" unselectable="on"><span class="k-icon k-i-arrow-s" unselectable="on" style="cursor:pointer;">select</span></span></span></span></td>
+                        <td class="formthreelabel"></td>
+                        <td class="formthreeInputcolumn"></td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Enter Name"><font color="red">*</font><span id="spnSHIPPER_Name"> Name</span></td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="SHIPPER_Name" id="SHIPPER_Name" style="text-transform: none;" controltype="default" colname="name" data-valid="required" data-valid-msg="Enter Name" tabindex="32" maxlength="35" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Enter Name 2"><font>&nbsp;&nbsp;</font><span id="spnSHIPPER_Name2"> Name 2</span></td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="SHIPPER_Name2" id="SHIPPER_Name2" style="text-transform: none;" controltype="default" colname="name 2" tabindex="33" maxlength="35" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Enter Address"><font color="red">*</font><span id="spnSHIPPER_Street"> Address</span></td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="SHIPPER_Street" id="SHIPPER_Street" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar="!@Html.Raw('@')#$%^*(){},.|\" colname="address" data-valid="required" data-valid-msg="Enter Street" tabindex="34" maxlength="35" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Enter Address 2"><font>&nbsp;&nbsp;</font><span id="spnSHIPPER_Street2"> Address 2</span></td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="SHIPPER_Street2" id="SHIPPER_Street2" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar="!@Html.Raw('@')#$%^*(){},.|\" colname="address 2" tabindex="35" maxlength="80" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Enter Town/Location"><font color="red">*</font><span id="spnSHIPPER_TownLocation"> Town/Location</span></td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="SHIPPER_TownLocation" id="SHIPPER_TownLocation" style=" text-transform: none;" controltype="default" colname="town/location" data-valid="required" data-valid-msg="Enter Town/Location" tabindex="36" maxlength="17" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Enter State"><font color="red">*</font> State</td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="SHIPPER_State" id="SHIPPER_State" style=" text-transform: none;" controltype="default" colname="state" tabindex="37" maxlength="9" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Enter Postal Code"><font color="red">*</font> Postal Code</td>
+                        <td class="formthreeInputcolumn"><input type="number" class="k-input" name="SHIPPER_PostalCode" id="SHIPPER_PostalCode" style=" text-transform: uppercase;" controltype="alphanumericupper" colname="postal code" tabindex="38" maxlength="9" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Enter Contact Number"><font color="red">*</font> Contact Number</td>
+                        <td class="formthreeInputcolumn"><input type="number" class="k-input" name="SHIPPER_MobileNo" id="SHIPPER_MobileNo" style=" text-transform: uppercase; text-align: left;" controltype="alphanumericupper" colname="contact number" data-valid="minlength[7]" data-valid-msg="Enter Contact Nbr" tabindex="39" maxlength="25" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Enter Contact Number 2"><font>&nbsp;&nbsp;&nbsp;</font>Contact Number 2</td>
+                        <td class="formthreeInputcolumn"><input type="number" class="k-input" name="SHIPPER_MobileNo2" id="SHIPPER_MobileNo2" style=" text-transform: uppercase;" controltype="alphanumericupper" colname="contact number 2" data-valid="minlength[7]" data-valid-msg="Enter Contact Nbr" tabindex="40" maxlength="25" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Enter Email"><font color="red">*</font><span id="spnSHIPPER_Email"> Email</span></td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="SHIPPER_Email" id="SHIPPER_Email" style=" text-transform: none;" controltype="default" colname="email" data-valid="email" data-valid-msg="Enter Email ID" tabindex="41" maxlength="100" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Select Country"><font color="red">*</font><span id="spnSHIPPER_CountryCode"> Country</span></td>
+                        <td class="formthreeInputcolumn"><input type="hidden" name="SHIPPER_CountryCode" id="SHIPPER_CountryCode" value="200"><span class="k-widget k-combobox k-header"><span class="k-dropdown-wrap k-state-default" unselectable="on" style=""><input type="text" class="k-input" name="Text_SHIPPER_CountryCode" id="Text_SHIPPER_CountryCode" data-valid="required" data-valid-msg="Select Country" tabindex="42" controltype="autocomplete" colname="country" maxlength="10" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="width: 100%; text-transform: uppercase;"><span class="k-select" unselectable="on"><span class="k-icon k-i-arrow-s" unselectable="on" style="cursor:pointer;">select</span></span></span></span></td>
+                        <td class="formthreelabel" title="Select City"><font color="red">*</font><span id="spnSHIPPER_City"> City</span></td>
+                        <td class="formthreeInputcolumn"><input type="hidden" name="SHIPPER_City" id="SHIPPER_City" value=""><span class="k-widget k-combobox k-header"><span class="k-dropdown-wrap k-state-default" unselectable="on" style=""><input type="text" class="k-input" name="Text_SHIPPER_City" id="Text_SHIPPER_City" data-valid="required" data-valid-msg="Select City" tabindex="43" controltype="autocomplete" colname="city" maxlength="10" value="" placeholder="" data-role="autocomplete" autocomplete="off" style=" text-transform: uppercase;"><span class="k-select" unselectable="on"><span class="k-icon k-i-arrow-s" unselectable="on" style="cursor:pointer;">select</span></span></span></span></td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Enter Fax"><font>&nbsp;&nbsp;&nbsp;</font>Fax</td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="SHipper_Fax" id="SHipper_Fax" style=" text-transform: uppercase;" controltype="alphanumericupper" colname="fax" data-valid="minlength[7]" data-valid-msg="Enter Fax Number" tabindex="44" maxlength="25" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title=""><font>&nbsp;&nbsp;&nbsp;</font></td>
+                        <td class="formthreeInputcolumn"></td>
+                        <td class="formthreelabel" title=""><font>&nbsp;&nbsp;&nbsp;</font></td>
+                        <td class="formthreeInputcolumn"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table class="WebFormTable" validateonsubmit="true">
+                <tbody>
+                    <tr>
+                        <td class="formSection" colspan="6">Consignee Information</td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel"></td>
+                        <td class="formthreeInputcolumn"></td>
+                        <td class="formthreelabel" title="Select Account Number"><font color="red">*</font> Account Number</td>
+                        <td class="formthreeInputcolumn"><input type="hidden" name="CONSIGNEEDOAccountNO" id="CONSIGNEEDOAccountNO" value=""><span class="k-widget k-combobox k-header"><span class="k-dropdown-wrap k-state-default" unselectable="on" style=""><input type="text" class="k-input" name="Text_CONSIGNEEDOAccountNO" id="Text_CONSIGNEEDOAccountNO" tabindex="46" controltype="autocomplete" colname="account number" maxlength="14" value="" placeholder="" data-role="autocomplete" autocomplete="off" style=" text-transform: uppercase;"><span class="k-select" unselectable="on"><span class="k-icon k-i-arrow-s" unselectable="on" style="cursor:pointer;">select</span></span></span></span></td>
+                        <td class="formthreelabel"></td>
+                        <td class="formthreeInputcolumn"></td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Enter Name"><font color="red">*</font><span id="spnCONSIGNEE_AccountNoName"> Name</span></td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="CONSIGNEE_AccountNoName" id="CONSIGNEE_AccountNoName" style=" text-transform: none;" controltype="default" colname="name" data-valid="required" data-valid-msg="Enter Name" tabindex="47" maxlength="35" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Enter Name 2"><font>&nbsp;&nbsp;</font><span id="spnCONSIGNEE_AccountNoName2"> Name 2</span></td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="CONSIGNEE_AccountNoName2" id="CONSIGNEE_AccountNoName2" style=" text-transform: none;" controltype="default" colname="name 2" tabindex="48" maxlength="35" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Enter Address"><font color="red">*</font><span id="spnCONSIGNEE_Street"> Address</span></td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="CONSIGNEE_Street" id="CONSIGNEE_Street" style=" text-transform: uppercase;" controltype="alphanumericupper" allowchar="!@Html.Raw('@')#$%^*(){},.|\" colname="address" data-valid="required" data-valid-msg="Enter Street" tabindex="49" maxlength="35" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Enter Address 2"><font>&nbsp;&nbsp;</font><span id="spnCONSIGNEE_Street2"> Address 2</span></td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="CONSIGNEE_Street2" id="CONSIGNEE_Street2" style=" text-transform: uppercase;" controltype="alphanumericupper" allowchar="! @Html.Raw('@').#$%^*(){},.|\" colname="address 2" tabindex="50" maxlength="80" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Enter Town/Location"><font color="red">*</font><span id="spnCONSIGNEE_TownLocation"> Town/Location</span></td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="CONSIGNEE_TownLocation" id="CONSIGNEE_TownLocation" style=" text-transform: none;" controltype="default" colname="town/location" data-valid="required" data-valid-msg="Enter Town/Location" tabindex="51" maxlength="17" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Enter State"><font color="red">*</font> State</td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="CONSIGNEE_State" id="CONSIGNEE_State" style=" text-transform: none;" controltype="default" colname="state" tabindex="52" maxlength="9" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Enter Postal Code"><font color="red">*</font> Postal Code</td>
+                        <td class="formthreeInputcolumn"><input type="number" class="k-input" name="CONSIGNEE_PostalCode" id="CONSIGNEE_PostalCode" style=" text-transform: uppercase;" controltype="alphanumericupper" colname="postal code" tabindex="53" maxlength="9" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Enter Contact Number"><font color="red">*</font><span id="spnCONSIGNEE_MobileNo"> Contact Number</span></td>
+                        <td class="formthreeInputcolumn"><input type="number" class="k-input" name="CONSIGNEE_MobileNo" id="CONSIGNEE_MobileNo" style=" text-transform: uppercase; text-align: left;" controltype="alphanumericupper" colname="contact number" data-valid="minlength[7]" data-valid-msg="Enter Contact Nbr" tabindex="54" maxlength="25" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Enter Contact Number 2"><font>&nbsp;&nbsp;</font><span id="spnCONSIGNEE_MobileNo2"> Contact Number 2</span></td>
+                        <td class="formthreeInputcolumn"><input type="number" class="k-input" name="CONSIGNEE_MobileNo2" id="CONSIGNEE_MobileNo2" style=" text-transform: uppercase;" controltype="alphanumericupper" colname="contact number 2" data-valid="minlength[7]" data-valid-msg="Enter Contact Nbr" tabindex="55" maxlength="25" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Enter Email"><font color="red">*</font><span id="spnCONSIGNEE_Email"> Email</span></td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="CONSIGNEE_Email" id="CONSIGNEE_Email" style=" text-transform: none;" controltype="default" colname="email" data-valid="email" data-valid-msg="Enter Email ID" tabindex="56" maxlength="100" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title="Select Country"><font color="red">*</font><span id="spnCONSIGNEE_CountryCode"> Country</span></td>
+                        <td class="formthreeInputcolumn"><input type="hidden" name="CONSIGNEE_CountryCode" id="CONSIGNEE_CountryCode" value="120"><span class="k-widget k-combobox k-header"><span class="k-dropdown-wrap k-state-default" unselectable="on" style=""><input type="text" class="k-input" name="Text_CONSIGNEE_CountryCode" id="Text_CONSIGNEE_CountryCode" data-valid="required" data-valid-msg="Select Country" tabindex="57" controltype="autocomplete" colname="country" maxlength="10" value="" placeholder="" data-role="autocomplete" autocomplete="off" style=" text-transform: uppercase;"><span class="k-select" unselectable="on"><span class="k-icon k-i-arrow-s" unselectable="on" style="cursor:pointer;">select</span></span></span></span></td>
+                        <td class="formthreelabel" title="Select City"><font color="red">*</font><span id="spnCONSIGNEE_City"> City</span></td>
+                        <td class="formthreeInputcolumn"><input type="hidden" name="CONSIGNEE_City" id="CONSIGNEE_City" value=""><span class="k-widget k-combobox k-header"><span class="k-dropdown-wrap k-state-default" unselectable="on" style=""><input type="text" class="k-input" name="Text_CONSIGNEE_City" id="Text_CONSIGNEE_City" data-valid="required" data-valid-msg="Select City" tabindex="58" controltype="autocomplete" colname="city" maxlength="10" value="" placeholder="" data-role="autocomplete" autocomplete="off" style=" text-transform: uppercase;"><span class="k-select" unselectable="on"><span class="k-icon k-i-arrow-s" unselectable="on" style="cursor:pointer;">select</span></span></span></span></td>
+                    </tr>
+                    <tr>
+                        <td class="formthreelabel" title="Enter Fax"><font>&nbsp;&nbsp;</font><span id="spnCONSIGNEE_Fax"> Fax</span></td>
+                        <td class="formthreeInputcolumn"><input type="text" class="k-input" name="CONSIGNEE_Fax" id="CONSIGNEE_Fax" style=" text-transform: uppercase;" controltype="alphanumericupper" colname="fax" data-valid="minlength[7]" data-valid-msg="Enter Fax Number" tabindex="59" maxlength="25" value="" placeholder="" data-role="alphabettextbox" autocomplete="off"></td>
+                        <td class="formthreelabel" title=""><font>&nbsp;&nbsp;&nbsp;</font></td>
+                        <td class="formthreeInputcolumn"></td>
+                        <td class="formthreelabel" title=""><font>&nbsp;&nbsp;&nbsp;</font></td>
+                        <td class="formthreeInputcolumn"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

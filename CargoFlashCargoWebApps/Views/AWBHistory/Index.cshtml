@@ -1,0 +1,73 @@
+﻿
+<style type="text/css">
+
+</style>
+<section id="loginForm">
+
+    <div id='MainDiv'>
+        <div id='ApplicationTabs'>
+            <div id='ApplicationTabs-1'>
+                <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                   <tr><td class='formSection' colspan='4'> </td></tr>
+                    <tr><td class='formActiontitle' colspan='4'><span id='__SpanHeader__'>AWB  History</span><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+                   
+                    <tr><td class='formSection' colspan='4'>AWB History Information</td></tr>
+                    <tr>
+                        <td class="formlabel"><span id="spnHistoryFilter">
+                            <input type="radio" name="Filter" id="AWbNoCheck" value="A">AWB No
+                            <input type="radio" name="Filter" id="RefNoCheck" value="R"> Reference No
+                        </span></td>
+                        <td class=" formlabel"></td><td class=" formlabel"></td><td class=" formlabel"></td>
+                    </tr>
+                    <tr>
+                        <td class=' formlabel' title='AWB Prefix'>
+                            <font color='red'>*</font><span id='spnAWBPrefix'>
+                              AWB Prefix
+                                 </span>
+                        </td>
+                        <td class='formInputcolumn'>
+                            @Html.Hidden("AWBPrefix")
+
+
+                            @Html.TextBox("Text_AWBPrefix", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "AWB Prefix  can not be blank" })
+                        </td>
+                        <td class='formlabel' title='AWB NO'>
+                            <font color='red'>*</font><span id='spnAWBNO'>  AWB No</span>
+                        </td>
+                        <td class='formInputcolumn'>
+                            @Html.Hidden("AWBNO")
+
+
+                            @Html.TextBox("Text_AWBNO", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "AWB Number  can not be blank" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class=' formlabel' title='Reference Number'>
+                            <font color='red'>*</font><span id='spnAWBPrefix'>
+                                Reference Number
+                            </span>
+                        </td>
+                        <td class='formInputcolumn'>
+                            @Html.Hidden("RefNo")
+
+
+                            @Html.TextBox("Text_RefNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Ref No can not be blank" })
+                        </td>
+                        <td class=" formlabel"></td><td class="formInputcolumn"></td>
+                    </tr>
+                    <tr ><td class='formbuttonrow' align="center" colspan='4'><input type='submit' name='operation' value='Search' onclick="BindAWBHistory()"  class='btn btn-success'  /></td></tr>
+
+                </table>
+                <br>
+                <div id="baseDetalis" style="text-align: -webkit-right;"></div>
+                <br>
+                <div id="BindAWBHistoryTable" style="width:100%">
+
+                </div>
+
+                </div>
+            </div>
+
+        </div>
+    <script src="~/JScript/AuditLog/AWBHistory.js"></script>
+</section>

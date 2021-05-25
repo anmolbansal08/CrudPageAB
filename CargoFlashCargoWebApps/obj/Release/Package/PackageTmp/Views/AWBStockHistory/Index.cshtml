@@ -1,0 +1,91 @@
+﻿
+
+<style type="text/css">
+
+</style>
+
+<div id="divbody" style="height:auto">
+
+    
+
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>AWB Stock History</td></tr>
+                        <tr><td class='formActiontitle' colspan='4'><span id='__SpanHeader__'>AWB Stock History</span><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+                        <tr><td class='formbuttonrow' colspan='4'><input type='submit' name='operation' value='Search' onclick="GetReportData()" class='btn btn-success' /></td></tr>
+                        <tr><td class='formSection' colspan='4'>AWB Stock History Information</td></tr>
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    Airline
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AirlineSNo")
+
+
+                                @Html.TextBox("Text_AirlineSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                            </td>
+                            <td class='formlabel' title='Office'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    Office
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("OfficeSNo")
+
+
+                                @Html.TextBox("Text_OfficeSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                        </tr>
+                        <tr>
+                          
+                            <td class='formlabel' title='Office'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    Agent
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AgentSNo")
+
+
+                                @Html.TextBox("Text_AgentSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                            <td class='formlabel' title='Office'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                  
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                               
+                            </td>
+                        </tr>
+                       
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="example">
+            <div id="grid" style="font-size:14px;"></div>
+
+
+
+            <script src="~/JScript/Stock/AWBStockHistory.js"></script>
+        </div>
+
+
+    </section>
+   
+</div>
+
+
+

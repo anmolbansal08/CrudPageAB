@@ -1,0 +1,34 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AirlineCode</Name>
+    <Message>Airline Code cannot be blank</Message>
+  </DataFieldName>
+  <DataFieldName>
+    <Name>CityCode</Name>
+    <Message>City Code cannot be blank</Message>
+  </DataFieldName>
+    <ServerMessage>
+    <Key>1009</Key>
+    <value>ULD Stock is already in use</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>ULD Stock already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Invalid ULD Stock series being generated. Cannot proceed!</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>ULD Stock Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>ULD Stock Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>ULD Stock Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

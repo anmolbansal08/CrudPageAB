@@ -1,0 +1,35 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>CommodityCode</Name>
+    <Message>Commodity Code can not be blank</Message>
+  </DataFieldName>
+
+  <!--<DataFieldName>
+    <Name>CommoditySubGroupSNo</Name>
+    <Message>Commodity SubGroup can not be blank</Message>
+  </DataFieldName>-->
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Commodity Code already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Commodity Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Commodity Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Commodity Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+</Messages>

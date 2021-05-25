@@ -1,0 +1,561 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript">
+        
+        $(document).ready(function () {
+            
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+        });
+    </script>
+    <title></title>
+    <style type="text/css">
+        .bc {
+            text-align: center;
+            font-family: Arial;
+            height: 20px;
+        }
+
+        .c {
+            text-align: left;
+            font-family: Arial;
+            height: 20px;
+        }
+
+        body {
+            font-family: Arial;
+            font-size: 12px;
+        }
+
+        span {
+            text-align: center;
+        }
+
+
+        .ui-widget-overlay ui-front {
+            opacity: 0.1 !important;
+        }
+
+        .ui-widget-overlay {
+            background: none !important;
+            opacity: 0.1 !important;
+        }
+
+        .coverBorder {
+            border: 1px solid lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div id="MainDiv">
+        <div id="ApplicationTabs" data-role="tabstrip" class="k-widget k-header k-tabstrip">
+            <ul class="k-tabstrip-items k-reset"><li id="liAirline" class="k-state-active k-item k-tab-on-top k-state-default k-first"><a class="k-link">CCA</a></li></ul>
+            <div id="ApplicationTabs-1" class="k-content k-state-active" style="display: block;">
+                <table class="WebFormTable" id="tbl" validateonsubmit="true">
+                    <tr><td class="formSection" colspan="4">CCA</td></tr>
+                    <tr><td class="formActiontitle" colspan="4"><span id="__SpanHeader__">NEW CARGO CHARGES CORRECTION ADVICE (CCA):</span><div class="MandatoryTextCss"><font color="red">*</font> Mandatory Fields</div></td></tr>
+                    <!--<tr>
+                        <td class="formbuttonrow" colspan="4">
+                            <input type="submit" name="operation" value="Save" onclick="SaveCCA();" class="btn btn-success">
+                            <input id="btnBack" type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=Shipment&Apps=CCA&FormAction=INDEXVIEW');" class="btn btn-inverse">
+                        </td>
+                    </tr>
+                    <tr style="float:right">
+                        <td class=""><input id="btnPrint" type="button" value="Print" class="btn btn-success" onclick='printDiv();'></td>
+                    </tr>-->
+                    <!--<tr><td class="formSection" colspan="4">CCA INFORMATION</td></tr>-->
+                    <tr>
+                        <td>
+                            <div id="htmldivdetails" style="margin-left:auto;margin-right:auto;width:100%;margin-top:20px; height:100%;">
+
+                                <div style="margin-top:-26px;" id="SearchSection">
+                                    <fieldset>
+                                        <legend><b><h2 id="SearchHeading">Search</h2> </b></legend>
+                                        <span id="AWbSnoSpan" style="font-size:12px">  AWB SNo : </span>
+
+                                        <input type="hidden" name="AWBSNo" id="AWBSNo" value="">
+                                        <!--<input type="text" class="" name="Text_AWBSNo" id="Text_AWBSNo" style="width:150px;" controltype="autocomplete" value="">-->
+                                        <input type="text" class="" name="Text_AWBSNo" id="Text_AWBSNo" tabindex="2" controltype="autocomplete" maxlength="10" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                        <input type="button" value="Search" title="Search" class="btn btn-success" id="btnSearch" onclick="GetCCADATA()">
+
+                                        <div id="DisplayButton" style="float:right">
+                                            <input type="submit" name="operation" value="Save" onclick="SaveCCA();" class="btn btn-success">
+                                            <input type="submit" name="operation" value="Update" class="btn btn-success" onclick="SaveCCA();" id="btnUpdate">
+                                            <input id="btnBack" type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=Shipment&Apps=CCA&FormAction=INDEXVIEW');" class="btn btn-inverse">
+                                            <input id="btnPrint" type="button" value="Print" class="btn btn-success" onclick='printDiv();'>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div id="PrintDiv" style="width:100%" validateonsubmit='true'>
+                                    <fieldset>
+                                        <legend><b><h2>AWB INFORMATION</h2> </b></legend>
+                                        <div style="width:98%;margin-top:10px;margin-right:auto;margin-left:auto">
+                                            <table style="border-collapse:collapse;width:100%" border="1" validateonsubmit='true' class="WebFormTable">
+                                                <tr id="CCAGeneratedRow">
+                                                    <td class="bc formlabel" colspan="3"></td>                                                    
+                                                    <td class="bc formlabel">CCA No : <span id="CCANo"></span></td>
+                                                    <td class="bc formlabel">Place of Execution : <span id="PlaceofExecution"></span></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="5" class="c formlabel">CARGO CHARGES CORRECTION ADVICE (CCA)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bc formlabel">AWB No :</td>
+                                                    <td class="bc formlabel">Origin :</td>
+                                                    <td class="bc formlabel">Destination :</td>
+                                                    <td class="bc formlabel">Date of AWB issue :</td>
+                                                    <td class="bc formlabel">Place of AWB Issue :</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bc">
+                                                        <span id="AWBNO"></span>
+                                                        <input id="hdnAWBSNo" type="hidden" name="hdnAWBSNo" value="" />
+                                                    </td>
+                                                    <td class="bc">
+                                                        <span id="Origin"></span>
+                                                        <input type="hidden" name="OriginSNo" id="OriginSNo" value="">
+                                                    </td>
+                                                    <td class="bc">
+                                                        <span id="Destination"></span>
+                                                        <input type="hidden" name="DestinationSNo" id="DestinationSNo" value="">
+                                                    </td>
+                                                    <td class="bc">
+                                                        <span id="DateOfAwbIssue"></span>
+                                                    </td>
+                                                    <td class="bc">
+                                                        <span id="PlaceOfAwbIssue"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" class="c formlabel">Name and City(Agent For Receipt):</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bc" colspan="5">
+                                                        <span id="NameAndCity"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="c formlabel"><font color="red">*</font>TO :</td>
+                                                    <td class="c formlabel"><font color="red">*</font>Flight No :</td>
+                                                    <td class="c formlabel"><font color="red">*</font>Date :</td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td class="c" colspan="3">
+                                                        <span id="To1"></span>
+                                                    </td>
+                                                    <td class="c">
+                                                        <span id="FlightNo1"></span>
+                                                    </td>
+                                                    <td class="c">
+                                                        <span id="Date1"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" class="c formlabel">Transfer stations to complete lines 2 or 3 as appropriate and forward to next carrier</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="c formlabel"><font color="red">*</font>To 2 :</td>
+                                                    <td class="c formlabel"><font color="red">*</font>Flight No :</td>
+                                                    <td class="c formlabel"><font color="red">*</font>Date :</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="c">
+                                                        <span id="To2"></span>
+                                                    </td>
+                                                    <td class="c">
+                                                        <span id="FlightNo2"></span>
+                                                    </td>
+                                                    <td class="c">
+                                                        <span id="Date2"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="c formlabel"><font color="red">*</font>To 3 :</td>
+                                                    <td class="c formlabel"><font color="red">*</font>Flight No :</td>
+                                                    <td class="c formlabel"><font color="red">*</font>Date :</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="c">
+                                                        <span id="To3"></span>
+                                                    </td>
+                                                    <td class="c">
+                                                        <span id="FlightNo3" class="bc"></span>
+                                                    </td>
+                                                    <td class="c">
+                                                        <span id="Date3" class="bc"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" class="c formlabel">Air Waybill weight and/or charges have been corrected/added as follows:</td>
+                                                </tr>
+                                            </table>
+                                            <table style="width:100%;border-collapse:collapse;" validateonsubmit='true'>
+                                                <tr>
+                                                    <td>
+                                                        <table style="width: 100%; border-collapse:collapse; border:1px solid lightgrey;">
+
+                                                            <tr>
+                                                                <td colspan="2" class="bc formlabel">CHARGEABLE WEIGHT </td>
+                                                                <td colspan="2" class="bc formlabel">Revised/Correct Chargeable Weight</td>
+                                                                <td colspan="2" class="bc formlabel">Original/Incorrect Chargeable Weight</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" class="bc formlabel">Weight unit:</td>
+                                                                <td colspan="2" class="bc coverBorder">
+                                                                    <input type="text" class="k-input" name="Text_RevisedWeightUnit" id="Text_RevisedWeightUnit" style="width:150px;" />
+                                                                </td>
+                                                                <td colspan="2" class="bc coverBorder">
+                                                                    <span id="hdn_OriginalWeightUnit"></span>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td colspan="2" class="bc formlabel">Gross Weight :</td>
+                                                                <td colspan="2" class="bc coverBorder">
+                                                                    <input type="text" class="k-input" maxlength="9" name="Text_RevisedGrossWeight" id="Text_RevisedGrossWeight" style="width:150px;" />
+                                                                </td>
+                                                                <td colspan="2" class="bc coverBorder">
+                                                                    <span id="hdn_OriginalGrossWeight"></span>
+                                                                </td>
+                                                            </tr>
+
+
+                                                            <tr>
+                                                                <td colspan="2" class="bc formlabel">Pieces :</td>
+                                                                <td colspan="2" class="bc coverBorder">
+                                                                    <input type="text" class="k-input" maxlength="5" name="Text_RevisedPieces" id="Text_RevisedPieces" style="width:150px;" />
+                                                                </td>
+                                                                <td colspan="2" class="bc coverBorder">
+                                                                    <span id="hdn_OriginalPieces"></span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" class="bc formlabel">Volume :</td>
+                                                                <td colspan="2" class="bc coverBorder">
+                                                                    <input type="text" class="k-input" maxlength="9" name="Text_RevisedVolume" id="Text_RevisedVolume" style="width:150px;" />
+                                                                </td>
+                                                                <td colspan="2" class="bc coverBorder">
+                                                                    <span id="hdn_OriginalVolume"></span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" class="bc formlabel">Chargeable Weight :</td>
+                                                                <td colspan="2" class="bc coverBorder">
+                                                                    <input type="text" class="k-input" maxlength="9" name="Text_RevisedChargeableWeight" id="Text_RevisedChargeableWeight" style="width:150px;" />
+                                                                </td>
+                                                                <td colspan="2" class="bc coverBorder">
+                                                                    <span id="hdn_OriginalChargeableWeight"></span>
+                                                                </td>
+                                                            </tr>
+                                                            <!--<tr>
+                                    <td colspan="6" class="c formlabel bc">
+
+                                        Revised/Correct GROSS WEIGHT: Gross Weight is (<span id="TotalGrossWeight"></span> )K as per MAWB, Chargeable
+                                        Weight is(<span id="TotalFreight"></span> )K due to DIMS
+
+                                    </td>
+                                </tr>-->
+                                                            <tr>
+                                                                <td colspan="2" class="bc formlabel">Charges</td>
+                                                                <td colspan="2" class="bc formlabel">Revised/Correct Charges</td>
+                                                                <td colspan="2" class="bc formlabel">Original/Incorrect Charges</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" class="c formlabel">Currency : <span id="CurrencyCode"></span></td>
+
+                                                                <td class="bc formlabel">Prepaid</td>
+                                                                <td class="bc formlabel">Collect</td>
+                                                                <td class="bc formlabel">Prepaid</td>
+                                                                <td class="bc formlabel">Collect</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" class="c formlabel"><font color="red">*</font>Weight Charges</td>
+                                                                <td class="bc coverBorder">
+                                                                    <input type="text" class="k-input" name="Text_RevisedPrepaidWeightCharges" id="Text_RevisedPrepaidWeightCharges" style="width:150px;" />
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <input type="text" class="k-input" name="Text_RevisedCollectWeightCharges" id="Text_RevisedCollectWeightCharges" style="width:150px;" />
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="hdn_OriginalPrepaidWeightCharges"></span>
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="hdn_OriginalCollectWeightCharges"></span>
+                                                                </td>
+                                                            </tr>
+
+
+
+
+                                                            <tr>
+                                                                <td colspan="2" class="c formlabel"><font color="red">*</font>Valuation Charges</td>
+                                                                <td class="bc coverBorder">
+                                                                    <input type="text" class="k-input" name="Text_RevisedPrepaidValuationCharges" id="Text_RevisedPrepaidValuationCharges" style="width:150px;" />
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <input type="text" class="k-input" name="Text_RevisedCollectValuationCharges" id="Text_RevisedCollectValuationCharges" style="width:150px;" />
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="hdn_OriginalPrepaidValuationCharges"></span>
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="hdn_OriginalCollectValuationCharges"></span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" class="c formlabel"><font color="red">*</font>Tax</td>
+                                                                <td class="bc coverBorder">
+                                                                    <input type="text" class="k-input" name="Text_RevisedPrepaidTax" id="Text_RevisedPrepaidTax" style="width:150px;" />
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <input type="text" class="k-input" name="Text_RevisedCollectTax" id="Text_RevisedCollectTax" style="width:150px;" />
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="hdn_OriginalPrepaidTax"></span>
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="hdn_OriginalCollectTax"></span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" class="c formlabel">
+                                                                    Total Other Charges Due Agent
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="Text_RevisedPrepaidDueAgent"></span>
+                                                                    <input type="submit" name="operation" id="0" onclick="CalculateDueAgent(this.id)" value="Calculate" class="btn btn-success">
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="Text_RevisedCollectDueAgent"></span>
+
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="hdn_OriginalPrepaidDueAgent"></span>
+                                                                    <input type="submit" name="operation" id="2" value="View" onclick="ViewAWBOtherChargesRecord(this.id)" class="btn btn-success">
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="hdn_OriginalCollectDueAgent"></span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" class="c formlabel">Total Other Charges Due Carrier</td>
+                                                                <td class="bc coverBorder">
+
+                                                                    <span id="Text_RevisedPrepaidDueCarrier"></span>
+                                                                    <input type="submit" name="operation" id="1" value="Calculate" onclick="CalculateDueCarrier(this.id)" class="btn btn-success">
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="Text_RevisedCollectDueCarrier"></span>
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="hdn_OriginalPrepaidDueCarrier"></span>
+                                                                    <input type="submit" name="operation" id="1" value="View" onclick="ViewAWBOtherChargesRecord(this.id)" class="btn btn-success">
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="hdn_OriginalCollectDueCarrier"></span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" class="c formlabel">Total</td>
+                                                                <td class="bc coverBorder">
+                                                                    <input type="text" class="k-input" name="Text_RevisedPrepaidTotal" id="Text_RevisedPrepaidTotal" style="width:150px;" />
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <input type="text" class="k-input" name="Text_RevisedCollectTotal" id="Text_RevisedCollectTotal" style="width:150px;" />
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="hdn_OriginalPrepaidTotal"></span>
+
+                                                                </td>
+                                                                <td class="bc coverBorder">
+                                                                    <span id="hdn_OriginalCollectTotal"></span>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td style="vertical-align: top; border: 1px solid lightgrey;">
+                                                        <table style="width: 100%;">
+                                                            <tr>
+                                                                <td class="bc">
+                                                                    <br />
+                                                                    Remarks and reason for issuing CCA
+                                                                    <br />
+
+                                                                    PLEASE SELECT APPROPRIATE REASON
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <br />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="bc">
+                                                                    <!--<input type="text" class="k-input" name="Text_Remarks" id="Text_Remarks" style="width:96%;height:40px;" />-->
+                                                                    <textarea class="k-input" id="Text_Remarks" style="width:96%;height: 80px;" rows="5" cols="25"></textarea>
+                                                                    <!--<input type="textarea" id="Text_Remarks" name="Text_Remarks" data-valid="required" data-valid-msg="Origin can not be blank" maxlength="500" style="width: 350px; height: 40px;">-->
+                                                            </tr>
+
+                                                            <tr>
+                                    <td class="c">
+                                        <input type="checkbox" name="WEIGHTDISCREP" class="CCAReason" value="1"> WEIGHT DISCREP
+                                    </td>
+                                <tr>
+                                <tr>
+                                    <td class="c">
+                                        <input type="checkbox" name="VOLUMEDISCREP" class="CCAReason" value="1"> VOLUME DISCREP
+                                    </td>
+                                <tr>
+                                <tr>
+                                    <td class="c">
+                                        <input type="checkbox" name="CNEECHANGE" class="CCAReason" value="1"> CNEE CHANGE
+                                    </td>
+                                <tr>
+                                <tr>
+                                    <td class="c">
+                                        <input type="checkbox" name="DESTCHANGE" class="CCAReason" value="1"> DEST CHANGE<br>
+                                    </td>
+                                <tr>
+                                <!--<tr>
+                                    <td class="c">
+                                        <input type="checkbox" id="ppTocc" onchange="doalert(this.id)" name="Car"> PP TO CC <input type="checkbox" name="vehicle" id="ccTopp" value="Car" onchange="CalculatePrepaid(this.id)"> CC TO PP <br />
+
+                                    </td>
+                                <tr>-->
+
+                                <tr>
+                                    <td class="c">
+                                        <input type="checkbox" name="RATEERROR" class="CCAReason" value="1"> RATE ERROR
+                                    </td>
+                                <tr>
+                                <tr>
+                                    <td class="c">
+                                        <input type="checkbox" name="CCACHARGE" class="CCAReason" value="1"> CCA CHARGE
+                                    </td>
+                                <tr>
+                                                            <!--<tr>
+                                    <td class="c">
+                                        <input type="checkbox" name="vehicle" value="Car"> VOLUME DISCREP
+                                    </td>
+                                <tr>-->
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"></td>
+                                                    <td colspan="2"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <hr />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b> Shipper Name : <span id="Shipper"></span></b>
+
+                                                    </td>
+                                                    <td style="float:right;width:125px;">
+                                                        <b> Status : <span id="Status"></span></b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <hr />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <b> Consignee Name : <span id="Consignee"></span></b>
+                                                    </td>
+                                                   
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <hr />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" id="RequestAndApproveBy" style="">
+                                                        <b> Requested By : <span id="RequestedBy"></span></b><br />
+                                                        <b><label id="lblApprovedBy">Approved/Rejected  By : <span id="ApprovedBy"></span></label> </b>
+                                                        <br /><b><label id="lblCCAexecutionDate">CCA Execution Date : <span id="CCAExecutionDate"></span></label> </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <br />
+                                                    </td>
+                                                </tr>
+                                                <tr id="ApprovedPanel">
+                                                    <td colspan="2" style="font-size:14px;">
+                                                        <input id="RequestType" type="radio" name="Group" style="font-size:16px" onclick="RequestTypeMode();" value="Pending">Requested
+                                                        <input id="RequestType" type="radio" name="Group" style="font-size:16px" onclick="RequestTypeMode();" value="Approved">Approved
+                                                        <input id="RequestType" type="radio" name="Group" style="font-size:16px" onclick="RequestTypeMode();" value="Reject">Reject
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <br />
+                                                    </td>
+                                                </tr>
+                                                <tr id="ApprovedPanelRemarks">
+                                                    <td class="bc">
+                                                        <textarea class="k-input" id="Text_RemarksApproved" style="width:96%;height: 80px;" rows="5" cols="25"></textarea>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+
+
+                                        </div>
+
+                                        <!--open Open Code From here-->
+                                        <div id="DivCalculateDueAgent">
+
+
+                                        </div>
+                                        <div id="DivCalculateDueCarrier">
+
+
+                                        </div>
+                                        <div id="ViewOtherChargesRecord">
+
+
+                                        </div>
+                                        <div>
+                                            <br />
+                                        </div>
+                                        <!--<img alt="" border="0" style="height: 21px; width: 21px; cursor:pointer; margin-right:5px;" title="Change Password" onclick="PopChangePassword()" src="~/Images/key.png">-->
+                                        <div id="DisplayButtonUpdate" style="float:right;display:none">
+                                            <input type="submit" name="operation" value="Save" onclick="SaveCCA();" class="btn btn-success">
+                                            <input type="submit" name="operation" value="Update" class="btn btn-success" onclick="SaveCCA();" id="btnUpdate">
+                                            <input type="submit" name="operation" value="Delete" class="btn btn-success" onclick="SaveCCA();" id="btnUpdate">
+                                            <input type="submit" name="operation" value="Approve" class="btn btn-success" onclick="SaveCCA();" id="btnUpdate">
+                                            <input id="btnBack" type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=Shipment&Apps=CCA&FormAction=INDEXVIEW');" class="btn btn-inverse">
+                                            <input id="btnPrint" type="button" value="Print" class="btn btn-success" onclick='printDiv();'>
+                                        </div>
+                                        <div>
+                                            <br />
+                                            <br />
+                                            <br />
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>

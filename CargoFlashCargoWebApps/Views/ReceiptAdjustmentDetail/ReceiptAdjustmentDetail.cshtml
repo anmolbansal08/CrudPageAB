@@ -1,0 +1,128 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutGaruda.cshtml";
+}
+
+
+<h2>ReceiptAdjustmentDetail</h2>
+
+<div id="divbody" style="height:auto">
+
+    @*@using (Html.BeginForm("GetAirlineData", "AWBStockStatus", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {*@
+
+
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        @*<tr><td class='formSection' colspan='4'>Audit Log New</td></tr>*@
+
+                        <tr><td class='formSection' colspan='4'>Receipt Adjustment Detail</td></tr>
+                       
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnPageName'>
+                                    Airline Name
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AirlineSNo")
+                                @Html.TextBox("Text_AirlineSNo", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                               
+                            </td>                           
+                            <td class='formlabel' title='Airline'>
+                                <font color='red'><span id="spnvform"></span></font><span id='spnKeyValue'>
+                                   GSA Name
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>                            
+                                @Html.Hidden("AgentName")
+                                @Html.TextBox("Text_AgentName", null, new { controltype = "autocomplete", data_role = "autocomplete", })
+                            </td>
+                        </tr>
+                   
+                        <tr style="display:none" id="adjustid">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnStartDate'>
+                                    From Date
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.TextBox("Text_StartDate", null, new { controltype = "date", data_role = "autocomplete" })
+                            </td>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnEndDate'>
+                                    To Date
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+
+                                @Html.TextBox("Text_EndDate", null, new { controltype = "date", data_role = "autocomplete" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class='formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnAName'>
+                                
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+
+                                <input type="radio" name="Adjustment" value="0" id="AID" onclick="getval()" checked >Adjustment<br>
+                                <input type="radio" name="Adjustment" value="1" onclick="getval()"> History
+
+                                    </td>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnDownload'>
+
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type="button" class="btn btn-success" value="Search" id="btnSubmit" />
+                                @*<div id="exportflight" style="margin-left: 68px;margin-top: -26px;"><img id=" imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer;" title="Export To Excel" onclick="ExportToExcel_GSACSR()" /></div>*@
+
+                            </td>
+                        </tr>
+
+                        <table class="appendGrid ui-widget" style="margin-bottom:10px;" align="center" id="tbl_bookingprofile">
+
+                            <tbody id="tbodygridbookingprofile" class="ui-widget-content"></tbody>
+                        </table>
+                        @*<div id="divAuditLogReport"><span id="spnAuditLogReport"><input id="hdnPageType" name="hdnPageType" type="hidden" value="NEW"><input id="hdnAuditLogReportSNo" name="hdnAuditLogReportSNo" type="hidden" value=""><table id="tblAuditLogReport" style="margin-top: 20px; display: table;" class="appendGrid ui-widget"></table></span></div>
+                        <div id="divAuditLogReport_Booking"><span id="spnAuditLogReport_Booking"><input id="hdnPageType_Booking" name="hdnPageType" type="hidden" value="NEW"><input id="hdnAuditLogReportSNo_Booking" name="hdnAuditLogReportSNo" type="hidden" value=""><table id="tblAuditLogReport_Booking" style="margin-top: 20px; display: table;" class="appendGrid ui-widget"></table></span></div>*@
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="example">
+            <div id="grid" style="font-size:14px;"></div>
+            <script src="~/JScript/Accounts/ReceiptAdjustmentDetail.js"></script>
+            <script src="~/Scripts/jquery.appendGrid-1.3.2.js"></script>
+        </div>
+
+
+    </section>
+    
+    @*}*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".k-hierarchy-cell").click();
+        });
+
+        $('tr.k-master-row').click(function () {
+            $(this).nextUntil('tr.k-master-row').css('display', function (i, v) {
+                return this.style.display === 'table-row' ? 'none' : 'table-row';
+            });
+        });
+
+    </script>
+</div>
+

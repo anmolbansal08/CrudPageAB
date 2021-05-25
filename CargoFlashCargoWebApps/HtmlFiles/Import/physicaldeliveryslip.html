@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/Import/physicaldeliveryslip.js"></script>
+
+    <title></title>
+    <style>
+        table#table1 {
+            width: 70%;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+    </style>
+    <script type="text/javascript">
+        var userContext = "";
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+          
+        });
+    </script>
+        </head>
+        <body>
+            <table id="table1">
+                <tr>
+                    <td>
+                        <table style="width: 100%; background-color: rgba(0, 0, 255, 0.07); padding: 0px;">
+                            <tr>
+                                <td>
+                                    <table style="font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; color: gray;" width="90%">
+                                        <tr>
+
+                                            <!--<td align="center" class="topic"><img height="60Px" src="http://sharjahaviation.com/sites/default/files/SAS-Logo.png" /></td>-->
+                                            <td align="center" class="topic"><img height="60Px" src="" id="ImgLogo" /></td>
+                                            <td align="right"></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td align="center" class="topic" style="font-size: 14px; font-family: 'Arial Tahoma'; font-weight: bold; color: gray;">Physical Delivery Slip</td>
+                                        </tr>
+                                    </table>
+
+                                    <table width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td width="15%"></td>
+                                                <td width="20%"></td>
+                                                <td width="25%"><br /><br /></td>
+                                                <td width="15%"></td>
+                                                <td width="25%"></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">PDS Date:</td>
+                                                <td><span id="lblDate1"></span></td>
+                                                <td></td>
+                                                <td align="right">Staff:</td>
+                                                <td><span id="lblStaff"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">PDS Time:</td>
+                                                <td><span id="lblTime"></span></td>
+                                                <td></td>
+                                                <td align="right">WHS:</td>
+                                                <td><span id="lblWHS"></span></td>
+                                            </tr>
+                                            <tr><td colspan="5"> <hr style="border-style:dashed;" /></td></tr>
+                                            <tr>
+                                                <td align="right">PDS No:</td>
+                                                <td><span id="lblPDS"></span></td>
+                                                <td></td>
+                                                <td align="right">DLV Date & Time:</td>
+                                                <td><span id="lblPdsDate"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">DO No:</td>
+                                                <td><span id="lblDoNo"></span></td>
+                                                <td></td>
+                                                <td align="right">D/O Date:</td>
+                                                <td><span id="lblDoDate"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">AWB No:</td>
+                                                <td><span id="lblAwbNo"></span></td>
+                                                <td></td>
+                                                <td align="right">HAWB No:</td>
+                                                <td><span id="lblHawbNo"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right">Consignee:</td>
+                                                <td><span id="lblConsignee"></span></td>
+                                                <td></td>
+                                                <td align="right">Nature of Goods:</td>
+                                                <td><span id="lblNOG"></span></td>
+                                            </tr>
+                                            <tr><td colspan="5"> <hr style="border-style:dashed;" /></td></tr>
+                                        </tbody>
+                                        <tr style="text-align:center">
+                                            <td>Cargo Type:</td>
+                                            <td>Pieces:</td>
+                                            <td>Weight Delivery to:</td>
+                                            <td>Date:</td>
+                                            <td>User:</td>
+                                        </tr>
+                                        <tr style="text-align:center">
+                                            <td><span id="lblCargoType"></span></td>
+                                            <td><span id="lblPieces"></span></td>
+                                            <td><span id="lblWeightDeliveryTo"></span></td>
+                                            <td><span id="lblDate"></span></td>
+                                            <td><span id="lblUser"></span></td>
+                                        </tr>
+                                        <tr><td colspan="5">&nbsp;</td></tr>
+                                        <tr>
+                                            <td> PDS Remarks :</td>
+                                            <td><span id="lblRemarks"></span></td>
+                                            <td colspan="3"></td>
+                                        </tr>
+                                        <tr><td colspan="5">&nbsp;</td></tr>
+                                        <tr><td colspan="5">ALL PIECES RECEIVED IN GOOD ORDER AND CONDITION BY CONSIGNEE AS PER THE CONTRACT OF CARRIAGE. </td></tr>
+                                        <tr><td colspan="5"> <hr style="border-style:dashed;" /></td></tr>
+                                        <tr><td colspan="5" align="center"> To be filled manually</td></tr>
+                                        <tr>
+                                            <td align="right">Date:</td>
+                                            <td><span id="lblManuallyDate"></span></td>
+                                            <td></td>
+                                            <td align="right">Staff Name:</td>
+                                            <td><span id="lblStaffName"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">Vehicle No:</td>
+                                            <td><span id="lblVehicleNo"></span></td>
+                                            <td></td>
+                                            <td align="right">Date:</td>
+                                            <td><span id="lblStaffDate"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">Consignee Name:</td>
+                                            <td><span id="lblCneeName"></span></td>
+                                            <td></td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">Tel No:</td>
+                                            <td><span id="lblTelNo"></span></td>
+                                            <td></td>
+                                            <td align="right">Signature:</td>
+                                            <td><span id="lblSignature"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">Signature</td>
+                                            <td><span id="lblSignature2"></span></td>
+                                            <td></td>
+                                            <td align="right">Stamp</td>
+                                            <td><span id="lblStamp"></span></td>
+                                        </tr>
+                                        <tr><td colspan="5">&nbsp;</td></tr>
+                                        <tr><td colspan="5">&nbsp;</td></tr>
+                                        <tr>
+                                            <!--<td colspan="3" style="font-size:small; font-weight:bold" align="center"><b>Sharjah Aviation Services</b> P.O.Box :70888,Sharjah,United Arab Amirates, tel. : +971 6 514 11 80, Fax: +971 6 558 04 74</td>-->
+                                            <td colspan="5" align="right" style="font-weight: bold; color: black; font-size: 14px"><b style="margin-right: 10%; "></b></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5" style="font-size: small; font-weight: bold" align="center"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </body>
+        </html>

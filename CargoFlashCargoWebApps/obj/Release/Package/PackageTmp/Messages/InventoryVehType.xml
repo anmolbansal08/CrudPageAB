@@ -1,0 +1,45 @@
+﻿<Messages>
+  <!--#region Inventory Vehicle type XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  InventoryVehType
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Anju Rani
+  Created On:		27 oct 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>VehicleType</Name>
+    <Message>Vehicle Type can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Vehicle Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Vehicle Type Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Vehicle Type Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Vehicle Type Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>
+
+

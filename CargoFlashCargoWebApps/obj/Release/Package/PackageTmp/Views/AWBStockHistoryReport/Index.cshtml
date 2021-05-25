@@ -1,0 +1,85 @@
+﻿
+
+<div id="divbody" style="height:auto">
+
+    @*@using (Html.BeginForm("GetAirlineData", "AWBStockStatus", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {*@
+
+
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>AWB Stock History </td></tr>
+                        <tr><td class='formActiontitle' colspan='4'><span id='__SpanHeader__'>AWB Stock History </span><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+
+                        <tr><td class='formSection' colspan='4'>AWB Stock History Information</td></tr>                       
+                        <tr>
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    AWB No :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AWbNo")
+                                @Html.TextBox("Text_AWbNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "AWB No can not be blank" })
+                            </td>
+                            <td class=' formlabel' title='Office'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'></td>
+                        </tr>
+                        <tr>
+                            <td class=' formlabel' title='Airline '>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    <input type='submit' name='operation' onclick="SearchBlackListAWB()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+
+
+
+                    <div id="BindBlakListTable" style="width:100%">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="example">
+            <div id="grid" style="font-size:14px;"></div>
+            <script src="~/JScript/Stock/AWBStockHistoryReport.js"></script>
+        </div>
+
+
+    </section>
+  
+</div>
+
+
+

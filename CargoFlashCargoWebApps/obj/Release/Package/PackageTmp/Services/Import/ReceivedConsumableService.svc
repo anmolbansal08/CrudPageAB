@@ -1,0 +1,3 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="CargoFlash.Cargo.DataService.Import.ReceivedConsumableService" CodeBehind="ReceivedConsumableService.cs" %>
+<%@ Assembly Name="CargoFlash.Cargo.DataService" %>
+

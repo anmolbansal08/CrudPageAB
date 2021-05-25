@@ -1,0 +1,138 @@
+﻿<div id="divbody" style="height:auto">
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Penalty Approval Report</td></tr>
+                        <tr><td class='formActiontitle' colspan='4'><span id='__SpanHeader__'></span><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+
+          
+                        <tr class="AWBNoRow">
+
+                            <td class='formlabel' title='PenaltyType'>
+                                <font color='red'>*</font><span id='spnpenaltytype'>
+                                    Penalty Type :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("PenaltyType")
+                                @Html.TextBox("Text_PenaltyType", null, new { data_valid = "", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Penalty Type  can not be blank" })
+                            </td>
+                            <td class='formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    Airline Name :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AirLineSNo")
+
+                                @Html.TextBox("Text_AirLineSNo", null, new { data_valid = "", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "AirLine Name can not be blank" })
+                            </td>
+
+                        </tr>
+
+                        <tr class="FlightNo">
+
+                            <td class='formlabel' title='Origin City'>
+                                <span id='spnpenaltytype'>
+                                    Origin City :
+                                </span>
+
+
+
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("OriginCity")
+                                @Html.TextBox("Text_OriginCity", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+
+
+
+
+                            </td>
+                           
+                            <td class='formlabel' title='Report Type'>
+                                <span id='spnpenaltytype'>
+                                    Report Type :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn' title='Report Type' align="left">
+                                <input type="radio" name="BasedOn" id="RbtnApprovalDate" value="APRVL" checked="checked"><label for="ApprovalDate">Approval Date</label>
+                             <input type="radio" name="BasedOn" id="RbtnBookingDate" value="BD"><label for="BookingDate">Booking Date</label>
+                                <input type="radio" name="BasedOn" id="RbtnFlightDate" value="FD"><label for="FlightDate">Flight Date</label>
+                            </td>
+                        </tr>
+
+                        <tr class="DateWiseRow">
+                            <td class='formlabel' title='From Date'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    From Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+                            </td>
+                            <td class='formlabel' title='To Date'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    To Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class=' formlabel' title='Airline '>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    <input type='submit' name='operation' onclick="SearchPenaltyApprovalData()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+                            </td>
+                            <td class='formlabel' align="left">
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                                <form id="df1" action="../PenaltyApprovalReport/PenaltyApprovalReportExportToExcel" method="post">
+                                    <input id="FromDate" type="hidden" name="FromDate" value="" />
+                                    <input id="ToDate" type="hidden" name="ToDate" value="" />
+                                    <input id="AirLineSNo" type="hidden" name="AirLineSNo" value="" />
+                                     <input id="PenaltyType" type="hidden" name="PenaltyType" value="" />
+                                    <input id="OriginCity" type="hidden" name="OriginCity" value="" />
+                                    <input id="ReportType" type="hidden" name="ReportType" value="" />
+
+                                </form>
+
+                                <input type='submit' name='operation' onclick="ExportToExcel()" style="display: inline-block;margin-right: 360px;" value='Export To Excel' id="btnExportToExcel" class='btn btn-success btnSearch' />
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+
+                </div>
+
+            </div>
+        </div>
+        <div id="example">
+            <div id="grid" style="font-size:14px;"></div>
+            <script src="~/JScript/Export/PenaltyApprovalReport.js"></script>
+
+        </div>
+
+
+    </section>
+
+   
+
+</div>

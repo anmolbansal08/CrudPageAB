@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="../Styles/printmawb.css" type="text/css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="MSHTML 6.00.3790.1830" name="GENERATOR" />
+    <!--<script src="Scripts/jspdf.debug.js"></script>
+    <script src="Scripts/jspdf.min.js"></script>-->
+    <script src="Scripts/jquery-1.7.2.js"></script>
+    <script src="Scripts/html2canvas.js"></script>
+    <script src="Scripts/jspdf.debug.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>-->
+    <!--<script src="Scripts/docraptor-1.0.0.js"></script>-->
+    <script type='text/javascript'>
+        //$(document).ready(function () {
+        //    if (window.opener)
+        //        userContext = window.opener.parent.userContext;
+        //});
+        var downloadPDF = function () {
+            let doc = new jsPDF('p', 'pt', 'a4');
+            doc.setFontSize(12);
+            doc.addHTML(document.body, function () {
+                doc.save('TruckManifest.pdf');
+            });
+        }
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        ////////////////////////////////////////
+        function isBase64(str) {
+            try {
+                return btoa(atob(str)) == str;
+            }
+            catch (err) {
+                return false;
+            }
+        }
+        function ImageToBase64(image_src, mime_type) {
+            // New Canvas
+            var canvas = document.createElement('canvas');
+            canvas.width = image_src.width;
+            canvas.height = image_src.height;
+            // Draw
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(image_src, 0, 0);
+            // Image Base64
+            return canvas.toDataURL(mime_type);
+        }
+
+        //var doc = new jsPDF();
+        //var specialElementHandlers = {
+        //    '#editor': function (element, renderer) {
+        //        return true;
+        //    }
+        //};
+
+        //$('#cmd').click(function () {
+        //    doc.fromHTML($('#content').html(), 15, 15, {
+        //        'width': 170,
+        //        'elementHandlers': specialElementHandlers
+        //    });
+        //    doc.save('sample-file.pdf');
+        //});
+        $(document).ready(function () {
+
+            var TruckSNo = getParameterByName("TruckSNo", "");
+            var IsTruckingLoadPrint = getParameterByName("IsTruckingLoadPrint", "");
+
+
+            //For decrypt
+            if (isBase64(TruckSNo))
+                TruckSNo = atob(TruckSNo);
+            if (isBase64(IsTruckingLoadPrint))
+                IsTruckingLoadPrint = atob(IsTruckingLoadPrint)
+
+
+
+            var url;
+            $.ajax({
+                url: "Services/Master/VehicleService.svc/GetHHTTruckingPrint?TruckSNo=" + TruckSNo + "&IsTruckingLoadPrint=" + IsTruckingLoadPrint,
+                async: false, type: "get", dataType: "html", cache: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+
+
+                    if (result.split('?')[0] == '1') {
+                        // ShowMessage('warning', 'Warning -Shipment ', result.split('?')[1], "bottom-right");
+                    }
+                    else {
+                        $("#content").append(result);
+                        setTimeout(function () {
+                            $('div.content > img').css({ 'height': '120px' });
+                            downloadPDF()
+                        }, 300)
+
+                    }
+                },
+                error: {
+
+                }
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="content">
+
+    </div>
+    <!--<input id="pdf-button" type="button" value="Download PDF" onclick="downloadPDF()" />-->
+</body>
+</html>
+

@@ -1,0 +1,103 @@
+﻿
+
+<div id="divbody" style="height:auto">
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>CBV Sales Report</td></tr>
+
+                        <tr class="formInputcolumn">
+                            <td class='formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirline'>
+                                    Airline :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("Airline")
+                                @Html.TextBox("Text_Airline", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Select Airline" })
+                            </td>
+                            <td class='formlabel' title='OfficeName'>
+                                <font color='red'>*</font><span id='spnOfficeName'>
+                                    Office Name :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("OfficeName")
+                                @Html.TextBox("Text_OfficeName", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Select OfficeName" })
+                            </td>
+                        </tr>
+                        <tr class="formInputcolumn">
+                            <td class='formlabel' title='Month'>
+                                <font color='red'>*</font><span id='spnMonth'>
+                                    Month :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("Month")
+                                @Html.TextBox("Text_Month", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Select Month" })
+                            </td>
+                            <td class='formlabel' title='Year'>
+                                <font color='red'>*</font><span id='spnYear'>
+                                    Year :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("Year")
+                                @Html.TextBox("Text_Year", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Select Year" })
+                                @Html.Hidden("Fortnight")
+                                @Html.TextBox("Text_Fortnight", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Select Fortnight" })
+
+                            </td>
+                        </tr>
+                        <tr class="formInputcolumn">
+                            <td class='formlabel' title='Currency'>
+                                <span id='spnCurrency'>
+                                    Currency :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("Currency")
+                                @Html.TextBox("Text_Currency", null, new {  controltype = "autocomplete", data_role = "autocomplete"})
+                            </td>
+                            <td class='formlabel'></td>
+                            <td class='formInputcolumn'></td>
+                        </tr>
+
+                        <tr>
+                            <td class='formlabel'>
+                                @*<form id="ASToExcel" action="../GenrateAndViewInvoice/ExportToExcel" method="post">
+                <input id="DestinationAirPortSNo" type="hidden" name="DestinationAirPortSNo" value="" />*@
+                                <div style="float:left; display: block;">
+                                    <img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel()" />
+                                </div>
+                                <div style="float:left; display: block;">
+                                    <img id="imgpdf" src="../Images/iconPDF.png" style="width:30px;height:30px;cursor: pointer" title="Export To PDF" onclick="ExportToPDF()" />
+                                </div>
+                                @*</form>*@
+                            </td>
+
+                            <td class='formlabel'></td>
+                            <td class='formlabel'></td>
+                            <td class='formInputcolumn' title='Search'>
+                                <input type='submit' name='operation' onclick="GenerateAndViewInvoiceData()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+                                <input type='button' name='operation' onclick="PrintInvoice()" value='Print' id="btnPrint" class='btn btn-info btnPrint' />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <div id="grid" style="font-size:11px;"></div>
+                <div id="gridHide" style="font-size:11px;display:none;"></div>
+                <form method="post" name="aspnetForm" id="aspnetForm"></form>
+                <script src="~/Scripts/pdfmake.js"></script>
+                <script src="~/Scripts/html2canvas.js"></script>
+                <script src="~/JScript/Report/CBVSalesReport.js"></script>
+
+            </div>
+            
+        </div>
+    </section>
+</div>

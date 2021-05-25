@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="CargoFlash.Cargo.DataService.Rate.TaxLogsService" CodeBehind="TaxLogsService.cs" %>

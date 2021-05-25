@@ -1,0 +1,37 @@
+﻿<Messages>
+  
+ 
+ 
+  <ServerMessage>
+    <Key>5001</Key>
+    <value>Driver already exists in In-Active State. Please Enter another Driver.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Driver Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Driver Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Driver Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Driver Mobile Number already exists. Please Enter Another Driver Mobile Number.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2004</Key>
+    <value>Driver Licence number already exists.</value>
+  </ServerMessage>
+  
+  
+ 
+</Messages>
+
+
+
+
+

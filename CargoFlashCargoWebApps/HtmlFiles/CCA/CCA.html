@@ -1,0 +1,1454 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript">
+
+    </script>
+    <title></title>
+    <style type="text/css">
+ 
+        .bc {
+            text-align: center;
+            font-family: Arial;
+            height: 20px;
+        }
+
+        .c {
+            text-align: left;
+            font-family: Arial;
+            height: 20px;
+        }
+
+        body {
+            font-family: Arial;
+            font-size: 12px;
+        }
+
+        span {
+            text-align: center;
+        }
+
+
+        .ui-widget-overlay ui-front {
+            opacity: 0.1 !important;
+        }
+
+        .ui-widget-overlay {
+            background: none !important;
+            opacity: 0.1 !important;
+        }
+
+        .coverBorder {
+            border: 1px solid lightgray;
+        }
+
+        .CurveRectangle {
+            /*padding: 10px;*/
+            /*background: #dddddd;*/
+            border-top-right-radius: 6.5em;
+            border-top-left-radius: 6.5em;
+            -ms-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+            border-top: 1px solid lightgrey;
+        }
+
+        .CurveBackRectangle {
+            -ms-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            /* transform: rotate(360deg); */
+            display: block;
+        }
+
+        .formlabelcss {
+            font-size: 14px;
+            color: rgb(0, 0, 0);
+            font-family: Arial;
+            padding-left: 3px;
+            padding-right: 5px;
+            width: 17%;
+            height: 25px;
+            border-right: 1px solid rgb(190, 189, 190);
+            border-left: 2px solid rgb(190, 189, 190);
+            border-bottom: 1px solid rgb(190, 189, 190);
+            border-top: 1px solid rgb(190, 189, 190);
+        }
+    </style>
+</head>
+<body>
+    <div id="MainDiv">
+        <div id="ApplicationTabs" data-role="tabstrip" class="k-widget k-header k-tabstrip">
+            <ul class="k-tabstrip-items k-reset"><li id="liAirline" class="k-state-active k-item k-tab-on-top k-state-default k-first"><a class="k-link">CCA</a></li></ul>
+            <div id="ApplicationTabs-1" class="k-content k-state-active" style="display: block;">
+                <table class="WebFormTable" id="tbl">
+                    <tr><td class="formSection" colspan="4">CCA</td></tr>
+                    <tr><td class="formActiontitle" colspan="4"><span id="__SpanHeader__">NEW CARGO CHARGES CORRECTION ADVICE (CCA):</span><div class="MandatoryTextCss"><font color="red">*</font> Mandatory Fields</div></td></tr>
+                    <tr>
+                        <td>
+
+                            <div id="htmldivdetails" style="margin-left:auto;margin-right:auto;width:100%;margin-top:20px; height:100%;">
+
+                                <div style="margin-top:-26px;" id="SearchSection">
+                                    <fieldset>
+                                        <legend><b><h2 id="SearchHeading">Search</h2> </b></legend>
+                                        <span id="AWbSnoSpan" style="font-size:12px">  AWB SNo : </span>
+
+                                        <input type="hidden" name="AWBSNo" id="AWBSNo" value="">
+                                        <!--<input type="text" class="" name="Text_AWBSNo" id="Text_AWBSNo" style="width:150px;" controltype="autocomplete" value="">-->
+                                        <input type="text" class="" name="Text_AWBSNo" id="Text_AWBSNo" tabindex="2" controltype="autocomplete" maxlength="12" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                        <input type="button" value="Search" title="Search" class="btn btn-success" id="btnSearch" onclick="GetCCADATA()">
+                                        
+                                        <!--<div id="DisplayButton" style="float:right">-->
+                                        <div id="DisplayButton" style="position: fixed;margin-top: -119px;margin-left: 1064px;">
+                                            <input id="btnSave" type="submit" name="operation" value="Save" onclick="SaveCCA();" class="btn btn-success">
+                                            <input type="submit" name="operation" value="Update" class="btn btn-success" onclick="SaveCCA();" id="btnUpdate">
+                                            <input id="btnBack" type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=Shipment&Apps=CCA&FormAction=INDEXVIEW');" class="btn btn-inverse">
+                                            <!--<input id="btnPrint" type="button" value="Print" class="btn btn-success" onclick='printDiv();'>-->
+                                        </div>
+                                        
+                                    </fieldset>
+                                </div>
+                                <div id="DisplayButtonUpdate" style="float: right; display: none; margin-bottom: 20px;">
+                                    <input id="btnSave" type="submit" name="operation" value="Save" onclick="SaveCCA();" class="btn btn-success">
+                                    <input type="submit" name="operation" value="Update" class="btn btn-success" onclick="SaveCCA();" id="btnUpdate">
+                                    <input type="submit" name="operation" value="Delete" class="btn btn-success" onclick="SaveCCA();" id="btnUpdate">
+                                    <input type="submit" name="operation" value="Approve" class="btn btn-success" onclick="SaveCCA();" id="btnUpdate">
+                                    <input id="btnBack" type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=Shipment&Apps=CCA&FormAction=INDEXVIEW');" class="btn btn-inverse">
+                                    <input id="btnPrint" type="button" value="Print" class="btn btn-success" onclick='printDiv();'>
+                                </div>
+                                <div id="PrintDiv" style="width:100%">
+
+                                    <div style="width:98%;margin-top:40px;margin-right:auto;margin-left:auto">
+                                        <table style="border-collapse:collapse;width:100%" border="1" class="WebFormTable" id="CCATable">
+                                            <tr>
+                                                <td colspan="4" class="c formlabelcss" style="text-align: center; font-size: 20px; font-weight: 100;">Cargo Charges Correction Advice (CCA)</td>
+                                                <td class="c formlabelcss" style="text-align: left; font-size: 20px; font-weight: 100;">Number  -<span id="CCANo"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bc formlabelcss">AWB No :</td>
+                                                <td class="bc formlabelcss">Origin :</td>
+                                                <td class="bc formlabelcss">Destination :</td>
+                                                <td class="bc formlabelcss">Date of AWB issue :</td>
+                                                <td class="bc formlabelcss">Place of AWB Issue :</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bc">
+                                                    <span id="AWBNO"></span>
+                                                    <input id="hdnAWBSNo" type="hidden" name="hdnAWBSNo" value="" />
+                                                </td>
+                                                <td class="bc">
+                                                    <span id="Origin"></span>
+                                                    <input type="hidden" name="OriginSNo" id="OriginSNo" value="">
+                                                </td>
+                                                <td class="bc">
+                                                    <span id="Destination"></span>
+                                                    <input type="hidden" name="DestinationSNo" id="DestinationSNo" value="">
+                                                </td>
+                                                <td class="bc">
+                                                    <span id="DateOfAwbIssue"></span>
+                                                </td>
+                                                <td class="bc">
+                                                    <span id="PlaceOfAwbIssue"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="c formlabelcss" style="font-size:14px;">Name and City(Agent For Receipt):</td>
+                                                <td class="c formlabelcss"> Code (Agent or Recipient)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bc" colspan="4">
+                                                    <span id="NameAndCity"></span>
+                                                </td>
+                                                <td class="bc">
+                                                    <span id="AgentCode"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="c formlabelcss"><font color="red">*</font>TO :</td>
+                                                <td class="c formlabelcss">
+                                                    <font color="red">*</font>
+                                                    Flight No : <span id="FlightDetails1" style="float:right; width :182px;">Pcs/Gr.Wt/CBM./VolWt</span>
+                                                </td>
+                                                <td class="c formlabelcss"><font color="red">*</font>Date :</td>
+                                            </tr>
+                                            <tr>
+
+                                                <td class="c" colspan="3">
+                                                    <span id="To1"></span>
+                                                </td>
+                                                <td class="c">
+                                                    <span id="FlightNo1">
+
+                                                    </span>
+                                                    <div style="float:right;width: 197px;">
+                                                        <input id="DepartedPieces1" type="text" name="DepartedPieces1" maxlength="5" class="k-input" style="width:40px" />
+                                                        <input id="DepartedGrossWeight1" type="text" name="DepartedGrossWeight1" maxlength="9" class="k-input" style="width:40px" />
+                                                        <input id="DepartedVolume1" type="text" name="DepartedVolume1" class="k-input" maxlength="9" style="width:40px" />
+                                                        <input id="DepartedVolumeWeight1" type="text" name="DepartedVolumeWeight1" maxlength="9" readonly="readonly" class="k-input" style="width:40px" />
+                                                    </div>
+                                                </td>
+                                                <td class="c">
+                                                    <span id="Date1"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+                                                <td colspan="5" class="formlabelcss" style="font-family: Arial;font-size:14px; height 20px; text-align :center">Transfer stations to complete lines 2 or 3 as appropriate and forward to next carrier</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="c formlabelcss"><font color="red">*</font>To 2 :</td>
+                                                <td class="c formlabelcss">
+                                                    <font color="red">*</font>Flight No :
+                                                    <span id="FlightDetails2" style="float:right; width :182px;">Pcs/Gr.Wt/CBM./VolWt</span>
+                                                </td>
+                                                <td class="c formlabelcss"><font color="red">*</font>Date :</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="c">
+                                                    <span id="To2"></span>
+                                                </td>
+                                                <td class="c">
+                                                    <span id="FlightNo2"></span>
+                                                    <div style="float:right;width: 197px;">
+                                                        <input id="DepartedPieces2" type="text" name="DepartedPieces2" class="k-input" maxlength="5" style="width:40px" />
+                                                        <input id="DepartedGrossWeight2" type="text" name="DepartedGrossWeight2" class="k-input" maxlength="9" style="width:40px" />
+                                                        <input id="DepartedVolume2" type="text" name="DepartedVolume2" class="k-input" maxlength="9" style="width:40px" />
+                                                        <input id="DepartedVolumeWeight2" type="text" name="DepartedVolumeWeight2" maxlength="9" readonly="readonly" class="k-input" style="width:40px" />
+                                                    </div>
+                                                </td>
+                                                <td class="c">
+                                                    <span id="Date2"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="c formlabelcss"><font color="red">*</font>To 3 :</td>
+                                                <td class="c formlabelcss">
+                                                    <font color="red">*</font>Flight No :
+                                                    <span id="FlightDetails3" style="float:right; width :182px;">Pcs/Gr.Wt/CBM./VolWt</span>
+                                                </td>
+                                                <td class="c formlabelcss"><font color="red">*</font>Date :</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="c">
+                                                    <span id="To3"></span>
+                                                </td>
+                                                <td class="c">
+                                                    <span id="FlightNo3" class="bc"></span>
+                                                    <div style="float:right;width: 197px;">
+                                                        <input id="DepartedPieces3" type="text" name="DepartedPieces3" class="k-input" maxlength="5" style="width:40px" />
+                                                        <input id="DepartedGrossWeight3" type="text" name="DepartedGrossWeight3" class="k-input" maxlength="9" style="width:40px" />
+                                                        <input id="DepartedVolume3" type="text" name="DepartedVolume3" class="k-input" maxlength="9" style="width:40px" />
+                                                        <input id="DepartedVolumeWeight3" type="text" name="DepartedVolumeWeight3" maxlength="9" readonly="readonly" class="k-input" style="width:40px" />
+                                                    </div>
+                                                </td>
+                                                <td class="c">
+                                                    <span id="Date3" class="bc"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="formlabelcss" style=" font-family Arial; font-size 14px;text-align:left">Currency : <span id="CurrencyCode"></span> </td>
+                                                <td colspan="4" class="formlabelcss" style=" font-family Arial; font-size 14px; text-align center">AWB Weight and/or Charges have been corrected/added as follows:</td>
+                                            </tr>
+
+
+                                        </table>
+                                        <table style="width: 100%; border-collapse: collapse; border: 1px solid lightgrey; " validateonsubmit='true'>
+
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss"> </td>
+                                                <td colspan="2" class="bc formlabelcss">Revised/Correct Chargeable Weight</td>
+                                                <td colspan="2" class="bc formlabelcss">Original/Incorrect Chargeable Weight</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Gross Weight :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <input type="text" class="k-input" maxlength="9" name="Text_RevisedGrossWeight" id="Text_RevisedGrossWeight" style="width:150px;" />
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_OriginalGrossWeight"></span>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Pieces :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <input type="text" class="k-input" maxlength="5" name="Text_RevisedPieces" id="Text_RevisedPieces" style="width:150px;" />
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_OriginalPieces"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Volume :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <input type="text" class="k-input" maxlength="9" name="Text_RevisedVolume" id="Text_RevisedVolume" style="width:150px;" />
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_OriginalVolume"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Volume Weight :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <input type="text" class="k-input" maxlength="9" name="Text_RevisedVolumeWeight" id="Text_RevisedVolumeWeight" style="width:150px;" />
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_OriginalVolumeWeight"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Chargeable Weight :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <input type="text" class="k-input" maxlength="9" name="Text_RevisedChargeableWeight" id="Text_RevisedChargeableWeight" style="width:150px;" />
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_OriginalChargeableWeight"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Commodity :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <input type="hidden" name="CommoditySNo" id="CommoditySNo" value="">
+
+                                                    <input type="text" class="" name="Text_CommoditySNo" id="Text_CommoditySNo" tabindex="2" controltype="autocomplete" data-role="autocomplete" autocomplete="off">
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+
+                                                    <input type="hidden" name="OriginalCommoditySNo" id="OriginalCommoditySNo" value="">
+
+                                                    <input type="text" class="" name="Text_OriginalCommoditySNo" id="Text_OriginalCommoditySNo" tabindex="2" controltype="autocomplete" data-role="autocomplete" autocomplete="off">
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">SHC  :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <input type="hidden" name="SHCSNo" id="SHCSNo" value="">
+                                                    <input type="text" class="" name="Text_SHCSNo" id="Text_SHCSNo" tabindex="2" controltype="autocomplete" data-role="autocomplete" autocomplete="off">
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <input type="hidden" name="OriginalSHCSNo" id="OriginalSHCSNo" value="">
+                                                    <input type="text" class="" name="Text_OriginalSHCSNo" id="Text_OriginalSHCSNo" tabindex="2" controltype="autocomplete" data-role="autocomplete" autocomplete="off">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Product :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <input type="hidden" name="ProductSNo" id="ProductSNo" value="">
+                                                    <input type="text" class="" name="Text_ProductSNo" id="Text_ProductSNo" tabindex="2" controltype="autocomplete" data-role="autocomplete" autocomplete="off">
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <input type="hidden" name="OriginalProductSNo" id="OriginalProductSNo" value="">
+                                                    <input type="text" class="" name="Text_OriginalProductSNo" id="Text_OriginalProductSNo" tabindex="2" controltype="autocomplete" data-role="autocomplete" autocomplete="off">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Nature Of Goods :</td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <input type="text" class="k-input" maxlength="150" name="NatureOfGoods" id="NatureOfGoods" style="width:150px;" />
+                                                </td>
+                                                <td colspan="2" class="bc coverBorder">
+                                                    <span id="hdn_NatureOfGoods"></span>
+                                                </td>
+                                            </tr>
+                                            <!--flight plan section------------->
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Flight Plan :</td>
+                                                <td colspan="4" class="bc formlabelcss">
+                                                    <a id="Revfltplan" src="#" alt="No data found" onclick="Getflightplan(1);"><u style="color:blue;cursor: pointer;">Flight Plan</u></a>
+                                                </td>
+
+                                            </tr>
+                                            <!-----Due Carrier Charges section------------->
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Due Carrier Charges :</td>
+                                                <td colspan="4" class="bc formlabelcss">
+                                                    <a id="Revfltplan2" src="#" alt="No data found" onclick="OpenDueCarrierTab()"><u style="color:blue;cursor: pointer;">Due Carrier Charges</u></a>
+                                                </td>
+
+                                            </tr>
+                                            <!------Due Agent Charges------------->
+                                            <tr>
+                                                <td colspan="2" class="bc formlabelcss">Due Agent Charges :</td>
+                                                <td colspan="4" class="bc formlabelcss">
+                                                    <a id="Revfltplan3" src="#" alt="No data found" onclick="OpenDueAgentTab()"><u style="color:blue;cursor: pointer;">Due Agent Charges</u></a>
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                        
+                                       <div id="AgentPopUp"> <span><table id="tbldueAgentcharges"></table></span></div>
+                                        <div id="popUpwimdow"><span><table id="tbldueCarriercharges"></table></span></div>
+                                        <!--<table style="width: 100%; border-collapse: collapse; border: 1px solid lightgrey; " validateonsubmit='true'>
+
+        <tr>
+            <td colspan="2" class="bc formlabelcss"> </td>
+            <td colspan="2" class="bc formlabelcss">Revised/Correct</td>
+            <td colspan="2" class="bc formlabelcss">Original/Incorrect</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="bc formlabelcss">Shipper :</td>
+            <td colspan="2" class="bc coverBorder">
+                <input type="text" class="k-input" name="Text_RevisedShipper" id="Text_RevisedShipper" style="width:150px;" />
+            </td>
+            <td colspan="2" class="bc coverBorder">
+                <span id="hdn_OriginalShipper"></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="bc formlabelcss">Consignee :</td>
+            <td colspan="2" class="bc coverBorder">
+                <input type="text" class="k-input" name="Text_RevisedConsignee" id="Text_RevisedConsignee" style="width:150px;" />
+            </td>
+            <td colspan="2" class="bc coverBorder">
+                <span id="hdn_OriginalConsignee"></span>
+            </td>
+        </tr>
+    </table>-->
+                                        <table style="width:100%;">
+                                            <tr>
+                                                <td style="width: 70%;">
+                                                    <table style="width: 100%;  border:1px solid lightgrey;">
+
+                                                        <tr>
+                                                            <td colspan="3" class="bc formlabelcss">Revised/Corrected Charges</td>
+                                                            <td colspan="3" class="bc formlabelcss">Original/Incorrect Charges</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Prepaid</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Weight Charge</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Collect</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Prepaid</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Weight Charge</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Collect</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray;text-align:center">
+                                                                            <span id="Text_RevisedPrepaidWeightCharges"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+                                                                            <span id="Text_RevisedCollectWeightCharges"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+                                                                            <span id="hdn_OriginalPrepaidWeightCharges"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center">
+                                                                            <span id="hdn_OriginalCollectWeightCharges"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Valuation Charges</span></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Valuation Charges</span></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+
+                                                                            <span id="Text_RevisedPrepaidValuationCharges"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center">
+                                                                            <span id="Text_RevisedCollectValuationCharges"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalPrepaidValuationCharges"></span></td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalCollectValuationCharges"></span></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Tax</span></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Tax</span></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+
+                                                                            <span id="Text_RevisedPrepaidTax"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center">
+                                                                            <span id="Text_RevisedCollectTax"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalPrepaidTax"></span></td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalCollectTax"></span></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Other Charges Due Agent</span></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Other Charges Due Agent</span></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+
+                                                                            <span id="Text_RevisedPrepaidDueAgent"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center">
+                                                                            <span id="Text_RevisedCollectDueAgent"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalPrepaidDueAgent"></span></td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalCollectDueAgent"></span></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Other Charges Due Carrier</span></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Other Charges Due Carrier</span></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+
+                                                                            <span id="Text_RevisedPrepaidDueCarrier"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center">
+                                                                            <span id="Text_RevisedCollectDueCarrier"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalPrepaidDueCarrier"></span></td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"><span id="hdn_OriginalCollectDueCarrier"></span></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle"></span></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">C. C. Fee</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle"></span></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">C. C. Fee</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"></td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center"></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"></td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center"></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Prepaid</span></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Collect</span></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Prepaid</span></td>
+                                                            <td></td>
+                                                            <td class="bc formlabelcss CurveRectangle"><span class="CurveBackRectangle">Total Collect</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="c formlabelcss">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+                                                                            <span id="Text_RevisedPrepaidTotal"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style="border-top: 1px solid lightgray; text-align: center">
+                                                                            <span id="Text_RevisedCollectTotal"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td colspan="3" class="bc coverBorder">
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+                                                                            <span id="hdn_OriginalPrepaidTotal"></span>
+                                                                        </td>
+                                                                        <td class="c formlabelcss" style=" border-top 1px solid lightgray; text-align center">
+                                                                            <span id="hdn_OriginalCollectTotal"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr><td style="text-align: center;" colspan="3"><input id="btngetCharge" type="button" value="Get Charges" onclick="GetCharges();" class="btn btn-inverse" style=""></td></tr>
+                                                        <!--<tr>
+                        <td colspan="2" class="c formlabelcss">Total</td>
+                        <td class="bc coverBorder">
+                            <input type="text" class="k-input" name="Text_RevisedPrepaidTotal" id="Text_RevisedPrepaidTotal" style="width:150px;" />
+                        </td>
+                        <td class="bc coverBorder">
+                            <input type="text" class="k-input" name="Text_RevisedCollectTotal" id="Text_RevisedCollectTotal" style="width:150px;" />
+                        </td>
+                        <td class="bc coverBorder">
+                            <span id="hdn_OriginalPrepaidTotal"></span>
+
+                        </td>
+                        <td class="bc coverBorder">
+                            <span id="hdn_OriginalCollectTotal"></span>
+                        </td>
+                    </tr>-->
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top; border: 1px solid lightgrey;">
+                                                    <table style="width: 100%;">
+                                                        <tr>
+                                                            <td class="bc" colspan="2">
+                                                                <br />
+                                                                <span><font color="red">*</font></span>     Remarks and reason for issuing CCA
+                                                                <br />
+
+                                                                PLEASE SELECT APPROPRIATE REASON
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <br />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="bc" colspan="2">
+
+                                                                <textarea class="k-input" id="Text_Remarks" style="width:96%;height: 80px;" rows="5" cols="25"></textarea>
+
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="WEIGHTDISCREP" class="CCAReason" value="1"> WEIGHT DISCREP
+                                                            </td>
+                                                        <tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="VOLUMEDISCREP" class="CCAReason" value="1"> VOLUME DISCREP
+                                                            </td>
+                                                        <tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="CNEECHANGE" class="CCAReason" value="1"> CNEE CHANGE
+                                                            </td>
+                                                        <tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="SHPRCHANGE" class="CCAReason" value="1"> SHPR CHANGE
+                                                            </td>
+                                                        <tr>
+                                                        <!--<tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="DESTCHANGE" class="CCAReason" value="1"> DEST CHANGE <br>
+                                                            </td>
+                                                        <tr>-->
+
+
+                                                        <!--<tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="RATEERROR" class="CCAReason" value="1"> RATE ERROR
+                                                            </td>
+                                                        <tr>-->
+                                                        <!--<tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="CCACHARGE" class="CCAReason" value="1"> CCA CHARGE
+                                                            </td>
+
+                                                        </tr>-->
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="SHCCHARGE" class="CCAReason" value="1"> SHC CHANGE
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="PRODUCTCHARGE" class="CCAReason" value="1"> PRODUCT CHANGE
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="COMMODITYCHARGE" class="CCAReason" value="1"> COMMODITY CHANGE
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="NOGCHANGE" class="CCAReason" value="1"> NOG CHANGE
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="PIECESCHARGE" class="CCAReason" value="1"> PIECES CHANGE
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="IsDueCarrierChange" id="IsDueCarrierChange" class="CCAReason" value="1">Due Carrier Charge 
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="IsDueAgentChange" id="IsDueAgentChange" class="CCAReason" value="1">Due Agent Charge 
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="c">
+                                                                <input type="checkbox" name="IsRepriceAWB" id="IsRepriceAWB" class="CCAReason"> <font color="blue">REPRICE AWB </font>
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td width="50%">
+                                                                <input type="checkbox" name="IsTerminateShpt" id="IsTerminateShpt" class="CCAReason" onclick="BindTransit();"> <font color="blue" style="font-size:12px">Terminate Shpt</font>
+                                                            </td>
+                                                            <td width="50%" style="display:none">
+                                                                <input type="hidden" name="TermianteStation" id="TermianteStation" value="">
+                                                                <input type="text" class="" name="Text_TermianteStation" id="Text_TermianteStation" tabindex="2" controltype="autocomplete" data-role="autocomplete" autocomplete="off">
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td width="50%">
+                                                                <input type="checkbox" name="IsDestinationChange" id="IsDestinationChange" class="CCAReason" onclick="ChangeDestination();"> <font color="blue" style="font-size:12px">Change Destination</font>
+                                                            </td>
+                                                            <td width="50%" style="display:none">
+                                                                <input type="hidden" name="DestinationChange" id="DestinationChange" value="">
+                                                                <input type="text" class="" name="Text_DestinationChange" id="Text_DestinationChange" tabindex="2" controltype="autocomplete" data-role="autocomplete" autocomplete="off">
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr><td><br><br></td></tr>
+                                                        <tr>
+                                                            <td class="c" colspan="2">
+                                                                <b style="font-size:12px;">
+                                                                    In case of non-delivery enter all charges due at destination for collection from shipper.
+                                                                </b>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <hr />
+                                                </td>
+                                            </tr>
+                                            <!--shipper consignee section-->
+
+                                            <tr>
+                                                <td colspan="2" class="formSection"> <b style="font-size 12px; color:blue">Revised/Corrected Shipper And Consignee Details : </b> </td>
+                                            </tr>
+
+                                            <tr>
+
+                                                <td colspan="2">
+                                                    <table id="tblRevisedShipper" border="1" cellspacing="0" cellpadding="0" style="width: 100%; margin: 0px; padding: 0px;">
+                                                        <tr>
+                                                            <td style="text-align: -webkit-center; color:blue"> <b style="font-size: 12px;">Shipper Information :</b> </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td style="width:20%">
+                                                                            <label>Account Number :</label> <br>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="hidden" name="SHIPPER_AccountNo" id="SHIPPER_AccountNo" value="">
+                                                                                        <input type="text" class="" name="Text_SHIPPER_AccountNo" id="Text_SHIPPER_AccountNo" tabindex="51" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input type="checkbox" tabindex="51" class="" name="chkShipper" id="chkShipper" validatename="chkShipper[]" style="text-transform: uppercase;" title="Select to add in Participant as Shipper">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Name 1 :</label> <br>
+                                                                            <input type="text" class="" name="SHIPPER_Name" id="SHIPPER_Name" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar=",.-_" tabindex="52" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Name 2 :</label> <br>
+                                                                            <input type="text" class="" name="SHIPPER_Name2" id="SHIPPER_Name2" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar=",.-_" tabindex="53" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Address 1 :</label> <br>
+                                                                            <input type="text" class="" name="SHIPPER_Street" id="SHIPPER_Street" style="text-transform: uppercase;" controltype="default" tabindex="54" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Address 2 :</label> <br>
+                                                                            <input type="text" class="" name="SHIPPER_Street2" id="SHIPPER_Street2" style="text-transform: uppercase;" controltype="default" tabindex="55" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label>Town/Location :</label> <br>
+                                                                            <input type="text" class="" name="SHIPPER_TownLocation" id="SHIPPER_TownLocation" style="text-transform: uppercase;" controltype="uppercase" tabindex="56" maxlength="17" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>State :</label> <br>
+                                                                            <input type="text" class="" name="SHIPPER_State" id="SHIPPER_State" style="text-transform: uppercase;" controltype="uppercase" tabindex="57" maxlength="9" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Postal Code :</label> <br>
+                                                                            <input type="text" class="" name="SHIPPER_PostalCode" id="SHIPPER_PostalCode" style="text-transform: uppercase;" controltype="alphanumericupper" tabindex="58" maxlength="9" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Contact Number :</label> <br>
+                                                                            <input type="text" class="" name="SHIPPER_MobileNo" style="width:125px" id="SHIPPER_MobileNo" data-valid="minlength[1]" data-valid-msg="Enter Valid Contact Nbr" controltype="number" tabindex="59" maxlength="25" value="" placeholder="" data-role="numerictextbox">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Telex :</label> <br>
+                                                                            <input type="text" class="" name="SHIPPER_MobileNo2" id="SHIPPER_MobileNo2" data-valid="minlength[1]" data-valid-msg="Enter Valid Contact Nbr" style="text-transform: uppercase;" controltype="alphanumericupper" tabindex="60" maxlength="25" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label>Email :</label> <br>
+                                                                            <input type="text" class="" name="SHIPPER_Email" id="SHIPPER_Email" data-valid="email" data-valid-msg="Enter Email ID" style="text-transform: uppercase;" controltype="default" tabindex="61" maxlength="100" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Country :</label> <br>
+                                                                            <input type="hidden" name="SHIPPER_CountryCode" id="SHIPPER_CountryCode" value="">
+                                                                            <input type="text" class="" name="Text_SHIPPER_CountryCode" id="Text_SHIPPER_CountryCode" tabindex="62" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>City :</label> <br>
+                                                                            <input type="hidden" name="SHIPPER_City" id="SHIPPER_City" value="">
+                                                                            <input type="text" class="" name="Text_SHIPPER_City" id="Text_SHIPPER_City" tabindex="63" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Fax :</label> <br>
+                                                                            <input type="text" class="" name="SHipper_Fax" id="SHipper_Fax" style="width:125px" data-valid="minlength[1]" data-valid-msg="Enter Fax Number" controltype="number" tabindex="64" maxlength="25" value="" placeholder="" data-role="numerictextbox">
+                                                                        </td>
+
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="font-size 12px; text-align: -webkit-center;color:blue"><b style="font-size: 12px;">Consignee Information :<b></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td style="width:20%;">
+                                                                            <label>Account Number :</label> <br>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="hidden" name="CONSIGNEE_AccountNo" id="CONSIGNEE_AccountNo" value="">
+                                                                                        <input type="text" class="" name="Text_CONSIGNEE_AccountNo" id="Text_CONSIGNEE_AccountNo" tabindex="66" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input type="checkbox" tabindex="66" class="" name="chkconsignee" id="chkconsignee" validatename="chkconsignee[]" title="Select to add in Participant as Consignee" style="text-transform: uppercase;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Name 1 :</label> <br>
+                                                                            <input type="text" class="" name="CONSIGNEE_AccountNoName" id="CONSIGNEE_AccountNoName" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar=",.-_" tabindex="67" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Name 2 :</label> <br>
+                                                                            <input type="text" class="" name="CONSIGNEE_AccountNoName2" id="CONSIGNEE_AccountNoName2" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar=",.-_" tabindex="68" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Address 1 :</label> <br>
+                                                                            <input type="text" class="" name="CONSIGNEE_Street" id="CONSIGNEE_Street" style="text-transform: uppercase;" controltype="default" tabindex="69" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Address 2 :</label> <br>
+                                                                            <input type="text" class="" name="CONSIGNEE_Street2" id="CONSIGNEE_Street2" style="text-transform: uppercase;" controltype="default" tabindex="70" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label>Town/Location :</label> <br>
+                                                                            <input type="text" class="" name="CONSIGNEE_TownLocation" id="CONSIGNEE_TownLocation" style="text-transform: uppercase;" controltype="uppercase" tabindex="71" maxlength="17" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>State :</label> <br>
+                                                                            <input type="text" class="" name="CONSIGNEE_State" id="CONSIGNEE_State" style="text-transform: uppercase;" controltype="uppercase" tabindex="72" maxlength="9" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Postal Code :</label> <br>
+                                                                            <input type="text" class="" name="CONSIGNEE_PostalCode" id="CONSIGNEE_PostalCode" style="text-transform: uppercase;" controltype="alphanumericupper" tabindex="73" maxlength="9" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Contact Number :</label> <br>
+                                                                            <input type="text" class="" name="CONSIGNEE_MobileNo" id="CONSIGNEE_MobileNo" style="width:125px" data-valid="minlength[1]" data-valid-msg="Enter Valid Contact Nbr" controltype="number" tabindex="74" maxlength="25" value="" placeholder="" data-role="numerictextbox">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Telex :</label> <br>
+                                                                            <input type="text" class="" name="CONSIGNEE_MobileNo2" id="CONSIGNEE_MobileNo2" data-valid="minlength[1]" data-valid-msg="Enter Valid Contact Nbr" style="text-transform: uppercase;" controltype="alphanumericupper" tabindex="75" maxlength="25" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label>Email :</label> <br>
+                                                                            <input type="text" class="" name="CONSIGNEE_Email" id="CONSIGNEE_Email" data-valid="email" data-valid-msg="Enter Email ID" style="text-transform: uppercase;" controltype="default" tabindex="76" maxlength="100" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Country :</label> <br>
+                                                                            <input type="hidden" name="CONSIGNEE_CountryCode" id="CONSIGNEE_CountryCode" value="">
+                                                                            <input type="text" class="" name="Text_CONSIGNEE_CountryCode" id="Text_CONSIGNEE_CountryCode" tabindex="77" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>City :</label><br>
+                                                                            <input type="hidden" name="CONSIGNEE_City" id="CONSIGNEE_City" value="">
+                                                                            <input type="text" class="" name="Text_CONSIGNEE_City" id="Text_CONSIGNEE_City" tabindex="78" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Fax :</label><br>
+                                                                            <input type="text" class="" name="CONSIGNEE_Fax" id="CONSIGNEE_Fax" data-valid="minlength[1]" style="width:125px" data-valid-msg="Enter Fax Number" controltype="number" tabindex="79" maxlength="25" value="" placeholder="" data-role="numerictextbox">
+                                                                        </td>
+                                                                        <td>
+                                                                            <!--<label>Add New Consignee :</label>
+                                        <input type="checkbox" tabindex="80" class="" name="chkconsignee" id="chkconsignee" validatename="chkconsignee[]" title="Select to add in Participant as Consignee" style="text-transform: uppercase;">-->
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="formSection"> <b style="font-size 12px;">Original/Incorrect Shipper And Consignee Details : </b> </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table id="tblOriginalShipper" border="1" cellspacing="0" cellpadding="0" style="width: 100%; margin: 0px; padding: 0px;">
+                                                        <tr>
+                                                            <td style="text-align: -webkit-center;"><b style="font-size: 12px;">Shipper Information :</b> </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td style="width:20%">
+                                                                            <label>Account Number :</label> <br>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="hidden" name="OrgSHIPPER_AccountNo" id="OrgSHIPPER_AccountNo" value="">
+                                                                                        <input type="text" class="" name="Text_OrgSHIPPER_AccountNo" id="Text_OrgSHIPPER_AccountNo" tabindex="51" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input type="checkbox" tabindex="51" class="" name="chkOrgSHIPPER" id="chkOrgSHIPPER" validatename="chkOrgSHIPPER[]" style="text-transform: uppercase;" title="Select to add in Participant as OrgSHIPPER">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Name 1 :</label> <br>
+                                                                            <input type="text" class="" name="OrgSHIPPER_Name" id="OrgSHIPPER_Name" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar=",.-_" tabindex="52" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Name 2 :</label> <br>
+                                                                            <input type="text" class="" name="OrgSHIPPER_Name2" id="OrgSHIPPER_Name2" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar=",.-_" tabindex="53" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Address 1 :</label> <br>
+                                                                            <input type="text" class="" name="OrgSHIPPER_Street" id="OrgSHIPPER_Street" style="text-transform: uppercase;" controltype="default" tabindex="54" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Address 2 :</label> <br>
+                                                                            <input type="text" class="" name="OrgSHIPPER_Street2" id="OrgSHIPPER_Street2" style="text-transform: uppercase;" controltype="default" tabindex="55" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label>Town/Location :</label> <br>
+                                                                            <input type="text" class="" name="OrgSHIPPER_TownLocation" id="OrgSHIPPER_TownLocation" style="text-transform: uppercase;" controltype="uppercase" tabindex="56" maxlength="17" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>State :</label> <br>
+                                                                            <input type="text" class="" name="OrgSHIPPER_State" id="OrgSHIPPER_State" style="text-transform: uppercase;" controltype="uppercase" tabindex="57" maxlength="9" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Postal Code :</label> <br>
+                                                                            <input type="text" class="" name="OrgSHIPPER_PostalCode" id="OrgSHIPPER_PostalCode" style="text-transform: uppercase;" controltype="alphanumericupper" tabindex="58" maxlength="9" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Contact Number :</label> <br>
+                                                                            <input type="text" class="" name="OrgSHIPPER_MobileNo" style="width:125px" id="OrgSHIPPER_MobileNo" data-valid="minlength[1]" data-valid-msg="Enter Valid Contact Nbr" controltype="number" tabindex="59" maxlength="25" value="" placeholder="" data-role="numerictextbox">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Telex :</label> <br>
+                                                                            <input type="text" class="" name="OrgSHIPPER_MobileNo2" id="OrgSHIPPER_MobileNo2" data-valid="minlength[1]" data-valid-msg="Enter Valid Contact Nbr" style="text-transform: uppercase;" controltype="alphanumericupper" tabindex="60" maxlength="25" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label>Email :</label> <br>
+                                                                            <input type="text" class="" name="OrgSHIPPER_Email" id="OrgSHIPPER_Email" data-valid="email" data-valid-msg="Enter Email ID" style="text-transform: uppercase;" controltype="default" tabindex="61" maxlength="100" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Country :</label> <br>
+                                                                            <input type="hidden" name="OrgSHIPPER_CountryCode" id="OrgSHIPPER_CountryCode" value="">
+                                                                            <input type="text" class="" name="Text_OrgSHIPPER_CountryCode" id="Text_OrgSHIPPER_CountryCode" tabindex="62" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>City :</label> <br>
+                                                                            <input type="hidden" name="OrgSHIPPER_City" id="OrgSHIPPER_City" value="">
+                                                                            <input type="text" class="" name="Text_OrgSHIPPER_City" id="Text_OrgSHIPPER_City" tabindex="63" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Fax :</label> <br>
+                                                                            <input type="text" class="" name="OrgSHIPPER_Fax" id="OrgSHIPPER_Fax" style="width:125px" data-valid="minlength[1]" data-valid-msg="Enter Fax Number" controltype="number" tabindex="64" maxlength="25" value="" placeholder="" data-role="numerictextbox">
+                                                                        </td>
+
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align: -webkit-center;"> <b style="font-size: 12px;">Consignee Information :</b></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td style="width:20%;">
+                                                                            <label>Account Number :</label> <br>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="hidden" name="OrgCONSIGNEE_AccountNo" id="OrgCONSIGNEE_AccountNo" value="">
+                                                                                        <input type="text" class="" name="Text_OrgCONSIGNEE_AccountNo" id="Text_OrgCONSIGNEE_AccountNo" tabindex="66" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input type="checkbox" tabindex="66" class="" name="chkOrgCONSIGNEE" id="chkOrgCONSIGNEE" validatename="chkOrgCONSIGNEE[]" title="Select to add in Participant as OrgCONSIGNEE" style="text-transform: uppercase;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Name 1 :</label> <br>
+                                                                            <input type="text" class="" name="OrgCONSIGNEE_AccountNoName" id="OrgCONSIGNEE_AccountNoName" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar=",.-_" tabindex="67" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Name 2 :</label> <br>
+                                                                            <input type="text" class="" name="OrgCONSIGNEE_AccountNoName2" id="OrgCONSIGNEE_AccountNoName2" style="text-transform: uppercase;" controltype="alphanumericupper" allowchar=",.-_" tabindex="68" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Address 1 :</label> <br>
+                                                                            <input type="text" class="" name="OrgCONSIGNEE_Street" id="OrgCONSIGNEE_Street" style="text-transform: uppercase;" controltype="default" tabindex="69" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td style="width:20%">
+                                                                            <label>Address 2 :</label> <br>
+                                                                            <input type="text" class="" name="OrgCONSIGNEE_Street2" id="OrgCONSIGNEE_Street2" style="text-transform: uppercase;" controltype="default" tabindex="70" maxlength="35" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label>Town/Location :</label> <br>
+                                                                            <input type="text" class="" name="OrgCONSIGNEE_TownLocation" id="OrgCONSIGNEE_TownLocation" style="text-transform: uppercase;" controltype="uppercase" tabindex="71" maxlength="17" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>State :</label> <br>
+                                                                            <input type="text" class="" name="OrgCONSIGNEE_State" id="OrgCONSIGNEE_State" style="text-transform: uppercase;" controltype="uppercase" tabindex="72" maxlength="9" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Postal Code :</label> <br>
+                                                                            <input type="text" class="" name="OrgCONSIGNEE_PostalCode" id="OrgCONSIGNEE_PostalCode" style="text-transform: uppercase;" controltype="alphanumericupper" tabindex="73" maxlength="9" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Contact Number :</label> <br>
+                                                                            <input type="text" class="" name="OrgCONSIGNEE_MobileNo" id="OrgCONSIGNEE_MobileNo" style="width:125px" data-valid="minlength[1]" data-valid-msg="Enter Valid Contact Nbr" controltype="number" tabindex="74" maxlength="25" value="" placeholder="" data-role="numerictextbox">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Telex :</label> <br>
+                                                                            <input type="text" class="" name="OrgCONSIGNEE_MobileNo2" id="OrgCONSIGNEE_MobileNo2" data-valid="minlength[1]" data-valid-msg="Enter Valid Contact Nbr" style="text-transform: uppercase;" controltype="alphanumericupper" tabindex="75" maxlength="25" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label>Email :</label> <br>
+                                                                            <input type="text" class="" name="OrgCONSIGNEE_Email" id="OrgCONSIGNEE_Email" data-valid="email" data-valid-msg="Enter Email ID" style="text-transform: uppercase;" controltype="default" tabindex="76" maxlength="100" value="" data-role="alphabettextbox" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Country :</label> <br>
+                                                                            <input type="hidden" name="OrgCONSIGNEE_CountryCode" id="OrgCONSIGNEE_CountryCode" value="">
+                                                                            <input type="text" class="" name="Text_OrgCONSIGNEE_CountryCode" id="Text_OrgCONSIGNEE_CountryCode" tabindex="77" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>City :</label><br>
+                                                                            <input type="hidden" name="OrgCONSIGNEE_City" id="OrgCONSIGNEE_City" value="">
+                                                                            <input type="text" class="" name="Text_OrgCONSIGNEE_City" id="Text_OrgCONSIGNEE_City" tabindex="78" controltype="autocomplete" maxlength="50" value="" placeholder="" data-role="autocomplete" autocomplete="off" style="text-transform: uppercase;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <label>Fax :</label><br>
+                                                                            <input type="text" class="" name="OrgCONSIGNEE_Fax" id="OrgCONSIGNEE_Fax" data-valid="minlength[1]" style="width:125px" data-valid-msg="Enter Fax Number" controltype="number" tabindex="79" maxlength="25" value="" placeholder="" data-role="numerictextbox">
+                                                                        </td>
+                                                                        <td>
+                                                                            <!--<label>Add New OrgCONSIGNEE :</label>
+                                        <input type="checkbox" tabindex="80" class="" name="chkOrgCONSIGNEE" id="chkOrgCONSIGNEE" validatename="chkOrgCONSIGNEE[]" title="Select to add in Participant as OrgCONSIGNEE" style="text-transform: uppercase;">-->
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <b style="font-size 15px;"> Status : <span id="Status"></span></b>
+                                                </td>
+                                            </tr>
+                                            <!--<tr>
+            <td>
+                <b style=" font-size 12px;"> Shipper Name : <span id="Shipper"></span></b>
+
+            </td>
+            <td style="float:right;width:125px;">
+                <b style=" font-size 12px;"> Status : <span id="Status"></span></b>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <b style=" font-size 12px;"> Consignee Name : <span id="Consignee"></span></b>
+            </td>
+
+        </tr>-->
+                                            <tr>
+                                                <td colspan="2">
+                                                    <hr />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style=" height 35px;">
+                                                    <b style=" font-size 12px;"> Distribution : </b>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Original 					-		(for Carrier issuing CCA)
+                                                    </b>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			1		-		(for Accounting Department of issuing Carrier)
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <b style=" font-size 12px;"> ..............................................................</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			2		-		(for First Carrier)
+                                                    </b>
+                                                </td>
+                                                <td> <b style=" font-size 12px;">    Airline</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			3		-		(for Second Carrier)
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <b style=" font-size 12px;"> ..............................................................</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			4		-		(for Third Carrier)
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <b style=" font-size 12px;">    Date and Place of Issue</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			5		-		(for Cargo Department of Carrier issuing CCA)
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <b style=" font-size 12px;"> ..............................................................</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			6		-		(for CASS/CASS Collect-Settlement Office)
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <b style=" font-size 12px;">  Signature</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 800px; float: right; height: 25px;">
+                                                    <b style=" font-size 12px;">
+                                                        Copy			7		-		(for CASS/CASS Collect-Agent/Recipient)
+                                                    </b>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                        <table style="width: 100%;">
+                                            <tr>
+                                                <td colspan="4">
+                                                    <hr />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <hr />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <hr />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" style="height: 25px; font-size: 12px;">
+                                                    <b>This slip must be completed and returned to carrier issuing CCA.</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" style="height: 35px; font-size: 12px;">
+                                                    <b style="font-style: italic; float: right">   We herewith  confirm having corrected our documents and take the necessary action as per   your instructions.</b>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <br />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 25px; width: 152px; float: left;">
+                                                    <b style=" font-size 12px; float right;">To :</b>
+                                                </td>
+                                                <td><b style=" font-size 12px;"> ..............................................................</b></td>
+                                                <td>
+                                                    <b>   From :</b>
+                                                </td>
+                                                <td><b style=" font-size 12px;"> ..............................................................(Airline)</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 25px; width: 206px; float: left;">
+                                                    <b style=" font-size 12px; float right;">
+                                                        Ref.CCA No. :
+                                                    </b>
+                                                </td>
+                                                <td><b style=" font-size 12px;"> ..............................................................</b></td>
+                                                <td>
+                                                    <b>  At :</b>
+
+                                                </td>
+                                                <td>
+                                                    <b style=" font-size 12px;">
+                                                        ..............................................................(Station)
+                                                    </b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 25px; width: 208px; float: left;">
+                                                    <b style=" font-size 12px; float right;">
+                                                        Ref.AWB No. :
+
+                                                    </b>
+                                                </td>
+                                                <td><b style=" font-size 12px;"> ..............................................................</b></td>
+                                                <td>
+                                                    <b> Date :</b>
+
+                                                </td>
+                                                <td><b style=" font-size 12px;"> ..............................................................</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 25px; width: 215px; float: left;">
+                                                    <b style=" font-size 12px; float right;">
+
+                                                    </b>
+                                                </td>
+                                                <td><b style=" font-size 12px;"> </b></td>
+                                                <td>
+                                                    <b>   Signature</b>
+
+                                                </td>
+                                                <td><b style=" font-size 12px;"> ..............................................................(Airline)</b></td>
+                                            </tr>
+
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <table style="width: 100%;">
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <hr />
+                                        </td>
+                                    </tr>
+                                    <tr style="display:none">
+                                        <td colspan="2" id="RequestAndApproveBy" style="">
+                                            <b> Requested By : <span id="RequestedBy"></span></b><br />
+                                            <b><label id="lblApprovedBy">Approved/Rejected  By : <span id="ApprovedBy"></span></label> </b>
+                                            <br /><b><label id="lblCCAexecutionDate">CCA Execution Date : <span id="CCAExecutionDate"></span></label> </b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <br />
+                                        </td>
+                                    </tr>
+                                    <tr id="ApprovedPanel">
+                                        <td colspan="2" style="font-size:14px;">
+                                            <input id="RequestType" type="radio" name="Group" style="font-size:16px" onclick="RequestTypeMode();" value="Pending">Requested
+                                            <input id="RequestType" type="radio" name="Group" style="font-size:16px" onclick="RequestTypeMode();" value="Approved">Approved
+                                            <input id="RequestType" type="radio" name="Group" style="font-size:16px" onclick="RequestTypeMode();" value="Reject">Reject
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <br />
+                                        </td>
+                                    </tr>
+                                    <tr id="ApprovedPanelRemarks">
+                                        <td class="bc">
+                                            <textarea class="k-input" id="Text_RemarksApproved" style="width:96%;height: 80px;" rows="5" cols="25"></textarea>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                                <div id="DivCalculateDueAgent">
+
+
+                                </div>
+                                <div id="DivCalculateDueCarrier">
+
+
+                                </div>
+                                <div id="ViewOtherChargesRecord">
+
+
+                                </div>
+                                <div>
+                                    <br />
+                                </div>
+
+
+                                <div>
+                                    <br />
+                                    <br />
+                                    <br />
+                                </div>
+
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+﻿<Messages>
+  <!--#region RateServiceType XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  RateServiceType
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Parvez Khan
+  Created On:		4 APR 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+ 
+
+  <DataFieldName>
+    <Name>ServiceName</Name>
+    <Message>Service Name can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Service Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Rate Service Type Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Rate Service Type Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Rate Service Type Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>
+
+
+
+
+
+

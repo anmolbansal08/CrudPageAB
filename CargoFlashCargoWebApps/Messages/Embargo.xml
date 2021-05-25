@@ -1,0 +1,45 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>EmbargoName</Name>
+    <Message>Embargo Name can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>ValidFrom</Name>
+    <Message>Valid From can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>ValidTo</Name>
+    <Message>Valid To can not be blank</Message>
+  </DataFieldName>
+ 
+  <DataFieldName>
+    <Name>MaxWeight</Name>
+    <Message>Max Weight can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Reason</Name>
+    <Message>Reason can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Embargo Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Embargo Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Embargo Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Embargo Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

@@ -1,0 +1,30 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>X-Ray Machine Code  already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1004</Key>
+    <value>X-Ray Machine Name already exists</value>
+  </ServerMessage>
+
+
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>X-Ray Machine Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>X-Ray Machine Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>X-Ray Machine Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+</Messages>

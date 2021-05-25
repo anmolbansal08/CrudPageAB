@@ -1,0 +1,161 @@
+﻿<div id="divbody" style="height:auto">
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Marine Insurance Report</td></tr>
+                        <tr class="DateWiseRow">
+                            <td class='formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirline'>
+                                    Airline:
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("Airline")
+                                @Html.TextBox("Text_Airline", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline can not be blank" })
+                            </td>
+                            <td class='formlabel' title='City'>
+                                <font color='red'></font><span id='spnCity'>
+                                    City:
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("City")
+                                @Html.TextBox("Text_City", null, new {controltype = "autocomplete", data_role = "autocomplete"})
+                            </td>
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class='formlabel' title='From Date'>
+                                <font color='red'></font><span id='spnFromDate'>
+                                    From Date:
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+                            </td>
+                            <td class='formlabel' title='To Date'>
+                                <font color='red'></font><span id='spnToDate'>
+                                    To Date:
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select To Date' controltype='datetype' value='' placeholder='To Date' />
+                            </td>
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class='formlabel' title='Airline'>
+                                <font color='red'></font><span id='spnAirline'>
+                                    Agent:
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("Agent")
+                                @Html.TextBox("Text_Agent", null, new {controltype = "autocomplete", data_role = "autocomplete"})
+                            </td>
+                            <td class='formlabel' title='City'>
+                                <font color='red'></font><span id='spnCity'>
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='formlabel'>
+                                <form id="MarineToExcel" action="../MarineInsuranceReport/ExportToExcel" method="post">
+                                    <input id="FromDate" type="hidden" name="FromDate" value="" />
+                                    <input id="ToDate" type="hidden" name="ToDate" value="" />
+                                    <input id="Airline" type="hidden" name="Airline" value="" />
+                                    <input id="City" type="hidden" name="City" value="" />
+                                    <input id="Agent" type="hidden" name="Agent" value="" />
+                                    <input id="UserSNo" type="hidden" name="UserSNo" value="" />
+                                    <div style="float:left; display: block;">
+                                        <img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" title="Export To Excel" onclick="ExportToExcel()" />
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                @*<input type='submit' name='operation' onclick="SearchMarineInsuranceReport()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />*@
+                                <input type="button" name='SearchSave' value='Search' class='btn btn-success' id="btnSubmit" />
+                            </td>
+                            <td class='formlabel'></td>
+                            <td class='formlabel'></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <br /><br />
+
+            <div class="k-grid-header-wrap" id="grid" style="display: none;overflow-x:auto;">
+
+                <br />
+                <table class="appendGrid ui-widget" style="margin-bottom:10px;" align="center" id="tblgrid" width="100%">
+
+
+                    <thead class="ui-widget-header" style="text-align:center" id="theadid">
+                      
+
+                        <tr>
+                            <td rowspan="3" class="ui-widget-header"><b>No</b></td>
+                            <td rowspan="3" class="ui-widget-header"><b>BO REPORT</b></td>
+                            <td colspan="1" class="ui-widget-header"><b>PIC</b></td>
+                            <td rowspan="3" class="ui-widget-header"><b>CUSTOMER NAME</b></td>
+                            <td colspan="10" class="ui-widget-header"><b>MARINE CARGO INSURANCE DATA</b></td>
+                            <td colspan="5" class="ui-widget-header"><b>CUSTOMER  TO  GA (IDR)</b></td>
+                            <td colspan="3" class="ui-widget-header"><b>GA TO INSURANCE (IDR)</b></td>
+                            <td colspan="2" class="ui-widget-header"><b>GA FEE BASED INCOME (IDR)</b></td>
+                            @*<td rowspan="2" class="ui-widget-header"><b>FLT NO</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>FLT DATE</b></td>
+                            <td colspan="2" class="ui-widget-header"><b>ROUTE (JOURNEY)</b></td>
+                            <td colspan="3" class="ui-widget-header"><b>COMPLAINT RECORDS</b></td>
+                            <td colspan="3" class="ui-widget-header"><b>CASE CLOSED (√)</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>Complain Status</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>COMPLIMENTARY NOTICE</b></td>*@
+                        </tr>
+                        <tr>
+
+                            <td rowspan="2" class="ui-widget-header"><b>GA SALES atau <br />CARGO ASSISTANT</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>AWB</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>ROUTE</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>FLIGHT</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>DATE</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>PCS</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>WEIGHT</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>COMMODITY</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>INSURANCE <br /> COMMODITY <br /> CLASSIFICATION</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>DECLARED <br />VALUE (IDR)</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>CERTIFICATE <br /> NUMBER</b></td>
+                            <td colspan="3" class="ui-widget-header"><b>DECLARE VALUE </b></td>
+                            <td colspan="2" class="ui-widget-header"><b>NON DECLARE VALUE</b></td>
+                            <td colspan="2" class="ui-widget-header"><b>DECLARE VALUE</b></td>
+                            <td colspan="1" class="ui-widget-header"><b>NON DECLARE VALUE</b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>GENERAL<br />  (Declare Value) </b></td>
+                            <td rowspan="2" class="ui-widget-header"><b>PREMIUM<br /> (Non Dec.Value)</b></td>
+
+                        </tr>
+                        <tr>
+                            <td class="ui-widget-header"><b>PUBLISH <br />RATE </b></td>
+                            <td class="ui-widget-header"><b>CHARGEABLE<br /> RATE </b></td>
+                            <td class="ui-widget-header"><b>MINIMUM PREMI<br /> APPLIED </b></td>
+                            <td class="ui-widget-header"><b>PUBLISH <br />PREMIUM RATE  </b></td>
+                            <td class="ui-widget-header"><b>CHARGEABLE <br />PREMI   </b></td>
+                            <td class="ui-widget-header"><b>NET <br />PUBLISH RATE  </b></td>
+                            <td class="ui-widget-header"><b>NET <br />CHARGEABLE PREMI </b></td>
+                            <td class="ui-widget-header"><b>CHARGEABLE <br />PREMI   </b></td>
+                        
+                        </tr>
+
+                    </thead>
+                    <tbody id="gridbodys" class="ui-widget-content"></tbody>
+                </table>
+            </div>
+            <div>
+                <div id="grid" style="font-size:11px;"></div>
+                <script src="~/JScript/Report/MarineInsuranceReport.js"></script>
+            </div>
+        </div>
+    </section>
+</div>
+

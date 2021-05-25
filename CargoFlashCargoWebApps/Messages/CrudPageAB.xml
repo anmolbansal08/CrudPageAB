@@ -1,0 +1,104 @@
+﻿<Messages>
+
+  <DataFieldName>
+    <Name>Name</Name>
+    <Message>Machine Name  Can't be Blank.</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CitySNo</Name>
+    <Message>City  Can't be Blank.</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Machine Name already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>545</Key>
+    <value>Machine Name already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>4</Key>
+    <value>BTBMachinePallet Added Succesfully</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1995</Key>
+    <value>BTBMachinePallet Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1996</Key>
+    <value>BTBMachinePallet already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1997</Key>
+    <value>BTBMachinePallet Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>BTBMachinePallet Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>BTBMachine Pallet Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>BTB Pallet Machine Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2222</Key>
+    <value>Machine can not be deleted.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2627</Key>
+    <value>Violation of Primary keys</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1547</Key>
+    <value>Machine Type  can not be  changed.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>10001</Key>
+    <value>Machine Commision Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>10002</Key>
+    <value>Machine Commision Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>10003</Key>
+    <value>Machine Commision Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Machine Name already exists.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2004</Key>
+    <value> Machine Infomation Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2005</Key>
+    <value>Machine Infomation Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2006</Key>
+    <value>Machine Name Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2009</Key>
+    <value>AR Code already exists.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2007</Key>
+    <value>Machine Name Updated Successfully.</value>
+  </ServerMessage>
+
+
+</Messages>
+
+
+
+
+

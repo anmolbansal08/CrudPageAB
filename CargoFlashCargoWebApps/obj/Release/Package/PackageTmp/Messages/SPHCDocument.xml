@@ -1,0 +1,39 @@
+﻿<Messages>
+  <!--#region IrregularityPacking XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  SPHC Document
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Karan Kumar
+  Created On:		2 feb 2016
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Document Code already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>SHC Document Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>SHC Document Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>SHC Document Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

@@ -1,0 +1,233 @@
+﻿@{
+    ViewBag.Title = "UploadExcel";
+
+}
+
+
+@Scripts.Render("~/JScript/Master/ExcelUpload.js")
+
+<div id="divbody" style="height:auto">
+
+    <section class="content-wrapper main-content clear-fix">
+        <div id="divValidationMessage" class="validation-summary-errors">
+        </div>
+        <div id="overlayDialogBox" class="black_overlay">
+        </div>
+        <div id="divDialogBox" style="display: none; text-align: center">
+            <br>
+            <span id="lblDialogBoxMessage"></span>
+            <br>
+            <div id="divDialogBoxControls" style="text-align: center">
+            </div>
+        </div>
+
+        <section id="loginForm">
+            @using (Html.BeginForm("UploadExcel", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @*<form method="post" name="aspnetForm" id="aspnetForm">*@
+                <table class="WebFormTable" id="tbl" validateonsubmit="true">
+                    <tbody>
+                        <tr>
+                            <td class="formActiontitle" colspan="5">
+                                <span id="__SpanHeader__">New Excel Upload</span>
+                                <div class="MandatoryTextCss"><font color="red">*</font> Mandatory Fields</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="formbuttonrow" colspan="5">
+                                <input type="submit" tabindex="4" class="btn btn-success" name="Upload" onclick="javascript: return UploadFile();" id="Upload" style="width:80px;" value="Upload">
+
+                                @*<input type="button" value="Back" onclick="navigateUrl('Default.cshtml?Module=Master&amp;Apps=ExcelUpload&amp;FormAction=INDEXVIEW');" class="btn btn-inverse">*@
+                            </td>
+
+
+                        </tr>
+                        <tr>
+                            <td class="formlabel" title="Select Page Name"><font color="red">*</font><span id="spnPageSNo"> Page Name</span></td>
+                            <td class="formInputcolumn">
+                                @Html.Hidden("PageSNo")
+                                @Html.TextBox("Text_PageSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Page Name can not be blank" })
+                            </td>
+                            <td class="formInputcolumn" id="tdrateType">
+                                @Html.RadioButton("RateType", "PublishRate") Publish Rate
+                                @Html.RadioButton("RateType", "AgentSpecificRate") Agent Specific Rate
+                                @Html.RadioButton("RateType", "AllotmentRate") Allotment Rate
+                                @Html.RadioButton("RateType", "MailRating") Mail Rating
+                                @*@Html.RadioButton("KK", new { @id = "lblKK", @class = "k-radio" })
+                                    <label class="k-radio-label" for="lblKK">KK</label>
+                                    @Html.RadioButton("LL", new { @id = "lblLL", @class = "k-radio" })
+                                    <label class="k-radio-label" for="lblLL">LL</label>
+                                    @Html.RadioButton("Both", new { @checked = "checked", @id = "lblboth", @class = "k-radio" })
+                                    <label class="k-radio-label" for="lblboth">Both</label>*@
+                            </td>
+                            <td class="formlabel" title="Select Choose Excel File">Choose Excel File</td>
+                            <td class="formInputcolumn">
+                                <input type="file" class="" name="ExcelFile" id="ExcelFile" style="width:300px;" tabindex="3" value="">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table><div id="ValidationDialog"></div>
+            }
+            @*</form>*@
+           
+        </section>
+        <section id="ss">
+            <table id="tbl" validateonsubmit="true">
+                <tbody>
+                    <tr>
+                        
+                                <td align="left">
+                                    @using (Html.BeginForm("SuccessRateDownload", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        @*<button id="SuccRate" onclick="SuccessRateDownload(2);" style="width: 130px; display: block;">SuccessRate Download</button>*@
+                                        //{
+
+                                                if (Convert.ToBoolean(ViewData["SuccessTrue"]))
+                                                {
+                                                    <button id="SuccRate" onclick="SuccessRateDownload(2);" style="width: 130px; display: block;">Success Download</button>
+                                                }
+                                                else
+                                                {
+                                                    <button id="SuccRate" onclick="SuccessRateDownload(2);" style="width: 130px; display: none;">Success Download</button>
+                                                }
+                                            @*}*@
+                                    }
+                                </td>
+                           
+                                
+                                <td align="left">
+                                    @using (Html.BeginForm("DuplicateRateDownload", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        @*<button id="DupRate" onclick="DuplicateRateDownload(2);" style="width: 130px; display: block;">DuplicateRate Download</button>*@
+                                        //{
+
+                                               if (Convert.ToBoolean(ViewData["DuplicateTrue"]))
+                                                {
+                                                    <button id="DupRate" onclick="DuplicateRateDownload(2);" style="width: 150px; display: block;">InValid/Duplicate Download</button>
+                                                }
+                                                else
+                                                {
+                                                    <button id="DupRate" onclick="DuplicateRateDownload(2);" style="width: 150px; display: none;">InValid/Duplicate Download</button>
+                                                }
+                                            @*}*@
+                                    }
+                                </td>
+                            
+                        <td align="left">
+                            @using (Html.BeginForm("BlankRateDownload", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                               
+
+                                if (Convert.ToBoolean(ViewData["BlankTrue"]))
+                                {
+                                    <button id="DupRate" onclick="BlankRateDownload(2);" style="width: 130px; display: block;">Error Rate Download</button>
+                                }
+                                else
+                                {
+                                    <button id="DupRate" onclick="BlankeRateDownload(2);" style="width: 130px; display: none;">Error Rate Download</button>
+                                }
+                                
+                            }
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </section>
+   
+    @*@if (ViewBag.DuplicateTrue != null)
+    {
+         <script type="text/javascript">
+             window.onload = function () {
+                 alert("dssdf");
+
+                 document.getElementById('DupRate').disabled = false;
+                 document.getElementById('SuccRate').disabled = true;
+                //DisplayHide();
+            };
+            </script>
+    }*@
+    @if (ViewBag.Error != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Error");
+            };
+        </script>
+    }
+    @if (ViewBag.Refresh != null)
+    {
+         <script type="text/javascript">
+             $(document).ready(function () {
+                 location.reload();
+                 $('#ExcelFile').val('');
+                 $('#Text_PageSNo').val('');
+                 $('input[type=radio][name^=RateType][value=PublishRate]').prop("checked",false);
+             });
+                </script> 
+    }
+</div>
+@*@Scripts.Render("~/JScript/Master/ExcelUpload.js")*@
+
+@if (ViewBag.Message != null)
+{
+    <script>
+
+        $(document).ready(function () {
+
+            alert('@ViewBag.Message');
+            location.reload();
+           
+        });
+        //function DisplayHide()
+        //{
+
+        //    document.getElementById('DupRate').style.visibility = 'visible';
+        //    document.getElementById('SuccRate').style.visibility = 'hidden';
+        //}
+
+    </script>
+
+}
+    @*@using (Html.BeginForm("RateDownload", "Master", FormMethod.Get, new { enctype = "multipart/form-data", @id = "SearchAWBRateAuditLogSearchForm" }))
+        {
+
+            <button id="ss" onclick="RateDownload(2);"  ></button>
+        }*@
+    <script type="text/javascript">
+        function abc() {
+            var value;
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: "/Master/RateDownload",
+                dataType: 'json',
+                data: { id: "2" },
+                contentType: "application/json; charset=utf-8", cache: false,
+                success: function (data) {
+                    var myData = data;
+                    alert(myData);
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+        }
+    </script>
+    <style type="text/css">
+        button {
+            background: none !important;
+            color: inherit;
+            border: none;
+            padding: 0 !important;
+            font-family: Calibri;
+            font-weight: bold;
+            font-size: 12px;
+            /*border is optional*/
+            border-bottom: 1px solid #444;
+            cursor: pointer;
+        }
+    </style>
+    @*<script type="text/javascript">alert('dsfsdfsd');</script>*@

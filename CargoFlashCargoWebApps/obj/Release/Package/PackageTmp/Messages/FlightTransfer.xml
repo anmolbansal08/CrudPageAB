@@ -1,0 +1,16 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>3001</Key>
+    <value>Select one check box</value>
+  </ServerMessage>  
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Flight Transfer space not available</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Shipment Transfer Successfully.</value>
+  </ServerMessage>
+  
+</Messages>

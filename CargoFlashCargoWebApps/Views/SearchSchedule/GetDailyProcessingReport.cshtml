@@ -1,0 +1,123 @@
+﻿<table class='WebFormTable' id='tbl' validateonsubmit=true>
+    <tr><td class='formSection' colspan='10'>Daily Processing Report </td></tr>
+    <tr><td class='formlabel' colspan='10'><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+    <tr class='formSection'>
+
+        <td class="formlabel"><font color='red'>*</font> Date</td>
+        <td class="formInputcolumn">@Html.TextBox("date", null, new { data_valid = "required", data_valid_msg = " Date can not be blank" })</td>
+        @*<td class="formlabel">Top </td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("TopNumber")
+                @Html.TextBox("Text_TopNumber", null, new {data_valid = "required", data_valid_msg = " Top can not be blank", controltype = "autocomplete", data_role = "autocomplete", style = "width:250px;" })
+
+
+            </td>*@
+
+
+
+
+
+    </tr>
+
+    <tr class='formSection'>
+        <td colspan='10'>
+            <input type="button" name='SearchSave' value='Search' class='btn btn-success' id="btnSubmit" />
+            @*<input type="button" name='ExcelVersionDetails' value='Export To Excel' class='btn btn-success' id="btnSubmit" src="../Images/IconExcel.png" />*@
+        </td>
+    </tr>
+
+
+</table>
+
+<div class="k-grid-header-wrap" id="grid_shipment" style="display: none; overflow-x: scroll; overflow-y: scroll; margin-left: 10px;">
+
+
+    <br />
+    <table>
+        <tr>
+            <td>
+                <div id="ExportProcessing" style="margin-left: 68px; margin-top: 4px; display: none"><img id=" imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer;" title="Export To Excel" onclick="ExportToExcel_Processing()" /></div>
+                <h2 style="margin-top: -20px">Export </h2> 
+            </td>
+        </tr>
+
+    </table>
+    <table class="appendGrid ui-widget" style="margin-bottom:10px;" align="center" id="tblgrid_shipment">
+
+        <thead class='ui-widget-header' style='text-align:center' id="theadid_shipment">
+
+            <tr>
+
+                <td class="ui-widget-header">Stations</td>
+                <td class="ui-widget-header">Domestic Departure</td>
+                <td class="ui-widget-header">Domestic Arrival</td>
+                <td class="ui-widget-header">International Departure</td>
+                <td class="ui-widget-header">
+                    International Arrival
+                </td>
+                <td class="ui-widget-header">
+                    Manual Booking
+                </td>
+                <td class="ui-widget-header">
+                    Electronic Booking
+                </td>
+                <td class="ui-widget-header">
+                    AWB Executed
+                </td>
+                <td class="ui-widget-header">
+                    FWB Received
+                </td>
+
+            </tr>
+        </thead>
+        <tbody id="gridbodys_Proccesing" class="ui-widget-content"></tbody>
+
+    </table>
+
+</div>
+<div class="k-grid-header-wrap" id="grid_shipment_handling" style="display: none; overflow-x: scroll; overflow-y: scroll; margin-left: 10px;">
+
+
+    <br />
+    <table>
+        <tr>
+            <td>
+                <div id="importProcessing" style="margin-left: 68px; margin-top: 4px; display: none; "><img id=" imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer;" title="Export To Excel" onclick="ImportToExcel_Processing()" /></div>
+
+                <h2 style="margin-top: -20px">Import</h2> 
+                
+            </td>
+        </tr>
+    </table>
+    <table class="appendGrid ui-widget" style="margin-bottom:10px;" align="center" id="tbl_secondProccesing">
+
+
+        <thead class='ui-widget-header' style='text-align:center' id="theadid_secondProccesing">
+
+            <tr>
+
+                <td class="ui-widget-header">Stations</td>
+                <td class="ui-widget-header">Warehouse</td>
+                <td class="ui-widget-header">Total Weight handled (export)</td>
+                <td class="ui-widget-header">Total Handling Charge (Export)</td>
+
+                <td class="ui-widget-header">
+                    Total Weight Import
+                </td>
+                <td class="ui-widget-header">
+                    Total Handling Charge (Import)
+                </td>
+
+
+            </tr>
+        </thead>
+        <tbody id="gridbodys_secondProccesing" class="ui-widget-content"></tbody>
+
+    </table>
+
+</div>
+
+<script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>
+<script src="~/JScript/Report/DailyProcessingreport.js"></script>
+

@@ -1,0 +1,131 @@
+﻿
+<style type="text/css">
+    .k-grid-header th.k-header > .k-link {
+        cursor: auto;
+    }
+</style>
+
+
+<div id="divbody" style="height:auto">
+    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+        <tr><td class='formSection' colspan='4'>Agent Credit Limit Report</td></tr>
+        <tr class="DateWiseRow">
+            <td class=' formlabel' title='Airline'>
+                <font color='red'>*</font><span id='spnAirlineCode'>
+                    Airline :
+                </span>
+            </td>
+            <td class='formInputcolumn'>
+                @Html.Hidden("AirlineSNo")
+                @Html.TextBox("Text_AirlineSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank", style = "width:190px;" })
+
+            </td>
+
+            <td class=' formlabel' title='City'>
+                <font color='red'>*</font>
+                <span id='spnCityName'> City : </span>
+
+            </td>
+            <td class='formInputcolumn'>
+                @Html.Hidden("CitySNo")
+                @Html.TextBox("Text_CitySNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "City Name can not be blank", style = "width:190px;" })
+            </td>
+
+        </tr>
+
+
+        <tr class='formSection'>
+
+            <td class="formlabel">Office :</td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("OfficeSNo")
+                @Html.TextBox("Text_OfficeSNo", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:190px;" })
+
+
+            </td>
+
+            <td class="formlabel" title='Agent'> Agent :           
+                @*<font color='red'>*</font><span id='spnAgentName'>
+                  Agent :
+                </span>*@
+            </td>
+
+            <td class="formInputcolumn">
+
+                @Html.Hidden("AccountSNo")
+                @Html.TextBox("Text_AccountSNo", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:190px;" })
+                @*@Html.TextBox("Text_AccountSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Agent Name can not be blank", style = "width:160px;" })*@
+            </td>
+
+        </tr>
+
+
+        <tr class='formSection'>
+
+            <td class="formlabel">
+                @*<font color='red'>*</font>
+                    <span id='spnAirlineCode'></span>*@
+                Currency :
+
+            </td>
+            <td class="formInputcolumn">
+
+                @Html.Hidden("CurrencySNo")
+                @Html.TextBox("Text_CurrencySNo", null, new { controltype = "autocomplete", data_role = "autocomplete", style = "width:190px;" })
+
+            </td>
+
+            <td class="formlabel">
+                <font color='red'></font>
+
+            </td>
+
+            <td class="formInputcolumn"></td>
+
+
+        </tr>
+
+
+        
+
+        <tr>
+            <td class=' formlabel'>
+                <div id="exportflight" style="float:left;">
+                    <img id="imgexcel" src="../Images/IconExcel.png" style="width:30px;height:30px;cursor: pointer" onclick="ExportToExcel()" title="Export To Excel" />
+                </div>
+            </td>
+            <td class='formInputcolumn'>
+                @*<input type='submit' name='operation' onclick="SearchPaymentStatusReport()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />*@
+                <input type='submit' name='operation' onclick="SearchPaymentStatusReport()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+                @*<input type='submit' name='operation' onclick="SearchFPRLionReport()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />*@
+
+                @*onclick="DownloadExcelReport()" name='operation'*@
+            </td>
+            <td class="formlabel"></td>
+            <td class="formInputcolumn"></td>
+
+        </tr>
+    </table>
+    <br />
+    <br />
+</div>
+<table id='tbl'></table>
+
+
+<div id="example">
+    <div id="grid" style="font-size:11px;"></div>
+    <script src="~/JScript/Accounts/AgentPayment.js"></script>
+    <script src="~/Scripts/jquery.appendGrid-1.3.2.js"></script>
+    @*<script src="~/Scripts/Common.js" ></script>*@
+    @*<script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>*@
+    @*<script src="~/Scripts/Common.js" ></script>*@
+
+</div>
+<div id='divCreditLimitReport'>
+    <span id='spnCreditLimitReport'>
+        <input id='hdnPageType' name='hdnPageType' type='hidden' />
+        <input id='hdnCreditLimitReportSNo' name='hdnCreditLimitReportSNo' type='hidden' />
+        <table id='tblCreditLimitReport' Style='margin-top: 20px;'></table>
+    </span>
+</div>

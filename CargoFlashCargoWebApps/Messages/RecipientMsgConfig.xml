@@ -1,0 +1,28 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>RecipientMsgConfig</Name>
+    <Message>Recipient Message Config Can Not be Blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Recipient Message Config Already Exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Recipient Message Config Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Recipient Message Config Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Recipient Message Config Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

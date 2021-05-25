@@ -1,0 +1,36 @@
+﻿<Messages>
+
+
+
+  <DataFieldName>
+    <Name>StockValidate</Name>
+    <Message>Stock can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Stock already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Stock Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Stock Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Stock Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>
+
+
+
+
+
+

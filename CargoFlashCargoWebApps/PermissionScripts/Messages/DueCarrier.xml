@@ -1,0 +1,54 @@
+﻿<Messages>
+  <!--#region DueCarrier XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  DueCarrier
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Tarun Kumar
+  Created On:		26 Mar 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>Code</Name>
+    <Message>Code can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Name</Name>
+    <Message>Name can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Code already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Due Carrier Added Successfully.</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Due Carrier Updated Successfully.</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Due Carrier Deleted Successfully.</value>
+  </ServerMessage>
+  
+</Messages>
+
+
+ 
+ 
+    
+
+      

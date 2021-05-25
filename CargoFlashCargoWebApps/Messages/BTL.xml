@@ -1,0 +1,28 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>BTLName</Name>
+    <Message>BTL Name can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>BTL Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>BTL Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>BTL Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>BTL Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

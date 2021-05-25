@@ -1,0 +1,22 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Tariff Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Tariff Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Tariff Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Tariff Slab Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2004</Key>
+    <value>Atleast single slab information must exist.</value>
+  </ServerMessage>
+</Messages>

@@ -1,0 +1,68 @@
+﻿<Messages>
+  <!--#region Customer XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  Customer
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Tarun Kumar
+  Created On:		17 feb 2014
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>CustomerTypeSNo</Name>
+    <Message>Customer Type Can't be Blank.</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>Name</Name>
+    <Message>Customer Name Can't be Blank.</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>AccountName</Name>
+    <Message>Account Name Can't be Blank.</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CityCode</Name>
+    <Message>City Can't be Blank.</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Customer Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Custom Code already exists</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Customer Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Customer Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Customer Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2627</Key>
+    <value>Violation of Primary keys</value>
+  </ServerMessage>
+</Messages>
+
+
+
+
+

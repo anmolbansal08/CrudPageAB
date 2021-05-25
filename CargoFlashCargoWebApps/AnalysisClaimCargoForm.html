@@ -1,0 +1,2203 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <link href="../Styles/CfiMessage.css" type="text/css" rel="stylesheet" />
+    <script src="Scripts/jquery.validate.min.js"></script>
+    <script src="Scripts/json2.js"></script>
+    <script type="text/javascript" src="../Scripts/CfiMessage.js"></script>
+    <script type="text/javascript" src="../Scripts/commono.js"></script>
+    <script type="text/javascript" src="../Scripts/common.js"></script>
+    <script type="text/javascript">
+
+
+
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        $(document).ready(function () {
+
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            var CurrentClaimSNo = getParameterByName("sno", "");
+            var pageName = getParameterByName("pagename", "");
+            var FinalData;
+            var FinalData1;
+            var url;
+            $("[id='Masterairwaybillyescross']").hide();
+
+
+            url = "Services/Irregularity/ClaimService.svc/GetAnalysisClaimCargoFormPrint"
+            $.ajax({
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ CurrentClaimSNo: CurrentClaimSNo }),
+                async: true,
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    //alert(data); // this is Json data object
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table0;
+                    FinalData1 = ResultData.Table1;
+                    var FinalData2 = ResultData.Table2;
+                    var x = FinalData2[0].EDoxdocumenttypeSNo;
+
+                    var FinalData3 = ResultData.Table3;
+                    var y = FinalData3[0].EDoxdocumenttypeSNo;
+
+                    var FinalData4 = ResultData.Table4;
+
+
+                    //claim
+
+                    if (FinalData.length > 0) {
+                        $('#spnAWBNO').text(FinalData[0].AWBNO);
+                        $('#spnflightnodate').text(FinalData[0].FlightNODate);
+                        $('#spnRouting').text(FinalData[0].Routing);
+                        $('#spnPiecesweight').text(FinalData[0].PiecesWeight);
+                        $('#spnCommodity').text(FinalData[0].Commodity);
+                        $('#ImgLogo').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineLogo);
+                        $('#ImgLogo').attr('onError', 'this.onerror=null;this.src="../Logo/aaa.jpg";');
+                    }
+                    if (FinalData1.length > 0) {
+                        var amount = parseFloat(FinalData1[0].ApprovedAmount);
+                        $('#spnBranchOffice').text(FinalData1[0].BranchOffice);
+                        $('#spnClaImagesnt').text(FinalData1[0].Claimant);
+                        $('#spnClaimFormNumber').text(FinalData1[0].ClaimFormNumber);
+                        $('#spnClaImagesmount').text(FinalData1[0].ClaimOfAmount);
+                        $('#spnReasonClaim').text(FinalData1[0].Remarks);
+
+                        $('#spnclaimnumber').text(FinalData1[0].ClaimFormNumber);
+                        $('#spnApprovedAmount').text(amount);
+                        $('#spnBOSignature').text(FinalData1[0].Username);
+                        // $('#spncityName').text(FinalData1[0].CityName);
+                    }
+                   
+                    if (y.indexOf(72) !== -1) {
+
+                        $('#Masterairwaybillyescross').show();
+                        $('#Masterairwaybillyesempty').hide();
+                        $('#Masterairwaybillnacross').hide();
+                        $('#Masterairwaybillnaempty').show();
+                    }
+                    else {
+                        $('#Masterairwaybillyescross').hide();
+                        $('#Masterairwaybillyesempty').show();
+                        $('#Masterairwaybillnacross').show();
+                        $('#Masterairwaybillnaempty').hide();
+                    }
+
+                    if (x.indexOf(60) !== -1) {
+
+                        $('#LetterClaimyescross').show();
+                        $('#LetterClaimyesempty').hide();
+                        $('#LetterClaimnacross').hide();
+                        $('#LetterClaimnaemptys').show();
+                    }
+                    else {
+                        $('#LetterClaimyescross').hide();
+                        $('#LetterClaimyesempty').show();
+                        $('#LetterClaimnacross').show();
+                        $('#LetterClaimnaemptys').hide();
+
+                    }
+
+                    if (y.indexOf(75) !== -1) {
+                        $('#HouseWaybillyescross').show();
+                        $('#HouseWaybillyesempty').hide();
+                        $('#HouseWaybillnacross').hide();
+                        $('#HouseWaybillnaempty').show();
+                    }
+                    else {
+                        $('#HouseWaybillyescross').hide();
+                        $('#HouseWaybillyesempty').show();
+                        $('#HouseWaybillnacross').show();
+                        $('#HouseWaybillnaempty').hide();
+                    }
+
+                    if (x.indexOf(88) !== -1) {
+                        $('#ShipperInvoiceyescross').show();
+                        $('#ShipperInvoiceyesempty').hide();
+                        $('#ShipperInvoicenacross').hide();
+                        $('#ShipperInvoicenaemptys').show();
+                    }
+                    else {
+
+                        $('#ShipperInvoiceyescross').hide();
+                        $('#ShipperInvoiceyesempty').show();
+                        $('#ShipperInvoicenacross').show();
+                        $('#ShipperInvoicenaemptys').hide();
+                    }
+
+                    if (y.indexOf(103) !== -1) {
+                        $('#CarrierManifestyescross').show();
+                        $('#CarrierManifestyesempty').hide();
+                        $('#CarrierManifestnacross').hide();
+                        $('#CarrierManifestnaempty').show();
+
+                    }
+                    else {
+                        $('#CarrierManifestyescross').hide();
+                        $('#CarrierManifestyesempty').show();
+                        $('#CarrierManifestnacross').show();
+                        $('#CarrierManifestnaempty').hide();
+                    }
+                    if (x.indexOf(65) !== -1) {
+
+                        $('#PackingListyescross').show();
+                        $('#PackingListyesempty').hide();
+                        $('#PackingListnacross').hide();
+                        $('#PackingListnaemptys').show();
+                    }
+
+                    else {
+                        $('#PackingListyescross').hide();
+                        $('#PackingListyesempty').show();
+                        $('#PackingListnacross').show();
+                        $('#PackingListnaemptys').hide();
+                    }
+
+                    if (y.indexOf(76) !== -1) {
+                        $('#TransferManifestyescross').show();
+                        $('#TransferManifestyesempty').hide();
+                        $('#TransferManifestnacross').hide();
+                        $('#TransferManifestnaempty').show();
+
+                    }
+                    else {
+                        $('#TransferManifestyescross').hide();
+                        $('#TransferManifestyesempty').show();
+                        $('#TransferManifestnacross').show();
+                        $('#TransferManifestnaempty').hide();
+
+                    }
+
+                    if (x.indexOf(90) !== -1) {
+                        $('#AssignmentReceiptyescross').show();
+                        $('#AssignmentReceiptyesempty').hide();
+                        $('#AssignmentReceiptnacross').hide();
+                        $('#AssignmentReceiptnaemptys').show();
+                    }
+                    else {
+                        $('#AssignmentReceiptyescross').hide();
+                        $('#AssignmentReceiptyesempty').show();
+                        $('#AssignmentReceiptnacross').show();
+                        $('#AssignmentReceiptnaemptys').hide();
+                    }
+                    if (y.indexOf(78) !== -1) {
+                        $('#CargoLossyescross').show();
+                        $('#CargoLossyesempty').hide();
+                        $('#CargoLossnacross').hide();
+                        $('#CargoLossnaempty').show();
+
+                    }
+                    else {
+                        $('#CargoLossyescross').hide();
+                        $('#CargoLossyesempty').show();
+                        $('#CargoLossnacross').show();
+                        $('#CargoLossnaempty').hide();
+                    }
+                    if (x.indexOf(69) !== -1) {
+                        $('#SalvageValueyescross').show();
+                        $('#SalvageValueyesempty').hide();
+                        $('#SalvageValuenacross').hide();
+                        $('#SalvageValuenaemptys').show();
+                    }
+
+                    else {
+                        $('#SalvageValueyescross').hide();
+                        $('#SalvageValueyesempty').show();
+                        $('#SalvageValuenacross').show();
+                        $('#SalvageValuenaemptys').hide();
+                    }
+                    if (y.indexOf(80) !== -1) {
+                        $('#CarrierSurveyyescross').show();
+                        $('#CarrierSurveyyesempty').hide();
+                        $('#CarrierSurveynacross').hide();
+                        $('#CarrierSurveynaempty').show();
+                    }
+
+                    else {
+                        $('#CarrierSurveyyescross').hide();
+                        $('#CarrierSurveyyesempty').show();
+                        $('#CarrierSurveynacross').show();
+                        $('#CarrierSurveynaempty').hide();
+                    }
+                    if (x.indexOf(71) !== -1) {
+                        $('#DestroyCertificateyescross').show();
+                        $('#DestroyCertificateyesempty').hide();
+                        $('#DestroyCertificatenacross').hide();
+                        $('#DestroyCertificatenaemptys').show();
+                    }
+                    else {
+                        $('#DestroyCertificateyescross').hide();
+                        $('#DestroyCertificateyesempty').show();
+                        $('#DestroyCertificatenacross').show();
+                        $('#DestroyCertificatenaemptys').hide();
+                    }
+                    if (y.indexOf(77) !== -1) {
+
+                        $('#Irregularityyescross').show();
+                        $('#Irregularityyesempty').hide();
+                        $('#Irregularitynacross').hide();
+                        $('#Irregularitynaempty').show();
+
+
+                    }
+                    else {
+                        $('#Irregularityyescross').hide();
+                        $('#Irregularityyesempty').show();
+                        $('#Irregularitynacross').show();
+                        $('#Irregularitynaempty').hide();
+                    }
+
+
+                    if (x.indexOf(89) !== -1) {
+
+                        $('#ProfessionalSurveyyescross').show();
+                        $('#ProfessionalSurveyyesempty').hide();
+                        $('#ProfessionalSurveynacross').hide();
+                        $('#ProfessionalSurveynaemptys').show();
+                    }
+                    else {
+                        $('#ProfessionalSurveyyescross').hide();
+                        $('#ProfessionalSurveyyesempty').show();
+                        $('#ProfessionalSurveynacross').show();
+                        $('#ProfessionalSurveynaemptys').hide();
+                    }
+                    if (y.indexOf(102) !== -1) {
+                        $('#TracingMessageyescross').show();
+                        $('#TracingMessageyesempty').hide();
+                        $('#TracingMessagenacross').hide();
+                        $('#TracingMessagenaempty').show();
+                    }
+                    else {
+
+                        $('#TracingMessageyescross').hide();
+                        $('#TracingMessageyesempty').show();
+                        $('#TracingMessagenacross').show();
+                        $('#TracingMessagenaempty').hide();
+
+                    }
+
+                    $('#Photograpsyesempty').hide();
+                    if (x.indexOf(61) !== -1) {
+                        $('#Photograpsyescross').show();
+                        $('#Photograpsnacross').hide();
+                        $('#Photograpsnaemptys').show();
+                    }
+                    else {
+
+                        $('#Photograpsyescross').hide();
+                        $('#Photograpsyesempty').show();
+                        $('#Photograpsnacross').show();
+                        $('#Photograpsnaemptys').hide();
+
+                    }
+                    if (y.indexOf(101) !== -1) {
+                        $('#BuildChecklistyescross').show();
+                        $('#BuildChecklistyesempty').hide();
+                        $('#BuildChecklistnacross').hide();
+                        $('#BuildChecklistnaempty').show();
+                    }
+                    else {
+                        $('#BuildChecklistyescross').hide();
+                        $('#BuildChecklistyesempty').show();
+                        $('#BuildChecklistnacross').show();
+                        $('#BuildChecklistnaempty').hide();
+                    }
+                    if (x.indexOf(91) !== -1) {
+                        $('#HealthCertificateshipperconsigneeyescross').show();
+                        $('#HealthCertificateshipperconsigneeyesempty').hide();
+                        $('#HealthCertificateshipperconsigneenacross').hide();
+                        $('#HealthCertificateshipperconsigneenaemptys').show();
+                    }
+                    else {
+                        $('#HealthCertificateshipperconsigneeyescross').hide();
+                        $('#HealthCertificateshipperconsigneeyesempty').show();
+                        $('#HealthCertificateshipperconsigneenacross').show();
+                        $('#HealthCertificateshipperconsigneenaemptys').hide();
+                    }
+                    if (y.indexOf(100) !== -1) {
+                        $('#Breakdownyescross').show();
+                        $('#Breakdownyesempty').hide();
+                        $('#Breakdownnacross').hide();
+                        $('#Breakdownnaempty').show();
+                    }
+                    else {
+                        $('#Breakdownyescross').hide();
+                        $('#Breakdownyesempty').show();
+                        $('#Breakdownnacross').show();
+                        $('#Breakdownnaempty').hide();
+                    }
+                    if (x.indexOf(92) !== -1) {
+                        $('#VeterinarianCertificateshipperconsigneeyescross').show();
+                        $('#VeterinarianCertificateshipperconsigneeyesempty').hide();
+                        $('#VeterinarianCertificateshipperconsigneenacross').hide();
+                        $('#VeterinarianCertificateshipperconsigneenaemptys').show();
+                    }
+                    else {
+                        $('#VeterinarianCertificateshipperconsigneeyescross').hide();
+                        $('#VeterinarianCertificateshipperconsigneeyesempty').show();
+                        $('#VeterinarianCertificateshipperconsigneenacross').show();
+                        $('#VeterinarianCertificateshipperconsigneenaemptys').hide();
+                    }
+                    if (y.indexOf(99) !== -1) {
+                        $('#LoadingChecklistyescross').show();
+                        $('#LoadingChecklistyesempty').hide();
+                        $('#LoadingChecklistnacross').hide();
+                        $('#LoadingChecklistnaempty').show();
+                    }
+                    else {
+
+                        $('#LoadingChecklistyescross').hide();
+                        $('#LoadingChecklistyesempty').show();
+                        $('#LoadingChecklistnacross').show();
+                        $('#LoadingChecklistnaempty').hide();
+                    }
+                    if (x.indexOf(87) !== -1) {
+
+                        $('#ImportLicenseshipperconsigneeyescross').show();
+                        $('#ImportLicenseshipperconsigneeyesempty').hide();
+                        $('#ImportLicenseshipperconsigneenacross').hide();
+                        $('#ImportLicenseshipperconsigneenaempty').show();
+                    }
+                    else {
+
+                        $('#ImportLicenseshipperconsigneeyescross').hide();
+                        $('#ImportLicenseshipperconsigneeyesempty').show();
+                        $('#ImportLicenseshipperconsigneenacross').show();
+                        $('#ImportLicenseshipperconsigneenaempty').hide();
+                    }
+                    if (y.indexOf(98) !== -1) {
+
+                        $('#ProofofDeliveryyescross').show();
+                        $('#ProofofDeliveryyesempty').hide();
+                        $('#ProofofDeliverynacross').hide();
+                        $('#ProofofDeliverynaempty').show();
+                    }
+                    else {
+                        $('#ProofofDeliveryyescross').hide();
+                        $('#ProofofDeliveryyesempty').show();
+                        $('#ProofofDeliverynacross').show();
+                        $('#ProofofDeliverynaempty').hide();
+                    }
+                    if (x.indexOf(93) !== -1) {
+                        $('#CITIESCertificateshipperconsigneeyescross').show();
+                        $('#CITIESCertificateshipperconsigneeyesempty').hide();
+                        $('#CITIESCertificateshipperconsigneenacross').hide();
+                        $('#CITIESCertificateshipperconsigneenaemptys').show();
+
+                    }
+                    else {
+                        $('#CITIESCertificateshipperconsigneeyescross').hide();
+                        $('#CITIESCertificateshipperconsigneeyesempty').show();
+                        $('#CITIESCertificateshipperconsigneenacross').show();
+                        $('#CITIESCertificateshipperconsigneenaemptys').hide();
+                    }
+                    if (y.indexOf(96) !== -1) {
+                        $('#MarketPriceyescross').show();
+                        $('#MarketPriceyesempty').hide();
+                        $('#MarketPricenacross').hide();
+                        $('#MarketPricenaemptys').show();
+                    }
+                    else {
+
+                        $('#MarketPriceyescross').hide();
+                        $('#MarketPriceyesempty').show();
+                        $('#MarketPricenacross').show();
+                        $('#MarketPricenaemptys').hide();
+                    }
+                    if (x.indexOf(94) !== -1) {
+                        $('#DangerousGoodsshipperconsigneeyescross').show();
+                        $('#DangerousGoodsshipperconsigneeyesempty').hide();
+                        $('#DangerousGoodsshipperconsigneenacross').hide();
+                        $('#DangerousGoodsshipperconsigneenaemptys').show();
+                    }
+                    else {
+
+                        $('#DangerousGoodsshipperconsigneeyescross').hide();
+                        $('#DangerousGoodsshipperconsigneeyesempty').show();
+                        $('#DangerousGoodsshipperconsigneenacross').show();
+                        $('#DangerousGoodsshipperconsigneenaemptys').hide();
+                    }
+
+                    if (y.indexOf(97) !== -1) {
+
+                        $('#DeliveryOrderyescross').show();
+                        $('#DeliveryOrderyesempty').hide();
+                        $('#DeliveryOrdernacross').hide();
+                        $('#DeliveryOrdernaemptys').show();
+                    }
+                    else {
+
+                        $('#DeliveryOrderyescross').hide();
+                        $('#DeliveryOrderyesempty').show();
+                        $('#DeliveryOrdernacross').show();
+                        $('#DeliveryOrdernaemptys').hide();
+                    }
+
+                    if (x.indexOf(95) !== -1) {
+
+                        $('#PEBCustomshipperconsigneeyescross').show();
+                        $('#PEBCustomshipperconsigneeyesempty').hide();
+                        $('#PEBCustomshipperconsigneenacross').hide();
+                        $('#PEBCustomshipperconsigneenaemptys').show();
+
+                    }
+                    else {
+
+                        $('#PEBCustomshipperconsigneeyescross').hide();
+                        $('#PEBCustomshipperconsigneeyesempty').show();
+                        $('#PEBCustomshipperconsigneenacross').show();
+                        $('#PEBCustomshipperconsigneenaemptys').hide();
+
+
+                    }
+
+                    $('#spnClaImagesnalysis').text(FinalData[0].ClaImagesnalysis);
+                    $('#spnresume').text(FinalData[0].Resume);
+                    $('#spnpreparedbydate').text(FinalData1[0].ActionDate);
+                    $('#spnpreparedbyname').text(FinalData1[0].Username);
+                    $('#spnpreparedbyjobtitle').text(FinalData1[0].PreparedByJobTitle);
+                    //if (FinalData4.length > 0) {
+                    $('#spnapprovedbydate').text(FinalData4[0].ApprovedByDate);
+                    $('#spnapprovedbyname').text(FinalData4[0].ApprovedByName);
+                    //$('#spnapprovedbyjobtitle').text(FinalData4[0].ApprovedByJobTitle);
+                    $('#spnapprovedbyjobtitle').text(FinalData4[0].Groupname + "-" + FinalData1[0].CityName);
+                    $('#spnpreparedbydate').text(FinalData4[0].PreparedByDate);
+                    $('#spnpreparedbyname').text(FinalData4[0].Preparedby);
+                    $('#GroupName').text(FinalData4[0].Groupname + "-" + FinalData1[0].CityName);
+
+
+
+
+                    //$('#spnapprovedbyname1').text(FinalData4[0].ApprovedByName);
+                    // $('#spnapprovedbydate1').text(FinalData4[0].ApprovedByDate);
+                    //$('#GroupName').text(FinalData4[0].Groupname);
+                    //}
+
+                }
+
+            });
+
+        });
+
+
+        //---- selected manadotry field by user for Carrier's or Ground Handling and  Shipper's or ConSignee---//   updated by indra pratap singh
+
+        function PrintElem(elem) {
+            
+
+            var isValid = true;
+
+
+           
+            $(".WebFormTabledetail tr").each(function () {
+                if ($(this).find("input[name*='check']").length > 0) {
+                    if ($(this).find('td:eq(2)').find("input[name*='check']").is(":checked")
+                             == false && $(this).find('td:eq(3)').find("input[name*='check']").is(":checked")
+                                == false) {
+                        ShowMessage('warning', 'Warning', 'Please select an option for ' + $(this).find('td:eq(1)').text());
+                        isValid = false;
+                        return false;
+
+                    }
+
+                    if ($(this).find('td:eq(6)').find("input[name*='check']").is(":checked")
+                           == false && $(this).find('td:eq(7)').find("input[name*='check']").is(":checked")
+                                 == false) {
+
+                        ShowMessage('warning', 'Warning', 'Please select an option for ' + $(this).find('td:eq(5)').text());
+                        isValid = false;
+                        return false;
+
+                    }
+                }
+
+            });
+            if (isValid) {
+                $(".WebFormTabledetail tr").each(function () {
+                    if ($(this).find("input[name*='check']").length > 0) {
+                        if ($(this).find('td:eq(2)').find("input[name*='check']").is(":checked") == true) {
+                           
+                            $(this).find('td:eq(2)').find('img').show();
+                            $(this).find('td:eq(2)').find("input[name*='check']").hide();
+                          
+
+                        }
+                        else
+                        {
+                            $(this).find('td:eq(2)').find("input[name*='check']").hide();
+                        }
+                        if ($(this).find('td:eq(3)').find("input[name*='check']").is(":checked") == true) {
+                           
+                            $(this).find('td:eq(3)').find('img').show();
+                            $(this).find('td:eq(3)').find("input[name*='check']").hide();
+                          
+
+                        }
+                        else {
+                            $(this).find('td:eq(3)').find("input[name*='check']").hide();
+                        }
+                        if ($(this).find('td:eq(6)').find("input[name*='check']").is(":checked") == true) {
+                           
+                            $(this).find('td:eq(6)').find('img').show();
+                            $(this).find('td:eq(6)').find("input[name*='check']").hide();
+                           
+
+                        }
+                        else {
+                            $(this).find('td:eq(6)').find("input[name*='check']").hide();
+                        }
+                        if ($(this).find('td:eq(7)').find("input[name*='check']").is(":checked") == true) {
+                           
+                            $(this).find('td:eq(7)').find('img').show();
+                            $(this).find('td:eq(7)').find("input[name*='check']").hide();
+                            
+
+                        }
+                        else {
+                            $(this).find('td:eq(7)').find("input[name*='check']").hide();
+                        }
+
+                    }
+                });
+            }
+
+            if (isValid) {
+                $("#tblSTTStatus").find("input[type='button']").hide();
+                Popup($(elem).html());
+                $("#tblSTTStatus").find("input[type='button']").show();
+            }
+        }
+
+
+        function SetCheck(el) {
+            if (el) {
+                if (el.checked)
+                    el.setAttribute('checked', 'checked');
+                else
+                    el.removeAttribute("checked");
+            }
+        }
+
+
+           
+
+            function Popup(data) {
+               
+                window.print();
+               
+
+                return true;
+            }
+
+        //-----------------------------------------------------------------------------//
+           
+
+    </script>
+
+    <style type="text/css">
+        body {
+            font-family: Verdana;
+            margin: 0px;
+            padding: 5px;
+            color: #696969;
+        }
+
+        .prs {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: normal;
+            font-family: Verdana, Geneva, sans-serif;
+        }
+
+        .fsttd {
+            width: 100% !important;
+        }
+
+        .scndtd {
+            width: 35% !important;
+        }
+
+        .thrdtd {
+            width: 30% !important;
+        }
+
+        .WebFormTableNoWidth {
+            padding: 10px;
+            border: 0;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .WebFormMTable {
+            width: 95%;
+            height: 100%;
+            padding: 0px;
+            border: 0px solid #000;
+            margin-bottom: 0px;
+        }
+
+
+
+        .WebFormTable {
+            width: 94%;
+            padding: 0px;
+            border: 0px solid #000;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-weight: normal;
+        }
+
+        
+        .WebFormTable1 {
+            width: 80%;
+            padding: 0px;
+            border: 0px solid #000;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-weight: normal;
+        }
+
+
+        .WebFormTablefooter {
+            width: 90%;
+            padding: 0px;
+            border: 0px solid #000;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-weight: normal;
+        }
+
+
+        .WebFormTabledetail {
+            width: 100%;
+            padding: 0px;
+            border: 0px solid #000;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-weight: normal;
+        }
+
+            .WebFormTabledetail tr {
+                border: 1px solid #000;
+            }
+
+                .WebFormTabledetail tr td {
+                    border-right: 1px solid;
+                }
+@media print {
+        @page {
+            margin :0;
+        }
+  body { font-size: 10pt; margin:1.6cm;}
+  
+
+}
+
+
+@media screen {
+  body { font-size: 13px;  }
+}
+
+@media screen, print {
+  body { line-height: 1.2; }
+}
+
+@media only screen 
+  and (min-width: 320px) 
+  and (max-width: 480px)
+  and (resolution: 150dpi) {
+    body { line-height: 1.4; }
+}
+
+        .WebFormTablebottomdetail {
+            width: 100%;
+            padding: 0px;
+            border: 0px solid #000;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-weight: normal;
+        }
+
+            .WebFormTablebottomdetail tr td {
+                border-right: 1px solid;
+            }
+
+
+
+        .tdLabel {
+            font-size: 8px;
+            text-align: left;
+            padding-left: 1px;
+            width: 15%;
+        }
+
+        .tdColon {
+            font-size: 8px;
+            font-weight: bold;
+            width: 5%;
+        }
+
+        .tdValue {
+            font-size: 7px;
+            font-weight: bold;
+            text-align: left;
+            padding-left: 1px;
+            width: 30%;
+        }
+
+        .tdBarcodeLabel {
+            font-size: 8px;
+            font-weight: bold;
+            text-align: left;
+            width: 30%;
+        }
+
+        .tdFooter {
+            font-size: 7px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .tdAddress {
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .tdILabel {
+            font-size: 8px;
+            text-align: left;
+            padding-left: 1px;
+            width: 30%;
+        }
+
+        .tdIColon {
+            font-size: 8px;
+            font-weight: bold;
+            width: 5%;
+        }
+
+        .tdIValue {
+            font-size: 7px;
+            font-weight: bold;
+            text-align: left;
+            padding-left: 1px;
+            width: 65%;
+        }
+
+        .tdHeaderCgValue {
+            font-size: 8px;
+            text-align: right;
+            padding-left: 1px;
+            font-weight: bold;
+        }
+
+        .tdHeaderValue {
+            font-size: 8px;
+            text-align: center;
+            padding-left: 1px;
+            width: 14%;
+        }
+
+        .tdHeader {
+            font-size: 8px;
+            text-align: center;
+            font-weight: bold;
+            padding-left: 1px;
+            width: 14%;
+        }
+
+        .tdHeader {
+            font-size: 8px;
+            text-align: center;
+            font-weight: bold;
+            padding-left: 1px;
+            width: 14%;
+        }
+
+        .tdSLabel {
+            font-size: 8px;
+            text-align: center;
+            padding-left: 1px;
+        }
+
+        .tdBLLabel {
+            font-size: 8px;
+            text-align: left;
+            padding-left: 1px;
+        }
+
+        .tdBRLabel {
+            font-size: 8px;
+            text-align: right;
+            padding-left: 1px;
+        }
+
+        .style1 {
+            width: 163px;
+            height: 16px;
+        }
+
+        .fontfamilyHeader {
+            font-weight: bold;
+            font-size: 8px;
+            color: #000000;
+            font-family: Verdana;
+        }
+
+        .fontfamily {
+            font-size: 7px;
+            color: #000000;
+            font-family: Verdana;
+        }
+
+        span {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .auto-style1 {
+            height: 13.5pt;
+            width: 103pt;
+            color: windowtext;
+            font-size: 6.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: "Courier New", monospace;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 0px;
+        }
+
+        .auto-style2 {
+            height: 14pt;
+            width: 103pt;
+            color: black;
+            font-size: 10.0pt;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+            font-family: "Courier New", monospace;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 1px;
+            text-align: center;
+        }
+
+        .auto-style2text {
+            height: 14pt;
+            width: 103pt;
+            color: black;
+            font-size: 10.0pt;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+            font-family: "Courier New", monospace;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 1px;
+        }
+
+        .auto-style3 {
+            width: 25%;
+            height: 14pt;
+        }
+
+        .auto-style4 {
+            height: 14pt;
+            width: 2%;
+            color: black;
+            font-size: 10.0pt;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+            font-family: "Courier New", monospace;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 1px;
+        }
+
+        .auto-style5 {
+            width: 100%;
+            height: 14pt;
+        }
+
+        .auto-style6 {
+            height: 13pt;
+            width: 103pt;
+            color: windowtext;
+            font-size: 10.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: "Courier New", monospace;
+            text-align: general;
+            vertical-align: bottom;
+            white-space: nowrap;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 0px;
+        }
+
+        .auto-style7 {
+            width: 100%;
+            height: 13pt;
+        }
+
+        .myclass {
+            font-weight: normal !important;
+            font-size: 15px !important;
+        }
+
+        .myclass1 {
+            font-weight: bold !important;
+            font-size: 10px !important;
+        }
+
+        .myclass2 {
+            font-weight: normal !important;
+            font-size: 15px !important;
+            font-style: italic;
+        }
+
+        .myclass3 {
+            font-weight: normal !important;
+            font-size: 10px !important;
+        }
+
+        .myclass4 {
+            font-weight: normal !important;
+            font-size: 12px !important;
+        }
+    </style>
+
+</head>
+
+<body>
+    <form id="myform">
+        <div id="divMainSTTStatus">
+
+            <div id="divConnNotePrinttab" style="width:90%;height: 100%;margin-left:0%;">
+                <table class="WebFormMTable" id="tblSTTStatus" style="width: 100%; height: 100%;">
+
+                    <tr>
+                        <td valign="top" class="formbuttonrow">
+                            <table class="WebFormTable fontfamilyHeader">
+                                <tr>
+                                    <td style="text-align: center; width: 35%; padding: 0px;" align="center" valign="top">
+                                        <table class="WebFormTable" style="margin-left: -100px;">
+
+
+
+                                            <tr>
+                                                <td style="text-align: center; width: 30%;" align="center" valign="top">
+                                                    <table class="WebFormTable">
+                                                        <tr>
+                                                            <td>
+                                                                <img id="ImgLogo" width='120' height='50' />
+                                                                <!--<img src="Images/GarudaIndonesiaGroupNew.png" width='120' height='50' />-->
+                                                            </td>
+                                                        </tr>
+
+                                                        <!--<tr>
+                                                            <td>
+                                                                <span></span><span></span>
+                                                                <br />
+                                                                <span></span> <span> </span>
+                                                            </td>
+                                                        </tr>-->
+
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+
+
+                                            <tr>
+                                                <td>
+                                                    <span style="font-size: 16px;">ANALYSIS OF CLAIM CARGO FORM</span>  <br /><span class="myclass" style="font-size: 16px;font-style:italic;">FORMULIR ANALISA KLAIM KARGO</span>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-left: 0px;">
+                                                    <span style="font-size: 12px;">NO : <span style="font-size:12px;" id="spnclaimnumber"></span></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="middle">
+                            <table class="WebFormTable">
+
+
+
+
+                                <tr>
+                                    <td class="fsttd WebFormTable searchHeader">
+
+                                        <table class="WebFormTable">
+
+
+                                            <!--<tr>
+                                                <td class="auto-style4" style="padding-left: 0px; "> </td>
+
+
+
+                                                <td class="auto-style5">  <span id=""></span></td>
+                                            </tr>-->
+                                            <!--<tr>
+                                                <td class="auto-style4" style="padding-left: 0px; "> </td>
+
+
+
+                                                <td class="auto-style5"><span></span></td>
+                                            </tr>-->
+
+
+
+                                            <tr>
+                                                <td class="auto-style4" style="padding-left: 0px; "><span>1. Branch Office </span><span class="myclass2">(Perwakilan) </span>  </td>
+
+
+
+                                                <td class="auto-style5">:&nbsp;<span style="font-size:11px;" id="spnBranchOffice"></span></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="auto-style4"><span>2. AWB NO.</span><span class="myclass2">(Nomor AWB) </span> </td>
+                                                <td class="auto-style3">
+
+                                                    :
+                                                    <span style="font-size:11px;" id="spnAWBNO"></span>
+
+
+
+                                                </td>
+                                            </tr>
+
+
+
+                                            <tr>
+                                                <td class="auto-style1"> <span>3. Flight NO/Date</span><br /><span class="myclass2">(Nomor Penerbangan/Tanggal Penerbangan )</span> </td>
+                                                <td style="width: 40%;">
+
+                                                    :
+                                                    <span style="font-size:11px;" id="spnflightnodate"></span>
+
+
+
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="auto-style1"> <span>4. Routing</span><span class="myclass2">(Rute)</span></td>
+                                                <td style="width:100%;">
+
+                                                    :
+                                                    <span id="spnRouting" style="font-size:11px;"></span>
+
+
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="auto-style1"> <span>5. Pieces/Weight</span><span class="myclass2">(Koli/Berat)</span></td>
+                                                <td style="width:100%;">
+
+                                                    :
+                                                    <span id="spnPiecesweight" style="font-size:11px;"></span>
+
+
+
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td class="auto-style6"> <span>6. Commodity</span><span class="myclass2">(Komodity)</span></td>
+                                                <td class="auto-style7">
+
+                                                    :
+                                                    <span id="spnCommodity" style="font-size:11px;"></span>
+
+
+
+                                                </td>
+                                            </tr>
+
+
+
+                                            <tr>
+                                                <td class="auto-style1"> <span>7. Claimant</span><span class="myclass2">(Penggugat)</span></td>
+                                                <td style="width:100%;">
+
+                                                    :
+                                                    <span id="spnClaImagesnt" style="font-size:11px;"></span>
+
+
+
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="auto-style1"> <span>8. Cargo Claim Form Number</span><br /><span class="myclass2">(Nomor Formulir Klaim Kargo)</span></td>
+                                                <td style="width:100%;">
+
+                                                    :
+                                                    <span id="spnClaimFormNumber" style="font-size:11px;"></span>
+
+
+
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td class="auto-style1"> <span>9. Claim Of Amount</span><br /><span class="myclass2">(Nilal Klaim)</span></td>
+                                                <td style="width:100%;">
+
+                                                    :
+                                                    <span id="spnClaImagesmount" style="font-size:11px;"></span>
+
+
+
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="auto-style1"> <span>10. A Reason of Claim</span><br /><span class="myclass2">(Alasan Klaim)</span></td>
+                                                <td style="width:100%;">
+
+                                                    :
+                                                    <span id="spnReasonClaim" style="font-size:11px;"></span>
+
+
+
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="auto-style1" colspan="2">
+                                                    <span>11. Supporting Documents Claim Attached</span><span class="myclass2">(Lampiran dokumen pendukung klaim):</span>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td class="auto-style1" colspan="2">
+                                                    <span>
+                                                        Please Check the signment and fill the box with "X" sign.
+                                                    </span>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="auto-style1" colspan="2">
+                                                    <span>
+                                                        if Yes or Not Applicable
+                                                    </span><span class="myclass2">
+                                                        (Silahkan cek dan isi box dengan tanda "X" apabila Ya atau Tidak Diperlukan)
+                                                    </span>
+                                                </td>
+
+                                            </tr>
+
+                                        </table>
+
+                                    </td>
+
+
+                                    <td class="thrdtd WebFormTable searchHeader"></td>
+
+                                </tr>
+
+
+
+
+
+
+
+
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td valign="middle">
+                            <table class="WebFormTable">
+
+
+
+
+                                <tr>
+                                    <td class="fsttd WebFormTable searchHeader">
+
+                                        <table class="WebFormTable">
+
+
+
+
+
+
+
+
+                                            <tr>
+                                                <td class="auto-style3">
+
+                                                    <table class="WebFormTabledetail" style="border: 1px solid #000;">
+
+
+                                                        <tr>
+                                                            <td class="auto-style4" style="text-align:center;" colspan="4">From Carrier's or Ground Handling </td>
+
+
+                                                            <td class="auto-style4" style="text-align:center;" colspan="4">From Shipper's or ConSignee </td>
+
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="auto-style4" style="text-align:center;">NO</td>
+
+
+
+                                                            <td class="auto-style4" style="text-align:center;">Supporting Documents</td>
+
+                                                            <td class="auto-style4" style="text-align:center;">Yes</td>
+
+                                                            <td class="auto-style4" style="text-align:center;">N/A<span></span></td>
+
+                                                            <td class="auto-style4" style="text-align:center;">NO</td>
+
+
+
+                                                            <td class="auto-style4" style="text-align:center;">Supporting Documents</td>
+
+                                                            <td class="auto-style4" style="text-align:center;">Yes</td>
+
+                                                            <td class="auto-style4" style="text-align:center;">N/A<span></span></td>
+                                                        </tr>
+
+
+
+
+                                                        <tr>
+                                                            <td class="auto-style2"> 1</td>
+
+                                                            <td class="auto-style2text"> Master Air Waybill&nbsp;</td>
+
+
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check1"
+                                                                       onclick='SetCheck(this)' value="chck2">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check1"
+                                                                       onclick='SetCheck(this)' value="chck3">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+
+                                                            <td class="auto-style2"> 1</td>
+
+                                                            <td class="auto-style2text">Letter of Claim from Shipper/Consignee&nbsp;</td>
+
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check2"
+                                                                      onclick='SetCheck(this)'  value="chck4" >
+                                                                <img id="Masterairwaybillyescross"  src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check2"
+                                                                     onclick='SetCheck(this)'   value="chck5">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="auto-style2"> 2</td>
+
+                                                            <td class="auto-style2text"> House Waybill</td>
+
+
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check3"
+                                                                       onclick='SetCheck(this)' value="chck6">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check3"
+                                                                       onclick='SetCheck(this)' value="chck7">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2"> 2</td>
+
+                                                            <td class="auto-style2text">Shipper's Invoice</td>
+
+                                                         
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check4"
+                                                                       onclick='SetCheck(this)' value="chck8">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check4"
+                                                                       onclick='SetCheck(this)' value="chck9">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="auto-style2"> 3</td>
+
+                                                            <td class="auto-style2text"> Carrier&#39;s Cargo Manifest</td>
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check5"
+                                                                       onclick='SetCheck(this)' value="chck10">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check5"
+                                                                       onclick='SetCheck(this)' value="chck11">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2"> 3</td>
+
+                                                            <td class="auto-style2text">Packing List</td>
+
+                                                          
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check6"
+                                                                       onclick='SetCheck(this)' value="chck12">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check6"
+                                                                       onclick='SetCheck(this)' value="chck13">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td class="auto-style2"> 4</td>
+
+                                                            <td class="auto-style2text"> Transfer Manifest for Interline Shipment</td>
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check7"
+                                                                       onclick='SetCheck(this)' value="chck14">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check7"
+                                                                       onclick='SetCheck(this)' value="chck15">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2"> 4</td>
+
+                                                            <td class="auto-style2text">Assignment of right/Subrogation Receipt</td>
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check8"
+                                                                       onclick='SetCheck(this)' value="chck16">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check8"
+                                                                       onclick='SetCheck(this)' value="chck17">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="auto-style2"> 5</td>
+
+                                                            <td class="auto-style2text"> Cargo Loss or Damage Report</td>
+
+                                                         
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check9"
+                                                                       onclick='SetCheck(this)' value="chck18">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check9"
+                                                                       onclick='SetCheck(this)' value="chck19">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2"> 5</td>
+
+                                                            <td class="auto-style2text">Salvage Value</td>
+
+                                                        
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check10"
+                                                                       onclick='SetCheck(this)' value="chck20">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check10"
+                                                                       onclick='SetCheck(this)' value="chck21">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+
+
+                                                            <td class="auto-style2"> 6</td>
+
+                                                            <td class="auto-style2text"> Carrier&#39;s Survey Report</td>
+
+                                                          
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check11"
+                                                                       onclick='SetCheck(this)' value="chck22">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check11"
+                                                                       onclick='SetCheck(this)' value="chck23">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2"> 6</td>
+
+                                                            <td class="auto-style2text">Destroy Certificate</td>
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check12"
+                                                                       onclick='SetCheck(this)' value="chck24">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check12"
+                                                                       onclick='SetCheck(this)' value="chck25">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td class="auto-style2"> 7</td>
+
+                                                            <td class="auto-style2text"> Irregularity Report</td>
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check13"
+                                                                       onclick='SetCheck(this)' value="chck26">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check13"
+                                                                       onclick='SetCheck(this)' value="chck27">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2"> 7</td>
+
+                                                            <td class="auto-style2text"> Professional Survey Report</td>
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check14"
+                                                                       onclick='SetCheck(this)' value="chck28">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check14"
+                                                                       onclick='SetCheck(this)' value="chck29">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="auto-style2"> 8</td>
+
+                                                            <td class="auto-style2text"> Tracing Message(email,telex)</td>
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check15"
+                                                                       onclick='SetCheck(this)' value="chck30">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check15"
+                                                                       onclick='SetCheck(this)' value="chck31">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2"> 8</td>
+
+                                                            <td class="auto-style2text">Photograps</td>
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check16"
+                                                                       onclick='SetCheck(this)' value="chck32">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check16"
+                                                                       onclick='SetCheck(this)' value="chck33">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr>
+                                                            <td class="auto-style2"> 9</td>
+
+                                                            <td class="auto-style2text"> Build up Checklist</td>
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check17"
+                                                                       onclick='SetCheck(this)' value="chck34">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check17"
+                                                                       onclick='SetCheck(this)' value="chck35">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2"> 9</td>
+
+                                                            <td class="auto-style2text">Health Certificate for Live Animals</td>
+
+                                                       
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check18"
+                                                                       onclick='SetCheck(this)' value="chck36">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check18"
+                                                                       onclick='SetCheck(this)' value="chck37">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr>
+                                                            <td class="auto-style2"> 10</td>
+
+                                                            <td class="auto-style2text"> Break down Checklist</td>
+
+                                                         
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check19"
+                                                                       onclick='SetCheck(this)' value="chck38">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check19"
+                                                                       onclick='SetCheck(this)' value="chck39">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2"> 10</td>
+
+                                                            <td class="auto-style2text">Veterinarian Certificate for Live Animals</td>
+
+                                                       
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check20"
+                                                                       onclick='SetCheck(this)' value="chck40">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check20"
+                                                                       onclick='SetCheck(this)' value="chck41">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="auto-style2"> 11</td>
+
+                                                            <td class="auto-style2text"> Loading/Unloading Checklist</td>
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check21"
+                                                                       onclick='SetCheck(this)' value="chck42">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check21"
+                                                                       onclick='SetCheck(this)' value="chck43">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2"> 11</td>
+
+                                                            <td class="auto-style2text">Import License for Live Animals</td>
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check22"
+                                                                       onclick='SetCheck(this)' value="chck44">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check22"
+                                                                       onclick='SetCheck(this)' value="chck45">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+
+
+
+                                                        <tr>
+                                                            <td class="auto-style2"> 12</td>
+
+                                                            <td class="auto-style2text"> Proof of Delivery (POD)</td>
+
+                                                         
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check23"
+                                                                       onclick='SetCheck(this)' value="chck46">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check23"
+                                                                       onclick='SetCheck(this)' value="chck47">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2"> 12</td>
+
+                                                            <td class="auto-style2text">CITIES Certificate</td>
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check24"
+                                                                       onclick='SetCheck(this)' value="chck48">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check24"
+                                                                       onclick='SetCheck(this)' value="chck49">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+
+
+
+                                                        <tr>
+                                                            <td class="auto-style2"> 13</td>
+
+                                                            <td class="auto-style2text"> Market Price/Market Value</td>
+
+                                                        
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check25"
+                                                                       onclick='SetCheck(this)' value="chck50">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check25"
+                                                                       onclick='SetCheck(this)' value="chck51">
+                                                            </td>
+                                                            <td class="auto-style2"> 13</td>
+
+                                                            <td class="auto-style2text">Dangerous Goods Certificate</td>
+
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check26"
+                                                                       onclick='SetCheck(this)' value="chck52">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check26"
+                                                                       onclick='SetCheck(this)' value="chck53">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr>
+                                                            <td class="auto-style2"> 14</td>
+                                                            <td class="auto-style2text"> Delivery Order (DO)</td>
+                                                        
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check27"
+                                                                       onclick='SetCheck(this)' value="chck54">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check27"
+                                                                       onclick='SetCheck(this)' value="chck55">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2"> 14</td>
+
+                                                            <td class="auto-style2text">PEB/PIB/PEBT/PIBT(Custom)</td>
+
+                                                          
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check28"
+                                                                       onclick='SetCheck(this)' value="chck56">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                            <td class="auto-style2">
+                                                                <input type="radio" name="check28"
+                                                                       onclick='SetCheck(this)' value="chck57">
+                                                                <img id="Masterairwaybillyescross" src="Images/cross.jpg" width='40' height='20' />
+                                                            </td>
+                                                        </tr>
+
+
+
+
+                                                    </table>
+
+
+                                                </td>
+                                                <td class="auto-style3">
+
+                                                    &nbsp&nbsp
+                                                    <span id="spnAWBNO"></span>
+
+
+
+                                                </td>
+                                            </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+                                        </table>
+
+                                    </td>
+
+
+
+
+                                </tr>
+
+
+
+
+
+
+
+
+                            </table>
+                        </td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td valign="middle">
+                            <table class="WebFormTable1">
+
+
+
+
+                                <tr>
+                                    <td class="fsttd WebFormTable searchHeader">
+
+                                        <table class="WebFormTablefooter">
+
+
+
+
+                                            <tr>
+                                                <td class="auto-style4" style="padding-left: 0px; "> </td>
+
+
+
+                                                <td class="auto-style4" style="text-align: right;">*)Yes:Ya; N/A : Tidak diperlukan</td>
+                                            </tr>
+
+
+
+                                            <tr>
+                                                <td class="auto-style4" style="padding-left: 0px; ">12.Claim Analysis<span class="myclass2"> (Analisa Klaim)</span><br />&nbsp;&nbsp;<span id="spnApprovedAmount"></span></td>   <!--1. 50*RP.100.000=RP.5,000,000-->
+
+
+
+                                                <td class="auto-style5">: &nbsp&nbsp <span id="spnClaImagesnalysis"></span></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="auto-style4">13. Resume<span class="myclass2">(Kesimpulan)</span><br />&nbsp;&nbsp;&nbsp;&nbsp;CLAIMABLE</td>
+                                                <td class="auto-style3">
+
+                                                    : &nbsp&nbsp
+                                                    <span id="spnresume"></span>
+
+
+
+                                                </td>
+                                            </tr>
+
+
+
+                                        </table>
+
+                                    </td>
+
+
+                                    <td class="thrdtd WebFormTable searchHeader"></td>
+
+                                </tr>
+
+
+
+
+
+
+
+
+                            </table>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td valign="middle">
+                            <table class="WebFormTable">
+
+
+
+
+                                <tr>
+                                    <td class="fsttd WebFormTable searchHeader">
+
+                                        <table class="WebFormTablefooter" style="border: 1px solid #000;">
+
+
+                                            <tr>
+                                                <td class="auto-style4" style="padding-left: 0px;  border-right: 1px solid; ">Prepared By <span class="myclass2">(Disiapkan Oleh)</span> </td>
+
+
+
+                                                <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid; text-align: center;">Signature<span class="myclass2">(tandatangan)</span><br /><span id="spnBOSignature"></span></td>
+
+                                                <td class="auto-style4" style="padding-left: 0px;  border-right: 1px solid; ">Approved By<span class="myclass2">(Disetujui oleh)</span></td>
+
+
+                                                <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid; text-align: center;">Signature<span class="myclass2">(tandatangan)</span></td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid;">
+
+                                                    <table class="WebFormTable">
+
+
+
+
+                                                        <tr>
+                                                            <td class="fsttd WebFormTable searchHeader">
+
+                                                                <table class="WebFormTable">
+
+
+                                                                    <tr>
+                                                                        <td class="auto-style4" style="padding-left: 0px; "> Date<span class="myclass2">(Tanggal)</span> </td>
+
+
+
+                                                                        <td class="auto-style5">: &nbsp&nbsp <span id="spnpreparedbydate"></span></td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td class="auto-style4">Name<span class="myclass2">(Nama)</span> </td>
+                                                                        <td class="auto-style3">
+
+                                                                            : &nbsp&nbsp
+                                                                            <span id="spnpreparedbyname"></span>
+
+
+
+                                                                        </td>
+                                                                    </tr>
+
+
+
+                                                                    <tr>
+                                                                        <td class="auto-style1"> <span style="font-size:12px;">Job Title</              span><span class="myclass2">(Jabatan)</span> </td>
+                                                                        <td style="width: 40%;">
+
+                                                                            : &nbsp&nbsp
+                                                                            <span style="padding-left: 0px;" id="GroupName"></span>
+
+
+
+
+                                                                        </td>
+                                                                    </tr>
+
+
+                                                                </table>
+
+                                                            </td>
+
+
+                                                            <td class="thrdtd WebFormTable searchHeader"></td>
+
+                                                        </tr>
+
+
+
+
+
+
+
+
+                                                    </table>
+
+                                                </td>
+
+
+
+                                                <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid;">
+                                                    <span id=""></span>
+
+                                                    <table class="WebFormTable">
+
+
+                                                        <tr>
+                                                            <td colspan="2" class="auto-style4" style="padding-left: 0px; text-align: center;"><span id="spnSignature"></span></td>
+
+
+
+                                                            <!--<td class="auto-style5"> &nbsp&nbsp <span id="spnBranchOffice"></span></td>-->
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="auto-style2"> </td>
+                                                            <td class="auto-style3">
+
+                                                                &nbsp&nbsp
+                                                                <span id="spnAWBNO"></span>
+
+
+
+                                                            </td>
+                                                        </tr>
+
+
+
+                                                        <tr>
+                                                            <td class="auto-style1"> <span style="font-size:12px;"></span> </td>
+                                                            <td style="width: 40%;">
+
+                                                                &nbsp&nbsp
+                                                                <span style="font-size:12px;" id="spnflightnodate"></span>
+
+
+
+                                                            </td>
+                                                        </tr>
+
+
+                                                    </table>
+
+                                                </td>
+
+                                                <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid;">
+
+                                                    <table class="WebFormTable">
+
+
+                                                        <tr>
+                                                            <td class="auto-style4" style="padding-left: 0px; "> Date<span class="myclass2">(Tanggal)</span> </td>
+
+
+
+                                                            <td class="auto-style5">: &nbsp&nbsp <span id="spnapprovedbydate"></span></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="auto-style4">Name<span class="myclass2">(Nama) </span></td>
+                                                            <td class="auto-style3">
+
+                                                                : &nbsp&nbsp
+                                                                <span id="spnapprovedbyname"></span>
+
+
+
+                                                            </td>
+                                                        </tr>
+
+
+
+                                                        <tr>
+                                                            <td class="auto-style4"> <span style="font-size:12px;">Job Title</span><span class="myclass2">(Jabatan)</span> </td>
+                                                            <td style="width: 40%;">
+
+                                                                : &nbsp&nbsp
+                                                                <span style="padding-left: 0px;" id="spnapprovedbyjobtitle"></span>
+
+
+
+                                                            </td>
+                                                        </tr>
+
+
+                                                    </table>
+                                                </td>
+
+
+                                                <td class="auto-style4" style="padding-left: 0px; border-right: 1px solid;">
+
+                                                    <table class="WebFormTable">
+
+
+                                                      
+
+                                                        <tr>
+                                                            <td class="auto-style1"> <span style="font-size:12px;"></span> </td>
+                                                            <td style="width: 40%;">
+
+                                                                &nbsp&nbsp
+                                                                <span style="font-size:12px;" id="spnflightnodate"></span>
+
+
+
+                                                            </td>
+                                                        </tr>
+
+
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+
+                                        </table>
+
+                                    </td>
+
+
+                                    <td class="thrdtd WebFormTable searchHeader"></td>
+
+                                </tr>
+
+
+
+
+
+
+
+
+                            </table>
+                        </td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td valign="middle">
+                            <table class="WebFormTable">
+
+
+
+
+                                <tr>
+                                    <td class="fsttd WebFormTable searchHeader">
+
+                                        <table class="WebFormTable">
+
+
+
+                                            <tr>
+
+
+
+
+                                                <td class="auto-style4" style="text-align: left;" colspan="2">
+                                                    *Dokumen ini tidak memerlukan tanda tangan dan telah dinyatakan sah sebagai dokumen Pendukung pem
+                                                </td>
+                                            </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+                                        </table>
+
+                                    </td>
+
+
+                                    <td class="thrdtd WebFormTable searchHeader"></td>
+
+                                </tr>
+
+
+
+                                <tr style="text-align:center;background-color:white;padding-bottom:20px" id="trPrint"><td><div style="align-content:center;"><input type="button" id="btnCSRPrint" onclick="PrintElem('#divConnNotePrinttab')" value="Print"></div></td></tr>
+
+
+
+
+                            </table>
+                        </td>
+                    </tr>
+
+
+
+                </table>
+            </div>
+        </div>
+    </form>
+    <script>
+      
+    </script>
+
+</body>
+
+</html>

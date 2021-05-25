@@ -1,0 +1,29 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>Code</Name>
+    <Message>Code can not be blank</Message>
+  </DataFieldName>
+
+    <ServerMessage>
+    <Key>1001</Key>
+    <value>Special Handling Code already exists</value>
+  </ServerMessage>
+  
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Special Handling Code Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Special Handling Code Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Special Handling Code Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Allready used Another Table.</value>
+  </ServerMessage>
+
+</Messages>

@@ -1,0 +1,70 @@
+﻿
+<style type="text/css">
+     .k-grid-filter {
+        display: none;
+    }
+
+    .k-link {
+        cursor: text;
+    }
+</style>
+<div id="divbody" style="height:auto">
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>Generate Insurance Certificate</td></tr>
+                        <tr>
+                            <td class='formlabel' title='AWB No'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    AWB No :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AWBSNo")
+                                @Html.TextBox("Text_AWBSNo", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "AWB No can not be blank" })
+                            </td>
+                            <td class=' formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'></td>
+                        </tr>
+                        <tr>
+                            <td class=' formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    <input type='submit' name='operation' onclick="GenerateInsuranceCertificate()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="example">
+            <div id="grid" style="font-size:14px;"></div>
+            <script src="~/JScript/Report/GenerateInsuranceCertificate.js"></script>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,476 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <script src="../../Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/UWS/jquery-barcode-2.0.2.js"></script>
+    <title>Delivery Order Print</title>
+    <style type="text/css">
+        .auto-style1 {
+            height: 23px;
+        }
+
+        .auto-style3 {
+        }
+
+        .auto-style12 {
+            width: 490px;
+        }
+
+        .auto-style39 {
+            width: 93px;
+        }
+
+        .auto-style40 {
+            height: 42px;
+        }
+
+        table#table1 {
+            /*width: 100%;
+            margin-left: 15%;
+            margin-right: 15%;*/
+            width: 100%;
+        }
+
+        #background {
+            position: absolute;
+            z-index: 0;
+            background: white;
+            display: block;
+            min-height: 100%;
+            min-width: 100%;
+            color: yellow;
+            margin-left: 0;
+        }
+
+        #content {
+            position: absolute;
+            z-index: 1;
+        }
+
+        #bg-text {
+            color: #808080;
+            font-size: 150px;
+            transform: rotate(300deg);
+            -webkit-transform: rotate(300deg);
+        }
+
+        body {
+            font-family: 'Times New Roman';
+        }
+
+        table {
+            font-size: 10pt;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            GetDeliveryOrderPrint();
+        });
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        function GetDeliveryOrderPrint() {
+            var DOSNo = getParameterByName("DOSNo", "");
+            var Type = getParameterByName("Type", "");
+            $.ajax({
+                url: "../../Services/Import/DeliveryOrderService.svc/GetDeliveryOrderPrint",
+                async: false,
+                type: "GET",
+                dataType: "json",
+                data: { DOSNo: DOSNo, Type: Type },
+                contentType: "application/json; charset=utf-8", cache: false,
+
+                success: function (result) {
+                    var ResultData = jQuery.parseJSON(result);
+                    FinalData = ResultData.Table0;
+                    FinalData1 = ResultData.Table1;
+                    FinalData2 = ResultData.Table2;
+                    LocationData = ResultData.Table3;
+                    StorageData = ResultData.Table4;
+                    var chargeType = "";
+                    var Pieces = 0;
+                    var Currencycode="";
+                    debugger;
+                    if (FinalData.length > 0) {
+                        Pieces = FinalData[0].Pieces;
+                        $("#spnDONo").text(FinalData[0].DeliveryOrderNo);
+                        $("#spnDate").text(FinalData[0].DeliveryOrderDate + ' ' + FinalData[0].DOTime);
+                        //$("#spnConsignee").text(FinalData[0].Consignee);
+                        //$("#spnNotify").text(FinalData[0].NOTIFY);
+                        $("#spnConsignee").html(FinalData[0].Consignee + '</br>' + FinalData[0].HouseConsignee);
+                        $("#spnNotify").html(FinalData[0].NOTIFY + '</br>' + FinalData[0].HouseNOTIFY);
+                        $("#spnAirWaybillNo").text(FinalData[0].AWBNo);
+                        $('#spnCCPP').text(FinalData[0].PaymentType)
+                        $("#spnRctNoAndDate").text(FinalData[0].RctNo + "/" + (FinalData[0].RctDate == "01-Jan-1900" ? "" : FinalData[0].RctDate));
+                        $("#spnRemarks").html(FinalData[0].Remarks);
+                        $("#spnNameSignature").html(FinalData[0].Name);
+                        $("#spnStaff").html(FinalData[0].Staff);
+                        $("#spnHawbValue").html(FinalData[0].HouseNo);
+                        $("#spnLocation").html(FinalData[0].Location);
+                        chargeType = FinalData[0].ChargesType;
+                        if (FinalData[0].IsCancel == "False") {
+                            $("#spnReprintCount").html(FinalData[0].PrintCount > 1 ? "(RE-PRINT: " + (FinalData[0].PrintCount - 1).toString() + ")" : "");
+                            $("#background").css("display", "none");
+                        }
+                        else
+                            $("#background").css("display", "block");
+
+                        $("#spnBarCode").barcode(FinalData[0].AWBNo, "code39", { barWidth: 1, barHeight: 40 });
+                        
+                        Currencycode=FinalData[0].CurrencyCode;
+                        //$("#divULDTag").find("#Barcode").barcode(ResultData.Table0[i].ULDNo, "code39", { barWidth: 1, barHeight: 40 });
+                        //$("#divULDTag").find("#spnbarcode").barcode(ResultData.Table0[i].ULDNo, "code39", { barWidth: 1, barHeight: 40 });
+
+                        //$("#spnBarCode").barcode(FinalData[0].AWBNo, "code39", { barWidth: 1, barHeight: 40 });
+                    }
+
+                    var strdata = '';
+                    if (FinalData1.length > 0) {
+                        strdata = strdata + "<tr><td align='center' style='width:8%'>&nbsp;&nbsp;&nbsp;</td><td align='center' style='width:15%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;.</td><td align='center' style='width:52%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align='center' style='width:25%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";
+                        for (var num = 0; num < FinalData1.length; num++) {
+                            strdata = strdata + "<tr><td style='padding-right:10px' align='left'><span id='spnPcs'>" + FinalData1[num].Pieces + "</span></td><td class='auto-style36'  align='left'><span id='spnGrossWt'>" + FinalData1[num].GrossWeight + "</span></td><td class='auto-style12' style='vertical-align:top;'><span id='spnDescription'>" + FinalData1[num].DescriptionOfGoods + "</span></td><td style='vertical-align:top;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='spnFlightDetails' style='width:70px; word-wrap: break-word; max-width: 70px;'>" + FinalData1[num].FlightDetails + "</span></td><tr>";
+                        }
+
+                        $('#tabletrans').html(strdata);
+                    }
+
+                    var Particulars;
+                    var Charges;
+                    var TotalCharges = 0;
+                    if (FinalData2.length > 0) {
+                        for (var num = 0; num < FinalData2.length; num++) {
+                            Particulars = Particulars + "</br>" + (FinalData2[num].IsWaveOff == "True" ? FinalData2[num].TariffName + '(Waived Off)' : FinalData2[num].TariffName);
+                            Charges = Charges + "</br>" + FinalData2[num].ChargeValue;
+                            if (FinalData2[num].IsWaveOff != "True")
+                                TotalCharges = parseFloat(FinalData2[num].TotalAmount);
+                        }
+                        $("#spnParticulars").html(Particulars.replace(undefined, ""));
+                        $("#spnAmount").html(Charges.replace(undefined, ""));
+                        $("#spnTotal").html(TotalCharges.toFixed(2) + " (" + chargeType + ")");
+                    }
+
+                    var strLocationData = '';
+                    if (LocationData.length > 0) {
+                        strLocationData = strLocationData + "<tr><td align='center'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align='center'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align='center'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align='center'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align='center'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";
+                        if ($("#spnHawbValue").html() != "") {
+                            LocationData = $.grep(LocationData, function (value, i) {
+                                return (value.HAWBNo == $("#spnHawbValue").html());
+                            });
+
+                            var length = LocationData.length > 2 ? 3 : LocationData.length;
+                            for (var num = 0; num < Number(length) ; num++) {
+                                if (Number(Pieces) <= Number(LocationData[num].EndPieces)) {
+                                    strLocationData = strLocationData + "<tr><td style='padding-right:10px' align='center'><span id='spnULDNo'>" + (Number(LocationData[num].StartPieces) > 0 ? "" : (LocationData[num].ULDNo != "BULK" ? LocationData[num].ULDNo : "")) + "</span></td><td style='padding-right:10px' align='center'><span id='spnHAWBNo'>" + (LocationData[num].HAWBNo != "" ? LocationData[num].HAWBNo : "") + "</span></td><td class='auto-style36'  align='center'><span id='spnStartPiece'>" + (LocationData[num].StartPieces != "0" ? LocationData[num].StartPieces : "") + "</span></td><td class='auto-style36' align='center'><span id='spnEndPiece'>" + (LocationData[num].EndPieces != "0" ? (Number(Pieces) <= Number(LocationData[num].EndPieces) ? LocationData[num].EndPieces : Pieces) : "") + "</span></td><td class='auto-style36'  align='center'><span id='spnLocation'>" + (LocationData[num].AssignLocation != "" ? LocationData[num].AssignLocation : LocationData[num].MovableLocation) + "</span></td><tr>";
+                                }
+                            }
+                        }
+                        else {
+                            var length = LocationData.length > 2 ? 3 : LocationData.length;
+                            for (var num = 0; num < Number(length) ; num++) {
+                                if (Number(Pieces) <= Number(LocationData[num].EndPieces)) {
+                                    strLocationData = strLocationData + "<tr><td style='padding-right:10px' align='center'><span id='spnULDNo'>" + (Number(LocationData[num].StartPieces) > 0 ? "" : (LocationData[num].ULDNo != "BULK" ? LocationData[num].ULDNo : "")) + "</span></td><td style='padding-right:10px' align='center'><span id='spnHAWBNo'>" + (LocationData[num].HAWBNo != "" ? LocationData[num].HAWBNo : "") + "</span></td><td class='auto-style36' align='center'><span id='spnStartPiece'>" + (LocationData[num].StartPieces != "0" ? LocationData[num].StartPieces : "") + "</span></td><td class='auto-style36'  align='center'><span id='spnEndPiece'>" + (LocationData[num].EndPieces != "0" ? (Number(Pieces) <= Number(LocationData[num].EndPieces) ? LocationData[num].EndPieces : Pieces) : "") + "</span></td><td class='auto-style36'  align='center'><span id='spnLocation'>" + (LocationData[num].AssignLocation != "" ? LocationData[num].AssignLocation : LocationData[num].MovableLocation) + "</span></td><tr>";
+                                }
+                            }
+                        }
+                        if (LocationData.length > 3)
+                            strLocationData = strLocationData + "<tr><td style='padding-right:10px;' align='center' colspan='5'>View more location details from delivery order details</td></tr>";
+                    }
+                    $('#Locationtrans').html(strLocationData);
+
+                    var StorageRemarks = "";
+                    if (StorageData.length > 0) {
+                        StorageRemarks = "Free Storage";
+                        for (var num = 0; num < StorageData.length; num++) {
+                            StorageRemarks = StorageRemarks + "</br>" + ("For " + StorageData[num].PartNo + "Till " + StorageData[num].FOCTime + " (GMT)/" + $("#spnRemarks").html());
+                        }
+
+                        //StorageRemarks = StorageRemarks + "</br>" + "Charges are rounded up @ AED 5.00";
+                        StorageRemarks = StorageRemarks + "</br>" + "Charges are rounded up @" + Currencycode;
+                        $("#spnRemarks").html(StorageRemarks);
+                    }
+                    else
+                    {
+                        StorageRemarks = StorageRemarks + "</br>" + "Charges are rounded up @" + Currencycode;
+                        $("#spnRemarks").html(StorageRemarks);
+
+                    }
+                   
+                  
+                },
+                error: function (err) {
+                    if (err.responseText.toLowerCase().indexOf("object reference not set") != -1) {
+                        document.cookie = "UserDetail=0";
+                        location.href = '../../Account/GarudaLogin.cshtml?islogout=true';
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <form id="form1">
+        <div id="background">
+            <p id="bg-text">Cancelled</p>
+        </div>
+        <div id="content">
+            <table id="table1">
+                <tr>
+                    <td>
+                        <!--<table style="width: 100%; background-color: rgba(0, 0, 255, 0.07); padding: 0px;">
+                            <tr>
+                                <td style="font-size:12pt; font-weight:bold; height:30px; width:35% " valign="top"></td>
+                                <td rowspan="3" valign="top" style="font-size:14pt;">
+                                    <span style="margin-top: -69px;"><img src="pic/SAS-Logo.png" /></span>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12pt; font-weight: bold; height: 30px; "></td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12pt; font-weight: bold; height: 30px;"></td>
+                            </tr>
+                        </table>-->
+                        <!--<table style="width: 100%; padding: 0px; margin: 0px; background-color: rgba(0, 0, 255, 0.07);" align="center" cellspacing="5px">-->
+                        <table style="width: 100%; padding: 0px; margin: 0px;" cellpadding="0px" align="center" cellspacing="0px">
+                            <tr>
+                                <td align="center" class="auto-style1" colspan="3"> <span id="spnReprintCount"></span><br /></td>
+                            </tr>
+                            <tr>
+                                <td height="85px" align="center" colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <table style="width:100%; padding:0px; margin:0px;" cellspacing="5px">
+                                        <tr>
+                                            <td class="auto-style3" rowspan="2">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+                                                <br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :
+                                                &nbsp;
+                                            </td>
+                                            <td align="right" class="auto-style39">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            </td>
+                                            <td style="width:25%">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spnDONo"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right" class="auto-style39">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                            </td>
+                                            <td style=" width:25%">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spnDate"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <table style="width:100%; margin:0px;" cellspacing="5px" padding="0px">
+                                        <tr>
+                                            <td colspan="2">
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                        </tr>
+                                        <tr>
+                                            <td style="width:10%;">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            </td>
+                                            <td style="height:40px;width:80%;vertical-align:top;">
+                                                <span id="spnConsignee"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:10%;">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            </td>
+                                            <td style="height:40px; vertical-align:top;">
+                                                <span id="spnNotify"></span>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table style="width:100%; margin:0px; padding:0px;" cellspacing="5px" align="center">
+
+                                        <tr>
+                                            <!--<td colspan="5"></td>-->
+                                            <td align="center" style="width:15%;">
+                                                &nbsp;
+                                            </td>
+                                            <td align="center" style="width:13%;"></td>
+                                            <td style="width:55%;"></td>
+                                            <td align="center" style="width:5%;"></td>
+                                            <td align="center" style="width:20%;"></td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td style="vertical-align:top; height:40px;" align="center"
+                                                <span id="spnAirWaybillNo"></span>
+                                            </td>
+                                            <td style="vertical-align:top; height:40px;" align="center">
+                                                <span id="spnHawbValue"></span>
+                                            </td>
+                                            <td align="center"><div style="width:205px;"><span id="spnBarCode"></span></div></td>
+                                            <td align="left" style="height:40px;vertical-align:top">
+                                                <span id="spnCCPP"></span>
+                                            </td>
+                                            <td style="height:40px;" align="left" valign="top">
+                                                <span id="spnRctNoAndDate"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <table style="width:100%; padding:0px; margin:0px;" cellspacing="5px" id="tabletrans"></table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <table style="width:100%; padding:0px; margin:0px;" cellspacing="5px">
+                                        <tr>
+                                            <td colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" style="vertical-align:top;overflow:auto;" class="auto-style40">
+                                                <span id="spnRemarks"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" style="vertical-align:top;overflow:auto;" class="auto-style40">
+                                                <span id="spnDefaultRemarks"></span>
+                                            </td>
+                                        </tr>
+                                        <!--<tr>
+                                            <td colspan="3" align="left">
+                                                Location
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <!--<td colspan="3" align="center" style="border:1px solid black; padding-right:10px; vertical-align:top;">
+                                                <span id="spnLocation">
+                                                </span>
+                                            </td>-->
+                                        <td colspan="3" align="center">
+                                            <table style="width:100%; padding:0px; margin:0px;" cellspacing="0px" id="Locationtrans"></table>
+
+                                        </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="center"></td>
+                                <td align="center" style="width:40%"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="left" style="padding-left:10px;height:100px; vertical-align:top;">
+                                    <span id="spnParticulars">
+                                    </span>
+                                </td>
+                                <td align="center" style="width:40%; padding-right:10px; vertical-align:top; height:100px;">
+                                    <span id="spnAmount">
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="Right" style=" vertical-align:top;"></td>
+                                <td align="center" style="width:40%;" rowspan="2">
+                                    <span id="spnTotal"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" align="left" style=" vertical-align:top; font-family:Arial;">
+                                    <!--All vehicles carrying cargo must exit only through-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="left" style=" vertical-align:top; font-family:Arial;">
+                                    <!--Customs at the Main Gate of Freight Centre**-->
+                                </td>
+                                <td align="left" style="width:40%; ">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <!--<tr>
+                                <td colspan="2" align="left" style=" vertical-align:top;">
+                                    &nbsp;
+                                </td>
+                                <td align="left" style="width:40%; ">
+                                    &nbsp;
+                                </td>
+                            </tr>-->
+                            <tr>
+                                <td colspan="2" align="left" style=" vertical-align:top;">
+                                    &nbsp;
+                                </td>
+                                <td align="left" style="width:40%; ">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="center" style=" vertical-align:top;">
+                                    <span id="spnNameSignature"></span>
+                                </td>
+                                <td align="center" style="width:40%; ">
+                                    <span id="spnStaff"></span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2" align="center" style=" vertical-align:top;">
+                                    <!--<hr style="width:200px; border: .5px solid black" />
+                                    Name &amp; Signature-->
+                                </td>
+                                <td align="center" style="width:40%; ">
+                                    <!--<hr style="width:250px; border: .5px solid black" />
+                                    Staff-->
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            </td>
+            </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>

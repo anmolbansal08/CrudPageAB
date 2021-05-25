@@ -1,0 +1,183 @@
+﻿
+
+<style type="text/css">
+    .completeprocess {
+        color: #fff;
+        background-color: #51a351;
+        border-color: #51a351;
+        font-size: 10px;
+    }
+
+    .incompleteprocess {
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+        font-size: 10px;
+    }
+
+    .partialprocess {
+        color: #fff;
+        background-color: #FE9D5A;
+        border-color: #FE9D5A;
+        font-size: 10px;
+    }
+
+    .failureprocess {
+        color: #fff;
+        background-color: #FE0404;
+        border-color: #FE9D5A;
+        font-size: 10px;
+    }
+
+    .dependentprocess {
+        color: #fff;
+        background-color: brown;
+        border-color: goldenrod;
+        font-size: 10px;
+    }
+
+    .k-grid-filter {
+        display: none;
+    }
+
+    .k-link {
+        cursor: text;
+    }
+</style>
+
+<div id="divbody" style="height:auto">
+
+
+
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>AWB Flown Report</td></tr>
+                        <tr><td class='formActiontitle' colspan='4'><span id='__SpanHeader__'></span><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>
+                        <tr><td class='formbuttonrow' colspan='4'><input type='submit' onclick="DownloadExcelReport()" name='operation' value='Download Report' class='btn btn-success' /></td></tr>
+                        <tr><td class='formSection' colspan='4'>AWB Flown Information</td></tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Airline'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    Airline
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("CarrierCode")
+                                @Html.TextBox("Text_CarrierCode", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Airline Name can not be blank" })
+                            </td>
+
+
+                            <td class=' formlabel' title='Customer Type'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    Customer Type :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("CustomerType")
+                                @Html.TextBox("Text_CustomerType", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Billing To City'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    Billing To City
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("BillingCitycode")
+                                @Html.TextBox("Text_BillingCitycode", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+
+
+                            <td class=' formlabel' title='Agent Code'>
+                                <font color='red'></font>
+                                <span id='spnAirlineCode'>
+                                    Agent Code
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("AgentCode")
+                                @Html.TextBox("Text_AgentCode", null, new { controltype = "autocomplete", data_role = "autocomplete" })
+                            </td>
+                                                                                   
+                        </tr>
+
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='From Date'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    From Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+                            </td>
+                            <td class=' formlabel' title='To Date'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    To Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' />
+                            </td>
+                        </tr>
+
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='Based On'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    Based On :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("BasedOn")
+                                @Html.TextBox("Text_BasedOn", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "BasedOn can not be blank" })
+                            </td>
+                            <td class=' formlabel' ></td>
+                            <td></td>
+
+                        </tr>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="example">
+            <div id="grid" style="font-size:14px;"></div>
+            <script src="~/JScript/CRA/AWBLevelPrimeGCRFlightReport.js"></script>
+
+
+        </div>
+
+
+    </section>
+    @*}*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".k-hierarchy-cell").click();
+        });
+
+        $('tr.k-master-row').click(function () {
+            $(this).nextUntil('tr.k-master-row').css('display', function (i, v) {
+                return this.style.display === 'table-row' ? 'none' : 'table-row';
+            });
+        });
+
+    </script>
+</div>
+
+
+

@@ -1,0 +1,32 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AccountAllocationCode</Name>
+    <Message>AllocationCode can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>AccountAllocationCode already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+
+    <Key>2000</Key>
+    <value>AllocationAccountULD Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>AllocationAccountULD  Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>AllocationAccountULD  Deleted Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>8114</Key>
+    <value>Conversion failed when converting the datatype varchar to numeric.</value>
+  </ServerMessage>
+
+</Messages>

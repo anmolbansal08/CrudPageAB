@@ -1,0 +1,581 @@
+﻿
+@{
+	ViewBag.Title = "booking";
+
+}
+@*<head>
+		<title></title>
+		<link rel="stylesheet" href="~/styles/Booking.css" />
+
+	</head>
+
+	<mat-accordion class="booking row">
+		<mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+			<mat-expansion-panel-header expandedHeight="40px">
+				<mat-panel-title>
+					Booking
+				</mat-panel-title>
+				<mat-panel-description>
+					Status - Booked/Booking Confirm/ Executed
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<form class="row">
+				<div class="col-md-12 col-lg-6 k-form">
+
+					<fieldset>
+						<legend>New Booking</legend>
+
+						<div class="col-xs-12 p0">
+							<div class="bktop">
+								<autocomplete class="wd" textValue="POS-KSO" required="true" name="Users_UserTypeName"
+											  placeholder="Type" filterByField="UserTypeName"
+											  [(model)]="usertype"></autocomplete>
+
+							</div>
+							<div class="bktop">
+								<autocomplete class="wd" textValue="POS-KSO" required="true" name="Users_UserTypeName"
+											  placeholder="Manual" filterByField="UserTypeName"
+											  [(model)]="usertype"></autocomplete>
+
+							</div>
+							<div class="bktop">
+
+								<autocomplete class="wd" textValue="POS-KSO" required="true" name="Users_UserTypeName"
+											  placeholder="MOP" filterByField="UserTypeName"
+											  [(model)]="usertype"></autocomplete>
+							</div>
+
+							<div class="bktop">
+								<kendo-maskedtextbox class="wd112" [value]="value"
+													 [mask]="mask">
+								</kendo-maskedtextbox>
+							</div>
+							<div class="bktop">
+								<input required class="k-textbox wd" placeholder="No of HAWB" type="text" />
+							</div>
+							<div class="bktop">
+								<input type="checkbox" id="isbup" class="k-checkbox" checked />
+								<label class="k-checkbox-label bup" for="isbup">BUP</label>
+
+							</div>
+
+						</div>
+
+
+						<div class="col-xs-12 col-sm-6 pl0">
+
+
+
+							<div class="fieldBlock">
+								<span>Origin <span class="k-required">*</span></span>
+								<autocomplete name="Users_Airline" filterByField="airlineName" placeholder="Origin"></autocomplete>
+							</div>
+
+							<div class="fieldBlock">
+								<span>Agent<span class="k-required">*</span></span>
+								<autocomplete required="true" filterByField="CityCode,CityName" name="Users_City" placeholder="Agent"></autocomplete>
+							</div>
+							<div class="fieldBlock">
+								<span>Pieces<span class="k-required">*</span></span>
+								<input required class="k-textbox" placeholder="Pieces" type="text" />
+							</div>
+							<div class="fieldBlock">
+								<span>Vol. Weight</span>
+								<div class="divInfo">
+									<input required class="k-textbox wd65" placeholder="Vol Wt." type="text" />
+									<a kendoTooltip title="Click to add dimension"><i class="k-icon k-i-info"></i></a>
+								</div>
+							</div>
+
+							<div class="fieldBlock">
+								<span>Commodity<span class="k-required">*</span></span>
+								<autocomplete name="Users_Airport" placeholder="Commodity"></autocomplete>
+							</div>
+
+							<div class="fieldBlock">
+								<span>SHC <span class="k-field-info">optional</span></span>
+								<autocomplete name="Users_Terminal" placeholder="SHC"></autocomplete>
+							</div>
+
+						</div>
+
+
+						<div class="col-xs-12 col-sm-6 pr0">
+
+							<div class="fieldBlock">
+								<span>Destination <span class="k-required">*</span></span>
+								<autocomplete name="Users_Airline" filterByField="airlineName" placeholder="Destination"></autocomplete>
+							</div>
+
+							<div class="fieldBlock">
+								<span>Product <span class="k-required">*</span></span>
+								<autocomplete required="true" filterByField="CityCode,CityName" name="Users_City" placeholder="Product"></autocomplete>
+							</div>
+							<div class="fieldBlock">
+								<span>Gross Weight <span class="k-required">*</span></span>
+								<input required class="k-textbox" placeholder="Gross Wt." type="text" />
+							</div>
+							<div class="fieldBlock">
+								<span>CBM</span>
+								<input required class="k-textbox" placeholder="CBM" type="text" />
+							</div>
+
+							<div class="fieldBlock">
+								<span title="Nature of Goods">NOG <span class="k-required">*</span></span>
+								<input required class="k-textbox" placeholder="NOG" type="text" />
+							</div>
+
+							<div class="fieldBlock">
+								<span>Priority <span class="k-field-info">optional</span></span>
+								<autocomplete name="Users_Terminal" placeholder="Priority"></autocomplete>
+							</div>
+
+						</div>
+
+					</fieldset>
+
+
+				</div>
+
+				<div class="col-md-12 col-lg-6 p0">
+
+					<div class="col-xs-12 col-sm-6 k-form">
+
+						<fieldset>
+							<legend>Additional Information</legend>
+
+							<div class="fieldBlock">
+								<span>Shipper</span>
+								<div class="divInfo">
+									<input required class="k-textbox wd65" placeholder="Shipper" type="text" />
+									<a><i class="k-icon k-i-info"></i></a>
+								</div>
+							</div>
+
+							<div class="fieldBlock">
+								<span>Consignee</span>
+								<div class="divInfo">
+									<input required class="k-textbox wd65" placeholder="Consignee" type="text" />
+									<a><i class="k-icon k-i-info"></i></a>
+								</div>
+							</div>
+
+							<div class="fieldBlock">
+								<span>Handling Info</span>
+								<div class="divInfo">
+									<input required class="k-textbox wd65" placeholder="Handling Info" type="text" />
+									<a><i class="k-icon k-i-info"></i></a>
+								</div>
+							</div>
+
+							<div class="fieldBlock">
+								<span>Notify Party</span>
+								<div class="divInfo">
+									<input required class="k-textbox wd65" placeholder="Notify Party" type="text" />
+									<a><i class="k-icon k-i-info"></i></a>
+								</div>
+							</div>
+
+							<div class="fieldBlock">
+								<span>OCI Info</span>
+								<div class="divInfo">
+									<a kendoTooltip title="Click to Add OCI Info"><i class="k-icon k-i-plus-circle"></i></a>
+									<a kendoTooltip title="Click to Edit OCI Info"><i class="k-icon k-i-edit"></i></a>
+									<a kendoTooltip title="Click to View OCI Info"><i class="k-icon k-i-eye"></i></a>
+								</div>
+								<!--<button class="k-button adInfo-btn">Add Info</button>-->
+							</div>
+
+							<div class="fieldBlock">
+								<span>HAWB Info</span>
+								<div class="divInfo">
+									<a kendoTooltip title="Click to Add HAWB Info"><i class="k-icon k-i-plus-circle"></i></a>
+									<a kendoTooltip title="Click to Edit HAWB Info"><i class="k-icon k-i-edit"></i></a>
+									<a kendoTooltip title="Click to View HAWB Info"><i class="k-icon k-i-eye"></i></a>
+								</div>
+							</div>
+
+							<div class="fieldBlock">
+								<span>BUP Info</span>
+								<div class="divInfo">
+									<a kendoTooltip title="Click to Add BUP Info"><i class="k-icon k-i-plus-circle"></i></a>
+									<a kendoTooltip title="Click to Edit BUP Info"><i class="k-icon k-i-edit"></i></a>
+									<a kendoTooltip title="Click to View BUP Info"><i class="k-icon k-i-eye"></i></a>
+								</div>
+							</div>
+
+						</fieldset>
+
+
+					</div>
+
+					<div class="col-xs-12 col-sm-6 k-form">
+						<fieldset>
+							<legend>Rate Information</legend>
+
+							<div class="fieldBlock">
+								<span>CH Wt.</span>
+								<input class="k-textbox" placeholder="CH Wt." />
+							</div>
+
+							<div class="fieldBlock">
+								<span>Rate</span>
+								<div class="divInfo">
+									<input required class="k-textbox wd65" placeholder="Rate" type="text" />
+									<a><i class="k-icon k-i-info"></i></a>
+								</div>
+							</div>
+
+							<div class="fieldBlock">
+								<span>Ref No</span>
+								<input class="k-textbox" placeholder="Ref No" />
+							</div>
+
+							<div class="fieldBlock">
+								<span>Spot Rate</span>
+								<input class="k-textbox" placeholder="Spot Rate" />
+							</div>
+
+							<div class="fieldBlock">
+								<span>Spot Freight</span>
+								<div class="divInfo">
+									<input required class="k-textbox wd65" placeholder="Spot Freight" type="text" />
+									<a><i class="k-icon k-i-info"></i></a>
+								</div>
+							</div>
+
+							<div class="fieldBlock">
+								<span>Spot Code</span>
+								<input class="k-textbox" placeholder="Spot Code" />
+							</div>
+
+							<div class="fieldBlock">
+								<span>Discount</span>
+								<input class="k-textbox" placeholder="Discount" />
+							</div>
+
+
+						</fieldset>
+
+					</div>
+
+				</div>
+			</form>
+
+
+			<mat-action-row>
+				<button mat-button color="primary" (click)="nextStep()">Next</button>
+			</mat-action-row>
+		</mat-expansion-panel>
+	</mat-accordion>*@
+
+
+<ul kendo-panel-bar style="width: 100%">
+	<li class="k-state-active">
+		<span class="k-link">1. AWB Information</span>
+		<div style="padding: 10px;">
+			<table style="width:100%;">
+				<tbody>
+					<tr>
+						<td style="width:60%">
+							<fieldset>
+								<legend>New Booking</legend>
+								<table style="width:100%; height:210px;">
+									<tr>
+										<td colspan="4">
+											<input kendo-combo-box k-placeholder="'Booking Type'"
+												   k-min-length="2"
+												   k-filter="'contains'" k-auto-bind="false"
+												   ng-model="SearchRequest.BookingType"
+												   k-filterfield="'OriginAirportCode'" style="width:100px;"
+												   k-options='K_Options("Text_BookingType", "SpaceControl_Origin")' />
+											<input kendo-combo-box k-placeholder="'AWB Stock'"
+												   k-min-length="2"
+												   k-filter="'contains'" k-auto-bind="false"
+												   ng-model="SearchRequest.AWBStock"
+												   k-filterfield="'OriginAirportCode'" style="width:100px;"
+												   k-options='K_Options("Text_AWBStock", "SpaceControl_Origin")' />
+											<input kendo-combo-box k-placeholder="'MOP'"
+												   k-min-length="2"
+												   k-filter="'contains'" k-auto-bind="false"
+												   ng-model="SearchRequest.ChargeCode"
+												   k-filterfield="'OriginAirportCode'" style="width:100px;"
+												   k-options='K_Options("Text_ChargeCode", "SpaceControl_Origin")' />
+											<input kendo-combo-box k-placeholder="'Prefix'"
+												   k-min-length="2" data-valid='required' data-valid-msg='Select Prefix'
+												   k-filter="'contains'" k-auto-bind="false"
+												   ng-model="SearchRequest.AWBCode"
+												   k-filterfield="'AirlineCode'" style="width:100px;"
+												   k-options='K_Options("Text_AWBCode", "Reservation_Airline")' />
+											<input required class="k-textbox wd" id="AWBNumber" style="width:100px;" placeholder="SNR" type="number" />
+											<input required class="k-textbox wd" id="NoofHouse" style="width:100px;" placeholder="No of HAWB" type="number" />
+											<input required class="k-textbox wd" id="AWBNoofBUP" style="width:100px;" placeholder="No of BUP" type="number" />
+											<input type="checkbox" id="chkIsBUP" class="k-checkbox" checked />
+											<label class="k-checkbox-label bup" for="chkIsBUP">BUP</label>
+										</td>
+									</tr>
+									<tr>
+										<td>Origin City:</td>
+										<td>
+											<input kendo-combo-box k-placeholder="'Origin City'"
+												   k-min-length="2"
+												   k-filter="'contains'" k-auto-bind="false"
+												   ng-model="SearchRequest.AWBOrigin"
+												   k-filterfield="'CityCode,CityName'"
+												   k-options='K_Options("Text_AWBOrigin", "Reservation_City1")' />
+										</td>
+										<td>Destination City:</td>
+										<td>
+											<input kendo-combo-box k-placeholder="'Destination City'"
+												   k-min-length="2"
+												   k-filter="'contains'" k-auto-bind="false"
+												   ng-model="SearchRequest.AWBDestination"
+												   k-filterfield="'CityCode,CityName'"
+												   k-options='K_Options("Text_AWBDestination", "Reservation_City1")' />
+										</td>
+									</tr>
+									<tr>
+										<td>Agent :</td>
+										<td>
+											<input kendo-combo-box k-placeholder="'Agent'"
+												   k-min-length="2"
+												   k-filter="'contains'" k-auto-bind="false"
+												   ng-model="SearchRequest.AWBAgent"
+												   k-filterfield="'Name'"
+												   k-options='K_Options("Text_AWBAgent", "Reservation_Agent")' />
+										</td>
+										<td>Product :</td>
+										<td>
+											<input kendo-combo-box k-placeholder="'Product'"
+												   k-min-length="2"
+												   k-filter="'contains'" k-auto-bind="false"
+												   ng-model="SearchRequest.Product"
+												   k-filterfield="'ProductName'"
+												   k-options='K_Options("Text_Product", "Reservation_Product")' />
+										</td>
+									</tr>
+									<tr>
+										<td>Pieces :</td>
+										<td>
+											<input required class="k-textbox wd" id="AWBPieces" placeholder="Pieces" type="number" />
+										</td>
+										<td>Gr. Wt. :</td>
+										<td>
+											<input required class="k-textbox wd" id="AWBGrossWeight" placeholder="Gross Weight" type="number" />
+										</td>
+									</tr>
+									<tr>
+										<td>Vol. Wt. :</td>
+										<td>
+											<input required class="k-textbox wd" id="AWBVolumeWeight" style="width:100px;" placeholder="Volume Weight" type="number" />
+											<a kendoTooltip title="Click to add dimension"><i class="k-icon k-i-info"></i></a>
+										</td>
+										<td>CBM. :</td>
+										<td>
+											<input required class="k-textbox wd" id="AWBCBM" placeholder="CBM" type="number" />
+										</td>
+									</tr>
+									<tr>
+										<td>Commodity :</td>
+										<td>
+											<input kendo-combo-box k-placeholder="'Commodity'"
+												   k-min-length="2"
+												   k-filter="'contains'" k-auto-bind="false"
+												   ng-model="SearchRequest.Commodity"
+												   k-filterfield="'CommodityCode,CommodityDescription'"
+												   k-options='K_Options("Text_Commodity", "Reservation_Commodity")' />
+										</td>
+										<td>NOG :</td>
+										<td>
+											<input required class="k-textbox wd" id="NatureOfGoods" placeholder="NOG" type="text" />
+										</td>
+									</tr>
+									<tr>
+										<td>SHC :</td>
+										<td>
+											<input kendo-combo-box k-placeholder="'SHC'"
+												   k-min-length="2"
+												   k-filter="'contains'" k-auto-bind="false"
+												   ng-model="SearchRequest.SHC"
+												   k-filterfield="'CODE,Description'"
+												   k-options='K_Options("Text_SHC", "Reservation_SPHC1")' />
+										</td>
+										<td>Priority :</td>
+										<td>
+											<input kendo-combo-box k-placeholder="'Priority'"
+												   k-min-length="2"
+												   k-filter="'contains'" k-auto-bind="false"
+												   ng-model="SearchRequest.Priority"
+												   k-filterfield="'Code,PriorityName'"
+												   k-options='K_Options("Text_Priority	", "Reservation_Priority")' />
+										</td>
+									</tr>
+								</table>
+							</fieldset>
+						</td>
+						<td style="width:20%">
+							<fieldset>
+								<legend>Additional Information</legend>
+								<table style="width:100%; height:210px;">
+									<tr>
+										<td>
+											Shipper :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="SHIPPER_AccountNo" style="width:120px;" placeholder="Shipper" type="text" />
+											<a kendoTooltip title="Click to add Shipper"><i class="k-icon k-i-info"></i></a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Consignee :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="CONSIGNEE_AccountNo" style="width:120px;" placeholder="Consignee" type="text" />
+											<a kendoTooltip title="Click to add Consignee"><i class="k-icon k-i-info"></i></a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Handling Info. :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="HandlingInformation" style="width:120px;" placeholder="Handling Info" type="text" />
+											<a kendoTooltip title="Click to add Handling Info."><i class="k-icon k-i-info"></i></a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Notify Party :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="NotifyParty" style="width:120px;" placeholder="Notify Party" type="text" />
+											<a kendoTooltip title="Click to add Notify Party"><i class="k-icon k-i-info"></i></a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											OCI Info. :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="NotifyParty" style="width:120px;" placeholder="OCI Info" type="text" />
+											<a kendoTooltip title="Click to add OCI Info"><i class="k-icon k-i-info"></i></a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											HAWB Info. :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="NotifyParty" style="width:120px;" placeholder="HAWB Info" type="text" />
+											<a kendoTooltip title="Click to add HAWB Info"><i class="k-icon k-i-info"></i></a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											BUP Info. :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="NotifyParty" style="width:120px;" placeholder="BUP Info" type="text" />
+											<a kendoTooltip title="Click to add BUP Info"><i class="k-icon k-i-info"></i></a>
+										</td>
+									</tr>
+								</table>
+							</fieldset>
+						</td>
+						<td style="width:20%">
+							<fieldset>
+								<legend>Rate Information</legend>
+								<table style="width:100%; height:210px;">
+									<tr>
+										<td>
+											CH Wt. :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="SHIPPER_AccountNo" placeholder="CH Wt" type="text" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Rate :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="NotifyParty" style="width:120px;" placeholder="Rate" type="text" />
+											<a kendoTooltip title="Click to add Rate"><i class="k-icon k-i-info"></i></a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Ref No :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="SHIPPER_AccountNo" placeholder="Ref No" type="text" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Spot Rate :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="SHIPPER_AccountNo" placeholder="Spot Rate" type="text" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Spot Freight :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="NotifyParty" style="width:120px;" placeholder="Spot Freight" type="text" />
+											<a kendoTooltip title="Click to add Spot Freight"><i class="k-icon k-i-info"></i></a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Spot Code :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="SHIPPER_AccountNo" placeholder="Spot Code" type="text" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Discount :
+										</td>
+										<td>
+											<input required class="k-textbox wd" id="SHIPPER_AccountNo" placeholder="Discount" type="text" />
+										</td>
+									</tr>
+								</table>
+							</fieldset>
+						</td>
+					</tr>
+                    <tr>
+                        <td style="width:100%;">
+                            <fieldset>
+                                <legend>Itinerary</legend>
+                                <table style="width:100%">
+
+                                </table>
+                            </fieldset>
+                        </td>
+                    </tr>
+				</tbody>
+			</table>
+		</div>      
+	</li>
+
+	@*<li disabled="disabled">
+			Communication
+		</li>*@
+
+
+
+
+</ul>
+
+
+
+
+
+@Scripts.Render("~/bundles/Booking")

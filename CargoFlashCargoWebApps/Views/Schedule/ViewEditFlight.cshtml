@@ -1,0 +1,1196 @@
+﻿
+@Html.AntiForgeryToken()
+<fieldset style="margin:2px;max-width:97%;" ng-init="GetAirport();">
+    <legend class="legcls">Flight Capacity</legend>
+    <table id="tblSearch" width="100%" style="margin-bottom:0.8em;">
+
+        <tr>
+
+
+            <td>
+                <label>Search By:</label>
+                <input type="radio" ng-change="ResetSearch(true);" ng-model="SearchBy" class="k-radio" value="1" id="lblIsDelayYesSearchBy" />
+                <label class="k-radio-label" for="lblIsDelayYesSearchBy">Flight No</label>
+
+                <input type="radio" ng-change="ResetSearch(false);" value="0" ng-model="SearchBy" class="k-radio" id="lblIsDelayNoSearchBy" />
+                <label class="k-radio-label" for="lblIsDelayNoSearchBy">Origin-Dest</label>
+            </td>
+            <td ng-if="SearchBy==0">
+                A/C Reg. No:
+            </td>
+
+            <td ng-if="SearchBy==0" class="tdfont">
+                <ul class="options m0">
+                    <li>
+                        <input ng-true-value="1" ng-false-value="0" id="ckdYesNO" type="checkbox" ng-model="SearchRequest.ACRegYes" class="k-checkbox" />
+                        <label class="k-checkbox-label" for="ckdYesNO">YES</label>
+                    </li>
+                    <li>
+                        <input ng-true-value="0" ng-false-value="1" id="YesNOckd" type="checkbox" ng-model="SearchRequest.ACRegNo" class="k-checkbox" />
+                        <label class="k-checkbox-label" for="YesNOckd">NO</label>
+                    </li>
+                </ul>
+
+            </td>
+
+            <td ng-if="SearchBy==0">
+                <label>Available Capacity:</label>
+
+                <input style="width:100px;" kendo-combo-box k-placeholder="'Select Capacity'"
+                       k-min-length="2" k-auto-bind="true"
+                       k-filter="'contains'"
+                       ng-model="SearchRequest.AvlCap"
+                       k-filterfield="'LOOKUPNAME'"
+                       k-options='K_Options("Text_CapacityUtilized", "SpaceControl_LookUp")' />
+            </td>
+
+            <td ng-if="SearchBy==1">
+                <label><font color="red">*</font>Flight Date:</label>
+                <input style="width:100px;" kendo-date-picker ng-model="SearchRequest.FlightDate" data-valid='required' data-valid-msg='Select Flight Date'
+                       placeholder='Flight Date' id="rpDate" k-rebind="minDate" k-min="minDate" onchange="validDate(this);"
+                       k-format="'dd-MMM-yyyy'" /> @*k-max="maxDate" k-rebind="maxDate"*@
+            </td>
+
+            <td ng-if="SearchBy==1">
+                <label><font color="red">*</font> Flight No:</label>
+
+                <input kendo-combo-box k-placeholder="'Select Flight No'" id="fltNo" name="fltNo" data-valid='required' data-valid-msg='Select Flight No'
+                       k-min-length="2" k-auto-bind="false"
+                       k-filter="'contains'"
+                       ng-model="SearchRequest.FlightNo"
+                       k-filterfield="'FlightNo'"
+                       k-options='K_Options("Search_FlightNo", "ViewNEditFlight_FlightNo1")' />
+
+            </td>
+
+
+
+            <td ng-if="SearchBy==0">
+
+                <label>Origin:</label>
+
+                <input style="width:100px;" kendo-combo-box="replancomboOrigin" k-placeholder="'Select Origin'"
+                       k-min-length="2"
+                       k-filter="'contains'" k-auto-bind="false"
+                       ng-model="SearchRequest.Origin"
+                       k-filterfield="'OriginAirportCode'"
+                       k-options='K_Options("S_O", "SpaceControl_Origin")' />
+
+            </td>
+
+            <td ng-if="SearchBy==0">
+                <label>Destination:</label>
+                <input style="width:100px;" kendo-combo-box="replancomboDest" k-placeholder="'Select Destination'"
+                       k-min-length="2"
+                       k-filter="'contains'" k-auto-bind="false"
+                       ng-model="SearchRequest.Destination"
+                       k-filterfield="'DestinationAirportCode'"
+                       k-options='K_Options("S_D", "SpaceControl_Dest")' />
+
+            </td>
+
+            <td ng-if="SearchBy==0">
+                <label><font color="red">*</font>Flight Date:</label>
+                <input style="width:100px;" kendo-date-picker ng-model="SearchRequest.FlightDate" data-valid='required' data-valid-msg='Select Flight Date'
+                       placeholder='Flight Date' id="rpDate" k-rebind="minDate" k-min="minDate" onchange="validDate(this);"
+                       k-format="'dd-MMM-yyyy'" />  @*k-max="maxDate" k-rebind="maxDate"*@
+            </td>
+            <td>
+                <input type="button" class="btn btn-success" ng-click="SearchFlights();" style="width:80px;" value="Search">
+
+            </td>
+        </tr>
+
+
+
+    </table>
+
+    <kendo-grid ng-show="SearchInfoShow && SearchBy==0" options="FlightSearchO_DGridOptions"></kendo-grid>
+    <kendo-tooltip k-options="FlightSearchGridOptionsTooltip">
+        <kendo-grid ng-show="SearchInfoShow && SearchBy==1" ng-init="SearchInfoShow=false;" options="FlightSearchGridOptions"></kendo-grid>
+    </kendo-tooltip>
+    <ul ng-show="SearchInfoShow && SearchBy==1" class="options" style="width:70%">
+        <li>
+
+            <label>Indicators:</label>
+
+        </li>
+        @*<li>
+                <input id="Targeted" type="checkbox" class="k-checkbox" checked="checked" />
+                <label class="k-checkbox-label" for="Targeted">Targeted</label>
+
+            </li>*@
+        <li>
+           @* <input id="CAO" ng-disabled="IsEdit==0" type="checkbox" ng-model="CAO" ng-false-value="'2'" ng-true-value="'1,3'" class="k-checkbox" />*@
+            <input id="CAO" ng-disabled="true" type="checkbox" ng-model="CAO" ng-checked="CAO==1" class="k-checkbox" />
+            <label class="k-checkbox-label" for="CAO">CAO</label>
+
+        </li>
+
+        <li>
+            <input id="Cancel" ng-disabled="IsEdit==0" ng-model="Cancel" ng-change="CancellFlight();" type="checkbox" class="k-checkbox" />
+            <label class="k-checkbox-label" for="Cancel">Cancel Flight</label>
+        </li>
+        <li ng-hide="{{Environment!='JT'}}">
+            <input id="imptAllCap" ng-disabled="IsEdit==0" type="checkbox" ng-init="IsImpactAllCap=true" ng-model="IsImpactAllCap" class="k-checkbox" />
+            <label class="k-checkbox-label" title="{{IsImpactAllCap?'Any change in Actual Capacity impacts Free Sale + Reserve + Over Book':'Any change in Actual Capacity would now alter Free Sale capacity only'}}" for="imptAllCap">Impact All Capacities</label>
+        </li>
+        <li ng-hide="{{SegmentBookingOpenClose!=true}}">
+            <input id="BookingClosed" ng-disabled="IsEdit==0" type="checkbox" ng-init="SearchInfoShow=false;" ng-model="IsSegmentBookingOpenClose" ng-click="SegmentBookingClose();" class="k-checkbox" />
+            <label class="k-checkbox-label" for="BookingClosed">Flight Booking Open/Close</label>
+        </li>
+        <li>  @*ng-hide="{{Environment!='JT'}}"*@
+            <input id="CapDist" ng-disabled="IsEdit==0" type="checkbox" ng-init="SearchInfoShow=false;" ng-model="IsSectorCapDistribution" ng-click="CapDistribution();" class="k-checkbox" />
+            <label class="k-checkbox-label" for="CapDist">Capacity Distribution</label>
+        </li>
+        <li>
+            <input id="rerout" ng-disabled="IsEdit==0" type="checkbox" ng-model="IsReroute" ng-click="Reroute();" class="k-checkbox" />
+            <label class="k-checkbox-label" for="rerout">Re-Route Flight</label>
+        </li>
+        @*<li>
+                <input id="Adhoc" type="checkbox" class="k-checkbox" />
+                <label class="k-checkbox-label" for="Adhoc">Adhoc</label>
+            </li>
+            <li>
+                <input id="Charter" type="checkbox" class="k-checkbox" />
+                <label class="k-checkbox-label" for="Charter">Charter</label>
+            </li>
+            <li>
+                <input id="Hidden" type="checkbox" class="k-checkbox" />
+                <label class="k-checkbox-label" for="Hidden">Hidden</label>
+            </li>
+            <li>
+                <input id="Blocked" type="checkbox" class="k-checkbox" />
+                <label class="k-checkbox-label" for="Blocked">Blocked</label>
+            <li>
+                <input id="CFEMER" type="checkbox" class="k-checkbox" />
+                <label class="k-checkbox-label" for="CFEMER">Close for Emergency</label>
+            <li>
+                <input id="Disrupted" type="checkbox" class="k-checkbox" />
+                <label class="k-checkbox-label" for="Disrupted">Disrupted</label>
+            </li>*@
+
+    </ul>
+    <span ng-show="SearchInfoShow && SearchBy==1" style="float:right;margin-right:17px;margin-top:-4px;margin-bottom:3px">
+        <input type="button" ng-show="!IsReroute && !IsSegmentBookingOpenClose" class="btn btn-success" ng-click="SaveChanges();" value="Update Flight Details" />
+        <input type="button" ng-show="IsApply && !IsSegmentBookingOpenClose" class="btn btn-success" ng-click="UpdateFlightRoute();" value="Update Flight Route" />
+        <input type="button" ng-show="IsSegmentBookingOpenClose" class="btn btn-success" ng-click="UpdateFlightBooingOpenClose();" value="Update Flight Booking Open/Close" />
+        <input type="button" class="btn btn-info" ng-click="ViewHistory();" value="View History" />
+    </span>
+
+
+
+    <div class="clear"></div>
+    <div kendo-tab-strip="tabs" k-animation="false" style="margin-top:0.8em;" ng-show="SearchInfoShow && SearchBy==1">
+        <ul>
+            <li class="k-state-active">
+                <span>Capacity</span>
+            </li>
+            <li>
+                <span class="k-link">Allotment</span>
+            </li>
+            <li>
+                <span class="k-link">PAX</span>
+            </li>
+            <li>
+                <span class="k-link">Movement</span>
+            </li>
+            <li ng-hide="{{SegmentBookingOpenClose!=true}}">
+                <span class="k-link">Flight Booking Open/Close</span>
+            </li>
+            <li > @*ng-hide="{{Environment!='JT'}}"*@
+                <span class="k-link">Capacity Distribution</span>
+            </li>
+            <li class="k-state-disabled">
+                <span class="k-link">Re-Route Flight</span>
+            </li>
+
+        </ul>
+        <div>
+            <fieldset style="margin:0px;">
+                <legend class="legcls">Leg</legend>
+                <kendo-tooltip k-options="LegGridOptionsTooltip">
+                    <kendo-grid options="LegGridOptions"></kendo-grid>
+                </kendo-tooltip>
+
+            </fieldset>
+            <fieldset style="margin:0px;">
+                <legend class="legcls">Segment</legend>
+                <kendo-tooltip k-options="SegmentGridOptionsTooltip">
+                    <div kendo-grid="SegmentsGrid" options="SegmentGridOptions"></div>
+                </kendo-tooltip>
+            </fieldset>
+        </div>
+        @*allotment*@
+        <div>
+            <fieldset style="margin:0px;">
+                <legend class="legcls">Flight Allotment Information</legend>
+                <div ng-if="LegDataSource.length>0">
+                    <kendo-grid k-options="AllotmentGridOptions()"></kendo-grid>
+                </div>
+            </fieldset>
+        </div>
+        @*Pax*@
+        <div>
+            <fieldset style="margin:0px;">
+                <legend class="legcls">Pax Information</legend>
+                <div>
+
+
+                    <ul ng-if="LegDataSource.length>0" kendo-panel-bar>
+                        <li class="k-state-active" ng-repeat="item in LegDataSource">
+                            <span class="k-link k-state-selected">{{item.FlightNo +' : '+ item.Board+' - '+ item.Off +' on '+ item.FlightDate}}</span>
+                            <div style="padding: 10px;">
+                                <table style="width:70%;">
+
+                                    <tr>
+                                        <td>Passenger Load</td>
+
+                                        <td class="tdfont">
+                                            {{item.PassengerLoad}}
+                                        </td>
+
+                                        <td>Baggage Load</td>
+
+                                        <td class="tdfont">
+                                            {{item.BaggageLoad}}
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+
+
+                                        <td>Weight Per Pax</td>
+                                        <td class="tdfont">
+                                            {{item.WeightPerPax}}
+                                        </td>
+
+                                        <td>Open Seats</td>
+
+                                        <td class="tdfont">
+
+                                            <input ng-disabled="item.IsDisabled" ng-model="item.OpenSeats" ng-change="CalPax(item);" min="0" max="999" k-format="'{0:n0}'" kendo-numeric-text-box />
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+                            </div>
+                        </li>
+
+                        @*<li disabled="disabled">
+                                Communication
+                            </li>*@
+                    </ul>
+                </div>
+            </fieldset>
+        </div>
+        @*movement*@
+        <div>
+            <fieldset style="margin:0px;">
+                <legend class="legcls">Flight Information</legend>
+
+                <div>
+
+
+                    <ul id="movementPanel" ng-if="LegDataSource.length>0" kendo-panel-bar>
+                        @*<li class="{{$index == 0?'k-state-active':''}}" ng-repeat="item in LegDataSource">*@
+                        <li class="k-state-active" ng-repeat="item in LegDataSource">
+                            <span class="k-link k-state-selected">{{item.Header}}</span>
+                            <div style="padding: 10px;">
+                                <table style="width:100%;">
+
+                                    <tr>
+                                        <td>Valid From</td>
+
+                                        <td class="tdfont">
+                                            <input kendo-date-picker k-ng-model="item.ValidFrom" disabled="disabled"
+                                                   k-format="'dd-MMM-yyyy'" />
+                                        </td>
+
+                                        <td>Valid To</td>
+
+                                        <td class="tdfont">
+                                            @*ng-disabled="item.IsDisabled && {{Environment!='JT'}}"*@     
+                                            <input kendo-date-picker k-ng-model="item.ValidTo" data-valid='required' data-valid-msg='Select Valid To Date'
+                                                   placeholder='Valid To' id="validTo{{$index}}" k-min="item.ValidFrom" k-on-change="CheckFlightDateRange(kendoEvent,item,1)" 
+    @*(item.FlightNo,item.ValidFrom,item.ValidTo,item.Board,item.Off);" onchange="validDate(this);"*@
+                                                   k-format="'dd-MMM-yyyy'" />
+                                        </td>
+
+                                        <td>Flight Type</td>
+
+                                        <td class="tdfont">
+                                            <input kendo-combo-box k-placeholder="'Select Flight Type'" ng-disabled="item.IsDisabled"
+                                                   k-min-length="2" k-auto-bind="true"
+                                                   k-filter="'contains'"
+                                                   ng-model="item.FlightTypeSNo"
+                                                   k-filterfield="'FlightTypeName'"
+                                                   k-options='K_Options("Sech_FlighNo", "ViewNEditFlight_FlightType")' />
+
+                                        </td>
+
+
+                                        <td>
+                                            CAO
+                                        </td>
+
+                                        <td class="tdfont">
+
+                                            <input ng-disabled="item.IsDisabled" type="radio" disabled ng-model="item.IsCAO" class="k-radio" value="True" id="lblIsCAOYes{{$index}}" />
+                                            <label class="k-radio-label" for="lblIsCAOYes{{$index}}">Yes</label>
+
+                                            <input ng-disabled="item.IsDisabled" type="radio" disabled value="False" ng-model="item.IsCAO" class="k-radio" id="lblIsCAONo{{$index}}" />
+                                            <label class="k-radio-label" for="lblIsCAONo{{$index}}">No</label>
+                                        </td>
+
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>ETD</td>
+
+                                        <td class="tdfont">
+                                             <input ng-model-options="{ updateOn: 'blur' }" id="movETD{{$index}}" data-valid='required' data-valid-msg='Select ETD' ng-disabled="item.IsDisabled" kendo-date-time-picker
+                                                   ng-model="item.LocalETD"
+                                                   k-format="'dd-MMM-yyyy HH:mm'" 
+                                                    placeholder = "dd-mmm-yyyy hh:mm"
+                                                    Culture="en-GB"
+                                                    timeFormat="HH:mm" 
+                                                    @*min="item.LocalSTD"*@
+                                                    k-min = "minScheduleDate"
+                                                    interval="1"
+                                                    ng-change="DateTimeValidate(item,'LocalETD');"
+                                                    />
+                                            @*<input ng-change="VTime(item,'ETD');" ng-model-options="{ updateOn: 'blur' }" required ng-disabled="item.IsDisabled" kendo-time-picker
+                                                   ng-model="item.ETD"
+                                                   k-format="'HH:mm'" />*@
+                                        </td>
+
+                                        <td>ETA</td>
+                                        <td class="tdfont">
+                                            <input ng-model-options="{ updateOn: 'blur' }"  id="movETA{{$index}}" data-valid='required' data-valid-msg='Select ETA' ng-disabled="item.IsDisabled" kendo-date-time-picker
+                                                   ng-model="item.LocalETA"
+                                                   k-format="'dd-MMM-yyyy HH:mm'" 
+                                                   placeholder = "dd-mmm-yyyy hh:mm"
+                                                   Culture="en-GB"
+                                                   @*min="item.LocalSTA"*@
+                                                  k-min = "minScheduleDate"
+                                                   timeFormat="HH:mm"
+                                                   interval="1"
+                                                   ng-change="DateTimeValidate(item,'LocalETA');"
+                                                   />
+                                            @*<input kendo-time-picker ng-disabled="item.IsDisabled" ng-change="VTime(item,'ETA');" ng-model-options="{ updateOn: 'blur' }"
+                                                   ng-model="item.ETA" k-format="'HH:mm'" />*@
+                                        </td>
+
+                                        <td>Day Diff</td>
+                                        <td class="tdfont">
+                                            <label>Dep.</label> <select disabled ng-model="item.DayDiff" ng-options="x for x in dayDiff"></select>
+                                            <label>Arr.</label> <select disabled ng-model="item.ArrDayDiff" ng-options="x for x in dayDiff"></select>
+                                        </td>
+
+                                        <td ng-hide="{{SegmentBookingOpenClose}}">Booking</td>
+                                        <td ng-hide="{{SegmentBookingOpenClose}}" class="tdfont">
+
+                                            <input type="radio" ng-disabled="item.IsDisabled" ng-model="item.IsBookingClosed" value="False" class="k-radio" id="lblbkdYes{{$index}}" />
+                                            <label class="k-radio-label" for="lblbkdYes{{$index}}">Open</label>
+
+                                            <input type="radio" ng-disabled="item.IsDisabled" ng-model="item.IsBookingClosed" value="True" class="k-radio" id="lblbkdNo{{$index}}" />
+                                            <label class="k-radio-label" for="lblbkdNo{{$index}}">Closed</label>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>STD</td>
+                                        <td class="tdfont">
+                                            <input  disabled="disabled"  kendo-date-time-picker
+                                                   ng-model="item.LocalSTD"
+                                                   k-format="'dd-MMM-yyyy HH:mm'" 
+                                                   placeholder = "dd-mmm-yyyy hh:mm"
+                                                   Culture="en-GB"
+                                                   timeFormat="HH:mm"
+                                                   interval="1"
+                                                   ng-change="DateTimeValidate(item,'LocalSTD');"
+                                                   />
+
+                                            @*<input kendo-time-picker disabled="disabled"
+                                                   ng-model="item.STD" k-format="'HH:mm'" />*@
+                                        </td>
+
+                                        <td>STA</td>
+
+                                        <td class="tdfont">
+                                            <input disabled="disabled"  kendo-date-time-picker
+                                                   ng-model="item.LocalSTA"
+                                                   k-format="'dd-MMM-yyyy HH:mm'" 
+                                                   placeholder = "dd-mmm-yyyy hh:mm" 
+                                                   Culture="en-GB"
+                                                   timeFormat="HH:mm"
+                                                   interval="1"
+                                                   ng-change="DateTimeValidate(item,'LocalSTA');"
+                                                   />
+                                            @*<input kendo-time-picker disabled="disabled"
+                                                   ng-model="item.STA" k-format="'HH:mm'" />*@
+                                        </td>
+
+
+                                        <td>
+                                            Cancel Flight
+                                        </td>
+
+                                        <td class="tdfont">
+
+                                            <input ng-disabled="item.IsDisabled && item.IsDeparted=='True'" type="radio" ng-change="IsCancelled(item,true);" ng-model="item.IsCancelled" class="k-radio" value="True" id="lblfltcanYes{{$index}}" />
+                                            <label class="k-radio-label" for="lblfltcanYes{{$index}}">Yes</label>
+
+                                            <input ng-disabled="item.IsDisabled && item.IsDeparted=='True'" type="radio" ng-change="IsCancelled(item,false);" value="False" ng-model="item.IsCancelled" class="k-radio" id="lblfltcanNo{{$index}}" />
+                                            <label class="k-radio-label" for="lblfltcanNo{{$index}}">No</label>
+                                        </td>
+
+
+
+                                        <td>
+                                            Flight Delay
+                                        </td>
+
+                                        <td class="tdfont">
+
+                                            <input disabled type="radio" ng-model="item.IsDelay" class="k-radio" value="True" id="lblIsDelayYes{{$index}}" />
+                                            <label class="k-radio-label" for="lblIsDelayYes{{$index}}">Yes</label>
+
+                                            <input disabled type="radio" value="False" ng-model="item.IsDelay" class="k-radio" id="lblIsDelayNo{{$index}}" />
+                                            <label class="k-radio-label" for="lblIsDelayNo{{$index}}">No</label>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+
+                                        <td>ATD</td>
+
+                                        <td class="tdfont">
+                                            <input disabled="disabled" kendo-date-time-picker
+                                                   ng-model="item.LocalATD"
+                                                   k-format="'dd-MMM-yyyy HH:mm'"
+                                                   placeholder = "dd-mmm-yyyy hh:mm"
+                                                   Culture="en-GB"
+                                                   timeFormat="HH:mm"
+                                                   interval="1"
+                                                   ng-change="DateTimeValidate(item,'LocalATD');"
+                                                    />
+                                            @*<input kendo-time-picker disabled="disabled"
+                                                   ng-model="item.ATD" k-format="'HH:mm'" />*@
+                                        </td>
+
+
+                                        <td>ATA</td>
+
+                                        <td class="tdfont">
+                                            <input disabled="disabled" kendo-date-time-picker
+                                                   ng-model="item.LocalATA"
+                                                   k-format="'dd-MMM-yyyy HH:mm'"
+                                                   placeholder = "dd-mmm-yyyy hh:mm"
+                                                   Culture="en-GB"
+                                                   timeFormat="HH:mm"
+                                                   interval="1"
+                                                   ng-change="DateTimeValidate(item,'LocalATA');"
+                                                    />
+                                            @*<input kendo-time-picker disabled="disabled"
+                                                   ng-model="item.ATA" k-format="'HH:mm'" />*@
+                                        </td>
+
+                                        <td ng-hide="{{Environment!='JT'}}" colspan="2">
+                                            <input ng-disabled="(item.IsDisabled || item.IsCancelled=='False')" id="isCnlUpdt" type="checkbox" ng-model="item.IsCancelNotice" class="k-checkbox" />
+                                            <label class="k-checkbox-label" for="isCnlUpdt">Cancel Until Further Notice</label>
+
+                                        </td>
+
+
+                                        @*<td>*  Control City:</td>
+
+                                            <td class="tdfont">
+                                                <input kendo-combo-box k-placeholder="'Select Flight No'" name="fltNo" data-valid='required' data-valid-msg='Select Flight No'
+                                                       k-min-length="2" k-auto-bind="false"
+                                                       k-filter="'contains'"
+                                                       ng-model="SearchRequest.FlightNo"
+                                                       k-filterfield="'CityCode'"
+                                                       k-options='K_Options("FInfo_City", "vCity" , "SNo" , "CityCode" , ["CityCode"])' />
+
+                                            </td>*@
+
+
+
+                                        <td>Charter Flight</td>
+
+                                        <td class="tdfont">
+
+                                            <input ng-disabled="item.IsDisabled" type="radio" ng-model="item.IsCharter" class="k-radio" value="True" id="lblIsCharterYes{{$index}}" />
+                                            <label class="k-radio-label" for="lblIsCharterYes{{$index}}">Yes</label>
+
+                                            <input ng-disabled="item.IsDisabled" type="radio" value="False" ng-model="item.IsCharter" class="k-radio" id="lblIsCharterNo{{$index}}" />
+                                            <label class="k-radio-label" for="lblIsCharterNo{{$index}}">No</label>
+                                        </td>
+
+
+
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>
+                                            Week Days
+                                        </td>
+
+                                        <td colspan="3" class="tdfont">
+                                            <ul class="options">
+                                                <li>
+                                                    <input id="{{$parent.$index}}allday{{$index}}" ng-change="CheckAll(item);" type="checkbox" ng-model="item.All" class="k-checkbox" />
+                                                    <label class="k-checkbox-label" for="{{$parent.$index}}allday{{$index}}">All Days</label>
+
+                                                </li>
+                                                <li ng-repeat="(day,enabled) in item.Days.toJSON()">
+                                                    <input id="{{$parent.$index}}Day1{{$index}}" type="checkbox" ng-model="item.Days[day]" class="k-checkbox" />
+                                                    <label class="k-checkbox-label" for="{{$parent.$index}}Day1{{$index}}">{{day}}</label>
+
+                                                </li>
+
+                                            </ul>
+
+                                        </td>
+                                        <td>
+                                            Remarks
+                                        </td>
+
+                                        <td rowspan="2" colspan="2" class="tdfont">
+                                            <textarea disabled ng-model="item.Remarks" style="width:97%;"></textarea>
+                                            @*<span class="txtRem">{{250-item.Remarks.length}}</span>*@
+                                        </td>
+
+
+                                        <td>
+                                            <input type="button" class="btn btn-info btninfo" ng-click="OpenPopUp(item,'A');" value="Previous Aircrafts" />
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Max Gross/Pcs</td>
+
+                                        <td class="tdfont">
+                                            <input k-format="'{0:n0}'" kendo-numeric-text-box  ng-disabled="item.IsDisabled"
+                                                   ng-model="item.MaxGrossPerPcs" min="0" max="4000" />
+                                        </td>
+
+                                        <td>Max Vol/Pcs</td>
+                                        <td class="tdfont">
+                                            <input k-format="'{0:n0}'" kendo-numeric-text-box ng-disabled="item.IsDisabled"
+                                                   ng-model="item.MaxVolumePerPcs" min="0" max="4000" />
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <input type="button" class="btn btn-info btninfo" ng-click="OpenPopUp(item,'SI');" value="Flight SI Details" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </li>
+
+                        @*<li disabled="disabled">
+                                Communication
+                            </li>*@
+                    </ul>
+                </div>
+
+            </fieldset>
+
+        </div>
+        @*Flight Booking Open/Close*@
+        <div ng-hide="{{SegmentBookingOpenClose!=true}}">
+            <fieldset style="margin:0px;">
+                <legend class="legcls">Flight Information</legend>
+                <div>
+                    <ul id="FlightBookingOpenClose" ng-if="SegmentDataSource.length>0" kendo-panel-bar>
+                        <li class="k-state-active" ng-repeat="item in SegmentDataSource">
+                            <span class="k-link k-state-selected">{{item.Header}}</span>
+                            <div style="padding: 10px;">
+                                <table style="width:100%;">
+
+                                    <tr>
+                                        <td style="width:8%"><strong>Valid From</strong></td>
+
+                                        <td style="width:15%" class="tdfont">
+                                            <input kendo-date-picker k-ng-model="item.ValidFrom" disabled="disabled"
+                                                   k-format="'dd-MMM-yyyy'" />
+                                        </td>
+
+                                        <td style="width:8%"><strong>Valid To</strong></td>
+
+                                        <td style="width:15%" class="tdfont">
+
+
+                                            <input kendo-date-picker k-ng-model="item.ValidTo" data-valid='required' data-valid-msg='Select Valid To Date'
+                                                   placeholder='Valid To' id="BValidTo{{$index}}" k-min="item.ValidFrom" k-on-change="CheckFlightDateRange(kendoEvent,item,0)" @*(item.FlightNo,item.ValidFrom,item.ValidTo,item.Board,item.Off) onchange="validDate(this);"*@
+                                                   k-format="'dd-MMM-yyyy'" />
+                                        </td>
+
+                                        <td style="width:8%"><strong>Booking</strong></td>
+
+                                        <td style="width:15%" class="tdfont">
+                                            <input type="radio" ng-model="item.IsBookingClosed" value="False" class="k-radio" id="BlblbkdYes{{$index}}" />
+                                            <label class="k-radio-label" for="BlblbkdYes{{$index}}">Open</label>
+
+                                            <input type="radio" ng-model="item.IsBookingClosed" value="True" class="k-radio" id="BlblbkdNo{{$index}}" />
+                                            <label class="k-radio-label" for="BlblbkdNo{{$index}}">Closed</label>
+                                        </td>
+
+                                        <td style="width:8%"></td>
+                                        <td style="width:23%" class="tdfont"></td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>Week Days</strong></td>
+
+                                        <td colspan="3" class="tdfont">
+                                            <ul class="options">
+                                                <li>
+                                                    <input id="{{$parent.$index}}Ballday{{$index}}" ng-change="CheckAll(item);" type="checkbox" ng-model="item.All" class="k-checkbox" />
+                                                    <label class="k-checkbox-label" for="{{$parent.$index}}Ballday{{$index}}">All Days</label>
+
+                                                </li>
+                                                <li ng-repeat="(day,enabled) in item.Days.toJSON()">
+                                                    <input id="{{$parent.$index}}BDay1{{$index}}" type="checkbox" ng-model="item.Days[day]" class="k-checkbox" />
+                                                    <label class="k-checkbox-label" for="{{$parent.$index}}BDay1{{$index}}">{{day}}</label>
+
+                                                </li>
+
+                                            </ul>
+
+                                        </td>
+
+                                        <td colspan="4"></td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </fieldset>
+        </div>
+        @*Capacity Distribution*@
+        <div >@*ng-hide="{{Environment!='JT'}}"*@
+            <fieldset style="margin:0px;">
+                <legend class="legcls">Capacity Distribution</legend>
+                <kendo-grid options="CapDistributeGridOptions"></kendo-grid>
+            </fieldset>
+        </div>
+        @*Re-Route*@
+        <div>
+            <fieldset style="margin:0px;">
+                <legend class="legcls">Existing Route</legend>
+                <ul class="routetab">
+
+
+                    <li ng-repeat="route in routes">
+                        <div>
+
+                            <img title="Click here to add new route from Origin" ng-if="!IsddOpen && $index==0 && !IsApply && route.DepStatus!='DEP'" ng-click="AddRoute(route,true,true);" class="Add-route" ng-src="~/Images/plus.svg" />
+                            <span ng-if="route.IsFirst">
+                                <input kendo-combo-box k-placeholder="'Airport'" name="arpt" data-valid='required' data-valid-msg='Select airport code'
+                                       k-min-length="1" k-auto-bind="false"
+                                       k-ng-model="AirportCode"
+                                       k-filterfield="'AirportCode'" style="width:65px;vertical-align:top;"
+                                       k-options='K_Options("AirportCode", "FC_RouteAirport")' />
+
+                                <img ng-click="AddNewRoute(0,route,routes,true);" class="Add-route" ng-src="~/Images/save.svg" />
+                                <img title="Click here to remove this route" ng-click="AddRoute(route,false);" class="Add-route" ng-src="~/Images/cancel.svg" />
+
+                            </span>
+
+                            <img ng-if="!(route.IsNew && IsApply)" class="img-route" ng-src="~/Images/{{route.icon}}" />
+
+                            <img title="Click here to remove this route" ng-if="route.IsNew && !route.IsddEnabled && !IsApply" ng-disabled="IsApply" ng-click="RemoveRoute($index,route,routes);" class="Add-route btnRemove" ng-src="~/Images/cancel.svg" />
+                            <input ng-if="!(route.IsNew && IsApply)" id="route{{$index}}" ng-disabled="route.disabled || IsApply" type="checkbox" ng-model="route.IsSelect" class="k-checkbox" />
+                            <label ng-if="!(route.IsNew && IsApply)" class="k-checkbox-label lblRoute" for="route{{$index}}">{{route.Name}}</label>
+
+                            <img title="Click here to add new route" ng-if="route.IsAddRoute && route.IsSelect &&!IsddOpen && !IsApply" ng-click="AddRoute(route,true);" class="Add-route" ng-src="~/Images/plus.svg" />
+
+                            <span ng-if="route.IsddEnabled && !route.IsFirst">
+                                <input kendo-combo-box k-placeholder="'Airport'" name="arpt" data-valid='required' data-valid-msg='Select airport code'
+                                       k-min-length="1" k-auto-bind="false"
+                                       k-ng-model="AirportCode"
+                                       k-filterfield="'AirportCode'" style="width:65px;vertical-align:top;"
+                                       k-options='K_Options("AirportCode", "FC_RouteAirport")' />
+
+                                <img ng-click="AddNewRoute($index,route,routes);" class="Add-route" ng-src="~/Images/save.svg" />
+                                <img title="Click here to remove this route" ng-click="AddRoute(route,false);" class="Add-route" ng-src="~/Images/cancel.svg" />
+
+                            </span>
+
+                        </div>
+                    </li>
+                </ul>
+
+            </fieldset>
+
+            <fieldset id="tblUpdateRoute" style="margin:0px;">
+                <legend class="legcls">Updated Route</legend>
+                <table>
+                    <tr>
+                        <td style="width:100%;">
+                            <ul class="routetab">
+                                <li ng-repeat="route in routes" ng-if="route.IsSelect">
+
+                                    <img class="img-route" ng-src="~/Images/{{route.icon}}" />
+
+
+                                    <input id="updroute{{$index}}" readonly ng-disabled="route.disabled || IsApply" type="checkbox" ng-model="route.IsSelect" class="k-checkbox" />
+                                    <label class="k-checkbox-label lblRoute" for="updroute{{$index}}">{{route.Name}}</label>
+
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <label ng-show="IsApplyHide"><font color="red">*</font>From:</label>
+                        </td>
+                        <td>
+                            <input ng-disabled="IsApply" ng-show="IsApplyHide" style="width:100px;" kendo-date-picker k-ng-model="RouteRange.From" data-valid='required'
+                                   data-valid-msg='Select From Date'
+                                   k-max="RouteRange.To" k-min="RouteRange.FromMin" k-rebind="RouteRange.To"
+                                   placeholder='From Date' id="frmDate" onchange="validDate(this);"
+                                   k-format="'dd-MMM-yyyy'" />
+
+                        </td>
+                        <td>
+                            <label ng-show="IsApplyHide"><font color="red">*</font>To:</label>
+                        </td>
+                        <td>
+                            <input ng-disabled="IsApply" ng-show="IsApplyHide" style="width:100px;" kendo-date-picker k-ng-model="RouteRange.To" data-valid='required' data-valid-msg='Select To Date'
+                                   placeholder='To Date' id="toDate" onchange="validDate(this);"
+                                   k-rebind="RouteRange.From" k-min="RouteRange.From"
+                                   k-format="'dd-MMM-yyyy'" />
+
+                        </td>
+                        <td>
+                            <input ng-disabled="IsApply" ng-show="IsApplyHide" type="button" style="width:80px;" ng-click="ApplyRoute();" class="btn btn-success" value="Apply" />
+                        </td>
+                    </tr>
+                </table>
+                <div class="clear"></div>
+
+                <ul ng-if="updateRoutes.length>0" kendo-panel-bar>
+
+                    <li ng-disabled="item.disabled" class="k-state-active" ng-repeat="item in updateRoutes">
+                        <span class="k-link k-state-selected">  {{item.FlightNo +' : '+ item.Board+' - '+ item.Off +' on '+ item.FlightDate}}  <label class="flt">{{item.FlyTime}}</label></span>
+                        <div style="padding: 10px;">
+                            <table style="width:100%;">
+
+
+
+                                <tr>
+                                    <td>Flight Date</td>
+
+                                    <td class="tdfont">
+                                        <input kendo-date-picker disabled k-ng-model="item.FlightDate" k-format="'dd-MMM-yyyy'" />
+                                    </td>
+                                    <td>ETD (HH:MM)</td>
+
+                                    <td class="tdfont">
+                                        <input ng-disabled="IsApply" data-valid='required' data-valid-msg='ETD required' id="etdr{{$index}}"
+                                               kendo-time-picker k-min="item.ETA" k-rebind="item.ETA" ng-change="VTime(item,'ETD',updateRoutes);" ng-model-options="{ updateOn: 'blur' }"
+                                               ng-model="item.ETD" k-max="item.ETA"
+                                               k-format="'HH:mm'" />
+                                    </td>
+
+                                    <td>ETA (HH:MM)</td>
+                                    <td class="tdfont">
+                                        <input ng-disabled="IsApply" data-valid='required' data-valid-msg='ETA required' id="etar{{$index}}"
+                                               kendo-time-picker k-rebind="item.ETD" k-min="item.ETD" k-max="item.ETD" ng-change="VTime(item,'ETA',updateRoutes);" ng-model-options="{ updateOn: 'blur' }"
+                                               ng-model="item.ETA" k-format="'HH:mm'" />
+                                    </td>
+
+
+
+                                    <td>Day Diff</td>
+
+                                    <td class="tdfont">
+                                        <select disabled ng-change="OnSelectDayDiff(updateRoutes,item);" ng-model="item.DayDiff" ng-options="x for x in dayDiff"></select>
+                                    </td>
+                                    <td>Arr Day Diff</td>
+
+                                    <td class="tdfont">
+                                        <select disabled ng-model="item.ArrDayDiff" ng-options="x for x in dayDiff"></select>
+                                    </td>
+                                </tr>
+
+
+
+
+                            </table>
+                        </div>
+                    </li>
+
+                    @*<li disabled="disabled">
+                            Communication
+                        </li>*@
+                </ul>
+            </fieldset>
+        </div>
+
+
+    </div>
+
+
+
+</fieldset>
+
+<div kendo-window="kwinRemarks" k-title="'Remarks'" k-width="400" k-height="130" k-visible="false">
+
+    <textarea id="UpdateRemarks" ng-model="UpdateRemarks" style="width:97%;" rows="5" data-valid='required' data-valid-msg='Remarks field is required' required maxlength="250"></textarea>
+    <span class="txtRem">{{250-UpdateRemarks.length}}</span>
+    <input ng-if="IsUpdateFlight && !IsSegmentBookingOpenClose" type="button" class="btn btn-success" ng-click="SaveChanges();" value="Submit" />
+    <input ng-if="!IsUpdateFlight && !IsSegmentBookingOpenClose" type="button" class="btn btn-success" ng-click="UpdateFlightRoute();" value="Submit" />
+    <input ng-if="!IsUpdateFlight && IsSegmentBookingOpenClose" type="button" class="btn btn-success" ng-click="UpdateFlightBooingOpenClose();" value="Submit" />
+
+</div>
+
+<div kendo-window="kwinMessageType" k-title="'Message Type Details'" k-width="400" k-height="250" k-visible="false">
+    <textarea id="MessageTypeDetails" ng-model="MessageTypeDetails" disabled style="width:97%; height:96%; background-color:white;"></textarea>
+</div>
+
+<div kendo-window="historyWin" k-title="'History Details'" k-visible="false">
+
+    <kendo-tab-strip k-animation="false" style="margin-top:0px;">
+        <ul>
+            <li class="k-state-active">
+                <span>Flight Capacity</span>
+            </li>
+            <li>
+                <span class="k-link">Operation</span>
+            </li>
+            <li>
+                <span class="k-link">Re-Route</span>
+            </li>
+
+        </ul>
+        <div>
+            <kendo-tooltip k-options="HistoryGridOptionsTooltip">
+                <kendo-grid style="width:100%;" options="HistoryGridOptions"></kendo-grid>
+            </kendo-tooltip>
+        </div>
+        <div>
+            <kendo-tooltip k-options="OperationHistoryGridOptionsTooltip">
+                <kendo-grid style="width:100%;" options="OperationHistoryGridOptions"></kendo-grid>
+            </kendo-tooltip>
+        </div>
+        <div>
+            <kendo-tooltip k-options="ReRouteHistoryGridOptionsTooltip">
+                <kendo-grid style="width:100%;" options="ReRouteHistoryGridOptions"></kendo-grid>
+            </kendo-tooltip>
+        </div>
+
+
+    </kendo-tab-strip>
+
+</div>
+
+<div kendo-window="kwin1" k-title="''" k-height="400" k-on-close="OnClose2()" k-resizable="true" k-visible="false">
+    <kendo-tooltip k-options="PopUpOptionsTooltip">
+        <kendo-grid ng-if="PopUpType!=''" options="PopUpOptions(PopUpType)">  
+            <div k-detail-template>
+                <div kendo-tooltip k-options="PopUpOptionsPCSTooltip">
+                    <kendo-grid options="PopUpOptionsPCS(dataItem)"></kendo-grid>
+                </div>
+            </div>
+</kendo-grid>
+    </kendo-tooltip>
+</div>
+<div kendo-window="kwin2" k-title="''" k-on-close="OnColse()" k-width="800" k-height="300" k-resizable="false" k-visible="false">
+    <kendo-grid ng-if="PopUpTypePCS" options="PopUpOptionsPCS(PCSDataItem)" ></kendo-grid>
+</div>
+<div kendo-window="kwin3" style="align-content:center;" k-on-close="OnClose1()"  k-title="'Please Select'" k-visible="false">
+    <input type="button" class="btn btn-info" ng-click="OpenBKDorUT(2);" value="Booked and Executed Shipments" />
+    <input type="button" class="btn btn-info" ng-click="OpenBKDorUT(1);" value="Utilized Capacity" />
+</div>
+
+<style>
+
+    .k-callout-n {
+    display:none;
+    }
+
+    .k-window {
+        max-width: 98% !important;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .k-grid .k-hierarchy-col {
+        width: 30px;
+    }
+
+
+    .options {
+        padding: 0px;
+    }
+
+        .options > li {
+            float: left;
+            list-style: none;
+            padding-right: 1em;
+        }
+
+    label {
+        font-weight: 500;
+    }
+
+    .routetab > li {
+        float: left;
+        list-style: none;
+        padding-right: 1em;
+    }
+
+
+    .k-grid tbody .k-button {
+        min-width: 12px;
+        width: 18px;
+        color: transparent;
+        background-color: transparent;
+        border: transparent;
+        height: 22px;
+    }
+
+    .k-grid-header th.k-header {
+        vertical-align: inherit !important;
+    }
+
+    .chkCls {
+        text-align: center;
+    }
+
+
+
+    .k-radio, input.k-checkbox {
+        display: inline;
+        opacity: 0;
+        width: 0;
+        margin: 0;
+        -webkit-appearance: none;
+        overflow: hidden;
+    }
+
+    .k-radio-label {
+        padding-right: 5px;
+        font-size: 11px;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        background-color: #3f51b5;
+        border-radius: 50%;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        top: 4px;
+        left: 4px;
+    }
+
+    .k-checkbox-label, .k-radio-label {
+        display: inline-block;
+        position: relative;
+        padding-left: 19px;
+        vertical-align: text-top;
+        line-height: 16px;
+        cursor: pointer;
+        border-style: solid;
+        border-width: 0;
+    }
+
+    .k-radio:checked + .k-radio-label:before, .k-radio:checked + .k-radio-label:hover:before {
+        border-color: #3f51b5;
+    }
+
+    .k-radio-label:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 12px;
+        height: 12px;
+        border-style: solid;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+    }
+
+    .k-radio-label:before {
+        border-color: #7f7f7f;
+        border-radius: 50%;
+        background-color: #fff;
+        border-width: 2px;
+    }
+
+    .k-invalid-msg {
+        position: fixed;
+    }
+
+    td[role=gridcell] {
+        white-space: nowrap;
+    }
+
+    .btninfo {
+        width: 10.5em;
+        padding: 2px;
+    }
+
+
+    .k-checkbox:disabled + .k-checkbox-label:before {
+        background: #696969;
+        border-color: #696969;
+        border-radius: 1px;
+    }
+
+    .k-radio:disabled + .k-radio-label:before {
+        background: #ffffff;
+        border-color: #696969;
+    }
+
+    .img-route {
+        height: 25px;
+    }
+
+    .Add-route {
+        height: 25px;
+        filter: contrast(0.6);
+    }
+
+    .btnRemove {
+        height: 18px;
+        margin-top: -18px;
+        margin-left: 1.8em;
+        position: absolute;
+    }
+
+    .Add-route:hover {
+        filter: contrast(5);
+        color: blue;
+        cursor: pointer;
+    }
+
+    .lblRoute {
+        margin: -10px 20px;
+    }
+
+    .fltimg {
+        vertical-align: middle;
+        height: 18px;
+    }
+
+    div[kendo-window="winRoute"] table td {
+        border-bottom: 1px solid #7fc4e6;
+    }
+
+    div[id=ReRouteTab] .k-grid-content {
+        max-height: 421px;
+    }
+
+    div[id=ReRouteTab] .k-detail-cell .k-grid-content {
+        max-height: 200px;
+    }
+
+    div[options=FlightSearchO_DGridOptions] .k-grid-content {
+        max-height: 71vh;
+    }
+
+    div[kendo-window="historyWin"] .k-grid-content {
+        max-height: 70vh;
+    }
+
+    .redl {
+        color: red;
+    }
+
+        .redl:before {
+            content: "\f0c8";
+            color: red;
+            margin-right: 8px;
+        }
+
+    .greenl {
+        color: green;
+        margin-right: 20px;
+    }
+
+        .greenl:before {
+            content: "\f0c8";
+            color: green;
+            margin-right: 8px;
+        }
+
+    .lgd {
+        border: solid 1px #9a9898;
+        padding: 0px 10px;
+        font-size: 14px;
+        margin-left: 8px;
+    }
+
+    .k-window-content .bVErrMsgContainer {
+        display: none;
+    }
+
+    .k-window-content {
+        font-size: 0.85em;
+    }
+
+    .k-grid-content-locked {
+        height: auto !important;
+    }
+
+    .hcap {
+        color: #9d331d;
+        font-weight: 700;
+    }
+
+    .hbold {
+        color: black;
+        font-weight: 700;
+    }
+
+    .m0 {
+        margin: 0;
+    }
+
+    .k-grid-content {
+        min-height: 40px;
+    }
+
+    .fb {
+        font-weight: 500;
+    }
+
+    .flt {
+        margin-left: 30em;
+        font-size: 13px;
+        font-weight: normal;
+    }
+</style>
+
+
+<script type="text/x-kendo-template" id="template">
+    <kendo-grid k-scope-field=initgrd{{dataItem.Route.exRep()+dataItem.ULDNo.exRep()}} k-options="ShipmentInitGrid(dataItem);"></kendo-grid>
+
+</script>
+
+@Scripts.Render("~/bundles/vieweditflightV2")

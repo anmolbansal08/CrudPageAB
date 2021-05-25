@@ -1,0 +1,19 @@
+﻿<Messages>
+	<ServerMessage>
+		<Key>1001</Key>
+		<value>Region already exists with same input parameters</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2000</Key>
+		<value>Region Added Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2001</Key>
+		<value>Region Updated Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2002</Key>
+		<value>Region Deleted Successfully.</value>
+	</ServerMessage>
+</Messages>
+

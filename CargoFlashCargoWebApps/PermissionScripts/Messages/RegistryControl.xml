@@ -1,0 +1,14 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Registry Control Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Registry Control Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Registry Control Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

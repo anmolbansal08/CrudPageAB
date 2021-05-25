@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="CargoFlash.SoftwareFactory.Security.BaseWebUISecureObject">
+    <Position X="1" Y="0.75" Width="5.75" />
+    <TypeIdentifier>
+      <FileName>BaseWebUISecureObject.cs</FileName>
+      <HashCode>EQBAAhAACCEZCCiQAhEqBFNBgwACYAGRBhEgABKIBQg=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+</ClassDiagram>

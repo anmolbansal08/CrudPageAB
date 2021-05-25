@@ -1,0 +1,148 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>InsertMessage</title>
+</head>
+<body>
+    <div>
+        <table class='WebFormTable' id='tbl'>
+            <tr><td class='formSection' colspan='10'>Generate Message </td></tr>
+            @*<tr><td class='formlabel' colspan='10'><div class='MandatoryTextCss'> Mandatory Fields</div></td></tr>*@
+
+
+
+
+
+            <tr>
+                @*<td width="5%">
+                    <asp:Label ID="lblMsgType" runat="server" Text="Msg Type:"></asp:Label>
+                </td>*@
+                <td class="formlabel" >Msg Type:</td>
+                <td class="formlabel">
+                    @Html.TextBox("Text_MsgType", null, new { data_valid = "required", data_role = "autocomplete", data_valid_msg = " Msg type can not be blank" })
+                </td>
+
+                <td class="formlabel">Serial No. Or ID:</td>
+                <td class="formlabel">
+                    @Html.TextBox("Text_SerialNo", null)
+                </td>
+                <td class="formlabel">Save Message in DB</td>
+                <td class="formlabel">
+                    @Html.CheckBox("chksavemsg", false)
+                </td>
+               
+            </tr>
+            <tr>
+                <td class="formlabel">Sub Type:</td>
+                <td class="formlabel">
+                    @Html.TextBox("Text_Subtype", null)
+                </td>
+                <td class="formlabel">Origin:</td>
+                <td class="formlabel">
+                    @Html.TextBox("Text_Origin", null)
+                </td>
+                <td class="formlabel">Destination</td>
+                <td class="formlabel">
+                    @Html.TextBox("Text_Destination", null)
+                </td>
+                
+            </tr>
+            <tr>
+                <td class="formlabel">Version:</td>
+                <td class="formlabel">
+                    @Html.TextBox("Text_Version", null, new { data_valid = "required", data_role = "autocomplete", data_valid_msg = "Version can not be blank" })
+                </td>
+                <td class="formlabel">Flight Date.:</td>
+                <td class="formlabel">
+
+                    @Html.TextBox("FlightDate", null, new { data_valid = "required", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Date can not be blank" })
+                </td>
+             
+
+                <td class="formlabel">Flight No.:</td>
+
+                <td class="formlabel">
+                    @Html.TextBox("Text_FlightNo", null)
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel">O/P Structure :</td>
+                <td class="formlabel">
+                    @Html.Hidden("Structure")
+                    @Html.TextBox("Text_Structure", null, new { controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Rate Type  can not be blank" })
+                </td>
+                <td class="formlabel">Receiver</td>
+                <td class="formlabel">
+                    @Html.TextBox("Text_Receiver", null)
+                </td>
+                <td class="formlabel">Receiver Type</td>
+                <td class="formlabel">
+                    @Html.TextBox("Text_ReceiverType", null)
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel">Outbound Type:</td>
+                <td class="formlabel">
+                    @Html.Hidden("Outbound")
+                    @Html.TextBox("Text_Outbound", null, new { controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Rate Type  can not be blank" })
+                </td>
+                <td class="formlabel">Msg Seq No</td>
+                <td class="formlabel">
+                    @Html.TextBox("Text_MsgSeqNo", null)
+                </td>
+                <td class="formlabel">Double Signature</td>
+                <td class="formlabel">
+               
+                    @Html.CheckBox("chkDoubleSig", false)
+                </td>
+            </tr>
+            <tr class='formSection'>
+                <td>
+                    <input type="button" name='CreateMessage' value='Create' class='btn btn-success' id="btnCreateMessage" style="text-align:center" />
+                </td>
+                <td>
+                    <input type="button" name='ClearData' value='Clear' class='btn btn-success' id="btnClearData" style="text-align:center" />
+                </td>
+                <td colspan="8"></td>
+            </tr>
+            <tr class='formSection'>
+
+                <td colspan="10">
+                    @Html.TextArea("txtmessage", null, new { style = "width: 50%; height:250px;margin-left:10px;margin-top:5px;" })
+                   
+                </td>
+            </tr>
+            <tr class='formSection'>
+                <td >Email</td>
+                <td colspan="9">
+                    @Html.TextBox("Text_Email", null, new { style = "width: 500px; " })
+
+                </td>
+            </tr>
+            <tr class='formSection'>
+                <td >Sita ID</td>
+                <td colspan="9">
+                    @Html.TextBox("Text_SitaId", null, new { style = "width: 500px; " })
+                   
+                </td>
+            </tr>
+            <tr class='formSection'>
+                <td colspan='10'>
+                    <input type="button" name='SearchSave' value='Send' class='btn btn-success' id="btnSend" />
+                  
+
+                </td>
+            </tr>
+           
+        </table>
+    </div>
+</body>
+</html>
+
+
+<script src="~/Scripts/jquery-ui-1.10.2.custom.min.js"></script>
+
+<script src="~/JScript/EDI/ManualEdiMessage.js"></script>

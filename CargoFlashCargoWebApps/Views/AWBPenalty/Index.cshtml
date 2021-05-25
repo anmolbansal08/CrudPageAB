@@ -1,0 +1,180 @@
+﻿
+<div id="divbody" style="height:auto">
+    <section id="loginForm">
+        <div id='MainDiv'>
+            <div id='ApplicationTabs'>
+                <div id='ApplicationTabs-1'>
+                    <table class='WebFormTable' id='tbl' validateonsubmit=true>
+                        <tr><td class='formSection' colspan='4'>AWB Action</td></tr>
+                        @*<tr ><td class='formActiontitle' colspan='4'><span id='__SpanHeader__'>AWB Penalty </span><div class='MandatoryTextCss'><font color='red'>*</font> Mandatory Fields</div></td></tr>*@
+                        <tr class="trpSubmit"><td class='formbuttonrow' colspan='4'><input type='submit' id="Penalty" onclick="UpdateDataAWBReservationPenalty()" name='operation' value='Penalty' class='btn btn-success' /></td></tr>
+
+                        <tr>
+                            <td class='formlabel' colspan='1'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+
+                                    <label> Penalty Type</label>
+                                </span>
+                 </td>
+                            <td class='formInputcolumn' colspan='1'>
+                                @Html.Hidden("PenaltyType")
+                                @Html.TextBox("Text_PenaltyType", null, new { data_valid = "", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Penalty Type  can not be blank" })
+
+                            </td>
+                      
+
+                            <td class='formlabel' colspan='1'>
+                         
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    <input type="radio" name="Filter" id="AWbNoCheck" value="A"><label for="AWbNoCheck"> AWB/Ref No.</label>
+                                    <input type="radio" name="Filter" id="DateWise" value="D"> Date Wise
+                                </span>
+                            </td>
+
+                          
+
+                            <td class='formInputcolumn' colspan='1'></td>
+</tr>
+                        @*<tr class="trRadio">
+                            <td class='formlabel' title='Airline'   align="left">
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                    <input type="radio" name="Filter" id="AWbNoCheck" value="A"><label for="AWbNoCheck"> AWB/Ref No.</label>
+                                    <input type="radio" name="Filter" id="DateWise" value="D"> Date Wise
+                                </span>
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                                                    
+                        </tr>*@
+
+                        <tr class="DateWiseRow">
+                      
+                        </tr>
+                        <tr class="DateWiseRow">
+                         
+                        </tr>
+                        <tr class="DateWiseRow">
+                            <td class=' formlabel' title='From Date'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    From Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='FromDate' id='FromDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From Date' controltype='datetype' value='' placeholder='From Date' />
+                            </td>
+                            <td class=' formlabel' title='To Date'>
+                                <font color='red'>*</font><span id='spnAirlineCode'>
+                                    To Date :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                <input type='text' name='ToDate' id='ToDate' style='width: 133px;' data-valid='required'
+                                       data-role="datepicker" data-valid-msg='Select From To Date' controltype='datetype' value='' placeholder='To Date' />
+                            </td>
+                        </tr>
+                      
+                        <tr class="AWBNoRow">
+                            <td class=' formlabel' title='Reference Number'>
+                                @*<font color='red'>*</font>*@ <span id='spnAirlineCode'>
+                                    Reference Number :
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+                                @Html.Hidden("ReferenceNumber")
+
+                                @Html.TextBox("Text_ReferenceNumber", null, new { data_valid = "", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "Reference Number  can not be blank" })
+                            </td>
+                            <td class=' formlabel' title='AWB No'>
+                                @*<font color='red'>*</font>*@ AWB No<span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+
+                                @Html.Hidden("AWBNo")
+
+                                @Html.TextBox("Text_AWBNo", null, new { data_valid = "", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "AWBNo  can not be blank" })
+
+                            </td>
+                        </tr>
+
+                        <tr class="AWBNoR">
+                          
+                            <td class=' formlabel' title='AWB No'>
+                                <font color='red'>*</font>AWB No<span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                            <td class='formInputcolumn'>
+
+                                @Html.Hidden("AWBNo1")
+
+                                @Html.TextBox("Text_AWBNo1", null, new { data_valid = "", controltype = "autocomplete", data_role = "autocomplete", data_valid_msg = "AWBNo  can not be blank" })
+                                @*, data_valid_msg = "AWBNo  can not be blank"*@
+                            </td>
+                            <td class=' formlabel' title=''></td>
+                            <td class='formInputcolumn'></td>
+                        </tr>
+                        <tr>
+                            <td class=' formlabel' >
+                                Airline Prefix 
+                                @*<font color='red'></font><span id='spnAirlineCode'>
+                                    <input type='submit' name='operation' onclick="SearchAWBPenalty()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />*@
+                            </td>
+                            <td  class='formInputcolumn' style = "font-weight: bold;font-size: 10px;" >
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                                             @*<label class='formlabel' for="AirlinePrefix"></label>*@
+                                </span>
+
+                            </td>
+                            <td class='formlabel' title='Search'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+                                                             <font color='red'></font><span id='spnAirlineCode'>
+                                                                 <input type='submit' name='operation' onclick="SearchAWBPenalty()" value='Search' id="btnSearch" class='btn btn-success btnSearch' />
+                                                             </span>
+                            </td>
+                            <td class='formlabel'>
+                                <font color='red'></font><span id='spnAirlineCode'>
+
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+
+
+
+                    <div id="BindBlakListTable" style="width:100%">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="example">
+            <div id="grid" style="font-size:14px;"></div>
+            <script src="~/JScript/Export/AWBPenalty.js"></script>
+
+        </div>
+
+
+    </section>
+
+    <input type="hidden" value="@ViewBag.uid" id="uid" /> 
+
+    </div>

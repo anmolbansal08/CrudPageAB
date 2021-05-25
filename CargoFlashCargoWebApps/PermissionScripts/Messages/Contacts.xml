@@ -1,0 +1,18 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1999</Key>
+    <value>Select Primary only one time</value>
+  </ServerMessage>
+	 <ServerMessage>
+		<Key>2000</Key>
+		<value>Contacts Added Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2001</Key>
+		<value>Contacts Updated Successfully.</value>
+	</ServerMessage>
+	<ServerMessage>
+		<Key>2002</Key>
+		<value>Contacts Deleted Successfully.</value>
+	</ServerMessage>
+</Messages>

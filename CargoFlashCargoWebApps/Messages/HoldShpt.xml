@@ -1,0 +1,49 @@
+﻿<Messages>
+  <!--#region IrregularityPacking XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  IrregularityPacking
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Santosh Gupta
+  Created On:		9 oct 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>AWBNo already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>AWBNo Hold Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>AWBNo Hold Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>AWBNo Hold Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Tariff is already entered, charges can not  Delete or update.</value>
+  </ServerMessage>
+
+
+  <ServerMessage>
+    <Key>3001</Key>
+    <value>Duplicate Hold Type not allowed.</value>
+  </ServerMessage>
+</Messages>

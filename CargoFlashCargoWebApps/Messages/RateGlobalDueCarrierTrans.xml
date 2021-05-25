@@ -1,0 +1,29 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>DueCarrierSNo</Name>
+    <Message>Due Carrier Can't be Blank.</Message>
+  </DataFieldName>
+
+
+  <DataFieldName>
+    <Name>CurrencySNo</Name>
+    <Message>Currency Can't be Blank.</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Due Carrier Global  Rate Trans  already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Due Carrier Global  Rate Trans Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Due Carrier Global Rate Trans Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Due Carrier Global Rate Trans Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

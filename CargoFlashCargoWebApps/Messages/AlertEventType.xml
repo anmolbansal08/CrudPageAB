@@ -1,0 +1,18 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Alert Event Type  already exists.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Alert Event Type Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Alert Event Type  Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Alert Event Type  Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

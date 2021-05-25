@@ -1,0 +1,23 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Airline Class Rate already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Airline Class Rate Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Airline Class Rate Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Airline Class Rate Deleted Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2003</Key>
+    <value>Class Rate Slab Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

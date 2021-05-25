@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @{
+        if (Session["UserDetail"] == null)
+        {
+            System.Web.HttpContext.Current.Response.Redirect("~/Account/GarudaLogin.cshtml");
+            return;
+        }
+        if (Session["UserDetail"] != null && HttpContext.Current.Request.FilePath == "/")
+        {
+            System.Web.HttpContext.Current.Response.Redirect("~/Index.cshtml");
+            return;
+        }
+        else if (HttpContext.Current.Request.FilePath == "/")
+        {
+            System.Web.HttpContext.Current.Response.Redirect("~/Account/GarudaLogin.cshtml");
+            return;
+        }
+        var dttemp = ((CargoFlash.Cargo.Model.UserLogin)Session["UserDetail"]).SysSetting["JSVersion"];
+    }
+    <meta charset="utf-8" />
+    <title>Garuda Indonesia Cargo System</title>
+    <link type="text/css" rel="stylesheet" href="Styles/Application.css?+@dttemp" />
+    <link type="text/css" rel="stylesheet" href="Styles/Grid/kendo.common.min.css?+@dttemp" />
+    <link type="text/css" rel="stylesheet" href="Styles/Grid/kendo.blueopal.min.css?+@dttemp" />
+    <link type="text/css" rel="stylesheet" href="Styles/Site.css?+@dttemp" />
+    <link type="text/css" rel="stylesheet" href="Styles/validator.theme.red.css?+@dttemp" />
+    <link type="text/css" rel="stylesheet" href="Styles/jquery.appendGrid-1.3.2.css?+@dttemp" />
+    <link type="text/css" rel="stylesheet" href="Styles/jquery-ui/jquery-ui-1.10.2.custom.css?+@dttemp" />
+    <link type="text/css" rel="stylesheet" href="Styles/CfiMessage.css?+@dttemp" />
+    <link type="text/css" rel="stylesheet" href="Styles/font-awesome.min.css?+@dttemp" />
+    <link type="text/css" rel="stylesheet" href="Styles/jquery.alerts.css?+@dttemp" />
+
+
+    @if (Request.Url.ToString().ToLower().Contains("module=shipment&apps=buildup"))
+    {
+        <script type="text/javascript" src="Scripts/jquery-2.1.3.js?+@dttemp"></script>
+        <script type="text/javascript" src="Scripts/kendo/kendoo.web.js?+@dttemp"></script>
+        <script type="text/javascript" src="~/Scripts/Commono.js?+@dttemp"></script>
+    }
+    else if (Request.Url.ToString().ToLower().Contains("dashboard"))
+    {
+        <link type="text/css" rel="stylesheet" href="Styles/Dashboard.css?+@dttemp" />
+        <link type="text/css" rel="stylesheet" href="Styles/bootstrap.css?+@dttemp" />
+        <script type="text/javascript" src="Scripts/jquery-2.1.3.js?+@dttemp"></script>
+        <script src="~/PermissionScripts/Kendo/kendo.all.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/Common.js?+@dttemp"></script>
+    }
+    else if (Request.Url.ToString().ToLower().Contains("module=report&apps=operation"))
+    {
+        <link type="text/css" rel="stylesheet" href="Styles/Dashboard.css?+@dttemp" />
+        <script type="text/javascript" src="Scripts/jquery-1.9.1.min.js?+@dttemp"></script>
+        <script src="~/Scripts/KendoSchedular/Content/JS/kendo.all.min.js?+@dttemp"></script>
+        <script src="~/Scripts/KendoSchedular/Content/JS/kendo.dataviz.min.js?+@dttemp"></script>
+        <script type="text/javascript" src="~/Scripts/Common.js?+@dttemp"></script>
+    }
+    else if (Request.Url.ToString().ToLower().Contains("module=report&apps=impoperation"))
+    {
+        <link type="text/css" rel="stylesheet" href="Styles/Dashboard.css?+@dttemp" />
+        <script type="text/javascript" src="Scripts/jquery-1.9.1.min.js?+@dttemp"></script>
+        <script src="~/Scripts/KendoSchedular/Content/JS/kendo.all.min.js?+@dttemp"></script>
+        <script src="~/Scripts/KendoSchedular/Content/JS/kendo.dataviz.min.js?+@dttemp"></script>
+        <script type="text/javascript" src="~/Scripts/Common.js?+@dttemp"></script>
+    }
+    else
+    {
+        <script type="text/javascript" src="Scripts/jquery-1.7.2.js?+@dttemp"></script>
+        <script type="text/javascript" src="Scripts/kendo/kendo.web.js?+@dttemp"></script>
+        <script type="text/javascript" src="~/Scripts/Common.js?+@dttemp"></script>
+        <script type="text/javascript" src="~/Scripts/jquery.toolbar.js?+@dttemp"></script>
+    }
+
+    <script type="text/javascript" src="~/Scripts/validator.js?+@dttemp"></script>
+    <script src="~/Scripts/CfiMessage.js?+@dttemp"></script>
+    <script type="text/javascript" src="Scripts/maketrans.js?+@dttemp"></script>
+    <script src="Scripts/jquery.appendGrid-1.3.2.js?+@dttemp"></script>
+    <script src="Scripts/jquery.serializeToJSON.js?+@dttemp"></script>
+    <script src="Scripts/shortcut.js?+@dttemp"></script>
+    <script type="text/javascript" src="Scripts/jquery-ui-1.10.2.custom.min.js?+@dttemp"></script>
+    <script type="text/javascript" src="Scripts/jqueryPrintNew.js?+@dttemp"></script>
+    <script type="text/javascript" src="Scripts/jquery.alerts.js?+@dttemp"></script>
+    <meta name="viewport" content="width=device-width" />
+    <style type="text/css">
+        .completeprocess {
+            color: #fff;
+            background-color: #51a351;
+            border-color: #51a351;
+            font-size: 10px;
+        }
+
+        .incompleteprocess {
+            color: black;
+            /*background-color: #51a351;*/
+            /*background-color: #428bca;*/
+            background-color: #cbd5de;
+            border-color: #cbd5de;
+            font-size: 10px;
+        }
+
+        .partialprocess {
+            color: #fff;
+            background-color: #FE9D5A;
+            border-color: #FE9D5A;
+            font-size: 10px;
+        }
+
+        .failureprocess {
+            color: #fff;
+            background-color: #FE0404;
+            border-color: #FE9D5A;
+            font-size: 10px;
+        }
+
+        .dependentprocess {
+            color: #fff;
+            background-color: brown;
+            border-color: goldenrod;
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    @*<img src='./Styles/Grid/BlueOpal/loading-image.gif' alt='Loading Page...' style='z-index: 99999 !important;display: none;' id='divLoading'>*@
+    <div id="divDialogSession" style="display:none;">
+        <table width="100%">
+            <tr>
+                <td>
+                    User Name
+                </td>
+                <td>
+                    <label id="txtReUserId" class="k-input" style="width:200px;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password
+                </td>
+                <td>
+                    <input type="password" id="txtRePassword" class="k-input" style="width:200px;" />
+                </td>
+            </tr>
+        </table>
+        <br />
+    </div>
+    <div id="divbody" style="height:auto">
+        @RenderSection("featured", required: false)
+        <section class="content-wrapper main-content clear-fix">
+            <div id="divValidationMessage" class="validation-summary-errors">
+            </div>
+            <div id="overlayDialogBox" class="black_overlay">
+            </div>
+            <div id="divDialogBox" style="display: none; text-align: center">
+                <br />
+                <span id="lblDialogBoxMessage"></span>
+                <br />
+                <div id="divDialogBoxControls" style="text-align: center">
+                </div>
+            </div>
+
+            @RenderBody()
+
+        </section>
+    </div>
+    <div id='divFooter' class='divFooter'></div>
+    @*<footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year -Cargoflash</p>
+                </div>
+            </div>
+        </footer>*@
+    @RenderSection("Scripts", required: true)
+    <script type="text/javascript">
+        function ResizedBody() {
+            var windowheight = window.innerHeight;
+            var divBody = document.getElementById('divbody');
+            var divFooter = document.getElementById('divFooter');
+            if (divFooter != undefined || divFooter != null) {
+                divBody.style.height = windowheight - 30 + 'px';
+                divFooter.style.height = 30 + 'px';
+                divFooter.style.position = 'fixed';
+                divFooter.style.bottom = '0px';
+                //  divBody.style.overflow = "auto";
+            }
+        }
+
+    </script>
+</body>
+</html>

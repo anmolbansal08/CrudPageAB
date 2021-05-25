@@ -1,0 +1,44 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>AuctionSNo</Name>
+    <Message>Auction Name can not can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CustomerSNo</Name>
+    <Message>CustomerSNo can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CustomerRate</Name>
+    <Message>Customer Rate can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>CurrencyCode</Name>
+    <Message>Currency Code can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Customer Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>Auction Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Customer Bid Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Customer Bid Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Customer Bid Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

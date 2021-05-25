@@ -1,0 +1,35 @@
+﻿<Messages>
+
+
+
+
+
+  <ServerMessage>
+    <Key>545</Key>
+    <value>Please Add ULD Allocation In Edit Mode</value>
+  </ServerMessage>
+
+  <ServerMessage>
+  <Key>1001</Key>
+  <value>City Code already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>City Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>City Wise ULD Allocation Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>City Wise ULD Allocation Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>City Wise ULD Allocation Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

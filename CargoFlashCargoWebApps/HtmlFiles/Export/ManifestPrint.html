@@ -1,0 +1,337 @@
+﻿<script type="text/javascript">
+
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+        //alert(userContext.SysSetting.LogoURL);
+       // $("#ImgLogo").attr("src", userContext.SysSetting.LogoURL);
+    });
+</script>
+
+<!--<div id='divPrint'>
+<a id='anchorPrint' onclick='printDetails();' href='#' title='Print'>
+    <img alt='' border='0' style='height:30px' src='../Images/IconPrint.png'>
+</a>
+</div>
+<br />-->
+<div id="divDetailPop" style="border: 1px solid black;" width="99%" cellpadding="0" cellspacing="0">
+    <table border="1" cellspacing="0" width="100%" id="tblheader">
+        <tr>
+            <td align="center" width="25%"><img id="ImgLogo" height="70px" width="200px" /></td>
+            <td align="center" width="40%"><h1>CARGO MANIFEST</h1></td>
+            <td align="left" width="35%">
+                <table width="100%" id="tblDoc">
+                    <tr>
+                        <td align="left" width="50%">
+                            Doc No. : 
+                        </td>
+
+                        <td align="right" width="50%">AAI/CG/F/09</td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            Issue Date :
+                        </td>
+
+                        <td align="right" width="50%" id="tdIssueDate">01 FEB 2018</td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            Issue 01 :
+                        </td>
+
+                        <td align="right" width="50%" id="tdIssue01">
+                            Rev 00
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+    </table><br />
+    <table width='100%' id="tblNatinality">
+        <tbody id="tbadyHeaderManifestData">
+            <tr> <td align='center' colspan='5'> (I.C.A.O ANNEX 9)</td></tr>
+            <tr><td align='center' colspan='3'> </td></tr>
+
+            <tr><td align='left' width='20%'> Nationality/Region :</td><td width='20%' align='left'><span id="tdNatinality"></span></td>
+                <td width='20%'></td> <td align='left' width='20%'>Owner/Operator :</td><td align='left' width='20%'><span id="tdOwner"></span> </td></tr>
+
+            <tr>
+                <td align='left' width='20%'> Point of loading :</td>
+                <td width='20%' align='left' id="tdPointOfLoading"></td>
+                <td width='20%'></td>
+                <td align='left' width='20%'>Flight & Date :</td>
+                <td align='left' width='20%' id="tdFT"> </td>
+
+
+            </tr>
+
+            <tr><td align='left' width='20%'> Total Pcs :</td><td width='20%' align='left' id="tdTotalPcs"></td><td width='20%'></td> <td align='left' width='20%'>Point of Unloading :</td><td align='left' width='20%' id="tdPointofUnloading"></td></tr>
+
+            <tr><td align='left' width='20%'> Gross Wt EGM/IGM :</td><td width='20%' align='left' id="tdGrossWt"></td><td width='20%'></td> <td align='left' width='20%'></td><td align='left' width='20%'> </td></tr>
+            </tbody>
+
+</table>
+    <br />
+    <span id="spnLocal"></span>
+    <table width="100%" border="1" cellspacing="0" id="tblLocal">
+        <thead>
+            <tr>
+                <th class='grdTableHeader'>
+                    ULD ID
+                </th>
+                 <th class='grdTableHeader'>
+                    AWB No.
+                </th>
+                 <th class='grdTableHeader'>
+                    Manifest Pieces
+                </th>
+                 <th class='grdTableHeader'>
+                    Manifest Weight
+                </th>
+                 <th class='grdTableHeader'>
+                    AWB Pieces
+                </th>
+                 <th class='grdTableHeader'>
+                    AWB Weight
+                </th>
+                 <th class='grdTableHeader'>
+                    Description of Goods
+                </th>
+                 <th class='grdTableHeader'>
+                    Origin
+                </th>
+                 <th class='grdTableHeader'>
+                    Destination
+                </th>
+                 <th class='grdTableHeader'>
+                    SHC
+                </th>
+                 <th class='grdTableHeader'>
+                    Bonded
+                </th>
+                 <th class='grdTableHeader'>
+                    Remarks
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tbadyManifestData">
+            <tr> <td style='border:none' colspan='12'></td></tr>
+            <tr> <td style='border:none' colspan='12'></td></tr>
+            <tr> <td style='border:none' colspan='12'></td></tr>
+            <tr> <td style='border:none' colspan='12'></td></tr>
+            <tr> <td style='border:none' colspan='12'></td></tr>
+            <tr> <td style='border:none' colspan='12'></td></tr>
+            <tr><td  align='center' colspan='12' style='border:none;font-size:30px;color:red'>NIL MANIFEST&nbsp;</td> </tr>
+            <tr> <td style ='border:none' colspan='12'></td></tr>
+            <tr> <td style='border:none' colspan='12'></td></tr>
+            <tr> <td style='border:none' colspan='12'></td></tr>
+            <tr> <td style='border:none' colspan='12'></td></tr>
+            <tr> <td style='border:none' colspan='12'></td></tr>
+            <tr> <td style='border:none' colspan='12'></td></tr>
+        </tbody>
+          <!--<tr>
+              <td>
+                  ULD No.
+              </td>
+              <td>
+                  AWB No
+              </td>
+              <td>
+                  Manifest Pieces
+              </td>
+              <td>
+                  Manifest Wt[KG]
+              </td>
+              <td>
+                  AWB Pieces
+              </td>
+              <td>
+                  AWB Wt(kg)
+              </td>
+              <td>
+                  Description of Goods
+              </td>
+              <td>
+                  Origin
+              </td>
+              <td>
+                  Destination
+              </td>
+              <td>
+                  SHC
+              </td>
+              <td>
+                  Bonded
+              </td>
+              <td>
+                  Remarks
+              </td>
+
+          </tr>
+
+          <tr>
+              <td id="tdULDNo">
+
+              </td>
+              <td id="tdAWBNo">
+
+              </td>
+              <td id="tdManifectPcs">
+
+              </td>
+              <td id="tdManifectWt">
+
+              </td>
+              <td id="tdAWBPcs">
+
+              </td>
+              <td id="tdAWBWt">
+
+              </td>
+              <td id="tdDescGoods">
+
+              </td>
+              <td  id="tdOrigin">
+
+              </td>
+              <td id="tdDestination">
+
+              </td>
+              <td id="tdSHC">
+
+              </td>
+              <td id="tdBonded">
+
+              </td>
+              <td id="tdRemarks">
+
+              </td>
+
+          </tr>
+          <tr>
+              <td>Summary</td>
+              <td id="tdTotalCount"></td>
+              <td id="tdTotalAWBPcs"></td>
+              <td id="tdTotalAWBWt"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+          </tr>-->
+    </table>
+    <br />
+    <!--<span id="spnTrans">Transit</span>-->
+    <!--<table width="100%" border="1" cellspacing="0" id="tblTransit">
+        <thead>
+            <tr>
+                <th class='grdTableHeader'>
+                    ULD No.
+                </th>
+                <th class='grdTableHeader'>
+                    AWB No
+                </th>
+                <th class='grdTableHeader'>
+                    Manifest Pieces
+                </th>
+                <th class='grdTableHeader'>
+                    Manifest Wt[KG]
+                </th>
+                <th class='grdTableHeader'>
+                    AWB Pieces
+                </th>
+                <th class='grdTableHeader'>
+                    AWB Wt(kg)
+                </th>
+                <th class='grdTableHeader'>
+                    Description of Goods
+                </th>
+                <th class='grdTableHeader'>
+                    Origin
+                </th>
+                <th class='grdTableHeader'>
+                    Destination
+                </th>
+                <th class='grdTableHeader'>
+                    SHC
+                </th>
+                <th class='grdTableHeader'>
+                    Bonded
+                </th>
+                <th class='grdTableHeader'>
+                    Remarks
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tbadyTransManifestData">
+           
+        </tbody>-->
+        <!--<tr>
+            <td id="tdTransULDNo"></td>
+            <td id="tdTransAWBNo"></td>
+            <td id="tdTransManifectPcs"></td>
+            <td id="tdTransManifectWt"></td>
+            <td id="tdTransAWBPcs"></td>
+            <td id="tdTransAWBWt"></td>
+            <td id="tdTransDescGoods"></td>
+            <td id="tdTransOrigin"></td>
+            <td id="tdTransDestination"></td>
+            <td id="tdTransSHC"></td>
+            <td id="tdTransBonded"></td>
+            <td id="tdTransRemarks"></td>
+
+        </tr>
+        <tr>
+            <td>Summary</td>
+            <td id="tdTransTotalCount"></td>
+            <td id="tdTransTotalAWBPcs"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>-->
+    <!--</table>-->
+
+    <br />
+    <br />
+
+    <table width="100%">
+        <tr>
+            <td width="20%">
+                Prepared By:
+            </td>
+            <td width="60%"></td>
+            <td width="20%">
+                Page....of Page
+            </td>
+        </tr>
+
+    </table>
+    <br />
+    <br />
+    <table width='100%' border='1' cellspacing='0px'>
+        <tr>
+            <!--<td width='30%'>Prepared By:<br />I5 Cargo Regional Head</td>
+            <td width='50%'>Authority of<br /> Head-Commercial Director,AirAsia(India)Ltd</td>-->
+            <td width='30%'>Prepared By:<br />AAI cargo Manager</td>
+            <td width='50%'>Approved by<br /> Chief Commercial Officer</td>
+            <td width='20%'> Page 1 of 1</td>
+        </tr>
+    </table>
+</div>
+
+
+
+
+

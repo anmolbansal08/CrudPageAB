@@ -1,0 +1,700 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>NOTIFICATION TO Captain (NOTOC)</title>
+  <style>
+    .tblNDG, .tblNDG tr th, .tblNDG tr td {
+      border: 1px solid #000;
+      border-collapse: collapse;
+    }
+    .tblNDG {
+      width: 100%;
+      font-size:smaller;
+    }
+        .tblNDG1, .tblNDG1 tr th, .tblNDG1 tr td {
+      border: 0px solid #000;
+      border-collapse: collapse;
+    }
+    .tblNDG1 {
+      width: 100%;
+      font-size:smaller;
+    }
+    
+  </style>
+
+
+  
+</head>
+<body style="font-size:12px;font-family:Arial">
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+        if (window.opener)
+            userContext = window.opener.parent.userContext;
+        //alert(userContext.SysSetting.LogoURL);
+        // $("#ImgLogo").attr("src", userContext.SysSetting.LogoURL);
+       
+    });
+
+    </script>
+  <div class="wrapper">
+
+      <table width="100%">
+          <tr>
+              <td style="text-align:left;" rowspan="7"><img id="ImgLogo" height="70px" width="150px" /></td>
+
+          </tr>
+          <tr>
+              <td style="text-align:left;" align="left"><h1 style="text-align:center; text-decoration :underline">NOTIFICATION TO CAPTAIN (NOTOC)</h1></td>
+          </tr>
+      </table>
+
+    
+    <table class="tblNDG">
+      <tr>
+        <td width="60%">INSTRUCTION FOR COMPLETION OF NOTOC</td>
+        <td width="10%">PORT OF LOAD: <span id="spnOriginCity"></span></td>
+        <td rowspan="2" width="30%">
+          Dgs PREPARATION CERTIFICATION(To be completed by a CASR Subpart 92 C certified person when dangerous goods are to be considered as freight.
+          I certify that this NOTOC has been prepared in compliance with the procedures for the acceptance and dispatch of dangerous good as detailed in the DG & safely Dangerous Goods Manual)
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="3"><br />
+          1.A NOTOC to be issued whenever dangerous goods(DGs) or other special lead items are to be carried on DC & safety aircraft. <br />
+          2. The NOTOC form is to be prepared by the freight handling agent contracted to dispact consignment on DG & safety when DGs and/or special load are consignee as freight Or by loading master when items of special load checked in be carried. <br />
+          3. The freight agent must print and sign his/her name in the DGs preparation certification field in the top right hand section of the form whenever freight load containing dangerous goods are dispatched.  <br />
+          4. The person responsible for entering the special load details must annolate their name in applicable name field of the special load section of the form. Two fields are provided for this one for use by the freight agent and one for the loading master(as required)<br />
+          5.Before loading the loading master is to check the dangerous goods items for evidence of any non normal leatures such as leakage or damage. After loading on the aircraft , the person is responsible for supervising loading operations in to the print and sign their name in the certiviction field in the bottom right hand section of the form certifying that the items have been loaded in the location specified on the form.<br />
+          6. The NOTOC is to be given to the captain who is certify acceptance of the NOTOC in the bottom left hand corner of the form.<br /><br />
+        </td>
+        <td>FLIGHT No: <span id="spnFlightNo"></span></td>
+
+
+      </tr>
+      <tr>
+        <td>DATE: <span id="spnFlightDate"></span></td>
+        <td rowspan="2"><span style="text-align:right" id="spnSignature">SIGNATURE</span> <br />PREPARED BY: <span id="spnPreparedBy"></span></td>
+      </tr>
+      <tr>
+        <td>AIRCRAFT REG: <span id="spnRegistrationNo11"></span></td>
+
+      </tr>
+    </table>
+    <p></p>
+    <table id="tblDgGoods" class="tblNDG">
+      <thead>
+        <tr><th colspan="16">DANGEROUS GOODS</th></tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+          <td>7</td>
+          <td>8</td>
+          <td>9</td>
+          <td>10</td>
+          <td>11</td>
+          <td>12</td>
+          <td>13</td>
+          <td colspan="2">14</td>
+          <td>15</td>
+        </tr>
+        <tr>
+          <th rowspan="2">Destination</th>
+          <th rowspan="2">Air Waybill Number consignment note</th>
+          <th rowspan="2">Proper Shipment Name</th>
+          <th rowspan="2">Class Or Division</th>
+          <th rowspan="2">UN or ID Number</th>
+          <th rowspan="2">Sub-Risk</th>
+          <th rowspan="2">No. Of Packages</th>
+          <th rowspan="2">Net Quantity Non-Radioactive</th>
+          <th rowspan="2">Transport Index Radioactive Material</th>
+          <th rowspan="2">Radioactive Package Category</th>
+          <th rowspan="2">Un Packing Group</th>
+          <th rowspan="2">Code</th>
+          <th rowspan="2">CAO</th>
+          <th colspan="2">Loaded</th>
+          <th rowspan="2">Emergency Response Code</th>
+        </tr>
+
+
+
+        <tr>
+          <th>ULD</th>
+          <th>Position</th>
+        </tr>
+
+      </thead>
+
+      <tbody></tbody>
+
+    </table>
+    <br />
+   
+
+    <table id="tblSpGoods" class="tblNDG">
+      <thead>
+        <tr>
+          <th colspan="16">SPECIAL LOAD = the person entering the special load details is to print their name here (1) Freight Agent <span>.......</span> (2) Loading Master <span>......</span></th>
+        </tr>
+
+        <tr>
+          <th rowspan="2">Destination</th>
+          <th rowspan="2">Air Waybill Number Consignment Note</th>
+          <th rowspan="2" colspan="6">Content And Descriptions</th>
+          <th rowspan="2">No Of Packages</th>
+          <th rowspan="2">Quantity</th>
+          <th rowspan="2" colspan="3">Supplementary Information</th>
+          <th rowspan="2">Code</th>
+          <th colspan="2">Loaded</th>
+        </tr>
+        <tr>
+          <th>ULD</th>
+          <th>Position</th>
+        </tr>
+      </thead>
+      <tbody>
+       
+
+      </tbody>
+    </table>
+    <br />
+    <table class="tblNDG">
+      <tr>
+        <th rowspan="2">
+          ACCEPTANCE BY Captain: <br />
+
+          I accept the loading location of the item specified on this NOTOC
+        </th>
+        <th rowspan="2" width="150px" align="left">
+          Captain's Name:<span></span>.................... <br />
+          Captain's Signature:<span></span>............... 
+        </th>
+        <th>CERTIFICATION BY PERSON SUPERVISING LOADING OPERATIONS </th>
+        <th width="150px" align="left"> CERTIFIED BY:<span></span>............... </th>
+      </tr>
+      <tr>
+        <th>Certify that the aircraft has been loaded in accordance with the procedures detailed in the DG Chapter 6: Cargo Manual:6.3 Hidden DG , Chapter 6: GOM.6.3:Hidden DG and that the items have been checked and that this NOTOC accurately reflects the locations of the DGs and/or special load items in This Aircraft</th>
+        <th width="150px" align="left">Signature:<span></span>............... </th>
+      </tr>
+      
+    </table>
+    <table id="tblnotoc" class="tblNDG1" border="0" style="font-size:smaller;">
+      <tr>
+            <th align="left" colspan="4" style="border:none;padding-bottom:5px;">LA–GO-03-03-12</th>
+      
+            <th align="right" colspan="4" style="width:350px;border:none;padding-bottom:5px;">LA-CF-03-06.F.02</th>
+ 
+            <th align="right" colspan="4" style="border:none;padding-bottom:5px;">Rev.01 24-Apr-18</th>
+        </tr>
+    </table> 
+      <p style="page-break-before: always" style="font-size:smaller;">
+
+          <table class="tblNDG" align="right" style="margin-top:-100px;">
+              <table width="100%">
+                  <tr>
+                      <td style="text-align:center;font-size:smaller" align="center" ><h2 style="text-align:center; text-decoration :underline">AIRCRAFT EMERGENCY RESPONSE DRILLS</h2></td>
+
+
+                      <td style="text-align:center;font-size:smaller" align="center"><h2 style="text-align:center; text-decoration :underline">CARGO IMP CODES</h2></td>
+                  </tr>
+              </table>
+              <table width="100%" style="font-size:smaller;margin-left:0px;margin-right:0px;margin-bottom:0px;shape-margin:0px">
+                  <tr>
+                      <td rowspan="3" align="left">
+                          <table class="tblNDG" style="margin-top:25px;" align="left">
+                              <tr style="color:white; background-color:dimgray;font-size:smaller;font-weight:bold;">
+                                  <td align="center">DRILL No.</td>
+                                  <td align="center">INHERENT RISK</td>
+                                  <td align="center">RISK TO AIRCRAFT</td>
+                                  <td align="center">RISK TO OCCUPANTS</td>
+                                  <td align="center">SPILL OR LEAK PROCEDURE</td>
+                                  <td align="center">FIRE FIGHTING PROCEDURE</td>
+                                  <td align="center">ADDITIONAL CONSIDERATIONS</td>
+                              </tr>
+                              <tr>
+                                  <td align="left">1</td>
+                                  <td align="left">Explosion may cause <br />structural failure</td>
+                                  <td align="left">Fire and/or explosion</td>
+                                  <td align="left">As indicated by the Drill Letter</td>
+                                  <td align="left">Use 100% Oxygen; No Smoking</td>
+                                  <td align="left">All agents according to availability.<br /> Use standard fire procedure</td>
+                                  <td align="left">Possible abrupt loss <br />of pressurization</td>
+                              </tr>
+                              <tr>
+                                  <td align="left">2</td>
+                                  <td align="left">Gas, Non-Flammable, Pressure may <br />create hazards in fire</td>
+                                  <td align="left">Minimal</td>
+                                  <td align="left">As indicated by the <br />Drill Letter</td>
+                                  <td align="left">Use 100% Oxygen: Establish and Maintain maximum <br />ventilation for “A”, “I” or “P” Frill Letter</td>
+                                  <td align="left">All Agents according to availability: <br />use standard fire procedure</td>
+                                  <td align="left">Possible abrupt loss <br />of pressurization</td>
+                              </tr>
+                              <tr>
+                                  <td align="left">3</td>
+                                  <td align="left">Flammable Liquid <br />or solid</td>
+                                  <td align="left">Fire and/or <br />explosion</td>
+                                  <td align="left">Smoke, fume and <br />heat, and as <br />indicated by the <br />Drill Letter</td>
+                                  <td align="left">Use 100 % Oxygen: Establish <br />and maintain maximum <br />ventilation; No smoking; <br />Minimum electrics</td>
+                                  <td align="left">All agents according <br />to availability; No <br />water on “W” Drill<br /> Letter</td>
+                                  <td align="left">Possible abrupt loss<br /> of pressurization</td>
+
+                              </tr>
+                              <tr>
+                                  <td align="left">4</td>
+                                  <td align="left">Spontaneous <br />combustible or <br />pyrophoric when <br />exposed to water</td>
+                                  <td align="left">Fire and/or <br />explosion	</td>
+                                  <td align="left">Smoke, Fume and <br />Heat, and as <br />indicated by the <br />Drill Letter</td>
+                                  <td align="left">Use 100% Oxygen: Establish<br /> and maintain maximum <br />ventilation</td>
+                                  <td align="left">All agents according <br />to availability; No <br />water on “W” Drill <br />Letter	</td>
+                                  <td align="left">Possible abrupt loss <br />of pressurization</td>
+
+                              </tr>
+                              <tr>
+                                  <td align="left">5</td>
+                                  <td align="left">Oxidizer may <br />ignite other <br />materials, may <br />explode in heat <br />of a fire</td>
+                                  <td align="left">Fire and/or <br />explosion, <br />possible <br />corrosion <br />damage</td>
+                                  <td align="left">Eye, nose and <br />throat irritation. <br />Skin damage on <br />contact	</td>
+                                  <td align="left">Use 100 % Oxygen: Establish <br />and maintain maximum<br /> ventilation</td>
+                                  <td align="left">All agents according <br />to availability</td>
+                                  <td align="left">Possible abrupt loss <br />of pressurization</td>
+
+                              </tr>
+                              <tr>
+                                  <td align="left">6</td>
+                                  <td align="left">Poison, may <br />be fatal if inhaled,<br /> ingested or <br />absorbed by skin</td>
+                                  <td align="left">Contamination<br /> with poisonous<br /> liquid or <br />solid</td>
+                                  <td align="left">Acute poisoning, <br />effect may be <br />delayed	</td>
+                                  <td align="left">Use 100 % Oxygen: Establish <br />and maintain maximum<br /> ventilation; Do not touch<br /> without gloves</td>
+                                  <td align="left">All agents according<br /> to availability; No<br /> water on “W” Drill <br />Letter	</td>
+                                  <td align="left">Possible abrupt loss <br />of pressurization; <br />Minimum electrics if<br /> “F” or “H”</td>
+
+                              </tr>
+                              <tr>
+                                  <td align="left">7</td>
+                                  <td align="left">Radiation from <br />broken <br />/unshielded<br /> packages</td>
+                                  <td align="left">Contamination <br />with spilled<br /> radioactive<br /> material	</td>
+                                  <td align="left">Exposure to<br /> radiation,<br /> personnel<br /> contamination	</td>
+                                  <td align="left">Do not move packages, avoid <br />contact</td>
+                                  <td align="left">All agents according <br />to availability</td>
+                                  <td align="left">Call for a qualified<br /> person to meet the<br /> aircraft</td>
+
+                              </tr>
+                              <tr>
+                                  <td align="left">8</td>
+                                  <td align="left">Corrosive, fumes<br /> disabling if <br />inhaled or in<br /> contact with skin</td>
+                                  <td align="left">Possible<br /> corrosion <br />damage</td>
+                                  <td align="left">Eye, nose and<br /> throat irritation; skin <br />damage on contact</td>
+                                  <td align="left">Use 100 % Oxygen: Establish<br /> and maintain maximum <br />ventilation; Do not touch<br /> without gloves</td>
+                                  <td align="left">All agents according <br />to availability; No <br />water on “W” Drill<br /> Letter</td>
+                                  <td align="left">Possible abrupt loss <br />of pressurization;<br /> Minimum electrics if<br /> “F” or “H” Drill Letter</td>
+
+                              </tr>
+                              <tr>
+                                  <td align="left">9</td>
+                                  <td align="left">No general <br />inherent risk</td>
+                                  <td align="left">As indicated<br /> by the Drill<br /> Letter</td>
+                                  <td align="left">As indicated in Drill<br /> Letter</td>
+                                  <td align="left">Use 100 % Oxygen: Establish<br /> and maintain maximum <br />ventilation if “A” Drill Letter</td>
+                                  <td align="left">All agents according<br /> to availability</td>
+                                  <td align="left">None</td>
+
+                              </tr>
+                              <tr>
+                                  <td align="left">10</td>
+                                  <td align="left">Gas, Flammable, <br />high fire, risk if<br /> any ignition<br /> source present</td>
+                                  <td align="left">Fire and/or<br /> explosion</td>
+                                  <td align="left">Smoke, Fumes and<br /> Heat and as <br />indicated by the <br />Drill Letter</td>
+                                  <td align="left">Use 100 % Oxygen; Establish <br />and maintain maximum <br />ventilation; No smoking; <br />Minimum Electrics</td>
+                                  <td align="left">All agents according <br />to availability</td>
+                                  <td align="left">Possible abrupt loss <br />of pressurization</td>
+
+                              </tr>
+                              <tr>
+                                  <td align="left">11</td>
+                                  <td align="left">Infectious <br />substances may <br />affect humans or <br />absorbed through <br />the mucous <br />membrane or an<br /> open wound</td>
+                                  <td align="left">Contamination <br />with infectious <br />substances</td>
+                                  <td align="left">Delayed infection <br />to humans or<br /> animals</td>
+                                  <td align="left">Do not touch. Minimum <br />recirculation and ventilation in<br /> affected area</td>
+                                  <td align="left">All agents according <br />to availability. No<br /> water “Y” Drill Letter	</td>
+                                  <td align="left">Call for a qualified <br />person to meet the <br />aircraft</td>
+
+                              </tr>
+
+                          </table>
+                          <br />
+                          <table id="tblnotoc" class="tblNDG1" border="0" style="font-size:smaller;">
+                              <tr>
+                                  <th align="left" colspan="2" style="border:none;padding-bottom:5px; font-size:smaller;">LA–GO-03-03-12</th>
+
+                                  <th align="center" colspan="2" style="width:350px;border:none;padding-bottom:5px; font-size:smaller;">LA-CF-03-06.F.02</th>
+
+                                  <th align="right" colspan="4" style="border:none;padding-bottom:5px; font-size:smaller;">Rev.01 24-Apr-18</th>
+                          </table>
+                          <table>
+                              <tr>
+                                  <td style="border-right:none;border-left:none;border-bottom:none;border-top:none;padding-right:10px;">
+                                     
+                                      <table border="0" cellspacing="0" cellpadding="0">
+                                          <tr>
+                                              <td style="font-weight:10;padding-left: 10px;font-size:smaller " align="left">DRILL<br /> LETTER</td>
+                                              <td style="font-weight:10;font-size:smaller" align="left">ADDITIONAL RISK</td>
+                                          </tr>
+                                          <tr>
+                                              <td style="padding-left: 20px;font-size:smaller">
+                                                  A<br />
+                                                  C<br />
+                                                  E<br />
+                                                  F<br />
+                                                  H<br />
+                                                  I<br />
+                                                  L<br />
+                                                  *Toxic has the same<br /> meaning as poison
+                                              </td>
+                                              <td style="padding-left: 20px;font-size:smaller">
+                                                  Anesthetics<br />
+                                                  Corrosive<br />
+                                                  Explosive<br />
+                                                  Flammable<br />
+                                                  Highly ignitable<br />
+                                                  Irritant/tear producing<br />
+                                                  Other risk low or none
+                                              </td>
+                                          </tr>
+                                      </table>
+                                  </td>
+                                  <td style="padding-right:60px;"></td>
+                                  <td style="border-right:none;border-left:none;border-bottom:none;border-top:none">
+                                      <table border="0">
+                                          <tr>
+                                              <td style="font-weight:10;font-size:smaller" align="left">DRILL<br /> LETTER</td>
+                                              <td style="font-weight:10;font-size:smaller" align="left">ADDITIONAL RISK</td>
+                                          </tr>
+                                          <tr>
+                                              <td style="font-size:smaller">
+                                                  M<br />
+                                                  N<br />
+                                                  P<br />
+                                                  S<br />
+                                                  W<br />
+                                                  X<br />
+                                                  Y
+
+                                              </td>
+                                              <td style="font-size:smaller">
+                                                  Magnetic<br />
+                                                  Noxious<br />
+                                                  Toxic* (Poison)<br />
+                                                  Spontaneously combustible or pyrophoric<br />
+                                                  If wet gives off poisonous or flammable gas<br />
+                                                  Oxidizer<br />
+                                                  Depending on the type of infectious subtance, the appropiate<br />
+                                                  national authority may be required to quarantine individuals,<br />
+                                                  animals, cargo and the aircraft.
+
+                                              </td>
+                                          </tr>
+                                      </table>
+                                  </td>
+                              </tr>
+                          </table>
+
+                      </td>
+                      <td style="padding-right:5px;"></td>
+                      <td align="right">
+                          <table class="tblNDG" align="right" style="margin-top:10px;">
+                              <tr style="color:white; background-color:dimgray;font-size:smaller;font-weight:bold;">
+                                  <td colspan="4" align="center">DANGEROUS GOODS</td>
+                              </tr>
+                              <tr style="color:white; background-color:dimgray;font-size:smaller;font-weight:bold;">
+                                  <td align="center">CODE</td>
+                                  <td align="center">NAME</td>
+                                  <td align="center">CLASS</td>
+                                  <td align="center">DIVISION/COMPATIBILITY GROUP</td>
+                              </tr>
+                              <tr>
+                                  <td align="left">
+                                      RCX<br />
+                                      REX<br />
+                                      RGX<br />
+                                      RXB<br />
+                                      RXC<br />
+                                      RXD<br />
+                                      RXE<br />
+                                      RXG<br />
+                                      RXS
+                                  </td>
+                                  <td align="left">
+                                      Explosives<br />
+
+                                      Noted :<br />
+                                      1.	Only Explosives in Division 1.4 compatibly group S are <br />permitted on a passenger aircraft<br />
+                                      2.	Only explosives in Division 1.3, compatibly group C and <br /> G and Division 1.4 compatibly groups B, C, D, E, G and S <br />are permitted on a cargo aircraft
+                                  </td>
+                                  <td align="left">1</td>
+                                  <td align="left">
+                                      1.3 C<br />
+                                      1.1, 1.2, 1.3, 1.4 F,1.5, 1.6<br />
+                                      1.3 G<br />
+                                      1.4 B<br />
+                                      1.4 C<br />
+                                      1.4 D<br />
+                                      1.4 E<br />
+                                      1.4 G<br />
+                                      1.4 S
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td align="left">
+                                      RCL<br />
+                                      RFG<br />
+                                      RNG<br />
+                                      RPG
+                                  </td>
+                                  <td align="left">
+                                      Cryogenic Liquids (PI 202)<br />
+                                      Flammable Gases<br />
+                                      Non-Flammable, Non-Tonic Gases<br />
+                                      Toxic Gases
+
+                                  </td>
+                                  <td align="left">
+                                      2
+
+                                  </td>
+                                  <td align="left">
+                                      2.2<br />
+                                      2.1<br />
+                                      2.2<br />
+                                      2.3
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td align="left">RFL</td>
+                                  <td align="left">Flammable Liquids</td>
+                                  <td align="left">3</td>
+                                  <td align="left">-</td>
+                              </tr>
+                              <tr>
+                                  <td align="left">
+                                      RFS<br />
+                                      RFW<br />
+                                      RSC
+                                  </td>
+                                  <td align="left">
+                                      Flammable Solids<br />
+                                      Dangerous When Wet<br />
+                                      Spontaneously Combustible
+                                  </td>
+                                  <td align="left">4</td>
+                                  <td align="left">
+                                      4.1<br />
+                                      4.3<br />
+                                      4.2
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td align="left">
+                                      ROP<br />
+                                      ROX
+
+                                  </td>
+                                  <td align="left">
+                                      Organic Peroxides<br />
+                                      Oxidizer
+
+                                  </td>
+                                  <td align="left">5</td>
+                                  <td align="left">
+                                      5.2<br />
+                                      5.1
+
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td align="left">
+                                      RDS<br />
+                                      RIS<br />
+                                      RPB
+
+
+                                  </td>
+                                  <td align="left">
+                                      Biological Substances Category B (UN 3373)<br />
+                                      Infectious Substances<br />
+                                      Toxic Substances
+
+
+                                  </td>
+                                  <td align="left">6</td>
+                                  <td align="left">
+                                      6.2<br />
+                                      6.2<br />
+                                      6.1
+
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td align="left">
+                                      RRW<br />
+                                      RRE<br />
+                                      RRY
+                                  </td>
+                                  <td align="left">
+                                      Radioactive Material Category I – White<br />
+                                      Radioactive – Excepted Packages of Radioactive Material<br />
+                                      Radioactive Material Categories II Yellow and III Yellow
+                                  </td>
+                                  <td align="left"> 7</td>
+                                  <td align="left">
+                                      CAT I<br /><br />
+
+                                      CAT II
+
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td align="left">
+                                      RCM
+                                  </td>
+                                  <td align="left">
+                                      Corrosive
+                                  </td>
+                                  <td align="left">8</td>
+                                  <td align="left"></td>
+                              </tr>
+                              <tr>
+                                  <td align="left">
+                                      RMD<br />
+                                      RSB<br />
+                                      ICE<br />
+                                      MAG<br />
+                                      RLI<br /><br />
+
+                                      RLM<br /><br />
+
+                                      RBI<br /><br />
+
+                                      RBM
+
+                                  </td>
+                                  <td align="left">
+                                      Miscellaneous Dangerous Goods<br />
+                                      Polymeric Beads/Plastics Molding Compound (PI 957)<br />
+                                      Carbon Dioxide Solid (Dry Ice)<br />
+                                      Magnetized Materials<br />
+                                      Fully Regulated Lithium Batteries Ion Batteries as Per Section IA & IB of PI 965 and Section I of PI 966-967<br />
+                                      Fully Regulated Lithium Batteries Metal Batteries as Per Section IA & IB of PI 966 and Section I of PI 969-970<br />
+                                      Fully Regulated Lithium Ion Batteries (UN 3480) as Per section IA and IB of PI 965<br />
+                                      Fully Regulated Lithium Metal Batteries (UN 3090) as Per section IA and IB of PI 968
+
+                                  </td>
+                                  <td align="left">9</td>
+                                  <td align="left"></td>
+                              </tr>
+                              <tr>
+                                  <td align="center" colspan="4" style="border:none;padding-bottom:5px;"></td>
+                              </tr>
+                              <tr style="color:white; background-color:dimgray;font-size:smaller;font-weight:bold;">
+                                  <td align="center" colspan="4">OTHER SPECIAL LOADS</td>
+                              </tr>
+                              <tr>
+                                  <td align="left">
+                                      AVI<br />
+                                      BIG<br />
+                                      DIP<br />
+                                      EAT<br />
+                                      FIL<br />
+                                      FRO<br />
+                                      HUM<br />
+                                      LHO<br />
+                                      MUW<br />
+                                      OBX
+                                  </td>
+                                  <td align="left">
+                                      Live Animals<br />
+                                      Outsized Cargo<br />
+                                      Diplomatic Cargo<br />
+                                      Food Stuffs<br />
+                                      Undeveloped Photographic Film<br />
+                                      Frozen Goods Subject to Vet Inspections<br />
+                                      Human Remain<br />
+                                      Living Human Organs / Blood<br />
+                                      Munitions of War<br />
+                                      Obnoxious Cargo
+
+                                  </td>
+                                  <td align="left">
+                                      PEA<br />
+
+                                      PEF<br />
+                                      PEM<br />
+                                      PEP<br />
+                                      PER<br />
+                                      PES<br />
+                                      VAL<br />
+                                      WET
+
+                                  </td>
+                                  <td align="left">
+                                      Hunting Trophies Skin & All Articles made of containing parts of species listed in cities<br />
+                                      Flowers<br />
+                                      Meat<br />
+                                      Fruits and Vegetables<br />
+                                      Perishables Cargo<br />
+                                      Fish / Seafood For Human Consumption<br />
+                                      Valuable Cargo<br />
+                                      Shipment of Wet Material not packed in watertight<br /> containers
+
+                                  </td>
+                              </tr>
+                                 
+                                    
+                                   
+                                  <tr style="border-left:none;border-right:none;border:0px;">
+                                      <td align="center" colspan="4" style="border-left:none;border-right:none; padding-bottom:5px;"></td>
+                                  </tr>
+
+                                  <tr style="color:white; background-color:dimgray;font-size:smaller;font-weight:bold;">
+                                      <td align="center" colspan="4">OTHER IMP CODES</td>
+                                  </tr>
+                                  <tr>
+                                      <td align="left">
+                                          AOG<br />
+                                          CAO<br />
+                                          DGD<br />
+                                          IMP<br />
+                                          REQ<br />
+                                          ELI<br />
+                                          ELM
+                                      </td>
+                                      <td colspan="3" align="left">
+                                          Aircraft On Ground<br />
+                                          Cargo Aircraft Only<br />
+                                          Shipper & Declaration for Dangerous Goods<br />
+                                          Interline Message Procedure<br />
+                                          Excepted Quantities of Dangerous Goods<br />
+                                          Lithium Ion Batteries Excepted as Per Section II of PI 965-967<br />
+                                          Lithium Metal Batteries Excepted as Per Section II of 968-970
+
+                                      </td>
+                                  </tr>
+                              </table>
+                      </td>
+
+                  </tr>
+
+                  <tr>
+                      <td></td>
+                      <td style="font-size:smaller">
+                          Note:RCX and RGX are assigned exclusively to those item identified in IATA DGR current additions as authorized on cargo <br />
+                          aircraft only.  All other explosives in Division 1.3 forbidden for transportation and are to be assigned the code REX.
+                      </td>
+                  </tr>
+              </table>
+</div>
+</body>
+</html>

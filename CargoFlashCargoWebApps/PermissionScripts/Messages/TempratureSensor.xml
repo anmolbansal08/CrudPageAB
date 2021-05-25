@@ -1,0 +1,24 @@
+﻿<Messages>
+  <ServerMessage>
+
+    <ServerMessage>
+
+      <Key>1001</Key>
+      <value>Sensor Name Already Exists.</value>
+    </ServerMessage>
+    
+    <Key>2000</Key>
+    <value>Temperature Sensor Added Successfully.</value>
+  </ServerMessage>
+
+  
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Temperature Sensor Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Temperature Sensor Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>
+

@@ -1,0 +1,20 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Item Name Already Exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Item Save Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Item Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    
+    <Key>2002</Key>
+    <value>Item Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

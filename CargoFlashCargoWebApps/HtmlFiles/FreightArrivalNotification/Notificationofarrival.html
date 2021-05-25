@@ -1,0 +1,440 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <script src="../../JScript/Import/Notificationofarrival.js"></script>
+    <title></title>
+    <style>
+        table#table1 {
+            width: 70%;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+    </style>
+    <style type="text/css">
+        @media print {
+            body, html {
+                margin-top: -115px;
+                margin-left: 0px;
+                padding-top: -115px;
+                margin-bottom: 2px;
+                transform: scale(1.2,.84);
+            }
+        }
+    </style>
+    <!--<style>
+        table#table1 {
+            width: 80%;
+            /*margin-left: 15%;
+            margin-right: 15%;*/
+             border-collapse: collapse;
+        }
+          table th{
+
+                        border: 1px solid black;
+                        
+                    }
+    </style>
+    <style type="text/css">
+        /*/*@media print {
+            body, html {
+                /*margin-top: -115px;
+                margin-left: 0px;
+                padding-top: -115px;
+                margin-bottom: 2px;*/
+                transform: scale(1.2,.84);
+            }*/*/
+        }
+    </style>-->
+    <script type="text/javascript">
+        var userContext = "";
+        var Environment = "";
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            Environment = userContext.SysSetting.ICMSEnvironment;
+        });
+    </script>
+</head>
+<body>
+    <!--for UK-->
+    <div id="foruk" style=" padding-left: 5em; width:95%;">
+        <table id="table1">
+            <br />
+            <br />
+
+            <tr style="text-align: center;">
+                <td>
+
+                    <img id="ImgLogo" height=" 70" width="200"> <br /> <br />
+                </td>
+            </tr>
+            <tr style="text-align: center;">
+                <td style=" padding-bottom 1em;font-size 23px; ">
+                    <strong>FREIGHT ARRIVAL NOTIFICATION</strong>
+                </td>
+
+            </tr>
+            </table>
+            <table style="width:80%;">
+                <tr>
+                    <td style="padding-right:6em;">
+                        <strong>Consignee Details</strong>
+                    </td>
+                    <td>
+                        <strong>  Date</strong>
+                       
+                    </td>
+
+                </tr>
+                <tr>
+                     <td style="padding-right:6em;">
+                        <span id="spnConsignee"></span><br>
+                        <span id="spnConsigneeAddress"></span>
+                    </td>
+                    <td>
+                        <span id="Arrival_Date"> </span>
+                    </td>
+
+                </tr>
+            </table>
+            <br>
+            <table cellpadding="0" cellspacing="0" style="width:80%;">
+                <tr style="font-size: 15px;">
+                    <th>
+                        AWB No  <br>
+                        <br>
+                        <span id="spnAWBNo"></span>
+                    </th>
+                    <th>
+                        Origin <br>
+                        <br>
+                        <span id="spnOrigin"></span>
+                    </th>
+                    <th>
+                        Pcs  <br>
+                        <br>
+                        <span id="spnPieces"></span>
+                    </th>
+                    <th>
+                        Weight <br>
+                        <br>
+                        <span id="spnWeight"></span> kg
+                    </th>
+                    <th>
+                        CC/PP <br >
+                        <br>
+                        <span id="spnCCPP"></span>
+                    </th>
+                    <th>
+                        Commodity <br >
+                           <br>
+                           <span id="spnContent"></span>
+                    </th>
+                    <th>
+                        Flight no /Date <br>
+                        <br>
+                        <span id="spnFlightNo"></span>/<span id="spnDate"></span>
+                        
+                    </th>
+
+                </tr>
+            </table>
+            <br>
+            <table id="table1">
+
+                <tr>
+                    <td>
+                        The following documents are required at the Import Counter along with Photo copies to
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        facilities immediate clearance
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        (1) Personal shipments: Passport of Consignee, Authority letter and ID in case of
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        representative.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        (2) Commercial shipment: Authority/ID of representative.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        (3) Shipments through Bank: Bank Release Letter/Indemnity and Authority Letter/ID.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 3em; padding-bottom: 3em;">
+                        <b><u>  For Delivery order please contact, Freight centre import counter with appropriate documents.</b></u>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 1em;">
+                        <strong> CONSIGNEE'S INSTRUCTION: </strong><span style="font-size: 13px;">(can be used as Authority letter, except for Bank and Valuable shipments)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 2em;">
+                        I / We authorise Mr./Mrs. ...................................................whose specimen signature appended below
+                        to collect shipment with with AWB No <span id="spnAWBNo1"></span> ................................................
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 2em;">
+                        (Date)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 2em;">
+                        Consignee's name
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 3em;">
+                        Signature
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Company stamp)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 2em;">
+                        ..................................................................
+                    </td>
+                </tr>
+                <tr style="font-size: 10px;">
+                    <td>
+                        <b> IMPORTANT-PLEASE NOTE </b>The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and /or
+
+                    </td>
+                </tr>
+                <tr style="font-size: 10px;">
+                    <td>
+                        privileged material. Any review, retransmission, or other use of or taking of any action in reliance upon, this information by persons or entities other than
+
+                    </td>
+                </tr>
+                <tr style="font-size: 10px;">
+                    <td>
+                        the intended recipient is prohibited. If you received this in error, please contact the sender and destroy this facsimile.
+
+                    </td>
+                </tr>
+
+            </table>
+
+
+
+       
+    </div>
+    <!--for GA-->
+    <div id="forga" align="center">
+        <br />
+        <br />
+        <br />
+        <br />
+        <table id="table1">
+            <tr>
+                <td>
+                    <table style="width: 90%; border:1px solid black; padding: 0px;margin-left :5%;margin-right :5%">
+                        <tr style="margin-left: 5%">
+                            <td style="border: 0px;">
+                                <table cellpadding="0" cellspacing="0" style="text-align: center; width: 100%;">
+                                    <tr>
+                                        <td style="width: 40px; height: 70px; vertical-align: bottom; padding-left: 15px; border: 0px; text-align: center">
+                                            <br />
+                                            <!--<img src="GaurdaCMS Logo.jpg" style="align-content:" " alt=" " height=" 70" width="200"> <br /> <br />-->
+                                            <img id="ImgLogo" style="align-content:" " alt="" height="150" width="250"> <br /> <br />
+                                        </td>
+                                    </tr>
+                                    <!--<tr><td style="font-weight: bold;">CARGO</td></tr>-->
+                                    <tr style="text-align: center">
+                                        <td style="font-weight: bold; text-decoration: underline;">PEMBERITAHUAN KIRIMAN BARANG</td>
+                                    </tr>
+                                    <tr>
+                                        <td>NOTICE OF ARRIVAL</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            Kepada Yth :<span id="spnConsignee"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span id="spnConsigneeAddress"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Diberitahukan bahwa telah tiba barang kiriman Anda di gudang kami dengan data sebagai berikut :
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i> Here with notified that your consignment has arrived at our warehouse,detail as follows.</i>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><br /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table style=" width:100%">
+                                                <tr>
+                                                    <td style="width:25%">No. Surat Muatan Udara </td>
+                                                    <td style="width:2%">:</td>
+                                                    <td style="width:67%;text-align:left;"><span id="spnAWBNo"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2"><i> Air Waybill No  </i> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>No. Penerbangan / Tanggal</td>
+                                                    <td>:</td>
+                                                    <td><span id="spnFlightNo"></span> <span id="spnDate"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2"><i> Flight No / Date  </i> </td>
+                                                </tr>
+                                                <tr class="trHide">
+                                                    <td>No.BC1.1 /Pos</td>
+                                                    <td>:</td>
+                                                    <td><span id="spnBC1"></span>/<span id="spnPosNo"></span></td>
+                                                </tr>
+                                                <!--<tr class="trHide">
+                                                        <td colspan="2"><i> No.BC1.1 /Pos  </i> </td>
+                                                    </tr>-->
+                                                <tr>
+                                                    <td>Kolli / Berat</td>
+                                                    <td>:</td>
+                                                    <td><span id="spnPieces"></span> Kolli/<span id="spnWeight"></span> KG</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2"><i> Pieces / Weight  </i> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pengrim / Shipper</td>
+                                                    <td>:</td>
+                                                    <td><span id="spnShipper"></span></td>
+                                                </tr>
+                                            </table>
+                                            <table>
+                                                <tr>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <u>Syarat- syarat pengambilan:</u>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <i>Conditions of collection</i>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        1.<u>Pengambilan AWB asli harus menunjukan tanda bukti diri KTP/Pasport </u>
+                                                        <br />
+                                                        <i>Pick up Airwaybill must be shown identity card</i>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        2.<u>Pengambilan AWB asli oleh orang lain harus dengan surat kuasa rangkap bermaterai</u><br />
+                                                        <i>Pick up Airwaybill by any others person, must be shown Authorize Letter</i>
+                                                    </td>
+                                                </tr>
+                                                <tr class="trHide">
+                                                    <td>
+                                                        3.<u>
+                                                            Penyimpanan maksimal 30 hari sejak tanggal tiba dan selanjutnya barang serahkan ke pihak Bea Cukai
+                                                            <br />
+                                                            dan pihak kami tidak bertanggung jawab atas kerusakan dan kehilangan barang kiriman tersebut
+                                                        </u>
+                                                        <br />
+                                                        <i>Storage maximal 30 days since arrival date ,next shipment will delivery to Customs and we are not responsibility of lost or Damage of shipment</i>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span id="spnConditionSequence"></span>.<u>Informasi Tarif Jasa Pelayanan dan other charge adalah :</u><br />
+                                                        <i>Storage charges information                        :</i>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div id="divcharge"></div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="trFooter">
+                                                    <td>
+                                                        <br />
+                                                        Berat yang dikenakan berdasarkan Chargeable Weight
+                                                        <br />
+                                                        Untuk seluruh biaya tersebut diatas dikenakan PPN
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <br />
+                                                        Demikian disampaikan untuk dapat diketahui atas data pengiriman Bapak/ Ibu.
+                                                        <br />
+                                                        Terima kasih telah menggunakan jasa pelayanan Cargo Terminal PT Garuda Indonesia
+                                                        <br />
+                                                        Soekarno Hatta International Airport
+                                                        <br />
+                                                        <span id="spnCreatedDate"></span>
+                                                        <br />
+                                                        Nama <span id="splFinalyDeliveryBy"></span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Cargo Import</b> l Bldg 520 l Soekarno-Hatta International Airport l Cengkareng 19100 l Jakarta - Indonesia l
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Telp .+62 21 5507318  I Fax. +62 21 5507319 I
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+

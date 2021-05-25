@@ -1,0 +1,33 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>vehicletype</Name>
+    <Message>Enter the value of Vehicle Type</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Vehicle Type already exists. Please Enter another Vehicle Type.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>5001</Key>
+    <value>Vehicle Type already exists in In-Active State. Please Enter another Vehicle Type.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Vehicle Type Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Vehicle Type  Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Vehicle Type Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>
+
+
+
+
+

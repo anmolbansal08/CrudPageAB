@@ -1,0 +1,27 @@
+﻿<Messages>
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Agent Name for office already exists</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1002</Key>
+    <value>There is no Flight for selected sector.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>1003</Key>
+    <value>It is already have been used, can not be allowed to update.</value>
+  </ServerMessage>
+    
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Allotment Added Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Allotment Updated Successfully.</value>
+  </ServerMessage>
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Allotment Deleted Successfully.</value>
+  </ServerMessage>
+</Messages>

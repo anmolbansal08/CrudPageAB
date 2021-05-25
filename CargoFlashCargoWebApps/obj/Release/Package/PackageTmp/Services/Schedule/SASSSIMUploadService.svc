@@ -1,0 +1,2 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="CargoFlash.Cargo.DataService.Schedule.SASSSIMUploadService" CodeBehind="SASSSIMUploadService.cs" %>
+<%@ Assembly Name="CargoFlash.Cargo.DataService" %>

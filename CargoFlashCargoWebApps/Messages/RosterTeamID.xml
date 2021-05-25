@@ -1,0 +1,43 @@
+﻿<Messages>
+  <!--#region Roster Team ID XML Message Description
+  /*
+  *****************************************************************************
+  XML Name:		  RosterTeamID
+  Purpose:		  This XML used for Message information.
+  Company:		  CargoFlash Infotech Pvt Ltd.
+  Author:			  Farogh Haider
+  Created On:		27 oct 2015
+  Updated By:
+  Updated On:
+  Approved By:
+  Approved On:
+  *****************************************************************************
+  */
+  #endregion-->
+  <DataFieldName>
+    <Name>Name</Name>
+    <Message>Team Name can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Team Name already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Team Name Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Team Name Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Team Name Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

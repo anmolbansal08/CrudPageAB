@@ -1,0 +1,170 @@
+﻿@{
+    ViewBag.Title = "AWB Rate Audit Log";
+}
+@model CargoFlash.Cargo.Model.SpaceControl.SpaceControlSearchModel
+<script src="~/Scripts/KendoSchedular/Content/JS/kendo.dataviz.min.js"></script>
+
+<ul id="SpaceControlSearchpanelbar">
+    <li class="k-state-active">
+        <span class="k-link k-state-selected">Search AWB Rate Audit Log</span>
+        <div>
+            @using (Html.BeginForm("AWBRateAuditLog", "GetData", FormMethod.Post, new { enctype = "multipart/form-data", @id = "SpaceControlSearchForm" }))
+            {
+                <table class="WebFormTable">
+                    <tbody>
+                        <tr>
+                            <td class="formlabel" style="width: 150px;">
+                                <font color="red">*</font>
+                                AWB Reference Number:
+                            </td>
+
+                            <td class="formInputcolumn">
+                                @Html.HiddenFor(m => m.FlightNo)
+                                @Html.TextBox("AWBReferenceNumber", null, new {placeholder = "Enter AWB Reference Number" })
+                                @*@Html.HiddenFor(m => m.FlightNo)
+                                @Html.TextBox("Text_FlightNo", null, new { data_valid = "required", @data_valid_msg = "Select the Flight Number", @required = "required", placeholder = "Select Flight No", controltype = "autocomplete", data_role = "autocomplete" })*@
+                            </td>
+                            <td class="formlabel" style="width: 100px;">
+                                <font color="red">*</font>
+                                AWB Number:
+                            </td>
+                            <td class="formInputcolumn">
+                                @Html.HiddenFor(m => m.FlightNo)
+                                @Html.TextBox("AWBNumber", null, new { placeholder = "Enter AWB Number" })
+                            </td>
+                           
+                            <td class="formbuttonrow" colspan="2">
+                                <input type="button" tabindex="4" class="btn btn-success"  onclick="SearchAWBRateAuditLog();" name="Search" style="width:80px; display:none" value="Search">
+                                <input type="submit" tabindex="4" class="btn btn-success"  name="GetData" style="width:80px;" value="Search">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+        </div>
+    </li>
+    <li class="k-state-active">
+        AWB Rate Audit Log Search Results
+        <div id="SpaceControlSerachGridDiv"></div>
+    </li>
+</ul>
+
+
+<style>
+    .k-state-focused {
+        background-color: none;
+    }
+
+    .k-state-selected.k-state-focused {
+        background-color: #7bd2f6 !important;
+    }
+
+    .formlabel {
+        width: 13% !important;
+    }
+
+    td.formInputcolumn {
+        width: 17% !important;
+    }
+
+    .k-filter-row th {
+        overflow: hidden;
+        border-style: solid;
+        border-width: 0 0 1px 1px;
+        padding: .5em .6em .4em .6em;
+        font-weight: normal;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: left;
+    }
+
+    .k-grid-header th.k-header {
+        vertical-align: inherit !important;
+    }
+
+    .linkbtn {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .gridemptyrow {
+        color: Red;
+    }
+
+    .k-grid-content > .k-no-data, .mandatory {
+        content: "No records found." !important;
+        color: #f00 !important;
+    }
+
+
+
+    .k-radio, input.k-checkbox {
+        display: inline;
+        opacity: 0;
+        width: 0;
+        margin: 0;
+        -webkit-appearance: none;
+        overflow: hidden;
+    }
+
+    .k-radio-label {
+        padding-right: 5px;
+        font-size: 11px;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        background-color: #3f51b5;
+        border-radius: 50%;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        top: 4px;
+        left: 4px;
+    }
+
+    .k-checkbox-label, .k-radio-label {
+        display: inline-block;
+        position: relative;
+        padding-left: 20px;
+        vertical-align: text-top;
+        line-height: 16px;
+        cursor: pointer;
+        border-style: solid;
+        border-width: 0;
+    }
+
+    .k-radio:checked + .k-radio-label:before, .k-radio:checked + .k-radio-label:hover:before {
+        border-color: #3f51b5;
+    }
+
+    .k-radio-label:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 13px;
+        height: 13px;
+        border-style: solid;
+    }
+
+    .k-radio:checked + .k-radio-label:after {
+        content: "";
+        width: 9px;
+        height: 9px;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+    }
+
+    .k-radio-label:before {
+        border-color: #7f7f7f;
+        border-radius: 50%;
+        background-color: #fff;
+        border-width: 2px;
+    }
+</style>
+
+
+
+<script src="~/JScript/Rate/AWBRateAuditLog.js"></script>

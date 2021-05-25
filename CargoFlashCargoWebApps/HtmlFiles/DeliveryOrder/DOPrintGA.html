@@ -1,0 +1,469 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>DOPrint</title>
+    <script src="../../Scripts/jquery-1.7.2.js"></script>
+    <script src="../../Scripts/json2.js"></script>
+    <style>
+        .watermark {
+            opacity: 0.5;
+            color: #808080;
+            font-size: 150px;
+            transform: rotate(300deg);
+            -webkit-transform: rotate(300deg);
+            position: absolute;
+            margin-top: 25%;
+            margin-left: 20%;
+        }
+
+        #PrintDO {
+            width: 70px;
+            height: 30px;
+        }
+
+        .auto-style1 {
+            height: 23px;
+        }
+
+        .auto-style3 {
+        }
+
+        .auto-style12 {
+            width: 490px;
+        }
+
+        .auto-style36 {
+            width: 133px;
+            height: 40px;
+        }
+
+        .auto-style39 {
+            width: 93px;
+        }
+
+        .auto-style40 {
+            height: 42px;
+        }
+
+        table#table1, #table2, #table3 {
+            width: 100%;
+            font-size: smaller;
+        }
+
+        #content {
+            position: initial;
+            z-index: 1;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function funPrintDOReportData(divID, bac) {
+            PrintDiv($(divID).html(), $(bac).html());
+        }
+
+        function PrintDiv(data, bac) {
+            var mywindow = window.open('', 'my div', 'height=400,width=600');
+            mywindow.document.write('<html><head><title></title>');
+            mywindow.document.write('</head><body >');
+            mywindow.document.write(data);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close();
+            mywindow.focus();
+            mywindow.print();
+            mywindow.close();
+            return true;
+        }
+
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+            var LogoURL = getParameterByName("LogoURL", "");
+            GetDeliveryOrderPrint();
+            $('#divPrint1').append($('#content').html()
+            );
+
+            //Edited By Rahul Kumar Singh to add Logo on 27-07-2017
+            $('#content').html("");
+            var str = LogoURL;
+            str = str.split('/');
+
+            if (IsCancel == "1") {
+                $('#divPrint1').find('.watermark').map(function () { return $(this).text('Cancelled'); })
+            }
+
+            var IsCancel = 0;
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+
+            // CODE for Showing Current Time//
+            function startTime() {
+                var today = new Date();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                // add a zero in front of numbers<10
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('#spntime').innerHTML = h + ":" + m + ":" + s;
+                t = setTimeout(function () {
+                    startTime()
+                }, 500);
+            }
+            startTime();
+            //END//
+
+            function GetDeliveryOrderPrint() {
+                var Particulars = "";
+                var Charges = 0;
+                var TotalCharges = 0;
+                var DOSNo = getParameterByName("DOSNo", "");
+                var Type = getParameterByName("Type", "");
+                var POMailSNo = getParameterByName("POMailSNo", "") == null ? 0 : getParameterByName("POMailSNo", "");
+
+                $.ajax({
+                    url: "../../Services/Import/DeliveryOrderService.svc/GetDeliveryOrderPrint",
+                    async: false,
+                    type: "GET",
+                    dataType: "json",
+                    data: { DOSNo: DOSNo, Type: Type, InvoiceSNo: 0, POMailSNo: POMailSNo },
+                    contentType: "application/json; charset=utf-8",
+                    cache: false,
+                    success: function (result) {
+                        var ResultData = jQuery.parseJSON(result);
+                        FinalData = ResultData.Table0;
+                        FinalData1 = ResultData.Table1;
+                        FinalData2 = ResultData.Table2;
+                        LocationData = ResultData.Table3;
+                        StorageData = ResultData.Table4;
+                        NatureOfGoods = ResultData.Table5;
+
+                        var chargeType = "";
+                        var Pieces = 0;
+                        var GrossWeight = 0.0;
+                        var chargeType1 = "";
+                        var Pieces1 = 0;
+                        var chargeType2 = "";
+                        var Pieces2 = 0;
+                        var POSNo = "";
+                        var CustomRefNo = "";
+
+                        if (FinalData.length > 0) {
+                            POSNo = FinalData[0].POSNO;
+                            CustomRefNo = FinalData1[0].CustomRefNo;
+
+                            //#spnConsigneeAddress to upper case by rahul on 27-12-2017 as per bug refrence 5163
+                            Pieces = FinalData[0].Pieces;
+                            GrossWeight = FinalData[0].GrossWeight;
+                            $("#spnDONo").text(CustomRefNo + '/' + POSNo);
+                            $("#spnserialno").text(FinalData[0].SNo);
+                            $("#spnDate").text(FinalData[0].DOTime.split(" ")[0] + " / " + FinalData[0].DOTime.split(" ")[1]);
+                            $("#spnConsignee").html(FinalData[0].Consignee);
+                            $("#spnAirWaybillNo").text(FinalData[0].AWBNo);
+                            $("#spnName").html(FinalData[0].Name);
+                            $("#spnHouseNo").html(FinalData[0].DOHouseNo);
+                            $("#spnName1").html(FinalData[0].Name);
+                            $("#spnAirline").html(FinalData[0].AIRLINENAME);
+                            $("#spnConsigneeAddress").html((FinalData[0].STREET).toUpperCase());
+                            $('#ImgLogo').attr('src', '/BLOBUploadAndDownload/DownloadFromBlob/?filenameOrUrl=' + FinalData[0].AirlineLogo.toString());
+                            $('#ImgLogo').attr('onError', 'this.onerror=null;this.src="' + LogoURL + '";');
+
+                            chargeType = FinalData[0].ChargesType;
+                            if (FinalData[0].IsCancel == "False") {
+                                $("#spnReprintCount").html(FinalData[0].PrintCount > 1 ? "(RE-PRINT: " + (FinalData[0].PrintCount - 1).toString() + ")" : "");
+                                IsCancel = 0;
+                            }
+                            else {
+                                IsCancel = 1;
+                            }
+                        }
+
+                        if (NatureOfGoods.length > 0) {
+                            Particulars = Particulars + "</br>" + (NatureOfGoods[0].CommodityDescription);
+                        }
+
+                        for (var S = 0; S < FinalData2.length ; S++) {
+                            if (Charges == 0)
+                            {
+                                Charges = "</br>" + (FinalData2[S].IsWaveOff == "True" ? FinalData2[S].TariffName + '(Waived Off)' : FinalData2[S].TariffName) + '   ' + FinalData2[S].ChargeValue;
+                            }
+                            else
+                            {
+                                Charges = Charges + "</br>" + (FinalData2[S].IsWaveOff == "True" ? FinalData2[S].TariffName + '(Waived Off)' : FinalData2[S].TariffName) + '   ' + FinalData2[S].ChargeValue;
+                            }
+                            if (FinalData2[S].IsWaveOff != "True")
+                                TotalCharges = parseFloat(FinalData2[S].TotalAmount);
+                        }
+
+                        var strdata = '';
+                        var TotalPieces = 0;
+                        var TotalGrossWeight = 0.0;
+                        if (FinalData1.length > 0) {
+                            strdata = strdata + "<tr style='border:1px solid black;font-family:'Verdana''><td  style='text-align:center; border-right:1px solid black;'>Jenis Barang</br>(Commodity)</td><td style='text-align:center; border-right:1px solid black;'>Jumlah koli</br>(Pcs)</td><td style='text-align:center; border-right:1px solid black;'>Jumlah Berat(Kg)</br>(Gross Weight)</td><td style='text-align:center; border-right:1px solid black;'> Keterangan</td></tr>";
+
+                            var flightno = "";
+                            var totalpieces = 0;
+                            var totalGrossWeight = 0.0;
+                            for (var k = 0; k < FinalData1.length ; k++) {
+                                flightno += "/" + FinalData1[k].FlightDetails
+                                totalpieces += parseInt(FinalData1[k].Pieces)
+                                totalGrossWeight += parseFloat(FinalData1[k].GrossWeight)
+                            }
+
+                            flightno = flightno.substring(1, flightno.length)
+                            TotalPieces = Number(TotalPieces) + Number(Pieces);
+                            TotalGrossWeight = Number(TotalGrossWeight) + Number(GrossWeight);
+
+                            $("#spnFlightNo").html(flightno);
+                            strdata += "<tr style='border:1px solid black;padding:4px;'>";
+
+                            if (NatureOfGoods.length > 0) {
+                                strdata += "<td style='text-align:left; border-right:1px solid black;font-size:15px;'><span id='spnParticulars'>" + NatureOfGoods[0].CommodityDescription + "</span></td>"
+                            }
+                            else {
+                                strdata += "<td style='text-align:left; border-right:1px solid black;font-size:15px;'><span id='spnParticulars'></span></td>"
+                            }
+                            strdata += "<td style='text-align:left; border-right:1px solid black;font-size:15px;'><span id='spnPieces'>" + totalpieces + "</span></td>";
+                            strdata += "<td style='text-align:left; border-right:1px solid black;font-size:15px;'><span id='spnGrossWt'>" + totalGrossWeight + "</span></td>";
+                            strdata += "<td style='text-align:right; border-right:1px solid black;font-size:15px;'><span id='spnAmount'></span></td>";
+                            strdata += "<tr>"
+                            $('#tabletrans').html(strdata);
+                        }
+
+                        $("#spnParticulars").html(Particulars.replace("undefined", ""));
+                        $("#spnAmount").html('');
+                        $("#spntotalamountinwords").html(FinalData2[0].TotalAmountInWord);
+                        $("#spntp").html(LocationData.length == 0 ? '0' : LocationData[0].TotalPieces);
+                        $("#spnwt").html(LocationData.length == 0 ? '0' : LocationData[0].TotalGrossWeight);
+
+                        if (FinalData2.length > 5)
+                            $("#Total").hide();
+                    },
+                    error: function (err) {
+                        if (err.responseText.toLowerCase().indexOf("object reference not set") != -1) {
+                            document.cookie = "UserDetail=0";
+                            location.href = '../../Account/' + userContext.SysSetting.LoginPage + '?islogout=true';
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <form id="form1">
+        <div id="divPrint1">
+            <div class="watermark">
+            </div>
+        </div>
+        <div class="example"></div>
+        <div id="content">
+            <table id="table1">
+                <tr>
+                    <td>
+                        <div id="DivHead" width="90%" align="center">
+                            <table width="90%" style="border-bottom:1px solid black;">
+                                <tr>
+                                    <td></td>
+                                    <td><center><img id="ImgLogo" alt="" width="400px" height="120px" /></center></td>
+                                    <td align="right"></td>
+                                </tr>
+                            </table>
+                            <table width="90%">
+                                <tr>
+                                    <td style="width:50%;padding-bottom:2%;">
+                                        <table width="90%" align="left" style="border-collapse:collapse;font-family:Verdana;font-size:15px;">
+                                            <tr>
+                                                <td style="font-weight:bold;text-align:left;">
+                                                    <u>PENYERAHAN AIR WAYBILL</u></br>AWB DELIVERY ORDER
+                                                </td>
+                                                <td style="padding-bottom:5%;"></td>
+                                            </tr>
+                                            <tr><td></td></tr>
+                                        </table>
+                                    </td>
+                                    <td style="width:40%">
+                                        <table width="90%" align="right" style="border-collapse:collapse;font-family:'Verdana';font-size:15px;">
+                                            <tr>
+                                                <td style="font-weight:bold;text-align:right;">CARGO DEPARTMENT</BR>SOEKARNO- HATTA AIRPORT</BR> TELP.5507318,5507319</td>
+                                                <td style="padding-bottom:10%;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:bold;text-align:right;font-size:25px;">
+                                                    Rolling No.
+                                                    <span id="spnserialno">120147</span>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                            </table>
+                            <table width="90%" style="border-bottom:1px solid black;">
+                                <tr>
+                                    <td style="width:40%;padding-bottom:5%;">
+                                        <table width="100%" align="left" style="border-collapse:collapse;font-family:'Verdana'; font-size:13px;">
+                                            <tr>
+                                                <td style="width:60%">Penerima barang    </td>
+                                                <td>:</td>
+                                                <td style="width:50%"><span id="spnConsignee"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;font-size:10px;">(Consignee)</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:60%">A l a m a t   </td>
+                                                <td>:</td>
+                                                <td style="width:50%"><span id="spnConsigneeAddress"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;font-size:10px;">(Consignee Address)</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:60%">Diurus/dikuasakan oleh</td>
+                                                <td>:</td>
+                                                <td style="width:50%"><span id="spnName"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;font-size:10px;">(Authorised Person Name)</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:60%">HAWB No / Pieces </td>
+                                                <td>:</td>
+                                                <td style="width:50%"><span id="spnHouseNo"></span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width:60%;">
+                                        <table width="90%" align="right" style="font-family:'Verdana'; font-size:13px;">
+                                            <tr>
+                                                <td style="text-align:right">Penerbangan No</td>
+                                                <td style="text-align:right;">:</td>
+                                                <td style="text-align:right;"><span id="spnFlightNo"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;font-size:10px;">(Flight No.)</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;">A W B No.</td>
+                                                <td style="text-align:right;">:</td>
+                                                <td style="text-align:right;"><span id="spnAirWaybillNo"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;font-size:10px;">(Air WayBill No.)</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;">Custom Ref / Pos No.</td>
+                                                <td style="text-align:right;">:</td>
+                                                <td style="text-align:right;"><span id="spnDONo"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;font-size:10px;"></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;">Tanggal tiba</td>
+                                                <td style="text-align:right;">:</td>
+                                                <td style="text-align:right;"><span id="spnDate"></span><span id="spntime"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;font-size:10px;">(Delivery Order Date)</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;">Barang di gudang</td>
+                                                <td style="text-align:right;">:</td>
+                                                <td style="text-align:right;"><span id="spnAirline"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;font-size:10px;">(Airline Name)</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            </br>
+                                        </table>
+                                    </td>
+                                    </br>
+                                </tr>
+                            </table></br>
+
+                            <table id="tabletrans" width="90%" cellpadding="12" cellspacing="0" style="font-size:18px;border-collapse:collapse; "></table>
+                            <table width="90%" cellpadding="12" cellspacing="0" style="font-size:15px;border-collapse:collapse; ">
+                                <tr style="font-family:verdana">
+                                </tr>
+                            </table>
+                            </br></br>
+                            <table width="90%" style="font-size:15px;">
+                                <tr>
+                                    <td style="width:50%">
+                                        <table width="90%" style="float:left;font-size:20px; ">
+                                            <tr></tr>
+                                            <tr>
+                                                <td>Tanda tangan penerima,</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size:12px;">(Recipient Signature),</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width:50%">
+                                        <table width="90%" style="float:right;font-size:20px; ">
+                                            <tr>
+                                                <td style="padding:8px;text-align:right;width:20%;"></td>
+                                                <td style="padding:8px;text-align:right;width:20%;"></td>
+                                                <td style="padding:8px;text-align:right;">Cengkareng,</td>
+                                                <td style="padding:8px;text-align:right;">.......................................<span id="spndate"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:8px;text-align:right;width:20%;"></td>
+                                                <td style="padding:8px;text-align:right;width:20%;"></td>
+                                                <td colspan="2" style="padding:8px;text-align:left;">Yang menyerahkan,</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width:90%;font-size:18px; ">
+                                <tr>
+                                    <td style="padding:8px;text-align:center;">(..................................)</br><span id="spnName1"></span></td>
+                                    <td style="padding:8px;text-align:right;width:15%;"></td>
+                                    <td style="padding:8px;text-align:right;width:10%;"></td>
+                                    <td style="padding:8px;text-align:left;width:10%;"></td>
+                                    <td style="padding:8px;text-align:left;width:10%;"></td>
+                                    <td style="padding:8px;text-align:right;width:10%;">(......................................)<span id="spnno"></span></td>
+                                    <td style="padding:8px;text-align:right;width:15%;">No.Peg.:</td>
+                                    <td style="padding:8px;text-align:left;width:10%">.....................<span id="spnpegno"></span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <table width="90%">
+            <tr>
+                <td align="center">
+                    <input type="button" class="btn btn-block btn-primary" name="name" value="Print" onclick="funPrintDOReportData('#divPrint1', '#bg-text');" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

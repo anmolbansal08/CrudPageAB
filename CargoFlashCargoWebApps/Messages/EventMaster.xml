@@ -1,0 +1,28 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>EventMaster</Name>
+    <Message>Event Master can not be blank</Message>
+  </DataFieldName>
+
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Event Master already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Event Master Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Event Master Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Event Master Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>

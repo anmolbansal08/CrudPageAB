@@ -1,0 +1,595 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (window.opener)
+                userContext = window.opener.parent.userContext;
+        });
+    </script>
+    <style>
+        #maindiv{
+            border:0px solid black;
+        }
+        </style>
+</head>
+<body>
+    <div id="maindiv" width="90%" align="center">
+        <table style="width:88%;font-family:Verdana;font-size:14px;" >
+            <tr>
+                <td style="width:50%">
+                    <table width="90%" align="left" style="border-collapse:collapse;font-family:Verdana;font-size:14px;">
+                        <tr>
+                            <td></td>
+                            <td colspan="6"><strong> Address</strong></td>
+                            <td>&nbsp;</td>
+                            <td colspan="8"><strong>Copy To</strong></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td style="border:1px solid black;text-align:center">Q<span id="spnAddress1"></span></td>
+                            <td style="border:1px solid black;text-align:center">I<span id="spnAddress2"></span></td>
+                            <td style="border:1px solid black;text-align:center">F<span id="spnAddress3"></span></td>
+                            <td style="border:1px solid black;text-align:center">F<span id="spnAddress4"></span></td>
+                            <td style="border:1px solid black;text-align:center">G<span id="spnAddress5"></span></td>
+                            <td style="border:1px solid black;text-align:center">M<span id="spnAddress6"></span></td>
+                            <td ></td>
+                            <td style="border:1px solid black;text-align:center">J<span id="spnCopyTo1"></span></td>
+                            <td style="border:1px solid black;text-align:center">K<span id="spnCopyTo2"></span></td>
+                            <td style="border:1px solid black;text-align:center">T<span id="spnCopyTo3"></span></td>
+                            <td style="border:1px solid black;text-align:center">U<span id="spnCopyTo4"></span></td>
+                            <td style="border:1px solid black;text-align:center">L<span id="spnCopyTo5"></span></td>
+                            <td style="border:1px solid black;text-align:center">G<span id="spnCopyTo6"></span></td>
+                            <td style="border:1px solid black;text-align:center">A<span id="spnCopyTo7"></span></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="7"><strong>Originator</strong></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="7" style="border:1px solid black">         <span id="spnOriginator"></span></td>
+                        </tr>
+                        <tr><td>&nbsp;</td>
+                            <td style="border-left:1px solid black;border-RIGHT:0px solid black;border-bottom:1px solid black;text-align:center">L<span id="spnO1"></span></td>
+                            <td style="border-right:0px solid black;border-bottom:1px solid black;text-align:center">U<span id="spn02"></span></td>
+                            <td style="border-right:1px solid black;border-bottom:1px solid black;text-align:center">C<span id="spn03"></span></td>
+                        <!--<td colspan="3" style="border:1px solid black">L U C<span id="spnLUC"></span></td>--></tr>
+                    </table>
+                </td>
+
+                <td style="width:50%">
+                    <table width="60%" align="right">
+                        <tr>
+                            <td colspan="7" align="right">
+                                <img src="../../Images/GaurdaCMS Logo.jpg" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" align="right"><strong>ULD CONTROL RECEIPT</strong></td>
+                        </tr>
+                        <tr>
+                            <td align="right"><b>NO. 007352</b><span id="spnSerialNo"></span></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+                            <table width="88%" style="border-collapse:collapse;font-family:Verdana;font-size:14px;">
+                                <tr>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="10" style="border:1px solid black; text-align:center;font-weight:bold;">IATA ID CODE</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="7" style="border:1px solid black;text-align:center;font-weight:bold;">DATA OF TRANSFER</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="4" style="border:1px solid black; text-align:center;font-weight:bold;" >TIME LOCAL</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td rowspan="2" colspan="9" style="border:1px solid black ;text-align:center;font-weight:bold;">RECEIVED BY</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="3" style="border:1px solid black; text-align:center;font-weight:bold;">TYPE CODE</td>
+                                    <td colspan="5" style="border:1px solid black; text-align:center;font-weight:bold;">SERIAL NO.</td>
+                                    <td colspan="2" style="border:1px solid black; text-align:center;font-weight:bold;">OWNER</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="2" style="border:1px solid black; text-align:center;font-weight:bold;">DAY</td>
+                                    <td colspan="3" style="border:1px solid black; text-align:center;font-weight:bold;">MONTH</td>
+                                    <td colspan="2" style="border:1px solid black; text-align:center;font-weight:bold;">YEAR</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="4" style="border:1px solid black; text-align:center;font-weight:bold;">24 HOUR CLOCK</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>0</td>
+                                    <td style="border:1px solid black;"><span id="spnTypeCode1"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnTypeCode2"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnTypeCode3"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo1"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo2"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo3"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo4"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo5"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnOwnerNo1"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnOwnerNo2"></span></td>
+                                    <td>&nbsp;/&nbsp;</td>
+                                    <td style="border:1px solid black;"><span id="spnday1"></td>
+                                    <td style="border:1px solid black;"><span id="spnday2"></td>
+                                    <td style="border:1px solid black;"><span id="spnM1"></td>
+                                    <td style="border:1px solid black;"><span id="spnM2"></td>
+                                    <td style="border:1px solid black;"><span id="spnM3"></td>
+                                    <td style="border:1px solid black;"><span id="spnY1"></td>
+                                    <td style="border:1px solid black;"><span id="spny2"></td>
+                                    <td>&nbsp;/&nbsp;</td>
+                                    <td style="border:1px solid black;"><span id="Time1"></td>
+                                    <td style="border:1px solid black;"><span id="Time2"></td>
+                                    <td style="border:1px solid black;"><span id="Time3"></td>
+                                    <td style="border:1px solid black;"><span id="Time4"></td>
+                                    <td>&nbsp;/&nbsp;</td>
+                                    <td colspan="9" style="border:1px solid black;"><span id="spnReceivedBy"></span></td>
+                                    <!--<td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>-->
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td style="border:1px solid black;"><span id="spnTypeCode4"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnTypeCode5"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnTypeCode6"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo6"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo7"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo8"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo9"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo10"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnOwnerNo3"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnOwnerNo4"></span></td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="4">Serviceable To</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="2">SE...</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td style="border:1px solid black;"><span id="spnTypeCode7"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnTypeCode8"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnTypeCode9"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo11"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo12"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo13"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo14"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnSerialNo15"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnOwnerNo5"></span></td>
+                                    <td style="border:1px solid black;"><span id="spnOwnerNo6"></span></td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="4" font-size="9px">CONDITION CODE KEY</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="6" font-size="9px">Incomplete/Damage</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="2" font-size="9px">DAM</td>
+                                </tr>
+                            </table>
+                            <table width="88%" style=" border-collapse:collapse;font-size:15px;font-family:Verdana;font-size:14px;">
+                                <tr>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="8" style="border:1px solid black; text-align:center;font-weight:bold;">TRANSFERED BY</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="3" style="border:1px solid black; text-align:center;font-weight:bold;">TRANSFER</BR> POINT</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="12" style="border:1px solid black; text-align:center;font-weight:bold;">CONTROL RECEIPT NUMBER</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="3" style="border:1px solid black; text-align:center;font-weight:bold;">FINAL</BR>DESTINATION</td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="3" style="border:1px solid black; text-align:center;font-weight:bold;">CONDITION</BR>CODE</td>
+                                </tr>
+
+                                <tr>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="8" style="border:1px solid black;text-align:center;"><span id="spnTransferedBy"></span></td>
+                                    <!--<td style="border:1px solid black;text-align:center;"></td>
+                                    <td style="border:1px solid black;text-align:center;"></td>
+                                    <td style="border:1px solid black;text-align:center;"></td>
+                                    <td style="border:1px solid black;text-align:center;"></td>
+                                    <td style="border:1px solid black;text-align:center;"></td>
+                                    <td style="border:1px solid black;text-align:center;"></td>
+                                    <td style="border:1px solid black;text-align:center;"></td>
+                                    <td style="border:1px solid black;text-align:center;"></td>-->
+                                    <td>&nbsp;/&nbsp;</td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnTransferPoint1"></span></td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnTransferPoint2"></span></td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnTransferPoint3"></span></td>
+                                    <td>&nbsp;/&nbsp;</td>
+                                    <td style="border:1px solid black;text-align:center;">1<span id="spnControlReceiptNo1"></span></td>
+                                    <td style="border:1px solid black;text-align:center;">2<span id="spnControlReceiptNo2"></span></td>
+                                    <td style="border:1px solid black;text-align:center;">6<span id="spnControlReceiptNo3"></span></td>
+                                    <td style="border:1px solid black;text-align:center;">-<span id="spnControlReceiptNo4"></span></td>
+                                    <td style="border:1px solid black;text-align:center;">0<span id="spnControlReceiptNo5"></span></td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnControlReceiptNo6"></span></td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnControlReceiptNo7"></span></td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnControlReceiptNo8"></span></td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnControlReceiptNo9"></span></td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnControlReceiptNo10"></span></td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnControlReceiptNo11"></span></td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnControlReceiptNo12"></span></td>
+                                    <td>&nbsp;/&nbsp;</td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnFinalDestination1"></span></td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnFinalDestination2"></span></td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnFinalDestination3"></span></td>
+                                    <td>&nbsp;/&nbsp;</td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnConditionCode1"></span></td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnConditionCode2"></span></td>
+                                    <td style="border:1px solid black;text-align:center;"><span id="spnConditionCode3"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td colspan="12" style="border-bottom:0px solid black;border-left:1px solid black; font-size:12px;border-right:1px solid black;font-family:Verdana;font-weight:bold;">REMARKS</td>
+
+                                  
+                        <td>&nbsp;/&nbsp;</td>
+                        <td style="border:1px solid black;text-align:center;">1<span id="spnControlReceiptNo13"></span></td>
+                        <td style="border:1px solid black;text-align:center;">2<span id="spnControlReceiptNo14"></span></td>
+                        <td style="border:1px solid black;text-align:center;">6<span id="spnControlReceiptNo15"></span></td>
+                        <td style="border:1px solid black;text-align:center;">-<span id="spnControlReceiptNo16"></span></td>
+                        <td style="border:1px solid black;text-align:center;">1<span id="spnControlReceiptNo17"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo18"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo19"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo20"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo21"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo22"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo23"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo24"></span></td>
+                        <td>&nbsp;/&nbsp;</td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnFinalDestination4"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnFinalDestination5"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnFinalDestination6"></span></td>
+                        <td>&nbsp;/&nbsp;</td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnConditionCode4"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnConditionCode5"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnConditionCode6"></span></td></BR>
+                    </tr>
+
+                    <tr>
+                        <td>&nbsp;&nbsp;</td>
+                        <td colspan="12" style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;font-size:12px;font-family:Verdana;"><strong>SI---></strong></td>
+                        <!--<td colspan="12" style="border-left: 1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;"><strong>SI----><!--</strong></td>-->
+                        <td>&nbsp;/&nbsp;</td>
+                        <td style="border:1px solid black; text-align:center;">1<span id="spnControlReceiptNo25"></span></td>
+                        <td style="border:1px solid black; text-align:center;">2<span id="spnControlReceiptNo26"></span></td>
+                        <td style="border:1px solid black;text-align:center;">6<span id="spnControlReceiptNo27"></span></td>
+                        <td style="border:1px solid black;text-align:center;">-<span id="spnControlReceiptNo28"></span></td>
+                        <td style="border:1px solid black;text-align:center;">2<span id="spnControlReceiptNo29"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo30"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo31"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo32"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo33"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo34"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo35"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnControlReceiptNo36"></span></td>
+                        <td>&nbsp;/&nbsp;</td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnFinalDestination7"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnFinalDestination8"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnFinalDestination9"></span></td>
+                        <td>&nbsp;/&nbsp;</td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnConditionCode7"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnConditionCode8"></span></td>
+                        <td style="border:1px solid black;text-align:center;">&nbsp;&nbsp;<span id="spnConditionCode9"></span></td>
+                    </tr>
+                </table></BR>
+        <table width="88%" font-family="verdana"font-size=" 14px;">
+            <tr>
+                <td style="width:50%">
+                    <table width="100%" align="left" style="border-collapse:collapse;font-family:Verdana;font-size:14px;">
+                        <tr>
+                            <td colspan="2" style="border:1px solid black;font-weight:bold;">ULD RELEASED</td>
+                            <td colspan="8" style="border:1px solid black;font-weight:bold;">AIR WAYBILL NO.</td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom:0px solid black;border-left:1px solid black;border-right:0px solid black;font-weight:bold;">Empty</td>
+                            <td><input id="Empty" type="text" size="5px" /><span id="spnEmpty"></span></td>
+                            <!--<td>&nbsp;&nbsp;</td>-->
+                            <td colspan="8" style="border-bottom:0px solid black;border-left:1px solid black;border-right:1px solid black"><span id="spnAirWayBillNo"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom:0px solid black;border-left:1px solid black;border-right:0px solid black">&nbsp;&nbsp;</td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:1px solid black">&nbsp;&nbsp;</td>
+                            <td colspan="8" style="border-bottom:0px solid black;border-left:1px solid black;border-right:1px solid black">&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:0px solid black;font-weight:bold;">Loaded</td>
+                            <td style="border-bottom:1px solid black;border-left:0px solid black;border-right:0px solid black">
+                                <input id="Loaded" type="text" size="5px" /><span id="spnLoaded"></span>
+                            </td>
+                            <!--<td>&nbsp;&nbsp;</td>-->
+                            <td colspan="8" style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" style="border:1px solid black;font-weight:bold;">ULD SUPPORT EQUIPMENT(Write in amount)</td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;font-weight:bold;">NETS</td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:0px solid black">&nbsp;&nbsp;</td>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;font-weight:bold;">DOORS</td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:0px solid black">&nbsp;&nbsp;</td>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;font-weight:bold;">STRAPS</td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:0px solid black">&nbsp;&nbsp;</td>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;font-weight:bold;">FITTINGS</td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:1px solid black">&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:0px solid black"></td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:1px solid black">&nbsp;&nbsp;<span id="spnNETS"></span></td>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:0px solid black"></td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:1px solid black">&nbsp;&nbsp;<span id="spnDOORS"></span></td>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:0px solid black"></td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:1px solid black">&nbsp;&nbsp;<span id="spnSTRAPS"></span></td>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:0px solid black"></td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:1px solid black">&nbsp;&nbsp;<span id="spnFITTINGS"></span></td>
+                            <!--<td colspan="2" style="border-bottom:1px solid black;border-right:1px solid black;border-left:1px solid black">&nbsp;&nbsp;</td>
+                        <td colspan="2" style="border-bottom:1px solid black;border-right:1px solid black">&nbsp;&nbsp;</td>
+                        <td colspan="2" style="border-bottom:1px solid black;border-right:1px solid black">&nbsp;&nbsp;</td>
+                        <td colspan="2" style="border-bottom:1px solid black;border-right:1px solid black">&nbsp;&nbsp;</td>-->
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="border:1px solid black;font-weight:bold;">ULD RETURNED</td>
+                            <td colspan="8" style="border:1px solid black;font-weight:bold;">AIR WAYBILL NO.</td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom:0px solid black;border-left:1px solid black;border-right:0px solid black;font-weight:bold;">Empty</td>
+                            <td><input id="Empty" type="text" value=""size="5px" /></td>
+                            <!--<td>&nbsp;&nbsp;</td>-->
+                            <td colspan="8" style="border-bottom:0px solid black;border-left:1px solid black;border-right:1px solid black;text-align:center;"><span id="spnAirWayBillNo">514-0000001</span></td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom:0px solid black;border-left:1px solid black;border-right:0px solid black">&nbsp;&nbsp;</td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:1px solid black">&nbsp;&nbsp;</td>
+                            <td colspan="8" style="border-bottom:0px solid black;border-left:1px solid black;border-right:1px solid black">&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:0px solid black;font-weight:bold;">Loaded</td>
+                            <td style="border-bottom:1px solid black;border-left:0px solid black;border-right:0px solid black;font-weight:bold;"><input id="Loaded" type="text" size="5px" /></td>
+                            <!--<td>&nbsp;&nbsp;</td>-->
+                            <td colspan="8" style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" style="border:1px solid black;font-weight:bold;">ULD SUPPORT EQUIPMENT(Write in amount)</td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;font-weight:bold;">NETS</td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:0px solid black;">&nbsp;&nbsp;</td>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;font-weight:bold;">DOORS</td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:0px solid black">&nbsp;&nbsp;</td>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;font-weight:bold;">STRAPS</td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:0px solid black">&nbsp;&nbsp;</td>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;font-weight:bold;">FITTINGS</td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:1px solid black">&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:0px solid black"></td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:1px solid black">&nbsp;&nbsp;<span id="spnNETS1">nos</span></td>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:0px solid black"></td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:1px solid black">&nbsp;&nbsp;<span id="spnDOORS1">yes</span></td>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:0px solid black"></td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:1px solid black">&nbsp;&nbsp;<span id="spnSTRAPS1">no</span></td>
+                            <td style="border-bottom:1px solid black;border-left:1px solid black;border-right:0px solid black"></td>
+                            <td style="border-bottom:0px solid black;border-left:0px solid black;border-right:1px solid black">&nbsp;&nbsp;<span id="spnFITTINGS1">yes</span></td>
+                            <!--<td colspan="2" style="border-bottom:1px solid black;border-right:1px solid black;border-top:0px solid black;border-left:1px solid black">&nbsp;&nbsp;</td>-->
+                            <!--<td colspan="2" style="border-bottom:1px solid black;border-right:1px solid black">&nbsp;&nbsp;</td>-->
+                            <!--<td colspan="2" style="border-bottom:1px solid black;border-right:1px solid black">&nbsp;&nbsp;</td>
+                        <td colspan="2" style="border-bottom:1px solid black;border-right:1px solid black">&nbsp;&nbsp;</td>-->
+                        </tr>
+
+                        <tr>
+                            <td colspan="5" style="border-bottom:0px solid black;border-left:1px solid black;border-top:1px solid black;font-weight:bold;">Customer</td>
+                            <!--<td colspan="5" style="border-bottom:1px solid black;border-right:1px solid black;"><span id=" spncustomer"></span></td>-->
+                            <td colspan="3" style="border-bottom:0px solid black;border-left:1px solid black;border-top:1px solid black;border-right:1px solid black;font-weight:bold;">Account No.</td>
+                            <!--<td  colspan="3" style="border-bottom:1px solid black;border-right:1px solid black;"><span id=" spnaccountno"></span></td>-->
+                        </tr>
+                        <tr>
+                        <tr>
+
+                            <td colspan="5" style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;text-align:center;">&nbsp;&nbsp;<span id=" spncustomer">Surbhi</span></td>
+
+                            <td colspan="5" style="border-bottom:1px solid black;border-right:1px solid black;text-align:center;">&nbsp;&nbsp;<span id=" spnaccountno">9965211</span></td>
+                        </tr>
+                        <tr>
+                            <td height="70px;" align="left" style="vertical-align: top; border-left: 1px solid black; border-right:0px solid black; border-bottom:1px solid black; border-top:1px solid black;font-weight:bold;">
+                                Address
+                               
+                            </td>
+                            <td height="70px;" colspan="10" align="left" style="vertical-align: top; border-left: 0px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;font-weight:bold;text-align:center">
+                              
+                                <span style="font-size:12pt;" id="spnAddress"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="10" height="20px" align="center" style=" border-left: 1px solid black;border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;">
+                                <b>CUSTOMER-PLEASE NOTE</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" height="30px" style=" vertical-align: top;border-left: 1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;font-weight:bold;">DEMURRAGE BEGINS------------------><span id="spnDestination"></span></td>
+
+                            <td colspan="3" height="30px" style=" vertical-align: top;border-left: 1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;font-weight:bold;">Date:-<span id="spnDate">07-04-2017</span></td>
+                            <td colspan="3" height="30px" style=" vertical-align: top;border-left :0px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;font-weight:bold;">Time:-<span id="spnTime">12:00</span></td>
+                        </tr>
+
+                    </table>
+                </td>
+                <td style="width:5%"></td>
+                <td style="width:50%">
+                    <table style="align:right; border-collapse:collapse;width:100%;font-family:Verdana;font-size:14px;">
+                        <tr>
+                            <td colspan="8" style="border:1px solid black;font-weight:bold;"><center>CUSTOMER/INTERLINE TRANSACTION/ULD RELEASED</center></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" height="10px" style=" vertical-align: top;border-left :1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;font-weight:bold;">Receiving Carrier Or Customer Signature</td>
+
+                            <td colspan="2" height="10px" style=" vertical-align: top;border-left: 1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;font-weight:bold;">Date</td>
+                            <td colspan="2" height="10px" style=" vertical-align: top;border-left :1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;font-weight:bold;">Time</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" height="50px" style=" vertical-align: middle;border-left :1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;"><span id="spnRC">dfhd</span>
+                                </td>
+                            <td colspan="2" height="50px" style=" vertical-align: middle;border-left: 1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;"><span id="spndate1">dfd</span></td>
+                            <td colspan="2" height="50px" style=" vertical-align: middle;border-left :1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;"><span id="spntime1">fdgdf</span></td>
+
+                            </tr>
+<!--</tr>-->
+                        <tr>
+                            <td colspan="4" height="10px" style=" vertical-align: top;border-left :1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;font-weight:bold;">Transfering Carrier Or Customer Signature</br><span id="spnTC"></span></td>
+
+                            <td colspan="2" height="10px" style=" vertical-align: top;border-left: 1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;font-weight:bold;">Date</td>
+                            <td colspan="2" height="10px" style=" vertical-align: top;border-left :1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;font-weight:bold;">Time</td>
+                        </tr>
+
+
+            <tr>
+                <td colspan="4" height="50px" style=" vertical-align: middle;border-left :1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;">
+                    <span id="spnTC">dfhd</span>
+                </td>
+                <td colspan="2" height="50px" style=" vertical-align: middle;border-left: 1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;"><span id="spndate2">dfd</span></td>
+                <td colspan="2" height="50px" style=" vertical-align: middle;border-left :1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;;"><span id="spntime2">fdgdf</span></td>
+
+            </tr>
+
+                        <tr>
+                            <td colspan="8" height="10px">&nbsp;&nbsp;</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="8" style="border:1px solid black;font-weight:bold;"><center>CUSTOMER TRANSACTIONS ONLY ULD RELEASED</center></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" height="10px" style=" vertical-align: top;border-left :1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;font-weight:bold;">Receiving Carrier Signature</td>
+
+                            <td colspan="2" height="10px" style=" vertical-align: top;border-left: 1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;font-weight:bold;">Date</td>
+                            <td colspan="2" height="10px" style=" vertical-align: top;border-left :1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;font-weight:bold;">Time</td>
+                        </tr>
+
+
+            <tr>
+                <td colspan="4" height="50px" style=" vertical-align: middle;border-left :1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;">
+                    <span id="spnRC1">dfhd</span>
+                </td>
+                <td colspan="2" height="50px" style=" vertical-align: middle;border-left: 1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;"><span id="spndate3">dfd</span></td>
+                <td colspan="2" height="50px" style=" vertical-align: middle;border-left :1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;"><span id="spntime3">fdgdf</span></td>
+
+            </tr>
+
+                        <tr>
+                            <td colspan="4" height="10px" style=" vertical-align: top;border-left :1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;font-weight:bold;">Transfering  Customer Signature</td>
+
+                            <td colspan="2" height="10px" style=" vertical-align: top;border-left: 1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;font-weight:bold;">Date</td>
+                            <td colspan="2" height="10px" style=" vertical-align: top;border-left :1px solid black; border-right:1px solid black; border-bottom:0px solid black; border-top:1px solid black;font-weight:bold;">Time</td>
+                        </tr>
+
+
+            <tr>
+                <td colspan="4" height="50px" style=" vertical-align: middle;border-left :1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;">
+                    <span id="spnRC1">dfhd</span>
+                </td>
+                <td colspan="2" height="50px" style=" vertical-align: middle;border-left: 1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;"><span id="spnDate4">dfd</span></td>
+                <td colspan="2" height="50px" style=" vertical-align: middle;border-left :1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:0px solid black;"><span id="spntime4">fdgdf</span></td>
+
+            </tr>
+
+
+                        <tr>
+                            <td colspan="8" height="10px">CUSTOMER AGREE TO LIABILTY AS SPECIFIED ON REVERSE</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" height="10px">&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" style="border:1px solid black;font-weight:bold;"><center>CARRIER USE ONLY</center></td>
+                        </tr>
+                        <tr>
+                            <td height="50px" style=" vertical-align: top;border-left :1px solid black; border-right:0px solid black; border-bottom:1px solid black; border-top:1px solid black;"><b>Excess Time</b></td>
+                            <td colspan="3" height="50px" style="border-left :0px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;"><span id="spnExcessTime"></span></td>
+
+                            <td height="50px" style=" vertical-align: top;border-left: 1px solid black; border-right:0px solid black; border-bottom:1px solid black; border-top:1px solid black;"><b>No. of Days: </b><span id="spnDays"><center></center></span></td>
+
+                            <td height="50px" style=" vertical-align: bottom;border-left: 0px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;"><b>Per Days</b><span id="spnPerDays"><center></center></span></td>
+                            <td colspan="2" height="50px" style=" vertical-align: top;border-left :1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;"><b>8</b><span id="spn1"><center></center></span></td>
+                        </tr>
+                        <tr>
+                            <td height="50px" style=" vertical-align: top;border-left :1px solid black; border-right:0px solid black; border-bottom:1px solid black; border-top:1px solid black;"><b>Other Charges:</b></td>
+                            <td colspan="3" height="50px" style="border-left :0px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;"><span id="spnOtherCharges"><center></center></span></td>
+
+                            <td height="50px" style=" vertical-align:middle;border-left: 1px solid black; border-right:0px solid black; border-bottom:1px solid black; border-top:1px solid black;"><b>Lose: </b><span id="spnLose"><center></center></span></td>
+
+                            <td height="50px" style=" text-align:center;border-left: 0px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;"><b>Damage:</b><span id="spnDamage"><center></center></span></td>
+                            <td colspan="3" height="50px" style=" vertical-align: top;border-left :1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;"><b>5</b><span id="spn2"><center></center></span></td>
+                        </tr>
+                        <tr>
+                            <td height="50px" style=" vertical-align: top;border-left :1px solid black; border-right:0px solid black; border-bottom:1px solid black; border-top:1px solid black;"><span id=""></span></td>
+
+                            <td colspan="3" height="30px" style=" vertical-align: top;border-left :0px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;"><span id=""></span>&nbsp;&nbsp;</td>
+                            <td height="30px" style=" border-left: 1px solid black; border-right:0px solid black; border-bottom:1px solid black; border-top:1px solid black;"><b>TOTAL CHARGES</b><span id="spnTotalCharges"><center></center></span></td>
+
+                            <td height="50px" style=" vertical-align: center;border-left: 0px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;"><span id=""><center></center></span></td>
+
+                            <td colspan="3" height="50px" style=" vertical-align: top;border-left :1px solid black; border-right:1px solid black; border-bottom:1px solid black; border-top:1px solid black;"><b>5</b><span id="spn3"><center></center></span></td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </table>
+                <table width="88%">
+                    <tr>
+                        <td style="width:40%">
+                            <table style="width:100%; float:left;font-size:12px;font-family:Verdana;">
+                                <tr>
+                                    <td rowspan="5">OPERATOR DO NOT TRANSMIT BLANK</BR>CARRIER CONTROL CENTRE</td>
+                                    <td rowspan="5"></td>
+                                    <td rowspan="5">
+                                        Part1. for tranfering carrier control centre [White]</br> Part2. for transfering carrier or customer [Green]</br>
+                                        Part3. for transfering carrier field office file copy [pink]</br>Part4. for Account [Blue].
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width:40%">
+                            <table style="width:100%;float:right;font-size:12px;font-family:Verdana;">
+                                <tr>
+
+                                    <td align="right">Form GA-1352/02-CGO</BR>IGA-F40CI<span id="spnODS"></span></td>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+</div>
+</body>
+</html>

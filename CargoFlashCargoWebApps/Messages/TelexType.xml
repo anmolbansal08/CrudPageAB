@@ -1,0 +1,37 @@
+﻿<Messages>
+  <DataFieldName>
+    <Name>TeleTextMessage</Name>
+    <Message>Free Text can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>EmailAddress</Name>
+    <Message>Email Address can not be blank</Message>
+  </DataFieldName>
+
+  <DataFieldName>
+    <Name>SitaAddress</Name>
+    <Message>Sita Address can not be blank</Message>
+  </DataFieldName>
+
+  <ServerMessage>
+    <Key>1001</Key>
+    <value>Telex Type already exists</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2000</Key>
+    <value>Telex Type Message Added Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2001</Key>
+    <value>Telex Type Message Updated Successfully.</value>
+  </ServerMessage>
+
+  <ServerMessage>
+    <Key>2002</Key>
+    <value>Telex Type Message Deleted Successfully.</value>
+  </ServerMessage>
+
+</Messages>
